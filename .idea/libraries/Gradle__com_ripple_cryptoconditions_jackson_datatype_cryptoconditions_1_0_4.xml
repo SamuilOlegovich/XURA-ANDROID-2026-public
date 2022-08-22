@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: com.ripple.cryptoconditions:jackson-datatype-cryptoconditions:1.0.4">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.ripple.cryptoconditions/jackson-datatype-cryptoconditions/1.0.4/d3cdc8d019e80ae8bf013f8463dcaa570c028716/jackson-datatype-cryptoconditions-1.0.4.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.ripple.cryptoconditions/jackson-datatype-cryptoconditions/1.0.4/944402db6763284e7e85daed1525efacaff46f4e/jackson-datatype-cryptoconditions-1.0.4-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.ripple.cryptoconditions/jackson-datatype-cryptoconditions/1.0.4/1bb03d3f848c4feedb358ea84a106287edb96d2/jackson-datatype-cryptoconditions-1.0.4-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

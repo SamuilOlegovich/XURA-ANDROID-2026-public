@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: org.xrpl:xrpl4j-address-codec:2.3.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.xrpl/xrpl4j-address-codec/2.3.0/8af4c75e159be9e04e50b664764f137df130ab0d/xrpl4j-address-codec-2.3.0.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.xrpl/xrpl4j-address-codec/2.3.0/3813ae39c51e94516862835743d67652862de580/xrpl4j-address-codec-2.3.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.xrpl/xrpl4j-address-codec/2.3.0/4f238d1f7d549dad12929d2d9478bdf47eda920e/xrpl4j-address-codec-2.3.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -1,0 +1,87 @@
+<resources>
+    <string name="app_name">XURA</string>
+    <string name="set_password"><u>CONFIRM</u></string>
+    <string name="restore_wallet"><u>RESTORE WALLET</u></string>
+    <string name="create_new_wallet"><u>CREATE NEW WALLET</u></string>
+    <string name="skip"><u>SKIP</u></string>
+    <string name="next_one"><u>NEXT >></u></string>
+    <string name="next"><u>NEXT</u></string>
+    <string name="set"><u>SET</u></string>
+    <string name="become_referral"><u>BECOME A REFERRAL</u></string>
+    <string name="set_referral"><u>SET REFERRAL</u></string>
+    <string name="restore_referral"><u>RESTORE REFERRAL</u></string>
+
+    <string name="black"><u>BLACK</u></string>
+    <string name="place_a_bet"><u>PLACE BET</u></string>
+    <string name="red"><u>RED</u></string>
+    <string name="info"><u>INFO</u></string>
+    <string name="send"><u>SEND</u></string>
+    <string name="scan_qr_code"><u>SCAN QR CODE</u></string>
+    <string name="request"><u>REQUEST</u></string>
+    <string name="transaction_history"><u>TRANSACTION HISTORY</u></string>
+    <string name="settings"><u>SETTINGS</u></string>
+    <string name="copy"><u>COPY</u></string>
+    <string name="rules_of_the_game"><u>RULES OF THE GAME</u></string>
+    <string name="become_a_referral"><u>BECOME A REFERRAL</u></string>
+    <string name="name_guess_the_color"><u>GUESS THE COLOR</u></string>
+    <string name="name_guess_the_number"><u>GUESS THE NUMBER</u></string>
+    <string name="name_roulette"><u>ROULETTE</u></string>
+    <string name="collect_and_renew_bet"><u>COLLECT AND RENEW BET</u></string>
+    <string name="roulette_game">ROULETTE</string>
+    <string name="guess_the_color">GUESS THE COLOR</string>
+    <string name="and_double_the_bet">AND DOUBLE THE BET</string>
+    <string name="and_get_a_hundred_times_more">AND GET A HUNDRED TIMES MORE</string>
+    <string name="game_notifications">GAME NOTIFICATIONS</string>
+    <string name="rules_guess_the_color">The rules of this game are very simple. You place a bet and indicate which color. If the color is guessed - your bet will be doubled. If the bet is lost, it goes to the savings fund - lotto. Absolutely any user can win a lotto, regardless of what and how much he bet - if the lotto sector falls out. And you can also win a mini lotto - it is one tenth of the lotto. The minimum bet is 0.1 XRP, the maximum is 100 XRP.</string>
+    <string name="guess_the_number">GUESS THE NUMBER</string>
+    <string name="rules_double_your_bet">The rules of this game are very simple. The bet is always fixed and is - 1XRP. You just have to choose the number you want to bet on. (from - 1 to -  36) In case of winning, the bet will be increased by 36 times. If the bet is lost, it goes to the savings fund - lotto. Absolutely any user can win a lotto, regardless of what and how much he bet - if the lotto sector falls out. And you can also win a mini lotto - it is one tenth of the lotto.</string>
+    <string name="rules_roulette">CURRENTLY THE GAME IS UNDER DEVELOPMENT. WE WANT TO IMPLEMENT THE CLASSIC ROULETTE GAME WITH THE MAXIMUM QUALITY.</string>
+    <string name="select_game">SELECT GAME</string>
+    <string name="referral_text">IF YOU HAVE A REFERRAL CODE - BE SURE TO ENTER IT - IT WILL GIVE YOU EXTRA LIVES ON YOUR BETS AND PARTICIPATION IN THE DAILY PRIZE DRAW</string>
+    <string name="check_the_seed_and_try_again">ERROR - check the seed and try again.</string>
+    <string name="want_to_win"><u>WANT TO WIN 386301 XRP - PRESS AND START PLAYING!</u></string>
+
+
+    <string name="it_s_important_to_know">IT S IMPORTANT TO KNOW</string>
+    <string name="about_benefits_1"> • We are not an extra XRP wallet.</string>
+    <string name="about_benefits_2"> • We do not store or send your keys anywhere.</string>
+    <string name="about_benefits_3"> • By starting to use our application, you confirm that you are over 18 years old.</string>
+    <string name="about_benefits_4"> • To activate only that the created wallet should be replenished with 10 XRP - this is not required, these are the rules of the XRP network to avoid spamming on the network.</string>
+    <string name="about_benefits_5"> • Become a referral and get a number - 10 XRP.</string>
+    <string name="about_benefits_6"> • Referral number recovery - 5 XRP.</string>
+    <string name="about_benefits_7"> • Each participant who has a referral number and made one bet per day becomes a participant in the evening prize draw.</string>
+    <string name="about_benefits_8"> • Each participant with a referral code gets the opportunity to replay if his bet is lost.</string>
+    <string name="about_benefits_9"> • More than 90 percent of the lost bets at the end of the day will be played between the participants who played that day..</string>
+
+    <string name="about_benefits">ABOUT BENEFITS</string>
+    <string name="it_s_important_to_know_1"> • Our application is the embodiment of our vision of the future - where games and the wallet are one.</string>
+    <string name="it_s_important_to_know_2"> • You no longer need to transfer your money somewhere, top up your balance, register - remember passwords and keys.</string>
+    <string name="it_s_important_to_know_3"> • We do not store or send your keys anywhere.</string>
+    <string name="it_s_important_to_know_4"> • You will no longer risk funds - transferring them somewhere.</string>
+    <string name="it_s_important_to_know_5"> • No one can block you or take away your money.</string>
+    <string name="it_s_important_to_know_6"> • In our vision of future games, all these moments should be replaced by just one recovery phrase from your wallet.</string>
+    <string name="it_s_important_to_know_7"> • Your key to your wallet is also the key to everything.</string>
+    <string name="it_s_important_to_know_8"> • As soon as you have restored your wallet, you are immediately ready to play, nothing else is needed.</string>
+    <string name="it_s_important_to_know_9"> • You can use our wallet without any restrictions - it is not necessary to play, everything is only according to your desire.</string>
+    <string name="it_s_important_to_know_10"> • For active users, we provide rewards. Any of our users playing our games can win our SUPER LOTTO and more.</string>
+    <string name="it_s_important_to_know_11"> • Any user can become our referral and earn 5% of the attracted funds, as well as from the prize pool.</string>
+    <string name="it_s_important_to_know_12"> • Другие комиссии или сборы: отсутствуют</string>
+
+    <string name="our_advantages">OUR ADVANTAGES</string>
+    <string name="our_advantages_1"> • The whole system works fully automatically.</string>
+    <string name="our_advantages_2"> • The system is as loyal and democratic as possible, and takes into account the interests of the user as much as possible.</string>
+    <string name="our_advantages_3"> • Part of the system code is already in the public domain.</string>
+    <string name="our_advantages_4"> • Further, after we finish everything and bring it to perfection, as well as take into account and implement your wishes, we will put all the code in the public domain.</string>
+    <string name="our_advantages_5"> • We strive for the most fair and honest conditions for everyone.</string>
+    <string name="our_advantages_6"> • We do not track your location and other data.</string>
+    <string name="our_advantages_7"> • We do not divide our users into classes.</string>
+    <string name="our_advantages_8"> • All actions performed in our games are fully accounted for and permanently recorded in the XRP ledger.</string>
+    <string name="our_advantages_9"> • We make the system as automatic and secure as possible, as well as decentralized.</string>
+    <string name="our_advantages_10"> • And we do not have endpoints of access to our servers, therefore it is impossible to attack them, as well as to find them - all communication with the server goes through the blockchain.</string>
+    <string name="our_advantages_11"> • We plan to develop further, increase functionality and expand the range of gaming options.</string>
+
+    <string name="our_goal">OUR GOAL</string>
+    <string name="our_goal_1"> • Our main goal is to make games available to everyone and anywhere in the world at any time you wish. And also so that everyone has the same and fair conditions both in the game and in the opportunity to earn in our system..</string>
+    <string name="our_goal_2"> • Good luck and thank you for your trust in choosing our application.</string>
+
+</resources>

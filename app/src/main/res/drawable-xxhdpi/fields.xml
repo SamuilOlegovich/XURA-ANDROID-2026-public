@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true" >
+        <shape android:shape="rectangle"  >
+            <corners android:radius="20dip" />
+            <stroke android:width="3dip" android:color="#000000" />
+            <solid android:color="#FFD300"/>
+        </shape>
+    </item>
+    <item android:state_focused="true">
+        <shape android:shape="rectangle"  >
+            <corners android:radius="20dip" />
+            <stroke android:width="3dip" android:color="#000000" />
+            <solid android:color="#FFD300"/>
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle"  >
+            <corners android:radius="20dip" />
+            <stroke android:width="3dip" android:color="#654F00" />
+            <solid android:color="#FFD300"/>
+        </shape>
+    </item>
+</selector>
+<!--Это файл стилей, который можно приминять ко всему чему угодно.-->
+<!--Например закруглять края кнопок или окон и т д.-->
+<!--    item - первый для кнопок задает для кнопок, остальные для другого-->
+<!--    shape - форма-->
+<!--    corners - радиус кругов-->
+<!--    stroke - обводка-->
+<!--    solid - основной цвет поля-->

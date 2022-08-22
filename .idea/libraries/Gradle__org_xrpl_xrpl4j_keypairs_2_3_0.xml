@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: org.xrpl:xrpl4j-keypairs:2.3.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.xrpl/xrpl4j-keypairs/2.3.0/9cb519c18881f5bcd2c3a2ae27a70af32bd34157/xrpl4j-keypairs-2.3.0.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.xrpl/xrpl4j-keypairs/2.3.0/b3f97373cd897173d15db19a4eb059699cc863b8/xrpl4j-keypairs-2.3.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.xrpl/xrpl4j-keypairs/2.3.0/87a243f71cba78b2c0d7445e1fe97aef70464569/xrpl4j-keypairs-2.3.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

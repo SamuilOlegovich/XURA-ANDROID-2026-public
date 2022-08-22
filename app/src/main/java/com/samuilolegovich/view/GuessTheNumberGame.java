@@ -1,0 +1,380 @@
+package com.samuilolegovich.view;
+
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.media.MediaPlayer;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.view.Gravity;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.samuilolegovich.R;
+import com.samuilolegovich.asyncAndRun.asyncTask.GetBalanceAsync;
+import com.samuilolegovich.asyncAndRun.asyncTask.SendPaymentAsync;
+import com.samuilolegovich.asyncAndRun.runnable.GenNumberRun;
+import com.samuilolegovich.enums.StringEnum;
+import com.samuilolegovich.utils.Lotto;
+
+import static com.samuilolegovich.view.Flasher.FLASHER_CLASS;
+import static com.samuilolegovich.view.RulesOfTheGameGuessTheNumber.RULES_OF_THE_GAME_GUESS_THE_NUMBER_CLASS;
+
+import java.math.BigDecimal;
+import java.util.concurrent.ExecutionException;
+
+public class GuessTheNumberGame extends AppCompatActivity {
+    public static final String GUESS_THE_NUMBER_GAME_CLASS = ".GuessTheNumberGame";
+
+    @SuppressLint("StaticFieldLeak")
+    public static volatile GuessTheNumberGame GUESS_THE_NUMBER_GAME;
+    public static volatile boolean VISIBLE_ON_SCREEN = false;
+
+    private SharedPreferences preferences;
+    private MediaPlayer casinoMediaPlayer;
+    private MediaPlayer errorMediaPlayer;
+    private MediaPlayer betMediaPlayer;
+    private Animation animTranslate;
+    private BigDecimal yourBalance;
+    private String myReferral;
+
+    private EditText betNumber;
+    private TextView rulesInfo;
+    private TextView placeBet;
+    private TextView balance;
+    private TextView outInfo;
+    private EditText bet;
+
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.guess_the_number_game);
+        setButtons();
+        listeners();
+        setBalance();
+        getReferral();
+        GUESS_THE_NUMBER_GAME = this;
+        goThread();
+    }
+
+
+
+    private void soundPlay(MediaPlayer mediaPlayer) {
+        mediaPlayer.setVolume(0.5f, 0.5f);
+        mediaPlayer.setLooping(true);
+        mediaPlayer.start();
+    }
+
+
+
+    private void setButtons() {
+        casinoMediaPlayer = MediaPlayer.create(this, R.raw.in_casino);
+        errorMediaPlayer = MediaPlayer.create(this, R.raw.error);
+        betMediaPlayer = MediaPlayer.create(this, R.raw.bet);
+        rulesInfo = (TextView) findViewById(R.id.rules_of_the_game);
+        balance = (TextView) findViewById(R.id.your_balance_xrp);
+        placeBet = (TextView) findViewById(R.id.place_a_bet);
+        outInfo = (TextView) findViewById(R.id.number_info);
+        betNumber = (EditText) findViewById(R.id.number);
+        bet = (EditText) findViewById(R.id.bet);
+
+        soundPlay(casinoMediaPlayer);
+    }
+
+
+
+    private void listeners() {
+        animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
+        rulesInfo.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        v.startAnimation(animTranslate);
+                        goToAnotherPage(RULES_OF_THE_GAME_GUESS_THE_NUMBER_CLASS);
+                    }
+                }
+        );
+        placeBet.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        v.startAnimation(animTranslate);
+                        betMediaPlayer.start();
+                        makeStackThread();
+                    }
+                }
+        );
+    }
+
+    private void makeStackThread() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                makeStack();
+            }
+        }).start();
+    }
+
+
+
+    private void makeStack() {
+        String sendAmount = prepareTheShippingAmount(bet.getText().toString());
+        String tag = betNumber.getText().toString();
+        String tegNumber = testNumber(tag);
+        if (myReferral == null) {
+            myReferral = "0";
+        }
+        if (tegNumber != null && checkData(sendAmount, tegNumber + myReferral)) {
+            betNumber.setText("");
+            bet.setText("");
+            makeToast("BET IS MADE - EXPECT THE RESULT");
+            setBetParam(tag, true);
+            goToAnotherPage(FLASHER_CLASS);
+        } else {
+            errorMediaPlayer.start();
+            makeToast("GUESSED NUMBER SHOULD NOT BE LESS THAN - 1 - AND MORE THAN - 36");
+        }
+    }
+
+    private String prepareTheShippingAmount(String sendAmount) {
+        if (sendAmount.contains(".")) {
+            int i = sendAmount.indexOf(".");
+            int max = i + 6;
+            if (max < sendAmount.length()) {
+                return sendAmount.substring(0, max + 1);
+            }
+        }
+        return sendAmount;
+    }
+
+    private void setBetParam(String tag, boolean color) {
+        boolean b = Lotto.getRandomColorForNumber(tag);
+        Flasher.COLOR_BET = Lotto.getRandomColorForNumber(tag);
+        Flasher.NUMBER_BET = tag;
+    }
+
+    private boolean checkData(String sendAmount, String sendTeg) {
+        if (sendAmount == null || sendAmount.length() < 1) {
+            errorMediaPlayer.start();
+            makeToast("PAYMENT AMOUNT IS INCORRECT");
+            return false;
+        }
+        if (new BigDecimal(sendAmount).compareTo(new BigDecimal("0.000000")) == 0) {
+            errorMediaPlayer.start();
+            makeToast( "IT IS NOT POSSIBLE TO SEND NULL");
+            return false;
+        }
+        if (new BigDecimal(sendAmount).compareTo(yourBalance) > 0) {
+            errorMediaPlayer.start();
+            makeToast("YOUR ACCOUNT IS NOT ENOUGH TO SEND");
+            return false;
+        }
+        if (sendTeg != null && !sendTeg.equals("") && Long.parseLong(sendTeg) >= Integer.MAX_VALUE) {
+            errorMediaPlayer.start();
+            makeToast("TAG KNOWLEDGE CANNOT BE MORE - 2147483647");
+            return false;
+        }
+        if (new BigDecimal(sendAmount).compareTo(new BigDecimal(StringEnum.MAX_BET_GUESS_THE_COLOR.getValue())) > 0) {
+            errorMediaPlayer.start();
+            makeToast("BET CANNOT BE MORE THAN - " + StringEnum.MAX_BET_GUESS_THE_COLOR.getValue() + "XRP");
+            return false;
+        }
+        if (new BigDecimal(sendAmount).compareTo(new BigDecimal(StringEnum.MIN_BET_GUESS_THE_COLOR.getValue())) < 0) {
+            errorMediaPlayer.start();
+            makeToast("BET CANNOT BE LESS THAN - " + StringEnum.MIN_BET_GUESS_THE_COLOR.getValue() + "XRP");
+            return false;
+        }
+        return makePayment(sendAmount, sendTeg);
+    }
+
+
+
+//    private boolean checkData(String sendAmount, String sendTeg) {
+//        if (sendAmount == null) {
+//            errorMediaPlayer.start();
+//            makeToast("PAYMENT AMOUNT IS INCORRECT");
+//            return false;
+//        }
+//        if (new BigDecimal(sendAmount).compareTo(yourBalance) > 0) {
+//            errorMediaPlayer.start();
+//            makeToast("YOUR ACCOUNT IS NOT ENOUGH TO SEND");
+//            return false;
+//        }
+//        if (sendTeg != null && !sendTeg.equals("") && Long.parseLong(sendTeg) >= Integer.MAX_VALUE) {
+//            errorMediaPlayer.start();
+//            makeToast("TAG KNOWLEDGE CANNOT BE MORE - 2147483647");
+//            return false;
+//        }
+//        return makePayment(sendAmount, sendTeg);
+//    }
+
+
+
+    private boolean makePayment(String sendAmount, String sendTeg) {
+        AsyncTask<String, Void, Boolean> asyncTask = new SendPaymentAsync()
+                .execute(StringEnum.SERVER_ADDRESS_GUESS_THE_NUMBER.getValue(), sendAmount, sendTeg);
+        boolean b = false;
+        try {
+            b = asyncTask.get();
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        if (!b) {
+            errorMediaPlayer.start();
+            makeToast("WRONG DESTINATION ADDRESS");
+        }
+        return b;
+    }
+
+
+
+    public void setColorAndText(String text, boolean b) {
+        // goToAnotherPage
+        new Thread() {
+            public void run() {
+                GUESS_THE_NUMBER_GAME.runOnUiThread(new Runnable() {
+                    @SuppressLint("ResourceAsColor")
+                    public void run() {
+                        if (b) {
+                            outInfo.setText(text);
+                            outInfo.setTextColor(Color.BLACK);
+                        } else if (text.equalsIgnoreCase("00"))  {
+                            outInfo.setText(text);
+                            outInfo.setTextColor(Color.parseColor("#007143"));
+                        } else {
+                            outInfo.setText(text);
+                            outInfo.setTextColor(Color.RED);
+                        }
+                    }
+                });
+            }
+        }.start();
+    }
+
+
+
+    private void getReferral() {
+        // tag 214 referral 7483647
+        preferences = getSharedPreferences(StringEnum.APP_PREFERENCES.getValue(), Context.MODE_PRIVATE);
+        if (preferences.contains(StringEnum.APP_PREFERENCES_REFERRAL.getValue())) {
+            myReferral = preferences.getString(StringEnum.APP_PREFERENCES_REFERRAL.getValue(), "");
+        } else {
+            myReferral = "0";
+        }
+    }
+
+
+
+    private String testNumber(String number) {
+        if (!number.equals("") && number.length() > 0 && number.length() < 3 && !number.startsWith("0")) {
+            long inTag = Long.parseLong(number);
+            int min = Integer.parseInt(StringEnum.MIN_BET_GUESS_THE_NUMBER.getValue());
+            int max = Integer.parseInt(StringEnum.MAX_BET_GUESS_THE_NUMBER.getValue());
+
+            if (inTag >= min && inTag <= max) {
+                long result = 100 + inTag;
+                return result + "";
+            }
+        }
+        return null;
+    }
+
+
+
+    private void goToAnotherPage(String namePage) {
+        // класс для перехода на другую страницу
+        Intent intent = new Intent(namePage);
+        startActivity(intent);
+    }
+
+
+    private void makeToast(String massage) {
+        new Thread() {
+            public void run() {
+                GUESS_THE_NUMBER_GAME.runOnUiThread(new Runnable() {
+                    public void run() {
+                        //Do your UI operations like dialog opening or Toast here
+                        Toast toast = Toast.makeText(getApplicationContext(), massage, Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.TOP, 0,110);   // import android.view.Gravity;
+                        toast.show();
+                    }
+                });
+            }
+        }.start();
+    }
+
+
+
+
+    @SuppressLint("SetTextI18n")
+    private void goText(String s) {
+        outInfo.setText(s);
+    }
+
+
+
+    @SuppressLint("SetTextI18n")
+    private void setBalance() {
+        AsyncTask<String, Void, BigDecimal> getBalanceAsync = new GetBalanceAsync().execute("");
+        try {
+            yourBalance = getBalanceAsync.get();
+            balance.setText(yourBalance.toString() + "  XRP");
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+    @SuppressLint("SetTextI18n")
+    public void updateBalance(BigDecimal bigDecimal) {
+        yourBalance = bigDecimal;
+        balance.setText(yourBalance.toString() + "  XRP");
+    }
+
+    private void goThread(){
+        Runnable runnable = new GenNumberRun();
+        Thread thread = new Thread(runnable);
+        thread.start();
+    }
+
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        VISIBLE_ON_SCREEN = false;
+        GenNumberRun.FLAG =  false;
+    }
+
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        VISIBLE_ON_SCREEN = true;
+        GenNumberRun.FLAG =  true;
+        goThread();
+    }
+
+
+
+    // при нажатии на кнопку назад будем возвращаться назад
+    @Override
+    public void onBackPressed() {
+        casinoMediaPlayer.stop();
+        GenNumberRun.FLAG =  false;
+        super.onBackPressed();
+    }
+
+}

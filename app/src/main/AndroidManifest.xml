@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.samuilolegovich">
+    <!--    для доступа приложения к интернету надо указать в манифесте-->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+
+    <application
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.XGW">
+
+        <!-- тут мы прописываем - регистрируем страницы которые у нас есть в программ е-->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+<!--        ******************************** NEW PAGE *******************************************-->
+
+        <activity
+            android:name="com.samuilolegovich.view.CheckingNewWallet"
+            android:label="CheckingNewWallet"
+            android:exported="true">
+
+            <!-- вставляем сюда этот модуль-->
+            <intent-filter>
+
+                <!-- меняем на адрес новой страницы-->
+                <action android:name=".CheckingNewWallet" />
+                <!-- меняем на DEFAULT-->
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.samuilolegovich.view.CreateNewWallet"
+            android:label="CreateNewWallet"
+            android:exported="true">
+
+            <!-- вставляем сюда этот модуль-->
+            <intent-filter>
+
+                <!-- меняем на адрес новой страницы-->
+                <action android:name=".CreateNewWallet" />
+                <!-- меняем на DEFAULT-->
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.samuilolegovich.view.EnterApplicationPassword"
+            android:label="EnterApplicationPassword"
+            android:exported="true">
+
+            <!-- вставляем сюда этот модуль-->
+            <intent-filter>
+
+                <!-- меняем на адрес новой страницы-->
+                <action android:name=".EnterApplicationPassword" />
+                <!-- меняем на DEFAULT-->
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.samuilolegovich.view.ReceivePayment"
+            android:label="ReceivePayment"
+            android:exported="true">
+
+            <!-- вставляем сюда этот модуль-->
+            <intent-filter>
+
+                <!-- меняем на адрес новой страницы-->
+                <action android:name=".ReceivePayment" />
+                <!-- меняем на DEFAULT-->
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.samuilolegovich.view.RestoreOrCreateNewWallet"
+            android:label="RestoreOrCreateNewWallet"
+            android:exported="true">
+
+            <!-- вставляем сюда этот модуль-->
+            <intent-filter>
+
+                <!-- меняем на адрес новой страницы-->
+                <action android:name=".RestoreOrCreateNewWallet" />
+                <!-- меняем на DEFAULT-->
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.samuilolegovich.view.RestoreWallet"
+            android:label="RestoreWallet"
+            android:exported="true">
+
+            <!-- вставляем сюда этот модуль-->
+            <intent-filter>
+
+                <!-- меняем на адрес новой страницы-->
+                <action android:name=".RestoreWallet" />
+                <!-- меняем на DEFAULT-->
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.samuilolegovich.view.SendPayment"
+            android:label="SendPayment"
+            android:exported="true">
+
+            <!-- вставляем сюда этот модуль-->
+            <intent-filter>
+
+                <!-- меняем на адрес новой страницы-->
+                <action android:name=".SendPayment" />
+                <!-- меняем на DEFAULT-->
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.samuilolegovich.view.SetAnAppPassword"
+            android:label="SetAnAppPassword"
+            android:exported="true">
+
+            <!-- вставляем сюда этот модуль-->
+            <intent-filter>
+
+                <!-- меняем на адрес новой страницы-->
+                <action android:name=".SetAnAppPassword" />
+                <!-- меняем на DEFAULT-->
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.samuilolegovich.view.Info"
+            android:label="Info"
+            android:exported="true">
+
+            <!-- вставляем сюда этот модуль -->
+            <intent-filter>
+
+                <!-- меняем на адрес новой страницы -->
+                <action android:name=".Info" />
+                <!-- меняем на DEFAULT -->
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.samuilolegovich.view.GuessTheNumberGame"
+            android:label="GuessTheNumberGame"
+            android:exported="true">
+
+            <!-- вставляем сюда этот модуль -->
+            <intent-filter>
+
+                <!-- меняем на адрес новой страницы -->
+                <action android:name=".GuessTheNumberGame" />
+                <!-- меняем на DEFAULT -->
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.samuilolegovich.view.GuessTheColorGame"
+            android:label="GuessTheColorGame"
+            android:exported="true">
+
+            <!-- вставляем сюда этот модуль -->
+            <intent-filter>
+
+                <!-- меняем на адрес новой страницы -->
+                <action android:name=".GuessTheColorGame" />
+                <!-- меняем на DEFAULT -->
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.samuilolegovich.view.SelectGame"
+            android:label="SelectGame"
+            android:exported="true">
+
+            <!-- вставляем сюда этот модуль -->
+            <intent-filter>
+
+                <!-- меняем на адрес новой страницы -->
+                <action android:name=".SelectGame" />
+                <!-- меняем на DEFAULT -->
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.samuilolegovich.view.RulesOfTheGameGuessTheColor"
+            android:label="RulesOfTheGameGuessTheColor"
+            android:exported="true">
+
+            <!-- вставляем сюда этот модуль -->
+            <intent-filter>
+
+                <!-- меняем на адрес новой страницы -->
+                <action android:name=".RulesOfTheGameGuessTheColor" />
+                <!-- меняем на DEFAULT -->
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.samuilolegovich.view.RulesOfTheGameGuessTheNumber"
+            android:label="RulesOfTheGameGuessTheNumber"
+            android:exported="true">
+
+            <!-- вставляем сюда этот модуль -->
+            <intent-filter>
+
+                <!-- меняем на адрес новой страницы -->
+                <action android:name=".RulesOfTheGameGuessTheNumber" />
+                <!-- меняем на DEFAULT -->
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.samuilolegovich.view.RouletteGame"
+            android:label="RouletteGame"
+            android:exported="true">
+
+            <!-- вставляем сюда этот модуль -->
+            <intent-filter>
+
+                <!-- меняем на адрес новой страницы -->
+                <action android:name=".RouletteGame" />
+                <!-- меняем на DEFAULT -->
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.samuilolegovich.view.RulesOfTheGameRoulette"
+            android:label="RulesOfTheGameRoulette"
+            android:exported="true">
+
+            <!-- вставляем сюда этот модуль -->
+            <intent-filter>
+
+                <!-- меняем на адрес новой страницы -->
+                <action android:name=".RulesOfTheGameRoulette" />
+                <!-- меняем на DEFAULT -->
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.samuilolegovich.view.Referral"
+            android:label="Referral"
+            android:exported="true">
+
+            <!-- вставляем сюда этот модуль -->
+            <intent-filter>
+
+                <!-- меняем на адрес новой страницы -->
+                <action android:name=".Referral" />
+                <!-- меняем на DEFAULT -->
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.samuilolegovich.view.BecomeReferral"
+            android:label="BecomeReferral"
+            android:exported="true">
+
+            <!-- вставляем сюда этот модуль -->
+            <intent-filter>
+
+                <!-- меняем на адрес новой страницы -->
+                <action android:name=".BecomeReferral" />
+                <!-- меняем на DEFAULT -->
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.samuilolegovich.view.YourReferral"
+            android:label="YourReferral"
+            android:exported="true">
+
+            <!-- вставляем сюда этот модуль -->
+            <intent-filter>
+
+                <!-- меняем на адрес новой страницы -->
+                <action android:name=".YourReferral" />
+                <!-- меняем на DEFAULT -->
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.samuilolegovich.view.Lost"
+            android:label="Lost"
+            android:exported="true">
+
+            <!-- вставляем сюда этот модуль -->
+            <intent-filter>
+
+                <!-- меняем на адрес новой страницы -->
+                <action android:name=".Lost" />
+                <!-- меняем на DEFAULT -->
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.samuilolegovich.view.Win"
+            android:label="Win"
+            android:exported="true">
+
+            <!-- вставляем сюда этот модуль -->
+            <intent-filter>
+
+                <!-- меняем на адрес новой страницы -->
+                <action android:name=".Win" />
+                <!-- меняем на DEFAULT -->
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.samuilolegovich.view.Flasher"
+            android:label="Flasher"
+            android:exported="true">
+
+            <!-- вставляем сюда этот модуль -->
+            <intent-filter>
+
+                <!-- меняем на адрес новой страницы -->
+                <action android:name=".Flasher" />
+                <!-- меняем на DEFAULT -->
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.samuilolegovich.view.ScanQrCode"
+            android:label="ScanQrCode"
+            android:exported="true">
+
+            <!-- вставляем сюда этот модуль -->
+            <intent-filter>
+
+                <!-- меняем на адрес новой страницы -->
+                <action android:name=".ScanQrCode" />
+                <!-- меняем на DEFAULT -->
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.samuilolegovich.view.TransactionHistory"
+            android:label="TransactionHistory"
+            android:exported="true">
+
+            <!-- вставляем сюда этот модуль -->
+            <intent-filter>
+
+                <!-- меняем на адрес новой страницы -->
+                <action android:name=".TransactionHistory" />
+                <!-- меняем на DEFAULT -->
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+    </application>
+
+</manifest>

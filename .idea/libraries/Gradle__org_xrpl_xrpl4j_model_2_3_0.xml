@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: org.xrpl:xrpl4j-model:2.3.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.xrpl/xrpl4j-model/2.3.0/c2a9d21a0391af2ff9bab5e7a540adb48cd16e87/xrpl4j-model-2.3.0.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.xrpl/xrpl4j-model/2.3.0/80df03b15ec844b045388dafe82d6468cf1f8000/xrpl4j-model-2.3.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.xrpl/xrpl4j-model/2.3.0/711cdf61dd828604666bdbffe26464d183b7019e/xrpl4j-model-2.3.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

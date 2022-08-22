@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="../../../../../layout/custom_preview.xml" value="0.5253623188405797" />
+        <entry key="app/src/main/res/drawable-anydpi/info_button.xml" value="0.223" />
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.334" />
+        <entry key="app/src/main/res/drawable-xxhdpi/fields.xml" value="0.351" />
+        <entry key="app/src/main/res/drawable/button_style.xml" value="0.223" />
+        <entry key="app/src/main/res/drawable/button_style_red.xml" value="0.223" />
+        <entry key="app/src/main/res/drawable/fon_color.xml" value="0.223" />
+        <entry key="app/src/main/res/drawable/ic_baseline_arrow_back_24.xml" value="0.334" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.334" />
+        <entry key="app/src/main/res/drawable/info_button_background.xml" value="0.223" />
+        <entry key="app/src/main/res/drawable/info_credit_list.xml" value="0.223" />
+        <entry key="app/src/main/res/drawable/info_list.xml" value="0.223" />
+        <entry key="app/src/main/res/drawable/tab_list.xml" value="0.223" />
+        <entry key="app/src/main/res/font/montserrat.xml" value="0.351171875" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/become_referral.xml" value="0.20633104500381388" />
+        <entry key="app/src/main/res/layout/checking_new_wallet.xml" value="0.20671243325705568" />
+        <entry key="app/src/main/res/layout/create_new_wallet.xml" value="0.2921875" />
+        <entry key="app/src/main/res/layout/double_your_bet_game.xml" value="0.4234375" />
+        <entry key="app/src/main/res/layout/enter_application_password.xml" value="0.20671243325705568" />
+        <entry key="app/src/main/res/layout/flasher.xml" value="0.26434426229508196" />
+        <entry key="app/src/main/res/layout/guess_the_color_game.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/guess_the_number_game.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/hhh.xml" value="0.39617486338797814" />
+        <entry key="app/src/main/res/layout/info_credit_page.xml" value="0.4234375" />
+        <entry key="app/src/main/res/layout/info_page_game.xml" value="0.4234375" />
+        <entry key="app/src/main/res/layout/lost.xml" value="0.20633104500381388" />
+        <entry key="app/src/main/res/layout/main_info.xml" value="0.29815573770491804" />
+        <entry key="app/src/main/res/layout/receive_payment.xml" value="0.2921875" />
+        <entry key="app/src/main/res/layout/referral.xml" value="0.20671243325705568" />
+        <entry key="app/src/main/res/layout/restore_or_create_new_wallet.xml" value="0.20671243325705568" />
+        <entry key="app/src/main/res/layout/restore_wallet.xml" value="0.20671243325705568" />
+        <entry key="app/src/main/res/layout/roulette_game.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/rules_of_the_game_double_your_bet.xml" value="0.2305327868852459" />
+        <entry key="app/src/main/res/layout/rules_of_the_game_guess_the_color.xml" value="0.2687841530054645" />
+        <entry key="app/src/main/res/layout/rules_of_the_game_guess_the_number.xml" value="0.3271857923497268" />
+        <entry key="app/src/main/res/layout/rules_of_the_game_roulette.xml" value="0.2687841530054645" />
+        <entry key="app/src/main/res/layout/scan_code.xml" value="0.40095628415300544" />
+        <entry key="app/src/main/res/layout/select_game.xml" value="0.2305327868852459" />
+        <entry key="app/src/main/res/layout/send_payment.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/set_password_for_app.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/table.xml" value="0.26434426229508196" />
+        <entry key="app/src/main/res/layout/transaction_history.xml" value="0.39617486338797814" />
+        <entry key="app/src/main/res/layout/wallet.xml" value="0.2921875" />
+        <entry key="app/src/main/res/layout/web_page.xml" value="0.20671243325705568" />
+        <entry key="app/src/main/res/layout/win.xml" value="0.20633104500381388" />
+        <entry key="app/src/main/res/layout/your_referral.xml" value="0.3271857923497268" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_channel.xml" value="0.2915" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2915" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="12" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
