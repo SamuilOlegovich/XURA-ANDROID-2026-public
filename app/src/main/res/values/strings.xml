@@ -19,7 +19,7 @@
     <string name="scan_qr_code"><u>SCAN QR CODE</u></string>
     <string name="request"><u>REQUEST</u></string>
     <string name="transaction_history"><u>TRANSACTION HISTORY</u></string>
-    <string name="settings"><u>SETTINGS</u></string>
+    <string name="settings_main"><u>SETTINGS</u></string>
     <string name="copy"><u>COPY</u></string>
     <string name="rules_of_the_game"><u>RULES OF THE GAME</u></string>
     <string name="become_a_referral"><u>BECOME A REFERRAL</u></string>
@@ -42,6 +42,7 @@
     <string name="want_to_win"><u>WANT TO WIN 386301 XRP - PRESS AND START PLAYING!</u></string>
 
 
+    <string name="info_main">INFORMATION</string>
     <string name="it_s_important_to_know">IT S IMPORTANT TO KNOW</string>
     <string name="about_benefits_1"> • We are not an extra XRP wallet.</string>
     <string name="about_benefits_2"> • We do not store or send your keys anywhere.</string>
@@ -83,5 +84,11 @@
     <string name="our_goal">OUR GOAL</string>
     <string name="our_goal_1"> • Our main goal is to make games available to everyone and anywhere in the world at any time you wish. And also so that everyone has the same and fair conditions both in the game and in the opportunity to earn in our system..</string>
     <string name="our_goal_2"> • Good luck and thank you for your trust in choosing our application.</string>
+
+
+    <string name="info_referral">INFORMATION</string>
+
+    <string name="settings_settings">SETTINGS</string>
+
 
 </resources>

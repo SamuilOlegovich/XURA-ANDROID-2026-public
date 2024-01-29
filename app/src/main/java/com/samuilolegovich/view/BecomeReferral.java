@@ -1,5 +1,6 @@
 package com.samuilolegovich.view;
 
+import static com.samuilolegovich.view.InfoReferral.INFO_REFERRAL_CLASS;
 import static com.samuilolegovich.view.Referral.REFERRAL_CLASS;
 
 import android.annotation.SuppressLint;
@@ -24,6 +25,8 @@ import com.samuilolegovich.enums.StringEnum;
 import java.math.BigDecimal;
 import java.util.concurrent.ExecutionException;
 
+
+
 public class BecomeReferral  extends AppCompatActivity {
     public static final String BECOME_REFERRAL_CLASS = ".BecomeReferral";
     private BecomeReferral BECOME_REFERRAL;
@@ -31,8 +34,9 @@ public class BecomeReferral  extends AppCompatActivity {
     private Animation animTranslate;
     private BigDecimal yourBalance;
 
-    private TextView becomeReferral;
     private TextView restoreReferral;
+    private TextView becomeReferral;
+    private TextView infoReferral;
     private TextView setReferral;
 
 
@@ -48,8 +52,9 @@ public class BecomeReferral  extends AppCompatActivity {
     }
 
     private void setButtons() {
-        becomeReferral = (TextView) findViewById(R.id.become_referral);
         restoreReferral = (TextView) findViewById(R.id.restore_referral);
+        becomeReferral = (TextView) findViewById(R.id.become_referral);
+        infoReferral = (TextView) findViewById(R.id.info_referral);
         setReferral = (TextView) findViewById(R.id.set_referral);
     }
 
@@ -66,6 +71,17 @@ public class BecomeReferral  extends AppCompatActivity {
 
     private void listeners() {
         animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
+
+        infoReferral.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Referral.FLAG = false;
+                        goToAnotherPage(INFO_REFERRAL_CLASS);
+                    }
+                }
+        );
+
         setReferral.setOnClickListener(
                 new View.OnClickListener() {
                     @Override

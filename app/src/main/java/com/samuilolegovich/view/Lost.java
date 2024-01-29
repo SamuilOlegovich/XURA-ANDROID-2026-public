@@ -34,7 +34,7 @@ public class Lost extends AppCompatActivity {
         lostMediaPlayer = MediaPlayer.create(this, R.raw.lost);
         textInfo = (TextView) findViewById(R.id.info2);
         text = (TextView) findViewById(R.id.info3);
-        info = (TextView) findViewById(R.id.info);
+        info = (TextView) findViewById(R.id.info_link);
 
         lostMediaPlayer.start();
     }

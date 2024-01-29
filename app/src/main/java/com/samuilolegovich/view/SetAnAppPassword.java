@@ -25,6 +25,7 @@ import java.util.UUID;
 import static com.samuilolegovich.view.RestoreOrCreateNewWallet.RESTORE_OR_NEW_WALLET_CLASS;
 
 
+
 // тут устанавливаем пароль на приложение
 public class SetAnAppPassword extends AppCompatActivity {
     public static final String SET_AN_APP_PASSWORD_CLASS = ".SetAnAppPassword";
@@ -51,7 +52,7 @@ public class SetAnAppPassword extends AppCompatActivity {
     private void setButtons() {
         passwordTwo = (EditText) findViewById(R.id.editTextNumberPassword3);
         passwordOne = (EditText) findViewById(R.id.editTextSeed);
-        confirm = (TextView) findViewById(R.id.linkConfirmNext);
+        confirm = (TextView) findViewById(R.id.send_link);
         skip = (TextView) findViewById(R.id.link_footer_info);
     }
 
@@ -126,6 +127,5 @@ public class SetAnAppPassword extends AppCompatActivity {
     public void onBackPressed() {
         // оставляем пустым чтобы не работал возврат обратно
         // и не попадали на главную страницу кошелька
-//        super.onBackPressed();
     }
 }

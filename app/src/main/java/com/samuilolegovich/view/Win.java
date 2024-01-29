@@ -34,7 +34,7 @@ public class Win extends AppCompatActivity {
         winMediaPlayer = MediaPlayer.create(this, R.raw.win);
         info3 = (TextView) findViewById(R.id.info3);
         info2 = (TextView) findViewById(R.id.info2);
-        info = (TextView) findViewById(R.id.info);
+        info = (TextView) findViewById(R.id.info_link);
 
         winMediaPlayer.start();
     }

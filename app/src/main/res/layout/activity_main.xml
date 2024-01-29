@@ -14,8 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#FFD300"
-        app:layout_constraintBottom_toTopOf="@+id/textViewSeed3"
-        app:layout_constraintTop_toTopOf="@+id/textViewSeed3">
+        app:layout_constraintBottom_toTopOf="@+id/balance_linc"
+        app:layout_constraintTop_toTopOf="@+id/balance_linc">
 
         <!--        <ImageView-->
         <!--            android:id="@+id/imageViewLogo"-->
@@ -31,7 +31,7 @@
 
 
         <TextView
-            android:id="@+id/textViewLottoGo"
+            android:id="@+id/lotto_text_go_link"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginStart="15dp"
@@ -51,7 +51,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/logo_button" />
+            app:layout_constraintTop_toBottomOf="@+id/logo_button_link" />
 
         <TextView
             android:id="@+id/textViewSeed"
@@ -68,10 +68,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewLottoGo" />
+            app:layout_constraintTop_toBottomOf="@+id/lotto_text_go_link" />
 
         <TextView
-            android:id="@+id/textViewSeed3"
+            android:id="@+id/balance_linc"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
@@ -88,7 +88,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textViewSeed" />
 
         <TextView
-            android:id="@+id/linkConfirmNext"
+            android:id="@+id/send_link"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_marginStart="70dp"
@@ -102,14 +102,14 @@
             android:textSize="25sp"
             android:textStyle="bold"
             android:typeface="normal"
-            app:layout_constraintBottom_toTopOf="@+id/linkConfirmBack"
+            app:layout_constraintBottom_toTopOf="@+id/request_link"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent" />
 
 
         <TextView
-            android:id="@+id/linkConfirmBack"
+            android:id="@+id/request_link"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_marginStart="70dp"
@@ -123,13 +123,13 @@
             android:textSize="22sp"
             android:textStyle="bold"
             android:typeface="normal"
-            app:layout_constraintBottom_toTopOf="@+id/transaction_history"
+            app:layout_constraintBottom_toTopOf="@+id/transaction_history_link"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/transaction_history"
+            android:id="@+id/transaction_history_link"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_marginStart="15dp"
@@ -158,7 +158,7 @@
             android:layout_marginEnd="100dp"
             android:autoLink="all"
             android:fontFamily="@font/montserrat"
-            android:text="@string/settings"
+            android:text="@string/settings_main"
             android:textAlignment="center"
             android:textColor="@color/black_light"
             android:textSize="12sp"
@@ -170,7 +170,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/info"
+            android:id="@+id/info_link"
             android:layout_width="0dp"
             android:layout_height="30dp"
             android:layout_marginStart="70dp"
@@ -184,13 +184,13 @@
             android:textSize="14sp"
             android:textStyle="bold"
             android:typeface="normal"
-            app:layout_constraintBottom_toTopOf="@+id/linkConfirmNext"
+            app:layout_constraintBottom_toTopOf="@+id/send_link"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent" />
 
         <ImageButton
-            android:id="@+id/logo_button"
+            android:id="@+id/logo_button_link"
             android:layout_width="0dp"
             android:layout_height="172dp"
             android:layout_marginStart="70dp"

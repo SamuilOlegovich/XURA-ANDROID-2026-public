@@ -153,15 +153,42 @@
         </activity>
 
         <activity
-            android:name="com.samuilolegovich.view.Info"
-            android:label="Info"
+            android:name="com.samuilolegovich.view.Settings"
+            android:label="Settings"
             android:exported="true">
 
             <!-- вставляем сюда этот модуль -->
             <intent-filter>
-
                 <!-- меняем на адрес новой страницы -->
-                <action android:name=".Info" />
+                <action android:name=".Settings" />
+                <!-- меняем на DEFAULT -->
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.samuilolegovich.view.InfoMain"
+            android:label="InfoMain"
+            android:exported="true">
+
+            <!-- вставляем сюда этот модуль -->
+            <intent-filter>
+                <!-- меняем на адрес новой страницы -->
+                <action android:name=".InfoMain" />
+                <!-- меняем на DEFAULT -->
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.samuilolegovich.view.InfoReferral"
+            android:label="InfoReferral"
+            android:exported="true">
+
+            <!-- вставляем сюда этот модуль -->
+            <intent-filter>
+                <!-- меняем на адрес новой страницы -->
+                <action android:name=".InfoReferral" />
                 <!-- меняем на DEFAULT -->
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

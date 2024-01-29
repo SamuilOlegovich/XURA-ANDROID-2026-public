@@ -21,7 +21,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 import com.samuilolegovich.asyncAndRun.asyncTask.CreateNewWalletAsync;
-import com.samuilolegovich.asyncAndRun.runnable.FlasherRun;
 import com.samuilolegovich.enums.StringEnum;
 import com.samuilolegovich.utils.Cipher;
 
@@ -60,7 +59,7 @@ public class CreateNewWallet extends AppCompatActivity {
     }
 
     private void setButtons() {
-        next = (TextView) findViewById(R.id.linkConfirmNext);
+        next = (TextView) findViewById(R.id.send_link);
         seed = (TextView) findViewById(R.id.textView3);
         copy = (TextView) findViewById(R.id.copy);
     }

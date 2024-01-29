@@ -73,7 +73,7 @@ public class Flasher extends AppCompatActivity {
         numberInfo = (TextView) findViewById(R.id.number_info);
         infoThree = (TextView) findViewById(R.id.info3);
         infoTwo = (TextView) findViewById(R.id.info2);
-        winInfo = (TextView) findViewById(R.id.info);
+        winInfo = (TextView) findViewById(R.id.info_link);
     }
 
 

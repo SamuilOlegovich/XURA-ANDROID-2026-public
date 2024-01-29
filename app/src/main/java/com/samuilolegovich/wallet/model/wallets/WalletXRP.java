@@ -197,6 +197,7 @@ public class WalletXRP implements Wallet, MyWallets {
                     .lastLedgerSequence(lastLedgerSequence)
                     .build();
             System.out.println("Constructed Payment:  -- >  " + payment);
+            System.out.println("Constructed Payment:  -- ------------------------------->  " + numberOfXRP);
 
 
             // Sign transaction -----------------------------------------------------------

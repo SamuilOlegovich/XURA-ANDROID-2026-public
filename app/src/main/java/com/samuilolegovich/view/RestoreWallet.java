@@ -54,7 +54,7 @@ public class RestoreWallet extends AppCompatActivity {
     }
 
     private void setButtons() {
-        next = (TextView) findViewById(R.id.linkConfirmNext);
+        next = (TextView) findViewById(R.id.send_link);
         seed = (EditText) findViewById(R.id.editTextSeed);
         textInfo = (TextView) findViewById(R.id.textInfo);
     }

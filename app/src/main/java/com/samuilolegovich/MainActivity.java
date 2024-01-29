@@ -1,7 +1,6 @@
 package com.samuilolegovich;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
@@ -25,7 +24,6 @@ import com.samuilolegovich.utils.Cipher;
 import com.samuilolegovich.view.Lost;
 import com.samuilolegovich.view.Win;
 import com.samuilolegovich.view.YourReferral;
-import com.samuilolegovich.wallet.model.PaymentManager.PaymentAndSocketManagerXRPL;
 
 import java.math.BigDecimal;
 import java.util.Locale;
@@ -39,10 +37,13 @@ import static com.samuilolegovich.view.SetAnAppPassword.SET_AN_APP_PASSWORD_CLAS
 import static com.samuilolegovich.view.ReceivePayment.RECEIVE_PAYMENT_CLASS;
 import static com.samuilolegovich.view.SendPayment.SEND_PAYMENT_CLASS;
 import static com.samuilolegovich.view.SelectGame.SELECT_GAME_CLASS;
-import static com.samuilolegovich.view.Info.INFO_CLASS;
+import static com.samuilolegovich.view.InfoMain.INFO_MAIN_CLASS;
+import static com.samuilolegovich.view.Settings.SETTINGS_CLASS;
 import static com.samuilolegovich.view.TransactionHistory.TRANSACTION_HISTORY_CLASS;
 import static com.samuilolegovich.view.Win.WIN_CLASS;
 import static com.samuilolegovich.view.YourReferral.YOUR_REFERRAL_CLASS;
+
+
 
 // тут мы запросим придумать пароль к приложению либо оставим без пароля
 public class MainActivity extends AppCompatActivity {
@@ -62,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView transactionHistory;
     private TextView lottoTextGo;
+    private TextView settings;
     private TextView balance;
     private TextView request;
     private TextView send;
@@ -144,13 +146,14 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void setButtons() {
-        transactionHistory = (TextView) findViewById(R.id.transaction_history);
-        lottoTextGo = (TextView) findViewById(R.id.textViewLottoGo);
-        logoButton = (ImageButton) findViewById(R.id.logo_button);
-        request = (TextView) findViewById(R.id.linkConfirmBack);
-        balance = (TextView) findViewById(R.id.textViewSeed3);
-        send = (TextView) findViewById(R.id.linkConfirmNext);
-        info = (TextView) findViewById(R.id.info);
+        transactionHistory = (TextView) findViewById(R.id.transaction_history_link);
+        lottoTextGo = (TextView) findViewById(R.id.lotto_text_go_link);
+        logoButton = (ImageButton) findViewById(R.id.logo_button_link);
+        settings = (TextView) findViewById(R.id.settings_linc);
+        request = (TextView) findViewById(R.id.request_link);
+        balance = (TextView) findViewById(R.id.balance_linc);
+        send = (TextView) findViewById(R.id.send_link);
+        info = (TextView) findViewById(R.id.info_link);
 
     }
 
@@ -169,6 +172,16 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         v.startAnimation(animTranslate);
                         goToAnotherPage(SELECT_GAME_CLASS);
+                    }
+                }
+        );
+
+        settings.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        v.startAnimation(animTranslate);
+                        goToAnotherPage(SETTINGS_CLASS);
                     }
                 }
         );
@@ -198,7 +211,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         v.startAnimation(animTranslate);
-                        goToAnotherPage(INFO_CLASS);
+                        goToAnotherPage(INFO_MAIN_CLASS);
                     }
                 }
         );

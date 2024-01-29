@@ -54,7 +54,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/info"
+        android:id="@+id/info_link"
         android:layout_width="0dp"
         android:layout_height="87dp"
         android:layout_marginStart="30dp"
@@ -95,7 +95,7 @@
         android:typeface="normal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/info" />
+        app:layout_constraintTop_toBottomOf="@+id/info_link" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

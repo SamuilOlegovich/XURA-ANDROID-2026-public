@@ -47,7 +47,7 @@ public class EnterApplicationPassword extends AppCompatActivity {
 
     private void setButtons() {
         password = (EditText) findViewById(R.id.editTextSeed);
-        confirm = (TextView) findViewById(R.id.linkConfirmNext);
+        confirm = (TextView) findViewById(R.id.send_link);
     }
 
     private void listeners() {

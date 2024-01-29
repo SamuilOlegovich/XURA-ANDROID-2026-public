@@ -18,6 +18,8 @@ import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 import com.samuilolegovich.enums.StringEnum;
 
+
+
 public class Referral extends AppCompatActivity {
     public static final String REFERRAL_CLASS = ".Referral";
     public static Boolean FLAG = true;
