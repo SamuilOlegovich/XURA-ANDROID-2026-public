@@ -1,7 +1,7 @@
 <resources>
     <string name="want_to_win"><u>WANT TO WIN 386301 XRP - PRESS AND START PLAYING!</u></string>
     <string name="collect_and_renew_bet"><u>COLLECT AND RENEW BET</u></string>
-    <string name="transaction_history"><u>TRANSACTION HISTORY</u></string>
+    <string name="transaction_history"><u>ИСТОРИЯ ТРАНЗАКЦИЙ</u></string>
     <string name="name_guess_the_number"><u>GUESS THE NUMBER</u></string>
     <string name="name_guess_the_color"><u>GUESS THE COLOR</u></string>
     <string name="create_new_wallet"><u>CREATE NEW WALLET</u></string>
@@ -12,16 +12,15 @@
     <string name="restore_wallet"><u>RESTORE WALLET</u></string>
     <string name="set_referral"><u>SET REFERRAL</u></string>
     <string name="scan_qr_code"><u>SCAN QR CODE</u></string>
-    <string name="name_roulette"><u>ROULETTE</u></string>
-    <string name="settings_main"><u>SETTINGS</u></string>
+    <string name="settings_main"><u>НАСТРОЙКИ</u></string>
+    <string name="request"><u>ПРИНЯТЬ ПЛАТЕЖ</u></string>
+    <string name="name_roulette"><u>РУЛЕТКА</u></string>
     <string name="place_a_bet"><u>PLACE BET</u></string>
     <string name="set_password"><u>CONFIRM</u></string>
-    <string name="info_referral">INFORMATION</string>
     <string name="next_one"><u>NEXT >></u></string>
-    <string name="request"><u>REQUEST</u></string>
+    <string name="send"><u>ОТПРАВИТЬ</u></string>
     <string name="black"><u>BLACK</u></string>
     <string name="info"><u>INFO</u></string>
-    <string name="send"><u>SEND</u></string>
     <string name="copy"><u>COPY</u></string>
     <string name="skip"><u>SKIP</u></string>
     <string name="next"><u>NEXT</u></string>
@@ -56,6 +55,7 @@
     <string name="lead_the_seed">LEAD THE SEED</string>
     <string name="your_address">YOUR ADDRESS:</string>
     <string name="settings_settings">SETTINGS</string>
+    <string name="info_referral">INFORMATION</string>
     <string name="your_balance">YOUR BALANCE</string>
     <string name="send_payment">SEND PAYMENT</string>
     <string name="repeat_enter">Repeat enter</string>
@@ -70,6 +70,7 @@
     <string name="amount">Amount</string>
     <string name="app_name">XURA</string>
     <string name="to">To</string>
+
 
 
     <string name="info_main">INFORMATION</string>

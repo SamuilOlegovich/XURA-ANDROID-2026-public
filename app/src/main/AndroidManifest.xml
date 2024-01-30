@@ -22,6 +22,7 @@
         <!-- тут мы прописываем - регистрируем страницы которые у нас есть в программ е-->
         <activity
             android:name=".MainActivity"
+            android:configChanges="locale"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

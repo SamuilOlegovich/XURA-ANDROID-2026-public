@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.provider.Settings;
 import android.content.Context;
@@ -59,9 +61,11 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences preferences;
     private Animation animTranslate;
     private BigDecimal balanceXRP;
+    private Locale newLocale;
     private String lottoNow;
 
     private TextView transactionHistory;
+    private TextView yourBalanceText;
     private TextView lottoTextGo;
     private TextView settings;
     private TextView balance;
@@ -75,13 +79,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Locale.setDefault(Locale.ENGLISH);
         start();
-
+        setLocale();
         setContentView(R.layout.activity_main);
         lottoNow = Lotto.genLotto() + "";
         MAIN_ACTIVITY = this;
         setButtons();
+        setLanguage();
         setBalance();
         listeners();
         goText();
@@ -89,13 +93,14 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
     private void start() {
         preferences = getSharedPreferences(StringEnum.APP_PREFERENCES.getValue(), Context.MODE_PRIVATE);
+        newLocale = new Locale(preferences.getString(StringEnum.APP_PREFERENCES_LOCALE.getValue(), "en"));
         boolean isSetPassword = preferences.getString(StringEnum.APP_PREFERENCES_PASSWORD.getValue(), "")
                 .equalsIgnoreCase(StringEnum.APP_PREFERENCES_PASSWORD_NOT_INSTALLED.getValue());
         boolean isPassword = preferences.contains(StringEnum.APP_PREFERENCES_PASSWORD.getValue());
         boolean isSeed = preferences.contains(StringEnum.APP_PREFERENCES_SEED.getValue());
+
         restoreWallet(isSeed);
 
         // если пароль вообще ни разу не устанавливался
@@ -136,6 +141,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    private void setLocale() {
+        if (newLocale != null) {
+            Resources resources = getResources();
+            Configuration configuration = resources.getConfiguration();
+            configuration.setLocale(newLocale);
+            resources.updateConfiguration(configuration, resources.getDisplayMetrics());
+        } else {
+            Locale.setDefault(Locale.ENGLISH);
+        }
+    }
+
 
     private void startSocket() {
         Runnable runnable = new SubscriberRun();
@@ -144,9 +160,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     private void setButtons() {
         transactionHistory = (TextView) findViewById(R.id.transaction_history_link);
+        yourBalanceText = (TextView) findViewById(R.id.your_balance_text);
         lottoTextGo = (TextView) findViewById(R.id.lotto_text_go_link);
         logoButton = (ImageButton) findViewById(R.id.logo_button_link);
         settings = (TextView) findViewById(R.id.settings_linc);
@@ -154,7 +170,19 @@ public class MainActivity extends AppCompatActivity {
         balance = (TextView) findViewById(R.id.balance_linc);
         send = (TextView) findViewById(R.id.send_link);
         info = (TextView) findViewById(R.id.info_link);
+    }
 
+
+    @SuppressLint("SetTextI18n")
+    private void setLanguage() {
+
+        transactionHistory.setText(R.string.transaction_history);
+        yourBalanceText.setText(R.string.your_balance);
+        lottoTextGo.setText(R.string.want_to_win);
+        settings.setText(R.string.settings_main);
+        request.setText(R.string.request);
+        send.setText(R.string.send);
+        info.setText(R.string.info);
     }
 
 

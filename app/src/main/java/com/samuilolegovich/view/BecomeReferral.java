@@ -37,6 +37,7 @@ public class BecomeReferral  extends AppCompatActivity {
     private TextView restoreReferral;
     private TextView becomeReferral;
     private TextView infoReferral;
+    private TextView textReferral;
     private TextView setReferral;
 
 
@@ -46,16 +47,26 @@ public class BecomeReferral  extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.become_referral);
         setButtons();
+        setLanguage();
         listeners();
         setBalance();
         BECOME_REFERRAL = this;
     }
 
     private void setButtons() {
+        infoReferral = (TextView) findViewById(R.id.info_referral_layout);
         restoreReferral = (TextView) findViewById(R.id.restore_referral);
         becomeReferral = (TextView) findViewById(R.id.become_referral);
-        infoReferral = (TextView) findViewById(R.id.info_referral);
+        textReferral = (TextView) findViewById(R.id.text_referral);
         setReferral = (TextView) findViewById(R.id.set_referral);
+    }
+
+    private void setLanguage() {
+        textReferral.setText(R.string.become_referral_and_start_earning);
+        restoreReferral.setText(R.string.restore_referral);
+        becomeReferral.setText(R.string.become_referral);
+        setReferral.setText(R.string.set_referral);
+        infoReferral.setText(R.string.info);
     }
 
     @SuppressLint("SetTextI18n")

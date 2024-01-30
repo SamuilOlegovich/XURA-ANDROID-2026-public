@@ -28,6 +28,7 @@
         <entry key="app/src/main/res/layout/guess_the_number_game.xml" value="0.335" />
         <entry key="app/src/main/res/layout/hhh.xml" value="0.39617486338797814" />
         <entry key="app/src/main/res/layout/info_credit_page.xml" value="0.4234375" />
+        <entry key="app/src/main/res/layout/info_main.xml" value="0.397265625" />
         <entry key="app/src/main/res/layout/info_page_game.xml" value="0.4234375" />
         <entry key="app/src/main/res/layout/info_referral.xml" value="0.27424863387978143" />
         <entry key="app/src/main/res/layout/lost.xml" value="0.20633104500381388" />
@@ -47,11 +48,12 @@
         <entry key="app/src/main/res/layout/send_payment.xml" value="0.335" />
         <entry key="app/src/main/res/layout/set_password_for_app.xml" value="0.25" />
         <entry key="app/src/main/res/layout/setting.xml" value="0.397265625" />
+        <entry key="app/src/main/res/layout/settings.xml" value="0.30293715846994534" />
         <entry key="app/src/main/res/layout/table.xml" value="0.26434426229508196" />
         <entry key="app/src/main/res/layout/transaction_history.xml" value="0.39617486338797814" />
         <entry key="app/src/main/res/layout/wallet.xml" value="0.2921875" />
         <entry key="app/src/main/res/layout/web_page.xml" value="0.20671243325705568" />
-        <entry key="app/src/main/res/layout/win.xml" value="0.20633104500381388" />
+        <entry key="app/src/main/res/layout/win.xml" value="0.25" />
         <entry key="app/src/main/res/layout/your_referral.xml" value="0.3271857923497268" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_channel.xml" value="0.2915" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2915" />

@@ -39,7 +39,7 @@
             android:layout_marginStart="15dp"
             android:layout_marginTop="40dp"
             android:layout_marginEnd="15dp"
-            android:text="TRANSACTION HISTORY"
+            android:text="@string/transaction_history_text"
             android:textAlignment="center"
             android:textColor="#614F02"
             android:textSize="24sp"

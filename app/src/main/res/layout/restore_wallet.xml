@@ -31,7 +31,7 @@
         android:layout_marginStart="15dp"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="15dp"
-        android:text="RESTORE FROM BACKUP SEED"
+        android:text="@string/restore_from_backup_seed"
         android:textAlignment="center"
         android:textColor="#614F02"
         android:textSize="24sp"

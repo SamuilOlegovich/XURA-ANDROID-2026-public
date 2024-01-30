@@ -54,13 +54,13 @@
             app:layout_constraintTop_toBottomOf="@+id/logo_button_link" />
 
         <TextView
-            android:id="@+id/textViewSeed"
+            android:id="@+id/your_balance_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="70dp"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="70dp"
-            android:text="YOUR BALANCE"
+            android:text="@string/your_balance"
             android:textAlignment="center"
             android:textColor="@color/black_light"
             android:textSize="14sp"
@@ -85,7 +85,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewSeed" />
+            app:layout_constraintTop_toBottomOf="@+id/your_balance_text" />
 
         <TextView
             android:id="@+id/send_link"
@@ -150,7 +150,7 @@
 
 
         <TextView
-            android:id="@+id/linkConfirmBack2"
+            android:id="@+id/settings_linc"
             android:layout_width="0dp"
             android:layout_height="25dp"
             android:layout_marginStart="100dp"
