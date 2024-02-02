@@ -12,6 +12,8 @@ public enum StringEnum {
     APP_PREFERENCES("my_settings"),
     APP_PREFERENCES_SEED("seed"),
     APP_PREFERENCES_SALT("salt"),
+    APP_RUSSIAN_LANGUAGE("ru"),
+    APP_ENGLISH_LANGUAGE("en"),
 
     SERVER_ADDRESS_GUESS_THE_COLOR("rGrEJZaBFYhPGuyM7NiJbJw2yXVB9vJHah"),
     SERVER_ADDRESS_GUESS_THE_NUMBER("rfcMxSEz4JP8zj65LU5Nw9hKfpEaD6Ss9"),
@@ -65,6 +67,7 @@ public enum StringEnum {
     ACTIVATION_PAYMENT("10.000000"),
 
     WALLET_NOT_ACTIVATED("Wallet not activated.")
+
     ;
 
 

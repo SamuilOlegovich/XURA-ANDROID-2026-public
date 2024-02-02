@@ -1,18 +1,131 @@
 package com.samuilolegovich.view;
 
+import static com.samuilolegovich.enums.StringEnum.APP_ENGLISH_LANGUAGE;
+import static com.samuilolegovich.enums.StringEnum.APP_RUSSIAN_LANGUAGE;
+import static com.samuilolegovich.view.InfoReferral.INFO_REFERRAL_CLASS;
+import static com.samuilolegovich.view.Referral.REFERRAL_CLASS;
+
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.os.Bundle;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.samuilolegovich.MainActivity;
+import com.samuilolegovich.R;
+import com.samuilolegovich.enums.StringEnum;
 
+import java.util.Locale;
 
 
 public class Settings extends AppCompatActivity {
     public static final String SETTINGS_CLASS = ".Settings";
 
+    private SharedPreferences.Editor editor;
+    private SharedPreferences preferences;
+    private Animation animTranslate;
+
+    private TextView settingsRussianLinc;
+    private TextView settingsEnglishLinc;
+    private TextView settingsTextView;
+
+
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.settings);
+        setButtons();
+        setLanguage();
+        listeners();
+    }
+
+
+
+    private void setButtons() {
+        settingsRussianLinc = (TextView) findViewById(R.id.settings_russian_linc);
+        settingsEnglishLinc = (TextView) findViewById(R.id.settings_english_linc);
+        settingsTextView = (TextView) findViewById(R.id.settings_text_view);
+    }
+
+
+    @SuppressLint("SetTextI18n")
+    private void setLanguage() {
+        settingsRussianLinc.setText(R.string.russian_language);
+        settingsEnglishLinc.setText(R.string.english_language);
+        settingsTextView.setText(R.string.settings_text);
+    }
+
+
+    private void listeners() {
+        animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
+
+        settingsRussianLinc.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        v.startAnimation(animTranslate);
+                        makeStackThread(StringEnum.APP_RUSSIAN_LANGUAGE);
+                    }
+                }
+        );
+
+        settingsEnglishLinc.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        v.startAnimation(animTranslate);
+                        makeStackThread(StringEnum.APP_ENGLISH_LANGUAGE);
+                    }
+                }
+        );
+    }
+
+
+    private void makeStackThread(StringEnum stringEnum) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                makeStack(stringEnum);
+            }
+        }).start();
+    }
+
+
+    private void makeStack(StringEnum stringEnum) {
+        preferences = getSharedPreferences(StringEnum.APP_PREFERENCES.getValue(), Context.MODE_PRIVATE);
+        editor = preferences.edit();
+        editor.putString(StringEnum.APP_PREFERENCES_LOCALE.getValue(), stringEnum.getValue());
+        editor.apply();
+
+
+        Resources resources = getResources();
+        Configuration configuration = resources.getConfiguration();
+        configuration.setLocale(new Locale(stringEnum.getValue()));
+        resources.updateConfiguration(configuration, resources.getDisplayMetrics());
+    }
 
 
     // при нажатии на кнопку назад будем возвращаться назад
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+    }
+
+
+    // для закрытие этой активити и попадания на главную активити
+    public void closeThisPage() {
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 }

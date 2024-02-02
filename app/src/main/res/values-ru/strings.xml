@@ -10,8 +10,11 @@
     <string name="become_referral"><u>BECOME A REFERRAL</u></string>
     <string name="restore_referral"><u>RESTORE REFERRAL</u></string>
     <string name="restore_wallet"><u>RESTORE WALLET</u></string>
+    <string name="settings_language"><u>АНГЛИЙСКИЙ</u></string>
+    <string name="english_language"><u>АНГЛИЙСКИЙ</u></string>
     <string name="set_referral"><u>SET REFERRAL</u></string>
     <string name="scan_qr_code"><u>SCAN QR CODE</u></string>
+    <string name="russian_language"><u>РУССКИЙ</u></string>
     <string name="settings_main"><u>НАСТРОЙКИ</u></string>
     <string name="request"><u>ПРИНЯТЬ ПЛАТЕЖ</u></string>
     <string name="name_roulette"><u>РУЛЕТКА</u></string>
@@ -55,6 +58,7 @@
     <string name="lead_the_seed">LEAD THE SEED</string>
     <string name="your_address">YOUR ADDRESS:</string>
     <string name="settings_settings">SETTINGS</string>
+    <string name="settings_text">ВЫБРАТЬ ЯЗЫК</string>
     <string name="info_referral">INFORMATION</string>
     <string name="your_balance">YOUR BALANCE</string>
     <string name="send_payment">SEND PAYMENT</string>

@@ -79,11 +79,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         start();
         setLocale();
         setContentView(R.layout.activity_main);
+
         lottoNow = Lotto.genLotto() + "";
         MAIN_ACTIVITY = this;
+
         setButtons();
         setLanguage();
         setBalance();
@@ -96,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
     private void start() {
         preferences = getSharedPreferences(StringEnum.APP_PREFERENCES.getValue(), Context.MODE_PRIVATE);
         newLocale = new Locale(preferences.getString(StringEnum.APP_PREFERENCES_LOCALE.getValue(), "en"));
+
         boolean isSetPassword = preferences.getString(StringEnum.APP_PREFERENCES_PASSWORD.getValue(), "")
                 .equalsIgnoreCase(StringEnum.APP_PREFERENCES_PASSWORD_NOT_INSTALLED.getValue());
         boolean isPassword = preferences.contains(StringEnum.APP_PREFERENCES_PASSWORD.getValue());
@@ -175,7 +179,6 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     private void setLanguage() {
-
         transactionHistory.setText(R.string.transaction_history);
         yourBalanceText.setText(R.string.your_balance);
         lottoTextGo.setText(R.string.want_to_win);

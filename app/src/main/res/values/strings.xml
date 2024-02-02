@@ -10,10 +10,13 @@
     <string name="become_referral"><u>BECOME A REFERRAL</u></string>
     <string name="restore_referral"><u>RESTORE REFERRAL</u></string>
     <string name="restore_wallet"><u>RESTORE WALLET</u></string>
+    <string name="settings_language"><u>RUSSIAN</u></string>
     <string name="set_referral"><u>SET REFERRAL</u></string>
     <string name="scan_qr_code"><u>SCAN QR CODE</u></string>
-    <string name="name_roulette"><u>ROULETTE</u></string>
+    <string name="russian_language"><u>RUSSIAN</u></string>
+    <string name="english_language"><u>ENGLISH</u></string>
     <string name="settings_main"><u>SETTINGS</u></string>
+    <string name="name_roulette"><u>ROULETTE</u></string>
     <string name="place_a_bet"><u>PLACE BET</u></string>
     <string name="set_password"><u>CONFIRM</u></string>
     <string name="info_referral">INFORMATION</string>
@@ -51,6 +54,7 @@
     <string name="guess_the_number">GUESS THE NUMBER</string>
     <string name="guess_the_color">GUESS THE COLOR</string>
     <string name="destination_tag">Destination tag</string>
+    <string name="settings_text">SELECT LANGUAGE</string>
     <string name="enter_password">ENTER PASSWORD</string>
     <string name="place_your_bet">Place your bet</string>
     <string name="lead_the_seed">LEAD THE SEED</string>

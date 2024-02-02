@@ -202,7 +202,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.534"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linkConfirmBack2"
+            app:layout_constraintTop_toBottomOf="@+id/settings_linc"
             app:srcCompat="@drawable/logo_on_page_jpg" />
 
 

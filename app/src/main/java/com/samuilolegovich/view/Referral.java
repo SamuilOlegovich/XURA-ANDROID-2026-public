@@ -49,6 +49,7 @@ public class Referral extends AppCompatActivity {
 
     private void listeners() {
         animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
+
         next.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
