@@ -1,5 +1,6 @@
 package com.samuilolegovich.view;
 
+import static com.samuilolegovich.MainActivity.MAIN_ACTIVITY;
 import static com.samuilolegovich.view.Settings.SETTINGS_CLASS;
 
 import android.content.Context;
@@ -40,6 +41,7 @@ public class SelectLanguage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.select_language);
         setButtons();
         setLanguage();
@@ -71,6 +73,7 @@ public class SelectLanguage extends AppCompatActivity {
                     public void onClick(View v) {
                         v.startAnimation(animTranslate);
                         makeStackThread(StringEnum.APP_RUSSIAN_LANGUAGE);
+//                        makeStack(StringEnum.APP_RUSSIAN_LANGUAGE);
                     }
                 }
         );
@@ -81,6 +84,7 @@ public class SelectLanguage extends AppCompatActivity {
                     public void onClick(View v) {
                         v.startAnimation(animTranslate);
                         makeStackThread(StringEnum.APP_ENGLISH_LANGUAGE);
+//                        makeStack(StringEnum.APP_ENGLISH_LANGUAGE);
                     }
                 }
         );
@@ -98,17 +102,19 @@ public class SelectLanguage extends AppCompatActivity {
 
 
     private void makeStack(StringEnum stringEnum) {
+        MainActivity.newLocale = new Locale(stringEnum.getValue());
         preferences = getSharedPreferences(StringEnum.APP_PREFERENCES.getValue(), Context.MODE_PRIVATE);
         editor = preferences.edit();
         editor.putString(StringEnum.APP_PREFERENCES_LOCALE.getValue(), stringEnum.getValue());
         editor.apply();
 
-        // TODO доделать обновление страницы при смене языка - пока работает только при перезагрузке приложения
-        Resources resources = getResources();
-        Configuration configuration = resources.getConfiguration();
-        configuration.setLocale(new Locale(stringEnum.getValue()));
-        resources.updateConfiguration(configuration, resources.getDisplayMetrics());
+//        Settings.SETTINGS_ACTIVITY.recreate();
+//        MainActivity.MAIN_ACTIVITY.recreate();
+        MainActivity.MAIN_ACTIVITY.setLanguageThread();
+
+        recreate();
     }
+
 
 
     // при нажатии на кнопку назад будем возвращаться назад

@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.provider.Settings;
 import android.content.Context;
@@ -55,13 +56,14 @@ public class MainActivity extends AppCompatActivity {
     public static volatile boolean VISIBLE_ON_SCREEN = false;
     public static volatile boolean START_FLAG = true;
 
+    public static Locale newLocale;
+
     @SuppressLint("StaticFieldLeak")
     public static volatile MainActivity MAIN_ACTIVITY;
 
     private SharedPreferences preferences;
     private Animation animTranslate;
     private BigDecimal balanceXRP;
-    private Locale newLocale;
     private String lottoNow;
 
     private TextView transactionHistory;
@@ -145,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void setLocale() {
+    public void setLocale() {
         if (newLocale != null) {
             Resources resources = getResources();
             Configuration configuration = resources.getConfiguration();
@@ -339,6 +341,26 @@ public class MainActivity extends AppCompatActivity {
                             goToAnotherPage(YOUR_REFERRAL_CLASS);
                         }
                     }
+                });
+            }
+        }.start();
+    }
+
+
+    private void executeRecreate() {
+        recreate();
+    }
+
+
+    public void setLanguageThread() {
+        // goToAnotherPage
+        new Thread() {
+            public void run() {
+                MAIN_ACTIVITY.runOnUiThread(new Runnable() {
+                    public void run() {
+                        executeRecreate();
+                    }
+
                 });
             }
         }.start();

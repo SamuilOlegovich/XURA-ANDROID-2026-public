@@ -24,6 +24,8 @@ import com.samuilolegovich.utils.Cipher;
 import static com.samuilolegovich.MainActivity.MAIN_ACTIVITY;
 import static com.samuilolegovich.view.Referral.REFERRAL_CLASS;
 
+
+
 // тут мы сверим информаци о новом кошельке, правильно ли ее записал юзер
 public class CheckingNewWallet extends AppCompatActivity {
     public static final String CHECKING_NEW_WALLET_CLASS = ".CheckingNewWallet";
@@ -39,6 +41,7 @@ public class CheckingNewWallet extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.checking_new_wallet);
         setButtons();
         listeners();

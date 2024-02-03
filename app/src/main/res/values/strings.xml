@@ -11,15 +11,15 @@
     <string name="settings_set_password"><u>SET PASSWORD</u></string>
     <string name="become_referral"><u>BECOME A REFERRAL</u></string>
     <string name="restore_referral"><u>RESTORE REFERRAL</u></string>
+    <string name="select_language_russian"><u>RUSSIAN</u></string>
+    <string name="select_language_english"><u>ENGLISH</u></string>
     <string name="restore_wallet"><u>RESTORE WALLET</u></string>
+    <string name="settings_text_linc"><u>SETTINGS</u></string>
     <string name="settings_language"><u>RUSSIAN</u></string>
     <string name="set_referral"><u>SET REFERRAL</u></string>
     <string name="scan_qr_code"><u>SCAN QR CODE</u></string>
-    <string name="select_language_russian"><u>RUSSIAN</u></string>
-    <string name="select_language_english"><u>ENGLISH</u></string>
     <string name="settings_main"><u>SETTINGS</u></string>
     <string name="name_roulette"><u>ROULETTE</u></string>
-    <string name="settings_text"><u>SETTINGS</u></string>
     <string name="place_a_bet"><u>PLACE BET</u></string>
     <string name="set_password"><u>CONFIRM</u></string>
     <string name="info_referral">INFORMATION</string>
@@ -70,6 +70,7 @@
     <string name="select_game">SELECT GAME</string>
     <string name="coming_soon">COMING SOON</string>
     <string name="roulette_game">ROULETTE</string>
+    <string name="settings_text">SETTINGS</string>
     <string name="good_luck">GOOD LUCK</string>
     <string name="password">Password</string>
     <string name="bet_lost">BET LOST</string>

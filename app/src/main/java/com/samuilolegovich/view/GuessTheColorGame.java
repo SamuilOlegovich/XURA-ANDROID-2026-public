@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 import com.samuilolegovich.asyncAndRun.asyncTask.GetBalanceAsync;
 import com.samuilolegovich.asyncAndRun.asyncTask.SendPaymentAsync;
@@ -30,6 +31,8 @@ import java.util.concurrent.ExecutionException;
 
 import static com.samuilolegovich.view.Flasher.FLASHER_CLASS;
 import static com.samuilolegovich.view.RulesOfTheGameGuessTheColor.RULES_OF_THE_GAME_GUESS_THE_COLOR_CLASS;
+
+
 
 public class GuessTheColorGame extends AppCompatActivity {
     public static final String GUESS_THE_COLOR_GAME_CLASS = ".GuessTheColorGame";
@@ -48,7 +51,6 @@ public class GuessTheColorGame extends AppCompatActivity {
 
     private String myReferral;
 
-
     private TextView rulesInfo;
     private TextView balance;
     private TextView outInfo;
@@ -56,15 +58,12 @@ public class GuessTheColorGame extends AppCompatActivity {
     private TextView red;
     private EditText bet;
 
-//...
-//        ...
-//    final float volume = (float) (1 - (Math.log(MAX_VOLUME - soundVolume) / Math.log(MAX_VOLUME)));
-//mediaPlayer.setVolume(volume, volume);
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.guess_the_color_game);
         getReferral();
         setButtons();

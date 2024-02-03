@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 import com.samuilolegovich.asyncAndRun.asyncTask.GetBalanceAsync;
 import com.samuilolegovich.asyncAndRun.asyncTask.SendPaymentAsync;
@@ -30,6 +31,8 @@ import static com.samuilolegovich.view.RulesOfTheGameGuessTheNumber.RULES_OF_THE
 
 import java.math.BigDecimal;
 import java.util.concurrent.ExecutionException;
+
+
 
 public class GuessTheNumberGame extends AppCompatActivity {
     public static final String GUESS_THE_NUMBER_GAME_CLASS = ".GuessTheNumberGame";
@@ -58,6 +61,7 @@ public class GuessTheNumberGame extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.guess_the_number_game);
         setButtons();
         listeners();

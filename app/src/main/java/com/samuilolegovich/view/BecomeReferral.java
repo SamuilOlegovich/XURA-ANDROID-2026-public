@@ -45,6 +45,7 @@ public class BecomeReferral  extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.become_referral);
         setButtons();
         setLanguage();

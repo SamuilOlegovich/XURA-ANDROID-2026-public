@@ -16,8 +16,11 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 import com.samuilolegovich.enums.StringEnum;
+
+
 
 public class YourReferral  extends AppCompatActivity {
     public static final String YOUR_REFERRAL_CLASS = ".YourReferral";
@@ -40,6 +43,7 @@ public class YourReferral  extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.your_referral);
         setButtons();
         listeners();
@@ -62,6 +66,7 @@ public class YourReferral  extends AppCompatActivity {
     private void listeners() {
         animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
         clipboardManager=(ClipboardManager)getSystemService(CLIPBOARD_SERVICE);
+
         copy.setOnClickListener(
                 new View.OnClickListener() {
                     @Override

@@ -1,17 +1,11 @@
 package com.samuilolegovich.view;
 
-import static com.samuilolegovich.view.BecomeReferral.BECOME_REFERRAL_CLASS;
-import static com.samuilolegovich.view.GuessTheColorGame.GUESS_THE_COLOR_GAME_CLASS;
-import static com.samuilolegovich.view.GuessTheNumberGame.GUESS_THE_NUMBER_GAME_CLASS;
-import static com.samuilolegovich.view.RouletteGame.ROULETTE_GAME_CLASS;
 import static com.samuilolegovich.view.SendPayment.SEND_PAYMENT;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.view.View;
-import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,6 +21,7 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LifecycleOwner;
 
 import com.google.common.util.concurrent.ListenableFuture;
+import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 import com.samuilolegovich.qrScaner.QRCodeDecoder;
 
@@ -34,6 +29,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
+
 
 
 public class ScanQrCode extends AppCompatActivity {
@@ -53,6 +49,7 @@ public class ScanQrCode extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.scan_code);
         setButtons();
         performCheck();

@@ -18,7 +18,7 @@
     <string name="scan_qr_code"><u>SCAN QR CODE</u></string>
     <string name="select_language_russian"><u>РУССКИЙ</u></string>
     <string name="settings_main"><u>НАСТРОЙКИ</u></string>
-    <string name="settings_text"><u>НАСТРОЙКИ</u></string>
+    <string name="settings_text_linc"><u>НАСТРОЙКИ</u></string>
     <string name="request"><u>ПРИНЯТЬ ПЛАТЕЖ</u></string>
     <string name="name_roulette"><u>РУЛЕТКА</u></string>
     <string name="place_a_bet"><u>PLACE BET</u></string>
@@ -68,6 +68,7 @@
     <string name="send_payment">SEND PAYMENT</string>
     <string name="repeat_enter">Repeat enter</string>
     <string name="requesr_xrp">REQUEST XRP</string>
+    <string name="settings_text">НАСТРОЙКИ</string>
     <string name="select_game">SELECT GAME</string>
     <string name="coming_soon">COMING SOON</string>
     <string name="roulette_game">ROULETTE</string>

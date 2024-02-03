@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 import com.samuilolegovich.asyncAndRun.runnable.GenColorRun;
 import com.samuilolegovich.asyncAndRun.runnable.GenNumberRun;
@@ -18,6 +19,8 @@ import static com.samuilolegovich.view.BecomeReferral.BECOME_REFERRAL_CLASS;
 import static com.samuilolegovich.view.GuessTheNumberGame.GUESS_THE_NUMBER_GAME_CLASS;
 import static com.samuilolegovich.view.GuessTheColorGame.GUESS_THE_COLOR_GAME_CLASS;
 import static com.samuilolegovich.view.RouletteGame.ROULETTE_GAME_CLASS;
+
+
 
 public class SelectGame extends AppCompatActivity {
     public static final String SELECT_GAME_CLASS = ".SelectGame";
@@ -34,6 +37,7 @@ public class SelectGame extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.select_game);
         setButtons();
         setSound();

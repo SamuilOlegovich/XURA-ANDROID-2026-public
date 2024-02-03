@@ -6,7 +6,10 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
+
+
 
 // выводим правила игры
 public class RulesOfTheGameGuessTheColor extends AppCompatActivity {
@@ -25,6 +28,7 @@ public class RulesOfTheGameGuessTheColor extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.rules_of_the_game_guess_the_color);
         setButtons();
         setText();

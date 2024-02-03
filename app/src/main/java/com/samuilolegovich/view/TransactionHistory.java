@@ -1,18 +1,20 @@
 package com.samuilolegovich.view;
 
-
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 import com.samuilolegovich.assistants.HistoryCreator;
 import com.samuilolegovich.assistants.HistoryPaymentArrayAdapter;
 import com.samuilolegovich.dto.HistoryPaymentDto;
 
 import java.util.ArrayList;
+
+
 
 public class TransactionHistory  extends AppCompatActivity {
     public static final String TRANSACTION_HISTORY_CLASS = ".TransactionHistory";
@@ -27,6 +29,7 @@ public class TransactionHistory  extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.transaction_history);
         historyCreator = new HistoryCreator();
         setButtons();

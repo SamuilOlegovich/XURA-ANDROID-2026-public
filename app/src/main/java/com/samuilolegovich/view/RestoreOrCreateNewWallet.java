@@ -9,10 +9,12 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 
 import static com.samuilolegovich.view.CreateNewWallet.CREATE_NEW_WALLET_CLASS;
 import static com.samuilolegovich.view.RestoreWallet.RESTORE_WALLET_CLASS;
+
 
 
 // тут определяем что нам надо востановить или сгенирировать новый кошелек
@@ -26,8 +28,8 @@ public class RestoreOrCreateNewWallet extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.restore_or_create_new_wallet);
-
         setButtons();
         listeners();
     }

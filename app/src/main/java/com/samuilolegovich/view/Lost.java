@@ -7,7 +7,10 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
+
+
 
 public class Lost extends AppCompatActivity {
     public static final String LOST_CLASS = ".Lost";
@@ -23,6 +26,7 @@ public class Lost extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.lost);
         setButtons();
         goText();

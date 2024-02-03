@@ -5,8 +5,10 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 import com.samuilolegovich.asyncAndRun.runnable.GenNumberRun;
+
 
 
 // выводим правила игры
@@ -26,6 +28,7 @@ public class RulesOfTheGameGuessTheNumber extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.rules_of_the_game_guess_the_number);
         setButtons();
         setText();

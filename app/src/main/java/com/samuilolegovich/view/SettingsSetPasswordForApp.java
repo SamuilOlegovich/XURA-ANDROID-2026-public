@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 import com.samuilolegovich.enums.StringEnum;
 import com.samuilolegovich.utils.Cipher;
@@ -44,6 +45,7 @@ public class SettingsSetPasswordForApp extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.settings_set_password_for_app);
         setButtons();
         setLanguage();
@@ -71,6 +73,7 @@ public class SettingsSetPasswordForApp extends AppCompatActivity {
 
     private void listeners() {
         animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
+
         confirm.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -93,8 +96,9 @@ public class SettingsSetPasswordForApp extends AppCompatActivity {
 
 
     private void makeToast(String massage) {
+        // import android.view.Gravity
         Toast toast = Toast.makeText(getApplicationContext(), massage, Toast.LENGTH_LONG);
-        toast.setGravity(Gravity.TOP, 0,110);   // import android.view.Gravity;
+        toast.setGravity(Gravity.TOP, 0,110);
         toast.show();
     }
 

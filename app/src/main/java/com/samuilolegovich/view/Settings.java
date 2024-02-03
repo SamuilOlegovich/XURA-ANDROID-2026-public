@@ -13,12 +13,17 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 
 
 
 public class Settings extends AppCompatActivity {
     public static final String SETTINGS_CLASS = ".Settings";
+
+    @SuppressLint("StaticFieldLeak")
+    public static volatile Settings SETTINGS_ACTIVITY;
+
 
     private Animation animTranslate;
 
@@ -31,7 +36,9 @@ public class Settings extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.settings);
+        SETTINGS_ACTIVITY = this;
         setButtons();
         setLanguage();
         listeners();
@@ -49,8 +56,8 @@ public class Settings extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     private void setLanguage() {
         settingsSelectEnglishLinc.setText(R.string.settings_select_language);
+        settingsTextView.setText(R.string.settings_text);
         settingsSetPasswordLinc.setText(R.string.settings_set_password);
-        settingsTextView.setText(R.string.select_language_text);
     }
 
 

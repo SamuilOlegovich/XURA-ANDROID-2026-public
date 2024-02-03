@@ -10,9 +10,12 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 
 import static com.samuilolegovich.view.RulesOfTheGameRoulette.RULES_OF_THE_GAME_ROULETTE_CLASS;
+
+
 
 public class RouletteGame extends AppCompatActivity {
     public static final String ROULETTE_GAME_CLASS = ".RouletteGame";
@@ -24,6 +27,7 @@ public class RouletteGame extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.roulette_game);
         setButtons();
         listeners();

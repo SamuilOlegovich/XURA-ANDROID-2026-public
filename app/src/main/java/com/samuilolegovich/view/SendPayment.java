@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 import com.samuilolegovich.asyncAndRun.asyncTask.GetBalanceAsync;
 import com.samuilolegovich.asyncAndRun.asyncTask.SendPaymentAsync;
@@ -21,6 +22,8 @@ import com.samuilolegovich.asyncAndRun.asyncTask.SendPaymentAsync;
 
 import java.math.BigDecimal;
 import java.util.concurrent.ExecutionException;
+
+
 
 // тут страница для отсылки платежа
 public class SendPayment extends AppCompatActivity {
@@ -44,6 +47,7 @@ public class SendPayment extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.send_payment);
         setButtons();
         setBalance();

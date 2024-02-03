@@ -30,6 +30,8 @@ import java.util.concurrent.ExecutionException;
 import static com.samuilolegovich.MainActivity.MAIN_ACTIVITY;
 import static com.samuilolegovich.view.Referral.REFERRAL_CLASS;
 
+
+
 // тут востанавливаем кошелек
 public class RestoreWallet extends AppCompatActivity {
     public static final String RESTORE_WALLET_CLASS = ".RestoreWallet";
@@ -48,6 +50,7 @@ public class RestoreWallet extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         paymentAndSocketManagerXRPL = PaymentAndSocketManagerXRPL.getInstances();
         super.onCreate(savedInstanceState);
+        MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.restore_wallet);
         setButtons();
         listeners();
