@@ -1,13 +1,11 @@
 package com.samuilolegovich.view;
 
 import static com.samuilolegovich.MainActivity.MAIN_ACTIVITY;
-import static com.samuilolegovich.view.Settings.SETTINGS_CLASS;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -27,6 +25,9 @@ import java.util.Locale;
 public class SelectLanguage extends AppCompatActivity {
     public static final String SELECT_LANGUAGE_CLASS = ".SelectLanguage";
 
+    @SuppressLint("StaticFieldLeak")
+    public static volatile SelectLanguage SELECT_LANGUAGE_ACTIVITY;
+
     private SharedPreferences.Editor editor;
     private SharedPreferences preferences;
     private Animation animTranslate;
@@ -43,6 +44,7 @@ public class SelectLanguage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.select_language);
+        SELECT_LANGUAGE_ACTIVITY = this;
         setButtons();
         setLanguage();
         listeners();
@@ -108,13 +110,29 @@ public class SelectLanguage extends AppCompatActivity {
         editor.putString(StringEnum.APP_PREFERENCES_LOCALE.getValue(), stringEnum.getValue());
         editor.apply();
 
-//        Settings.SETTINGS_ACTIVITY.recreate();
-//        MainActivity.MAIN_ACTIVITY.recreate();
+        SelectLanguage.SELECT_LANGUAGE_ACTIVITY.setLanguageThread();
         MainActivity.MAIN_ACTIVITY.setLanguageThread();
-
-        recreate();
+        Settings.SETTINGS_ACTIVITY.setLanguageThread();
     }
 
+
+    public void setLanguageThread() {
+        new Thread() {
+            public void run() {
+                SELECT_LANGUAGE_ACTIVITY.runOnUiThread(new Runnable() {
+                    public void run() {
+                        executeRecreate();
+                    }
+
+                });
+            }
+        }.start();
+    }
+
+
+    private void executeRecreate() {
+        recreate();
+    }
 
 
     // при нажатии на кнопку назад будем возвращаться назад

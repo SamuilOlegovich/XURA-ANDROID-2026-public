@@ -1,10 +1,7 @@
 package com.samuilolegovich.view;
 
-import static com.samuilolegovich.view.Settings.SETTINGS_CLASS;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -57,7 +54,7 @@ public class SettingsSetPasswordForApp extends AppCompatActivity {
     private void setButtons() {
         textView = (TextView) findViewById(R.id.settings_set_password_app_text_view);
         passwordTwo = (EditText) findViewById(R.id.edit_text_passport_tow);
-        passwordOne = (EditText) findViewById(R.id.edit_text_passport_one);
+        passwordOne = (EditText) findViewById(R.id.edit_text_seed);
         confirm = (TextView) findViewById(R.id.confirm_link);
     }
 

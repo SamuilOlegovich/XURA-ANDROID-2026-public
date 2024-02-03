@@ -62,7 +62,7 @@ public class CreateNewWallet extends AppCompatActivity {
     }
 
     private void setButtons() {
-        next = (TextView) findViewById(R.id.send_link);
+        next = (TextView) findViewById(R.id.next_link);
         seed = (TextView) findViewById(R.id.textView3);
         copy = (TextView) findViewById(R.id.copy);
     }

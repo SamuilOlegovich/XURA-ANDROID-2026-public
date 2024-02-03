@@ -53,8 +53,8 @@ public class SetAnAppPassword extends AppCompatActivity {
 
     private void setButtons() {
         passwordTwo = (EditText) findViewById(R.id.edit_text_passport_tow);
-        passwordOne = (EditText) findViewById(R.id.edit_text_passport_one);
-        confirm = (TextView) findViewById(R.id.send_link);
+        passwordOne = (EditText) findViewById(R.id.edit_text_seed);
+        confirm = (TextView) findViewById(R.id.next_link);
         skip = (TextView) findViewById(R.id.link_footer_info);
     }
 

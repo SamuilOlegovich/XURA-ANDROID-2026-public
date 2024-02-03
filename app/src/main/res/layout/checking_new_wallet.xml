@@ -26,7 +26,7 @@
 
 
     <TextView
-        android:id="@+id/settings_set_password_app_text_view"
+        android:id="@+id/checking_new_wallet_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
@@ -43,7 +43,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageViewLogo" />
 
     <EditText
-        android:id="@+id/edit_text_passport_one"
+        android:id="@+id/edit_text_seed"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
@@ -56,10 +56,10 @@
         android:textColor="@color/rad_1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settings_set_password_app_text_view" />
+        app:layout_constraintTop_toBottomOf="@+id/checking_new_wallet_text" />
 
     <TextView
-        android:id="@+id/send_link"
+        android:id="@+id/next_link"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"

@@ -85,6 +85,24 @@ public class Settings extends AppCompatActivity {
         );
     }
 
+    public void setLanguageThread() {
+        new Thread() {
+            public void run() {
+                SETTINGS_ACTIVITY.runOnUiThread(new Runnable() {
+                    public void run() {
+                        executeRecreate();
+                    }
+
+                });
+            }
+        }.start();
+    }
+
+
+    private void executeRecreate() {
+        recreate();
+    }
+
 
     private void goToAnotherPage(String namePage) {
         // класс для перехода на другую страницу

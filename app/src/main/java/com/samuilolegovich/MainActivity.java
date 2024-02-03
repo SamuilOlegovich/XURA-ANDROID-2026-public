@@ -6,7 +6,6 @@ import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.provider.Settings;
 import android.content.Context;
@@ -174,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
         settings = (TextView) findViewById(R.id.settings_linc);
         request = (TextView) findViewById(R.id.request_link);
         balance = (TextView) findViewById(R.id.balance_linc);
-        send = (TextView) findViewById(R.id.send_link);
+        send = (TextView) findViewById(R.id.next_link);
         info = (TextView) findViewById(R.id.info_link);
     }
 
@@ -347,13 +346,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void executeRecreate() {
-        recreate();
-    }
-
-
     public void setLanguageThread() {
-        // goToAnotherPage
         new Thread() {
             public void run() {
                 MAIN_ACTIVITY.runOnUiThread(new Runnable() {
@@ -364,6 +357,11 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         }.start();
+    }
+
+
+    private void executeRecreate() {
+        recreate();
     }
 
 

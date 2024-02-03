@@ -34,6 +34,7 @@ public class CheckingNewWallet extends AppCompatActivity {
     private SharedPreferences preferences;
     private Animation animTranslate;
 
+    private TextView checkingNewWalletText;
     private EditText seed;
     private TextView next;
 
@@ -44,13 +45,24 @@ public class CheckingNewWallet extends AppCompatActivity {
         MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.checking_new_wallet);
         setButtons();
+        setLanguage();
         listeners();
     }
 
+
+
     private void setButtons() {
-        next = (TextView) findViewById(R.id.send_link);
-        seed = (EditText) findViewById(R.id.edit_text_passport_one);
+        checkingNewWalletText = (TextView) findViewById(R.id.checking_new_wallet_text);
+        seed = (EditText) findViewById(R.id.edit_text_seed);
+        next = (TextView) findViewById(R.id.next_link);
     }
+
+
+    private void setLanguage() {
+        checkingNewWalletText.setText(R.string.lead_the_seed);
+        next.setText(R.string.next);
+    }
+
 
     private void listeners() {
         animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
