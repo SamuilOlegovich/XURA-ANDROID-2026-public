@@ -31,7 +31,7 @@
 
 
         <TextView
-            android:id="@+id/textViewSeed"
+            android:id="@+id/settings_set_password_app_text_view"
             android:layout_width="0dp"
             android:layout_height="25dp"
             android:layout_marginStart="70dp"
@@ -78,7 +78,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewSeed" />
+            app:layout_constraintTop_toBottomOf="@+id/settings_set_password_app_text_view" />
 
 
         <ImageView

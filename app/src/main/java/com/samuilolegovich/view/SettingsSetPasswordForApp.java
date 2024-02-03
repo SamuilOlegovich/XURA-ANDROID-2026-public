@@ -1,5 +1,7 @@
 package com.samuilolegovich.view;
 
+import static com.samuilolegovich.view.Settings.SETTINGS_CLASS;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -22,13 +24,11 @@ import com.samuilolegovich.utils.Cipher;
 
 import java.util.UUID;
 
-import static com.samuilolegovich.view.RestoreOrCreateNewWallet.RESTORE_OR_NEW_WALLET_CLASS;
 
 
+public class SettingsSetPasswordForApp extends AppCompatActivity {
+    public static final String SETTINGS_SET_PASSWORD_FOR_APP_CLASS = ".SettingsSetPasswordForApp";
 
-// тут устанавливаем пароль на приложение
-public class SetAnAppPassword extends AppCompatActivity {
-    public static final String SET_AN_APP_PASSWORD_CLASS = ".SetAnAppPassword";
 
     private SharedPreferences.Editor editor;
     private SharedPreferences preferences;
@@ -36,25 +36,38 @@ public class SetAnAppPassword extends AppCompatActivity {
 
     private EditText passwordOne;
     private EditText passwordTwo;
-
+    private TextView textView;
     private TextView confirm;
-    private TextView skip;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.set_password_for_app);
+        setContentView(R.layout.settings_set_password_for_app);
         setButtons();
+        setLanguage();
         listeners();
     }
 
+
+
     private void setButtons() {
+        textView = (TextView) findViewById(R.id.settings_set_password_app_text_view);
         passwordTwo = (EditText) findViewById(R.id.edit_text_passport_tow);
         passwordOne = (EditText) findViewById(R.id.edit_text_passport_one);
-        confirm = (TextView) findViewById(R.id.send_link);
-        skip = (TextView) findViewById(R.id.link_footer_info);
+        confirm = (TextView) findViewById(R.id.confirm_link);
     }
+
+
+    @SuppressLint("SetTextI18n")
+    private void setLanguage() {
+        textView.setText(R.string.set_password_to_enter_application);
+        passwordOne.setText(R.string.enter_password_low_case);
+        passwordTwo.setText(R.string.repeat_enter);
+        confirm.setText(R.string.set_password);
+    }
+
 
     private void listeners() {
         animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
@@ -68,7 +81,6 @@ public class SetAnAppPassword extends AppCompatActivity {
 
                         if (one.length() > 3 && one.equals(two)) {
                             setPasswordForApp(one, true);
-                            goToAnotherPage(RESTORE_OR_NEW_WALLET_CLASS);
                         } else {
                             passwordOne.setText("");
                             passwordTwo.setText("");
@@ -77,24 +89,8 @@ public class SetAnAppPassword extends AppCompatActivity {
                     }
                 }
         );
-
-        skip.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        v.startAnimation(animTranslate);
-                        setPasswordForApp(StringEnum.APP_PREFERENCES_PASSWORD_NOT_INSTALLED.getValue(), false);
-                        goToAnotherPage(RESTORE_OR_NEW_WALLET_CLASS);
-                    }
-                }
-        );
     }
 
-    private void goToAnotherPage(String namePage) {
-        // класс для перехода на другую страницу
-        Intent intent = new Intent(namePage);
-        startActivity(intent);
-    }
 
     private void makeToast(String massage) {
         Toast toast = Toast.makeText(getApplicationContext(), massage, Toast.LENGTH_LONG);
@@ -102,11 +98,12 @@ public class SetAnAppPassword extends AppCompatActivity {
         toast.show();
     }
 
+
     private void setPasswordForApp(String password, boolean b) {
         preferences = getSharedPreferences(StringEnum.APP_PREFERENCES.getValue(), Context.MODE_PRIVATE);
 
         @SuppressLint("HardwareIds")
-        String androidId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+        String androidId = android.provider.Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
         String salt = UUID.randomUUID().toString();
         String saltEncrypt = Cipher.encryptStringForSalt(salt, androidId);
 
@@ -122,10 +119,10 @@ public class SetAnAppPassword extends AppCompatActivity {
         editor.apply();
     }
 
+
     // при нажатии на кнопку назад будем возвращаться назад
     @Override
     public void onBackPressed() {
-        // оставляем пустым чтобы не работал возврат обратно
-        // и не попадали на главную страницу кошелька
+        super.onBackPressed();
     }
 }

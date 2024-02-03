@@ -79,6 +79,36 @@
         </activity>
 
         <activity
+            android:name="com.samuilolegovich.view.SelectLanguage"
+            android:label="SelectLanguage"
+            android:exported="true">
+
+            <!-- вставляем сюда этот модуль-->
+            <intent-filter>
+
+                <!-- меняем на адрес новой страницы-->
+                <action android:name=".SelectLanguage" />
+                <!-- меняем на DEFAULT-->
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.samuilolegovich.view.SettingsSetPasswordForApp"
+            android:label="SettingsSetPasswordForApp"
+            android:exported="true">
+
+            <!-- вставляем сюда этот модуль-->
+            <intent-filter>
+
+                <!-- меняем на адрес новой страницы-->
+                <action android:name=".SettingsSetPasswordForApp" />
+                <!-- меняем на DEFAULT-->
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
             android:name="com.samuilolegovich.view.ReceivePayment"
             android:label="ReceivePayment"
             android:exported="true">

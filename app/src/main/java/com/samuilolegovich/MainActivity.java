@@ -197,6 +197,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void listeners() {
         animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
+
         lottoTextGo.setOnClickListener(
                 new View.OnClickListener() {
                     @Override

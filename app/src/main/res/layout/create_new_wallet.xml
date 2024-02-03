@@ -25,7 +25,7 @@
 
 
     <TextView
-        android:id="@+id/textViewSeed"
+        android:id="@+id/settings_set_password_app_text_view"
         android:layout_width="0dp"
         android:layout_height="71dp"
         android:layout_marginStart="15dp"
@@ -96,7 +96,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewSeed" />
+        app:layout_constraintTop_toBottomOf="@+id/settings_set_password_app_text_view" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,8 +1,10 @@
 <resources>
     <string name="want_to_win"><u>WANT TO WIN 386301 XRP - PRESS AND START PLAYING!</u></string>
     <string name="collect_and_renew_bet"><u>COLLECT AND RENEW BET</u></string>
+    <string name="settings_set_password"><u>УСТАНОВИТЬ ПАРОЛЬ</u></string>
     <string name="transaction_history"><u>ИСТОРИЯ ТРАНЗАКЦИЙ</u></string>
     <string name="name_guess_the_number"><u>GUESS THE NUMBER</u></string>
+    <string name="settings_select_language"><u>ВЫБРАТЬ ЯЗЫК</u></string>
     <string name="name_guess_the_color"><u>GUESS THE COLOR</u></string>
     <string name="create_new_wallet"><u>CREATE NEW WALLET</u></string>
     <string name="rules_of_the_game"><u>RULES OF THE GAME</u></string>
@@ -11,11 +13,12 @@
     <string name="restore_referral"><u>RESTORE REFERRAL</u></string>
     <string name="restore_wallet"><u>RESTORE WALLET</u></string>
     <string name="settings_language"><u>АНГЛИЙСКИЙ</u></string>
-    <string name="english_language"><u>АНГЛИЙСКИЙ</u></string>
+    <string name="select_language_english"><u>АНГЛИЙСКИЙ</u></string>
     <string name="set_referral"><u>SET REFERRAL</u></string>
     <string name="scan_qr_code"><u>SCAN QR CODE</u></string>
-    <string name="russian_language"><u>РУССКИЙ</u></string>
+    <string name="select_language_russian"><u>РУССКИЙ</u></string>
     <string name="settings_main"><u>НАСТРОЙКИ</u></string>
+    <string name="settings_text"><u>НАСТРОЙКИ</u></string>
     <string name="request"><u>ПРИНЯТЬ ПЛАТЕЖ</u></string>
     <string name="name_roulette"><u>РУЛЕТКА</u></string>
     <string name="place_a_bet"><u>PLACE BET</u></string>
@@ -29,6 +32,7 @@
     <string name="next"><u>NEXT</u></string>
     <string name="red"><u>RED</u></string>
     <string name="set"><u>SET</u></string>
+
 
 
 
@@ -58,7 +62,7 @@
     <string name="lead_the_seed">LEAD THE SEED</string>
     <string name="your_address">YOUR ADDRESS:</string>
     <string name="settings_settings">SETTINGS</string>
-    <string name="settings_text">ВЫБРАТЬ ЯЗЫК</string>
+    <string name="select_language_text">ВЫБРАТЬ ЯЗЫК</string>
     <string name="info_referral">INFORMATION</string>
     <string name="your_balance">YOUR BALANCE</string>
     <string name="send_payment">SEND PAYMENT</string>

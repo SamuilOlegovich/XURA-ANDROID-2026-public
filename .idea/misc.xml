@@ -45,9 +45,11 @@
         <entry key="app/src/main/res/layout/rules_of_the_game_roulette.xml" value="0.2687841530054645" />
         <entry key="app/src/main/res/layout/scan_code.xml" value="0.40095628415300544" />
         <entry key="app/src/main/res/layout/select_game.xml" value="0.2305327868852459" />
+        <entry key="app/src/main/res/layout/select_language.xml" value="0.27424863387978143" />
         <entry key="app/src/main/res/layout/send_payment.xml" value="0.335" />
         <entry key="app/src/main/res/layout/set_password_for_app.xml" value="0.25" />
         <entry key="app/src/main/res/layout/setting.xml" value="0.397265625" />
+        <entry key="app/src/main/res/layout/settingg_set_password_for_app.xml" value="0.27424863387978143" />
         <entry key="app/src/main/res/layout/settings.xml" value="0.30293715846994534" />
         <entry key="app/src/main/res/layout/table.xml" value="0.26434426229508196" />
         <entry key="app/src/main/res/layout/transaction_history.xml" value="0.39617486338797814" />

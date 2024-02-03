@@ -26,7 +26,7 @@
 
 
     <TextView
-        android:id="@+id/textViewSeed"
+        android:id="@+id/settings_set_password_app_text_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
@@ -43,7 +43,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageViewLogo" />
 
     <EditText
-        android:id="@+id/editTextSeed"
+        android:id="@+id/edit_text_passport_one"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
@@ -56,7 +56,7 @@
         android:textColor="@color/rad_1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewSeed" />
+        app:layout_constraintTop_toBottomOf="@+id/settings_set_password_app_text_view" />
 
     <TextView
         android:id="@+id/send_link"
