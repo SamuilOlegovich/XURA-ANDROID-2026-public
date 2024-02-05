@@ -29,6 +29,7 @@ public class Win extends AppCompatActivity {
         MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.win);
         setButtons();
+        setLanguage();
         goText();
     }
 
@@ -36,9 +37,9 @@ public class Win extends AppCompatActivity {
 
     private void setButtons() {
         winMediaPlayer = MediaPlayer.create(this, R.raw.win);
-        info3 = (TextView) findViewById(R.id.info3);
-        info2 = (TextView) findViewById(R.id.info2);
-        info = (TextView) findViewById(R.id.info_link);
+        info3 = (TextView) findViewById(R.id.info_text_tree);
+        info2 = (TextView) findViewById(R.id.info_text_tow);
+        info = (TextView) findViewById(R.id.info_text);
 
         winMediaPlayer.start();
     }

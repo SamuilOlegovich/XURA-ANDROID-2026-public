@@ -23,7 +23,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/info_link"
+        android:id="@+id/info_text"
         android:layout_width="0dp"
         android:layout_height="87dp"
         android:layout_marginStart="10dp"
@@ -43,7 +43,7 @@
         app:layout_constraintTop_toBottomOf="@+id/logo2" />
 
     <TextView
-        android:id="@+id/info2"
+        android:id="@+id/info_text_tow"
         android:layout_width="0dp"
         android:layout_height="44dp"
         android:layout_marginStart="15dp"
@@ -65,10 +65,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/info_link" />
+        app:layout_constraintTop_toBottomOf="@+id/info_text" />
 
     <TextView
-        android:id="@+id/info3"
+        android:id="@+id/info_text_tree"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"

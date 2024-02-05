@@ -40,6 +40,7 @@ public class SelectGame extends AppCompatActivity {
         MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.select_game);
         setButtons();
+        setLanguage();
         setSound();
         listeners();
     }

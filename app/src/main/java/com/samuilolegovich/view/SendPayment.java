@@ -50,6 +50,7 @@ public class SendPayment extends AppCompatActivity {
         MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.send_payment);
         setButtons();
+        setLanguage();
         setBalance();
         listeners();
         SEND_PAYMENT = this;

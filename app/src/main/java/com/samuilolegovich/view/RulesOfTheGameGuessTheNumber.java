@@ -31,6 +31,7 @@ public class RulesOfTheGameGuessTheNumber extends AppCompatActivity {
         MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.rules_of_the_game_guess_the_number);
         setButtons();
+        setLanguage();
         setText();
     }
 

@@ -18,6 +18,7 @@ public class RulesOfTheGameRoulette extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.rules_of_the_game_roulette);
+        setLanguage();
     }
 
     // при нажатии на кнопку назад будем возвращаться назад

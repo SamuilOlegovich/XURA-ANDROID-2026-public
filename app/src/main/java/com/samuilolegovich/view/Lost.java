@@ -29,6 +29,7 @@ public class Lost extends AppCompatActivity {
         MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.lost);
         setButtons();
+        setLanguage();
         goText();
     }
 
@@ -36,9 +37,9 @@ public class Lost extends AppCompatActivity {
 
     private void setButtons() {
         lostMediaPlayer = MediaPlayer.create(this, R.raw.lost);
-        textInfo = (TextView) findViewById(R.id.info2);
-        text = (TextView) findViewById(R.id.info3);
-        info = (TextView) findViewById(R.id.info_link);
+        textInfo = (TextView) findViewById(R.id.info_text_tow);
+        text = (TextView) findViewById(R.id.info_text_tree);
+        info = (TextView) findViewById(R.id.info_text);
 
         lostMediaPlayer.start();
     }

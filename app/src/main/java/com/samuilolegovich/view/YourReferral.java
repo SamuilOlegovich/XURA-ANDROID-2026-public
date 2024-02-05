@@ -46,6 +46,7 @@ public class YourReferral  extends AppCompatActivity {
         MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.your_referral);
         setButtons();
+        setLanguage();
         listeners();
         goText();
         setReferralForApp(CODE);
@@ -56,7 +57,7 @@ public class YourReferral  extends AppCompatActivity {
     private void setButtons() {
         erMediaPlayer = MediaPlayer.create(this, R.raw.error);
         code = (TextView) findViewById(R.id.code);
-        copy = (TextView) findViewById(R.id.copy);
+        copy = (TextView) findViewById(R.id.copy_linc);
 
         erMediaPlayer.start();
     }

@@ -51,7 +51,10 @@ public class GuessTheColorGame extends AppCompatActivity {
 
     private String myReferral;
 
-    private TextView rulesInfo;
+    private TextView nameGameTextViewTwo;
+    private TextView yourBalanceTextView;
+    private TextView rulesOfTheGameLink;
+    private TextView nameGameTextView;
     private TextView balance;
     private TextView outInfo;
     private TextView black;
@@ -67,6 +70,7 @@ public class GuessTheColorGame extends AppCompatActivity {
         setContentView(R.layout.guess_the_color_game);
         getReferral();
         setButtons();
+        setLanguage();
         listeners();
         setBalance();
         GUESS_THE_COLOR_GAME = this;
@@ -82,26 +86,40 @@ public class GuessTheColorGame extends AppCompatActivity {
     }
 
 
-
     private void setButtons() {
-        casinoMediaPlayer = MediaPlayer.create(this, R.raw.in_casino);
-        errorMediaPlayer = MediaPlayer.create(this, R.raw.error);
-        betMediaPlayer = MediaPlayer.create(this, R.raw.bet);
-        rulesInfo = (TextView) findViewById(R.id.rules_of_the_game);
+        nameGameTextViewTwo = (TextView) findViewById(R.id.name_game_text_view_tow);
+        yourBalanceTextView = (TextView) findViewById(R.id.your_balance_text_view);
+        rulesOfTheGameLink = (TextView) findViewById(R.id.rules_of_the_game_link);
+        nameGameTextView = (TextView) findViewById(R.id.name_game_text_view);
         balance = (TextView) findViewById(R.id.your_balance_xrp);
         outInfo = (TextView) findViewById(R.id.info_output);
         black = (TextView) findViewById(R.id.color_black);
         red = (TextView) findViewById(R.id.color_red);
-        bet = (EditText) findViewById(R.id.bet);
+        bet = (EditText) findViewById(R.id.bet_field);
+
+        casinoMediaPlayer = MediaPlayer.create(this, R.raw.in_casino);
+        errorMediaPlayer = MediaPlayer.create(this, R.raw.error);
+        betMediaPlayer = MediaPlayer.create(this, R.raw.bet);
 
         soundPlay(casinoMediaPlayer);
     }
 
 
+    private void setLanguage() {
+        nameGameTextViewTwo.setText(R.string.and_double_the_bet);
+        rulesOfTheGameLink.setText(R.string.rules_of_the_game);
+        yourBalanceTextView.setText(R.string.your_balance);
+        nameGameTextView.setText(R.string.guess_the_color);
+        bet.setText(R.string.place_your_bet);
+        black.setText(R.string.black);
+        red.setText(R.string.red);
+    }
+
 
     private void listeners() {
         animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
-        rulesInfo.setOnClickListener(
+
+        rulesOfTheGameLink.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -110,6 +128,7 @@ public class GuessTheColorGame extends AppCompatActivity {
                     }
                 }
         );
+
         black.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -121,6 +140,7 @@ public class GuessTheColorGame extends AppCompatActivity {
                     }
                 }
         );
+
         red.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -134,6 +154,7 @@ public class GuessTheColorGame extends AppCompatActivity {
         );
     }
 
+
     private void makeStackThread(String string, boolean b) {
         new Thread(new Runnable() {
             @Override
@@ -142,7 +163,6 @@ public class GuessTheColorGame extends AppCompatActivity {
             }
         }).start();
     }
-
 
 
     private void makeStack(String tag, boolean color) {
@@ -160,7 +180,6 @@ public class GuessTheColorGame extends AppCompatActivity {
         Flasher.NUMBER_BET = Lotto.getRandomNumberForColor(color) + "";
         Flasher.COLOR_BET = color;
     }
-
 
 
     public void setColorAndText(String text, boolean b) {
@@ -186,7 +205,6 @@ public class GuessTheColorGame extends AppCompatActivity {
             }
         }.start();
     }
-
 
 
     private boolean checkData(String sendAmount, String sendTeg) {
@@ -224,7 +242,6 @@ public class GuessTheColorGame extends AppCompatActivity {
     }
 
 
-
     private boolean makePayment(String sendAmount, String sendTeg) {
         AsyncTask<String, Void, Boolean> asyncTask = new SendPaymentAsync()
                 .execute(StringEnum.SERVER_ADDRESS_GUESS_THE_COLOR.getValue(), sendAmount, sendTeg);
@@ -242,7 +259,6 @@ public class GuessTheColorGame extends AppCompatActivity {
     }
 
 
-
     private void getReferral() {
         preferences = getSharedPreferences(StringEnum.APP_PREFERENCES.getValue(), Context.MODE_PRIVATE);
         if (preferences.contains(StringEnum.APP_PREFERENCES_REFERRAL.getValue())) {
@@ -251,7 +267,6 @@ public class GuessTheColorGame extends AppCompatActivity {
             myReferral = "0";
         }
     }
-
 
 
     private String prepareTheShippingAmount(String sendAmount) {
@@ -266,13 +281,11 @@ public class GuessTheColorGame extends AppCompatActivity {
     }
 
 
-
     private void goToAnotherPage(String namePage) {
         // класс для перехода на другую страницу
         Intent intent = new Intent(namePage);
         startActivity(intent);
     }
-
 
 
     private void makeToast(String massage) {
@@ -291,13 +304,11 @@ public class GuessTheColorGame extends AppCompatActivity {
     }
 
 
-
     private void goThread() {
         Runnable runnable = new GenColorRun();
         Thread thread = new Thread(runnable);
         thread.start();
     }
-
 
 
     @SuppressLint("SetTextI18n")
@@ -313,13 +324,11 @@ public class GuessTheColorGame extends AppCompatActivity {
     }
 
 
-
     @SuppressLint("SetTextI18n")
     public void updateBalance(BigDecimal bigDecimal) {
         yourBalance = bigDecimal;
         balance.setText(yourBalance.toString() + "  XRP");
     }
-
 
 
     @Override
@@ -330,7 +339,6 @@ public class GuessTheColorGame extends AppCompatActivity {
     }
 
 
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -338,7 +346,6 @@ public class GuessTheColorGame extends AppCompatActivity {
         GenColorRun.FLAG =  true;
         goThread();
     }
-
 
 
     // при нажатии на кнопку назад будем возвращаться назад

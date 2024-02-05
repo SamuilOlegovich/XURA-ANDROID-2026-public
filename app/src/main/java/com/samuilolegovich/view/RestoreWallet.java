@@ -53,12 +53,13 @@ public class RestoreWallet extends AppCompatActivity {
         MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.restore_wallet);
         setButtons();
+        setLanguage();
         listeners();
     }
 
     private void setButtons() {
         next = (TextView) findViewById(R.id.next_link);
-        seed = (EditText) findViewById(R.id.edit_text_seed);
+        seed = (EditText) findViewById(R.id.password_field);
         textInfo = (TextView) findViewById(R.id.textInfo);
     }
 

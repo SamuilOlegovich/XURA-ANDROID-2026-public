@@ -22,8 +22,10 @@ public class Flasher extends AppCompatActivity {
     public static final String FLASHER_CLASS = ".Flasher";
 
     public static volatile boolean VISIBLE_ON_SCREEN = false;
+
     @SuppressLint("StaticFieldLeak")
     public static volatile Flasher FLASHER;
+
     private volatile boolean FLAG;
 
     public static Boolean COLOR_BET;
@@ -39,6 +41,11 @@ public class Flasher extends AppCompatActivity {
     private TextView infoTwo;
     private TextView winInfo;
 
+    private  String CONGRATULATIONS;
+    private  String GOOD_LUCK;
+    private  String BET_LOST;
+    private  String BET_WON;
+
 
 
     @Override
@@ -49,9 +56,11 @@ public class Flasher extends AppCompatActivity {
         FLASHER = this;
         FLAG = true;
         setButtons();
+        setLanguage();
         setSound();
         goThread();
     }
+
 
 
     private void soundPlay(MediaPlayer mediaPlayer) {
@@ -69,15 +78,21 @@ public class Flasher extends AppCompatActivity {
     }
 
 
-
     private void setButtons() {
         constraintLayout = (ConstraintLayout) findViewById(R.id.flasher);
-        numberInfo = (TextView) findViewById(R.id.number_info);
-        infoThree = (TextView) findViewById(R.id.info3);
-        infoTwo = (TextView) findViewById(R.id.info2);
-        winInfo = (TextView) findViewById(R.id.info_link);
+        numberInfo = (TextView) findViewById(R.id.number_info_text);
+        infoThree = (TextView) findViewById(R.id.info_text_tree);
+        infoTwo = (TextView) findViewById(R.id.info_text_tow);
+        winInfo = (TextView) findViewById(R.id.info_text);
     }
 
+
+    private void setLanguage() {
+        CONGRATULATIONS = getString(R.string.congratulations);
+        GOOD_LUCK = getString(R.string.good_luck);
+        BET_LOST = getString(R.string.bet_lost);
+        BET_WON = getString(R.string.bet_won);
+    }
 
 
     public void setColorAndText(String text, boolean b) {
@@ -95,7 +110,6 @@ public class Flasher extends AppCompatActivity {
             }
         }.start();
     }
-
 
 
     public void stopGame(String text, boolean win) {
@@ -120,7 +134,6 @@ public class Flasher extends AppCompatActivity {
     }
 
 
-
     private void gameRun(String text, boolean b) {
         if (b) {
             numberInfo.setText(text);
@@ -139,7 +152,6 @@ public class Flasher extends AppCompatActivity {
             setColorNavigation(1);
         }
     }
-
 
 
     @SuppressLint("SetTextI18n")
@@ -163,9 +175,9 @@ public class Flasher extends AppCompatActivity {
             rouletteSpinMediaPlayer.stop();
             winMediaPlayer.start();
 
-            infoThree.setText("CONGRATULATIONS");
+            infoThree.setText(CONGRATULATIONS);
             numberInfo.setText(NUMBER_BET + "");
-            winInfo.setText("BET WON");
+            winInfo.setText(BET_WON);
             infoTwo.setText(text);
             infoTwo.setSelected(true);
 
@@ -196,13 +208,12 @@ public class Flasher extends AppCompatActivity {
             rouletteSpinMediaPlayer.stop();
             lostMediaPlayer.start();
 
-            infoThree.setText("GOOD LUCK");
-            winInfo.setText("BET LOST");
+            infoThree.setText(GOOD_LUCK);
+            winInfo.setText(BET_LOST);
             infoTwo.setText(text);
             infoTwo.setSelected(true);
         }
     }
-
 
 
     private void setColorNavigation(int color) {
@@ -227,13 +238,11 @@ public class Flasher extends AppCompatActivity {
     }
 
 
-
     private void goThread() {
         Runnable runnable = new FlasherRun();
         Thread thread = new Thread(runnable);
         thread.start();
     }
-
 
 
     @Override
@@ -244,7 +253,6 @@ public class Flasher extends AppCompatActivity {
     }
 
 
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -253,7 +261,6 @@ public class Flasher extends AppCompatActivity {
         FlasherRun.FLAG =  true;
         goThread();
     }
-
 
 
     // при нажатии на кнопку назад будем возвращаться назад

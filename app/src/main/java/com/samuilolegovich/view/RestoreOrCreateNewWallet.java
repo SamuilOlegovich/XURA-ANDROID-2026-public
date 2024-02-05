@@ -31,6 +31,7 @@ public class RestoreOrCreateNewWallet extends AppCompatActivity {
         MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.restore_or_create_new_wallet);
         setButtons();
+        setLanguage();
         listeners();
     }
 

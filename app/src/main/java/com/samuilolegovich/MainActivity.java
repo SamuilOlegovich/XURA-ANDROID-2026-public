@@ -174,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
         request = (TextView) findViewById(R.id.request_link);
         balance = (TextView) findViewById(R.id.balance_linc);
         send = (TextView) findViewById(R.id.next_link);
-        info = (TextView) findViewById(R.id.info_link);
+        info = (TextView) findViewById(R.id.info_text);
     }
 
 

@@ -52,6 +52,7 @@ public class ScanQrCode extends AppCompatActivity {
         MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.scan_code);
         setButtons();
+        setLanguage();
         performCheck();
     }
 

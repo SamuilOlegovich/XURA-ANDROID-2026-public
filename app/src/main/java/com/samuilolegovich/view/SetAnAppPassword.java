@@ -48,12 +48,13 @@ public class SetAnAppPassword extends AppCompatActivity {
         MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.set_password_for_app);
         setButtons();
+        setLanguage();
         listeners();
     }
 
     private void setButtons() {
         passwordTwo = (EditText) findViewById(R.id.edit_text_passport_tow);
-        passwordOne = (EditText) findViewById(R.id.edit_text_seed);
+        passwordOne = (EditText) findViewById(R.id.password_field);
         confirm = (TextView) findViewById(R.id.next_link);
         skip = (TextView) findViewById(R.id.link_footer_info);
     }

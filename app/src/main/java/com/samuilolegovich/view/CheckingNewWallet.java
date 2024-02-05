@@ -39,6 +39,7 @@ public class CheckingNewWallet extends AppCompatActivity {
     private TextView next;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +54,7 @@ public class CheckingNewWallet extends AppCompatActivity {
 
     private void setButtons() {
         checkingNewWalletText = (TextView) findViewById(R.id.checking_new_wallet_text);
-        seed = (EditText) findViewById(R.id.edit_text_seed);
+        seed = (EditText) findViewById(R.id.password_field);
         next = (TextView) findViewById(R.id.next_link);
     }
 
@@ -66,6 +67,7 @@ public class CheckingNewWallet extends AppCompatActivity {
 
     private void listeners() {
         animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
+
         next.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -89,7 +91,6 @@ public class CheckingNewWallet extends AppCompatActivity {
     }
 
 
-
     private void makeToast(String massage) {
         Toast toast = Toast.makeText(getApplicationContext(), massage, Toast.LENGTH_LONG);
         toast.setGravity(Gravity.TOP, 0,110);   // import android.view.Gravity;
@@ -97,13 +98,11 @@ public class CheckingNewWallet extends AppCompatActivity {
     }
 
 
-
     private void goToAnotherPage(String namePage) {
         // класс для перехода на другую страницу
         Intent intent = new Intent(namePage);
         startActivity(intent);
     }
-
 
 
     @SuppressLint("HardwareIds")
@@ -115,6 +114,7 @@ public class CheckingNewWallet extends AppCompatActivity {
                 Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
     }
 
+
     @SuppressLint("HardwareIds")
     private void setSeed(String newSeed) {
         preferences = getSharedPreferences(StringEnum.APP_PREFERENCES.getValue(), Context.MODE_PRIVATE);
@@ -125,6 +125,7 @@ public class CheckingNewWallet extends AppCompatActivity {
                         Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID)));
         editor.apply();
     }
+
 
     // при нажатии на кнопку назад будем возвращаться назад
     @Override

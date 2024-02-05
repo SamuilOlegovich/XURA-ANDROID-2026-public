@@ -64,6 +64,7 @@ public class GuessTheNumberGame extends AppCompatActivity {
         MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.guess_the_number_game);
         setButtons();
+        setLanguage();
         listeners();
         setBalance();
         getReferral();
@@ -85,12 +86,12 @@ public class GuessTheNumberGame extends AppCompatActivity {
         casinoMediaPlayer = MediaPlayer.create(this, R.raw.in_casino);
         errorMediaPlayer = MediaPlayer.create(this, R.raw.error);
         betMediaPlayer = MediaPlayer.create(this, R.raw.bet);
-        rulesInfo = (TextView) findViewById(R.id.rules_of_the_game);
+        rulesInfo = (TextView) findViewById(R.id.rules_of_the_game_link);
         balance = (TextView) findViewById(R.id.your_balance_xrp);
         placeBet = (TextView) findViewById(R.id.place_a_bet);
-        outInfo = (TextView) findViewById(R.id.number_info);
+        outInfo = (TextView) findViewById(R.id.number_info_text);
         betNumber = (EditText) findViewById(R.id.number);
-        bet = (EditText) findViewById(R.id.bet);
+        bet = (EditText) findViewById(R.id.bet_field);
 
         soundPlay(casinoMediaPlayer);
     }

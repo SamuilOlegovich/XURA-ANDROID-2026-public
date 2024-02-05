@@ -38,6 +38,7 @@ public class Referral extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.referral);
+        setLanguage();
         setButtons();
         listeners();
     }

@@ -17,6 +17,7 @@ public class InfoReferral extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.info_referral);
+        setLanguage();
     }
 
     // при нажатии на кнопку назад будем возвращаться назад

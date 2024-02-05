@@ -47,6 +47,7 @@ public class ReceivePayment extends AppCompatActivity {
         MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.receive_payment);
         setButtons();
+        setLanguage();
         listeners();
         setAddress();
         setQrCode();
@@ -57,7 +58,7 @@ public class ReceivePayment extends AppCompatActivity {
     private void setButtons() {
         qrCode = (ImageView) findViewById(R.id.qr_code);
         address = (TextView) findViewById(R.id.address);
-        copy = (TextView) findViewById(R.id.copy);
+        copy = (TextView) findViewById(R.id.copy_linc);
     }
 
     private void setAddress() {

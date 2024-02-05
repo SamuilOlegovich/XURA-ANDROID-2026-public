@@ -33,9 +33,9 @@ public class TransactionHistory  extends AppCompatActivity {
         setContentView(R.layout.transaction_history);
         historyCreator = new HistoryCreator();
         setButtons();
+        setLanguage();
         TRANSACTION_HISTORY = this;
         createHistoryThread();
-//        listeners();
     }
 
 
@@ -68,13 +68,13 @@ public class TransactionHistory  extends AppCompatActivity {
         }.start();
     }
 
+
     private void selectTabButton(ArrayList<HistoryPaymentDto> in) {
         ArrayAdapter<HistoryPaymentDto> adapter = new HistoryPaymentArrayAdapter(this, 0, in);
         listView.setAdapter(adapter);
         // для того чтобы лист показывался сверху вниз
         listView.setSelection(0);
     }
-
 
 
     // при нажатии на кнопку назад будем возвращаться назад

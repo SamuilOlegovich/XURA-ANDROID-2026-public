@@ -33,29 +33,45 @@ public class EnterApplicationPassword extends AppCompatActivity {
     private SharedPreferences preferences;
     private Animation animTranslate;
 
+    private TextView settingsSetPasswordAppTextView;
     private EditText password;
-    private TextView confirm;
+    private TextView next;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         MainActivity.MAIN_ACTIVITY.setLocale();
-        setContentView(R.layout.enter_application_password);
 
+        setContentView(R.layout.enter_application_password);
         preferences = getSharedPreferences(StringEnum.APP_PREFERENCES.getValue(), Context.MODE_PRIVATE);
 
         setButtons();
+        setLanguage();
         listeners();
     }
 
+
+
     private void setButtons() {
-        password = (EditText) findViewById(R.id.edit_text_seed);
-        confirm = (TextView) findViewById(R.id.next_link);
+        settingsSetPasswordAppTextView = (TextView) findViewById(R.id.settings_set_password_app_text_view);
+        password = (EditText) findViewById(R.id.password_field);
+        next = (TextView) findViewById(R.id.next_link);
     }
+
+
+    private void setLanguage() {
+        settingsSetPasswordAppTextView.setText(R.string.enter_password);
+        password.setText(R.string.password);
+        next.setText(R.string.next);
+    }
+
 
     private void listeners() {
         animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
-        confirm.setOnClickListener(
+
+        next.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -79,6 +95,7 @@ public class EnterApplicationPassword extends AppCompatActivity {
         );
     }
 
+
     @SuppressLint("HardwareIds")
     private String getPassword(String password) {
         return Cipher.encryptStringIrreversibly(password,
@@ -86,15 +103,18 @@ public class EnterApplicationPassword extends AppCompatActivity {
                 Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
     }
 
+
     private String getEncryptedPassword() {
         return preferences.getString(StringEnum.APP_PREFERENCES_PASSWORD.getValue(), "");
     }
+
 
     private void goToAnotherPage(String namePage) {
         // класс для перехода на другую страницу
         Intent intent = new Intent(namePage);
         startActivity(intent);
     }
+
 
     // при нажатии на кнопку назад будем возвращаться назад
     @Override
@@ -103,11 +123,13 @@ public class EnterApplicationPassword extends AppCompatActivity {
         // и не попадали на главную страницу кошелька
     }
 
+
     private void makeToast(String massage) {
         Toast toast = Toast.makeText(getApplicationContext(), massage, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.TOP, 0,110);   // import android.view.Gravity;
         toast.show();
     }
+
 
     // для закрытие этой активити и попадания на главную активити
     public void closeThisPage() {

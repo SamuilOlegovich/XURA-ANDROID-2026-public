@@ -31,6 +31,7 @@ public class RulesOfTheGameGuessTheColor extends AppCompatActivity {
         MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.rules_of_the_game_guess_the_color);
         setButtons();
+        setLanguage();
         setText();
     }
 

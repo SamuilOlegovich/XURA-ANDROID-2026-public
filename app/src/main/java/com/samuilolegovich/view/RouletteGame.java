@@ -30,12 +30,13 @@ public class RouletteGame extends AppCompatActivity {
         MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.roulette_game);
         setButtons();
+        setLanguage();
         listeners();
     }
 
     private void setButtons() {
         casinoMediaPlayer = MediaPlayer.create(this, R.raw.in_casino);
-        rulesInfo = (TextView) findViewById(R.id.rules_of_the_game);
+        rulesInfo = (TextView) findViewById(R.id.rules_of_the_game_link);
 
         casinoMediaPlayer.setLooping(true);
         casinoMediaPlayer.start();

@@ -54,6 +54,8 @@ public class BecomeReferral  extends AppCompatActivity {
         BECOME_REFERRAL = this;
     }
 
+
+
     private void setButtons() {
         infoReferral = (TextView) findViewById(R.id.info_referral_layout);
         restoreReferral = (TextView) findViewById(R.id.restore_referral);
@@ -61,6 +63,7 @@ public class BecomeReferral  extends AppCompatActivity {
         textReferral = (TextView) findViewById(R.id.text_referral);
         setReferral = (TextView) findViewById(R.id.set_referral);
     }
+
 
     private void setLanguage() {
         textReferral.setText(R.string.become_referral_and_start_earning);
@@ -70,9 +73,11 @@ public class BecomeReferral  extends AppCompatActivity {
         infoReferral.setText(R.string.info);
     }
 
+
     @SuppressLint("SetTextI18n")
     private void setBalance() {
         AsyncTask<String, Void, BigDecimal> getBalanceAsync = new GetBalanceAsync().execute("");
+
         try {
             yourBalance = getBalanceAsync.get();
 //            balance.setText(yourBalance.toString() + "  XRP");
@@ -80,6 +85,7 @@ public class BecomeReferral  extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
 
     private void listeners() {
         animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
@@ -150,7 +156,6 @@ public class BecomeReferral  extends AppCompatActivity {
     }
 
 
-
     private boolean checkData(String sendAmount, String sendTeg) {
         if (sendAmount == null) {
             makeToast("PAYMENT AMOUNT IS INCORRECT");
@@ -166,7 +171,6 @@ public class BecomeReferral  extends AppCompatActivity {
         }
         return makePayment(sendAmount, sendTeg);
     }
-
 
 
     private boolean makePayment(String sendAmount, String sendTeg) {
@@ -185,12 +189,12 @@ public class BecomeReferral  extends AppCompatActivity {
     }
 
 
-
     private void goToAnotherPage(String namePage) {
         // класс для перехода на другую страницу
         Intent intent = new Intent(namePage);
         startActivity(intent);
     }
+
 
     private void makeToast(String massage) {
         new Thread() {
@@ -207,11 +211,13 @@ public class BecomeReferral  extends AppCompatActivity {
         }.start();
     }
 
+
     // при нажатии на кнопку назад будем возвращаться назад
     @Override
     public void onBackPressed() {
         super.onBackPressed();
     }
+
 
     // для закрытие этой активити и попадания на главную активити
     public void closeThisPage() {

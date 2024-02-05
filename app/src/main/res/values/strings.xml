@@ -40,7 +40,7 @@
     <string name="rules_double_your_bet">The rules of this game are very simple. The bet is always fixed and is - 1XRP. You just have to choose the number you want to bet on. (from - 1 to -  36) In case of winning, the bet will be increased by 36 times. If the bet is lost, it goes to the savings fund - lotto. Absolutely any user can win a lotto, regardless of what and how much he bet - if the lotto sector falls out. And you can also win a mini lotto - it is one tenth of the lotto.</string>
     <string name="referral_text">IF YOU HAVE A REFERRAL CODE - BE SURE TO ENTER IT - IT WILL GIVE YOU EXTRA LIVES ON YOUR BETS AND PARTICIPATION IN THE DAILY PRIZE DRAW</string>
     <string name="rules_roulette">CURRENTLY THE GAME IS UNDER DEVELOPMENT. WE WANT TO IMPLEMENT THE CLASSIC ROULETTE GAME WITH THE MAXIMUM QUALITY.</string>
-    <string name="be_sure_to_save_seed_and_do_not_give_it_to_anyone">BE SURE TO SAVE THE SEED AND DO NOT GIVE IT TO ANYONE</string>
+    <string name="create_new_wallet_text">BE SURE TO SAVE THE SEED AND DO NOT GIVE IT TO ANYONE</string>
     <string name="set_password_to_enter_application">SET A PASSWORD TO ENTER THE APPLICATION</string>
     <string name="become_referral_and_start_earning">BECOME A REFERRAL AND START EARNING</string>
     <string name="check_the_seed_and_try_again">ERROR - check the seed and try again.</string>
@@ -57,6 +57,7 @@
     <string name="select_language_text">SELECT LANGUAGE</string>
     <string name="guess_the_number">GUESS THE NUMBER</string>
     <string name="guess_the_color">GUESS THE COLOR</string>
+    <string name="congratulations">CONGRATULATIONS</string>
     <string name="destination_tag">Destination tag</string>
     <string name="enter_password">ENTER PASSWORD</string>
     <string name="place_your_bet">Place your bet</string>
@@ -78,6 +79,7 @@
     <string name="amount">Amount</string>
     <string name="app_name">XURA</string>
     <string name="to">To</string>
+
 
 
     <string name="info_main">INFORMATION</string>

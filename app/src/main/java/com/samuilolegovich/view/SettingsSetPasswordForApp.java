@@ -54,7 +54,7 @@ public class SettingsSetPasswordForApp extends AppCompatActivity {
     private void setButtons() {
         textView = (TextView) findViewById(R.id.settings_set_password_app_text_view);
         passwordTwo = (EditText) findViewById(R.id.edit_text_passport_tow);
-        passwordOne = (EditText) findViewById(R.id.edit_text_seed);
+        passwordOne = (EditText) findViewById(R.id.password_field);
         confirm = (TextView) findViewById(R.id.confirm_link);
     }
 

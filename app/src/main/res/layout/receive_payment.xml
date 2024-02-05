@@ -94,7 +94,7 @@
             app:layout_constraintTop_toBottomOf="@+id/address" />
 
         <TextView
-            android:id="@+id/copy"
+            android:id="@+id/copy_linc"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="70dp"

@@ -46,9 +46,11 @@ public class CreateNewWallet extends AppCompatActivity {
 
     private String seedString;
 
+    private TextView createNewWalletText;
     private TextView copy;
     private TextView seed;
     private TextView next;
+
 
 
     @Override
@@ -57,18 +59,33 @@ public class CreateNewWallet extends AppCompatActivity {
         MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.create_new_wallet);
         setButtons();
+        setLanguage();
         listeners();
         isNewWallet = createNewWallet();
     }
 
+
+
     private void setButtons() {
+        createNewWalletText = (TextView) findViewById(R.id.create_new_wallet_text_view);
+        seed = (TextView) findViewById(R.id.seed_field);
         next = (TextView) findViewById(R.id.next_link);
-        seed = (TextView) findViewById(R.id.textView3);
-        copy = (TextView) findViewById(R.id.copy);
+        copy = (TextView) findViewById(R.id.copy_linc);
+
     }
+
+
+    private void setLanguage() {
+        createNewWalletText.setText(R.string.lead_the_seed);
+        seed.setText(R.string.wrong_restart_please);
+        next.setText(R.string.next);
+        copy.setText(R.string.copy);
+    }
+
 
     private void listeners() {
         animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
+
         next.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -86,6 +103,7 @@ public class CreateNewWallet extends AppCompatActivity {
         );
 
         clipboardManager=(ClipboardManager)getSystemService(CLIPBOARD_SERVICE);
+
         copy.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -114,6 +132,7 @@ public class CreateNewWallet extends AppCompatActivity {
         editor.apply();
     }
 
+
     // запустить менеджер и создать новый кошелек
     private boolean createNewWallet() {
         AsyncTask<String, Void, Map<String, String>> asyncTask = new CreateNewWalletAsync().execute("");
@@ -134,17 +153,20 @@ public class CreateNewWallet extends AppCompatActivity {
         return false;
     }
 
+
     private void goToAnotherPage(String namePage) {
         // класс для перехода на другую страницу
         Intent intent = new Intent(namePage);
         startActivity(intent);
     }
 
+
     private void makeToast(String massage) {
         Toast toast = Toast.makeText(getApplicationContext(), massage, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.TOP, 0,110);   // import android.view.Gravity;
         toast.show();
     }
+
 
     // при нажатии на кнопку назад будем возвращаться назад
     @Override

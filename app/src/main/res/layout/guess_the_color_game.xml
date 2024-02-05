@@ -11,7 +11,7 @@
     tools:ignore="MissingDefaultResource">
 
     <TextView
-        android:id="@+id/your_balance"
+        android:id="@+id/your_balance_text_view"
         android:layout_width="0dp"
         android:layout_height="15dp"
         android:layout_marginStart="70dp"
@@ -24,7 +24,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name_game_2" />
+        app:layout_constraintTop_toBottomOf="@+id/name_game_text_view_tow" />
 
     <TextView
         android:id="@+id/your_balance_xrp"
@@ -41,10 +41,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/your_balance" />
+        app:layout_constraintTop_toBottomOf="@+id/your_balance_text_view" />
 
     <TextView
-        android:id="@+id/name_game"
+        android:id="@+id/name_game_text_view"
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginStart="15dp"
@@ -60,10 +60,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rules_of_the_game" />
+        app:layout_constraintTop_toBottomOf="@+id/rules_of_the_game_link" />
 
     <TextView
-        android:id="@+id/name_game_2"
+        android:id="@+id/name_game_text_view_tow"
         android:layout_width="0dp"
         android:layout_height="20dp"
         android:layout_marginStart="70dp"
@@ -81,7 +81,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name_game" />
+        app:layout_constraintTop_toBottomOf="@+id/name_game_text_view" />
 
 
     <TextView
@@ -111,7 +111,7 @@
         app:layout_constraintTop_toBottomOf="@+id/your_balance_xrp" />
 
     <TextView
-        android:id="@+id/rules_of_the_game"
+        android:id="@+id/rules_of_the_game_link"
         android:layout_width="0dp"
         android:layout_height="25dp"
         android:layout_marginStart="50dp"
@@ -137,7 +137,7 @@
         android:layout_marginStart="50dp"
         android:layout_marginEnd="50dp"
         android:src="@drawable/up_jpg"
-        app:layout_constraintBottom_toTopOf="@+id/bet"
+        app:layout_constraintBottom_toTopOf="@+id/bet_field"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.555"
         app:layout_constraintStart_toStartOf="parent" />
@@ -197,7 +197,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/bet"
+        android:id="@+id/bet_field"
         android:layout_width="0dp"
         android:layout_height="45dp"
         android:layout_marginStart="30dp"
