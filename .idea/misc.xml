@@ -40,6 +40,7 @@
         <entry key="app/src/main/res/layout/referral_info.xml" value="0.397265625" />
         <entry key="app/src/main/res/layout/restore_or_create_new_wallet.xml" value="0.20671243325705568" />
         <entry key="app/src/main/res/layout/restore_wallet.xml" value="0.20671243325705568" />
+        <entry key="app/src/main/res/layout/restore_wallet_page.xml" value="0.375" />
         <entry key="app/src/main/res/layout/roulette_game.xml" value="0.335" />
         <entry key="app/src/main/res/layout/rules_of_the_game_double_your_bet.xml" value="0.2305327868852459" />
         <entry key="app/src/main/res/layout/rules_of_the_game_guess_the_color.xml" value="0.2687841530054645" />

@@ -25,23 +25,35 @@ public class RestoreOrCreateNewWallet extends AppCompatActivity {
     private Animation animTranslate;
     private TextView restoreWallet;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         MainActivity.MAIN_ACTIVITY.setLocale();
-        setContentView(R.layout.restore_or_create_new_wallet);
+        setContentView(R.layout.restore_or_create_new_wallet_page);
         setButtons();
         setLanguage();
         listeners();
     }
 
+
+
     private void setButtons() {
-        createNewWallet = (TextView) findViewById(R.id.create_new_wallet);
-        restoreWallet = (TextView) findViewById(R.id.restore_wallet);
+        createNewWallet = (TextView) findViewById(R.id.create_new_wallet_linc);
+        restoreWallet = (TextView) findViewById(R.id.restore_wallet_linc);
     }
+
+
+    private void setLanguage() {
+        createNewWallet.setText(R.string.create_new_wallet);
+        restoreWallet.setText(R.string.restore_wallet);
+    }
+
 
     private void listeners() {
         animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
+
         createNewWallet.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -63,11 +75,13 @@ public class RestoreOrCreateNewWallet extends AppCompatActivity {
         );
     }
 
+
     private void goToAnotherPage(String namePage) {
         // класс для перехода на другую страницу
         Intent intent = new Intent(namePage);
         startActivity(intent);
     }
+
 
     // при нажатии на кнопку назад будем возвращаться назад
     @Override

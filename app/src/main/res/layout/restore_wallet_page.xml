@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
 
-    android:id="@+id/restore_wallet"
+    android:id="@+id/restore_wallet_page"
     android:layout_width="match_parent"
 
     android:layout_height="match_parent"
@@ -25,7 +25,7 @@
 
 
     <TextView
-        android:id="@+id/settings_set_password_app_text_view"
+        android:id="@+id/restore_wallet_text_view"
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginStart="15dp"
@@ -42,7 +42,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageViewLogo" />
 
     <EditText
-        android:id="@+id/password_field"
+        android:id="@+id/restore_wallet_seed_field"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
@@ -55,10 +55,10 @@
         android:textColor="@color/rad_1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settings_set_password_app_text_view" />
+        app:layout_constraintTop_toBottomOf="@+id/restore_wallet_text_view" />
 
     <TextView
-        android:id="@+id/textInfo"
+        android:id="@+id/restore_wallet_text_view_tow"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="70dp"
@@ -72,10 +72,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password_field" />
+        app:layout_constraintTop_toBottomOf="@+id/restore_wallet_seed_field" />
 
     <TextView
-        android:id="@+id/next_link"
+        android:id="@+id/restore_wallet_next_link"
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginStart="100dp"

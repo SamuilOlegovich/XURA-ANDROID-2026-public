@@ -35,15 +35,19 @@ import static com.samuilolegovich.view.Referral.REFERRAL_CLASS;
 // тут востанавливаем кошелек
 public class RestoreWallet extends AppCompatActivity {
     public static final String RESTORE_WALLET_CLASS = ".RestoreWallet";
+
     private PaymentAndSocketManagerXRPL paymentAndSocketManagerXRPL;
+
+    private String ERROR_CHECK_THE_SEED_AND_TRY_AGAIN;
 
     private SharedPreferences.Editor editor;
     private SharedPreferences preferences;
     private Animation animTranslate;
 
-    private TextView textInfo;
+    private TextView restoreWalletTextView;
     private EditText seed;
     private TextView next;
+
 
 
     @Override
@@ -51,20 +55,32 @@ public class RestoreWallet extends AppCompatActivity {
         paymentAndSocketManagerXRPL = PaymentAndSocketManagerXRPL.getInstances();
         super.onCreate(savedInstanceState);
         MainActivity.MAIN_ACTIVITY.setLocale();
-        setContentView(R.layout.restore_wallet);
+        setContentView(R.layout.restore_wallet_page);
         setButtons();
         setLanguage();
         listeners();
     }
 
+
+
     private void setButtons() {
-        next = (TextView) findViewById(R.id.next_link);
-        seed = (EditText) findViewById(R.id.password_field);
-        textInfo = (TextView) findViewById(R.id.textInfo);
+        restoreWalletTextView = (TextView) findViewById(R.id.restore_wallet_text_view);
+        seed = (EditText) findViewById(R.id.restore_wallet_seed_field);
+        next = (TextView) findViewById(R.id.restore_wallet_next_link);
     }
+
+
+    private void setLanguage() {
+        ERROR_CHECK_THE_SEED_AND_TRY_AGAIN = getString(R.string.error_check_the_seed_and_try_again);
+
+        restoreWalletTextView.setText(R.string.restore_from_backup_seed);
+        next.setText(R.string.next);
+    }
+
 
     private void listeners() {
         animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
+
         next.setOnClickListener(
                 new View.OnClickListener() {
                     @SuppressLint("SetTextI18n")
@@ -80,15 +96,16 @@ public class RestoreWallet extends AppCompatActivity {
                                 MAIN_ACTIVITY.updateWallet();
                                 goToAnotherPage(REFERRAL_CLASS);
                             } else {
-                                makeToast("ERROR - CHECK THE SEED AND TRY AGAIN");
+                                makeToast(ERROR_CHECK_THE_SEED_AND_TRY_AGAIN);
                             }
                         } else {
-                            makeToast("ERROR - CHECK THE SEED AND TRY AGAIN");
+                            makeToast(ERROR_CHECK_THE_SEED_AND_TRY_AGAIN);
                         }
                     }
                 }
         );
     }
+
 
     @SuppressLint("HardwareIds")
     private void encryptAndWriteSeed(String seedRestore) {
@@ -105,10 +122,12 @@ public class RestoreWallet extends AppCompatActivity {
         editor.apply();
     }
 
+
     // запустить менеджер и реализовать востановление кошелька
     private boolean recoverWallet(String seedRestore)  {
         AsyncTask<String, Void, Map<String, String>> asyncTask = new RestoreWalletAsync().execute(seedRestore);
         Map<String, String> map = null;
+
         try {
             map = asyncTask.get();
         } catch (ExecutionException | InterruptedException e) {
@@ -118,8 +137,10 @@ public class RestoreWallet extends AppCompatActivity {
         if (map != null && map.containsKey("Classic Address")) {
             return true;
         }
+
         return false;
     }
+
 
     private void makeToast(String massage) {
         Toast toast = Toast.makeText(getApplicationContext(), massage, Toast.LENGTH_LONG);
@@ -127,11 +148,13 @@ public class RestoreWallet extends AppCompatActivity {
         toast.show();
     }
 
+
     private void goToAnotherPage(String namePage) {
         // класс для перехода на другую страницу
         Intent intent = new Intent(namePage);
         startActivity(intent);
     }
+
 
     // при нажатии на кнопку назад будем возвращаться назад
     @Override

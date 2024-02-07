@@ -35,6 +35,9 @@ import static com.samuilolegovich.view.CheckingNewWallet.CHECKING_NEW_WALLET_CLA
 // тут выводим данные по новому кошельку
 public class CreateNewWallet extends AppCompatActivity {
     public static final String CREATE_NEW_WALLET_CLASS = ".CreateNewWallet";
+
+    private String ADDRESS_COPIED_TO_PHONE_BUFFER;
+
     private ClipboardManager clipboardManager;
     private ClipData clipData;
 
@@ -76,6 +79,7 @@ public class CreateNewWallet extends AppCompatActivity {
 
 
     private void setLanguage() {
+        ADDRESS_COPIED_TO_PHONE_BUFFER = getString(R.string.addres_copied_to_phone_buffer);
         createNewWalletText.setText(R.string.lead_the_seed);
         seed.setText(R.string.wrong_restart_please);
         next.setText(R.string.next);
@@ -111,7 +115,7 @@ public class CreateNewWallet extends AppCompatActivity {
                         v.startAnimation(animTranslate);
                         clipData = ClipData.newPlainText("text", seedString);
                         clipboardManager.setPrimaryClip(clipData);
-                        makeToast("SEED COPIED TO BUFFER PHONE");
+                        makeToast(ADDRESS_COPIED_TO_PHONE_BUFFER);
                     }
                 }
         );

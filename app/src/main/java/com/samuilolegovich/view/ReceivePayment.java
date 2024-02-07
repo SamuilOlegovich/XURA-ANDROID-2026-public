@@ -29,6 +29,8 @@ import androidmads.library.qrgenearator.QRGEncoder;
 public class ReceivePayment extends AppCompatActivity {
     public static final String RECEIVE_PAYMENT_CLASS = ".ReceivePayment";
 
+    private String ADDRESS_COPIED_TO_PHONE_BUFFER;
+
     private ClipboardManager clipboardManager;
     private Animation animTranslate;
     private ClipData clipData;
@@ -67,6 +69,7 @@ public class ReceivePayment extends AppCompatActivity {
 
 
     private void setLanguage() {
+        ADDRESS_COPIED_TO_PHONE_BUFFER = getString(R.string.addres_copied_to_phone_buffer);
         receivePaymentTextViewTow.setText(R.string.and_get_a_hundred_times_more);
         receivePaymentTextView.setText(R.string.your_address);
         copy.setText(R.string.copy);
@@ -90,7 +93,7 @@ public class ReceivePayment extends AppCompatActivity {
                         v.startAnimation(animTranslate);
                         clipData = ClipData.newPlainText("text", classicAddress);
                         clipboardManager.setPrimaryClip(clipData);
-                        makeToast("ADDRESS COPIED TO PHONE BUFFER");
+                        makeToast(ADDRESS_COPIED_TO_PHONE_BUFFER);
                     }
                 }
         );

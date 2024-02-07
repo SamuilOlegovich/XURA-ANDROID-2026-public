@@ -76,10 +76,12 @@
 <!--    <string name="referral_text">IF YOU HAVE A REFERRAL CODE - BE SURE TO ENTER IT - IT WILL GIVE YOU EXTRA LIVES ON YOUR BETS AND PARTICIPATION IN THE DAILY PRIZE DRAW</string>-->
 <!--    <string name="rules_roulette">CURRENTLY THE GAME IS UNDER DEVELOPMENT. WE WANT TO IMPLEMENT THE CLASSIC ROULETTE GAME WITH THE MAXIMUM QUALITY.</string>-->
 <!--    <string name="create_new_wallet_text">BE SURE TO SAVE THE SEED AND DO NOT GIVE IT TO ANYONE</string>-->
+<!--        <string name="error_check_the_seed_and_try_again">ERROR - CHECK THE SEED AND TRY AGAIN</string>-->
 <!--    <string name="set_password_to_enter_application">SET A PASSWORD TO ENTER THE APPLICATION</string>-->
 <!--    <string name="become_referral_and_start_earning">BECOME A REFERRAL AND START EARNING</string>-->
 <!--    <string name="check_the_seed_and_try_again">ERROR - check the seed and try again.</string>-->
 <!--    <string name="last_text_two">DONT WORRY - PLAY FURTHER AND YOU WILL BE LUCKY</string>-->
+<!--    <string name="addres_copied_to_phone_buffer">ADDRESS COPIED TO PHONE BUFFER</string>-->
 <!--    <string name="and_get_a_hundred_times_more">AND GET A HUNDRED TIMES MORE</string>-->
 <!--    <string name="restore_from_backup_seed">RESTORE FROM BACKUP SEED</string>-->
 <!--    <string name="transaction_history_text">TRANSACTION HISTORY</string>-->
@@ -121,10 +123,12 @@
     <string name="rules_double_your_bet">Правила этой игры очень просты. Ставка всегда фиксирована и составляет - 1XRP. Вам просто нужно выбрать число, на которое хотите сделать ставку. (от -1 до - 36) В случае победы ставка будет увеличена в 36 раз. Если ставка проиграна, она идет в кассу - лото. Любой пользователь может выиграть лото, независимо от того, что и сколько он поставил - если выпадает сектор лото. Также вы можете выиграть мини-лото - это одна десятая лото.</string>
     <string name="referral_text">ЕСЛИ У ВАС ЕСТЬ КОД РЕФЕРАЛА - ОБЯЗАТЕЛЬНО ВВЕДИТЕ ЕГО - ЭТО ДАСТ ВАМ ДОПОЛНИТЕЛЬНЫЕ ЖИЗНИ НА ВАШИ СТАВКИ И УЧАСТИЕ В ЕЖЕДНЕВНОМ РОЗЫГРЫШЕ ПРИЗОВ</string>
     <string name="rules_roulette">В НАСТОЯЩЕЕ ВРЕМЯ ИГРА НАХОДИТСЯ В РАЗРАБОТКЕ. МЫ ХОТИМ РЕАЛИЗОВАТЬ КЛАССИЧЕСКУЮ ИГРУ В РУЛЕТКУ С МАКСИМАЛЬНОЙ КАЧЕСТВОМ</string>
+    <string name="error_check_the_seed_and_try_again">ОШИБКА - ПРОВЕРЬТЕ КЛЮЧ И ПОПРОБУЙТЕ ЕЩЕ РАЗ</string>
     <string name="create_new_wallet_text">ОБЯЗАТЕЛЬНО СОХРАНИТЕ КЛЮЧ И НЕ ПЕРЕДАВАЙТЕ ЕГО НИКОМУ</string>
     <string name="set_password_to_enter_application">УСТАНОВИТЕ ПАРОЛЬ ДЛЯ ВХОДА В ПРИЛОЖЕНИЕ</string>
     <string name="become_referral_and_start_earning">СТАНЬТЕ РЕФЕРАЛОМ И НАЧНИТЕ ЗАРАБАТЫВАТЬ</string>
     <string name="check_the_seed_and_try_again">ОШИБКА - проверьте ключ и попробуйте еще раз</string>
+    <string name="addres_copied_to_phone_buffer">АДРЕС СКОПИРОВАН В БУФФЕР ТЕЛЕФОНА</string>
     <string name="restore_from_backup_seed">ВОССТАНОВИТЬ ИЗ РЕЗЕРВНОГО КЛЮЧА</string>
     <string name="last_text_two">НЕ ВОЛНУЙТЕСЬ - ИГРАЙТЕ ДАЛЬШЕ И ВЫ УДАЧНЫ</string>
     <string name="and_get_a_hundred_times_more">И ПОЛУЧИТЕ В СТО РАЗ БОЛЬШЕ</string>
