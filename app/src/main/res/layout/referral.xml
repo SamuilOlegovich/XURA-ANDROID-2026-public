@@ -32,7 +32,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/settings_set_password_app_text_view"
+            android:id="@+id/referral_text_view"
             android:layout_width="0dp"
             android:layout_height="203dp"
             android:layout_marginStart="15dp"
@@ -49,7 +49,7 @@
 
 
         <EditText
-            android:id="@+id/referral_code"
+            android:id="@+id/referral_code_field"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="70dp"
@@ -62,11 +62,11 @@
             android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/settings_set_password_app_text_view" />
+            app:layout_constraintTop_toBottomOf="@+id/referral_text_view" />
 
 
         <TextView
-            android:id="@+id/next"
+            android:id="@+id/referral_set_linc"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_marginStart="70dp"
@@ -80,13 +80,13 @@
             android:textSize="25sp"
             android:textStyle="bold"
             android:typeface="normal"
-            app:layout_constraintBottom_toTopOf="@+id/skip"
+            app:layout_constraintBottom_toTopOf="@+id/referral_skip_linc"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/skip"
+            android:id="@+id/referral_skip_linc"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_marginStart="100dp"

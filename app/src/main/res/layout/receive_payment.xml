@@ -31,7 +31,7 @@
 
 
         <TextView
-            android:id="@+id/settings_set_password_app_text_view"
+            android:id="@+id/receive_payment_text_view_tow"
             android:layout_width="0dp"
             android:layout_height="25dp"
             android:layout_marginStart="70dp"
@@ -45,10 +45,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewSeed4" />
+            app:layout_constraintTop_toBottomOf="@+id/receive_payment_text_view" />
 
         <TextView
-            android:id="@+id/textViewSeed4"
+            android:id="@+id/receive_payment_text_view"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_marginStart="30dp"
@@ -78,7 +78,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/settings_set_password_app_text_view" />
+            app:layout_constraintTop_toBottomOf="@+id/receive_payment_text_view_tow" />
 
 
         <ImageView

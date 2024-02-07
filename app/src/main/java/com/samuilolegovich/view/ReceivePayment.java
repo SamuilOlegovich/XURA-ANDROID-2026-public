@@ -35,6 +35,8 @@ public class ReceivePayment extends AppCompatActivity {
 
     private String classicAddress;
 
+    private TextView receivePaymentTextViewTow;
+    private TextView receivePaymentTextView;
     private ImageView qrCode;
     private TextView address;
     private TextView copy;
@@ -56,19 +58,31 @@ public class ReceivePayment extends AppCompatActivity {
 
 
     private void setButtons() {
+        receivePaymentTextViewTow = (TextView) findViewById(R.id.receive_payment_text_view_tow);
+        receivePaymentTextView = (TextView) findViewById(R.id.receive_payment_text_view);
         qrCode = (ImageView) findViewById(R.id.qr_code);
         address = (TextView) findViewById(R.id.address);
         copy = (TextView) findViewById(R.id.copy_linc);
     }
+
+
+    private void setLanguage() {
+        receivePaymentTextViewTow.setText(R.string.and_get_a_hundred_times_more);
+        receivePaymentTextView.setText(R.string.your_address);
+        copy.setText(R.string.copy);
+    }
+
 
     private void setAddress() {
         classicAddress = PaymentAndSocketManagerXRPL.getInstances().getClassicAddress(true);
         address.setText(classicAddress);
     }
 
+
     private void listeners() {
         animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
         clipboardManager=(ClipboardManager)getSystemService(CLIPBOARD_SERVICE);
+
         copy.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -82,6 +96,7 @@ public class ReceivePayment extends AppCompatActivity {
         );
     }
 
+
     private void setQrCode() {
         // Initializing the QR Encoder with your value to be encoded, type you required and Dimension
         QRGEncoder qrgEncoder = new QRGEncoder(classicAddress, null, QRGContents.Type.TEXT, 800);
@@ -90,11 +105,13 @@ public class ReceivePayment extends AppCompatActivity {
         qrCode.setImageBitmap(qrgEncoder.getBitmap());
     }
 
+
     private void makeToast(String massage) {
         Toast toast = Toast.makeText(getApplicationContext(), massage, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.TOP, 0,110);   // import android.view.Gravity;
         toast.show();
     }
+
 
     // при нажатии на кнопку назад будем возвращаться назад
     @Override

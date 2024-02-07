@@ -18,11 +18,10 @@
     <string name="settings_language"><u>RUSSIAN</u></string>
     <string name="set_referral"><u>SET REFERRAL</u></string>
     <string name="scan_qr_code"><u>SCAN QR CODE</u></string>
+    <string name="place_bet_linc"><u>PLACE BET</u></string>
     <string name="settings_main"><u>SETTINGS</u></string>
     <string name="name_roulette"><u>ROULETTE</u></string>
-    <string name="place_a_bet"><u>PLACE BET</u></string>
     <string name="set_password"><u>CONFIRM</u></string>
-    <string name="info_referral">INFORMATION</string>
     <string name="next_one"><u>NEXT >></u></string>
     <string name="request"><u>REQUEST</u></string>
     <string name="black"><u>BLACK</u></string>
@@ -44,6 +43,7 @@
     <string name="set_password_to_enter_application">SET A PASSWORD TO ENTER THE APPLICATION</string>
     <string name="become_referral_and_start_earning">BECOME A REFERRAL AND START EARNING</string>
     <string name="check_the_seed_and_try_again">ERROR - check the seed and try again.</string>
+    <string name="last_text_two">DONT WORRY - PLAY FURTHER AND YOU WILL BE LUCKY</string>
     <string name="and_get_a_hundred_times_more">AND GET A HUNDRED TIMES MORE</string>
     <string name="restore_from_backup_seed">RESTORE FROM BACKUP SEED</string>
     <string name="transaction_history_text">TRANSACTION HISTORY</string>
@@ -64,6 +64,7 @@
     <string name="lead_the_seed">LEAD THE SEED</string>
     <string name="your_address">YOUR ADDRESS:</string>
     <string name="settings_settings">SETTINGS</string>
+    <string name="info_referral">INFORMATION</string>
     <string name="your_balance">YOUR BALANCE</string>
     <string name="send_payment">SEND PAYMENT</string>
     <string name="repeat_enter">Repeat enter</string>

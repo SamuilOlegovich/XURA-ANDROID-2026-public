@@ -49,9 +49,12 @@ public class GuessTheNumberGame extends AppCompatActivity {
     private BigDecimal yourBalance;
     private String myReferral;
 
+    private TextView nameGameTextViewTree;
+    private TextView nameGameTextViewTwo;
+    private TextView nameGameTextView;
+    private TextView placeBetLinc;
     private EditText betNumber;
     private TextView rulesInfo;
-    private TextView placeBet;
     private TextView balance;
     private TextView outInfo;
     private EditText bet;
@@ -62,7 +65,7 @@ public class GuessTheNumberGame extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         MainActivity.MAIN_ACTIVITY.setLocale();
-        setContentView(R.layout.guess_the_number_game);
+        setContentView(R.layout.guess_the_number_game_page);
         setButtons();
         setLanguage();
         listeners();
@@ -81,25 +84,39 @@ public class GuessTheNumberGame extends AppCompatActivity {
     }
 
 
-
     private void setButtons() {
         casinoMediaPlayer = MediaPlayer.create(this, R.raw.in_casino);
         errorMediaPlayer = MediaPlayer.create(this, R.raw.error);
         betMediaPlayer = MediaPlayer.create(this, R.raw.bet);
+
+        nameGameTextViewTree = (TextView) findViewById(R.id.name_game_text_view_tree);
+        nameGameTextViewTwo = (TextView) findViewById(R.id.name_game_text_view_tow);
+        nameGameTextView = (TextView) findViewById(R.id.name_game_text_view);
         rulesInfo = (TextView) findViewById(R.id.rules_of_the_game_link);
-        balance = (TextView) findViewById(R.id.your_balance_xrp);
-        placeBet = (TextView) findViewById(R.id.place_a_bet);
+        balance = (TextView) findViewById(R.id.your_balance_xrp_text);
+        placeBetLinc = (TextView) findViewById(R.id.place_bet_linc);
+        betNumber = (EditText) findViewById(R.id.bet_number_field);
         outInfo = (TextView) findViewById(R.id.number_info_text);
-        betNumber = (EditText) findViewById(R.id.number);
         bet = (EditText) findViewById(R.id.bet_field);
 
         soundPlay(casinoMediaPlayer);
     }
 
 
+    private void setLanguage() {
+        nameGameTextViewTwo.setText(R.string.and_get_a_hundred_times_more);
+        nameGameTextView.setText(R.string.guess_the_number);
+        nameGameTextViewTree.setText(R.string.your_balance);
+        rulesInfo.setText(R.string.rules_of_the_game);
+        placeBetLinc.setText(R.string.place_bet_linc);
+        betNumber.setText(R.string.enter_number_1_36);
+        bet.setText(R.string.place_your_bet);
+    }
+
 
     private void listeners() {
         animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
+
         rulesInfo.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -109,7 +126,8 @@ public class GuessTheNumberGame extends AppCompatActivity {
                     }
                 }
         );
-        placeBet.setOnClickListener(
+
+        placeBetLinc.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -121,6 +139,7 @@ public class GuessTheNumberGame extends AppCompatActivity {
         );
     }
 
+
     private void makeStackThread() {
         new Thread(new Runnable() {
             @Override
@@ -131,14 +150,15 @@ public class GuessTheNumberGame extends AppCompatActivity {
     }
 
 
-
     private void makeStack() {
         String sendAmount = prepareTheShippingAmount(bet.getText().toString());
         String tag = betNumber.getText().toString();
         String tegNumber = testNumber(tag);
+
         if (myReferral == null) {
             myReferral = "0";
         }
+
         if (tegNumber != null && checkData(sendAmount, tegNumber + myReferral)) {
             betNumber.setText("");
             bet.setText("");
@@ -151,6 +171,7 @@ public class GuessTheNumberGame extends AppCompatActivity {
         }
     }
 
+
     private String prepareTheShippingAmount(String sendAmount) {
         if (sendAmount.contains(".")) {
             int i = sendAmount.indexOf(".");
@@ -159,8 +180,10 @@ public class GuessTheNumberGame extends AppCompatActivity {
                 return sendAmount.substring(0, max + 1);
             }
         }
+
         return sendAmount;
     }
+
 
     private void setBetParam(String tag, boolean color) {
         boolean b = Lotto.getRandomColorForNumber(tag);
@@ -168,40 +191,46 @@ public class GuessTheNumberGame extends AppCompatActivity {
         Flasher.NUMBER_BET = tag;
     }
 
+
     private boolean checkData(String sendAmount, String sendTeg) {
         if (sendAmount == null || sendAmount.length() < 1) {
             errorMediaPlayer.start();
             makeToast("PAYMENT AMOUNT IS INCORRECT");
             return false;
         }
+
         if (new BigDecimal(sendAmount).compareTo(new BigDecimal("0.000000")) == 0) {
             errorMediaPlayer.start();
             makeToast( "IT IS NOT POSSIBLE TO SEND NULL");
             return false;
         }
+
         if (new BigDecimal(sendAmount).compareTo(yourBalance) > 0) {
             errorMediaPlayer.start();
             makeToast("YOUR ACCOUNT IS NOT ENOUGH TO SEND");
             return false;
         }
+
         if (sendTeg != null && !sendTeg.equals("") && Long.parseLong(sendTeg) >= Integer.MAX_VALUE) {
             errorMediaPlayer.start();
             makeToast("TAG KNOWLEDGE CANNOT BE MORE - 2147483647");
             return false;
         }
+
         if (new BigDecimal(sendAmount).compareTo(new BigDecimal(StringEnum.MAX_BET_GUESS_THE_COLOR.getValue())) > 0) {
             errorMediaPlayer.start();
             makeToast("BET CANNOT BE MORE THAN - " + StringEnum.MAX_BET_GUESS_THE_COLOR.getValue() + "XRP");
             return false;
         }
+
         if (new BigDecimal(sendAmount).compareTo(new BigDecimal(StringEnum.MIN_BET_GUESS_THE_COLOR.getValue())) < 0) {
             errorMediaPlayer.start();
             makeToast("BET CANNOT BE LESS THAN - " + StringEnum.MIN_BET_GUESS_THE_COLOR.getValue() + "XRP");
             return false;
         }
+
         return makePayment(sendAmount, sendTeg);
     }
-
 
 
 //    private boolean checkData(String sendAmount, String sendTeg) {
@@ -224,23 +253,24 @@ public class GuessTheNumberGame extends AppCompatActivity {
 //    }
 
 
-
     private boolean makePayment(String sendAmount, String sendTeg) {
-        AsyncTask<String, Void, Boolean> asyncTask = new SendPaymentAsync()
-                .execute(StringEnum.SERVER_ADDRESS_GUESS_THE_NUMBER.getValue(), sendAmount, sendTeg);
+        AsyncTask<String, Void, Boolean> asyncTask = new SendPaymentAsync().execute(
+                        StringEnum.SERVER_ADDRESS_GUESS_THE_NUMBER.getValue(), sendAmount, sendTeg);
         boolean b = false;
+
         try {
             b = asyncTask.get();
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
+
         if (!b) {
             errorMediaPlayer.start();
             makeToast("WRONG DESTINATION ADDRESS");
         }
+
         return b;
     }
-
 
 
     public void setColorAndText(String text, boolean b) {
@@ -267,10 +297,10 @@ public class GuessTheNumberGame extends AppCompatActivity {
     }
 
 
-
     private void getReferral() {
         // tag 214 referral 7483647
         preferences = getSharedPreferences(StringEnum.APP_PREFERENCES.getValue(), Context.MODE_PRIVATE);
+
         if (preferences.contains(StringEnum.APP_PREFERENCES_REFERRAL.getValue())) {
             myReferral = preferences.getString(StringEnum.APP_PREFERENCES_REFERRAL.getValue(), "");
         } else {
@@ -279,9 +309,11 @@ public class GuessTheNumberGame extends AppCompatActivity {
     }
 
 
-
     private String testNumber(String number) {
-        if (!number.equals("") && number.length() > 0 && number.length() < 3 && !number.startsWith("0")) {
+        if (!number.equals("")
+                && number.length() > 0
+                && number.length() < 3
+                && !number.startsWith("0")) {
             long inTag = Long.parseLong(number);
             int min = Integer.parseInt(StringEnum.MIN_BET_GUESS_THE_NUMBER.getValue());
             int max = Integer.parseInt(StringEnum.MAX_BET_GUESS_THE_NUMBER.getValue());
@@ -291,9 +323,9 @@ public class GuessTheNumberGame extends AppCompatActivity {
                 return result + "";
             }
         }
+
         return null;
     }
-
 
 
     private void goToAnotherPage(String namePage) {
@@ -319,18 +351,16 @@ public class GuessTheNumberGame extends AppCompatActivity {
     }
 
 
-
-
     @SuppressLint("SetTextI18n")
     private void goText(String s) {
         outInfo.setText(s);
     }
 
 
-
     @SuppressLint("SetTextI18n")
     private void setBalance() {
         AsyncTask<String, Void, BigDecimal> getBalanceAsync = new GetBalanceAsync().execute("");
+
         try {
             yourBalance = getBalanceAsync.get();
             balance.setText(yourBalance.toString() + "  XRP");
@@ -340,19 +370,18 @@ public class GuessTheNumberGame extends AppCompatActivity {
     }
 
 
-
     @SuppressLint("SetTextI18n")
     public void updateBalance(BigDecimal bigDecimal) {
         yourBalance = bigDecimal;
         balance.setText(yourBalance.toString() + "  XRP");
     }
 
+
     private void goThread(){
         Runnable runnable = new GenNumberRun();
         Thread thread = new Thread(runnable);
         thread.start();
     }
-
 
 
     @Override
@@ -363,7 +392,6 @@ public class GuessTheNumberGame extends AppCompatActivity {
     }
 
 
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -371,7 +399,6 @@ public class GuessTheNumberGame extends AppCompatActivity {
         GenNumberRun.FLAG =  true;
         goThread();
     }
-
 
 
     // при нажатии на кнопку назад будем возвращаться назад

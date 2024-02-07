@@ -80,10 +80,11 @@ public class Flasher extends AppCompatActivity {
 
     private void setButtons() {
         constraintLayout = (ConstraintLayout) findViewById(R.id.flasher);
+
+        infoThree = (TextView) findViewById(R.id.last_text_view_tree);
         numberInfo = (TextView) findViewById(R.id.number_info_text);
-        infoThree = (TextView) findViewById(R.id.info_text_tree);
-        infoTwo = (TextView) findViewById(R.id.info_text_tow);
-        winInfo = (TextView) findViewById(R.id.info_text);
+        infoTwo = (TextView) findViewById(R.id.last_text_view_two);
+        winInfo = (TextView) findViewById(R.id.last_text_view);
     }
 
 

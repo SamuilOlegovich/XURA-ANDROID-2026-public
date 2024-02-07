@@ -25,7 +25,9 @@
         <entry key="app/src/main/res/layout/enter_application_password.xml" value="0.20671243325705568" />
         <entry key="app/src/main/res/layout/flasher.xml" value="0.26434426229508196" />
         <entry key="app/src/main/res/layout/guess_the_color_game.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/guess_the_color_game_page.xml" value="0.46171875" />
         <entry key="app/src/main/res/layout/guess_the_number_game.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/guess_the_number_game_page.xml" value="0.46171875" />
         <entry key="app/src/main/res/layout/hhh.xml" value="0.39617486338797814" />
         <entry key="app/src/main/res/layout/info_credit_page.xml" value="0.4234375" />
         <entry key="app/src/main/res/layout/info_main.xml" value="0.397265625" />

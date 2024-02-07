@@ -67,7 +67,7 @@ public class GuessTheColorGame extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         MainActivity.MAIN_ACTIVITY.setLocale();
-        setContentView(R.layout.guess_the_color_game);
+        setContentView(R.layout.guess_the_color_game_page);
         getReferral();
         setButtons();
         setLanguage();
@@ -91,7 +91,7 @@ public class GuessTheColorGame extends AppCompatActivity {
         yourBalanceTextView = (TextView) findViewById(R.id.your_balance_text_view);
         rulesOfTheGameLink = (TextView) findViewById(R.id.rules_of_the_game_link);
         nameGameTextView = (TextView) findViewById(R.id.name_game_text_view);
-        balance = (TextView) findViewById(R.id.your_balance_xrp);
+        balance = (TextView) findViewById(R.id.your_balance_xrp_text);
         outInfo = (TextView) findViewById(R.id.info_output);
         black = (TextView) findViewById(R.id.color_black);
         red = (TextView) findViewById(R.id.color_red);

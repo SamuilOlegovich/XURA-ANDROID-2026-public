@@ -17,9 +17,11 @@ public class Lost extends AppCompatActivity {
     public static String MASSAGE = "";
 
     private MediaPlayer lostMediaPlayer;
-    private TextView textInfo;
-    private TextView text;
-    private TextView info;
+    private TextView lastTextViewTree;
+    private TextView lastTextViewTow;
+    private TextView lastTextView;
+
+    private String TICKER;
 
 
 
@@ -36,23 +38,29 @@ public class Lost extends AppCompatActivity {
 
 
     private void setButtons() {
-        lostMediaPlayer = MediaPlayer.create(this, R.raw.lost);
-        textInfo = (TextView) findViewById(R.id.info_text_tow);
-        text = (TextView) findViewById(R.id.info_text_tree);
-        info = (TextView) findViewById(R.id.info_text);
+        lastTextViewTree = (TextView) findViewById(R.id.last_text_view_tree);
+        lastTextViewTow = (TextView) findViewById(R.id.last_text_view_two);
+        lastTextView = (TextView) findViewById(R.id.last_text_view);
 
+        lostMediaPlayer = MediaPlayer.create(this, R.raw.lost);
         lostMediaPlayer.start();
     }
 
+
+    private void setLanguage() {
+        lastTextViewTree.setText(R.string.good_luck);
+        lastTextView.setText(R.string.bet_lost);
+
+        TICKER = getString(R.string.last_text_two);
+    }
 
 
     // настройка для бегущей строки
     @SuppressLint("SetTextI18n")
     private void goText() {
-        textInfo.setText("DON'T WORRY - PLAY FURTHER AND YOU WILL BE LUCKY");
-        textInfo.setSelected(true);
+        lastTextViewTow.setText(TICKER);
+        lastTextViewTow.setSelected(true);
     }
-
 
 
     // при нажатии на кнопку назад будем возвращаться назад

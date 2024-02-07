@@ -12,13 +12,18 @@ import com.samuilolegovich.R;
 public class InfoMain extends AppCompatActivity {
     public static final String INFO_MAIN_CLASS = ".InfoMain";
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.info_main);
+        setButtons();
         setLanguage();
     }
+
+
 
     // при нажатии на кнопку назад будем возвращаться назад
     @Override

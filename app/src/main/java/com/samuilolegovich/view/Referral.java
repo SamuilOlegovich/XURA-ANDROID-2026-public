@@ -28,9 +28,11 @@ public class Referral extends AppCompatActivity {
     private SharedPreferences preferences;
     private Animation animTranslate;
 
-    private EditText referralCode;
-    private TextView next;
+    private EditText enterReferralCode;
+    private TextView referralTextView;
     private TextView skip;
+    private TextView set;
+
 
 
     @Override
@@ -43,21 +45,33 @@ public class Referral extends AppCompatActivity {
         listeners();
     }
 
+
+
     private void setButtons() {
-        referralCode = (EditText) findViewById(R.id.referral_code);
-        next = (TextView) findViewById(R.id.next);
-        skip = (TextView) findViewById(R.id.skip);
+        referralTextView = (TextView) findViewById(R.id.referral_text_view);
+        enterReferralCode = (EditText) findViewById(R.id.referral_code_field);
+        skip = (TextView) findViewById(R.id.referral_skip_linc);
+        set = (TextView) findViewById(R.id.referral_set_linc);
     }
+
+
+    private void setLanguage() {
+        enterReferralCode.setText(R.string.enter_referral_code);
+        referralTextView.setText(R.string.referral_text);
+        skip.setText(R.string.skip);
+        set.setText(R.string.set);
+    }
+
 
     private void listeners() {
         animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
 
-        next.setOnClickListener(
+        set.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         v.startAnimation(animTranslate);
-                        String code = referralCode.getText().toString();
+                        String code = enterReferralCode.getText().toString();
 
                         if (code.length() > 0
                                 && Long.parseLong(code) < Long.parseLong(StringEnum.MAX_REFERRALS.getValue())) {
@@ -68,7 +82,7 @@ public class Referral extends AppCompatActivity {
                                 onBackPressed();
                             }
                         } else {
-                            referralCode.setText("");
+                            enterReferralCode.setText("");
                             makeToast(StringEnum.REFERRAL_DOES_NOT_MATCH.getValue());
                         }
                     }
@@ -91,6 +105,7 @@ public class Referral extends AppCompatActivity {
         );
     }
 
+
     private void setReferralForApp(String referral) {
         preferences = getSharedPreferences(StringEnum.APP_PREFERENCES.getValue(), Context.MODE_PRIVATE);
         editor = preferences.edit();
@@ -98,17 +113,20 @@ public class Referral extends AppCompatActivity {
         editor.apply();
     }
 
+
     private void makeToast(String massage) {
         Toast toast = Toast.makeText(getApplicationContext(), massage, Toast.LENGTH_LONG);
         toast.setGravity(Gravity.TOP, 0,110);   // import android.view.Gravity;
         toast.show();
     }
 
+
     // при нажатии на кнопку назад будем возвращаться назад
     @Override
     public void onBackPressed() {
         super.onBackPressed();
     }
+
 
     // для закрытие этой активити и попадания на главную активити
     public void closeThisPage() {

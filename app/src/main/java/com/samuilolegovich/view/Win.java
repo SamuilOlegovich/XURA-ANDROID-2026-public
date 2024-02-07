@@ -37,9 +37,9 @@ public class Win extends AppCompatActivity {
 
     private void setButtons() {
         winMediaPlayer = MediaPlayer.create(this, R.raw.win);
-        info3 = (TextView) findViewById(R.id.info_text_tree);
-        info2 = (TextView) findViewById(R.id.info_text_tow);
-        info = (TextView) findViewById(R.id.info_text);
+        info3 = (TextView) findViewById(R.id.last_text_view_tree);
+        info2 = (TextView) findViewById(R.id.last_text_view_two);
+        info = (TextView) findViewById(R.id.last_text_view);
 
         winMediaPlayer.start();
     }
