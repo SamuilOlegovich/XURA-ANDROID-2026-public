@@ -56,6 +56,8 @@ public class SendPayment extends AppCompatActivity {
         SEND_PAYMENT = this;
     }
 
+
+
     private void setButtons() {
         balance = (TextView) findViewById(R.id.balance);
         amount = (EditText) findViewById(R.id.amount);
@@ -65,9 +67,11 @@ public class SendPayment extends AppCompatActivity {
         tag = (EditText) findViewById(R.id.tag);
     }
 
+
     @SuppressLint("SetTextI18n")
     private void setBalance() {
         AsyncTask<String, Void, BigDecimal> getBalanceAsync = new GetBalanceAsync().execute("");
+
         try {
             yourBalance = getBalanceAsync.get();
             balance.setText(yourBalance.toString() + XRP);
@@ -76,6 +80,7 @@ public class SendPayment extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
 
     @SuppressLint("SetTextI18n")
     private void setNewText() {
@@ -93,8 +98,10 @@ public class SendPayment extends AppCompatActivity {
         }.start();
     }
 
+
     private void listeners() {
         animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
+
         send.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -105,6 +112,7 @@ public class SendPayment extends AppCompatActivity {
                     }
                 }
         );
+
         scan.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -115,6 +123,7 @@ public class SendPayment extends AppCompatActivity {
                 }
         );
     }
+
 
     private void sendThread(boolean b) {
         new Thread(new Runnable() {
@@ -131,6 +140,7 @@ public class SendPayment extends AppCompatActivity {
         }).start();
     }
 
+
     private void makeToast(String massage) {
         new Thread() {
             public void run() {
@@ -146,6 +156,7 @@ public class SendPayment extends AppCompatActivity {
         }.start();
     }
 
+
     private String prepareTheShippingAmount(String sendAmount) {
         if (sendAmount.contains(".")) {
             int i = sendAmount.indexOf(".");
@@ -157,48 +168,60 @@ public class SendPayment extends AppCompatActivity {
         return sendAmount;
     }
 
+
     private boolean checkData(String sendAddress, String sendAmount, String sendTeg) {
         setBalance();
         if (sendAddress == null || sendAddress.length() < 33) {
             makeToast("WRONG DESTINATION ADDRESS");
             return false;
         }
+
         if (sendAmount == null || sendAmount.length() < 1) {
             makeToast("PAYMENT AMOUNT IS INCORRECT");
             return false;
         }
+
         if (new BigDecimal(sendAmount).compareTo(new BigDecimal("0.000000")) == 0) {
             makeToast( "IT IS NOT POSSIBLE TO SEND NULL");
             return false;
         }
+
         if (new BigDecimal(sendAmount).compareTo(yourBalance) > 0) {
             makeToast("YOUR ACCOUNT IS NOT ENOUGH TO SEND");
             return false;
         }
+
         if (sendTeg != null && sendTeg.length() > 11) {
             makeToast("TAG KNOWLEDGE CANNOT BE MORE - 2147483647");
             return false;
         }
+
         if (sendTeg != null && !sendTeg.equals("") && Long.parseLong(sendTeg) >= Integer.MAX_VALUE) {
             makeToast("TAG KNOWLEDGE CANNOT BE MORE - 2147483647");
             return false;
         }
+
         return makePayment(sendAddress, sendAmount, sendTeg);
     }
+
 
     private boolean makePayment(String sendAddress, String sendAmount, String sendTeg) {
         AsyncTask<String, Void, Boolean> asyncTask = new SendPaymentAsync().execute(sendAddress, sendAmount, sendTeg);
         boolean b = false;
+
         try {
             b = asyncTask.get();
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
+
         if (!b) {
             makeToast("WRONG DESTINATION ADDRESS");
         }
+
         return b;
     }
+
 
     private void goToAnotherPage(String namePage) {
         // класс для перехода на другую страницу
@@ -206,12 +229,12 @@ public class SendPayment extends AppCompatActivity {
         startActivity(intent);
     }
 
+
     @SuppressLint("SetTextI18n")
     public void updateBalance(BigDecimal bigDecimal) {
         yourBalance = bigDecimal;
         balance.setText(yourBalance.toString());
     }
-
 
 
 //    private void makeToast(String massage) {
@@ -240,7 +263,6 @@ public class SendPayment extends AppCompatActivity {
     }
 
 
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -249,7 +271,6 @@ public class SendPayment extends AppCompatActivity {
             ADDRESS = "";
         }
     }
-
 
 
     // при нажатии на кнопку назад будем возвращаться назад

@@ -50,11 +50,12 @@ public class ScanQrCode extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         MainActivity.MAIN_ACTIVITY.setLocale();
-        setContentView(R.layout.scan_code);
+        setContentView(R.layout.scan_code_page);
         setButtons();
-        setLanguage();
         performCheck();
     }
+
+
 
     private void performCheck() {
         if (allPermissionGranted()) {
@@ -66,8 +67,10 @@ public class ScanQrCode extends AppCompatActivity {
 
 
     private void setButtons() {
+
         mPreviewView = (PreviewView) findViewById(R.id.camera);
     }
+
 
     // при сканировании кода запускаем тред и через время все обнуляется и он опять сканирует,
     // в нашем случаи надо сделать чтобы через это время он установил адрес сосканированного
@@ -90,6 +93,7 @@ public class ScanQrCode extends AppCompatActivity {
 //        }).start();
     }
 
+
     private void bindPreview(@NotNull ProcessCameraProvider cameraProvider) {
         // выбираем заднюю камеру устройства
         CameraSelector cameraSelector = new CameraSelector.Builder()
@@ -100,7 +104,6 @@ public class ScanQrCode extends AppCompatActivity {
         ImageAnalysis imageAnalysis = new ImageAnalysis.Builder().build();
         imageAnalysis.setAnalyzer(Executors.newFixedThreadPool(1), new QRCodeDecoder(this));
         ImageCapture.Builder builder = new ImageCapture.Builder();
-
 
 //        HdrImageCaptureExtender hdrImageCaptureExtender = HdrImageCaptureExtender.create(builder);
 //        if (hdrImageCaptureExtender.isExtensionAvaible(cameraSelector)) {
@@ -117,8 +120,10 @@ public class ScanQrCode extends AppCompatActivity {
         cameraProvider.bindToLifecycle((LifecycleOwner) this, cameraSelector, preview, imageAnalysis, imageCapture);
     }
 
+
     private void startCamera() {
         final ListenableFuture<ProcessCameraProvider> cameraProviderFuture = ProcessCameraProvider.getInstance(this);
+
         cameraProviderFuture.addListener(() -> {
             try {
                 ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
@@ -129,6 +134,7 @@ public class ScanQrCode extends AppCompatActivity {
         } , ContextCompat.getMainExecutor(this));
     }
 
+
     // все ли необходимые разрешения установлены пользователем
     private boolean allPermissionGranted() {
         for (String permission : REQUIRED_PERMISSIONS) {
@@ -136,12 +142,17 @@ public class ScanQrCode extends AppCompatActivity {
                 return false;
             }
         }
+
         return true;
     }
 
+
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
         if (requestCode == REQUEST_CODE_PERMISSIONS) {
             if (allPermissionGranted()) {
                 startCamera();
@@ -151,6 +162,7 @@ public class ScanQrCode extends AppCompatActivity {
         }
     }
 
+
     private void goToAnotherPage(String namePage) {
         // класс для перехода на другую страницу
         Intent intent = new Intent(namePage);
@@ -158,16 +170,17 @@ public class ScanQrCode extends AppCompatActivity {
     }
 
 
-
     @Override
     protected void onPause() {
         super.onPause();
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
     }
+
 
     // при нажатии на кнопку назад будем возвращаться назад
     @Override

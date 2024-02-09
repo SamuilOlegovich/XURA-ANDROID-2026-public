@@ -106,6 +106,7 @@ public class SelectLanguage extends AppCompatActivity {
     private void makeStack(StringEnum stringEnum) {
         MainActivity.newLocale = new Locale(stringEnum.getValue());
         preferences = getSharedPreferences(StringEnum.APP_PREFERENCES.getValue(), Context.MODE_PRIVATE);
+
         editor = preferences.edit();
         editor.putString(StringEnum.APP_PREFERENCES_LOCALE.getValue(), stringEnum.getValue());
         editor.apply();

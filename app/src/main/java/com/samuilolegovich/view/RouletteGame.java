@@ -21,29 +21,49 @@ public class RouletteGame extends AppCompatActivity {
     public static final String ROULETTE_GAME_CLASS = ".RouletteGame";
 
     private MediaPlayer casinoMediaPlayer;
+
     private Animation animTranslate;
+
+    private TextView rouletteGameTextView;
+    private TextView rouletteGameMessage;
     private TextView rulesInfo;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         MainActivity.MAIN_ACTIVITY.setLocale();
-        setContentView(R.layout.roulette_game);
+        setContentView(R.layout.roulette_game_page);
         setButtons();
         setLanguage();
         listeners();
     }
 
+
+
     private void setButtons() {
-        casinoMediaPlayer = MediaPlayer.create(this, R.raw.in_casino);
+        rouletteGameTextView = (TextView) findViewById(R.id.roulette_game_text_view);
+        rouletteGameMessage = (TextView) findViewById(R.id.roulette_game_message);
         rulesInfo = (TextView) findViewById(R.id.rules_of_the_game_link);
+
+        casinoMediaPlayer = MediaPlayer.create(this, R.raw.in_casino);
 
         casinoMediaPlayer.setLooping(true);
         casinoMediaPlayer.start();
     }
 
+
+    private void setLanguage() {
+        rouletteGameTextView.setText(R.string.rules_of_the_game);
+        rouletteGameMessage.setText(R.string.roulette_game);
+        rulesInfo.setText(R.string.coming_soon);
+    }
+
+
     private void listeners() {
         animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
+
         rulesInfo.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -55,11 +75,13 @@ public class RouletteGame extends AppCompatActivity {
         );
     }
 
+
     private void goToAnotherPage(String namePage) {
         // класс для перехода на другую страницу
         Intent intent = new Intent(namePage);
         startActivity(intent);
     }
+
 
     // при нажатии на кнопку назад будем возвращаться назад
     @Override

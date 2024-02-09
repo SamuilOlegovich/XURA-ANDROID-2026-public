@@ -42,12 +42,17 @@
         <entry key="app/src/main/res/layout/restore_wallet.xml" value="0.20671243325705568" />
         <entry key="app/src/main/res/layout/restore_wallet_page.xml" value="0.375" />
         <entry key="app/src/main/res/layout/roulette_game.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/roulette_game_page.xml" value="0.46171875" />
         <entry key="app/src/main/res/layout/rules_of_the_game_double_your_bet.xml" value="0.2305327868852459" />
         <entry key="app/src/main/res/layout/rules_of_the_game_guess_the_color.xml" value="0.2687841530054645" />
+        <entry key="app/src/main/res/layout/rules_of_the_game_guess_the_color_page.xml" value="0.46171875" />
         <entry key="app/src/main/res/layout/rules_of_the_game_guess_the_number.xml" value="0.3271857923497268" />
+        <entry key="app/src/main/res/layout/rules_of_the_game_guess_the_number_page.xml" value="0.46171875" />
         <entry key="app/src/main/res/layout/rules_of_the_game_roulette.xml" value="0.2687841530054645" />
         <entry key="app/src/main/res/layout/scan_code.xml" value="0.40095628415300544" />
+        <entry key="app/src/main/res/layout/scan_code_page.xml" value="0.5640625" />
         <entry key="app/src/main/res/layout/select_game.xml" value="0.2305327868852459" />
+        <entry key="app/src/main/res/layout/select_game_page.xml" value="0.5640625" />
         <entry key="app/src/main/res/layout/select_language.xml" value="0.27424863387978143" />
         <entry key="app/src/main/res/layout/send_payment.xml" value="0.335" />
         <entry key="app/src/main/res/layout/set_password_for_app.xml" value="0.25" />

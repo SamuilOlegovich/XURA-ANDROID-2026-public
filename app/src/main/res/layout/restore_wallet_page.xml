@@ -11,6 +11,7 @@
     tools:context=".view.RestoreWallet"
     tools:ignore="MissingDefaultResource">
 
+
     <ImageView
         android:id="@+id/imageViewLogo"
         android:layout_width="0dp"

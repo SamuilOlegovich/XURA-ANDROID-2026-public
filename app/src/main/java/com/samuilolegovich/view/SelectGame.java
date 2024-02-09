@@ -12,8 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
-import com.samuilolegovich.asyncAndRun.runnable.GenColorRun;
-import com.samuilolegovich.asyncAndRun.runnable.GenNumberRun;
 
 import static com.samuilolegovich.view.BecomeReferral.BECOME_REFERRAL_CLASS;
 import static com.samuilolegovich.view.GuessTheNumberGame.GUESS_THE_NUMBER_GAME_CLASS;
@@ -28,22 +26,26 @@ public class SelectGame extends AppCompatActivity {
     private MediaPlayer flourOfChoiceMediaPlayer;
     private Animation animTranslate;
 
+    private TextView selectTextView;
     private TextView becomeReferral;
     private TextView guessTheColor;
     private TextView doubleYourBet;
     private TextView roulette;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         MainActivity.MAIN_ACTIVITY.setLocale();
-        setContentView(R.layout.select_game);
+        setContentView(R.layout.select_game_page);
         setButtons();
         setLanguage();
         setSound();
         listeners();
     }
+
+
 
     private void setSound() {
         flourOfChoiceMediaPlayer = MediaPlayer.create(this, R.raw.flour_of_choice);
@@ -52,12 +54,24 @@ public class SelectGame extends AppCompatActivity {
         flourOfChoiceMediaPlayer.start();
     }
 
+
     private void setButtons() {
         becomeReferral = (TextView) findViewById(R.id.become_referral_linc);
-        guessTheColor = (TextView) findViewById(R.id.guess_the_color);
-        doubleYourBet = (TextView) findViewById(R.id.double_your_bet);
-        roulette = (TextView) findViewById(R.id.roulette);
+        guessTheColor = (TextView) findViewById(R.id.guess_the_color_linc);
+        doubleYourBet = (TextView) findViewById(R.id.double_your_bet_linc);
+        selectTextView = (TextView) findViewById(R.id.select_text_view);
+        roulette = (TextView) findViewById(R.id.roulette_linc);
     }
+
+
+    private void setLanguage() {
+        selectTextView.setText(R.string.name_guess_the_number);
+        doubleYourBet.setText(R.string.name_guess_the_color);
+        becomeReferral.setText(R.string.become_a_referral);
+        guessTheColor.setText(R.string.select_game);
+        roulette.setText(R.string.name_roulette);
+    }
+
 
     private void listeners() {
         animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
@@ -111,16 +125,19 @@ public class SelectGame extends AppCompatActivity {
         );
     }
 
+
     private void goToAnotherPage(String namePage) {
         // класс для перехода на другую страницу
         Intent intent = new Intent(namePage);
         startActivity(intent);
     }
 
+
     @Override
     protected void onPause() {
         super.onPause();
     }
+
 
     @Override
     protected void onResume() {
@@ -128,6 +145,7 @@ public class SelectGame extends AppCompatActivity {
         flourOfChoiceMediaPlayer.start();
         super.onResume();
     }
+
 
     // при нажатии на кнопку назад будем возвращаться назад
     @Override
