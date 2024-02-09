@@ -70,8 +70,8 @@ public class ReceivePayment extends AppCompatActivity {
 
     private void setLanguage() {
         ADDRESS_COPIED_TO_PHONE_BUFFER = getString(R.string.addres_copied_to_phone_buffer);
-        receivePaymentTextViewTow.setText(R.string.and_get_a_hundred_times_more);
-        receivePaymentTextView.setText(R.string.your_address);
+        receivePaymentTextViewTow.setText(R.string.your_address);
+        receivePaymentTextView.setText(R.string.requesr_xrp);
         copy.setText(R.string.copy);
     }
 

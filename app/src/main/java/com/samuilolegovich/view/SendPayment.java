@@ -35,6 +35,8 @@ public class SendPayment extends AppCompatActivity {
     private Animation animTranslate;
     private BigDecimal yourBalance;
 
+    private TextView sendPaymentPageTextViewTwo;
+    private TextView sendPaymentPageTextView;
     private TextView balance;
     private EditText address;
     private EditText amount;
@@ -48,7 +50,7 @@ public class SendPayment extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         MainActivity.MAIN_ACTIVITY.setLocale();
-        setContentView(R.layout.send_payment);
+        setContentView(R.layout.send_payment_page);
         setButtons();
         setLanguage();
         setBalance();
@@ -59,12 +61,22 @@ public class SendPayment extends AppCompatActivity {
 
 
     private void setButtons() {
+        sendPaymentPageTextViewTwo = (TextView) findViewById(R.id.send_payment_page_text_view_tow);
+        sendPaymentPageTextView = (TextView) findViewById(R.id.send_payment_page_text_view);
+        amount = (EditText) findViewById(R.id.amount_field);
+        address = (EditText) findViewById(R.id.from_field);
         balance = (TextView) findViewById(R.id.balance);
-        amount = (EditText) findViewById(R.id.amount);
-        address = (EditText) findViewById(R.id.from);
-        send = (TextView) findViewById(R.id.send);
-        scan = (TextView) findViewById(R.id.scan);
-        tag = (EditText) findViewById(R.id.tag);
+        scan = (TextView) findViewById(R.id.scan_linc);
+        send = (TextView) findViewById(R.id.send_linc);
+        tag = (EditText) findViewById(R.id.tag_field);
+    }
+
+
+    private void setLanguage() {
+        sendPaymentPageTextViewTwo.setText(R.string.your_balance);
+        sendPaymentPageTextView.setText(R.string.send_payment);
+        scan.setText(R.string.scan_qr_code);
+        send.setText(R.string.send);
     }
 
 

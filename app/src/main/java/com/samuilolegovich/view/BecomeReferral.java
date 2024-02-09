@@ -57,11 +57,11 @@ public class BecomeReferral  extends AppCompatActivity {
 
 
     private void setButtons() {
-        infoReferral = (TextView) findViewById(R.id.info_referral_layout);
         restoreReferral = (TextView) findViewById(R.id.restore_referral);
+        infoReferral = (TextView) findViewById(R.id.referral_info_linc);
+        textReferral = (TextView) findViewById(R.id.text_referral_view);
         becomeReferral = (TextView) findViewById(R.id.become_referral);
-        textReferral = (TextView) findViewById(R.id.text_referral);
-        setReferral = (TextView) findViewById(R.id.set_referral);
+        setReferral = (TextView) findViewById(R.id.set_referral_linc);
     }
 
 

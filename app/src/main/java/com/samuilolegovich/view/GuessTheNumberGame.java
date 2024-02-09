@@ -89,9 +89,9 @@ public class GuessTheNumberGame extends AppCompatActivity {
         errorMediaPlayer = MediaPlayer.create(this, R.raw.error);
         betMediaPlayer = MediaPlayer.create(this, R.raw.bet);
 
-        nameGameTextViewTree = (TextView) findViewById(R.id.name_game_text_view_tree);
-        nameGameTextViewTwo = (TextView) findViewById(R.id.name_game_text_view_tow);
-        nameGameTextView = (TextView) findViewById(R.id.name_game_text_view);
+        nameGameTextViewTree = (TextView) findViewById(R.id.guess_the_number_game_text_view_tree);
+        nameGameTextViewTwo = (TextView) findViewById(R.id.guess_the_number_game_text_view_tow);
+        nameGameTextView = (TextView) findViewById(R.id.guess_the_number_game_text_view);
         rulesInfo = (TextView) findViewById(R.id.rules_of_the_game_link);
         balance = (TextView) findViewById(R.id.your_balance_xrp_text);
         placeBetLinc = (TextView) findViewById(R.id.place_bet_linc);
@@ -109,8 +109,6 @@ public class GuessTheNumberGame extends AppCompatActivity {
         nameGameTextViewTree.setText(R.string.your_balance);
         rulesInfo.setText(R.string.rules_of_the_game);
         placeBetLinc.setText(R.string.place_bet_linc);
-        betNumber.setText(R.string.enter_number_1_36);
-        bet.setText(R.string.place_your_bet);
     }
 
 

@@ -55,9 +55,9 @@ public class RouletteGame extends AppCompatActivity {
 
 
     private void setLanguage() {
-        rouletteGameTextView.setText(R.string.rules_of_the_game);
-        rouletteGameMessage.setText(R.string.roulette_game);
-        rulesInfo.setText(R.string.coming_soon);
+        rouletteGameTextView.setText(R.string.roulette_game);
+        rouletteGameMessage.setText(R.string.coming_soon);
+        rulesInfo.setText(R.string.rules_of_the_game);
     }
 
 

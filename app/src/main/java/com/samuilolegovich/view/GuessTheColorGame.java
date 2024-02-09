@@ -68,11 +68,11 @@ public class GuessTheColorGame extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.guess_the_color_game_page);
-        getReferral();
         setButtons();
         setLanguage();
         listeners();
         setBalance();
+        getReferral();
         GUESS_THE_COLOR_GAME = this;
         goThread();
     }
@@ -110,7 +110,6 @@ public class GuessTheColorGame extends AppCompatActivity {
         rulesOfTheGameLink.setText(R.string.rules_of_the_game);
         yourBalanceTextView.setText(R.string.your_balance);
         nameGameTextView.setText(R.string.guess_the_color);
-        bet.setText(R.string.place_your_bet);
         black.setText(R.string.black);
         red.setText(R.string.red);
     }

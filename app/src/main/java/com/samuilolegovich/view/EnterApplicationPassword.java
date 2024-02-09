@@ -56,14 +56,13 @@ public class EnterApplicationPassword extends AppCompatActivity {
 
     private void setButtons() {
         settingsSetPasswordAppTextView = (TextView) findViewById(R.id.settings_set_password_app_text_view);
-        password = (EditText) findViewById(R.id.password_field);
-        next = (TextView) findViewById(R.id.next_link);
+        password = (EditText) findViewById(R.id.enter_application_password_field);
+        next = (TextView) findViewById(R.id.enter_application_password_next_link);
     }
 
 
     private void setLanguage() {
         settingsSetPasswordAppTextView.setText(R.string.enter_password);
-        password.setText(R.string.password);
         next.setText(R.string.next);
     }
 

@@ -41,7 +41,7 @@ public class HistoryPaymentArrayAdapter extends ArrayAdapter<HistoryPaymentDto>
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         @SuppressLint("ViewHolder") View view = inflater.inflate(R.layout.table, null);
 
-        TextView amount = (TextView) view.findViewById(R.id.amount);
+        TextView amount = (TextView) view.findViewById(R.id.amount_field);
         TextView address = (TextView) view.findViewById(R.id.address);
 
         // установить адрес и описание

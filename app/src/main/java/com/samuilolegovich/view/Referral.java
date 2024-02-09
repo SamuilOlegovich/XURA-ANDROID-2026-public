@@ -40,8 +40,8 @@ public class Referral extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.referral);
-        setLanguage();
         setButtons();
+        setLanguage();
         listeners();
     }
 
@@ -56,7 +56,6 @@ public class Referral extends AppCompatActivity {
 
 
     private void setLanguage() {
-        enterReferralCode.setText(R.string.enter_referral_code);
         referralTextView.setText(R.string.referral_text);
         skip.setText(R.string.skip);
         set.setText(R.string.set);

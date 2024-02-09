@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/snd_payment"
+    android:id="@+id/send_payment_page"
     android:background="#fdd400"
     tools:context=".view.SendPayment"
     tools:ignore="MissingDefaultResource">
@@ -17,7 +17,7 @@
 
 
         <TextView
-            android:id="@+id/scan"
+            android:id="@+id/scan_linc"
             android:layout_width="0dp"
             android:layout_height="25dp"
             android:layout_marginStart="70dp"
@@ -37,7 +37,7 @@
             app:layout_constraintTop_toBottomOf="@+id/balance" />
 
         <TextView
-            android:id="@+id/textViewSeed2"
+            android:id="@+id/send_payment_page_text_view_tow"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="70dp"
@@ -51,10 +51,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text" />
+            app:layout_constraintTop_toBottomOf="@+id/send_payment_page_text_view" />
 
         <TextView
-            android:id="@+id/text"
+            android:id="@+id/send_payment_page_text_view"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_marginStart="15dp"
@@ -97,10 +97,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewSeed2" />
+            app:layout_constraintTop_toBottomOf="@+id/send_payment_page_text_view_tow" />
 
         <TextView
-            android:id="@+id/send"
+            android:id="@+id/send_linc"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_marginStart="70dp"
@@ -119,7 +119,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
-            android:id="@+id/amount"
+            android:id="@+id/amount_field"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="70dp"
@@ -131,10 +131,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/from" />
+            app:layout_constraintTop_toBottomOf="@+id/from_field" />
 
         <EditText
-            android:id="@+id/from"
+            android:id="@+id/from_field"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
@@ -146,10 +146,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/scan" />
+            app:layout_constraintTop_toBottomOf="@+id/scan_linc" />
 
         <EditText
-            android:id="@+id/tag"
+            android:id="@+id/tag_field"
             android:layout_width="0dp"
             android:layout_height="45dp"
             android:layout_marginStart="100dp"
@@ -161,7 +161,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/amount" />
+            app:layout_constraintTop_toBottomOf="@+id/amount_field" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

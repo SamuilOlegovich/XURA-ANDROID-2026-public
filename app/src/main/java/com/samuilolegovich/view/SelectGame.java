@@ -29,7 +29,7 @@ public class SelectGame extends AppCompatActivity {
     private TextView selectTextView;
     private TextView becomeReferral;
     private TextView guessTheColor;
-    private TextView doubleYourBet;
+    private TextView guessTheNumber;
     private TextView roulette;
 
 
@@ -58,17 +58,17 @@ public class SelectGame extends AppCompatActivity {
     private void setButtons() {
         becomeReferral = (TextView) findViewById(R.id.become_referral_linc);
         guessTheColor = (TextView) findViewById(R.id.guess_the_color_linc);
-        doubleYourBet = (TextView) findViewById(R.id.double_your_bet_linc);
+        guessTheNumber = (TextView) findViewById(R.id.double_your_bet_linc);
         selectTextView = (TextView) findViewById(R.id.select_text_view);
         roulette = (TextView) findViewById(R.id.roulette_linc);
     }
 
 
     private void setLanguage() {
-        selectTextView.setText(R.string.name_guess_the_number);
-        doubleYourBet.setText(R.string.name_guess_the_color);
+        guessTheNumber.setText(R.string.name_guess_the_number);
+        guessTheColor.setText(R.string.name_guess_the_color);
         becomeReferral.setText(R.string.become_a_referral);
-        guessTheColor.setText(R.string.select_game);
+        selectTextView.setText(R.string.select_game);
         roulette.setText(R.string.name_roulette);
     }
 
@@ -100,7 +100,7 @@ public class SelectGame extends AppCompatActivity {
                 }
         );
 
-        doubleYourBet.setOnClickListener(
+        guessTheNumber.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
