@@ -203,15 +203,15 @@ public class MainActivity extends AppCompatActivity {
     private void listeners() {
         animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
 
-        lottoTextGo.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        v.startAnimation(animTranslate);
-                        goToAnotherPage(SELECT_GAME_CLASS);
-                    }
-                }
-        );
+//        lottoTextGo.setOnClickListener(
+//                new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        v.startAnimation(animTranslate);
+//                        goToAnotherPage(SELECT_GAME_CLASS);
+//                    }
+//                }
+//        );
 
         settings.setOnClickListener(
                 new View.OnClickListener() {

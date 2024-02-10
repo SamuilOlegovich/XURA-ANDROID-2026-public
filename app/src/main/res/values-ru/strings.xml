@@ -38,7 +38,7 @@
     <string name="want_to_win"><u>ХОТИТЕ ВЫИГРАТЬ 386301 XRP - НАЖМИТЕ И НАЧНИТЕ ИГРАТЬ!</u></string>
     <string name="collect_and_renew_bet"><u>СОБРАТЬ И ПЕРЕНОВИТЬ СТАВКУ</u></string>
     <string name="settings_set_password"><u>УСТАНОВИТЬ ПАРОЛЬ</u></string>
-    <string name="transaction_history"><u>ИСТОРИЯ ТРАНЗАКЦИЙ</u></string>
+    <string name="transaction_history"><u>ИСТОРИЯ</u></string>
     <string name="name_guess_the_number"><u>ОТГАДАЙТЕ ЧИСЛО</u></string>
     <string name="settings_select_language"><u>ВЫБЕРИТЕ ЯЗЫК</u></string>
     <string name="name_guess_the_color"><u>ОТГАДАЙТЕ ЦВЕТ</u></string>
@@ -62,7 +62,7 @@
     <string name="next_one"><u>ДАЛЕЕ >></u></string>
     <string name="send"><u>ОТПРАВИТЬ</u></string>
     <string name="black"><u>ЧЕРНОЕ</u></string>
-    <string name="info"><u>ИНФОРМАЦИЯ</u></string>
+    <string name="info"><u>ОПИСАНИЕ</u></string>
     <string name="copy"><u>КОПИРОВАТЬ</u></string>
     <string name="skip"><u>ПРОПУСТИТЬ</u></string>
     <string name="next"><u>ДАЛЕЕ</u></string>
@@ -126,8 +126,8 @@
     <string name="rules_guess_the_color">Правила этой игры очень просты. Вы делаете ставку и указываете цвет. Если цвет угадан - ваша ставка удваивается. Если ставка проиграна, она идет в кассу - лото. Любой пользователь может выиграть лото, независимо от того, что и сколько он поставил - если выпадает сектор лото. Также вы можете выиграть мини-лото - это одна десятая лото. Минимальная ставка - 0,1 XRP, максимальная - 100 XRP.</string>
     <string name="referral_text">ЕСЛИ У ВАС ЕСТЬ КОД РЕФЕРАЛА - ОБЯЗАТЕЛЬНО ВВЕДИТЕ ЕГО - ЭТО ДАСТ ВАМ ДОПОЛНИТЕЛЬНЫЕ ЖИЗНИ НА ВАШИ СТАВКИ И УЧАСТИЕ В ЕЖЕДНЕВНОМ РОЗЫГРЫШЕ ПРИЗОВ</string>
     <string name="rules_roulette">В НАСТОЯЩЕЕ ВРЕМЯ ИГРА НАХОДИТСЯ В РАЗРАБОТКЕ. МЫ ХОТИМ РЕАЛИЗОВАТЬ КЛАССИЧЕСКУЮ ИГРУ В РУЛЕТКУ С МАКСИМАЛЬНОЙ КАЧЕСТВОМ</string>
-    <string name="go_to_the_dark_side_find_the_secret_button">ПЕРЕХОДИТЕ НА ТЕМНУЮ СТОРОНУ - НАЙДИТЕ СЕКРЕТНУЮ КНОПКУ!</string>
     <string name="guessed_number_should_not_be_less_than">УГАДЫВАЕМОЕ ЧИСЛО НЕ ДОЛЖНО БЫТЬ МЕНЬШЕ - 1 - И БОЛЬШЕ - 36</string>
+    <string name="go_to_the_dark_side_find_the_secret_button">ПЕРЕХОДИ НА ТЕМНУЮ СТОРОНУ - НАЙДИ СЕКРЕТНУЮ КНОПКУ</string>
     <string name="get_recovery_become_referral">ЗАКАЗА УСПЕШНО ОТПРАВЛЕН - ПОЖАЛУЙСТА, ПОДОЖДИТЕ ОТВЕТА ОТ СЕРВЕРА</string>
     <string name="get_becom_referral_enum">ЗАКАЗ УСПЕШНО ОТПРАВЛЕН - ПОЖАЛУЙСТА, ПОДОЖДИТЕ ОТВЕТА ОТ СЕРВЕРА</string>
     <string name="your_account_is_not_enough_to_send">НА ВАШЕМ СЧЕТУ НЕ ДОСТАТОЧНО СРЕДСТВ ДЛЯ ОТПРАВКИ</string>

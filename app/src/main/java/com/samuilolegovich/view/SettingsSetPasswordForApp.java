@@ -59,11 +59,8 @@ public class SettingsSetPasswordForApp extends AppCompatActivity {
     }
 
 
-    @SuppressLint("SetTextI18n")
     private void setLanguage() {
         textView.setText(R.string.set_password_to_enter_application);
-        passwordOne.setText(R.string.enter_password_low_case);
-        passwordTwo.setText(R.string.repeat_enter);
         confirm.setText(R.string.set_password);
     }
 
