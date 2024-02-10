@@ -23,6 +23,7 @@ public class RulesOfTheGameRoulette extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.rules_of_the_game_roulette_page);
+        setButtons();
         setLanguage();
     }
 

@@ -20,7 +20,7 @@ public class InfoMain extends AppCompatActivity {
         MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.info_main);
 //        setButtons();
-        setLanguage();
+//        setLanguage();
     }
 
 

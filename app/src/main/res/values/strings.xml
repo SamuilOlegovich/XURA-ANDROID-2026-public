@@ -56,7 +56,7 @@
     <string name="bet_is_made_expect_the_result">BET IS MADE - EXPECT THE RESULT</string>
     <string name="last_text_two">DONT WORRY - PLAY FURTHER AND YOU WILL BE LUCKY</string>
     <string name="addres_copied_to_phone_buffer">ADDRESS COPIED TO PHONE BUFFER</string>
-    <string name="and_get_a_hundred_times_more">AND GET A HUNDRED TIMES MORE</string>
+    <string name="and_get_a_hundred_times_more">AND GET A 36 TIMES MORE</string>
     <string name="code_copied_to_phone_buffer">CODE COPIED TO PHONE BUFFER</string>
     <string name="payment_amount_is_incorrect">PAYMENT AMOUNT IS INCORRECT</string>
     <string name="wrong_destination_address">WRONG DESTINATION ADDRESS</string>
@@ -99,7 +99,18 @@
     <string name="to">To</string>
 
 
-    <string name="bet_lost_history">     bet lost :(</string>
+    <string name="referral_recovery_history">referral recovery</string>
+    <string name="won_the_lotto_history">won the LOTTO :)</string>
+    <string name="referral_order_history">referral order</string>
+    <string name="bet_on_black_history">bet on black</string>
+    <string name="bet_on_red_history">bet on red</string>
+    <string name="donation_history">donation :)</string>
+    <string name="bet_lost_history">bet lost :(</string>
+    <string name="referral_history">referral:</string>
+    <string name="bet_won_history">bet won :)</string>
+    <string name="bet_on_history">bet on:</string>
+    <string name="refund_history">refund</string>
+    <string name="tag_history">tag:</string>
 
 
 

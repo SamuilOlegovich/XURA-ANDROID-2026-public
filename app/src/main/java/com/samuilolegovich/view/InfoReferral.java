@@ -1,6 +1,5 @@
 package com.samuilolegovich.view;
 
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -26,7 +25,7 @@ public class InfoReferral extends AppCompatActivity {
         MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.info_referral);
 //        setButtons();
-        setLanguage();
+//        setLanguage();
     }
 
 

@@ -37,7 +37,7 @@ public class Settings extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         MainActivity.MAIN_ACTIVITY.setLocale();
-        setContentView(R.layout.settings);
+        setContentView(R.layout.settings_page);
         SETTINGS_ACTIVITY = this;
         setButtons();
         setLanguage();

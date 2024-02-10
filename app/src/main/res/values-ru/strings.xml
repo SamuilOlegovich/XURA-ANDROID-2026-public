@@ -1,123 +1,39 @@
 <resources>
-<!--    <string name="want_to_win"><u>WANT TO WIN 386301 XRP - PRESS AND START PLAYING!</u></string>-->
-<!--    <string name="collect_and_renew_bet"><u>COLLECT AND RENEW BET</u></string>-->
-<!--    <string name="settings_set_password"><u>УСТАНОВИТЬ ПАРОЛЬ</u></string>-->
-<!--    <string name="transaction_history"><u>ИСТОРИЯ ТРАНЗАКЦИЙ</u></string>-->
-<!--    <string name="name_guess_the_number"><u>ОТГАДАЙ ЧИСЛО</u></string>-->
-<!--    <string name="settings_select_language"><u>ВЫБРАТЬ ЯЗЫК</u></string>-->
-<!--    <string name="name_guess_the_color"><u>ОТГАДАЙ ЦВЕТ</u></string>-->
-<!--    <string name="create_new_wallet"><u>СОЗДАТЬ НОВЫЙ КОШЕЛЕ</u></string>-->
-<!--    <string name="rules_of_the_game"><u>RULES OF THE GAME</u></string>-->
-<!--    <string name="become_a_referral"><u>СТАТЬ РЕФЕРАЛОМ</u></string>-->
-<!--    <string name="become_referral"><u>СТАТЬ РЕФЕРАЛОМ</u></string>-->
-<!--    <string name="restore_referral"><u>ВОСТАНОВИТЬ РЕФЕРАЛ</u></string>-->
-<!--    <string name="restore_wallet"><u>ВОСТАНОВИТЬ КОШЕЛЕК</u></string>-->
-<!--    <string name="settings_language"><u>АНГЛИЙСКИЙ</u></string>-->
-<!--    <string name="select_language_english"><u>АНГЛИЙСКИЙ</u></string>-->
-<!--    <string name="set_referral"><u>УСТАНОВИТЬ РЕФЕРАЛ</u></string>-->
-<!--    <string name="scan_qr_code"><u>САНИРОВАТЬ QR КОД</u></string>-->
-<!--    <string name="select_language_russian"><u>РУССКИЙ</u></string>-->
-<!--    <string name="settings_main"><u>НАСТРОЙКИ</u></string>-->
-<!--    <string name="settings_text_linc"><u>НАСТРОЙКИ</u></string>-->
-<!--    <string name="request"><u>ПОЛУЧИТЬ</u></string>-->
-<!--    <string name="name_roulette"><u>РУЛЕТКА</u></string>-->
-<!--    <string name="place_bet_linc"><u>PLACE BET</u></string>-->
-<!--    <string name="set_password"><u>CONFIRM</u></string>-->
-<!--    <string name="next_one"><u>ДАЛЕЕ >></u></string>-->
-<!--    <string name="send"><u>ОТПРАВИТЬ</u></string>-->
-<!--    <string name="black"><u>ЧЕРНОЕ</u></string>-->
-<!--    <string name="info"><u>ИНФОРМАЦИЯ</u></string>-->
-<!--    <string name="copy"><u>КОПИРОВАТЬ</u></string>-->
-<!--    <string name="skip"><u>ПРОПУСТИТЬ</u></string>-->
-<!--    <string name="next"><u>ДАЛЕЕ</u></string>-->
-<!--    <string name="red"><u>КРАСНОЕ</u></string>-->
-<!--    <string name="set"><u>SET</u></string>-->
-
-
 
     <string name="want_to_win"><u>ХОТИТЕ ВЫИГРАТЬ 386301 XRP - НАЖМИТЕ И НАЧНИТЕ ИГРАТЬ!</u></string>
     <string name="collect_and_renew_bet"><u>СОБРАТЬ И ПЕРЕНОВИТЬ СТАВКУ</u></string>
     <string name="settings_set_password"><u>УСТАНОВИТЬ ПАРОЛЬ</u></string>
-    <string name="transaction_history"><u>ИСТОРИЯ</u></string>
-    <string name="name_guess_the_number"><u>ОТГАДАЙТЕ ЧИСЛО</u></string>
-    <string name="settings_select_language"><u>ВЫБЕРИТЕ ЯЗЫК</u></string>
-    <string name="name_guess_the_color"><u>ОТГАДАЙТЕ ЦВЕТ</u></string>
     <string name="create_new_wallet"><u>СОЗДАТЬ НОВЫЙ КОШЕЛЕК</u></string>
-    <string name="rules_of_the_game"><u>ПРАВИЛА ИГРЫ</u></string>
-    <string name="become_a_referral"><u>СТАТЬ РЕФЕРАЛОМ</u></string>
-    <string name="become_referral"><u>СТАТЬ РЕФЕРАЛОМ</u></string>
+    <string name="settings_select_language"><u>ВЫБРАТЬ ЯЗЫК</u></string>
     <string name="restore_referral"><u>ВОССТАНОВИТЬ РЕФЕРАЛ</u></string>
+    <string name="name_guess_the_number"><u>ОТГАДАТЬ ЧИСЛО</u></string>
+    <string name="name_guess_the_color"><u>ОТГАДАТЬ ЦВЕТ</u></string>
     <string name="restore_wallet"><u>ВОССТАНОВИТЬ КОШЕЛЕК</u></string>
-    <string name="settings_language"><u>АНГЛИЙСКИЙ</u></string>
     <string name="select_language_english"><u>АНГЛИЙСКИЙ</u></string>
+    <string name="become_a_referral"><u>СТАТЬ РЕФЕРАЛОМ</u></string>
     <string name="set_referral"><u>УСТАНОВИТЬ РЕФЕРАЛ</u></string>
+    <string name="become_referral"><u>СТАТЬ РЕФЕРАЛОМ</u></string>
     <string name="scan_qr_code"><u>СКАНИРОВАТЬ QR КОД</u></string>
     <string name="select_language_russian"><u>РУССКИЙ</u></string>
-    <string name="settings_main"><u>НАСТРОЙКИ</u></string>
+    <string name="rules_of_the_game"><u>ПРАВИЛА ИГРЫ</u></string>
     <string name="settings_text_linc"><u>НАСТРОЙКИ</u></string>
-    <string name="request"><u>ПОЛУЧИТЬ</u></string>
-    <string name="name_roulette"><u>РУЛЕТКА</u></string>
-    <string name="place_bet_linc"><u>СДЕЛАТЬ СТАВКУ</u></string>
+    <string name="settings_language"><u>АНГЛИЙСКИЙ</u></string>
+    <string name="transaction_history"><u>ИСТОРИЯ</u></string>
     <string name="set_password"><u>ПОДТВЕРДИТЬ</u></string>
+    <string name="settings_main"><u>НАСТРОЙКИ</u></string>
+    <string name="name_roulette"><u>РУЛЕТКА</u></string>
+    <string name="place_bet_linc"><u>ГОТОВО</u></string>
     <string name="next_one"><u>ДАЛЕЕ >></u></string>
-    <string name="send"><u>ОТПРАВИТЬ</u></string>
-    <string name="black"><u>ЧЕРНОЕ</u></string>
-    <string name="info"><u>ОПИСАНИЕ</u></string>
+    <string name="request"><u>ПОЛУЧИТЬ</u></string>
     <string name="copy"><u>КОПИРОВАТЬ</u></string>
     <string name="skip"><u>ПРОПУСТИТЬ</u></string>
-    <string name="next"><u>ДАЛЕЕ</u></string>
-    <string name="red"><u>КРАСНОЕ</u></string>
     <string name="set"><u>УСТАНОВИТЬ</u></string>
+    <string name="send"><u>ОТПРАВИТЬ</u></string>
+    <string name="info"><u>ОПИСАНИЕ</u></string>
+    <string name="black"><u>ЧЕРНОЕ</u></string>
+    <string name="red"><u>КРАСНОЕ</u></string>
+    <string name="next"><u>ДАЛЕЕ</u></string>
 
-
-
-    <!--    <string name="rules_guess_the_color">The rules of this game are very simple. You place a bet and indicate which color. If the color is guessed - your bet will be doubled. If the bet is lost, it goes to the savings fund - lotto. Absolutely any user can win a lotto, regardless of what and how much he bet - if the lotto sector falls out. And you can also win a mini lotto - it is one tenth of the lotto. The minimum bet is 0.1 XRP, the maximum is 100 XRP.</string>-->
-<!--    <string name="rules_double_your_bet">The rules of this game are very simple. The bet is always fixed and is - 1XRP. You just have to choose the number you want to bet on. (from - 1 to -  36) In case of winning, the bet will be increased by 36 times. If the bet is lost, it goes to the savings fund - lotto. Absolutely any user can win a lotto, regardless of what and how much he bet - if the lotto sector falls out. And you can also win a mini lotto - it is one tenth of the lotto.</string>-->
-<!--    <string name="referral_text">IF YOU HAVE A REFERRAL CODE - BE SURE TO ENTER IT - IT WILL GIVE YOU EXTRA LIVES ON YOUR BETS AND PARTICIPATION IN THE DAILY PRIZE DRAW</string>-->
-<!--    <string name="rules_roulette">CURRENTLY THE GAME IS UNDER DEVELOPMENT. WE WANT TO IMPLEMENT THE CLASSIC ROULETTE GAME WITH THE MAXIMUM QUALITY.</string>-->
-<!--    <string name="create_new_wallet_text">BE SURE TO SAVE THE SEED AND DO NOT GIVE IT TO ANYONE</string>-->
-<!--        <string name="error_check_the_seed_and_try_again">ERROR - CHECK THE SEED AND TRY AGAIN</string>-->
-<!--    <string name="set_password_to_enter_application">SET A PASSWORD TO ENTER THE APPLICATION</string>-->
-<!--    <string name="become_referral_and_start_earning">BECOME A REFERRAL AND START EARNING</string>-->
-<!--    <string name="check_the_seed_and_try_again">ERROR - check the seed and try again.</string>-->
-<!--    <string name="last_text_two">DONT WORRY - PLAY FURTHER AND YOU WILL BE LUCKY</string>-->
-<!--    <string name="addres_copied_to_phone_buffer">ADDRESS COPIED TO PHONE BUFFER</string>-->
-<!--    <string name="and_get_a_hundred_times_more">AND GET A HUNDRED TIMES MORE</string>-->
-<!--    <string name="restore_from_backup_seed">RESTORE FROM BACKUP SEED</string>-->
-<!--    <string name="transaction_history_text">TRANSACTION HISTORY</string>-->
-<!--    <string name="wrong_restart_please">Wrong, restart please.</string>-->
-<!--    <string name="enter_referral_code">Enter referral code</string>-->
-<!--    <string name="enter_password_low_case">Enter password</string>-->
-<!--    <string name="your_referral_code">YOUR REFERRAL CODE</string>-->
-<!--    <string name="and_double_the_bet">AND DOUBLE THE BET</string>-->
-<!--    <string name="game_notifications">GAME NOTIFICATIONS</string>-->
-<!--    <string name="enter_number_1_36">Enter number 1 - 36</string>-->
-<!--    <string name="guess_the_number">GUESS THE NUMBER</string>-->
-<!--    <string name="select_language_text">ВЫБРАТЬ ЯЗЫК</string>-->
-<!--    <string name="guess_the_color">GUESS THE COLOR</string>-->
-<!--    <string name="destination_tag">Destination tag</string>-->
-<!--    <string name="congratulations">CONGRATULATIONS</string>-->
-<!--    <string name="enter_password">ENTER PASSWORD</string>-->
-<!--    <string name="place_your_bet">Place your bet</string>-->
-<!--    <string name="lead_the_seed">LEAD THE SEED</string>-->
-<!--    <string name="your_address">YOUR ADDRESS:</string>-->
-<!--    <string name="settings_settings">SETTINGS</string>-->
-<!--    <string name="info_referral">INFORMATION</string>-->
-<!--    <string name="your_balance">YOUR BALANCE</string>-->
-<!--    <string name="send_payment">SEND PAYMENT</string>-->
-<!--    <string name="repeat_enter">Repeat enter</string>-->
-<!--    <string name="requesr_xrp">REQUEST XRP</string>-->
-<!--    <string name="settings_text">НАСТРОЙКИ</string>-->
-<!--    <string name="select_game">SELECT GAME</string>-->
-<!--    <string name="coming_soon">COMING SOON</string>-->
-<!--    <string name="roulette_game">ROULETTE</string>-->
-<!--    <string name="good_luck">GOOD LUCK</string>-->
-<!--    <string name="password">Password</string>-->
-<!--    <string name="bet_lost">BET LOST</string>-->
-<!--    <string name="bet_won">BET WON</string>-->
-<!--    <string name="amount">Amount</string>-->
-<!--    <string name="app_name">XURA</string>-->
-<!--    <string name="to">To</string>-->
 
 
     <string name="rules_guess_the_number_text">The rules of this game are very simple.\n\nThe bet is always fixed and is - 1XRP.\n\nYou just have to choose the number you want to bet on. (from - 1 to -  36)\n\nIn case of winning, the bet will be increased by 36 times.\n\nIf the bet is lost, it goes to the savings fund - LOTTO.\n\nAbsolutely any user can win a LOTTO, regardless of what and how much he bet - if the LOTTO sector falls out. And you can also win a mini LOTTO - it is one tenth of the LOTTO.</string>
@@ -143,7 +59,7 @@
     <string name="it_is_not_possible_to_send_null">НЕВОЗМОЖНО ОТПРАВИТЬ NULL</string>
     <string name="restore_from_backup_seed">ВОССТАНОВИТЬ ИЗ РЕЗЕРВНОГО КЛЮЧА</string>
     <string name="last_text_two">НЕ ВОЛНУЙТЕСЬ - ИГРАЙТЕ ДАЛЬШЕ И ВЫ УДАЧНЫ</string>
-    <string name="and_get_a_hundred_times_more">И ПОЛУЧИТЕ В СТО РАЗ БОЛЬШЕ</string>
+    <string name="and_get_a_hundred_times_more">И ПОЛУЧИТЕ В 36 РАЗ БОЛЬШЕ</string>
     <string name="wrong_restart_please">Неверно, перезапустите, пожалуйста</string>
     <string name="bet_cannot_be_less_than">СТАВКА НЕ МОЖЕТ БЫТЬ МЕНЬШЕ - </string>
     <string name="bet_cannot_be_more_than">СТАВКА НЕ МОЖЕТ БЫТЬ БОЛЕЕ - </string>
@@ -181,10 +97,22 @@
     <string name="good_luck">УДАЧИ</string>
     <string name="app_name">XURA</string>
     <string name="amount">Сумма</string>
-    <string name="to">To</string>
+    <string name="to">Кому</string>
 
 
-    <string name="bet_lost_history">     bet lost :(</string>
+
+    <string name="referral_recovery_history">восстановление реферрала</string>
+    <string name="referral_order_history">заказ реферрала</string>
+    <string name="won_the_lotto_history">выиграл ЛОТО :)</string>
+    <string name="bet_on_black_history">ставка на черное</string>
+    <string name="bet_on_red_history">ставка на красное</string>
+    <string name="bet_lost_history">ставка проиграна :(</string>
+    <string name="bet_won_history">ставка выиграна :)</string>
+    <string name="donation_history">пожертвование :)</string>
+    <string name="referral_history">реферрал:</string>
+    <string name="bet_on_history">ставка на: </string>
+    <string name="refund_history">возврат</string>
+    <string name="tag_history">тег:</string>
 
 
 
