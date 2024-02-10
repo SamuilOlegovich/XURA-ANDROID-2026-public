@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/yor_referral"
+    android:id="@+id/your_referral_page"
     android:background="#fdd400"
     tools:context=".view.YourReferral"
     tools:ignore="MissingDefaultResource">
@@ -30,7 +30,7 @@
 
 
         <TextView
-            android:id="@+id/textViewSeed4"
+            android:id="@+id/your_referral_page_text_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
@@ -46,7 +46,7 @@
             app:layout_constraintTop_toBottomOf="@+id/imageViewLogo" />
 
         <TextView
-            android:id="@+id/code"
+            android:id="@+id/your_referral_page_code"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
@@ -60,11 +60,11 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewSeed4" />
+            app:layout_constraintTop_toBottomOf="@+id/your_referral_page_text_view" />
 
 
         <TextView
-            android:id="@+id/copy_linc"
+            android:id="@+id/your_referral_page_copy_linc"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_marginStart="70dp"

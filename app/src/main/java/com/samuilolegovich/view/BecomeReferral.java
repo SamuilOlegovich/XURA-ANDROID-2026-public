@@ -29,6 +29,14 @@ import java.util.concurrent.ExecutionException;
 
 public class BecomeReferral  extends AppCompatActivity {
     public static final String BECOME_REFERRAL_CLASS = ".BecomeReferral";
+
+    private String YOUR_ACCOUNT_IS_NOT_ENOUGH_TO_SEND;
+    private String GET_RECOVERY_BECOME_REFERRAL;
+    private String TAG_KNOWLEDGE_CANNOT_BE_MORE;
+    private String PAYMENT_AMOUNT_IS_INCORRECT;
+    private String WRONG_DESTINATION_ADDRESS;
+    private String GET_BECOME_REFERRAL;
+
     private BecomeReferral BECOME_REFERRAL;
 
     private Animation animTranslate;
@@ -66,6 +74,12 @@ public class BecomeReferral  extends AppCompatActivity {
 
 
     private void setLanguage() {
+        YOUR_ACCOUNT_IS_NOT_ENOUGH_TO_SEND = getString(R.string.your_account_is_not_enough_to_send);
+        GET_RECOVERY_BECOME_REFERRAL = getString(R.string.get_recovery_become_referral);
+        TAG_KNOWLEDGE_CANNOT_BE_MORE = getString(R.string.tag_knowledge_cannot_be_more);
+        PAYMENT_AMOUNT_IS_INCORRECT = getString(R.string.payment_amount_is_incorrect);
+        WRONG_DESTINATION_ADDRESS = getString(R.string.wrong_destination_address);
+        GET_BECOME_REFERRAL = getString(R.string.get_becom_referral_enum);
         textReferral.setText(R.string.become_referral_and_start_earning);
         restoreReferral.setText(R.string.restore_referral);
         becomeReferral.setText(R.string.become_referral);
@@ -150,23 +164,23 @@ public class BecomeReferral  extends AppCompatActivity {
                         ? StringEnum.BECOME_A_REFERRAL.getValue()
                         : StringEnum.RECOVERY_BECOME_A_REFERRAL.getValue())) {
             makeToast(b
-                    ? StringEnum.GET_BECOME_REFERRAL.getValue()
-                    : StringEnum.GET_RECOVERY_BECOME_REFERRAL.getValue() );
+                    ? GET_BECOME_REFERRAL
+                    : GET_RECOVERY_BECOME_REFERRAL);
         }
     }
 
 
     private boolean checkData(String sendAmount, String sendTeg) {
         if (sendAmount == null) {
-            makeToast("PAYMENT AMOUNT IS INCORRECT");
+            makeToast(PAYMENT_AMOUNT_IS_INCORRECT);
             return false;
         }
         if (new BigDecimal(sendAmount).compareTo(yourBalance) > 0) {
-            makeToast("YOUR ACCOUNT IS NOT ENOUGH TO SEND");
+            makeToast(YOUR_ACCOUNT_IS_NOT_ENOUGH_TO_SEND);
             return false;
         }
         if (sendTeg != null && !sendTeg.equals("") && Long.parseLong(sendTeg) >= Integer.MAX_VALUE) {
-            makeToast("TAG KNOWLEDGE CANNOT BE MORE - 2147483647");
+            makeToast(TAG_KNOWLEDGE_CANNOT_BE_MORE);
             return false;
         }
         return makePayment(sendAmount, sendTeg);
@@ -177,14 +191,17 @@ public class BecomeReferral  extends AppCompatActivity {
         AsyncTask<String, Void, Boolean> asyncTask = new SendPaymentAsync()
                 .execute(StringEnum.SERVER_ADDRESS_BECOME_REFERRAL.getValue(), sendAmount, sendTeg);
         boolean b = false;
+
         try {
             b = asyncTask.get();
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
+
         if (!b) {
-            makeToast("WRONG DESTINATION ADDRESS");
+            makeToast(WRONG_DESTINATION_ADDRESS);
         }
+
         return b;
     }
 

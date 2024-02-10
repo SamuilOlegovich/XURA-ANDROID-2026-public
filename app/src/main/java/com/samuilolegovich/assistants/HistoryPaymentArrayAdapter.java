@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 import com.samuilolegovich.dto.HistoryPaymentDto;
 import com.samuilolegovich.enums.StringEnum;
@@ -18,15 +19,18 @@ import java.util.List;
 
 
 
-public class HistoryPaymentArrayAdapter extends ArrayAdapter<HistoryPaymentDto>
-{
+public class HistoryPaymentArrayAdapter extends ArrayAdapter<HistoryPaymentDto> {
     private List<HistoryPaymentDto> historyPaymentDtoList;
     private Context context;
+//    private String betLostHistory;
+
+
 
     public HistoryPaymentArrayAdapter(Context context, int resource, ArrayList<HistoryPaymentDto> historyPaymentDtoList) {
         super(context, resource, historyPaymentDtoList);
         this.historyPaymentDtoList = historyPaymentDtoList;
         this.context = context;
+//        betLostHistory = Context.getString(R.string.bet_lost_history);
     }
 
 
@@ -61,6 +65,7 @@ public class HistoryPaymentArrayAdapter extends ArrayAdapter<HistoryPaymentDto>
 
         return view;
     }
+
 
     private String processTag(String tag) {
 
@@ -111,6 +116,7 @@ public class HistoryPaymentArrayAdapter extends ArrayAdapter<HistoryPaymentDto>
                 return "     bet on: " + tagInt;
             }
         }
+
         return "     tag: " + tag;
     }
 }

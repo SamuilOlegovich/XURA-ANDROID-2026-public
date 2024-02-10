@@ -3,6 +3,7 @@ package com.samuilolegovich.view;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,10 +19,13 @@ import java.util.ArrayList;
 
 public class TransactionHistory  extends AppCompatActivity {
     public static final String TRANSACTION_HISTORY_CLASS = ".TransactionHistory";
+
     public static TransactionHistory TRANSACTION_HISTORY;
+
     private HistoryCreator historyCreator;
     private ArrayList listHistory;
 
+    private TextView transactionHistoryTextView;
     private ListView listView;
 
 
@@ -30,7 +34,7 @@ public class TransactionHistory  extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         MainActivity.MAIN_ACTIVITY.setLocale();
-        setContentView(R.layout.transaction_history);
+        setContentView(R.layout.transaction_history_page);
         historyCreator = new HistoryCreator();
         setButtons();
         setLanguage();
@@ -41,9 +45,14 @@ public class TransactionHistory  extends AppCompatActivity {
 
 
     private void setButtons() {
+        transactionHistoryTextView = (TextView) findViewById(R.id.transaction_history_text_view);
         listView = (ListView) findViewById(R.id.list_of_history);
     }
 
+
+    private void setLanguage() {
+        transactionHistoryTextView.setText(R.string.transaction_history_text);
+    }
 
 
     private void createHistoryThread() {

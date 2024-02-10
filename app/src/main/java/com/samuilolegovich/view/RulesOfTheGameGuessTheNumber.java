@@ -14,8 +14,6 @@ import com.samuilolegovich.asyncAndRun.runnable.GenNumberRun;
 // выводим правила игры
 public class RulesOfTheGameGuessTheNumber extends AppCompatActivity {
     public static final String RULES_OF_THE_GAME_GUESS_THE_NUMBER_CLASS = ".RulesOfTheGameGuessTheNumber";
-
-    private String RULES;
 //            "The rules of this game are very simple.\n\n" +
 //            "The bet is always fixed and is - 1XRP.\n\n" +
 //            "You just have to choose the number you want to bet on. (from - 1 to -  36)\n\n" +
@@ -25,6 +23,8 @@ public class RulesOfTheGameGuessTheNumber extends AppCompatActivity {
 //            "And you can also win a mini LOTTO - it is one tenth of the LOTTO.";
     private TextView guessTheColorTextView;
     private TextView rules;
+
+    private String RULES;
 
 
 
@@ -43,7 +43,6 @@ public class RulesOfTheGameGuessTheNumber extends AppCompatActivity {
     private void setButtons() {
         guessTheColorTextView = (TextView) findViewById(R.id.guess_the_color_text_view);
         rules = (TextView) findViewById(R.id.guess_the_color_rules);
-        RULES = getString(R.string.rules_guess_the_number_text);
     }
 
 

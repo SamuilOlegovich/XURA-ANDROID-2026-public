@@ -38,6 +38,16 @@ public class GuessTheColorGame extends AppCompatActivity {
     public static final String GUESS_THE_COLOR_GAME_CLASS = ".GuessTheColorGame";
     private static final int MAX_VOLUME = 100;
 
+    private String YOUR_ACCOUNT_IS_NOT_ENOUGH_TO_SEND;
+    private String IT_IS_NOT_POSSIBLE_TO_SEND_NULL;
+    private String BET_IS_MADE_EXPECT_THE_RESULT;
+    private String TAG_KNOWLEDGE_CANNOT_BE_MORE;
+    private String PAYMENT_AMOUNT_IS_INCORRECT;
+    private String WRONG_DESTINATION_ADDRESS;
+    private String BET_CANNOT_BE_MORE_THAN;
+    private String BET_CANNOT_BE_LESS_THAN;
+
+
     @SuppressLint("StaticFieldLeak")
     public static volatile GuessTheColorGame GUESS_THE_COLOR_GAME;
     public static volatile boolean VISIBLE_ON_SCREEN = false;
@@ -106,6 +116,14 @@ public class GuessTheColorGame extends AppCompatActivity {
 
 
     private void setLanguage() {
+        YOUR_ACCOUNT_IS_NOT_ENOUGH_TO_SEND = getString(R.string.your_account_is_not_enough_to_send);
+        IT_IS_NOT_POSSIBLE_TO_SEND_NULL = getString(R.string.it_is_not_possible_to_send_null);
+        BET_IS_MADE_EXPECT_THE_RESULT = getString(R.string.bet_is_made_expect_the_result);
+        TAG_KNOWLEDGE_CANNOT_BE_MORE = getString(R.string.tag_knowledge_cannot_be_more);
+        PAYMENT_AMOUNT_IS_INCORRECT = getString(R.string.payment_amount_is_incorrect);
+        WRONG_DESTINATION_ADDRESS = getString(R.string.wrong_destination_address);
+        BET_CANNOT_BE_MORE_THAN = getString(R.string.bet_cannot_be_more_than);
+        BET_CANNOT_BE_LESS_THAN = getString(R.string.bet_cannot_be_less_than);
         nameGameTextViewTwo.setText(R.string.and_double_the_bet);
         rulesOfTheGameLink.setText(R.string.rules_of_the_game);
         yourBalanceTextView.setText(R.string.your_balance);
@@ -171,7 +189,7 @@ public class GuessTheColorGame extends AppCompatActivity {
             bet.setText("");
             setBetParam(tag, color);
             goToAnotherPage(FLASHER_CLASS);
-            makeToast("BET IS MADE - EXPECT THE RESULT");
+            makeToast(BET_IS_MADE_EXPECT_THE_RESULT);
         }
     }
 
@@ -209,34 +227,40 @@ public class GuessTheColorGame extends AppCompatActivity {
     private boolean checkData(String sendAmount, String sendTeg) {
         if (sendAmount == null || sendAmount.length() < 1) {
             errorMediaPlayer.start();
-            makeToast("PAYMENT AMOUNT IS INCORRECT");
+            makeToast(PAYMENT_AMOUNT_IS_INCORRECT);
             return false;
         }
+
         if (new BigDecimal(sendAmount).compareTo(new BigDecimal("0.000000")) == 0) {
             errorMediaPlayer.start();
-            makeToast( "IT IS NOT POSSIBLE TO SEND NULL");
+            makeToast( IT_IS_NOT_POSSIBLE_TO_SEND_NULL);
             return false;
         }
+
         if (new BigDecimal(sendAmount).compareTo(yourBalance) > 0) {
             errorMediaPlayer.start();
-            makeToast("YOUR ACCOUNT IS NOT ENOUGH TO SEND");
+            makeToast(YOUR_ACCOUNT_IS_NOT_ENOUGH_TO_SEND);
             return false;
         }
+
         if (sendTeg != null && !sendTeg.equals("") && Long.parseLong(sendTeg) >= Integer.MAX_VALUE) {
             errorMediaPlayer.start();
-            makeToast("TAG KNOWLEDGE CANNOT BE MORE - 2147483647");
+            makeToast(TAG_KNOWLEDGE_CANNOT_BE_MORE);
             return false;
         }
+
         if (new BigDecimal(sendAmount).compareTo(new BigDecimal(StringEnum.MAX_BET_GUESS_THE_COLOR.getValue())) > 0) {
             errorMediaPlayer.start();
-            makeToast("BET CANNOT BE MORE THAN - " + StringEnum.MAX_BET_GUESS_THE_COLOR.getValue() + "XRP");
+            makeToast(BET_CANNOT_BE_MORE_THAN + StringEnum.MAX_BET_GUESS_THE_COLOR.getValue() + "XRP");
             return false;
         }
+
         if (new BigDecimal(sendAmount).compareTo(new BigDecimal(StringEnum.MIN_BET_GUESS_THE_COLOR.getValue())) < 0) {
             errorMediaPlayer.start();
-            makeToast("BET CANNOT BE LESS THAN - " + StringEnum.MIN_BET_GUESS_THE_COLOR.getValue() + "XRP");
+            makeToast(BET_CANNOT_BE_LESS_THAN + StringEnum.MIN_BET_GUESS_THE_COLOR.getValue() + "XRP");
             return false;
         }
+
         return makePayment(sendAmount, sendTeg);
     }
 
@@ -252,7 +276,7 @@ public class GuessTheColorGame extends AppCompatActivity {
         }
         if (!b) {
             errorMediaPlayer.start();
-            makeToast("WRONG DESTINATION ADDRESS");
+            makeToast(WRONG_DESTINATION_ADDRESS);
         }
         return b;
     }

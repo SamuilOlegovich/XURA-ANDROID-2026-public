@@ -38,29 +38,42 @@ public class SetAnAppPassword extends AppCompatActivity {
     private EditText passwordOne;
     private EditText passwordTwo;
 
+    private TextView settingsSetPasswordAppTextView;
     private TextView confirm;
     private TextView skip;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         MainActivity.MAIN_ACTIVITY.setLocale();
-        setContentView(R.layout.set_password_for_app);
+        setContentView(R.layout.set_password_for_app_page);
         setButtons();
         setLanguage();
         listeners();
     }
 
+
     private void setButtons() {
-        passwordTwo = (EditText) findViewById(R.id.edit_text_passport_tow);
-        passwordOne = (EditText) findViewById(R.id.password_field);
-        confirm = (TextView) findViewById(R.id.next_link);
-        skip = (TextView) findViewById(R.id.link_footer_info);
+        settingsSetPasswordAppTextView = (TextView) findViewById(R.id.settings_set_password_app_text_view);
+        passwordTwo = (EditText) findViewById(R.id.settings_set_password_app_field_tow);
+        confirm = (TextView) findViewById(R.id.settings_set_password_app_confirm_link);
+        passwordOne = (EditText) findViewById(R.id.settings_set_password_app_field);
+        skip = (TextView) findViewById(R.id.settings_set_password_app_skip_linc);
     }
+
+
+    private void setLanguage() {
+        settingsSetPasswordAppTextView.setText(R.string.set_password_to_enter_application);
+        confirm.setText(R.string.set_password);
+        skip.setText(R.string.skip);
+    }
+
 
     private void listeners() {
         animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
+
         confirm.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -93,17 +106,20 @@ public class SetAnAppPassword extends AppCompatActivity {
         );
     }
 
+
     private void goToAnotherPage(String namePage) {
         // класс для перехода на другую страницу
         Intent intent = new Intent(namePage);
         startActivity(intent);
     }
 
+
     private void makeToast(String massage) {
         Toast toast = Toast.makeText(getApplicationContext(), massage, Toast.LENGTH_LONG);
         toast.setGravity(Gravity.TOP, 0,110);   // import android.view.Gravity;
         toast.show();
     }
+
 
     private void setPasswordForApp(String password, boolean b) {
         preferences = getSharedPreferences(StringEnum.APP_PREFERENCES.getValue(), Context.MODE_PRIVATE);
@@ -124,6 +140,7 @@ public class SetAnAppPassword extends AppCompatActivity {
         }
         editor.apply();
     }
+
 
     // при нажатии на кнопку назад будем возвращаться назад
     @Override

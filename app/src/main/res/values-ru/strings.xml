@@ -126,16 +126,29 @@
     <string name="rules_guess_the_color">Правила этой игры очень просты. Вы делаете ставку и указываете цвет. Если цвет угадан - ваша ставка удваивается. Если ставка проиграна, она идет в кассу - лото. Любой пользователь может выиграть лото, независимо от того, что и сколько он поставил - если выпадает сектор лото. Также вы можете выиграть мини-лото - это одна десятая лото. Минимальная ставка - 0,1 XRP, максимальная - 100 XRP.</string>
     <string name="referral_text">ЕСЛИ У ВАС ЕСТЬ КОД РЕФЕРАЛА - ОБЯЗАТЕЛЬНО ВВЕДИТЕ ЕГО - ЭТО ДАСТ ВАМ ДОПОЛНИТЕЛЬНЫЕ ЖИЗНИ НА ВАШИ СТАВКИ И УЧАСТИЕ В ЕЖЕДНЕВНОМ РОЗЫГРЫШЕ ПРИЗОВ</string>
     <string name="rules_roulette">В НАСТОЯЩЕЕ ВРЕМЯ ИГРА НАХОДИТСЯ В РАЗРАБОТКЕ. МЫ ХОТИМ РЕАЛИЗОВАТЬ КЛАССИЧЕСКУЮ ИГРУ В РУЛЕТКУ С МАКСИМАЛЬНОЙ КАЧЕСТВОМ</string>
+    <string name="go_to_the_dark_side_find_the_secret_button">ПЕРЕХОДИТЕ НА ТЕМНУЮ СТОРОНУ - НАЙДИТЕ СЕКРЕТНУЮ КНОПКУ!</string>
+    <string name="guessed_number_should_not_be_less_than">УГАДЫВАЕМОЕ ЧИСЛО НЕ ДОЛЖНО БЫТЬ МЕНЬШЕ - 1 - И БОЛЬШЕ - 36</string>
+    <string name="get_recovery_become_referral">ЗАКАЗА УСПЕШНО ОТПРАВЛЕН - ПОЖАЛУЙСТА, ПОДОЖДИТЕ ОТВЕТА ОТ СЕРВЕРА</string>
+    <string name="get_becom_referral_enum">ЗАКАЗ УСПЕШНО ОТПРАВЛЕН - ПОЖАЛУЙСТА, ПОДОЖДИТЕ ОТВЕТА ОТ СЕРВЕРА</string>
+    <string name="your_account_is_not_enough_to_send">НА ВАШЕМ СЧЕТУ НЕ ДОСТАТОЧНО СРЕДСТВ ДЛЯ ОТПРАВКИ</string>
     <string name="error_check_the_seed_and_try_again">ОШИБКА - ПРОВЕРЬТЕ КЛЮЧ И ПОПРОБУЙТЕ ЕЩЕ РАЗ</string>
     <string name="create_new_wallet_text">ОБЯЗАТЕЛЬНО СОХРАНИТЕ КЛЮЧ И НЕ ПЕРЕДАВАЙТЕ ЕГО НИКОМУ</string>
+    <string name="tag_knowledge_cannot_be_more">ЗНАЧЕНИЕ ТЕГА НЕ МОЖЕТ БЫТЬ БОЛЬШЕ - 2147483647</string>
     <string name="set_password_to_enter_application">УСТАНОВИТЕ ПАРОЛЬ ДЛЯ ВХОДА В ПРИЛОЖЕНИЕ</string>
     <string name="become_referral_and_start_earning">СТАНЬТЕ РЕФЕРАЛОМ И НАЧНИТЕ ЗАРАБАТЫВАТЬ</string>
     <string name="check_the_seed_and_try_again">ОШИБКА - проверьте ключ и попробуйте еще раз</string>
+    <string name="bet_is_made_expect_the_result">СТАВКА СДЕЛАНА - ОЖИДАЙТЕ РЕЗУЛЬТАТА</string>
     <string name="addres_copied_to_phone_buffer">АДРЕС СКОПИРОВАН В БУФФЕР ТЕЛЕФОНА</string>
+    <string name="code_copied_to_phone_buffer">КОД СКОПИРОВАН В БУФФЕР ТЕЛЕФОНА</string>
+    <string name="it_is_not_possible_to_send_null">НЕВОЗМОЖНО ОТПРАВИТЬ NULL</string>
     <string name="restore_from_backup_seed">ВОССТАНОВИТЬ ИЗ РЕЗЕРВНОГО КЛЮЧА</string>
     <string name="last_text_two">НЕ ВОЛНУЙТЕСЬ - ИГРАЙТЕ ДАЛЬШЕ И ВЫ УДАЧНЫ</string>
     <string name="and_get_a_hundred_times_more">И ПОЛУЧИТЕ В СТО РАЗ БОЛЬШЕ</string>
     <string name="wrong_restart_please">Неверно, перезапустите, пожалуйста</string>
+    <string name="bet_cannot_be_less_than">СТАВКА НЕ МОЖЕТ БЫТЬ МЕНЬШЕ - </string>
+    <string name="bet_cannot_be_more_than">СТАВКА НЕ МОЖЕТ БЫТЬ БОЛЕЕ - </string>
+    <string name="wrong_destination_address">НЕВЕРНЫЙ АДРЕС НАЗНАЧЕНИЯ</string>
+    <string name="payment_amount_is_incorrect">НЕВЕРНАЯ СУММА ОПЛАТЫ</string>
     <string name="and_double_the_bet">И ВДВОЕ УВЕЛИЧИВАЙТЕ СТАВКУ</string>
     <string name="transaction_history_text">ИСТОРИЯ ТРАНЗАКЦИЙ</string>
     <string name="enter_number_1_36">Введите число от 1 до 36</string>
@@ -169,6 +182,9 @@
     <string name="app_name">XURA</string>
     <string name="amount">Сумма</string>
     <string name="to">To</string>
+
+
+    <string name="bet_lost_history">     bet lost :(</string>
 
 
 

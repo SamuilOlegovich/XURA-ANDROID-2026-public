@@ -13,8 +13,6 @@ import com.samuilolegovich.R;
 // выводим правила игры
 public class RulesOfTheGameGuessTheColor extends AppCompatActivity {
     public static final String RULES_OF_THE_GAME_GUESS_THE_COLOR_CLASS = ".RulesOfTheGameGuessTheColor";
-
-    private String RULES;
 //    "The rules of this game are very simple.\n\n" +
 //            "You place a bet and indicate which color.\n\n" +
 //            "If the color is guessed - your bet will be doubled.\n\n" +
@@ -24,6 +22,8 @@ public class RulesOfTheGameGuessTheColor extends AppCompatActivity {
 //            "The minimum bet is 0.1 XRP, the maximum is 100 XRP.";
     private TextView rulesOfTheGameGuessTheColorView;
     private TextView rules;
+
+    private String RULES;
 
 
 

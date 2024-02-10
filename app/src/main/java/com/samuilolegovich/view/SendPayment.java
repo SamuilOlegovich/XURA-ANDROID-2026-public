@@ -28,9 +28,16 @@ import java.util.concurrent.ExecutionException;
 // тут страница для отсылки платежа
 public class SendPayment extends AppCompatActivity {
     public static final String SEND_PAYMENT_CLASS = ".SendPayment";
-    public static SendPayment SEND_PAYMENT;
     private static final String XRP = " XRP";
+
+    public static SendPayment SEND_PAYMENT;
     public static String ADDRESS = "";
+
+    private String YOUR_ACCOUNT_IS_NOT_ENOUGH_TO_SEND;
+    private String IT_IS_NOT_POSSIBLE_TO_SEND_NULL;
+    private String TAG_KNOWLEDGE_CANNOT_BE_MORE;
+    private String PAYMENT_AMOUNT_IS_INCORRECT;
+    private String WRONG_DESTINATION_ADDRESS;
 
     private Animation animTranslate;
     private BigDecimal yourBalance;
@@ -73,6 +80,11 @@ public class SendPayment extends AppCompatActivity {
 
 
     private void setLanguage() {
+        YOUR_ACCOUNT_IS_NOT_ENOUGH_TO_SEND = getString(R.string.your_account_is_not_enough_to_send);
+        IT_IS_NOT_POSSIBLE_TO_SEND_NULL = getString(R.string.it_is_not_possible_to_send_null);
+        TAG_KNOWLEDGE_CANNOT_BE_MORE = getString(R.string.tag_knowledge_cannot_be_more);
+        PAYMENT_AMOUNT_IS_INCORRECT = getString(R.string.payment_amount_is_incorrect);
+        WRONG_DESTINATION_ADDRESS = getString(R.string.wrong_destination_address);
         sendPaymentPageTextViewTwo.setText(R.string.your_balance);
         sendPaymentPageTextView.setText(R.string.send_payment);
         scan.setText(R.string.scan_qr_code);
@@ -184,32 +196,32 @@ public class SendPayment extends AppCompatActivity {
     private boolean checkData(String sendAddress, String sendAmount, String sendTeg) {
         setBalance();
         if (sendAddress == null || sendAddress.length() < 33) {
-            makeToast("WRONG DESTINATION ADDRESS");
+            makeToast(WRONG_DESTINATION_ADDRESS);
             return false;
         }
 
         if (sendAmount == null || sendAmount.length() < 1) {
-            makeToast("PAYMENT AMOUNT IS INCORRECT");
+            makeToast(PAYMENT_AMOUNT_IS_INCORRECT);
             return false;
         }
 
         if (new BigDecimal(sendAmount).compareTo(new BigDecimal("0.000000")) == 0) {
-            makeToast( "IT IS NOT POSSIBLE TO SEND NULL");
+            makeToast( IT_IS_NOT_POSSIBLE_TO_SEND_NULL);
             return false;
         }
 
         if (new BigDecimal(sendAmount).compareTo(yourBalance) > 0) {
-            makeToast("YOUR ACCOUNT IS NOT ENOUGH TO SEND");
+            makeToast(YOUR_ACCOUNT_IS_NOT_ENOUGH_TO_SEND);
             return false;
         }
 
         if (sendTeg != null && sendTeg.length() > 11) {
-            makeToast("TAG KNOWLEDGE CANNOT BE MORE - 2147483647");
+            makeToast(TAG_KNOWLEDGE_CANNOT_BE_MORE);
             return false;
         }
 
         if (sendTeg != null && !sendTeg.equals("") && Long.parseLong(sendTeg) >= Integer.MAX_VALUE) {
-            makeToast("TAG KNOWLEDGE CANNOT BE MORE - 2147483647");
+            makeToast(TAG_KNOWLEDGE_CANNOT_BE_MORE);
             return false;
         }
 
@@ -228,7 +240,7 @@ public class SendPayment extends AppCompatActivity {
         }
 
         if (!b) {
-            makeToast("WRONG DESTINATION ADDRESS");
+            makeToast(WRONG_DESTINATION_ADDRESS);
         }
 
         return b;

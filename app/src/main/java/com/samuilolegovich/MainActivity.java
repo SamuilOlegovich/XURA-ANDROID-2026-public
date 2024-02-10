@@ -60,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("StaticFieldLeak")
     public static volatile MainActivity MAIN_ACTIVITY;
 
+    private String GO_TO_THE_DARK_SIDE_FIND_THE_SECRET_BUTTON;
+
     private SharedPreferences preferences;
     private Animation animTranslate;
     private BigDecimal balanceXRP;
@@ -75,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView info;
 
     private ImageButton logoButton;
+
 
 
     @Override
@@ -173,13 +176,14 @@ public class MainActivity extends AppCompatActivity {
         settings = (TextView) findViewById(R.id.settings_linc);
         request = (TextView) findViewById(R.id.request_link);
         balance = (TextView) findViewById(R.id.balance_linc);
-        send = (TextView) findViewById(R.id.next_link);
         info = (TextView) findViewById(R.id.last_text_view);
+        send = (TextView) findViewById(R.id.next_link);
     }
 
 
     @SuppressLint("SetTextI18n")
     private void setLanguage() {
+        GO_TO_THE_DARK_SIDE_FIND_THE_SECRET_BUTTON = getString(R.string.go_to_the_dark_side_find_the_secret_button);
         transactionHistory.setText(R.string.transaction_history);
         yourBalanceText.setText(R.string.your_balance);
         lottoTextGo.setText(R.string.want_to_win);
@@ -190,11 +194,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     @SuppressLint("SetTextI18n")
     private void setBalance() {
         balance.setText(balanceXRP.toString() + " XRP");
     }
+
 
     private void listeners() {
         animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
@@ -271,17 +275,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     // настройка для бегущей строки
     @SuppressLint("SetTextI18n")
     private void goText() {
 //        lottoTextGo.setText("WANT TO WIN LOTTO - "
 //                +  lottoNow
 //                + " XRP - CLICK ON THE LOGO AND START PLAYING!!!");
-        lottoTextGo.setText("GO TO THE DARK SIDE - FIND THE SECRET BUTTON!");
+        lottoTextGo.setText(GO_TO_THE_DARK_SIDE_FIND_THE_SECRET_BUTTON);
         lottoTextGo.setSelected(true);
     }
-
 
 
     @SuppressLint("HardwareIds")
@@ -298,16 +300,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     public void updateWallet() {
         getBalance();
         setBalance();
     }
 
+
     public void updateBalance(BigDecimal balance) {
         balanceXRP = balance;
         setBalance();
     }
+
 
     public void setLottoNow(String lotto) {
         new Thread() {
@@ -322,6 +325,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }.start();
     }
+
 
     public void notifyAboutAnEvent(String massage, String lotto, int i) {
         new Thread() {
@@ -380,7 +384,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     private void getBalance() {
         AsyncTask<String, Void, BigDecimal>  getBalanceAsync = new GetBalanceAsync().execute("");
         try {
@@ -389,6 +392,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
 
     private void goToAnotherPage(String namePage) {
         // класс для перехода на другую страницу

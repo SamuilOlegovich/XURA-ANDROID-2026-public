@@ -27,6 +27,9 @@ public class YourReferral  extends AppCompatActivity {
     public static String MASSAGE = "";
     public static String CODE = "";
 
+    private String CODE_COPIED_TO_PHONE_BUFFER;
+
+
     private ClipboardManager clipboardManager;
     private MediaPlayer erMediaPlayer;
     private Animation animTranslate;
@@ -35,6 +38,7 @@ public class YourReferral  extends AppCompatActivity {
     private SharedPreferences.Editor editor;
     private SharedPreferences preferences;
 
+    private TextView yourReferralPageTextView;
     private TextView copy;
     private TextView code;
 
@@ -44,7 +48,7 @@ public class YourReferral  extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         MainActivity.MAIN_ACTIVITY.setLocale();
-        setContentView(R.layout.your_referral);
+        setContentView(R.layout.your_referral_page);
         setButtons();
         setLanguage();
         listeners();
@@ -55,13 +59,21 @@ public class YourReferral  extends AppCompatActivity {
 
 
     private void setButtons() {
-        erMediaPlayer = MediaPlayer.create(this, R.raw.error);
-        code = (TextView) findViewById(R.id.code);
-        copy = (TextView) findViewById(R.id.copy_linc);
+        yourReferralPageTextView = (TextView) findViewById(R.id.your_referral_page_text_view);
+        copy = (TextView) findViewById(R.id.your_referral_page_copy_linc);
+        code = (TextView) findViewById(R.id.your_referral_page_code);
 
+        erMediaPlayer = MediaPlayer.create(this, R.raw.error);
         erMediaPlayer.start();
+
     }
 
+
+    private void setLanguage() {
+        CODE_COPIED_TO_PHONE_BUFFER = getString(R.string.code_copied_to_phone_buffer);
+        yourReferralPageTextView.setText(R.string.your_referral_code);
+        copy.setText(R.string.copy);
+    }
 
 
     private void listeners() {
@@ -75,12 +87,11 @@ public class YourReferral  extends AppCompatActivity {
                         v.startAnimation(animTranslate);
                         clipData = ClipData.newPlainText("text", CODE);
                         clipboardManager.setPrimaryClip(clipData);
-                        makeToast("CODE COPIED TO PHONE BUFFER ");
+                        makeToast(CODE_COPIED_TO_PHONE_BUFFER);
                     }
                 }
         );
     }
-
 
 
     private void setReferralForApp(String referral) {
@@ -91,7 +102,6 @@ public class YourReferral  extends AppCompatActivity {
     }
 
 
-
     private void makeToast(String massage) {
         Toast toast = Toast.makeText(getApplicationContext(), massage, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.TOP, 0,110);   // import android.view.Gravity;
@@ -99,13 +109,11 @@ public class YourReferral  extends AppCompatActivity {
     }
 
 
-
     // настройка для бегущей строки
     @SuppressLint("SetTextI18n")
     private void goText() {
         code.setText(CODE);
     }
-
 
 
     // при нажатии на кнопку назад будем возвращаться назад

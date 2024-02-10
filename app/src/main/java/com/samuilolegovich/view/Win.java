@@ -17,9 +17,10 @@ public class Win extends AppCompatActivity {
     public static String MASSAGE = "";
 
     private MediaPlayer winMediaPlayer;
-    private TextView info3;
-    private TextView info2;
-    private TextView info;
+
+    private TextView winPageTextViewTree;
+    private TextView winPageTextViewTwo;
+    private TextView winPageTextView;
 
 
 
@@ -27,7 +28,7 @@ public class Win extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         MainActivity.MAIN_ACTIVITY.setLocale();
-        setContentView(R.layout.win);
+        setContentView(R.layout.win_page);
         setButtons();
         setLanguage();
         goText();
@@ -36,12 +37,19 @@ public class Win extends AppCompatActivity {
 
 
     private void setButtons() {
-        winMediaPlayer = MediaPlayer.create(this, R.raw.win);
-        info3 = (TextView) findViewById(R.id.last_text_view_tree);
-        info2 = (TextView) findViewById(R.id.last_text_view_two);
-        info = (TextView) findViewById(R.id.last_text_view);
+        winPageTextViewTree = (TextView) findViewById(R.id.win_page_text_view_tree);
+        winPageTextViewTwo = (TextView) findViewById(R.id.win_page_text_view_tow);
+        winPageTextView = (TextView) findViewById(R.id.win_page_text_view);
 
+        winMediaPlayer = MediaPlayer.create(this, R.raw.win);
         winMediaPlayer.start();
+    }
+
+
+    private void setLanguage() {
+        winPageTextViewTree.setText(R.string.congratulations);
+        winPageTextView.setText(R.string.bet_won);
+//        MASSAGE = getString(R.string.);
     }
 
 
@@ -49,8 +57,8 @@ public class Win extends AppCompatActivity {
     // настройка для бегущей строки
     @SuppressLint("SetTextI18n")
     private void goText() {
-        info2.setText(MASSAGE);
-        info2.setSelected(true);
+        winPageTextViewTwo.setText(MASSAGE);
+        winPageTextViewTwo.setSelected(true);
     }
 
 
