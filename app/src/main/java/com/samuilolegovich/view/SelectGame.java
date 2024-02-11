@@ -17,6 +17,7 @@ import static com.samuilolegovich.view.BecomeReferral.BECOME_REFERRAL_CLASS;
 import static com.samuilolegovich.view.GuessTheNumberGame.GUESS_THE_NUMBER_GAME_CLASS;
 import static com.samuilolegovich.view.GuessTheColorGame.GUESS_THE_COLOR_GAME_CLASS;
 import static com.samuilolegovich.view.RouletteGame.ROULETTE_GAME_CLASS;
+import static com.samuilolegovich.view.SelectGameMode.SELECT_GAME_MODE_CLASS;
 
 
 
@@ -28,8 +29,9 @@ public class SelectGame extends AppCompatActivity {
 
     private TextView selectTextView;
     private TextView becomeReferral;
-    private TextView guessTheColor;
+    private TextView selectModeGame;
     private TextView guessTheNumber;
+    private TextView guessTheColor;
     private TextView roulette;
 
 
@@ -56,9 +58,10 @@ public class SelectGame extends AppCompatActivity {
 
 
     private void setButtons() {
+        selectModeGame = (TextView) findViewById(R.id.select_game_select_mode_game_linc);
         becomeReferral = (TextView) findViewById(R.id.become_referral_linc);
-        guessTheColor = (TextView) findViewById(R.id.guess_the_color_linc);
         guessTheNumber = (TextView) findViewById(R.id.double_your_bet_linc);
+        guessTheColor = (TextView) findViewById(R.id.guess_the_color_linc);
         selectTextView = (TextView) findViewById(R.id.select_text_view);
         roulette = (TextView) findViewById(R.id.roulette_linc);
     }
@@ -68,6 +71,7 @@ public class SelectGame extends AppCompatActivity {
         guessTheNumber.setText(R.string.name_guess_the_number);
         guessTheColor.setText(R.string.name_guess_the_color);
         becomeReferral.setText(R.string.become_a_referral);
+        selectModeGame.setText(R.string.select_game_mode);
         selectTextView.setText(R.string.select_game);
         roulette.setText(R.string.name_roulette);
     }
@@ -84,6 +88,18 @@ public class SelectGame extends AppCompatActivity {
                         flourOfChoiceMediaPlayer.stop();
                         flourOfChoiceMediaPlayer.prepareAsync();
                         goToAnotherPage(BECOME_REFERRAL_CLASS);
+                    }
+                }
+        );
+
+        selectModeGame.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        v.startAnimation(animTranslate);
+                        flourOfChoiceMediaPlayer.stop();
+                        flourOfChoiceMediaPlayer.prepareAsync();
+                        goToAnotherPage(SELECT_GAME_MODE_CLASS);
                     }
                 }
         );

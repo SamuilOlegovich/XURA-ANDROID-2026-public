@@ -1,0 +1,103 @@
+package com.samuilolegovich.view;
+
+import static com.samuilolegovich.view.BecomeReferral.BECOME_REFERRAL_CLASS;
+import static com.samuilolegovich.view.GuessTheNumberGame.GUESS_THE_NUMBER_GAME_CLASS;
+
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.samuilolegovich.MainActivity;
+import com.samuilolegovich.R;
+import com.samuilolegovich.enums.StringEnum;
+
+
+
+public class SelectGameMode  extends AppCompatActivity {
+    public static final String SELECT_GAME_MODE_CLASS = ".SelectGameMode";
+
+    private SharedPreferences.Editor editor;
+    private SharedPreferences preferences;
+    private Animation animTranslate;
+
+    private TextView selectGameModePageTextView;
+    private TextView selectGameModeLinc;
+
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        MainActivity.MAIN_ACTIVITY.setLocale();
+        setContentView(R.layout.select_game_mode_page);
+        setButtons();
+        setLanguage();
+        listeners();
+    }
+
+
+
+    private void setButtons() {
+        selectGameModePageTextView = (TextView) findViewById(R.id.select_game_mode_page_text_view);
+        selectGameModeLinc = (TextView) findViewById(R.id.select_game_mode_page_mode_linc);
+
+    }
+
+
+    private void setLanguage() {
+        selectGameModePageTextView.setText(R.string.select_game_mode_text);
+        selectGameModeLinc.setText(MainActivity.IS_REAL_GAME_MODE
+                ? R.string.select_game_mode_text_test
+                : R.string.select_game_mode_text_real);
+    }
+
+
+    private void listeners() {
+        animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
+
+        selectGameModeLinc.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        v.startAnimation(animTranslate);
+                        boolean isGameMode = MainActivity.IS_REAL_GAME_MODE.toString().equalsIgnoreCase("true");
+                        makeStackThread(isGameMode
+                                ? StringEnum.APP_GAME_MODE_TEST
+                                : StringEnum.APP_GAME_MODE_REAL);
+
+                        selectGameModeLinc.setText(isGameMode
+                                ? R.string.select_game_mode_text_real
+                                : R.string.select_game_mode_text_test);
+                    }
+                }
+        );
+    }
+
+
+    private void makeStackThread(StringEnum stringEnum) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                makeStack(stringEnum);
+            }
+        }).start();
+    }
+
+
+    private void makeStack(StringEnum stringEnum) {
+        preferences = getSharedPreferences(StringEnum.APP_PREFERENCES.getValue(), Context.MODE_PRIVATE);
+
+        editor = preferences.edit();
+        editor.putString(StringEnum.APP_GAME_MODE.getValue(), stringEnum.getValue());
+        editor.apply();
+
+        MainActivity.IS_REAL_GAME_MODE = stringEnum.getValue().equalsIgnoreCase("true");
+    }
+
+}

@@ -9,8 +9,11 @@
     <string name="rules_of_the_game"><u>RULES OF THE GAME</u></string>
     <string name="become_a_referral"><u>BECOME A REFERRAL</u></string>
     <string name="settings_set_password"><u>SET PASSWORD</u></string>
+    <string name="select_game_mode"><u>SELECT MODE GAME</u></string>
     <string name="become_referral"><u>BECOME A REFERRAL</u></string>
     <string name="restore_referral"><u>RESTORE REFERRAL</u></string>
+    <string name="select_game_mode_text_test"><u>TRIAL</u></string>
+    <string name="select_game_mode_text_real"><u>LIVE</u></string>
     <string name="select_language_russian"><u>RUSSIAN</u></string>
     <string name="select_language_english"><u>ENGLISH</u></string>
     <string name="restore_wallet"><u>RESTORE WALLET</u></string>
@@ -35,16 +38,19 @@
 
 
 
-    <string name="rules_guess_the_number_text">The rules of this game are very simple.\n\nThe bet is always fixed and is - 1XRP.\n\nYou just have to choose the number you want to bet on. (from - 1 to -  36)\n\nIn case of winning, the bet will be increased by 36 times.\n\nIf the bet is lost, it goes to the savings fund - LOTTO.\n\nAbsolutely any user can win a LOTTO, regardless of what and how much he bet - if the LOTTO sector falls out. And you can also win a mini LOTTO - it is one tenth of the LOTTO.</string>
-    <string name="rules_double_your_bet">The rules of this game are very simple. The bet is always fixed and is - 1XRP. You just have to choose the number you want to bet on. (from - 1 to -  36) In case of winning, the bet will be increased by 36 times. If the bet is lost, it goes to the savings fund - lotto. Absolutely any user can win a lotto, regardless of what and how much he bet - if the lotto sector falls out. And you can also win a mini lotto - it is one tenth of the lotto.</string>
+    <string name="rules_guess_the_number_text">The rules of this game are very simple.\n\nYou just have to choose the number you want to bet on. (from - 1 to -  36)\n\nIn case of winning, the bet will be increased by 36 times.\n\nIf the bet is lost, it goes to the savings fund - LOTTO.\n\nAbsolutely any user can win a LOTTO, regardless of what and how much he bet - if the LOTTO sector falls out. And you can also win a mini LOTTO - it is one tenth of the LOTTO.\n\nThe minimum bet is 0.1 XRP, the maximum is 100 XRP.</string>
+    <string name="rules_double_your_bet">The rules of this game are very simple. You just have to choose the number you want to bet on. (from - 1 to -  36) In case of winning, the bet will be increased by 36 times. If the bet is lost, it goes to the savings fund - lotto. Absolutely any user can win a lotto, regardless of what and how much he bet - if the lotto sector falls out. And you can also win a mini lotto - it is one tenth of the lotto.\n\nThe minimum bet is 0.1 XRP, the maximum is 100 XRP.</string>
     <string name="rules_guess_the_color_text">The rules of this game are very simple.\n\nYou place a bet and indicate which color.\n\nIf the color is guessed - your bet will be doubled.\n\nIf the bet is lost, it goes to the savings fund - LOTTO.\n\nAbsolutely any user can win a LOTTO, regardless of what and how much he bet - if the LOTTO sector falls out. And you can also win a mini LOTTO - it is one tenth of the LOTTO.\n\nThe minimum bet is 0.1 XRP, the maximum is 100 XRP.</string>
-    <string name="rules_guess_the_color">The rules of this game are very simple. You place a bet and indicate which color. If the color is guessed - your bet will be doubled. If the bet is lost, it goes to the savings fund - lotto. Absolutely any user can win a lotto, regardless of what and how much he bet - if the lotto sector falls out. And you can also win a mini lotto - it is one tenth of the lotto. The minimum bet is 0.1 XRP, the maximum is 100 XRP.</string>
+    <string name="rules_guess_the_color">The rules of this game are very simple. You place a bet and indicate which color. If the color is guessed - your bet will be doubled. If the bet is lost, it goes to the savings fund - lotto. Absolutely any user can win a lotto, regardless of what and how much he bet - if the lotto sector falls out. And you can also win a mini lotto - it is one tenth of the lotto.\n\nThe minimum bet is 0.1 XRP, the maximum is 100 XRP.</string>
     <string name="referral_text">IF YOU HAVE A REFERRAL CODE - BE SURE TO ENTER IT - IT WILL GIVE YOU EXTRA LIVES ON YOUR BETS AND PARTICIPATION IN THE DAILY PRIZE DRAW</string>
     <string name="rules_roulette">CURRENTLY THE GAME IS UNDER DEVELOPMENT. WE WANT TO IMPLEMENT THE CLASSIC ROULETTE GAME WITH THE MAXIMUM QUALITY.</string>
+    <string name="congratulations_yoyr_bet_is_won_loto">CONGRATULATIONS!  YOUR BET IS WON THE LOTTO! THE WIN IS - %s XRP - PLAY AND KEEP WINING!</string>
     <string name="get_recovery_become_referral">RECOVERY ORDER REFERRAL SUCCESSFULLY SENT - PLEASE WAIT FOR REPLY FROM THE SERVER</string>
+    <string name="congratulations_yoyr_bet_is_won">CONGRATULATIONS! YOUR BET IS WON! THE WIN IS - %s XRP - PLAY AND KEEP WINING!</string>
     <string name="guessed_number_should_not_be_less_than">GUESSED NUMBER SHOULD NOT BE LESS THAN - 1 - AND MORE THAN - 36</string>
     <string name="get_becom_referral_enum">ORDER FOR REFERRAL SUCCESSFULLY SENT - PLEASE WAIT FOR REPLY FROM THE SERVER</string>
     <string name="go_to_the_dark_side_find_the_secret_button">GO TO THE DARK SIDE - FIND THE SECRET BUTTON!</string>
+    <string name="your_bet_is_lost_try_again">YOUR BET IS LOST - TRY AGAIN AND YOU WILL BE LUCKY!</string>
     <string name="create_new_wallet_text">BE SURE TO SAVE THE SEED AND DO NOT GIVE IT TO ANYONE</string>
     <string name="set_password_to_enter_application">SET A PASSWORD TO ENTER THE APPLICATION</string>
     <string name="error_check_the_seed_and_try_again">ERROR - CHECK THE SEED AND TRY AGAIN</string>
@@ -56,9 +62,9 @@
     <string name="bet_is_made_expect_the_result">BET IS MADE - EXPECT THE RESULT</string>
     <string name="last_text_two">DONT WORRY - PLAY FURTHER AND YOU WILL BE LUCKY</string>
     <string name="addres_copied_to_phone_buffer">ADDRESS COPIED TO PHONE BUFFER</string>
-    <string name="and_get_a_hundred_times_more">AND GET A 36 TIMES MORE</string>
-    <string name="code_copied_to_phone_buffer">CODE COPIED TO PHONE BUFFER</string>
     <string name="payment_amount_is_incorrect">PAYMENT AMOUNT IS INCORRECT</string>
+    <string name="code_copied_to_phone_buffer">CODE COPIED TO PHONE BUFFER</string>
+    <string name="and_get_a_hundred_times_more">AND GET A 36 TIMES MORE</string>
     <string name="wrong_destination_address">WRONG DESTINATION ADDRESS</string>
     <string name="bet_cannot_be_more_than">BET CANNOT BE MORE THAN - </string>
     <string name="bet_cannot_be_less_than">BET CANNOT BE LESS THAN - </string>
@@ -67,6 +73,7 @@
     <string name="wrong_restart_please">Wrong, restart please.</string>
     <string name="enter_referral_code">Enter referral code</string>
     <string name="enter_password_low_case">Enter password</string>
+    <string name="select_game_mode_text">SELECT GAME MODE</string>
     <string name="your_referral_code">YOUR REFERRAL CODE</string>
     <string name="and_double_the_bet">AND DOUBLE THE BET</string>
     <string name="game_notifications">GAME NOTIFICATIONS</string>
@@ -97,6 +104,7 @@
     <string name="amount">Amount</string>
     <string name="app_name">XURA</string>
     <string name="to">To</string>
+
 
 
     <string name="referral_recovery_history">referral recovery</string>

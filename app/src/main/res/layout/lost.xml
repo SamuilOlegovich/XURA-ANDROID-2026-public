@@ -34,7 +34,7 @@
         android:text="@string/bet_lost"
         android:textAlignment="center"
         android:textColor="@color/black_light"
-        android:textSize="60sp"
+        android:textSize="40sp"
         android:textStyle="bold"
         android:typeface="normal"
         app:layout_constraintEnd_toEndOf="parent"

@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,8 +24,6 @@ import java.util.List;
 public class HistoryPaymentArrayAdapter extends ArrayAdapter<HistoryPaymentDto> {
     private List<HistoryPaymentDto> historyPaymentDtoList;
 
-    private Context context;
-
     private String referralRecoveryHistory;
     private String referralOrderHistory;
     private String wonTheLottoHistory;
@@ -39,6 +36,8 @@ public class HistoryPaymentArrayAdapter extends ArrayAdapter<HistoryPaymentDto> 
     private String refundHistory;
     private String betOnHistory;
     private String tagHistory;
+
+    private Context context;
 
 
 

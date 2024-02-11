@@ -1,5 +1,7 @@
 package com.samuilolegovich.wallet.subscribers;
 
+import android.content.Context;
+
 import com.samuilolegovich.asyncAndRun.runnable.NotifierRun;
 import com.samuilolegovich.asyncAndRun.runnable.UpdateBalanceRun;
 import com.samuilolegovich.wallet.model.sockets.enums.StreamSubscriptionEnum;
@@ -11,8 +13,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
+
 public class MyStreamSubscriber implements StreamSubscriber {
     private static final Logger LOG = LoggerFactory.getLogger(MyStreamSubscriber.class);
+    Context context;
 
     @Override
     public void onSubscription(StreamSubscriptionEnum subscription, JSONObject message) {

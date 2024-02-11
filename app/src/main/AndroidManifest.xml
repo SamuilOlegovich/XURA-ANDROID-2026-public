@@ -79,6 +79,21 @@
         </activity>
 
         <activity
+            android:name="com.samuilolegovich.view.SelectGameMode"
+            android:label="SelectGameMode"
+            android:exported="true">
+
+            <!-- вставляем сюда этот модуль-->
+            <intent-filter>
+
+                <!-- меняем на адрес новой страницы-->
+                <action android:name=".SelectGameMode" />
+                <!-- меняем на DEFAULT-->
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
             android:name="com.samuilolegovich.view.SelectLanguage"
             android:label="SelectLanguage"
             android:exported="true">

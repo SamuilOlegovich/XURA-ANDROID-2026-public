@@ -33,17 +33,17 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import static com.samuilolegovich.view.EnterApplicationPassword.ENTER_APPLICATION_PASSWORD_CLASS;
-import static com.samuilolegovich.view.Lost.LOST_CLASS;
 import static com.samuilolegovich.view.RestoreOrCreateNewWallet.RESTORE_OR_NEW_WALLET_CLASS;
+import static com.samuilolegovich.view.TransactionHistory.TRANSACTION_HISTORY_CLASS;
 import static com.samuilolegovich.view.SetAnAppPassword.SET_AN_APP_PASSWORD_CLASS;
 import static com.samuilolegovich.view.ReceivePayment.RECEIVE_PAYMENT_CLASS;
+import static com.samuilolegovich.view.YourReferral.YOUR_REFERRAL_CLASS;
 import static com.samuilolegovich.view.SendPayment.SEND_PAYMENT_CLASS;
 import static com.samuilolegovich.view.SelectGame.SELECT_GAME_CLASS;
 import static com.samuilolegovich.view.InfoMain.INFO_MAIN_CLASS;
 import static com.samuilolegovich.view.Settings.SETTINGS_CLASS;
-import static com.samuilolegovich.view.TransactionHistory.TRANSACTION_HISTORY_CLASS;
+import static com.samuilolegovich.view.Lost.LOST_CLASS;
 import static com.samuilolegovich.view.Win.WIN_CLASS;
-import static com.samuilolegovich.view.YourReferral.YOUR_REFERRAL_CLASS;
 
 
 
@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String MAIN_ACTIVITY_CLASS = ".MainActivity";
     public static final long ONE_XRP_IN_DROPS = 1_000_000L;
 
+    public static volatile Boolean IS_REAL_GAME_MODE = false;
     public static volatile boolean VISIBLE_ON_SCREEN = false;
     public static volatile boolean START_FLAG = true;
 
@@ -83,14 +84,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         start();
         setLocale();
         setContentView(R.layout.activity_main);
-
         lottoNow = Lotto.genLotto() + "";
         MAIN_ACTIVITY = this;
-
         setButtons();
         setLanguage();
         setBalance();
@@ -102,6 +100,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void start() {
         preferences = getSharedPreferences(StringEnum.APP_PREFERENCES.getValue(), Context.MODE_PRIVATE);
+        IS_REAL_GAME_MODE = preferences.getString(StringEnum.APP_GAME_MODE.getValue(), "false")
+                .equalsIgnoreCase("true");
         newLocale = new Locale(preferences.getString(StringEnum.APP_PREFERENCES_LOCALE.getValue(), "en"));
 
         boolean isSetPassword = preferences.getString(StringEnum.APP_PREFERENCES_PASSWORD.getValue(), "")

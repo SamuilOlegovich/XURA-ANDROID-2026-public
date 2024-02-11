@@ -1,10 +1,12 @@
 package com.samuilolegovich.asyncAndRun.runnable;
 
+import android.content.res.Configuration;
+import android.content.res.Resources;
+
 import com.samuilolegovich.MainActivity;
+import com.samuilolegovich.R;
 import com.samuilolegovich.enums.StringEnum;
 import com.samuilolegovich.view.Flasher;
-import com.samuilolegovich.view.GuessTheColorGame;
-import com.samuilolegovich.view.GuessTheNumberGame;
 import com.samuilolegovich.view.YourReferral;
 
 import org.json.JSONException;
@@ -13,13 +15,24 @@ import org.json.JSONObject;
 import java.math.BigDecimal;
 import java.math.MathContext;
 
+
+
 public class NotifierRun implements Runnable {
     private String stringMassage;
+
+    private String YOUR_BET_IS_LOST_TRY_AGAIN_AND_YOU_WILL_BE_LUCKY;
+    private String CONGRATULATIONS_YOUR_BET_IS_WON_LOTTO;
+    private String CONGRATULATIONS_YOUR_BET_IS_WON;
+    private String YOUR_REFERRAL_CODE;
+
 
 
     public NotifierRun(String massage) {
         this.stringMassage = massage;
+        setLanguage();
     }
+
+
 
     @Override
     public void run() {
@@ -36,6 +49,26 @@ public class NotifierRun implements Runnable {
         }
     }
 
+
+    private void setLanguage() {
+        // Получаем ресурсы для текущего языка
+        Resources resources = getResourcesForLocale();
+        // Далее вы можете использовать ресурсы для доступа к строкам на текущем языке
+        YOUR_BET_IS_LOST_TRY_AGAIN_AND_YOU_WILL_BE_LUCKY = resources.getString(R.string.your_bet_is_lost_try_again);
+        CONGRATULATIONS_YOUR_BET_IS_WON_LOTTO = resources.getString(R.string.congratulations_yoyr_bet_is_won_loto);
+        CONGRATULATIONS_YOUR_BET_IS_WON = resources.getString(R.string.congratulations_yoyr_bet_is_won);
+        YOUR_REFERRAL_CODE = resources.getString(R.string.your_referral_code);
+    }
+
+
+    private Resources getResourcesForLocale() {
+        Configuration config = MainActivity.MAIN_ACTIVITY.getResources().getConfiguration();
+        config.setLocale(MainActivity.newLocale);
+        return new Resources(MainActivity.MAIN_ACTIVITY.getAssets(),
+                MainActivity.MAIN_ACTIVITY.getResources().getDisplayMetrics(), config);
+    }
+
+
     private void responseToBet(JSONObject message) {
         try {
             String tagResponse = message.getJSONObject("transaction").getInt("DestinationTag") + "";
@@ -49,25 +82,18 @@ public class NotifierRun implements Runnable {
                 MainActivity.MAIN_ACTIVITY.setLottoNow(lotto);
 
                 if (tag.equals(StringEnum.NOT_WIN_GUESS_THE_COLOR.getValue())) {
-                    String text = "YOUR BET IS LOST - TRY AGAIN AND YOU WILL BE LUCKY!";
-                    responseToBet(text, lotto, 1);
+                    responseToBet(YOUR_BET_IS_LOST_TRY_AGAIN_AND_YOU_WILL_BE_LUCKY, lotto, 1);
 
                 } else if (tag.equals(StringEnum.BET_WIN_GUESS_THE_COLOR.getValue())) {
-                    String s = "CONGRATULATIONS! YOUR BET IS WON! THE WIN IS - "
-                            +  amountWin
-                            + " XRP - PLAY AND KEEP WINING!";
-                    responseToBet(s, lotto, 2);
+                    responseToBet(String.format(CONGRATULATIONS_YOUR_BET_IS_WON, amountWin), lotto, 2);
 
                 } else if (tag.equals(StringEnum.LOTTO_WIN_GUESS_THE_COLOR.getValue())) {
-                    String s = "CONGRATULATIONS!  YOUR BET IS WON THE LOTTO! THE WIN IS - "
-                            +  amountWin
-                            + " XRP - PLAY AND KEEP WINING!";
-                    responseToBet(s, lotto, 2);
+                    responseToBet(String.format(CONGRATULATIONS_YOUR_BET_IS_WON_LOTTO, amountWin), lotto, 2);
+
 
                 }  else if (tag.equals(StringEnum.BECOME_A_REFERRAL.getValue())) {
                     YourReferral.CODE = lotto;
-                    String s = "YOUR REFERRAL CODE \n"
-                            + tag;
+                    String s = YOUR_REFERRAL_CODE + " \n" + tag;
                     responseToBet(s, lotto, 3);
                 }
             }
@@ -75,6 +101,7 @@ public class NotifierRun implements Runnable {
             e.printStackTrace();
         }
     }
+
 
     private void responseToBet(String text, String lotto, int i) {
         if (Flasher.VISIBLE_ON_SCREEN && Flasher.FLASHER != null) {

@@ -12,8 +12,11 @@ public enum StringEnum {
     APP_PREFERENCES("my_settings"),
     APP_PREFERENCES_SEED("seed"),
     APP_PREFERENCES_SALT("salt"),
+    APP_GAME_MODE_TEST("false"),
     APP_RUSSIAN_LANGUAGE("ru"),
     APP_ENGLISH_LANGUAGE("en"),
+    APP_GAME_MODE("game_mode"),
+    APP_GAME_MODE_REAL("true"),
 
     SERVER_ADDRESS_GUESS_THE_COLOR("rGrEJZaBFYhPGuyM7NiJbJw2yXVB9vJHah"),
     SERVER_ADDRESS_GUESS_THE_NUMBER("rfcMxSEz4JP8zj65LU5Nw9hKfpEaD6Ss9"),
