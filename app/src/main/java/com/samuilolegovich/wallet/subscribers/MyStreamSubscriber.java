@@ -18,6 +18,8 @@ public class MyStreamSubscriber implements StreamSubscriber {
     private static final Logger LOG = LoggerFactory.getLogger(MyStreamSubscriber.class);
     Context context;
 
+
+
     @Override
     public void onSubscription(StreamSubscriptionEnum subscription, JSONObject message) {
         LOG.info("subscription returned a {} message", subscription.getMessageType());

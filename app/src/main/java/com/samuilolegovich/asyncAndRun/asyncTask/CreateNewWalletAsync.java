@@ -6,10 +6,14 @@ import com.samuilolegovich.wallet.model.PaymentManager.PaymentAndSocketManagerXR
 
 import java.util.Map;
 
+
+
 public class CreateNewWalletAsync extends AsyncTask<String, Void, Map<String, String>> {
+
     @Override
     protected void onPreExecute() {
     }
+
 
     @Override
     protected Map<String, String> doInBackground(String... arg) {
@@ -21,6 +25,7 @@ public class CreateNewWalletAsync extends AsyncTask<String, Void, Map<String, St
         }
         return map;
     }
+
 
     @Override
     protected void onPostExecute(Map<String, String> map) {

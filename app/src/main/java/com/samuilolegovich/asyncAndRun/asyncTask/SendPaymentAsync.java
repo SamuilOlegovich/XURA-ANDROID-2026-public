@@ -6,10 +6,14 @@ import com.samuilolegovich.wallet.model.PaymentManager.PaymentAndSocketManagerXR
 
 import java.math.BigDecimal;
 
+
+
 public class SendPaymentAsync extends AsyncTask<String, Void, Boolean> {
+
     @Override
     protected void onPreExecute() {
     }
+
 
     @Override
     protected Boolean doInBackground(String... arg) {
@@ -25,6 +29,7 @@ public class SendPaymentAsync extends AsyncTask<String, Void, Boolean> {
         }
         return b;
     }
+
 
     @Override
     protected void onPostExecute(Boolean map) {

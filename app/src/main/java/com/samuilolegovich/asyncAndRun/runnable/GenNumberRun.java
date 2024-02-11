@@ -6,15 +6,20 @@ import com.samuilolegovich.view.GuessTheNumberGame;
 
 import java.util.Map;
 
+
+
 public class GenNumberRun implements Runnable {
     public static volatile boolean FLAG = true;
     private boolean nextColor;
+
+
 
     @Override
     public void run() {
         while (FLAG) {
             if (GuessTheNumberGame.GUESS_THE_NUMBER_GAME != null) {
                 genNumberAndColor();
+
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {

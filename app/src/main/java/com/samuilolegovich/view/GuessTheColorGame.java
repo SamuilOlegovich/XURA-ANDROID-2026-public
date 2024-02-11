@@ -24,6 +24,7 @@ import com.samuilolegovich.asyncAndRun.asyncTask.GetBalanceAsync;
 import com.samuilolegovich.asyncAndRun.asyncTask.SendPaymentAsync;
 import com.samuilolegovich.asyncAndRun.runnable.GenColorRun;
 import com.samuilolegovich.enums.StringEnum;
+import com.samuilolegovich.enums.TestModeEnum;
 import com.samuilolegovich.utils.Lotto;
 
 import java.math.BigDecimal;
@@ -185,17 +186,25 @@ public class GuessTheColorGame extends AppCompatActivity {
     private void makeStack(String tag, boolean color) {
         String sendAmount = prepareTheShippingAmount(bet.getText().toString());
         String sendTeg = tag + myReferral;
+
         if (checkData(sendAmount, sendTeg)) {
             bet.setText("");
-            setBetParam(tag, color);
+            setBetParam(sendAmount, color);
             goToAnotherPage(FLASHER_CLASS);
             makeToast(BET_IS_MADE_EXPECT_THE_RESULT);
         }
     }
 
-    private void setBetParam(String tag, boolean color) {
+
+    private void setBetParam(String sendAmount,
+                             boolean color) {
         Flasher.NUMBER_BET = Lotto.getRandomNumberForColor(color) + "";
         Flasher.COLOR_BET = color;
+
+        if (!MainActivity.IS_REAL_GAME_MODE) {
+            Flasher.testModeEnum = TestModeEnum.GUESS_THE_COLOR_GAME;
+            Flasher.TEST_SAND_AMOUNT = sendAmount;
+        }
     }
 
 
@@ -217,7 +226,6 @@ public class GuessTheColorGame extends AppCompatActivity {
                             outInfo.setTextColor(Color.RED);
                         }
                     }
-
                 });
             }
         }.start();
@@ -266,19 +274,27 @@ public class GuessTheColorGame extends AppCompatActivity {
 
 
     private boolean makePayment(String sendAmount, String sendTeg) {
-        AsyncTask<String, Void, Boolean> asyncTask = new SendPaymentAsync()
-                .execute(StringEnum.SERVER_ADDRESS_GUESS_THE_COLOR.getValue(), sendAmount, sendTeg);
-        boolean b = false;
-        try {
-            b = asyncTask.get();
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
+
+        if (MainActivity.IS_REAL_GAME_MODE) {
+            boolean b = false;
+            AsyncTask<String, Void, Boolean> asyncTask = new SendPaymentAsync()
+                    .execute(StringEnum.SERVER_ADDRESS_GUESS_THE_COLOR.getValue(), sendAmount, sendTeg);
+
+            try {
+                b = asyncTask.get();
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            if (!b) {
+                errorMediaPlayer.start();
+                makeToast(WRONG_DESTINATION_ADDRESS);
+            }
+
+            return b;
+        } else {
+            return true;
         }
-        if (!b) {
-            errorMediaPlayer.start();
-            makeToast(WRONG_DESTINATION_ADDRESS);
-        }
-        return b;
     }
 
 

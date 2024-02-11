@@ -6,11 +6,14 @@ import com.samuilolegovich.wallet.model.PaymentManager.PaymentAndSocketManagerXR
 
 import java.util.Map;
 
+
+
 public class RestoreWalletAsync extends AsyncTask<String, Void, Map<String, String>> {
 
     @Override
     protected void onPreExecute() {
     }
+
 
     @Override
     protected Map<String, String> doInBackground(String... arg) {
@@ -22,6 +25,7 @@ public class RestoreWalletAsync extends AsyncTask<String, Void, Map<String, Stri
         }
         return map;
     }
+
 
     @Override
     protected void onPostExecute(Map<String, String> map) {

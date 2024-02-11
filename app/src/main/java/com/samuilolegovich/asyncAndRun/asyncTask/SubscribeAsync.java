@@ -12,11 +12,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
+
 public class SubscribeAsync extends AsyncTask<String, Void, Boolean> {
     private PaymentAndSocketManagerXRPL paymentManager;
+
+
+
     @Override
     protected void onPreExecute() {
     }
+
 
     @Override
     protected Boolean doInBackground(String... arg) {
@@ -35,6 +41,7 @@ public class SubscribeAsync extends AsyncTask<String, Void, Boolean> {
 
         return true;
     }
+
 
     @Override
     protected void onPostExecute(Boolean map) {

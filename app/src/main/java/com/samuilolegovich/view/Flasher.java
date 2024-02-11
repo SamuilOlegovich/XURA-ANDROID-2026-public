@@ -14,6 +14,8 @@ import androidx.core.content.ContextCompat;
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 import com.samuilolegovich.asyncAndRun.runnable.FlasherRun;
+import com.samuilolegovich.asyncAndRun.runnable.NotifierRunTest;
+import com.samuilolegovich.enums.TestModeEnum;
 import com.samuilolegovich.utils.Lotto;
 
 
@@ -23,13 +25,16 @@ public class Flasher extends AppCompatActivity {
 
     public static volatile boolean VISIBLE_ON_SCREEN = false;
 
+    public static volatile TestModeEnum testModeEnum;
     @SuppressLint("StaticFieldLeak")
     public static volatile Flasher FLASHER;
 
-    private volatile boolean FLAG;
+    public static String TEST_SAND_AMOUNT;
+    public static String NUMBER_BET;
 
     public static Boolean COLOR_BET;
-    public static String NUMBER_BET;
+
+    private volatile boolean FLAG;
 
     private MediaPlayer rouletteSpinMediaPlayer;
     private MediaPlayer winMediaPlayer;
@@ -59,6 +64,10 @@ public class Flasher extends AppCompatActivity {
         setLanguage();
         setSound();
         goThread();
+
+        if (!MainActivity.IS_REAL_GAME_MODE) {
+            goThreadTest();
+        }
     }
 
 
@@ -241,6 +250,13 @@ public class Flasher extends AppCompatActivity {
 
     private void goThread() {
         Runnable runnable = new FlasherRun();
+        Thread thread = new Thread(runnable);
+        thread.start();
+    }
+
+
+    private void goThreadTest() {
+        Runnable runnable = new NotifierRunTest(testModeEnum);
         Thread thread = new Thread(runnable);
         thread.start();
     }

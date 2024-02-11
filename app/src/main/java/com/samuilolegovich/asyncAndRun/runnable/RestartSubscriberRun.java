@@ -80,6 +80,7 @@ public class RestartSubscriberRun implements Runnable {
         }
     }
 
+
     private void startSocket() {
         boolean b = false;
 
@@ -98,6 +99,7 @@ public class RestartSubscriberRun implements Runnable {
             }
         }
     }
+
 
     private void restartSubscribeTo() {
         try {

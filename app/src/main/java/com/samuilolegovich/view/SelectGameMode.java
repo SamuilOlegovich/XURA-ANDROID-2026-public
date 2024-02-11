@@ -100,4 +100,10 @@ public class SelectGameMode  extends AppCompatActivity {
         MainActivity.IS_REAL_GAME_MODE = stringEnum.getValue().equalsIgnoreCase("true");
     }
 
+
+    // при нажатии на кнопку назад будем возвращаться назад
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }
