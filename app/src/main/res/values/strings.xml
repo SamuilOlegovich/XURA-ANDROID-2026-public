@@ -122,7 +122,7 @@
 
 
 
-    <string name="info_main_text">DESCRIPTION</string>
+    <string name="info_main_text">INFORMATION</string>
 
     <string name="it_is_important_to_know">It is important to know:</string>
     <string name="it_is_important_to_know_1"> • We are not an official wallet of XRP or Ripple.</string>
@@ -158,6 +158,29 @@
     <string name="advice_1"> • Our project has good security and recovery system, but internet connection itself does not guarantee one hundred percent operability. Therefore, we recommend starting the game with the lowest difficulty levels and gradually increasing them. In case of problems, postpone the game for a while – the system will process the failures and provide you with an answer.</string>
 
     <string name="good_luck_and_thank_you_for_choosing_our_app">Good luck and thank you for choosing our application!</string>
+
+
+
+    <string name="become_referral_main_text">INFORMATION</string>
+    <string name="become_referral_text">Become a Referral:</string>
+    <string name="become_referral_text_1"> • Users can become referrals by investing 66 XRP and start inviting new users under their referral.</string>
+    <string name="become_referral_text_2"> • The number of referral slots is limited.</string>
+    <string name="become_referral_text_3"> • The number of invited users under a referral is unlimited.</string>
+
+    <string name="referral_recovery_text">Referral Recovery:</string>
+    <string name="referral_recovery_text_1"> • In case of losing the referral code, it can be recovered for 13 XRP.</string>
+
+    <string name="benefits_for_referrals_and_their_partners">Benefits for Referrals and Their Partners:</string>
+    <string name="benefits_for_referrals_and_their_partners_1"> • Referrals, as well as their invited users actively participating in the application, can participate in the daily LOTTO draw.</string>
+    <string name="benefits_for_referrals_and_their_partners_2"> • Each user who joins under a referral receives an extra life in each game. This allows automatically replaying lost games, providing the opportunity to try again to win, while won games do not require replaying.</string>
+
+
+    <string name="restrictions_for_non_referral_users">Restrictions for Non-Referral Users:</string>
+    <string name="restrictions_for_non_referral_users_1"> • Users without referrals or subscription to a referral are deprived of the above-mentioned benefits. They do not have an extra life and do not participate in the daily LOTTO.</string>
+
+    <string name="future_plans">Future Plans:</string>
+    <string name="future_plans_1"> • Expansion of benefits for referrals and their subscribers in the future.</string>
+
 
 
 

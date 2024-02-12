@@ -163,6 +163,27 @@
 
 
 
+    <string name="become_referral_main_text">ИНФОРМАЦИЯ</string>
+    <string name="become_referral_text">Стать рефералом:</string>
+    <string name="become_referral_text_1"> • Пользователи могут стать рефералами, вложив 66 XRP, и начать приглашать под свой реферал новых пользователей.</string>
+    <string name="become_referral_text_2"> • Количество реферальных мест ограничено.</string>
+    <string name="become_referral_text_3"> • Количество приглашенных пользователей под реферала неограничено.</string>
+
+    <string name="referral_recovery_text">Восстановление реферала:</string>
+    <string name="referral_recovery_text_1"> • В случае утери реферального кода, его можно восстановить за 13 XRP.</string>
+
+    <string name="benefits_for_referrals_and_their_partners">Преимущества для рефералов и их подписчиков:</string>
+    <string name="benefits_for_referrals_and_their_partners_1"> • Рефералы, а так же их приглашенные пользователи активно участвующие в приложении, могут участвовать в ежедневном розыгрыше ЛОТТО.</string>
+    <string name="benefits_for_referrals_and_their_partners_2"> • Каждый пользователь, вступивший под реферала, получает дополнительную жизнь в каждой игре. Это позволяет переигрывать проигрышные игры автоматически, обеспечивая возможность попытаться снова выиграть, а выигранные игры не требуют повторного прохождения.</string>
+
+
+    <string name="restrictions_for_non_referral_users">Ограничения для нереферальных пользователей:</string>
+    <string name="restrictions_for_non_referral_users_1"> • Пользователи без рефералов или подписке на реферала лишены вышеупомянутых преимуществ. Не имеют дополнительной жизни и не участвуют в ежедневном ЛОТТО.</string>
+
+    <string name="future_plans">Планы на будущее:</string>
+    <string name="future_plans_1"> • Pасширение преимуществ для рефералов и их подписчиков в дальнейшем.</string>
+
+
 
 
 
