@@ -122,8 +122,49 @@
 
 
 
-    <string name="info_main">INFORMATION</string>
-    <string name="it_s_important_to_know">IT S IMPORTANT TO KNOW</string>
+    <string name="info_main_text">DESCRIPTION</string>
+
+    <string name="it_is_important_to_know">It is important to know:</string>
+    <string name="it_is_important_to_know_1"> • We are not an official wallet of XRP or Ripple.</string>
+    <string name="it_is_important_to_know_2"> • Your keys are stored only on your device and are not transmitted anywhere.</string>
+    <string name="it_is_important_to_know_3"> • By starting to use the application, you confirm that you are over 18 years old.</string>
+    <string name="it_is_important_to_know_4"> • According to XRP network rules, activating a new wallet costs - 10 XRP.</string>
+
+    <string name="about_the_application">About the application:</string>
+    <string name="about_the_application_1"> • Our application embodies a future where games and wallets are merged.</string>
+    <string name="about_the_application_2"> • Forget about transfers, balance top-ups, and registration – we don\'t need that.</string>
+    <string name="about_the_application_3"> • Now your funds are completely secure.</string>
+    <string name="about_the_application_4"> • Our vision - one wallet recovery phrase to rule them all.</string>
+    <string name="about_the_application_5"> • After wallet recovery, you are immediately ready to play.</string>
+    <string name="about_the_application_6"> • Our wallet is unrestricted, and its usage is at your discretion.</string>
+    <string name="about_the_application_7"> • Active users receive rewards and participate in SUPER LOTTO.</string>
+    <string name="about_the_application_8"> • Any user can become a referral.</string>
+
+    <string name="advantages">Advantages:</string>
+    <string name="advantages_1"> • The system operates automatically.</string>
+    <string name="advantages_2"> • Loyal and democratic, it takes into account user interests.</string>
+    <string name="advantages_3"> • Fair conditions for everyone.</string>
+    <string name="advantages_4"> • We do not track your location or classify users.</string>
+    <string name="advantages_5"> • Automated and secure system.</string>
+    <string name="advantages_6"> • Development, increasing functionality, and expanding gaming opportunities.</string>
+    <string name="advantages_7"> • All gaming actions are publicly available and permanently recorded in the XRP registry.</string>
+
+    <string name="target">Goal:</string>
+    <string name="target_1"> • Make games available worldwide at any place and time.</string>
+    <string name="target_2"> • Ensure equal and fair conditions for all users, as well as provide an opportunity for self-realization with us.</string>
+    <string name="target_3"> • Create a people\'s product where each user can participate in its further development, determining the direction of movement, and we will implement it.</string>
+
+    <string name="advice">Tips:</string>
+    <string name="advice_1"> • Our project has good security and recovery system, but internet connection itself does not guarantee one hundred percent operability. Therefore, we recommend starting the game with the lowest difficulty levels and gradually increasing them. In case of problems, postpone the game for a while – the system will process the failures and provide you with an answer.</string>
+
+    <string name="good_luck_and_thank_you_for_choosing_our_app">Good luck and thank you for choosing our application!</string>
+
+
+
+
+
+    <!--    <string name="info_main">INFORMATION</string>-->
+<!--    <string name="it_s_important_to_know">IT S IMPORTANT TO KNOW</string>-->
     <string name="about_benefits_1"> • We are not an extra XRP wallet.</string>
     <string name="about_benefits_2"> • We do not store or send your keys anywhere.</string>
     <string name="about_benefits_3"> • By starting to use our application, you confirm that you are over 18 years old.</string>

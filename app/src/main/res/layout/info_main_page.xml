@@ -63,7 +63,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
-                    android:text="@string/info_main"
+                    android:text="@string/info_main_text"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textSize="30sp"
@@ -92,14 +92,14 @@
                     android:textSize="12sp" />
 
                 <TextView
-                    android:id="@+id/borrower_requirements_text_view"
+                    android:id="@+id/it_is_important_to_know_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
-                    android:text="@string/it_s_important_to_know"
+                    android:text="@string/it_is_important_to_know"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textSize="18sp"
@@ -118,13 +118,13 @@
 
 
                 <CheckedTextView
-                    android:id="@+id/borrower_requirements_checked_text_view1"
+                    android:id="@+id/it_is_important_to_know_view_1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
-                    android:text="@string/about_benefits_1"
+                    android:text="@string/it_is_important_to_know_1"
                     android:textAlignment="textStart"
                     android:textColor="@color/black_light"
                     android:textSize="14sp" />
@@ -142,13 +142,13 @@
                     android:textSize="14sp" />
 
                 <CheckedTextView
-                    android:id="@+id/borrower_requirements_checked_text_view2"
+                    android:id="@+id/it_is_important_to_know_view_2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
-                    android:text="@string/about_benefits_2"
+                    android:text="@string/it_is_important_to_know_2"
                     android:textAlignment="textStart"
                     android:textColor="@color/black_light"
                     android:textSize="14sp" />
@@ -165,13 +165,13 @@
                     android:textSize="14sp" />
 
                 <CheckedTextView
-                    android:id="@+id/borrower_requirements_checked_text_view3"
+                    android:id="@+id/it_is_important_to_know_view_3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
-                    android:text="@string/about_benefits_3"
+                    android:text="@string/it_is_important_to_know_3"
                     android:textAlignment="textStart"
                     android:textColor="@color/black_light"
                     android:textSize="14sp" />
@@ -188,128 +188,13 @@
                     android:textSize="14sp" />
 
                 <CheckedTextView
-                    android:id="@+id/borrower_requirements_checked_text_view4"
+                    android:id="@+id/it_is_important_to_know_view_4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
-                    android:text="@string/about_benefits_4"
-                    android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
-                    android:textSize="14sp" />
-
-                <CheckedTextView
-                    android:id="@+id/borrower_requirements_checked_text_view5"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:fontFamily="@font/montserrat"
-                    android:textAlignment="textStart"
-                    android:textColor="@color/green_3"
-                    android:textSize="14sp" />
-
-                <CheckedTextView
-                    android:id="@+id/borrower_requirements_checked_text_view9"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:fontFamily="@font/montserrat"
-                    android:text="@string/about_benefits_5"
-                    android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
-                    android:textSize="14sp" />
-
-                <CheckedTextView
-                    android:id="@+id/borrower_requirements_checked_text_view8"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:fontFamily="@font/montserrat"
-                    android:textAlignment="textStart"
-                    android:textColor="@color/green_3"
-                    android:textSize="14sp" />
-
-                <CheckedTextView
-                    android:id="@+id/borrower_requirements_checked_text_view10"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:fontFamily="@font/montserrat"
-                    android:text="@string/about_benefits_6"
-                    android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
-                    android:textSize="14sp" />
-
-                <CheckedTextView
-                    android:id="@+id/borrower_requirements_checked_text_view11"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:fontFamily="@font/montserrat"
-                    android:textAlignment="textStart"
-                    android:textColor="@color/green_3"
-                    android:textSize="14sp" />
-
-                <CheckedTextView
-                    android:id="@+id/borrower_requirements_checked_text_view22"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:fontFamily="@font/montserrat"
-                    android:text="@string/about_benefits_7"
-                    android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
-                    android:textSize="14sp" />
-
-                <CheckedTextView
-                    android:id="@+id/borrower_requirements_checked_text_view25"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:fontFamily="@font/montserrat"
-                    android:textAlignment="textStart"
-                    android:textColor="@color/green_3"
-                    android:textSize="14sp" />
-
-                <CheckedTextView
-                    android:id="@+id/borrower_requirements_checked_text_view23"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:fontFamily="@font/montserrat"
-                    android:text="@string/about_benefits_8"
-                    android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
-                    android:textSize="14sp" />
-
-                <CheckedTextView
-                    android:id="@+id/borrower_requirements_checked_text_view26"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:fontFamily="@font/montserrat"
-                    android:textAlignment="textStart"
-                    android:textColor="@color/green_3"
-                    android:textSize="14sp" />
-
-                <CheckedTextView
-                    android:id="@+id/borrower_requirements_checked_text_view24"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:fontFamily="@font/montserrat"
-                    android:text="@string/about_benefits_9"
+                    android:text="@string/it_is_important_to_know_4"
                     android:textAlignment="textStart"
                     android:textColor="@color/black_light"
                     android:textSize="14sp" />
@@ -337,13 +222,13 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/conditions_for_obtaining_a_loan_text_view"
+                    android:id="@+id/about_the_application_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
-                    android:text="@string/about_benefits"
+                    android:text="@string/about_the_application"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textSize="18sp"
@@ -361,13 +246,13 @@
                     android:textSize="14sp" />
 
                 <CheckedTextView
-                    android:id="@+id/conditions_for_obtaining_a_loan_checked_text_view1"
+                    android:id="@+id/about_the_application_view_1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
-                    android:text="@string/it_s_important_to_know_1"
+                    android:text="@string/about_the_application_1"
                     android:textAlignment="textStart"
                     android:textColor="@color/black_light"
                     android:textSize="14sp" />
@@ -384,13 +269,13 @@
                     android:textSize="14sp" />
 
                 <CheckedTextView
-                    android:id="@+id/conditions_for_obtaining_a_loan_checked_text_view2"
+                    android:id="@+id/about_the_application_view_2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
-                    android:text="@string/it_s_important_to_know_2"
+                    android:text="@string/about_the_application_2"
                     android:textAlignment="textStart"
                     android:textColor="@color/black_light"
                     android:textSize="14sp" />
@@ -407,13 +292,13 @@
                     android:textSize="14sp" />
 
                 <CheckedTextView
-                    android:id="@+id/conditions_for_obtaining_a_loan_checked_text_view3"
+                    android:id="@+id/about_the_application_view_3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
-                    android:text="@string/it_s_important_to_know_3"
+                    android:text="@string/about_the_application_3"
                     android:textAlignment="textStart"
                     android:textColor="@color/black_light"
                     android:textSize="14sp" />
@@ -430,13 +315,13 @@
                     android:textSize="14sp" />
 
                 <CheckedTextView
-                    android:id="@+id/conditions_for_obtaining_a_loan_checked_text_view4"
+                    android:id="@+id/about_the_application_view_4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
-                    android:text="@string/it_s_important_to_know_4"
+                    android:text="@string/about_the_application_4"
                     android:textAlignment="textStart"
                     android:textColor="@color/black_light"
                     android:textSize="14sp" />
@@ -453,13 +338,13 @@
                     android:textSize="14sp" />
 
                 <CheckedTextView
-                    android:id="@+id/conditions_for_obtaining_a_loan_checked_text_view5"
+                    android:id="@+id/about_the_application_view_5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
-                    android:text="@string/it_s_important_to_know_5"
+                    android:text="@string/about_the_application_5"
                     android:textAlignment="textStart"
                     android:textColor="@color/black_light"
                     android:textSize="14sp" />
@@ -476,13 +361,13 @@
                     android:textSize="14sp" />
 
                 <CheckedTextView
-                    android:id="@+id/conditions_for_obtaining_a_loan_checked_text_view6"
+                    android:id="@+id/about_the_application_view_6"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
-                    android:text="@string/it_s_important_to_know_6"
+                    android:text="@string/about_the_application_6"
                     android:textAlignment="textStart"
                     android:textColor="@color/black_light"
                     android:textSize="14sp" />
@@ -499,13 +384,13 @@
                     android:textSize="14sp" />
 
                 <CheckedTextView
-                    android:id="@+id/conditions_for_obtaining_a_loan_checked_text_view7"
+                    android:id="@+id/about_the_application_view_7"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
-                    android:text="@string/it_s_important_to_know_7"
+                    android:text="@string/about_the_application_7"
                     android:textAlignment="textStart"
                     android:textColor="@color/black_light"
                     android:textSize="14sp" />
@@ -522,99 +407,19 @@
                     android:textSize="14sp" />
 
                 <CheckedTextView
-                    android:id="@+id/conditions_for_obtaining_a_loan_checked_text_view9"
+                    android:id="@+id/about_the_application_view_8"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
-                    android:text="@string/it_s_important_to_know_8"
-                    android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
-                    android:textSize="14sp" />
-
-                <CheckedTextView
-                    android:id="@+id/conditions_for_obtaining_a_loan_checked_text_view10"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:fontFamily="@font/montserrat"
-                    android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
-                    android:textSize="14sp" />
-
-                <CheckedTextView
-                    android:id="@+id/conditions_for_obtaining_a_loan_checked_text_view11"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:fontFamily="@font/montserrat"
-                    android:text="@string/it_s_important_to_know_9"
-                    android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
-                    android:textSize="14sp" />
-
-                <CheckedTextView
-                    android:id="@+id/conditions_for_obtaining_a_loan_checked_text_view12"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:fontFamily="@font/montserrat"
-                    android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
-                    android:textSize="14sp" />
-
-                <CheckedTextView
-                    android:id="@+id/conditions_for_obtaining_a_loan_checked_text_view13"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:fontFamily="@font/montserrat"
-                    android:text="@string/it_s_important_to_know_10"
-                    android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
-                    android:textSize="14sp" />
-
-                <CheckedTextView
-                    android:id="@+id/conditions_for_obtaining_a_loan_checked_text_view14"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:fontFamily="@font/montserrat"
-                    android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
-                    android:textSize="14sp" />
-
-                <CheckedTextView
-                    android:id="@+id/conditions_for_obtaining_a_loan_checked_text_view15"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:fontFamily="@font/montserrat"
-                    android:text="@string/it_s_important_to_know_11"
+                    android:text="@string/about_the_application_8"
                     android:textAlignment="textStart"
                     android:textColor="@color/black_light"
                     android:textSize="14sp" />
 
                 <CheckedTextView
                     android:id="@+id/conditions_for_obtaining_a_loan_checked_text_view16"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:fontFamily="@font/montserrat"
-                    android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
-                    android:textSize="14sp" />
-
-                <CheckedTextView
-                    android:id="@+id/conditions_for_obtaining_a_loan_checked_text_view18"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
@@ -637,13 +442,13 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/loan_calculation_example_text_view"
+                    android:id="@+id/advantages_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
-                    android:text="@string/our_advantages"
+                    android:text="@string/advantages"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textSize="18sp"
@@ -661,13 +466,13 @@
                     android:textSize="14sp" />
 
                 <CheckedTextView
-                    android:id="@+id/loan_calculation_example_text_checked_text_view1"
+                    android:id="@+id/advantages_view_1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
-                    android:text="@string/our_advantages_1"
+                    android:text="@string/advantages_1"
                     android:textAlignment="textStart"
                     android:textColor="@color/black_light"
                     android:textSize="14sp" />
@@ -684,13 +489,13 @@
                     android:textSize="14sp" />
 
                 <CheckedTextView
-                    android:id="@+id/loan_calculation_example_text_checked_text_view2"
+                    android:id="@+id/advantages_view_2"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="18dp"
                     android:layout_marginStart="15dp"
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
-                    android:text="@string/our_advantages_2"
+                    android:text="@string/advantages_2"
                     android:textAlignment="textStart"
                     android:textColor="@color/black_light"
                     android:textSize="14sp" />
@@ -707,13 +512,13 @@
                     android:textSize="14sp" />
 
                 <CheckedTextView
-                    android:id="@+id/loan_calculation_example_text_checked_text_view3"
+                    android:id="@+id/advantages_view_3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
-                    android:text="@string/our_advantages_3"
+                    android:text="@string/advantages_3"
                     android:textAlignment="textStart"
                     android:textColor="@color/black_light"
                     android:textSize="14sp" />
@@ -730,13 +535,13 @@
                     android:textSize="14sp" />
 
                 <CheckedTextView
-                    android:id="@+id/loan_calculation_example_text_checked_text_view4"
+                    android:id="@+id/advantages_view_4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
-                    android:text="@string/our_advantages_4"
+                    android:text="@string/advantages_4"
                     android:textAlignment="textStart"
                     android:textColor="@color/black_light"
                     android:textSize="14sp" />
@@ -753,13 +558,13 @@
                     android:textSize="14sp" />
 
                 <CheckedTextView
-                    android:id="@+id/loan_calculation_example_text_checked_text_view5"
+                    android:id="@+id/advantages_view_5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
-                    android:text="@string/our_advantages_5"
+                    android:text="@string/advantages_5"
                     android:textAlignment="textStart"
                     android:textColor="@color/black_light"
                     android:textSize="14sp" />
@@ -776,13 +581,13 @@
                     android:textSize="14sp" />
 
                 <CheckedTextView
-                    android:id="@+id/loan_calculation_example_text_checked_text_view"
+                    android:id="@+id/advantages_view_6"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
-                    android:text="@string/our_advantages_6"
+                    android:text="@string/advantages_6"
                     android:textAlignment="textStart"
                     android:textColor="@color/black_light"
                     android:textSize="14sp" />
@@ -799,105 +604,13 @@
                     android:textSize="14sp" />
 
                 <CheckedTextView
-                    android:id="@+id/loan_calculation_example_text_checked_text_view7"
+                    android:id="@+id/advantages_view_7"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
-                    android:text="@string/our_advantages_7"
-                    android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
-                    android:textSize="14sp" />
-
-                <CheckedTextView
-                    android:id="@+id/loan_calculation_example_text_checked_text_view18"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:fontFamily="@font/montserrat"
-                    android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
-                    android:textSize="14sp" />
-
-                <CheckedTextView
-                    android:id="@+id/loan_calculation_example_text_checked_text_view8"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:fontFamily="@font/montserrat"
-                    android:text="@string/our_advantages_8"
-                    android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
-                    android:textSize="14sp" />
-
-                <CheckedTextView
-                    android:id="@+id/loan_calculation_example_text_checked_text_view19"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:fontFamily="@font/montserrat"
-                    android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
-                    android:textSize="14sp" />
-
-                <CheckedTextView
-                    android:id="@+id/loan_calculation_example_text_checked_text_view9"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:fontFamily="@font/montserrat"
-                    android:text="@string/our_advantages_9"
-                    android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
-                    android:textSize="14sp" />
-
-                <CheckedTextView
-                    android:id="@+id/loan_calculation_example_text_checked_text_view20"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:fontFamily="@font/montserrat"
-                    android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
-                    android:textSize="14sp" />
-
-                <CheckedTextView
-                    android:id="@+id/loan_calculation_example_text_checked_text_view10"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:fontFamily="@font/montserrat"
-                    android:text="@string/our_advantages_10"
-                    android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
-                    android:textSize="14sp" />
-
-                <CheckedTextView
-                    android:id="@+id/loan_calculation_example_text_checked_text_view21"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:fontFamily="@font/montserrat"
-                    android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
-                    android:textSize="14sp" />
-
-                <CheckedTextView
-                    android:id="@+id/loan_calculation_example_text_checked_text_view11"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:fontFamily="@font/montserrat"
-                    android:text="@string/our_advantages_11"
+                    android:text="@string/advantages_7"
                     android:textAlignment="textStart"
                     android:textColor="@color/black_light"
                     android:textSize="14sp" />
@@ -925,13 +638,13 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/prolongation_text_view"
+                    android:id="@+id/target_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
-                    android:text="@string/our_goal"
+                    android:text="@string/target"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textSize="18sp"
@@ -950,13 +663,60 @@
 
 
                 <CheckedTextView
-                    android:id="@+id/prolongation_text_checked_text_view1"
+                    android:id="@+id/target_view_1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
-                    android:text="@string/our_goal_1"
+                    android:text="@string/target_1"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/black_light"
+                    android:textSize="14sp" />
+
+                <CheckedTextView
+                    android:id="@+id/loan_calculation_example_text_checked_text_view233"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:fontFamily="@font/montserrat"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/black_light"
+                    android:textSize="14sp" />
+
+                <CheckedTextView
+                    android:id="@+id/target_view_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="@string/target_2"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/black_light"
+                    android:textSize="14sp" />
+
+                <CheckedTextView
+                    android:id="@+id/prolongation_text_checked_text_view0324"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:fontFamily="@font/montserrat"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/black_light"
+                    android:textSize="14sp" />
+
+
+                <CheckedTextView
+                    android:id="@+id/target_view_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="@string/target_3"
                     android:textAlignment="textStart"
                     android:textColor="@color/black_light"
                     android:textSize="14sp" />
@@ -979,7 +739,90 @@
                     android:layout_marginStart="15dp"
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
-                    android:text="@string/our_goal_2"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/black_light"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/advice_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="@string/advice"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <CheckedTextView
+                    android:id="@+id/prolongation_text_checked_text_view0eheheerth"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:fontFamily="@font/montserrat"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/black_light"
+                    android:textSize="14sp" />
+
+
+                <CheckedTextView
+                    android:id="@+id/advice_view_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="@string/advice_1"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/black_light"
+                    android:textSize="14sp" />
+
+                <CheckedTextView
+                    android:id="@+id/loan_calculation_example_text_checked_text_view23332tger"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:fontFamily="@font/montserrat"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/black_light"
+                    android:textSize="14sp" />
+
+
+                <CheckedTextView
+                    android:id="@+id/loan_calculation_example_text_checked_text_view23rhehters"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:fontFamily="@font/montserrat"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/black_light"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/good_luck_and_thank_you_for_choosing_our_app_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="@string/good_luck_and_thank_you_for_choosing_our_app"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <CheckedTextView
+                    android:id="@+id/prolongation_text_checked_text_view2wetherst"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:fontFamily="@font/montserrat"
                     android:textAlignment="textStart"
                     android:textColor="@color/black_light"
                     android:textSize="14sp" />

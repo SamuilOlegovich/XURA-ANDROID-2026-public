@@ -33,7 +33,7 @@
     <string name="set"><u>УСТАНОВИТЬ</u></string>
     <string name="send"><u>ОТПРАВИТЬ</u></string>
     <string name="info"><u>ОПИСАНИЕ</u></string>
-    <string name="black"><u>ЧЕРРЫЙ</u></string>
+    <string name="black"><u>ЧЕРНЫЙ</u></string>
     <string name="red"><u>КРАСНЫЙ</u></string>
     <string name="next"><u>ДАЛЕЕ</u></string>
 
@@ -44,8 +44,8 @@
     <string name="rules_guess_the_color">Правила этой игры очень просты. Вы делаете ставку и указываете цвет. Если цвет угадан - ваша ставка удваивается. Если ставка проиграна, она идет в кассу - лото. Любой пользователь может выиграть лото, независимо от того, что и сколько он поставил - если выпадает сектор лото. Также вы можете выиграть мини-лото - это одна десятая лото.\n\nМинимальная ставка - 0,1 XRP, максимальная - 100 XRP.</string>
     <string name="rules_guess_the_color_text">Правила этой игры очень просты.\n\nВы делаете ставку и указываете цвет.\n\nЕсли цвет угадан - ваша ставка удваивается.\n\nЕсли ставка проиграна, она идет в фонд накоплений - ЛОТО.\n\nЛюбой пользователь может выиграть ЛОТО - если выпадет сектор ЛОТО. А также вы можете выиграть мини-ЛОТО - это одна десятая часть ЛОТО.\n\nМинимальная ставка - 0.1 XRP, максимальная - 100 XRP.</string>
     <string name="rules_guess_the_number_text">Правила этой игры очень просты.\n\nВам просто нужно выбрать число, на которое хотите поставить. (от - 1 до -  36)\n\nВ случае выигрыша ставка увеличится в 36 раз.\n\nЕсли ставка проиграна, она идет в фонд накоплений - ЛОТО.\n\nЛюбой пользователь может выиграть ЛОТО - если выпадет сектор ЛОТО. А также вы можете выиграть мини-ЛОТО - это одна десятая часть ЛОТО.\n\nМинимальная ставка - 0,1 XRP, максимальная - 100 XRP.</string>
-    <string name="referral_text">ЕСЛИ У ВАС ЕСТЬ КОД РЕФЕРАЛА - ОБЯЗАТЕЛЬНО ВВЕДИТЕ ЕГО - ЭТО ДАСТ ВАМ ДОПОЛНИТЕЛЬНЫЕ ЖИЗНИ НА ВАШИ СТАВКИ И УЧАСТИЕ В ЕЖЕДНЕВНОМ РОЗЫГРЫШЕ ПРИЗОВ</string>
-    <string name="rules_roulette">В НАСТОЯЩЕЕ ВРЕМЯ ИГРА НАХОДИТСЯ В РАЗРАБОТКЕ. МЫ ХОТИМ РЕАЛИЗОВАТЬ КЛАССИЧЕСКУЮ ИГРУ В РУЛЕТКУ С МАКСИМАЛЬНОЙ КАЧЕСТВОМ</string>
+    <string name="referral_text">ЕСЛИ У ВАС ЕСТЬ КОД РЕФЕРАЛА - ОБЯЗАТЕЛЬНО ВВЕДИТЕ ЕГО. ЭТО ДАСТ ВАМ ДОПОЛНИТЕЛЬНЫЕ ЖИЗНИ НА ВАШИ СТАВКИ И УЧАСТИЕ В ЕЖЕДНЕВНОМ РОЗЫГРЫШЕ ПРИЗОВ</string>
+    <string name="rules_roulette">В НАСТОЯЩЕЕ ВРЕМЯ ИГРА НАХОДИТСЯ В РАЗРАБОТКЕ. МЫ ХОТИМ РЕАЛИЗОВАТЬ КЛАССИЧЕСКУЮ ИГРУ В РУЛЕТКУ С МАКСИМАЛЬНЫМ КАЧЕСТВОМ</string>
     <string name="congratulations_yoyr_bet_is_won_loto">ПОЗДРАВЛЯЕМ! ВАША СТАВКА ВЫИГРАЛА В ЛОТО! ВЫИГРЫШ СОСТАВЛЯЕТ - %s XRP - ИГРАЙТЕ И ПОБЕЖДАЙТЕ!</string>
     <string name="congratulations_yoyr_bet_is_won">ПОЗДРАВЛЯЕМ! ВАША СТАВКА ВЫИГРАЛА! ВЫИГРЫШ СОСТАВЛЯЕТ - %s XRP - ИГРАЙТЕ И ПОБЕЖДАЙТЕ!</string>
     <string name="your_bet_is_lost_try_again">ВАША СТАВКА ПРОИГРАЛА - ПОПРОБУЙТЕ СНОВА И ВАМ ОБЯЗАТЕЛЬНО УЛЫБНЕТСЯ УДАЧА!</string>
@@ -53,51 +53,51 @@
     <string name="get_recovery_become_referral">ЗАКАЗА УСПЕШНО ОТПРАВЛЕН - ПОЖАЛУЙСТА, ПОДОЖДИТЕ ОТВЕТА ОТ СЕРВЕРА</string>
     <string name="go_to_the_dark_side_find_the_secret_button">ПЕРЕХОДИ НА ТЕМНУЮ СТОРОНУ - НАЙДИ СЕКРЕТНУЮ КНОПКУ</string>
     <string name="get_becom_referral_enum">ЗАКАЗ УСПЕШНО ОТПРАВЛЕН - ПОЖАЛУЙСТА, ПОДОЖДИТЕ ОТВЕТА ОТ СЕРВЕРА</string>
+    <string name="create_new_wallet_text">ОБЯЗАТЕЛЬНО СОХРАНИТЕ КЛЮЧ И НЕ ПЕРЕДАВАЙТЕ ЕГО ТРЕТЬИМ ЛИЦАМ</string>
     <string name="your_account_is_not_enough_to_send">НА ВАШЕМ СЧЕТУ НЕ ДОСТАТОЧНО СРЕДСТВ ДЛЯ ОТПРАВКИ</string>
     <string name="error_check_the_seed_and_try_again">ОШИБКА - ПРОВЕРЬТЕ КЛЮЧ И ПОПРОБУЙТЕ ЕЩЕ РАЗ</string>
-    <string name="create_new_wallet_text">ОБЯЗАТЕЛЬНО СОХРАНИТЕ КЛЮЧ И НЕ ПЕРЕДАВАЙТЕ ЕГО НИКОМУ</string>
     <string name="tag_knowledge_cannot_be_more">ЗНАЧЕНИЕ ТЕГА НЕ МОЖЕТ БЫТЬ БОЛЬШЕ - 2147483647</string>
+    <string name="last_text_two">НЕ РАССТРАИВАЙТЕСЬ - ИГРАЙТЕ ДАЛЬШЕ И ВАМ ОБЯЗАТЕЛЬНО ПОВЕЗЕТ</string>
     <string name="set_password_to_enter_application">УСТАНОВИТЕ ПАРОЛЬ ДЛЯ ВХОДА В ПРИЛОЖЕНИЕ</string>
     <string name="become_referral_and_start_earning">СТАНЬТЕ РЕФЕРАЛОМ И НАЧНИТЕ ЗАРАБАТЫВАТЬ</string>
     <string name="check_the_seed_and_try_again">ОШИБКА - проверьте ключ и попробуйте еще раз</string>
-    <string name="bet_is_made_expect_the_result">СТАВКА СДЕЛАНА - ОЖИДАЙТЕ РЕЗУЛЬТАТА</string>
+    <string name="bet_is_made_expect_the_result">СТАВКА СДЕЛАНА - ОЖИДАЙТЕ РЕЗУЛЬТАТ</string>
     <string name="addres_copied_to_phone_buffer">АДРЕС СКОПИРОВАН В БУФФЕР ТЕЛЕФОНА</string>
     <string name="code_copied_to_phone_buffer">КОД СКОПИРОВАН В БУФФЕР ТЕЛЕФОНА</string>
     <string name="it_is_not_possible_to_send_null">НЕВОЗМОЖНО ОТПРАВИТЬ NULL</string>
     <string name="restore_from_backup_seed">ВОССТАНОВИТЬ ИЗ РЕЗЕРВНОГО КЛЮЧА</string>
-    <string name="last_text_two">НЕ ВОЛНУЙТЕСЬ - ИГРАЙТЕ ДАЛЬШЕ И ВЫ УДАЧНЫ</string>
     <string name="and_get_a_hundred_times_more">И ПОЛУЧИТЕ В 36 РАЗ БОЛЬШЕ</string>
     <string name="wrong_restart_please">Неверно, перезапустите, пожалуйста</string>
     <string name="bet_cannot_be_less_than">СТАВКА НЕ МОЖЕТ БЫТЬ МЕНЬШЕ - </string>
     <string name="bet_cannot_be_more_than">СТАВКА НЕ МОЖЕТ БЫТЬ БОЛЕЕ - </string>
     <string name="wrong_destination_address">НЕВЕРНЫЙ АДРЕС НАЗНАЧЕНИЯ</string>
     <string name="payment_amount_is_incorrect">НЕВЕРНАЯ СУММА ОПЛАТЫ</string>
-    <string name="and_double_the_bet">И ВДВОЕ УВЕЛИЧИВАЙТЕ СТАВКУ</string>
-    <string name="transaction_history_text">ИСТОРИЯ ТРАНЗАКЦИЙ</string>
+    <string name="and_double_the_bet">И ПОЛУЧИТЕ В 2 РАЗА БОЛЬШЕ</string>
     <string name="enter_number_1_36">Введите число от 1 до 36</string>
     <string name="enter_referral_code">Введите код реферала</string>
     <string name="enter_password_low_case">Введите пароль</string>
-    <string name="select_game_mode_text">ВЫБРАТЬ РЕЖИМ</string>
+    <string name="select_game_mode_text">ВЫБЕРИТЕ РЕЖИМ</string>
     <string name="your_referral_code">ВАШ КОД РЕФЕРАЛА</string>
     <string name="game_notifications">УВЕДОМЛЕНИЯ ИГРЫ</string>
     <string name="place_your_bet">Сделайте свою ставку</string>
     <string name="select_language_text">ВЫБЕРИТЕ ЯЗЫК</string>
+    <string name="transaction_history_text">ИСТОРИЯ</string>
     <string name="guess_the_number">УГАДАЙТЕ ЧИСЛО</string>
     <string name="destination_tag">Тег назначения</string>
     <string name="enter_password">ВВЕДИТЕ ПАРОЛЬ</string>
-    <string name="send_payment">ОТПРАВИТЬ ПЛАТЕЖ</string>
     <string name="guess_the_color">УГАДАЙТЕ ЦВЕТ</string>
     <string name="congratulations">ПОЗДРАВЛЯЕМ</string>
     <string name="settings_settings">НАСТРОЙКИ</string>
-    <string name="repeat_enter">Повторить ввод</string>
+    <string name="repeat_enter">Повторите ввод</string>
     <string name="lead_the_seed">Ведите ключ</string>
     <string name="select_game">ВЫБЕРИТЕ ИГРУ</string>
     <string name="info_referral">ИНФОРМАЦИЯ</string>
     <string name="your_address">ВАШ АДРЕС:</string>
     <string name="settings_text">НАСТРОЙКИ</string>
     <string name="your_balance">ВАШ БАЛАНС</string>
-    <string name="requesr_xrp">ЗАПРОС XRP</string>
+    <string name="send_payment">ОТПРАВИТЬ</string>
     <string name="roulette_game">РУЛЕТКА</string>
+    <string name="requesr_xrp">ПОЛУЧИТЬ</string>
     <string name="coming_soon">СКОРО</string>
     <string name="bet_lost">ПЕЧАЛЬКА</string>
     <string name="good_luck">УДАЧИ</string>
@@ -124,8 +124,51 @@
 
 
 
-    <string name="info_main">INFORMATION</string>
-    <string name="it_s_important_to_know">IT S IMPORTANT TO KNOW</string>
+    <string name="info_main_text">ОПИСАНИЕ</string>
+
+    <string name="it_is_important_to_know">Важно знать:</string>
+    <string name="it_is_important_to_know_1"> • Мы не являемся официальным кошельком компании XRP или Ripple.</string>
+    <string name="it_is_important_to_know_2"> • Ваши ключи хранятся только на вашем устройстве и никуда не передаются.</string>
+    <string name="it_is_important_to_know_3"> • При начале использования приложения вы подтверждаете, что вам исполнилось 18 лет.</string>
+    <string name="it_is_important_to_know_4"> • Согласно правилам сети XRP - активация нового кошелька стоит - 10 XRP.</string>
+
+    <string name="about_the_application">О приложении:</string>
+    <string name="about_the_application_1"> • Наше приложение воплощает будущее, где игры и кошельки объединены.</string>
+    <string name="about_the_application_2"> • Забудьте о переводах, пополнении баланса и регистрации – у нас это не нужно.</string>
+    <string name="about_the_application_3"> • Теперь ваши средства в полной безопасности.</string>
+    <string name="about_the_application_4"> • Наше видение - одна фраза восстановления кошелька, заменяющая все.</string>
+    <string name="about_the_application_5"> • После восстановления кошелька вы сразу готовы к игре.</string>
+    <string name="about_the_application_6"> • Наш кошелек без ограничений, и его использование – по вашему усмотрению.</string>
+    <string name="about_the_application_7"> • Активные пользователи получают награды и участвуют в СУПЕР ЛОТО.</string>
+    <string name="about_the_application_8"> • Любой пользователь может стать реферралом.</string>
+
+    <string name="advantages">Преимущества:</string>
+    <string name="advantages_1"> • Система работает автоматически.</string>
+    <string name="advantages_2"> • Лояльная и демократичная, учитывает интересы пользователя.</string>
+    <string name="advantages_3"> • Справедливые условия для всех и каждого.</string>
+    <string name="advantages_4"> • Мы не отслеживаем ваше местоположение и не классифицируем пользователей.</string>
+    <string name="advantages_5"> • Автоматизированная и защищенная система.</string>
+    <string name="advantages_6"> • Развитие, увеличение функциональности и расширение игровых возможностей.</string>
+    <string name="advantages_7"> • Все игровые действия общедоступны и навсегда записываются в реестр XRP.</string>
+
+    <string name="target">Цель:</string>
+    <string name="target_1"> • Сделать игры доступными по всему миру в любом месте и в любое время.</string>
+    <string name="target_2"> • Обеспечить равные и справедливые условия для всех пользователей, а также дать возможность реализовываться вместе с нами.</string>
+    <string name="target_3"> • Создать народный продукт, в котором каждый пользователь сможет участвовать в его дальнейшем развитии, определяя направление движения, а мы в свою очередь будем это реализовывать.</string>
+
+    <string name="advice">Советы:</string>
+    <string name="advice_1"> • Наш проект имеет хорошую защищенность и систему восстановления, но интернет-соединение само по себе не гарантирует стопроцентной работоспособности. Поэтому рекомендуем начинать игру с наименьших уровней сложности и постепенно повышать их. В случае возникновения проблем, отложите игру на некоторое время – система обработает сбои и предоставит вам ответ.</string>
+
+    <string name="good_luck_and_thank_you_for_choosing_our_app">Удачи и благодарим за выбор нашего приложения!</string>
+
+
+
+
+
+
+
+
+
     <string name="about_benefits_1"> • We are not an extra XRP wallet.</string>
     <string name="about_benefits_2"> • We do not store or send your keys anywhere.</string>
     <string name="about_benefits_3"> • By starting to use our application, you confirm that you are over 18 years old.</string>
