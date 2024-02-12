@@ -14,7 +14,7 @@ import androidx.core.content.ContextCompat;
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 import com.samuilolegovich.asyncAndRun.runnable.FlasherRun;
-import com.samuilolegovich.asyncAndRun.runnable.NotifierRunTest;
+import com.samuilolegovich.asyncAndRun.runnable.NotifierRunForTrialGame;
 import com.samuilolegovich.enums.TestModeEnum;
 import com.samuilolegovich.utils.Lotto;
 
@@ -25,7 +25,7 @@ public class Flasher extends AppCompatActivity {
 
     public static volatile boolean VISIBLE_ON_SCREEN = false;
 
-    public static volatile TestModeEnum testModeEnum;
+    public static volatile TestModeEnum TEST_MODE_ENUM;
     @SuppressLint("StaticFieldLeak")
     public static volatile Flasher FLASHER;
 
@@ -256,7 +256,7 @@ public class Flasher extends AppCompatActivity {
 
 
     private void goThreadTest() {
-        Runnable runnable = new NotifierRunTest(testModeEnum);
+        Runnable runnable = new NotifierRunForTrialGame(TEST_MODE_ENUM);
         Thread thread = new Thread(runnable);
         thread.start();
     }

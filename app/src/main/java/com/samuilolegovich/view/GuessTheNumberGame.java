@@ -24,6 +24,7 @@ import com.samuilolegovich.asyncAndRun.asyncTask.GetBalanceAsync;
 import com.samuilolegovich.asyncAndRun.asyncTask.SendPaymentAsync;
 import com.samuilolegovich.asyncAndRun.runnable.GenNumberRun;
 import com.samuilolegovich.enums.StringEnum;
+import com.samuilolegovich.enums.TestModeEnum;
 import com.samuilolegovich.utils.Lotto;
 
 import static com.samuilolegovich.view.Flasher.FLASHER_CLASS;
@@ -180,7 +181,7 @@ public class GuessTheNumberGame extends AppCompatActivity {
             betNumber.setText("");
             bet.setText("");
             makeToast(BET_IS_MADE_EXPECT_THE_RESULT);
-            setBetParam(tag, true);
+            setBetParam(sendAmount, tag);
             goToAnotherPage(FLASHER_CLASS);
         } else {
             errorMediaPlayer.start();
@@ -202,9 +203,13 @@ public class GuessTheNumberGame extends AppCompatActivity {
     }
 
 
-    private void setBetParam(String tag, boolean color) {
+    private void setBetParam(String sendAmount,
+                             String tag) {
         boolean b = Lotto.getRandomColorForNumber(tag);
+
+        Flasher.TEST_MODE_ENUM = TestModeEnum.GUESS_THE_NUMBER_GAME;
         Flasher.COLOR_BET = Lotto.getRandomColorForNumber(tag);
+        Flasher.TEST_SAND_AMOUNT = sendAmount;
         Flasher.NUMBER_BET = tag;
     }
 
@@ -222,7 +227,7 @@ public class GuessTheNumberGame extends AppCompatActivity {
             return false;
         }
 
-        if (new BigDecimal(sendAmount).compareTo(yourBalance) > 0) {
+        if (MainActivity.IS_REAL_GAME_MODE && new BigDecimal(sendAmount).compareTo(yourBalance) > 0) {
             errorMediaPlayer.start();
             makeToast(YOUR_ACCOUNT_IS_NOT_ENOUGH_TO_SEND);
             return false;
@@ -250,43 +255,27 @@ public class GuessTheNumberGame extends AppCompatActivity {
     }
 
 
-//    private boolean checkData(String sendAmount, String sendTeg) {
-//        if (sendAmount == null) {
-//            errorMediaPlayer.start();
-//            makeToast("PAYMENT AMOUNT IS INCORRECT");
-//            return false;
-//        }
-//        if (new BigDecimal(sendAmount).compareTo(yourBalance) > 0) {
-//            errorMediaPlayer.start();
-//            makeToast("YOUR ACCOUNT IS NOT ENOUGH TO SEND");
-//            return false;
-//        }
-//        if (sendTeg != null && !sendTeg.equals("") && Long.parseLong(sendTeg) >= Integer.MAX_VALUE) {
-//            errorMediaPlayer.start();
-//            makeToast("TAG KNOWLEDGE CANNOT BE MORE - 2147483647");
-//            return false;
-//        }
-//        return makePayment(sendAmount, sendTeg);
-//    }
-
-
     private boolean makePayment(String sendAmount, String sendTeg) {
-        AsyncTask<String, Void, Boolean> asyncTask = new SendPaymentAsync().execute(
-                        StringEnum.SERVER_ADDRESS_GUESS_THE_NUMBER.getValue(), sendAmount, sendTeg);
-        boolean b = false;
+        if (MainActivity.IS_REAL_GAME_MODE) {
+            AsyncTask<String, Void, Boolean> asyncTask = new SendPaymentAsync().execute(
+                    StringEnum.SERVER_ADDRESS_GUESS_THE_NUMBER.getValue(), sendAmount, sendTeg);
+            boolean b = false;
 
-        try {
-            b = asyncTask.get();
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
+            try {
+                b = asyncTask.get();
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            if (!b) {
+                errorMediaPlayer.start();
+                makeToast(WRONG_DESTINATION_ADDRESS);
+            }
+
+            return b;
+        } else {
+            return true;
         }
-
-        if (!b) {
-            errorMediaPlayer.start();
-            makeToast(WRONG_DESTINATION_ADDRESS);
-        }
-
-        return b;
     }
 
 

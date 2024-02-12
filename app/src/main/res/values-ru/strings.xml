@@ -18,6 +18,7 @@
     <string name="scan_qr_code"><u>СКАНИРОВАТЬ QR КОД</u></string>
     <string name="select_language_russian"><u>РУССКИЙ</u></string>
     <string name="rules_of_the_game"><u>ПРАВИЛА ИГРЫ</u></string>
+    <string name="place_bet_linc"><u>СДЕЛАТЬ СТАВКУ</u></string>
     <string name="settings_text_linc"><u>НАСТРОЙКИ</u></string>
     <string name="settings_language"><u>АНГЛИЙСКИЙ</u></string>
     <string name="select_game_mode"><u>РЕЖИМ ИГРЫ</u></string>
@@ -25,7 +26,6 @@
     <string name="set_password"><u>ПОДТВЕРДИТЬ</u></string>
     <string name="settings_main"><u>НАСТРОЙКИ</u></string>
     <string name="name_roulette"><u>РУЛЕТКА</u></string>
-    <string name="place_bet_linc"><u>ГОТОВО</u></string>
     <string name="next_one"><u>ДАЛЕЕ >></u></string>
     <string name="request"><u>ПОЛУЧИТЬ</u></string>
     <string name="copy"><u>КОПИРОВАТЬ</u></string>
@@ -33,8 +33,8 @@
     <string name="set"><u>УСТАНОВИТЬ</u></string>
     <string name="send"><u>ОТПРАВИТЬ</u></string>
     <string name="info"><u>ОПИСАНИЕ</u></string>
-    <string name="black"><u>ЧЕРНОЕ</u></string>
-    <string name="red"><u>КРАСНОЕ</u></string>
+    <string name="black"><u>ЧЕРРЫЙ</u></string>
+    <string name="red"><u>КРАСНЫЙ</u></string>
     <string name="next"><u>ДАЛЕЕ</u></string>
 
 

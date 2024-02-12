@@ -36,6 +36,7 @@ public class SelectLanguage extends AppCompatActivity {
     private TextView settingsEnglishLinc;
     private TextView settingsTextView;
 
+    private String languageNow;
 
 
 
@@ -47,6 +48,7 @@ public class SelectLanguage extends AppCompatActivity {
         SELECT_LANGUAGE_ACTIVITY = this;
         setButtons();
         setLanguage();
+        getSettingsLanguage();
         listeners();
     }
 
@@ -66,6 +68,12 @@ public class SelectLanguage extends AppCompatActivity {
     }
 
 
+    private void getSettingsLanguage() {
+        preferences = getSharedPreferences(StringEnum.APP_PREFERENCES.getValue(), Context.MODE_PRIVATE);
+        languageNow = preferences.getString(StringEnum.APP_PREFERENCES_LOCALE.getValue(), "en");
+    }
+
+
     private void listeners() {
         animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
 
@@ -74,8 +82,10 @@ public class SelectLanguage extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         v.startAnimation(animTranslate);
-                        makeStackThread(StringEnum.APP_RUSSIAN_LANGUAGE);
-//                        makeStack(StringEnum.APP_RUSSIAN_LANGUAGE);
+
+                        if (!languageNow.equalsIgnoreCase(StringEnum.APP_RUSSIAN_LANGUAGE.getValue())) {
+                            makeStackThread(StringEnum.APP_RUSSIAN_LANGUAGE);
+                        }
                     }
                 }
         );
@@ -85,8 +95,10 @@ public class SelectLanguage extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         v.startAnimation(animTranslate);
-                        makeStackThread(StringEnum.APP_ENGLISH_LANGUAGE);
-//                        makeStack(StringEnum.APP_ENGLISH_LANGUAGE);
+
+                        if (!languageNow.equalsIgnoreCase(StringEnum.APP_ENGLISH_LANGUAGE.getValue())) {
+                            makeStackThread(StringEnum.APP_ENGLISH_LANGUAGE);
+                        }
                     }
                 }
         );

@@ -199,12 +199,10 @@ public class GuessTheColorGame extends AppCompatActivity {
     private void setBetParam(String sendAmount,
                              boolean color) {
         Flasher.NUMBER_BET = Lotto.getRandomNumberForColor(color) + "";
+        Flasher.TEST_MODE_ENUM = TestModeEnum.GUESS_THE_COLOR_GAME;
+        Flasher.TEST_SAND_AMOUNT = sendAmount;
         Flasher.COLOR_BET = color;
 
-        if (!MainActivity.IS_REAL_GAME_MODE) {
-            Flasher.testModeEnum = TestModeEnum.GUESS_THE_COLOR_GAME;
-            Flasher.TEST_SAND_AMOUNT = sendAmount;
-        }
     }
 
 
@@ -245,7 +243,7 @@ public class GuessTheColorGame extends AppCompatActivity {
             return false;
         }
 
-        if (new BigDecimal(sendAmount).compareTo(yourBalance) > 0) {
+        if (MainActivity.IS_REAL_GAME_MODE && new BigDecimal(sendAmount).compareTo(yourBalance) > 0) {
             errorMediaPlayer.start();
             makeToast(YOUR_ACCOUNT_IS_NOT_ENOUGH_TO_SEND);
             return false;

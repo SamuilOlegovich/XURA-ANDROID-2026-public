@@ -10,13 +10,11 @@ import com.samuilolegovich.enums.TestModeEnum;
 import com.samuilolegovich.view.Flasher;
 import com.samuilolegovich.view.YourReferral;
 
-import java.math.BigDecimal;
-import java.math.MathContext;
 import java.util.Random;
 
 
 
-public class NotifierRunTest implements Runnable {
+public class NotifierRunForTrialGame implements Runnable {
     private TestModeEnum testModeEnum;
 
     private String YOUR_BET_IS_LOST_TRY_AGAIN_AND_YOU_WILL_BE_LUCKY;
@@ -28,7 +26,7 @@ public class NotifierRunTest implements Runnable {
 
 
 
-    public NotifierRunTest(TestModeEnum testModeEnum) {
+    public NotifierRunForTrialGame(TestModeEnum testModeEnum) {
         this.testModeEnum = testModeEnum;
         this.random = new Random();
         setLanguage();
@@ -66,18 +64,20 @@ public class NotifierRunTest implements Runnable {
             e.printStackTrace();
         }
 
-
         if (testModeEnum.equals(TestModeEnum.GUESS_THE_COLOR_GAME)) {
             calculateForGuessTheColor(random.nextInt(1000) + 1);
-
         } else {
-            calculateForGuessTheNumber(random.nextInt(1000) + 1);
-
+            calculateForGuessTheNumber(random.nextInt(36) + 1);
         }
     }
 
 
     private void calculateForGuessTheNumber(int i) {
+        if (Flasher.NUMBER_BET.equalsIgnoreCase(i + "")) {
+            responseToBet(StringEnum.BET_WIN_GUESS_THE_COLOR.getValue());
+        } else {
+            responseToBet(StringEnum.NOT_WIN_GUESS_THE_COLOR.getValue());
+        }
     }
 
 
@@ -99,7 +99,10 @@ public class NotifierRunTest implements Runnable {
 
 
     private void responseToBet(String tag) {
-        String amountWin = ((Double.parseDouble(Flasher.TEST_SAND_AMOUNT)) * 2.0) + "";
+        String amountWin = testModeEnum.equals(TestModeEnum.GUESS_THE_NUMBER_GAME)
+                ? ((Double.parseDouble(Flasher.TEST_SAND_AMOUNT)) * 36.0) + ""
+                : ((Double.parseDouble(Flasher.TEST_SAND_AMOUNT)) * 2.0) + "";
+
         String lotto = (random.nextInt(10001 - 4000) + 4000) + "";
         MainActivity.MAIN_ACTIVITY.setLottoNow(lotto);
 
