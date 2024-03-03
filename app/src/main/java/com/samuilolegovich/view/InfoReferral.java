@@ -26,6 +26,7 @@ public class InfoReferral extends AppCompatActivity {
     private TextView benefitsForReferralsAndTheirPartnersView;
     private TextView benefitsForReferralsAndTheirPartnersView1;
     private TextView benefitsForReferralsAndTheirPartnersView2;
+    private TextView benefitsForReferralsAndTheirPartnersView3;
 
     private TextView restrictionsForNonReferralUsersView;
     private TextView restrictionsForNonReferralUsersView1;
@@ -41,8 +42,8 @@ public class InfoReferral extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.info_referral_page);
-//        setButtons();
-//        setLanguage();
+        setButtons();
+        setLanguage();
     }
 
 
@@ -61,14 +62,13 @@ public class InfoReferral extends AppCompatActivity {
         benefitsForReferralsAndTheirPartnersView = (TextView) findViewById(R.id.benefits_for_referrals_and_their_partners_view);
         benefitsForReferralsAndTheirPartnersView1 = (TextView) findViewById(R.id.benefits_for_referrals_and_their_partners_view_1);
         benefitsForReferralsAndTheirPartnersView2 = (TextView) findViewById(R.id.benefits_for_referrals_and_their_partners_view_2);
+        benefitsForReferralsAndTheirPartnersView3 = (TextView) findViewById(R.id.benefits_for_referrals_and_their_partners_view_3);
 
         restrictionsForNonReferralUsersView = (TextView) findViewById(R.id.restrictions_for_non_referral_users_view);
         restrictionsForNonReferralUsersView1 = (TextView) findViewById(R.id.restrictions_for_non_referral_users_view_1);
 
         futurePlansView = (TextView) findViewById(R.id.future_plans_view);
         futurePlansView1 = (TextView) findViewById(R.id.future_plans_view_1);
-
-
     }
 
 
@@ -86,14 +86,13 @@ public class InfoReferral extends AppCompatActivity {
         benefitsForReferralsAndTheirPartnersView.setText(R.string.benefits_for_referrals_and_their_partners);
         benefitsForReferralsAndTheirPartnersView1.setText(R.string.benefits_for_referrals_and_their_partners_1);
         benefitsForReferralsAndTheirPartnersView2.setText(R.string.benefits_for_referrals_and_their_partners_2);
+        benefitsForReferralsAndTheirPartnersView3.setText(R.string.benefits_for_referrals_and_their_partners_3);
 
         restrictionsForNonReferralUsersView.setText(R.string.restrictions_for_non_referral_users);
         restrictionsForNonReferralUsersView1.setText(R.string.restrictions_for_non_referral_users_1);
 
         futurePlansView.setText(R.string.future_plans);
         futurePlansView1.setText(R.string.future_plans_1);
-
-
     }
 
 

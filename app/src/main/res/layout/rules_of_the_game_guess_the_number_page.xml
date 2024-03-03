@@ -35,11 +35,11 @@
 
         <TextView
             android:id="@+id/guess_the_color_rules"
-            android:layout_width="0dp"
-            android:layout_height="359dp"
-            android:layout_marginStart="50dp"
+            android:layout_width="346dp"
+            android:layout_height="434dp"
+            android:layout_marginStart="30dp"
             android:layout_marginTop="20dp"
-            android:layout_marginEnd="50dp"
+            android:layout_marginEnd="30dp"
             android:text="@string/rules_double_your_bet"
             android:textAlignment="center"
             android:textColor="#614F02"

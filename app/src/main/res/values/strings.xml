@@ -173,6 +173,7 @@
     <string name="benefits_for_referrals_and_their_partners">Benefits for Referrals and Their Partners:</string>
     <string name="benefits_for_referrals_and_their_partners_1"> • Referrals, as well as their invited users actively participating in the application, can participate in the daily LOTTO draw.</string>
     <string name="benefits_for_referrals_and_their_partners_2"> • Each user who joins under a referral receives an extra life in each game. This allows automatically replaying lost games, providing the opportunity to try again to win, while won games do not require replaying.</string>
+    <string name="benefits_for_referrals_and_their_partners_3"> • Referrals automatically receive a percentage of active users.</string>
 
 
     <string name="restrictions_for_non_referral_users">Restrictions for Non-Referral Users:</string>
