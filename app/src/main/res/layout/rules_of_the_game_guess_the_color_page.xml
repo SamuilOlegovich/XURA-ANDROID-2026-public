@@ -35,14 +35,13 @@
 
         <TextView
             android:id="@+id/guess_the_color_rules"
-            android:layout_width="346dp"
-            android:layout_height="429dp"
+            android:layout_width="303dp"
+            android:layout_height="434dp"
             android:layout_marginStart="30dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="30dp"
             android:text="@string/rules_guess_the_color"
             android:textAlignment="center"
-            android:textAllCaps="false"
             android:textColor="#614F02"
             android:textSize="14sp"
             android:textStyle="italic"
