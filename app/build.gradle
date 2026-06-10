@@ -59,7 +59,8 @@ dependencies {
     // позволит стилизировать поля ввода
     implementation 'com.rengwuxian.materialedittext:library:2.1.4'
     // для работы со шрифтами стилями и т д
-    implementation 'uk.co.chrisjenx:calligraphy:2.3.0'
+    implementation 'io.github.inflationx:calligraphy3:3.1.1'
+    implementation 'io.github.inflationx:viewpump:2.0.3'
     // тоже надо
     implementation 'com.google.android.gms:play-services-auth:20.2.0'
 //    implementation 'com.firebaseui:firebase-ui-auth:4.3.1'
@@ -82,7 +83,6 @@ dependencies {
 //    implementation 'tech.gusavila92:java-android-websocket-client:1.2.2'
 //    implementation fileTree(dir: 'libs', include: ['*.jar'])
     // https://mvnrepository.com/artifact/org.json/json
-    annotationProcessor 'org.projectlombok:lombok:1.18.12'
     implementation 'org.json:json:20220320'
     // https://mvnrepository.com/artifact/com.sun/tools
 //    implementation 'com.sun:tools:1.5.0'
@@ -104,7 +104,6 @@ dependencies {
 //    implementation 'org.immutables:gson:2.8.2' // for annotations
 
     // QR - code
-    implementation 'androidmads.library.qrgenearator:QRGenearator:1.0.4'
     implementation 'com.google.zxing:core:3.3.2'
 
     implementation 'org.immutables:value:2.8.2'

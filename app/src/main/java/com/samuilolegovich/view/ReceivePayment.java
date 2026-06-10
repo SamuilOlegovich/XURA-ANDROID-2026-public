@@ -20,8 +20,13 @@ import com.samuilolegovich.R;
 import com.samuilolegovich.wallet.model.PaymentManager.PaymentAndSocketManagerXRPL;
 
 
-import androidmads.library.qrgenearator.QRGContents;
-import androidmads.library.qrgenearator.QRGEncoder;
+import android.graphics.Bitmap;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.common.BitMatrix;
+import java.util.HashMap;
+import java.util.Map;
 
 
 
@@ -101,11 +106,25 @@ public class ReceivePayment extends AppCompatActivity {
 
 
     private void setQrCode() {
-        // Initializing the QR Encoder with your value to be encoded, type you required and Dimension
-        QRGEncoder qrgEncoder = new QRGEncoder(classicAddress, null, QRGContents.Type.TEXT, 800);
-        qrgEncoder.setColorBlack(Color.BLACK);
-        qrgEncoder.setColorWhite(500188);
-        qrCode.setImageBitmap(qrgEncoder.getBitmap());
+        try {
+            Map<EncodeHintType, Object> hints = new HashMap<>();
+            hints.put(EncodeHintType.MARGIN, 1);
+            BitMatrix matrix = new MultiFormatWriter().encode(classicAddress, BarcodeFormat.QR_CODE, 800, 800, hints);
+            int width = matrix.getWidth();
+            int height = matrix.getHeight();
+            int[] pixels = new int[width * height];
+            for (int y = 0; y < height; y++) {
+                int offset = y * width;
+                for (int x = 0; x < width; x++) {
+                    pixels[offset + x] = matrix.get(x, y) ? Color.BLACK : 500188;
+                }
+            }
+            Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+            bitmap.setPixels(pixels, 0, width, 0, 0, width, height);
+            qrCode.setImageBitmap(bitmap);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
