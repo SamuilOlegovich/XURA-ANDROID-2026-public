@@ -11,12 +11,15 @@ import com.samuilolegovich.wallet.subscribers.interfaces.StreamSubscriber;
 import java.math.BigDecimal;
 import java.util.EnumSet;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 
 
 public class WalletRepository {
     private static WalletRepository instance;
     private final PaymentAndSocketManagerXRPL manager;
+    private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
     private final MutableLiveData<BigDecimal> balanceLiveData = new MutableLiveData<>(new BigDecimal("0.000000"));
     private final MutableLiveData<String> lottoTextLiveData = new MutableLiveData<>("");
@@ -56,6 +59,11 @@ public class WalletRepository {
 
 
     // Баланс
+
+    // Загрузить баланс асинхронно и обновить LiveData
+    public void loadBalance() {
+        executor.execute(() -> updateBalance(getBalance()));
+    }
 
     public BigDecimal getBalance() {
         return manager.getBalance(true);

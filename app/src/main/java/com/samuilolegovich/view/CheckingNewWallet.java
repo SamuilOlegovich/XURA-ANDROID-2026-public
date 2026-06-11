@@ -20,8 +20,8 @@ import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 import com.samuilolegovich.enums.StringEnum;
 import com.samuilolegovich.utils.Cipher;
+import com.samuilolegovich.wallet.repository.WalletRepository;
 
-import static com.samuilolegovich.MainActivity.MAIN_ACTIVITY;
 import static com.samuilolegovich.view.Referral.REFERRAL_CLASS;
 
 
@@ -78,7 +78,7 @@ public class CheckingNewWallet extends BaseActivity {
                         if (seedOne.equals(seedTwo)) {
                             setSeed(seedOne);
                             MainActivity.START_FLAG = false;
-                            MAIN_ACTIVITY.updateWallet();
+                            WalletRepository.getInstance().loadBalance();
                             goToAnotherPage(REFERRAL_CLASS);
                         } else {
                             seed.setText("");

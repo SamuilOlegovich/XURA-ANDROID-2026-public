@@ -49,10 +49,7 @@ public class MainViewModel extends ViewModel {
     // Действия
 
     public void loadBalance() {
-        executor.execute(() -> {
-            BigDecimal balance = repository.getBalance();
-            repository.updateBalance(balance);
-        });
+        repository.loadBalance();
     }
 
     // Восстановить кошелёк → загрузить баланс → подключить сокет

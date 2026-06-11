@@ -23,11 +23,11 @@ import com.samuilolegovich.R;
 import com.samuilolegovich.asyncAndRun.asyncTask.CreateNewWalletAsync;
 import com.samuilolegovich.enums.StringEnum;
 import com.samuilolegovich.utils.Cipher;
+import com.samuilolegovich.wallet.repository.WalletRepository;
 
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-import static com.samuilolegovich.MainActivity.MAIN_ACTIVITY;
 import static com.samuilolegovich.view.CheckingNewWallet.CHECKING_NEW_WALLET_CLASS;
 
 
@@ -96,7 +96,7 @@ public class CreateNewWallet extends BaseActivity {
                         v.startAnimation(animTranslate);
                         if (isNewWallet) {
                             MainActivity.START_FLAG = false;
-                            MAIN_ACTIVITY.updateWallet();
+                            WalletRepository.getInstance().loadBalance();
                             goToAnotherPage(CHECKING_NEW_WALLET_CLASS);
                         } else {
                             isNewWallet = createNewWallet();

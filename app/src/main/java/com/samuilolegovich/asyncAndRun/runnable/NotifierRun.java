@@ -1,10 +1,7 @@
 package com.samuilolegovich.asyncAndRun.runnable;
 
-import android.content.res.Configuration;
-import android.content.res.Resources;
-
-import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
+import com.samuilolegovich.XuraApp;
 import com.samuilolegovich.enums.StringEnum;
 import com.samuilolegovich.view.Flasher;
 import com.samuilolegovich.view.YourReferral;
@@ -52,9 +49,7 @@ public class NotifierRun implements Runnable {
 
 
     private void setLanguage() {
-        // Получаем ресурсы для текущего языка
-        Resources resources = getResourcesForLocale();
-        // Далее вы можете использовать ресурсы для доступа к строкам на текущем языке
+        android.content.res.Resources resources = XuraApp.getLocalizedResources();
         YOUR_BET_IS_LOST_TRY_AGAIN_AND_YOU_WILL_BE_LUCKY = resources.getString(R.string.your_bet_is_lost_try_again);
         CONGRATULATIONS_YOUR_BET_IS_WON_LOTTO = resources.getString(R.string.congratulations_yoyr_bet_is_won_loto);
         CONGRATULATIONS_YOUR_BET_IS_WON = resources.getString(R.string.congratulations_yoyr_bet_is_won);
@@ -62,19 +57,11 @@ public class NotifierRun implements Runnable {
     }
 
 
-    private Resources getResourcesForLocale() {
-        Configuration config = MainActivity.MAIN_ACTIVITY.getResources().getConfiguration();
-        config.setLocale(MainActivity.newLocale);
-        return new Resources(MainActivity.MAIN_ACTIVITY.getAssets(),
-                MainActivity.MAIN_ACTIVITY.getResources().getDisplayMetrics(), config);
-    }
-
-
     private void responseToBet(JSONObject message) {
         try {
             String tagResponse = message.getJSONObject("transaction").getInt("DestinationTag") + "";
             String amountWin = new BigDecimal(message.getJSONObject("meta").getString("delivered_amount"))
-                    .divide(BigDecimal.valueOf(MainActivity.ONE_XRP_IN_DROPS), MathContext.DECIMAL128)
+                    .divide(BigDecimal.valueOf(1_000_000L), MathContext.DECIMAL128)
                     .toString();
 
             if (tagResponse.length() > 3) {

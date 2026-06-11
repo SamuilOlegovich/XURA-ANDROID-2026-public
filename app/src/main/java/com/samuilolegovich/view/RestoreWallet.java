@@ -23,11 +23,11 @@ import com.samuilolegovich.asyncAndRun.asyncTask.RestoreWalletAsync;
 import com.samuilolegovich.enums.StringEnum;
 import com.samuilolegovich.utils.Cipher;
 import com.samuilolegovich.wallet.model.PaymentManager.PaymentAndSocketManagerXRPL;
+import com.samuilolegovich.wallet.repository.WalletRepository;
 
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-import static com.samuilolegovich.MainActivity.MAIN_ACTIVITY;
 import static com.samuilolegovich.view.Referral.REFERRAL_CLASS;
 
 
@@ -92,7 +92,7 @@ public class RestoreWallet extends BaseActivity {
                             if (recoverWallet(seedRestore)) {
                                 encryptAndWriteSeed(seedRestore);
                                 MainActivity.START_FLAG = false;
-                                MAIN_ACTIVITY.updateWallet();
+                                WalletRepository.getInstance().loadBalance();
                                 goToAnotherPage(REFERRAL_CLASS);
                             } else {
                                 makeToast(ERROR_CHECK_THE_SEED_AND_TRY_AGAIN);
