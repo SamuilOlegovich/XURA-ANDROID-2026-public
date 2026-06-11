@@ -22,12 +22,19 @@ import com.samuilolegovich.enums.StringEnum;
 import com.samuilolegovich.utils.Cipher;
 import com.samuilolegovich.wallet.repository.WalletRepository;
 
+import javax.inject.Inject;
+
 import static com.samuilolegovich.view.Referral.REFERRAL_CLASS;
+import dagger.hilt.android.AndroidEntryPoint;
+
 
 
 
 // тут мы сверим информаци о новом кошельке, правильно ли ее записал юзер
+@AndroidEntryPoint
 public class CheckingNewWallet extends BaseActivity {
+
+    @Inject WalletRepository repository;
     public static final String CHECKING_NEW_WALLET_CLASS = ".CheckingNewWallet";
 
     private SharedPreferences.Editor editor;
@@ -78,7 +85,7 @@ public class CheckingNewWallet extends BaseActivity {
                         if (seedOne.equals(seedTwo)) {
                             setSeed(seedOne);
                             MainActivity.START_FLAG = false;
-                            WalletRepository.getInstance().loadBalance();
+                            repository.loadBalance();
                             goToAnotherPage(REFERRAL_CLASS);
                         } else {
                             seed.setText("");

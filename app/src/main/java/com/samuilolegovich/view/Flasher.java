@@ -19,9 +19,12 @@ import com.samuilolegovich.asyncAndRun.runnable.FlasherRun;
 import com.samuilolegovich.asyncAndRun.runnable.NotifierRunForTrialGame;
 import com.samuilolegovich.enums.TestModeEnum;
 import com.samuilolegovich.utils.Lotto;
+import dagger.hilt.android.AndroidEntryPoint;
 
 
 
+
+@AndroidEntryPoint
 public class Flasher extends BaseActivity {
     public static final String FLASHER_CLASS = ".Flasher";
 

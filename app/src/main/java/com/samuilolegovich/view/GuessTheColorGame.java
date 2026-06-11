@@ -28,9 +28,12 @@ import com.samuilolegovich.viewmodel.GuessColorViewModel;
 
 import static com.samuilolegovich.view.Flasher.FLASHER_CLASS;
 import static com.samuilolegovich.view.RulesOfTheGameGuessTheColor.RULES_OF_THE_GAME_GUESS_THE_COLOR_CLASS;
+import dagger.hilt.android.AndroidEntryPoint;
 
 
 
+
+@AndroidEntryPoint
 public class GuessTheColorGame extends BaseActivity {
     public static final String GUESS_THE_COLOR_GAME_CLASS = ".GuessTheColorGame";
 

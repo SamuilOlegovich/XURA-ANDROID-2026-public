@@ -24,10 +24,13 @@ import com.samuilolegovich.utils.Cipher;
 import java.util.UUID;
 
 import static com.samuilolegovich.view.RestoreOrCreateNewWallet.RESTORE_OR_NEW_WALLET_CLASS;
+import dagger.hilt.android.AndroidEntryPoint;
+
 
 
 
 // тут устанавливаем пароль на приложение
+@AndroidEntryPoint
 public class SetAnAppPassword extends BaseActivity {
     public static final String SET_AN_APP_PASSWORD_CLASS = ".SetAnAppPassword";
 

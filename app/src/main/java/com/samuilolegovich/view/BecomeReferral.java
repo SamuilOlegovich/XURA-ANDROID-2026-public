@@ -22,9 +22,17 @@ import com.samuilolegovich.wallet.repository.WalletRepository;
 
 import java.math.BigDecimal;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
 
 
+
+
+@AndroidEntryPoint
 public class BecomeReferral extends BaseActivity {
+
+    @Inject WalletRepository repository;
     public static final String BECOME_REFERRAL_CLASS = ".BecomeReferral";
 
     private String YOUR_ACCOUNT_IS_NOT_ENOUGH_TO_SEND;
@@ -124,7 +132,7 @@ public class BecomeReferral extends BaseActivity {
             makeToast(PAYMENT_AMOUNT_IS_INCORRECT);
             return false;
         }
-        BigDecimal balance = WalletRepository.getInstance().getBalance();
+        BigDecimal balance = repository.getBalance();
         if (new BigDecimal(sendAmount).compareTo(balance) > 0) {
             makeToast(YOUR_ACCOUNT_IS_NOT_ENOUGH_TO_SEND);
             return false;
@@ -141,11 +149,11 @@ public class BecomeReferral extends BaseActivity {
         boolean success;
         try {
             if (sendTag == null || sendTag.isEmpty()) {
-                success = WalletRepository.getInstance()
+                success = repository
                         .sendPayment(StringEnum.SERVER_ADDRESS_BECOME_REFERRAL.getValue(),
                                 new BigDecimal(sendAmount));
             } else {
-                success = WalletRepository.getInstance()
+                success = repository
                         .sendPayment(StringEnum.SERVER_ADDRESS_BECOME_REFERRAL.getValue(),
                                 Integer.parseInt(sendTag),
                                 new BigDecimal(sendAmount));

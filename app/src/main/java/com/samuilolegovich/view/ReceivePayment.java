@@ -26,10 +26,18 @@ import com.google.zxing.common.BitMatrix;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
+
+
 
 
 // тут страница с данными для получения платежа плюс куар код
+@AndroidEntryPoint
 public class ReceivePayment extends BaseActivity {
+
+    @Inject WalletRepository repository;
     public static final String RECEIVE_PAYMENT_CLASS = ".ReceivePayment";
 
     private String ADDRESS_COPIED_TO_PHONE_BUFFER;
@@ -79,7 +87,7 @@ public class ReceivePayment extends BaseActivity {
 
 
     private void setAddress() {
-        classicAddress = WalletRepository.getInstance().getClassicAddress();
+        classicAddress = repository.getClassicAddress();
         address.setText(classicAddress);
     }
 

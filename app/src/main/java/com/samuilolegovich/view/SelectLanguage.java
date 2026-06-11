@@ -17,10 +17,13 @@ import com.samuilolegovich.BaseActivity;
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 import com.samuilolegovich.enums.StringEnum;
+import dagger.hilt.android.AndroidEntryPoint;
 
 
 
 
+
+@AndroidEntryPoint
 public class SelectLanguage extends BaseActivity {
     public static final String SELECT_LANGUAGE_CLASS = ".SelectLanguage";
 

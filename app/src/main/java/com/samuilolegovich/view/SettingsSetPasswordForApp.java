@@ -21,9 +21,12 @@ import com.samuilolegovich.enums.StringEnum;
 import com.samuilolegovich.utils.Cipher;
 
 import java.util.UUID;
+import dagger.hilt.android.AndroidEntryPoint;
 
 
 
+
+@AndroidEntryPoint
 public class SettingsSetPasswordForApp extends BaseActivity {
     public static final String SETTINGS_SET_PASSWORD_FOR_APP_CLASS = ".SettingsSetPasswordForApp";
 

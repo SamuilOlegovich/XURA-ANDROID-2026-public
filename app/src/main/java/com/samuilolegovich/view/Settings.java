@@ -15,9 +15,12 @@ import com.samuilolegovich.BaseActivity;
 
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
+import dagger.hilt.android.AndroidEntryPoint;
 
 
 
+
+@AndroidEntryPoint
 public class Settings extends BaseActivity {
     public static final String SETTINGS_CLASS = ".Settings";
 

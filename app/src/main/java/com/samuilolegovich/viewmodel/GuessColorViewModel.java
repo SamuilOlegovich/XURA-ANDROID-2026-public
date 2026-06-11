@@ -12,20 +12,25 @@ import java.math.BigDecimal;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.lifecycle.HiltViewModel;
 
 
+
+@HiltViewModel
 public class GuessColorViewModel extends ViewModel {
     private final WalletRepository repository;
     private final ExecutorService executor;
 
     private final MutableLiveData<GameBetError> errorLiveData = new MutableLiveData<>();
-    // Публикует подготовленную сумму ставки при успехе — Activity использует её для setBetParam()
     private final MutableLiveData<String> betSuccessLiveData = new MutableLiveData<>();
 
 
 
-    public GuessColorViewModel() {
-        repository = WalletRepository.getInstance();
+    @Inject
+    public GuessColorViewModel(WalletRepository repository) {
+        this.repository = repository;
         executor = Executors.newSingleThreadExecutor();
     }
 

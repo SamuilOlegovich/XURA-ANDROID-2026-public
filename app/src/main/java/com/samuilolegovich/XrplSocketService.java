@@ -20,9 +20,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
 
 
+
+@AndroidEntryPoint
 public class XrplSocketService extends Service {
+
+    @Inject WalletRepository repository;
     private static final int NOTIFICATION_ID = 1001;
     private static final String CHANNEL_ID = "xrpl_socket";
 
@@ -54,7 +61,7 @@ public class XrplSocketService extends Service {
 
     @Override
     public void onDestroy() {
-        WalletRepository.getInstance().closeSocket();
+        repository.closeSocket();
         super.onDestroy();
     }
 
@@ -63,7 +70,7 @@ public class XrplSocketService extends Service {
     private void connectSocket() {
         AppExecutors.io().execute(() -> {
             try {
-                WalletRepository repo = WalletRepository.getInstance();
+                WalletRepository repo = repository;
                 repo.startSocket();
                 Thread.sleep(1000);
                 String address = repo.getClassicAddress();

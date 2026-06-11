@@ -24,11 +24,18 @@ import com.samuilolegovich.wallet.repository.WalletRepository;
 
 import java.util.Map;
 
+import javax.inject.Inject;
+
 import static com.samuilolegovich.view.Referral.REFERRAL_CLASS;
+import dagger.hilt.android.AndroidEntryPoint;
 
 
 
+
+@AndroidEntryPoint
 public class RestoreWallet extends BaseActivity {
+
+    @Inject WalletRepository repository;
     public static final String RESTORE_WALLET_CLASS = ".RestoreWallet";
 
     private String ERROR_CHECK_THE_SEED_AND_TRY_AGAIN;
@@ -89,13 +96,13 @@ public class RestoreWallet extends BaseActivity {
 
     private void recoverWalletAsync(String seedRestore) {
         AppExecutors.io().execute(() -> {
-            Map<String, String> map = WalletRepository.getInstance().restoreWallet(seedRestore);
+            Map<String, String> map = repository.restoreWallet(seedRestore);
             boolean success = map != null && map.containsKey("Classic Address");
             runOnUiThread(() -> {
                 if (success) {
                     encryptAndWriteSeed(seedRestore);
                     MainActivity.START_FLAG = false;
-                    WalletRepository.getInstance().loadBalance();
+                    repository.loadBalance();
                     goToAnotherPage(REFERRAL_CLASS);
                 } else {
                     makeToast(ERROR_CHECK_THE_SEED_AND_TRY_AGAIN);

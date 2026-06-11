@@ -11,9 +11,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.samuilolegovich.enums.StringEnum;
 
 import java.util.Locale;
+import dagger.hilt.android.AndroidEntryPoint;
 
 
 
+
+@AndroidEntryPoint
 public abstract class BaseActivity extends AppCompatActivity {
 
     @Override

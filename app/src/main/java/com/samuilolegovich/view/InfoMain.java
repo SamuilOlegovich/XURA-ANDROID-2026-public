@@ -7,9 +7,12 @@ import com.samuilolegovich.BaseActivity;
 
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
+import dagger.hilt.android.AndroidEntryPoint;
 
 
 
+
+@AndroidEntryPoint
 public class InfoMain extends BaseActivity {
     public static final String INFO_MAIN_CLASS = ".InfoMain";
 

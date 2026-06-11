@@ -17,9 +17,12 @@ import com.samuilolegovich.BaseActivity;
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 import com.samuilolegovich.enums.StringEnum;
+import dagger.hilt.android.AndroidEntryPoint;
 
 
 
+
+@AndroidEntryPoint
 public class SelectGameMode  extends BaseActivity {
     public static final String SELECT_GAME_MODE_CLASS = ".SelectGameMode";
 

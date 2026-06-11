@@ -14,10 +14,13 @@ import com.samuilolegovich.R;
 
 import static com.samuilolegovich.view.CreateNewWallet.CREATE_NEW_WALLET_CLASS;
 import static com.samuilolegovich.view.RestoreWallet.RESTORE_WALLET_CLASS;
+import dagger.hilt.android.AndroidEntryPoint;
+
 
 
 
 // тут определяем что нам надо востановить или сгенирировать новый кошелек
+@AndroidEntryPoint
 public class RestoreOrCreateNewWallet extends BaseActivity {
     public static final String RESTORE_OR_NEW_WALLET_CLASS = ".RestoreOrCreateNewWallet";
 

@@ -15,9 +15,12 @@ import com.samuilolegovich.assistants.HistoryPaymentArrayAdapter;
 import com.samuilolegovich.dto.HistoryPaymentDto;
 
 import java.util.ArrayList;
+import dagger.hilt.android.AndroidEntryPoint;
 
 
 
+
+@AndroidEntryPoint
 public class TransactionHistory  extends BaseActivity {
     public static final String TRANSACTION_HISTORY_CLASS = ".TransactionHistory";
 

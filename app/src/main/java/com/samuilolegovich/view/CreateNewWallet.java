@@ -25,11 +25,18 @@ import com.samuilolegovich.wallet.repository.WalletRepository;
 
 import java.util.Map;
 
+import javax.inject.Inject;
+
 import static com.samuilolegovich.view.CheckingNewWallet.CHECKING_NEW_WALLET_CLASS;
+import dagger.hilt.android.AndroidEntryPoint;
 
 
 
+
+@AndroidEntryPoint
 public class CreateNewWallet extends BaseActivity {
+
+    @Inject WalletRepository repository;
     public static final String CREATE_NEW_WALLET_CLASS = ".CreateNewWallet";
 
     private String ADDRESS_COPIED_TO_PHONE_BUFFER;
@@ -89,7 +96,7 @@ public class CreateNewWallet extends BaseActivity {
                 v.startAnimation(animTranslate);
                 if (isNewWallet) {
                     MainActivity.START_FLAG = false;
-                    WalletRepository.getInstance().loadBalance();
+                    repository.loadBalance();
                     goToAnotherPage(CHECKING_NEW_WALLET_CLASS);
                 } else {
                     createNewWalletAsync();
@@ -114,7 +121,7 @@ public class CreateNewWallet extends BaseActivity {
     private void createNewWalletAsync() {
         isNewWallet = false;
         AppExecutors.io().execute(() -> {
-            Map<String, String> map = WalletRepository.getInstance().createNewWallet();
+            Map<String, String> map = repository.createNewWallet();
             runOnUiThread(() -> {
                 if (map != null && map.containsKey("Seed")) {
                     seedString = map.get("Seed");

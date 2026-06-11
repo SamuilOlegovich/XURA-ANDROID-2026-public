@@ -18,9 +18,12 @@ import static com.samuilolegovich.view.GuessTheNumberGame.GUESS_THE_NUMBER_GAME_
 import static com.samuilolegovich.view.GuessTheColorGame.GUESS_THE_COLOR_GAME_CLASS;
 import static com.samuilolegovich.view.RouletteGame.ROULETTE_GAME_CLASS;
 import static com.samuilolegovich.view.SelectGameMode.SELECT_GAME_MODE_CLASS;
+import dagger.hilt.android.AndroidEntryPoint;
 
 
 
+
+@AndroidEntryPoint
 public class SelectGame extends BaseActivity {
     public static final String SELECT_GAME_CLASS = ".SelectGame";
 

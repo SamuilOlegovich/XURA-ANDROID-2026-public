@@ -17,9 +17,12 @@ import com.samuilolegovich.BaseActivity;
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 import com.samuilolegovich.enums.StringEnum;
+import dagger.hilt.android.AndroidEntryPoint;
 
 
 
+
+@AndroidEntryPoint
 public class Referral extends BaseActivity {
     public static final String REFERRAL_CLASS = ".Referral";
     public static Boolean FLAG = true;

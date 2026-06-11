@@ -39,9 +39,12 @@ import static com.samuilolegovich.view.InfoMain.INFO_MAIN_CLASS;
 import static com.samuilolegovich.view.Settings.SETTINGS_CLASS;
 import static com.samuilolegovich.view.Lost.LOST_CLASS;
 import static com.samuilolegovich.view.Win.WIN_CLASS;
+import dagger.hilt.android.AndroidEntryPoint;
 
 
 
+
+@AndroidEntryPoint
 public class MainActivity extends BaseActivity {
     public static final String MAIN_ACTIVITY_CLASS = ".MainActivity";
     public static final long ONE_XRP_IN_DROPS = 1_000_000L;

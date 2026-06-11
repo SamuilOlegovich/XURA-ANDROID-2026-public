@@ -10,16 +10,22 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.lifecycle.HiltViewModel;
 
 
+
+@HiltViewModel
 public class MainViewModel extends ViewModel {
     private final WalletRepository repository;
     private final ExecutorService executor;
 
 
 
-    public MainViewModel() {
-        repository = WalletRepository.getInstance();
+    @Inject
+    public MainViewModel(WalletRepository repository) {
+        this.repository = repository;
         executor = Executors.newSingleThreadExecutor();
     }
 

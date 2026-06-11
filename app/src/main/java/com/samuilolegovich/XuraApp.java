@@ -10,8 +10,11 @@ import com.samuilolegovich.enums.StringEnum;
 
 import java.util.Locale;
 
+import dagger.hilt.android.HiltAndroidApp;
 
 
+
+@HiltAndroidApp
 public class XuraApp extends Application {
     private static Application instance;
 
