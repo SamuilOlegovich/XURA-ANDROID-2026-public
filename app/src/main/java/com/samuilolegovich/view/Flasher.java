@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.samuilolegovich.AppExecutors;
 import com.samuilolegovich.BaseActivity;
 import androidx.core.content.ContextCompat;
 
@@ -202,16 +203,12 @@ public class Flasher extends BaseActivity {
 
 
     private void goThread() {
-        Runnable runnable = new FlasherRun();
-        Thread thread = new Thread(runnable);
-        thread.start();
+        AppExecutors.io().execute(new FlasherRun());
     }
 
 
     private void goThreadTest() {
-        Runnable runnable = new NotifierRunForTrialGame(TEST_MODE_ENUM);
-        Thread thread = new Thread(runnable);
-        thread.start();
+        AppExecutors.io().execute(new NotifierRunForTrialGame(TEST_MODE_ENUM));
     }
 
 

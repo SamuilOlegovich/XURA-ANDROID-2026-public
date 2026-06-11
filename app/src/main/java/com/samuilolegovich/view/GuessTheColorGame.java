@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.samuilolegovich.AppExecutors;
 import com.samuilolegovich.BaseActivity;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -206,7 +207,7 @@ public class GuessTheColorGame extends BaseActivity {
 
 
     private void goThread() {
-        new Thread(new GenColorRun()).start();
+        AppExecutors.io().execute(new GenColorRun());
     }
 
 

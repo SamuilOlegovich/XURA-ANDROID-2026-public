@@ -12,6 +12,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
+import com.samuilolegovich.AppExecutors;
 import com.samuilolegovich.BaseActivity;
 
 import com.samuilolegovich.MainActivity;
@@ -104,7 +105,7 @@ public class SelectLanguage extends BaseActivity {
 
 
     private void makeStackThread(StringEnum stringEnum) {
-        new Thread(() -> makeStack(stringEnum)).start();
+        AppExecutors.io().execute(() -> makeStack(stringEnum));
     }
 
 

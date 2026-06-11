@@ -5,6 +5,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.samuilolegovich.AppExecutors;
 import com.samuilolegovich.BaseActivity;
 
 import com.samuilolegovich.MainActivity;
@@ -55,25 +56,12 @@ public class TransactionHistory  extends BaseActivity {
 
 
     private void createHistoryThread() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                historyCreator.createHistory();
-            }
-        }).start();
+        AppExecutors.io().execute(() -> historyCreator.createHistory());
     }
 
 
     public void selectTabButtonThread(ArrayList<HistoryPaymentDto> listHistory) {
-        new Thread() {
-            public void run() {
-                TRANSACTION_HISTORY.runOnUiThread(new Runnable() {
-                    public void run() {
-                        selectTabButton(listHistory);
-                    }
-                });
-            }
-        }.start();
+        runOnUiThread(() -> selectTabButton(listHistory));
     }
 
 

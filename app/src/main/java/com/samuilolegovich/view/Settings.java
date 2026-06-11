@@ -85,21 +85,7 @@ public class Settings extends BaseActivity {
     }
 
     public void setLanguageThread() {
-        new Thread() {
-            public void run() {
-                SETTINGS_ACTIVITY.runOnUiThread(new Runnable() {
-                    public void run() {
-                        executeRecreate();
-                    }
-
-                });
-            }
-        }.start();
-    }
-
-
-    private void executeRecreate() {
-        recreate();
+        runOnUiThread(this::recreate);
     }
 
 

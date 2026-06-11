@@ -22,6 +22,8 @@ import com.samuilolegovich.asyncAndRun.asyncTask.GetBalanceAsync;
 import com.samuilolegovich.asyncAndRun.asyncTask.SendPaymentAsync;
 import com.samuilolegovich.enums.StringEnum;
 
+import com.samuilolegovich.AppExecutors;
+
 import java.math.BigDecimal;
 import java.util.concurrent.ExecutionException;
 
@@ -146,12 +148,7 @@ public class BecomeReferral  extends BaseActivity {
 
 
     private void makeStackThread(boolean b) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                makeStack(b);
-            }
-        }).start();
+        AppExecutors.io().execute(() -> makeStack(b));
     }
 
 
@@ -213,18 +210,11 @@ public class BecomeReferral  extends BaseActivity {
 
 
     private void makeToast(String massage) {
-        new Thread() {
-            public void run() {
-                BECOME_REFERRAL.runOnUiThread(new Runnable() {
-                    public void run() {
-                        //Do your UI operations like dialog opening or Toast here
-                        Toast toast = Toast.makeText(getApplicationContext(), massage, Toast.LENGTH_LONG);
-                        toast.setGravity(Gravity.TOP, 0,110);   // import android.view.Gravity;
-                        toast.show();
-                    }
-                });
-            }
-        }.start();
+        runOnUiThread(() -> {
+            Toast toast = Toast.makeText(getApplicationContext(), massage, Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 110);
+            toast.show();
+        });
     }
 
 

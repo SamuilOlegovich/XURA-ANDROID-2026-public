@@ -1,5 +1,6 @@
 package com.samuilolegovich.asyncAndRun.runnable;
 
+import com.samuilolegovich.AppExecutors;
 import com.samuilolegovich.wallet.model.PaymentManager.PaymentAndSocketManagerXRPL;
 import com.samuilolegovich.wallet.model.sockets.enums.StreamSubscriptionEnum;
 import com.samuilolegovich.wallet.subscribers.MyStreamSubscriber;
@@ -120,7 +121,7 @@ public class RestartSubscriberRun implements Runnable {
         } catch (Exception e) {
             FLAG = true;
             RestartSubscriberRun restartSubscriberRun = new RestartSubscriberRun(10000);
-            new Thread(restartSubscriberRun).start();
+            AppExecutors.io().execute(restartSubscriberRun);
 
             e.printStackTrace();
         }

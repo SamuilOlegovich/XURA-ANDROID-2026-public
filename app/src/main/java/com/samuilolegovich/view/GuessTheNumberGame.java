@@ -16,6 +16,7 @@ import android.widget.GridLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.samuilolegovich.AppExecutors;
 import com.samuilolegovich.BaseActivity;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.lifecycle.ViewModelProvider;
@@ -244,7 +245,7 @@ public class GuessTheNumberGame extends BaseActivity {
 
 
     private void goThread() {
-        new Thread(new GenNumberRun()).start();
+        AppExecutors.io().execute(new GenNumberRun());
     }
 
 
