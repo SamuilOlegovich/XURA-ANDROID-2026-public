@@ -8,10 +8,13 @@ import com.samuilolegovich.BaseActivity;
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 import com.samuilolegovich.asyncAndRun.runnable.GenNumberRun;
+import dagger.hilt.android.AndroidEntryPoint;
+
 
 
 
 // выводим правила игры
+@AndroidEntryPoint
 public class RulesOfTheGameGuessTheNumber extends BaseActivity {
     public static final String RULES_OF_THE_GAME_GUESS_THE_NUMBER_CLASS = ".RulesOfTheGameGuessTheNumber";
 

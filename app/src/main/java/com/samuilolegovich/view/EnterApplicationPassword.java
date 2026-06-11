@@ -23,10 +23,13 @@ import com.samuilolegovich.utils.Cipher;
 
 
 import static com.samuilolegovich.view.RestoreOrCreateNewWallet.RESTORE_OR_NEW_WALLET_CLASS;
+import dagger.hilt.android.AndroidEntryPoint;
+
 
 
 
 // тут будет вводится и проверяться пароль от приложения для дальнейшего доступа к игре
+@AndroidEntryPoint
 public class EnterApplicationPassword extends BaseActivity {
     public static final String ENTER_APPLICATION_PASSWORD_CLASS = ".EnterApplicationPassword";
 

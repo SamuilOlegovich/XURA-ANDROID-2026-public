@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.samuilolegovich.viewmodel.NavigationEvent;
 import com.samuilolegovich.wallet.model.PaymentManager.PaymentAndSocketManagerXRPL;
 import com.samuilolegovich.wallet.model.sockets.enums.StreamSubscriptionEnum;
+import com.samuilolegovich.wallet.model.sockets.interfaces.CommandListener;
 import com.samuilolegovich.wallet.subscribers.interfaces.StreamSubscriber;
 
 import java.math.BigDecimal;
@@ -24,6 +25,7 @@ public class WalletRepository {
     private final MutableLiveData<BigDecimal> balanceLiveData = new MutableLiveData<>(new BigDecimal("0.000000"));
     private final MutableLiveData<String> lottoTextLiveData = new MutableLiveData<>("");
     private final MutableLiveData<NavigationEvent> navigationEventLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> walletReadyLiveData = new MutableLiveData<>(false);
 
 
 
@@ -45,6 +47,7 @@ public class WalletRepository {
     public LiveData<BigDecimal> getBalanceLiveData() { return balanceLiveData; }
     public LiveData<String> getLottoTextLiveData() { return lottoTextLiveData; }
     public LiveData<NavigationEvent> getNavigationEventLiveData() { return navigationEventLiveData; }
+    public LiveData<Boolean> getWalletReadyLiveData() { return walletReadyLiveData; }
 
 
 
@@ -82,7 +85,11 @@ public class WalletRepository {
     }
 
     public Map<String, String> restoreWallet(String seed) {
-        return manager.connectAnExistingWallet(seed, true);
+        Map<String, String> result = manager.connectAnExistingWallet(seed, true);
+        if (result != null && result.containsKey("Classic Address")) {
+            walletReadyLiveData.postValue(true);
+        }
+        return result;
     }
 
     public String getClassicAddress() {
@@ -137,5 +144,14 @@ public class WalletRepository {
 
     public void unsubscribe(EnumSet<StreamSubscriptionEnum> streams) throws Exception {
         manager.unsubscribe(streams);
+    }
+
+    public void closeSocket() {
+        manager.closeSocket();
+    }
+
+    public String sendCommand(String command, Map<String, Object> parameters,
+                              CommandListener listener) throws Exception {
+        return manager.sendCommand(command, parameters, listener);
     }
 }

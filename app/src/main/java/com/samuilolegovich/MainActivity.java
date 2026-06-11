@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.content.Context;
@@ -38,9 +39,12 @@ import static com.samuilolegovich.view.InfoMain.INFO_MAIN_CLASS;
 import static com.samuilolegovich.view.Settings.SETTINGS_CLASS;
 import static com.samuilolegovich.view.Lost.LOST_CLASS;
 import static com.samuilolegovich.view.Win.WIN_CLASS;
+import dagger.hilt.android.AndroidEntryPoint;
 
 
 
+
+@AndroidEntryPoint
 public class MainActivity extends BaseActivity {
     public static final String MAIN_ACTIVITY_CLASS = ".MainActivity";
     public static final long ONE_XRP_IN_DROPS = 1_000_000L;
@@ -117,6 +121,10 @@ public class MainActivity extends BaseActivity {
                     goToAnotherPage(YOUR_REFERRAL_CLASS);
                     break;
             }
+        });
+
+        viewModel.getWalletReady().observe(this, ready -> {
+            if (Boolean.TRUE.equals(ready)) startXrplSocketService();
         });
 
         handleStartup();
@@ -263,6 +271,22 @@ public class MainActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         VISIBLE_ON_SCREEN = true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        stopService(new Intent(this, XrplSocketService.class));
+        super.onDestroy();
+        MAIN_ACTIVITY = null;
+    }
+
+    private void startXrplSocketService() {
+        Intent intent = new Intent(this, XrplSocketService.class);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(intent);
+        } else {
+            startService(intent);
+        }
     }
 
 

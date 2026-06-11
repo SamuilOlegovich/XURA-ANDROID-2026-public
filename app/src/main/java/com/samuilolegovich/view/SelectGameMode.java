@@ -11,14 +11,18 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
+import com.samuilolegovich.AppExecutors;
 import com.samuilolegovich.BaseActivity;
 
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 import com.samuilolegovich.enums.StringEnum;
+import dagger.hilt.android.AndroidEntryPoint;
 
 
 
+
+@AndroidEntryPoint
 public class SelectGameMode  extends BaseActivity {
     public static final String SELECT_GAME_MODE_CLASS = ".SelectGameMode";
 
@@ -80,12 +84,7 @@ public class SelectGameMode  extends BaseActivity {
 
 
     private void makeStackThread(StringEnum stringEnum) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                makeStack(stringEnum);
-            }
-        }).start();
+        AppExecutors.io().execute(() -> makeStack(stringEnum));
     }
 
 

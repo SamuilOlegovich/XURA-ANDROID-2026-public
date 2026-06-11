@@ -1,7 +1,8 @@
 package com.samuilolegovich.asyncAndRun.runnable;
 
-import com.samuilolegovich.wallet.model.PaymentManager.PaymentAndSocketManagerXRPL;
+import com.samuilolegovich.AppExecutors;
 import com.samuilolegovich.wallet.model.sockets.enums.StreamSubscriptionEnum;
+import com.samuilolegovich.wallet.repository.WalletRepository;
 import com.samuilolegovich.wallet.subscribers.MyStreamSubscriber;
 import com.samuilolegovich.wallet.subscribers.interfaces.StreamSubscriber;
 
@@ -13,48 +14,20 @@ import java.util.Map;
 
 
 public class RestartSubscriberRun implements Runnable {
-//    private PaymentAndSocketManagerXRPL paymentManager;
-//
-//    @Override
-//    public void run() {
-//        paymentManager = PaymentAndSocketManagerXRPL.getInstances();
-//        paymentManager.restartSocket();
-//        boolean b = false;
-//        while (!b) {
-//            b = paymentManager.startSocket();
-//            try {
-//                Thread.sleep(1000);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//
-//        StreamSubscriber subscriber = new MyStreamSubscriber();
-//        Map<String, Object> parameters = new HashMap<>();
-//
-//        parameters.put("accounts", List.of(paymentManager.getClassicAddress(true)));
-//
-//
-//        try {
-//            Thread.sleep(1000);
-//            paymentManager.subscribe(EnumSet.of(StreamSubscriptionEnum.ACCOUNT_CHANNELS), parameters, subscriber);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-
     public static volatile boolean FLAG = true;
 
-    private PaymentAndSocketManagerXRPL paymentManager;
-    private int time;
+    private final WalletRepository repository;
+    private final int time;
 
 
 
     public RestartSubscriberRun() {
+        this.repository = WalletRepository.getInstance();
         this.time = 1000;
     }
 
     public RestartSubscriberRun(Integer time) {
+        this.repository = WalletRepository.getInstance();
         this.time = time;
     }
 
@@ -72,9 +45,8 @@ public class RestartSubscriberRun implements Runnable {
 
 
     private void restartSocket() {
-        paymentManager = PaymentAndSocketManagerXRPL.getInstances();
         try {
-            paymentManager.restartSocket();
+            repository.restartSocket();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -82,11 +54,11 @@ public class RestartSubscriberRun implements Runnable {
 
 
     private void startSocket() {
-        boolean b = false;
+        boolean connected = false;
 
-        while (!b) {
+        while (!connected) {
             try {
-                b = paymentManager.startSocket();
+                connected = repository.startSocket();
             } catch (Exception e) {
                 e.printStackTrace();
                 restartSocket();
@@ -103,25 +75,16 @@ public class RestartSubscriberRun implements Runnable {
 
     private void restartSubscribeTo() {
         try {
-//            paymentManager.restartSubscribeTo();
             StreamSubscriber subscriber = new MyStreamSubscriber();
             Map<String, Object> parameters = new HashMap<>();
+            parameters.put("accounts", List.of(repository.getClassicAddress()));
 
-            parameters.put("accounts", List.of(paymentManager.getClassicAddress(true)));
-
-            try {
-                Thread.sleep(1000);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            paymentManager.subscribe(EnumSet.of(StreamSubscriptionEnum.ACCOUNT_CHANNELS), parameters, subscriber);
+            Thread.sleep(1000);
+            repository.subscribe(EnumSet.of(StreamSubscriptionEnum.ACCOUNT_CHANNELS), parameters, subscriber);
 
         } catch (Exception e) {
             FLAG = true;
-            RestartSubscriberRun restartSubscriberRun = new RestartSubscriberRun(10000);
-            new Thread(restartSubscriberRun).start();
-
+            AppExecutors.io().execute(new RestartSubscriberRun(10000));
             e.printStackTrace();
         }
     }

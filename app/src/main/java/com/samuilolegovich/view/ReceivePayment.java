@@ -14,10 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.samuilolegovich.BaseActivity;
-
-import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
-import com.samuilolegovich.wallet.model.PaymentManager.PaymentAndSocketManagerXRPL;
+import com.samuilolegovich.wallet.repository.WalletRepository;
 
 
 import android.graphics.Bitmap;
@@ -28,10 +26,18 @@ import com.google.zxing.common.BitMatrix;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
+
+
 
 
 // тут страница с данными для получения платежа плюс куар код
+@AndroidEntryPoint
 public class ReceivePayment extends BaseActivity {
+
+    @Inject WalletRepository repository;
     public static final String RECEIVE_PAYMENT_CLASS = ".ReceivePayment";
 
     private String ADDRESS_COPIED_TO_PHONE_BUFFER;
@@ -81,7 +87,7 @@ public class ReceivePayment extends BaseActivity {
 
 
     private void setAddress() {
-        classicAddress = PaymentAndSocketManagerXRPL.getInstances().getClassicAddress(true);
+        classicAddress = repository.getClassicAddress();
         address.setText(classicAddress);
     }
 

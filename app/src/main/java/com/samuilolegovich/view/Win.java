@@ -11,9 +11,12 @@ import com.samuilolegovich.BaseActivity;
 
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
+import dagger.hilt.android.AndroidEntryPoint;
 
 
 
+
+@AndroidEntryPoint
 public class Win extends BaseActivity {
     public static final String WIN_CLASS = ".Win";
     public static String MASSAGE = "";

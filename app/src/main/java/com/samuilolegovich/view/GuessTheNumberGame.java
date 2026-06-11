@@ -16,6 +16,7 @@ import android.widget.GridLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.samuilolegovich.AppExecutors;
 import com.samuilolegovich.BaseActivity;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.lifecycle.ViewModelProvider;
@@ -31,9 +32,12 @@ import com.samuilolegovich.viewmodel.GuessNumberViewModel;
 
 import static com.samuilolegovich.view.Flasher.FLASHER_CLASS;
 import static com.samuilolegovich.view.RulesOfTheGameGuessTheNumber.RULES_OF_THE_GAME_GUESS_THE_NUMBER_CLASS;
+import dagger.hilt.android.AndroidEntryPoint;
 
 
 
+
+@AndroidEntryPoint
 public class GuessTheNumberGame extends BaseActivity {
     public static final String GUESS_THE_NUMBER_GAME_CLASS = ".GuessTheNumberGame";
 
@@ -244,7 +248,7 @@ public class GuessTheNumberGame extends BaseActivity {
 
 
     private void goThread() {
-        new Thread(new GenNumberRun()).start();
+        AppExecutors.io().execute(new GenNumberRun());
     }
 
 

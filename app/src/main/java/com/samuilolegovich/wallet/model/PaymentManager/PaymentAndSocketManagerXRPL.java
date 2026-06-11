@@ -244,6 +244,16 @@ public class PaymentAndSocketManagerXRPL implements PaymentManager, SocketManage
         return true;
     }
 
+    public void closeSocket() {
+        if (socket != null) {
+            try {
+                socket.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
 
     // Presets *********************************************************************************************************

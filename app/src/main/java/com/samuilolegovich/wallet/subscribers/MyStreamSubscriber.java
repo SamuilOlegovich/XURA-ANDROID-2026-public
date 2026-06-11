@@ -2,6 +2,7 @@ package com.samuilolegovich.wallet.subscribers;
 
 import android.content.Context;
 
+import com.samuilolegovich.AppExecutors;
 import com.samuilolegovich.asyncAndRun.runnable.NotifierRun;
 import com.samuilolegovich.asyncAndRun.runnable.UpdateBalanceRun;
 import com.samuilolegovich.wallet.model.sockets.enums.StreamSubscriptionEnum;
@@ -28,14 +29,8 @@ public class MyStreamSubscriber implements StreamSubscriber {
             if (message.has("type") && message.getString("type").equals("transaction")) {
                 String messageString = message.toString();
 
-                Runnable updateBalanceAsync = new UpdateBalanceRun(messageString);
-                Runnable renovatorAsync = new NotifierRun(messageString);
-
-                Thread updateBalanceAsyncThread = new Thread(updateBalanceAsync);
-                Thread renovatorAsyncThread = new Thread(renovatorAsync);
-
-                updateBalanceAsyncThread.start();
-                renovatorAsyncThread.start();
+                AppExecutors.io().execute(new UpdateBalanceRun(messageString));
+                AppExecutors.io().execute(new NotifierRun(messageString));
             }
         } catch (JSONException e) {
             e.printStackTrace();

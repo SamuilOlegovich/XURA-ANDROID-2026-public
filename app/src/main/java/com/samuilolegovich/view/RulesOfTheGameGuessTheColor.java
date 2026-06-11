@@ -7,10 +7,13 @@ import com.samuilolegovich.BaseActivity;
 
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
+import dagger.hilt.android.AndroidEntryPoint;
+
 
 
 
 // выводим правила игры
+@AndroidEntryPoint
 public class RulesOfTheGameGuessTheColor extends BaseActivity {
     public static final String RULES_OF_THE_GAME_GUESS_THE_COLOR_CLASS = ".RulesOfTheGameGuessTheColor";
 

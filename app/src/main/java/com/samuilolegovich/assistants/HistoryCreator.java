@@ -3,7 +3,7 @@ package com.samuilolegovich.assistants;
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.dto.HistoryPaymentDto;
 import com.samuilolegovich.view.TransactionHistory;
-import com.samuilolegovich.wallet.model.PaymentManager.PaymentAndSocketManagerXRPL;
+import com.samuilolegovich.wallet.repository.WalletRepository;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,17 +18,17 @@ import java.util.Map;
 
 
 public class HistoryCreator {
-    private final PaymentAndSocketManagerXRPL paymentManager;
+    private final WalletRepository repository;
     private String myAccount;
 
     public HistoryCreator() {
-        this.paymentManager = PaymentAndSocketManagerXRPL.getInstances();
+        this.repository = WalletRepository.getInstance();
     }
 
 
 
     public synchronized void createHistory() {
-        myAccount = paymentManager.getClassicAddress(true);
+        myAccount = repository.getClassicAddress();
         getAllHistory();
     }
 
@@ -39,10 +39,9 @@ public class HistoryCreator {
         parameters.put("account", myAccount);
         parameters.put("validated", "true");
         parameters.put("limit", 100);
-//        parameters.put("transactions", 4);
 
         try {
-            paymentManager.sendCommand("account_tx", parameters, (response) -> {
+            repository.sendCommand("account_tx", parameters, (response) -> {
                 parseResponse(response.toString());
             });
         } catch (Exception e) {

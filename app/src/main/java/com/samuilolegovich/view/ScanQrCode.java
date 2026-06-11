@@ -27,9 +27,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
+import dagger.hilt.android.AndroidEntryPoint;
 
 
 
+
+@AndroidEntryPoint
 public class ScanQrCode extends BaseActivity {
     public static final String SCAN_QR_CODE_CLASS = ".ScanQrCode";
 

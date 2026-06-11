@@ -15,9 +15,12 @@ import com.samuilolegovich.BaseActivity;
 
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
+import dagger.hilt.android.AndroidEntryPoint;
 
 
 
+
+@AndroidEntryPoint
 public class Settings extends BaseActivity {
     public static final String SETTINGS_CLASS = ".Settings";
 
@@ -85,21 +88,7 @@ public class Settings extends BaseActivity {
     }
 
     public void setLanguageThread() {
-        new Thread() {
-            public void run() {
-                SETTINGS_ACTIVITY.runOnUiThread(new Runnable() {
-                    public void run() {
-                        executeRecreate();
-                    }
-
-                });
-            }
-        }.start();
-    }
-
-
-    private void executeRecreate() {
-        recreate();
+        runOnUiThread(this::recreate);
     }
 
 
@@ -110,10 +99,15 @@ public class Settings extends BaseActivity {
     }
 
 
-    // при нажатии на кнопку назад будем возвращаться назад
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SETTINGS_ACTIVITY = null;
     }
 
 }

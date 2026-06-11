@@ -1,5 +1,6 @@
 package com.samuilolegovich.wallet.model.sockets;
 
+import com.samuilolegovich.AppExecutors;
 import com.samuilolegovich.asyncAndRun.runnable.RestartSubscriberRun;
 import com.samuilolegovich.wallet.model.PaymentManager.PaymentAndSocketManagerXRPL;
 import com.samuilolegovich.wallet.model.sockets.enums.StreamSubscriptionEnum;
@@ -249,7 +250,7 @@ public class SocketXRP extends WebSocketClient {
             } else {
                 restartSubscriberRun = new RestartSubscriberRun();
             }
-            new Thread(restartSubscriberRun).start();
+            AppExecutors.io().execute(restartSubscriberRun);
         }
     }
 }

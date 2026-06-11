@@ -19,9 +19,12 @@ import com.samuilolegovich.BaseActivity;
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 import com.samuilolegovich.enums.StringEnum;
+import dagger.hilt.android.AndroidEntryPoint;
 
 
 
+
+@AndroidEntryPoint
 public class YourReferral  extends BaseActivity {
     public static final String YOUR_REFERRAL_CLASS = ".YourReferral";
     public static String MASSAGE = "";

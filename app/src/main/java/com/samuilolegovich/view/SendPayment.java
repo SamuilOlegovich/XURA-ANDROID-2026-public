@@ -17,9 +17,12 @@ import androidx.lifecycle.ViewModelProvider;
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 import com.samuilolegovich.viewmodel.SendPaymentViewModel;
+import dagger.hilt.android.AndroidEntryPoint;
 
 
 
+
+@AndroidEntryPoint
 public class SendPayment extends BaseActivity {
     public static final String SEND_PAYMENT_CLASS = ".SendPayment";
 

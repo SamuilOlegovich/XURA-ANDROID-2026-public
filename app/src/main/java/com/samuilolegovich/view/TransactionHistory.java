@@ -5,6 +5,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.samuilolegovich.AppExecutors;
 import com.samuilolegovich.BaseActivity;
 
 import com.samuilolegovich.MainActivity;
@@ -14,9 +15,12 @@ import com.samuilolegovich.assistants.HistoryPaymentArrayAdapter;
 import com.samuilolegovich.dto.HistoryPaymentDto;
 
 import java.util.ArrayList;
+import dagger.hilt.android.AndroidEntryPoint;
 
 
 
+
+@AndroidEntryPoint
 public class TransactionHistory  extends BaseActivity {
     public static final String TRANSACTION_HISTORY_CLASS = ".TransactionHistory";
 
@@ -55,25 +59,12 @@ public class TransactionHistory  extends BaseActivity {
 
 
     private void createHistoryThread() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                historyCreator.createHistory();
-            }
-        }).start();
+        AppExecutors.io().execute(() -> historyCreator.createHistory());
     }
 
 
     public void selectTabButtonThread(ArrayList<HistoryPaymentDto> listHistory) {
-        new Thread() {
-            public void run() {
-                TRANSACTION_HISTORY.runOnUiThread(new Runnable() {
-                    public void run() {
-                        selectTabButton(listHistory);
-                    }
-                });
-            }
-        }.start();
+        runOnUiThread(() -> selectTabButton(listHistory));
     }
 
 
@@ -85,9 +76,14 @@ public class TransactionHistory  extends BaseActivity {
     }
 
 
-    // при нажатии на кнопку назад будем возвращаться назад
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        TRANSACTION_HISTORY = null;
     }
 }

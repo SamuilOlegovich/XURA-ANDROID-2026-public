@@ -10,8 +10,13 @@ import java.math.BigDecimal;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.lifecycle.HiltViewModel;
 
 
+
+@HiltViewModel
 public class SendPaymentViewModel extends ViewModel {
     private final WalletRepository repository;
     private final ExecutorService executor;
@@ -21,8 +26,9 @@ public class SendPaymentViewModel extends ViewModel {
 
 
 
-    public SendPaymentViewModel() {
-        repository = WalletRepository.getInstance();
+    @Inject
+    public SendPaymentViewModel(WalletRepository repository) {
+        this.repository = repository;
         executor = Executors.newSingleThreadExecutor();
     }
 
