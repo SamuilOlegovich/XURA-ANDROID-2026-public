@@ -5,10 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Gravity;
-import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
@@ -16,18 +14,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
-import com.samuilolegovich.asyncAndRun.asyncTask.GetBalanceAsync;
-import com.samuilolegovich.asyncAndRun.asyncTask.SendPaymentAsync;
 import com.samuilolegovich.asyncAndRun.runnable.GenColorRun;
 import com.samuilolegovich.enums.StringEnum;
 import com.samuilolegovich.enums.TestModeEnum;
 import com.samuilolegovich.utils.Lotto;
-
-import java.math.BigDecimal;
-import java.util.concurrent.ExecutionException;
+import com.samuilolegovich.viewmodel.GameBetError;
+import com.samuilolegovich.viewmodel.GuessColorViewModel;
 
 import static com.samuilolegovich.view.Flasher.FLASHER_CLASS;
 import static com.samuilolegovich.view.RulesOfTheGameGuessTheColor.RULES_OF_THE_GAME_GUESS_THE_COLOR_CLASS;
@@ -36,7 +32,8 @@ import static com.samuilolegovich.view.RulesOfTheGameGuessTheColor.RULES_OF_THE_
 
 public class GuessTheColorGame extends AppCompatActivity {
     public static final String GUESS_THE_COLOR_GAME_CLASS = ".GuessTheColorGame";
-    private static final int MAX_VOLUME = 100;
+
+    public static volatile boolean VISIBLE_ON_SCREEN = false;
 
     private String YOUR_ACCOUNT_IS_NOT_ENOUGH_TO_SEND;
     private String IT_IS_NOT_POSSIBLE_TO_SEND_NULL;
@@ -47,18 +44,15 @@ public class GuessTheColorGame extends AppCompatActivity {
     private String BET_CANNOT_BE_MORE_THAN;
     private String BET_CANNOT_BE_LESS_THAN;
 
-
-    @SuppressLint("StaticFieldLeak")
-    public static volatile GuessTheColorGame GUESS_THE_COLOR_GAME;
-    public static volatile boolean VISIBLE_ON_SCREEN = false;
-
+    private GuessColorViewModel viewModel;
     private SharedPreferences preferences;
     private MediaPlayer casinoMediaPlayer;
     private MediaPlayer errorMediaPlayer;
     private MediaPlayer betMediaPlayer;
     private Animation animTranslate;
-    private BigDecimal yourBalance;
 
+    // Сохраняем цвет ставки до получения ответа от ViewModel
+    private boolean pendingColor;
     private String myReferral;
 
     private TextView nameGameTextViewTwo;
@@ -77,39 +71,62 @@ public class GuessTheColorGame extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.guess_the_color_game_page);
+
+        viewModel = new ViewModelProvider(this).get(GuessColorViewModel.class);
+
         setButtons();
         setLanguage();
-        listeners();
-        setBalance();
         getReferral();
-        GUESS_THE_COLOR_GAME = this;
+        listeners();
+
+        viewModel.getBalance().observe(this, b ->
+                balance.setText(b.toString() + "  XRP"));
+
+        viewModel.getError().observe(this, error -> {
+            if (error == null) return;
+            errorMediaPlayer.start();
+            switch (error) {
+                case INVALID_AMOUNT:       showToast(PAYMENT_AMOUNT_IS_INCORRECT); break;
+                case AMOUNT_IS_ZERO:       showToast(IT_IS_NOT_POSSIBLE_TO_SEND_NULL); break;
+                case INSUFFICIENT_BALANCE: showToast(YOUR_ACCOUNT_IS_NOT_ENOUGH_TO_SEND); break;
+                case BET_TOO_HIGH:         showToast(BET_CANNOT_BE_MORE_THAN + StringEnum.MAX_BET_GUESS_THE_COLOR.getValue() + " XRP"); break;
+                case BET_TOO_LOW:          showToast(BET_CANNOT_BE_LESS_THAN + StringEnum.MIN_BET_GUESS_THE_COLOR.getValue() + " XRP"); break;
+                case TAG_TOO_LARGE:        showToast(TAG_KNOWLEDGE_CANNOT_BE_MORE); break;
+                default:                   showToast(WRONG_DESTINATION_ADDRESS); break;
+            }
+        });
+
+        viewModel.getBetSuccess().observe(this, preparedAmount -> {
+            if (preparedAmount == null) return;
+            bet.setText("");
+            setBetParam(preparedAmount, pendingColor);
+            goToAnotherPage(FLASHER_CLASS);
+            showToast(BET_IS_MADE_EXPECT_THE_RESULT);
+        });
+
+        viewModel.loadBalance();
         goThread();
     }
 
 
 
-    private void soundPlay(MediaPlayer mediaPlayer) {
-        mediaPlayer.setVolume(0.5f, 0.5f);
-        mediaPlayer.setLooping(true);
-        mediaPlayer.start();
-    }
-
-
     private void setButtons() {
-        nameGameTextViewTwo = (TextView) findViewById(R.id.name_game_text_view_tow);
-        yourBalanceTextView = (TextView) findViewById(R.id.your_balance_text_view);
-        rulesOfTheGameLink = (TextView) findViewById(R.id.rules_of_the_game_link);
-        nameGameTextView = (TextView) findViewById(R.id.name_game_text_view);
-        balance = (TextView) findViewById(R.id.your_balance_xrp_text);
-        black = (TextView) findViewById(R.id.color_black);
-        red = (TextView) findViewById(R.id.color_red);
-        bet = (EditText) findViewById(R.id.bet_field);
+        nameGameTextViewTwo = findViewById(R.id.name_game_text_view_tow);
+        yourBalanceTextView = findViewById(R.id.your_balance_text_view);
+        rulesOfTheGameLink = findViewById(R.id.rules_of_the_game_link);
+        nameGameTextView = findViewById(R.id.name_game_text_view);
+        balance = findViewById(R.id.your_balance_xrp_text);
+        black = findViewById(R.id.color_black);
+        red = findViewById(R.id.color_red);
+        bet = findViewById(R.id.bet_field);
 
         casinoMediaPlayer = MediaPlayer.create(this, R.raw.in_casino);
         errorMediaPlayer = MediaPlayer.create(this, R.raw.error);
         betMediaPlayer = MediaPlayer.create(this, R.raw.bet);
 
-        soundPlay(casinoMediaPlayer);
+        casinoMediaPlayer.setVolume(0.5f, 0.5f);
+        casinoMediaPlayer.setLooping(true);
+        casinoMediaPlayer.start();
     }
 
 
@@ -134,225 +151,68 @@ public class GuessTheColorGame extends AppCompatActivity {
     private void listeners() {
         animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
 
-        rulesOfTheGameLink.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        v.startAnimation(animTranslate);
-                        goToAnotherPage(RULES_OF_THE_GAME_GUESS_THE_COLOR_CLASS);
-                    }
-                }
-        );
+        rulesOfTheGameLink.setOnClickListener(v -> {
+            v.startAnimation(animTranslate);
+            goToAnotherPage(RULES_OF_THE_GAME_GUESS_THE_COLOR_CLASS);
+        });
 
-        black.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        v.startAnimation(animTranslate);
-                        betMediaPlayer.start();
-                        Flasher.COLOR_BET = true;
-                        makeStackThread(StringEnum.TAG_BLACK_GUESS_THE_NUMBER.getValue(), true);
-                    }
-                }
-        );
+        black.setOnClickListener(v -> {
+            v.startAnimation(animTranslate);
+            betMediaPlayer.start();
+            pendingColor = true;
+            Flasher.COLOR_BET = true;
+            viewModel.placeBet(
+                    bet.getText().toString(),
+                    StringEnum.TAG_BLACK_GUESS_THE_NUMBER.getValue(),
+                    myReferral);
+        });
 
-        red.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        v.startAnimation(animTranslate);
-                        betMediaPlayer.start();
-                        Flasher.COLOR_BET = false;
-                        makeStackThread(StringEnum.TAG_RED_GUESS_THE_COLOR.getValue(), false);
-                    }
-                }
-        );
-    }
-
-
-    private void makeStackThread(String string, boolean b) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                makeStack(string, b);
-            }
-        }).start();
-    }
-
-
-    private void makeStack(String tag, boolean color) {
-        String sendAmount = prepareTheShippingAmount(bet.getText().toString());
-        String sendTeg = tag + myReferral;
-
-        if (checkData(sendAmount, sendTeg)) {
-            bet.setText("");
-            setBetParam(sendAmount, color);
-            goToAnotherPage(FLASHER_CLASS);
-            makeToast(BET_IS_MADE_EXPECT_THE_RESULT);
-        }
-    }
-
-
-    private void setBetParam(String sendAmount,
-                             boolean color) {
-        Flasher.NUMBER_BET = Lotto.getRandomNumberForColor(color) + "";
-        Flasher.TEST_MODE_ENUM = TestModeEnum.GUESS_THE_COLOR_GAME;
-        Flasher.TEST_SAND_AMOUNT = sendAmount;
-        Flasher.COLOR_BET = color;
-
-    }
-
-
-    public void setColorAndText(String text, boolean b) {
-        // goToAnotherPage
-        new Thread() {
-            public void run() {
-                GUESS_THE_COLOR_GAME.runOnUiThread(new Runnable() {
-                    @SuppressLint("ResourceAsColor")
-                    public void run() {
-                        // result display removed
-                    }
-                });
-            }
-        }.start();
-    }
-
-
-    private boolean checkData(String sendAmount, String sendTeg) {
-        if (sendAmount == null || sendAmount.length() < 1) {
-            errorMediaPlayer.start();
-            makeToast(PAYMENT_AMOUNT_IS_INCORRECT);
-            return false;
-        }
-
-        if (new BigDecimal(sendAmount).compareTo(new BigDecimal("0.000000")) == 0) {
-            errorMediaPlayer.start();
-            makeToast( IT_IS_NOT_POSSIBLE_TO_SEND_NULL);
-            return false;
-        }
-
-        if (MainActivity.IS_REAL_GAME_MODE && new BigDecimal(sendAmount).compareTo(yourBalance) > 0) {
-            errorMediaPlayer.start();
-            makeToast(YOUR_ACCOUNT_IS_NOT_ENOUGH_TO_SEND);
-            return false;
-        }
-
-        if (sendTeg != null && !sendTeg.equals("") && Long.parseLong(sendTeg) >= Integer.MAX_VALUE) {
-            errorMediaPlayer.start();
-            makeToast(TAG_KNOWLEDGE_CANNOT_BE_MORE);
-            return false;
-        }
-
-        if (new BigDecimal(sendAmount).compareTo(new BigDecimal(StringEnum.MAX_BET_GUESS_THE_COLOR.getValue())) > 0) {
-            errorMediaPlayer.start();
-            makeToast(BET_CANNOT_BE_MORE_THAN + StringEnum.MAX_BET_GUESS_THE_COLOR.getValue() + "XRP");
-            return false;
-        }
-
-        if (new BigDecimal(sendAmount).compareTo(new BigDecimal(StringEnum.MIN_BET_GUESS_THE_COLOR.getValue())) < 0) {
-            errorMediaPlayer.start();
-            makeToast(BET_CANNOT_BE_LESS_THAN + StringEnum.MIN_BET_GUESS_THE_COLOR.getValue() + "XRP");
-            return false;
-        }
-
-        return makePayment(sendAmount, sendTeg);
-    }
-
-
-    private boolean makePayment(String sendAmount, String sendTeg) {
-
-        if (MainActivity.IS_REAL_GAME_MODE) {
-            boolean b = false;
-            AsyncTask<String, Void, Boolean> asyncTask = new SendPaymentAsync()
-                    .execute(StringEnum.SERVER_ADDRESS_GUESS_THE_COLOR.getValue(), sendAmount, sendTeg);
-
-            try {
-                b = asyncTask.get();
-            } catch (ExecutionException | InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            if (!b) {
-                errorMediaPlayer.start();
-                makeToast(WRONG_DESTINATION_ADDRESS);
-            }
-
-            return b;
-        } else {
-            return true;
-        }
+        red.setOnClickListener(v -> {
+            v.startAnimation(animTranslate);
+            betMediaPlayer.start();
+            pendingColor = false;
+            Flasher.COLOR_BET = false;
+            viewModel.placeBet(
+                    bet.getText().toString(),
+                    StringEnum.TAG_RED_GUESS_THE_COLOR.getValue(),
+                    myReferral);
+        });
     }
 
 
     private void getReferral() {
         preferences = getSharedPreferences(StringEnum.APP_PREFERENCES.getValue(), Context.MODE_PRIVATE);
-        if (preferences.contains(StringEnum.APP_PREFERENCES_REFERRAL.getValue())) {
-            myReferral = preferences.getString(StringEnum.APP_PREFERENCES_REFERRAL.getValue(), "");
-        } else {
-            myReferral = "0";
-        }
+        myReferral = preferences.contains(StringEnum.APP_PREFERENCES_REFERRAL.getValue())
+                ? preferences.getString(StringEnum.APP_PREFERENCES_REFERRAL.getValue(), "0")
+                : "0";
     }
 
 
-    private String prepareTheShippingAmount(String sendAmount) {
-        if (sendAmount.contains(".")) {
-            int i = sendAmount.indexOf(".");
-            int max = i + 6;
-            if (max < sendAmount.length()) {
-                return sendAmount.substring(0, max + 1);
-            }
-        }
-        return sendAmount;
+    @SuppressLint("SetTextI18n")
+    private void setBetParam(String amount, boolean color) {
+        Flasher.NUMBER_BET = Lotto.getRandomNumberForColor(color) + "";
+        Flasher.TEST_MODE_ENUM = TestModeEnum.GUESS_THE_COLOR_GAME;
+        Flasher.TEST_SAND_AMOUNT = amount;
+        Flasher.COLOR_BET = color;
     }
 
 
-    private void goToAnotherPage(String namePage) {
-        // класс для перехода на другую страницу
-        Intent intent = new Intent(namePage);
-        startActivity(intent);
-    }
-
-
-    private void makeToast(String massage) {
-        new Thread() {
-            public void run() {
-                GUESS_THE_COLOR_GAME.runOnUiThread(new Runnable() {
-                    public void run() {
-                        //Do your UI operations like dialog opening or Toast here
-                        Toast toast = Toast.makeText(getApplicationContext(), massage, Toast.LENGTH_LONG);
-                        toast.setGravity(Gravity.TOP, 0,110);   // import android.view.Gravity;
-                        toast.show();
-                    }
-                });
-            }
-        }.start();
+    private void showToast(String message) {
+        runOnUiThread(() -> {
+            Toast toast = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 110);
+            toast.show();
+        });
     }
 
 
     private void goThread() {
-        Runnable runnable = new GenColorRun();
-        Thread thread = new Thread(runnable);
-        thread.start();
+        new Thread(new GenColorRun()).start();
     }
 
 
-    @SuppressLint("SetTextI18n")
-    private void setBalance() {
-        AsyncTask<String, Void, BigDecimal> getBalanceAsync = new GetBalanceAsync().execute("");
-        try {
-            yourBalance = getBalanceAsync.get();
-            balance.setText(yourBalance.toString() + "  XRP");
-        } catch (ExecutionException | InterruptedException e) {
-            balance.setText("0.000000  XRP");
-            e.printStackTrace();
-        }
-    }
-
-
-    @SuppressLint("SetTextI18n")
-    public void updateBalance(BigDecimal bigDecimal) {
-        yourBalance = bigDecimal;
-        balance.setText(yourBalance.toString() + "  XRP");
+    private void goToAnotherPage(String namePage) {
+        startActivity(new Intent(namePage));
     }
 
 
@@ -360,25 +220,21 @@ public class GuessTheColorGame extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         VISIBLE_ON_SCREEN = false;
-        GenColorRun.FLAG =  false;
+        GenColorRun.FLAG = false;
     }
-
 
     @Override
     protected void onResume() {
         super.onResume();
         VISIBLE_ON_SCREEN = true;
-        GenColorRun.FLAG =  true;
+        GenColorRun.FLAG = true;
         goThread();
     }
 
-
-    // при нажатии на кнопку назад будем возвращаться назад
     @Override
     public void onBackPressed() {
         casinoMediaPlayer.stop();
-        GenColorRun.FLAG =  false;
+        GenColorRun.FLAG = false;
         super.onBackPressed();
     }
-
 }

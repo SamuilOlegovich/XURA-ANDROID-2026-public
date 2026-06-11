@@ -1,7 +1,6 @@
 package com.samuilolegovich.asyncAndRun.runnable;
 
 import com.samuilolegovich.utils.Lotto;
-import com.samuilolegovich.view.GuessTheColorGame;
 import com.samuilolegovich.view.GuessTheNumberGame;
 
 import java.util.Map;
@@ -17,31 +16,23 @@ public class GenNumberRun implements Runnable {
     @Override
     public void run() {
         while (FLAG) {
-            if (GuessTheNumberGame.GUESS_THE_NUMBER_GAME != null) {
-                genNumberAndColor();
-
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+            if (GuessTheNumberGame.VISIBLE_ON_SCREEN) {
+                genNextColor();
+            }
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
     }
 
-    private void genNumberAndColor() {
-        Map<Boolean, String> map = Lotto.genNumberAndColor();
 
+    private void genNextColor() {
+        Map<Boolean, String> map = Lotto.genNumberAndColor();
         while (map.containsKey(nextColor)) {
             map = Lotto.genNumberAndColor();
         }
-
-        if (map.containsKey(true)) {
-            GuessTheNumberGame.GUESS_THE_NUMBER_GAME.setColorAndText(map.get(true), true);
-            nextColor =true;
-        } else {
-            GuessTheNumberGame.GUESS_THE_NUMBER_GAME.setColorAndText(map.get(false), false);
-            nextColor = false;
-        }
+        nextColor = map.containsKey(true);
     }
 }

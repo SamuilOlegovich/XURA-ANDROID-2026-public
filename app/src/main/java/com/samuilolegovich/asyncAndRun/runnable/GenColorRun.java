@@ -16,32 +16,23 @@ public class GenColorRun implements Runnable {
     @Override
     public void run() {
         while (FLAG) {
-            if (GuessTheColorGame.GUESS_THE_COLOR_GAME != null) {
-                genNumberAndColor();
-
-               try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+            if (GuessTheColorGame.VISIBLE_ON_SCREEN) {
+                genNextColor();
+            }
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
     }
 
 
-    private void genNumberAndColor() {
+    private void genNextColor() {
         Map<Boolean, String> map = Lotto.genNumberAndColor();
-
         while (map.containsKey(nextColor)) {
             map = Lotto.genNumberAndColor();
         }
-
-        if (map.containsKey(true)) {
-            GuessTheColorGame.GUESS_THE_COLOR_GAME.setColorAndText(map.get(true), true);
-            nextColor =true;
-        } else {
-            GuessTheColorGame.GUESS_THE_COLOR_GAME.setColorAndText(map.get(false), false);
-            nextColor = false;
-        }
+        nextColor = map.containsKey(true);
     }
 }
