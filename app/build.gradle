@@ -102,15 +102,15 @@ dependencies {
     implementation 'io.github.openfeign:feign-jackson:11.8'
     implementation 'io.github.openfeign:feign-core:11.8'
 
-    annotationProcessor 'org.immutables:value:2.8.2' // for annotation processor
-//    implementation 'org.immutables:value-annotations:2.8.2' // for annotations
-//    implementation 'org.immutables:builder:2.8.2' // for annotations
-//    implementation 'org.immutables:gson:2.8.2' // for annotations
+    annotationProcessor 'org.immutables:value:2.10.0' // for annotation processor
+//    implementation 'org.immutables:value-annotations:2.10.0' // for annotations
+//    implementation 'org.immutables:builder:2.10.0' // for annotations
+//    implementation 'org.immutables:gson:2.10.0' // for annotations
 
     // QR - code
     implementation 'com.google.zxing:core:3.3.2'
 
-    implementation 'org.immutables:value:2.8.2'
+    implementation 'org.immutables:value:2.10.0'
 
     // retrofit
     implementation group: 'com.squareup.retrofit2', name: 'converter-gson', version: '2.11.0'
