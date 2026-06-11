@@ -1,15 +1,16 @@
 plugins {
-    id 'com.android.internal.application'
     id 'com.android.application'
 }
 
 android {
-    compileSdk 32
+    namespace "com.samuilolegovich"
+    compileSdk 36
+    buildToolsVersion "36.1.0"
 
     defaultConfig {
         applicationId "com.samuil.olegovich"
         minSdk 28
-        targetSdk 32
+        targetSdk 36
         versionCode 1
         versionName "1.0"
 
@@ -152,5 +153,3 @@ dependencies {
 
 }
 
-
-apply plugin: 'com.android.internal.application'
