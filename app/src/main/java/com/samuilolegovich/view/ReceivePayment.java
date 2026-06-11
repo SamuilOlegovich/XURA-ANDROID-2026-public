@@ -14,10 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.samuilolegovich.BaseActivity;
-
-import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
-import com.samuilolegovich.wallet.model.PaymentManager.PaymentAndSocketManagerXRPL;
+import com.samuilolegovich.wallet.repository.WalletRepository;
 
 
 import android.graphics.Bitmap;
@@ -81,7 +79,7 @@ public class ReceivePayment extends BaseActivity {
 
 
     private void setAddress() {
-        classicAddress = PaymentAndSocketManagerXRPL.getInstances().getClassicAddress(true);
+        classicAddress = WalletRepository.getInstance().getClassicAddress();
         address.setText(classicAddress);
     }
 

@@ -20,7 +20,6 @@ import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 import com.samuilolegovich.enums.StringEnum;
 import com.samuilolegovich.utils.Cipher;
-import com.samuilolegovich.wallet.model.PaymentManager.PaymentAndSocketManagerXRPL;
 import com.samuilolegovich.wallet.repository.WalletRepository;
 
 import java.util.Map;
@@ -31,8 +30,6 @@ import static com.samuilolegovich.view.Referral.REFERRAL_CLASS;
 
 public class RestoreWallet extends BaseActivity {
     public static final String RESTORE_WALLET_CLASS = ".RestoreWallet";
-
-    private PaymentAndSocketManagerXRPL paymentAndSocketManagerXRPL;
 
     private String ERROR_CHECK_THE_SEED_AND_TRY_AGAIN;
 
@@ -48,7 +45,6 @@ public class RestoreWallet extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        paymentAndSocketManagerXRPL = PaymentAndSocketManagerXRPL.getInstances();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.restore_wallet_page);
         setButtons();
