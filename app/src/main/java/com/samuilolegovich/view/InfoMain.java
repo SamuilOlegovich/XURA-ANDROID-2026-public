@@ -3,14 +3,14 @@ package com.samuilolegovich.view;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
+import com.samuilolegovich.BaseActivity;
 
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 
 
 
-public class InfoMain extends AppCompatActivity {
+public class InfoMain extends BaseActivity {
     public static final String INFO_MAIN_CLASS = ".InfoMain";
 
     private TextView infoMainTextView;
@@ -55,7 +55,6 @@ public class InfoMain extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.info_main_page);
         setButtons();
         setLanguage();

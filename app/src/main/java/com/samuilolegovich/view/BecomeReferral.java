@@ -14,7 +14,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
+import com.samuilolegovich.BaseActivity;
 
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
@@ -27,7 +27,7 @@ import java.util.concurrent.ExecutionException;
 
 
 
-public class BecomeReferral  extends AppCompatActivity {
+public class BecomeReferral  extends BaseActivity {
     public static final String BECOME_REFERRAL_CLASS = ".BecomeReferral";
 
     private String YOUR_ACCOUNT_IS_NOT_ENOUGH_TO_SEND;
@@ -53,7 +53,6 @@ public class BecomeReferral  extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.become_referral);
         setButtons();
         setLanguage();

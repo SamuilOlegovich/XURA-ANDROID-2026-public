@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import com.samuilolegovich.BaseActivity;
 import androidx.camera.core.CameraSelector;
 import androidx.camera.core.ImageAnalysis;
 import androidx.camera.core.ImageCapture;
@@ -30,7 +30,7 @@ import java.util.concurrent.Executors;
 
 
 
-public class ScanQrCode extends AppCompatActivity {
+public class ScanQrCode extends BaseActivity {
     public static final String SCAN_QR_CODE_CLASS = ".ScanQrCode";
 
     private final String[] REQUIRED_PERMISSIONS = new String[]{"android.permission.CAMERA"};
@@ -47,7 +47,6 @@ public class ScanQrCode extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.scan_code_page);
         setButtons();
         performCheck();

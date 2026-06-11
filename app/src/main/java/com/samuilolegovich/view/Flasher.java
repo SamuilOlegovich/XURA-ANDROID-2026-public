@@ -7,7 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
+import com.samuilolegovich.BaseActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
@@ -20,7 +20,7 @@ import com.samuilolegovich.utils.Lotto;
 
 
 
-public class Flasher extends AppCompatActivity {
+public class Flasher extends BaseActivity {
     public static final String FLASHER_CLASS = ".Flasher";
 
     public static volatile boolean VISIBLE_ON_SCREEN = false;
@@ -56,7 +56,6 @@ public class Flasher extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.flasher);
         FLASHER = this;
         FLAG = true;

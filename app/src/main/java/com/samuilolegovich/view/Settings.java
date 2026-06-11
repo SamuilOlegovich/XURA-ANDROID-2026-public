@@ -11,14 +11,14 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
+import com.samuilolegovich.BaseActivity;
 
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 
 
 
-public class Settings extends AppCompatActivity {
+public class Settings extends BaseActivity {
     public static final String SETTINGS_CLASS = ".Settings";
 
     @SuppressLint("StaticFieldLeak")
@@ -36,7 +36,6 @@ public class Settings extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.settings_page);
         SETTINGS_ACTIVITY = this;
         setButtons();

@@ -7,14 +7,14 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
+import com.samuilolegovich.BaseActivity;
 
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 
 
 
-public class Win extends AppCompatActivity {
+public class Win extends BaseActivity {
     public static final String WIN_CLASS = ".Win";
     public static String MASSAGE = "";
 
@@ -29,7 +29,6 @@ public class Win extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.win_page);
         setButtons();
         setLanguage();

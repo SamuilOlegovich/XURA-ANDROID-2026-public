@@ -3,14 +3,14 @@ package com.samuilolegovich.view;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
+import com.samuilolegovich.BaseActivity;
 
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 
 
 
-public class RulesOfTheGameRoulette extends AppCompatActivity {
+public class RulesOfTheGameRoulette extends BaseActivity {
     public static final String RULES_OF_THE_GAME_ROULETTE_CLASS = ".RulesOfTheGameRoulette";
 
     private TextView rulesOfTheGameRouletteGuessTheColor;
@@ -21,7 +21,6 @@ public class RulesOfTheGameRoulette extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.rules_of_the_game_roulette_page);
         setButtons();
         setLanguage();

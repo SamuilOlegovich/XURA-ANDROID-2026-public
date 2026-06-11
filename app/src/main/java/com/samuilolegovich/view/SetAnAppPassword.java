@@ -14,7 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
+import com.samuilolegovich.BaseActivity;
 
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
@@ -28,7 +28,7 @@ import static com.samuilolegovich.view.RestoreOrCreateNewWallet.RESTORE_OR_NEW_W
 
 
 // тут устанавливаем пароль на приложение
-public class SetAnAppPassword extends AppCompatActivity {
+public class SetAnAppPassword extends BaseActivity {
     public static final String SET_AN_APP_PASSWORD_CLASS = ".SetAnAppPassword";
 
     private SharedPreferences.Editor editor;
@@ -47,7 +47,6 @@ public class SetAnAppPassword extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.set_password_for_app_page);
         setButtons();
         setLanguage();

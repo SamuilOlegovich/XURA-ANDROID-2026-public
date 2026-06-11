@@ -13,7 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
+import com.samuilolegovich.BaseActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.samuilolegovich.MainActivity;
@@ -30,7 +30,7 @@ import static com.samuilolegovich.view.RulesOfTheGameGuessTheColor.RULES_OF_THE_
 
 
 
-public class GuessTheColorGame extends AppCompatActivity {
+public class GuessTheColorGame extends BaseActivity {
     public static final String GUESS_THE_COLOR_GAME_CLASS = ".GuessTheColorGame";
 
     public static volatile boolean VISIBLE_ON_SCREEN = false;
@@ -69,7 +69,6 @@ public class GuessTheColorGame extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.guess_the_color_game_page);
 
         viewModel = new ViewModelProvider(this).get(GuessColorViewModel.class);

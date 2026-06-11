@@ -5,7 +5,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
+import com.samuilolegovich.BaseActivity;
 
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 
 
-public class TransactionHistory  extends AppCompatActivity {
+public class TransactionHistory  extends BaseActivity {
     public static final String TRANSACTION_HISTORY_CLASS = ".TransactionHistory";
 
     public static TransactionHistory TRANSACTION_HISTORY;
@@ -33,7 +33,6 @@ public class TransactionHistory  extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.transaction_history_page);
         historyCreator = new HistoryCreator();
         setButtons();

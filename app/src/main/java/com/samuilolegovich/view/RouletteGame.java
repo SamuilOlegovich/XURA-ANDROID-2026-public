@@ -8,7 +8,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
+import com.samuilolegovich.BaseActivity;
 
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
@@ -17,7 +17,7 @@ import static com.samuilolegovich.view.RulesOfTheGameRoulette.RULES_OF_THE_GAME_
 
 
 
-public class RouletteGame extends AppCompatActivity {
+public class RouletteGame extends BaseActivity {
     public static final String ROULETTE_GAME_CLASS = ".RouletteGame";
 
     private MediaPlayer casinoMediaPlayer;
@@ -33,7 +33,6 @@ public class RouletteGame extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.roulette_game_page);
         setButtons();
         setLanguage();

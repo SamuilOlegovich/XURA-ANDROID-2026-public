@@ -15,7 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
+import com.samuilolegovich.BaseActivity;
 
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
@@ -33,7 +33,7 @@ import static com.samuilolegovich.view.Referral.REFERRAL_CLASS;
 
 
 // тут востанавливаем кошелек
-public class RestoreWallet extends AppCompatActivity {
+public class RestoreWallet extends BaseActivity {
     public static final String RESTORE_WALLET_CLASS = ".RestoreWallet";
 
     private PaymentAndSocketManagerXRPL paymentAndSocketManagerXRPL;
@@ -54,7 +54,6 @@ public class RestoreWallet extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         paymentAndSocketManagerXRPL = PaymentAndSocketManagerXRPL.getInstances();
         super.onCreate(savedInstanceState);
-        MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.restore_wallet_page);
         setButtons();
         setLanguage();

@@ -13,7 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
+import com.samuilolegovich.BaseActivity;
 
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
@@ -24,7 +24,7 @@ import java.util.UUID;
 
 
 
-public class SettingsSetPasswordForApp extends AppCompatActivity {
+public class SettingsSetPasswordForApp extends BaseActivity {
     public static final String SETTINGS_SET_PASSWORD_FOR_APP_CLASS = ".SettingsSetPasswordForApp";
 
 
@@ -42,7 +42,6 @@ public class SettingsSetPasswordForApp extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.settings_set_password_for_app);
         setButtons();
         setLanguage();

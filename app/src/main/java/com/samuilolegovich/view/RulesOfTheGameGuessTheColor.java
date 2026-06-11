@@ -3,7 +3,7 @@ package com.samuilolegovich.view;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
+import com.samuilolegovich.BaseActivity;
 
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
@@ -11,7 +11,7 @@ import com.samuilolegovich.R;
 
 
 // выводим правила игры
-public class RulesOfTheGameGuessTheColor extends AppCompatActivity {
+public class RulesOfTheGameGuessTheColor extends BaseActivity {
     public static final String RULES_OF_THE_GAME_GUESS_THE_COLOR_CLASS = ".RulesOfTheGameGuessTheColor";
 
     private TextView rulesOfTheGameGuessTheColorView;
@@ -24,7 +24,6 @@ public class RulesOfTheGameGuessTheColor extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.rules_of_the_game_guess_the_color_page);
         setButtons();
         setLanguage();

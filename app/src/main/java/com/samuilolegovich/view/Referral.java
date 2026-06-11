@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
+import com.samuilolegovich.BaseActivity;
 
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
@@ -20,7 +20,7 @@ import com.samuilolegovich.enums.StringEnum;
 
 
 
-public class Referral extends AppCompatActivity {
+public class Referral extends BaseActivity {
     public static final String REFERRAL_CLASS = ".Referral";
     public static Boolean FLAG = true;
 
@@ -38,7 +38,6 @@ public class Referral extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.referral);
         setButtons();
         setLanguage();

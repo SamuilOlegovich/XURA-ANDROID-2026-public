@@ -14,7 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
+import com.samuilolegovich.BaseActivity;
 
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
@@ -27,7 +27,7 @@ import static com.samuilolegovich.view.Referral.REFERRAL_CLASS;
 
 
 // тут мы сверим информаци о новом кошельке, правильно ли ее записал юзер
-public class CheckingNewWallet extends AppCompatActivity {
+public class CheckingNewWallet extends BaseActivity {
     public static final String CHECKING_NEW_WALLET_CLASS = ".CheckingNewWallet";
 
     private SharedPreferences.Editor editor;
@@ -43,7 +43,6 @@ public class CheckingNewWallet extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.checking_new_wallet);
         setButtons();
         setLanguage();

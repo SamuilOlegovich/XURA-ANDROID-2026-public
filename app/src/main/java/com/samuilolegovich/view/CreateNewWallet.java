@@ -16,7 +16,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
+import com.samuilolegovich.BaseActivity;
 
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
@@ -33,7 +33,7 @@ import static com.samuilolegovich.view.CheckingNewWallet.CHECKING_NEW_WALLET_CLA
 
 
 // тут выводим данные по новому кошельку
-public class CreateNewWallet extends AppCompatActivity {
+public class CreateNewWallet extends BaseActivity {
     public static final String CREATE_NEW_WALLET_CLASS = ".CreateNewWallet";
 
     private String ADDRESS_COPIED_TO_PHONE_BUFFER;
@@ -59,7 +59,6 @@ public class CreateNewWallet extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.create_new_wallet);
         setButtons();
         setLanguage();

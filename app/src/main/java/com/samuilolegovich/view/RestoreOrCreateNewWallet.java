@@ -7,7 +7,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
+import com.samuilolegovich.BaseActivity;
 
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
@@ -18,7 +18,7 @@ import static com.samuilolegovich.view.RestoreWallet.RESTORE_WALLET_CLASS;
 
 
 // тут определяем что нам надо востановить или сгенирировать новый кошелек
-public class RestoreOrCreateNewWallet extends AppCompatActivity {
+public class RestoreOrCreateNewWallet extends BaseActivity {
     public static final String RESTORE_OR_NEW_WALLET_CLASS = ".RestoreOrCreateNewWallet";
 
     private TextView createNewWallet;
@@ -30,7 +30,6 @@ public class RestoreOrCreateNewWallet extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.restore_or_create_new_wallet_page);
         setButtons();
         setLanguage();

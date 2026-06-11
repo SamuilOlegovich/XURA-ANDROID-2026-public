@@ -11,7 +11,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
+import com.samuilolegovich.BaseActivity;
 
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
@@ -19,7 +19,7 @@ import com.samuilolegovich.enums.StringEnum;
 
 
 
-public class SelectGameMode  extends AppCompatActivity {
+public class SelectGameMode  extends BaseActivity {
     public static final String SELECT_GAME_MODE_CLASS = ".SelectGameMode";
 
     private SharedPreferences.Editor editor;
@@ -34,7 +34,6 @@ public class SelectGameMode  extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.select_game_mode_page);
         setButtons();
         setLanguage();

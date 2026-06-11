@@ -14,7 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
+import com.samuilolegovich.BaseActivity;
 
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
@@ -27,7 +27,7 @@ import static com.samuilolegovich.view.RestoreOrCreateNewWallet.RESTORE_OR_NEW_W
 
 
 // тут будет вводится и проверяться пароль от приложения для дальнейшего доступа к игре
-public class EnterApplicationPassword extends AppCompatActivity {
+public class EnterApplicationPassword extends BaseActivity {
     public static final String ENTER_APPLICATION_PASSWORD_CLASS = ".EnterApplicationPassword";
 
     private SharedPreferences preferences;
@@ -42,7 +42,6 @@ public class EnterApplicationPassword extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MainActivity.MAIN_ACTIVITY.setLocale();
 
         setContentView(R.layout.enter_application_password);
         preferences = getSharedPreferences(StringEnum.APP_PREFERENCES.getValue(), Context.MODE_PRIVATE);

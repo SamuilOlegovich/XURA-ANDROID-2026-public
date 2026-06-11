@@ -7,14 +7,14 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
+import com.samuilolegovich.BaseActivity;
 
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 
 
 
-public class Lost extends AppCompatActivity {
+public class Lost extends BaseActivity {
     public static final String LOST_CLASS = ".Lost";
     public static String MASSAGE = "";
 
@@ -30,7 +30,6 @@ public class Lost extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.lost);
         setButtons();
         setLanguage();

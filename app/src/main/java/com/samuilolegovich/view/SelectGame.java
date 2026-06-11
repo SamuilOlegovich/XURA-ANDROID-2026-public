@@ -8,7 +8,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
+import com.samuilolegovich.BaseActivity;
 
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
@@ -21,7 +21,7 @@ import static com.samuilolegovich.view.SelectGameMode.SELECT_GAME_MODE_CLASS;
 
 
 
-public class SelectGame extends AppCompatActivity {
+public class SelectGame extends BaseActivity {
     public static final String SELECT_GAME_CLASS = ".SelectGame";
 
     private MediaPlayer flourOfChoiceMediaPlayer;
@@ -39,7 +39,6 @@ public class SelectGame extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.select_game_page);
         setButtons();
         setLanguage();

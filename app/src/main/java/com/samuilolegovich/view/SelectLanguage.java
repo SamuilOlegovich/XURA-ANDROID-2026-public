@@ -12,17 +12,16 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
+import com.samuilolegovich.BaseActivity;
 
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 import com.samuilolegovich.enums.StringEnum;
 
-import java.util.Locale;
 
 
 
-public class SelectLanguage extends AppCompatActivity {
+public class SelectLanguage extends BaseActivity {
     public static final String SELECT_LANGUAGE_CLASS = ".SelectLanguage";
 
     @SuppressLint("StaticFieldLeak")
@@ -43,7 +42,6 @@ public class SelectLanguage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.select_language);
         SELECT_LANGUAGE_ACTIVITY = this;
         setButtons();
@@ -106,45 +104,27 @@ public class SelectLanguage extends AppCompatActivity {
 
 
     private void makeStackThread(StringEnum stringEnum) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                makeStack(stringEnum);
-            }
-        }).start();
+        new Thread(() -> makeStack(stringEnum)).start();
     }
 
 
     private void makeStack(StringEnum stringEnum) {
-        MainActivity.newLocale = new Locale(stringEnum.getValue());
         preferences = getSharedPreferences(StringEnum.APP_PREFERENCES.getValue(), Context.MODE_PRIVATE);
+        preferences.edit()
+                .putString(StringEnum.APP_PREFERENCES_LOCALE.getValue(), stringEnum.getValue())
+                .apply();
 
-        editor = preferences.edit();
-        editor.putString(StringEnum.APP_PREFERENCES_LOCALE.getValue(), stringEnum.getValue());
-        editor.apply();
-
-        SelectLanguage.SELECT_LANGUAGE_ACTIVITY.setLanguageThread();
-        MainActivity.MAIN_ACTIVITY.setLanguageThread();
-        Settings.SETTINGS_ACTIVITY.setLanguageThread();
+        // BaseActivity.applyLocale() прочитает новую локаль при recreate()
+        runOnUiThread(this::recreate);
+        if (MainActivity.MAIN_ACTIVITY != null)
+            MainActivity.MAIN_ACTIVITY.runOnUiThread(MainActivity.MAIN_ACTIVITY::recreate);
+        if (Settings.SETTINGS_ACTIVITY != null)
+            Settings.SETTINGS_ACTIVITY.runOnUiThread(Settings.SETTINGS_ACTIVITY::recreate);
     }
 
 
     public void setLanguageThread() {
-        new Thread() {
-            public void run() {
-                SELECT_LANGUAGE_ACTIVITY.runOnUiThread(new Runnable() {
-                    public void run() {
-                        executeRecreate();
-                    }
-
-                });
-            }
-        }.start();
-    }
-
-
-    private void executeRecreate() {
-        recreate();
+        runOnUiThread(this::recreate);
     }
 
 

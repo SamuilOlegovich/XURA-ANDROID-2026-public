@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
+import com.samuilolegovich.BaseActivity;
 
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
@@ -31,7 +31,7 @@ import java.util.Map;
 
 
 // тут страница с данными для получения платежа плюс куар код
-public class ReceivePayment extends AppCompatActivity {
+public class ReceivePayment extends BaseActivity {
     public static final String RECEIVE_PAYMENT_CLASS = ".ReceivePayment";
 
     private String ADDRESS_COPIED_TO_PHONE_BUFFER;
@@ -53,7 +53,6 @@ public class ReceivePayment extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.receive_payment);
         setButtons();
         setLanguage();

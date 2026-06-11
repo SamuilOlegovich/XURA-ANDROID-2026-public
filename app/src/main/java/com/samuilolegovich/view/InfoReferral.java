@@ -3,14 +3,14 @@ package com.samuilolegovich.view;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
+import com.samuilolegovich.BaseActivity;
 
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 
 
 
-public class InfoReferral extends AppCompatActivity {
+public class InfoReferral extends BaseActivity {
     public static final String INFO_REFERRAL_CLASS = ".InfoReferral";
 
     private TextView becomeReferralMainTextView;
@@ -40,7 +40,6 @@ public class InfoReferral extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.info_referral_page);
         setButtons();
         setLanguage();

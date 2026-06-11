@@ -14,7 +14,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
+import com.samuilolegovich.BaseActivity;
 
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
@@ -22,7 +22,7 @@ import com.samuilolegovich.enums.StringEnum;
 
 
 
-public class YourReferral  extends AppCompatActivity {
+public class YourReferral  extends BaseActivity {
     public static final String YOUR_REFERRAL_CLASS = ".YourReferral";
     public static String MASSAGE = "";
     public static String CODE = "";
@@ -47,7 +47,6 @@ public class YourReferral  extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.your_referral_page);
         setButtons();
         setLanguage();

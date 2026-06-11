@@ -1,6 +1,5 @@
 package com.samuilolegovich;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
@@ -42,7 +41,7 @@ import static com.samuilolegovich.view.Win.WIN_CLASS;
 
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
     public static final String MAIN_ACTIVITY_CLASS = ".MainActivity";
     public static final long ONE_XRP_IN_DROPS = 1_000_000L;
 
@@ -83,9 +82,7 @@ public class MainActivity extends AppCompatActivity {
         preferences = getSharedPreferences(StringEnum.APP_PREFERENCES.getValue(), Context.MODE_PRIVATE);
         IS_REAL_GAME_MODE = preferences.getString(StringEnum.APP_GAME_MODE.getValue(), "false")
                 .equalsIgnoreCase("true");
-        newLocale = new Locale(preferences.getString(StringEnum.APP_PREFERENCES_LOCALE.getValue(), "en"));
-
-        setLocale();
+        // newLocale уже установлен BaseActivity.applyLocale() до super.onCreate()
         setContentView(R.layout.activity_main);
 
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);

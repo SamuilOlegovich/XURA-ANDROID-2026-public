@@ -16,7 +16,7 @@ import android.widget.GridLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
+import com.samuilolegovich.BaseActivity;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -34,7 +34,7 @@ import static com.samuilolegovich.view.RulesOfTheGameGuessTheNumber.RULES_OF_THE
 
 
 
-public class GuessTheNumberGame extends AppCompatActivity {
+public class GuessTheNumberGame extends BaseActivity {
     public static final String GUESS_THE_NUMBER_GAME_CLASS = ".GuessTheNumberGame";
 
     public static volatile boolean VISIBLE_ON_SCREEN = false;
@@ -74,7 +74,6 @@ public class GuessTheNumberGame extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.guess_the_number_game_page);
 
         viewModel = new ViewModelProvider(this).get(GuessNumberViewModel.class);

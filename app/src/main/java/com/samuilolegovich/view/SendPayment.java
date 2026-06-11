@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
+import com.samuilolegovich.BaseActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.samuilolegovich.MainActivity;
@@ -20,7 +20,7 @@ import com.samuilolegovich.viewmodel.SendPaymentViewModel;
 
 
 
-public class SendPayment extends AppCompatActivity {
+public class SendPayment extends BaseActivity {
     public static final String SEND_PAYMENT_CLASS = ".SendPayment";
 
     // Заполняется ScanQrCode и читается в onResume
@@ -49,7 +49,6 @@ public class SendPayment extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.send_payment_page);
 
         viewModel = new ViewModelProvider(this).get(SendPaymentViewModel.class);
