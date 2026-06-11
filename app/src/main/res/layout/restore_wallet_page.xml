@@ -2,98 +2,105 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-
     android:id="@+id/restore_wallet_page"
     android:layout_width="match_parent"
-
     android:layout_height="match_parent"
-    android:background="#fdd400"
+    android:background="@color/xura_black"
     tools:context=".view.RestoreWallet"
     tools:ignore="MissingDefaultResource">
 
+    <!-- XURA Logo -->
+    <include
+            layout="@layout/logo_xura"
+            android:id="@+id/imageViewLogo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="90dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginEnd="90dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
 
-    <ImageView
-        android:id="@+id/imageViewLogo"
-        android:layout_width="0dp"
-        android:layout_height="155dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="100dp"
-        android:src="@drawable/logo_on_page_jpg"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
+    <!-- RESTORE FROM BACKUP SEED title -->
     <TextView
         android:id="@+id/restore_wallet_text_view"
         android:layout_width="0dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="15dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
         android:text="@string/restore_from_backup_seed"
         android:textAlignment="center"
-        android:textColor="#614F02"
-        android:textSize="24sp"
+        android:textColor="@color/xura_text_secondary"
+        android:textSize="22sp"
         android:textStyle="bold"
+        android:fontFamily="@font/montserrat"
+        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageViewLogo" />
 
+    <!-- Seed input -->
     <EditText
         android:id="@+id/restore_wallet_seed_field"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="30dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/bg_input_xura"
         android:ems="10"
         android:hint="ssG3xqRQSnxfYfF9foHfy7fNEZZctDc3Dx"
         android:inputType="text"
-        android:textAlignment="textStart"
-        android:textColor="@color/rad_1"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="14dp"
+        android:paddingBottom="14dp"
+        android:textColor="@color/xura_cyan"
+        android:textColorHint="@color/xura_text_muted"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/restore_wallet_text_view" />
 
+    <!-- Status text -->
     <TextView
         android:id="@+id/restore_wallet_text_view_tow"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="70dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="70dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
         android:text=""
         android:textAlignment="center"
-        android:textColor="#614F02"
+        android:textColor="@color/xura_text_secondary"
         android:textSize="14sp"
-        android:textStyle="bold"
+        android:fontFamily="@font/montserrat"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/restore_wallet_seed_field" />
 
+    <!-- NEXT button -->
     <TextView
         android:id="@+id/restore_wallet_next_link"
         android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginEnd="100dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         android:layout_marginBottom="40dp"
-        android:autoLink="all"
+        android:background="@drawable/bg_button_primary"
         android:fontFamily="@font/montserrat"
         android:text="@string/next"
         android:textAlignment="center"
-        android:textColor="#614F02"
-        android:textSize="25sp"
+        android:textColor="@color/xura_text_primary"
+        android:textSize="16sp"
         android:textStyle="bold"
-        android:typeface="normal"
+        android:gravity="center"
+        android:letterSpacing="0.08"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

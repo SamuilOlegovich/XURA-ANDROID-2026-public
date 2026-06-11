@@ -1,6 +1,8 @@
 package com.samuilolegovich.view;
 
 import android.annotation.SuppressLint;
+import android.graphics.LinearGradient;
+import android.graphics.Shader;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -43,6 +45,17 @@ public class Win extends AppCompatActivity {
 
         winMediaPlayer = MediaPlayer.create(this, R.raw.win);
         winMediaPlayer.start();
+
+        winPageTextView.post(() -> {
+            LinearGradient gradient = new LinearGradient(
+                0f, 0f, winPageTextView.getWidth(), 0f,
+                new int[]{0xFF00D4FF, 0xFF4040F0, 0xFF9020D0, 0xFFD02090, 0xFFFFB000},
+                new float[]{0f, 0.25f, 0.5f, 0.75f, 1f},
+                Shader.TileMode.CLAMP
+            );
+            winPageTextView.getPaint().setShader(gradient);
+            winPageTextView.invalidate();
+        });
     }
 
 

@@ -5,7 +5,7 @@
     android:id="@+id/referral"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fdd400"
+    android:background="@color/xura_black"
     tools:context=".view.Referral"
     tools:ignore="MissingDefaultResource">
 
@@ -13,97 +13,108 @@
         android:id="@+id/LayoutSetAnAppPassword"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="@color/xura_black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-
-        <ImageView
+        <!-- XURA Logo -->
+        <include
+            layout="@layout/logo_xura"
             android:id="@+id/imageViewLogo"
             android:layout_width="0dp"
-            android:layout_height="155dp"
-            android:layout_marginStart="100dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="100dp"
-            android:src="@drawable/logo_on_page_jpg"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="90dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="90dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            />
 
+        <!-- Referral info text -->
         <TextView
             android:id="@+id/referral_text_view"
             android:layout_width="0dp"
-            android:layout_height="203dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="15dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
             android:text="@string/referral_text"
             android:textAlignment="center"
-            android:textColor="#614F02"
-            android:textSize="22sp"
+            android:textColor="@color/xura_text_secondary"
+            android:textSize="18sp"
             android:textStyle="bold"
+            android:fontFamily="@font/montserrat"
+            android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageViewLogo" />
 
-
+        <!-- Referral code input -->
         <EditText
             android:id="@+id/referral_code_field"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="70dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="70dp"
+            android:layout_height="52dp"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="48dp"
+            android:background="@drawable/bg_input_xura"
             android:ems="10"
             android:hint="@string/enter_referral_code"
             android:inputType="number"
-            android:textAlignment="textStart"
-            android:textColor="@color/black"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:textAlignment="center"
+            android:textColor="@color/xura_text_primary"
+            android:textColorHint="@color/xura_text_muted"
+            android:textSize="18sp"
+            android:fontFamily="@font/montserrat"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/referral_text_view" />
 
-
-        <TextView
-            android:id="@+id/referral_set_linc"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="70dp"
-            android:layout_marginEnd="70dp"
-            android:layout_marginBottom="20dp"
-            android:autoLink="all"
-            android:fontFamily="@font/montserrat"
-            android:text="@string/set"
-            android:textAlignment="center"
-            android:textColor="#614F02"
-            android:textSize="25sp"
-            android:textStyle="bold"
-            android:typeface="normal"
-            app:layout_constraintBottom_toTopOf="@+id/referral_skip_linc"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent" />
-
+        <!-- SKIP link -->
         <TextView
             android:id="@+id/referral_skip_linc"
             android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="100dp"
-            android:layout_marginEnd="100dp"
-            android:layout_marginBottom="40dp"
-            android:autoLink="all"
+            android:layout_height="32dp"
+            android:layout_marginStart="80dp"
+            android:layout_marginEnd="80dp"
+            android:layout_marginBottom="36dp"
             android:fontFamily="@font/montserrat"
             android:text="@string/skip"
             android:textAlignment="center"
-            android:textColor="#614F02"
-            android:textSize="14sp"
-            android:typeface="normal"
+            android:textColor="@color/xura_text_muted"
+            android:textSize="13sp"
+            android:gravity="center"
+            android:letterSpacing="0.06"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- SET button -->
+        <TextView
+            android:id="@+id/referral_set_linc"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/bg_button_primary"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/set"
+            android:textAlignment="center"
+            android:textColor="@color/xura_text_primary"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:letterSpacing="0.08"
+            app:layout_constraintBottom_toTopOf="@+id/referral_skip_linc"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

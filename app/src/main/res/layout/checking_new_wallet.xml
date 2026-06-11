@@ -2,81 +2,88 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-
     android:id="@+id/checking_new_wallet"
     android:layout_width="match_parent"
-
     android:layout_height="match_parent"
-    android:background="#fdd400"
+    android:background="@color/xura_black"
     tools:context=".view.CheckingNewWallet"
     tools:ignore="MissingDefaultResource">
 
+    <!-- XURA Logo -->
+    <include
+            layout="@layout/logo_xura"
+            android:id="@+id/imageViewLogo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="90dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginEnd="90dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
 
-    <ImageView
-        android:id="@+id/imageViewLogo"
-        android:layout_width="0dp"
-        android:layout_height="155dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="100dp"
-        android:src="@drawable/logo_on_page_jpg"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
+    <!-- Instruction text -->
     <TextView
         android:id="@+id/checking_new_wallet_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="30dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="24dp"
         android:text="@string/lead_the_seed"
         android:textAlignment="center"
-        android:textColor="#614F02"
-        android:textSize="24sp"
+        android:textColor="@color/xura_text_primary"
+        android:textSize="22sp"
         android:textStyle="bold"
+        android:fontFamily="@font/montserrat"
+        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageViewLogo" />
 
+    <!-- Seed input -->
     <EditText
         android:id="@+id/password_field"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="30dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/bg_input_xura"
         android:ems="10"
         android:hint="ssG3xqRQSnxfYfFsThoHfy7fNEZZctDc3Dx"
         android:inputType="text"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
         android:textAlignment="textStart"
-        android:textColor="@color/rad_1"
+        android:textColor="@color/xura_cyan"
+        android:textColorHint="@color/xura_text_muted"
+        android:textSize="13sp"
+        android:fontFamily="@font/montserrat"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/checking_new_wallet_text" />
 
+    <!-- NEXT button -->
     <TextView
         android:id="@+id/next_link"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginEnd="100dp"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         android:layout_marginBottom="40dp"
-        android:autoLink="all"
+        android:background="@drawable/bg_button_primary"
         android:fontFamily="@font/montserrat"
         android:text="@string/next"
         android:textAlignment="center"
-        android:textColor="#614F02"
-        android:textSize="25sp"
+        android:textColor="@color/xura_text_primary"
+        android:textSize="16sp"
         android:textStyle="bold"
-        android:typeface="normal"
+        android:gravity="center"
+        android:letterSpacing="0.08"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

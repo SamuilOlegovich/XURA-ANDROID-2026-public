@@ -6,37 +6,53 @@
     android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/yellow_6"
+    android:background="@color/xura_black"
     tools:context=".MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FFD300"
-        app:layout_constraintBottom_toTopOf="@+id/balance_linc"
-        app:layout_constraintTop_toTopOf="@+id/balance_linc">
+        android:background="@color/xura_black">
 
-        <!--        <ImageView-->
-        <!--            android:id="@+id/imageViewLogo"-->
-        <!--            android:layout_width="0dp"-->
-        <!--            android:layout_height="155dp"-->
-        <!--            android:layout_marginStart="100dp"-->
-        <!--            android:layout_marginTop="40dp"-->
-        <!--            android:layout_marginEnd="100dp"-->
-        <!--            android:src="@drawable/logo_on_page_jpg"-->
-        <!--            app:layout_constraintEnd_toEndOf="parent"-->
-        <!--            app:layout_constraintStart_toStartOf="parent"-->
-        <!--            app:layout_constraintTop_toTopOf="parent" />-->
+        <!-- Settings — top center -->
+        <TextView
+            android:id="@+id/settings_linc"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/settings_main"
+            android:textAlignment="center"
+            android:textColor="@color/xura_text_tertiary"
+            android:textSize="11sp"
+            android:gravity="center"
+            android:letterSpacing="0.08"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
+        <!-- XURA Logo — click opens game selection -->
+        <include
+            layout="@layout/logo_xura"
+            android:id="@+id/logo_button_link"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="80dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="80dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/settings_linc" />
 
+        <!-- Lotto ticker -->
         <TextView
             android:id="@+id/lotto_text_go_link"
             android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="1dp"
-            android:layout_marginEnd="15dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="24dp"
             android:ellipsize="marquee"
             android:focusable="true"
             android:focusableInTouchMode="true"
@@ -45,182 +61,130 @@
             android:singleLine="true"
             android:text="@string/want_to_win"
             android:textAlignment="center"
-            android:textColor="@color/black_light"
-            android:textSize="30sp"
-            android:textStyle="bold"
+            android:textColor="@color/xura_text_muted"
+            android:textSize="10sp"
+            android:letterSpacing="0.12"
+            android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/logo_button_link" />
 
+        <!-- "YOUR BALANCE" label -->
         <TextView
             android:id="@+id/your_balance_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="70dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="70dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="24dp"
             android:text="@string/your_balance"
             android:textAlignment="center"
-            android:textColor="@color/black_light"
-            android:textSize="14sp"
-            android:textStyle="bold"
+            android:textColor="@color/xura_text_tertiary"
+            android:textSize="11sp"
+            android:textAllCaps="true"
+            android:letterSpacing="0.16"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/lotto_text_go_link" />
 
+        <!-- Balance amount — the hero number -->
         <TextView
             android:id="@+id/balance_linc"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="1dp"
-            android:layout_marginEnd="30dp"
-            android:text="97,456782  XRP"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="24dp"
+            android:text="97.456782 XRP"
             android:textAlignment="center"
-            android:textColor="@color/rad_1"
-            android:textSize="30sp"
+            android:textColor="@color/xura_text_primary"
+            android:textSize="40sp"
             android:textStyle="bold"
+            android:fontFamily="@font/montserrat"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/your_balance_text" />
 
+        <!-- Info link -->
+        <TextView
+            android:id="@+id/last_text_view"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/info"
+            android:textAlignment="center"
+            android:textColor="@color/xura_text_tertiary"
+            android:textSize="12sp"
+            android:letterSpacing="0.06"
+            android:gravity="center"
+            app:layout_constraintBottom_toTopOf="@+id/next_link"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <!-- SEND — primary gradient button -->
         <TextView
             android:id="@+id/next_link"
             android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="70dp"
-            android:layout_marginEnd="70dp"
-            android:layout_marginBottom="20dp"
-            android:autoLink="all"
+            android:layout_height="56dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/bg_button_primary"
             android:fontFamily="@font/montserrat"
             android:text="@string/send"
             android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="25sp"
+            android:textColor="@color/xura_text_primary"
+            android:textSize="16sp"
             android:textStyle="bold"
-            android:typeface="normal"
+            android:gravity="center"
+            android:letterSpacing="0.08"
             app:layout_constraintBottom_toTopOf="@+id/request_link"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent" />
 
-
+        <!-- REQUEST — secondary glass button -->
         <TextView
             android:id="@+id/request_link"
             android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="70dp"
-            android:layout_marginEnd="70dp"
-            android:layout_marginBottom="20dp"
-            android:autoLink="all"
+            android:layout_height="56dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/bg_button_secondary"
             android:fontFamily="@font/montserrat"
             android:text="@string/request"
             android:textAlignment="center"
-            android:textColor="@color/black_light"
-            android:textSize="22sp"
+            android:textColor="@color/xura_text_secondary"
+            android:textSize="16sp"
             android:textStyle="bold"
-            android:typeface="normal"
+            android:gravity="center"
+            android:letterSpacing="0.08"
             app:layout_constraintBottom_toTopOf="@+id/transaction_history_link"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent" />
 
+        <!-- Transaction History link -->
         <TextView
             android:id="@+id/transaction_history_link"
             android:layout_width="0dp"
             android:layout_height="40dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginBottom="40dp"
-            android:autoLink="all"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="24dp"
             android:fontFamily="@font/montserrat"
             android:text="@string/transaction_history"
             android:textAlignment="center"
-            android:textColor="@color/black_light"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:typeface="normal"
+            android:textColor="@color/xura_text_tertiary"
+            android:textSize="13sp"
+            android:letterSpacing="0.06"
+            android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent" />
-
-
-        <TextView
-            android:id="@+id/settings_linc"
-            android:layout_width="0dp"
-            android:layout_height="25dp"
-            android:layout_marginStart="100dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="100dp"
-            android:autoLink="all"
-            android:fontFamily="@font/montserrat"
-            android:text="@string/settings_main"
-            android:textAlignment="center"
-            android:textColor="@color/black_light"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            android:typeface="normal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/last_text_view"
-            android:layout_width="0dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="70dp"
-            android:layout_marginEnd="70dp"
-            android:layout_marginBottom="20dp"
-            android:autoLink="all"
-            android:fontFamily="@font/montserrat"
-            android:text="@string/info"
-            android:textAlignment="center"
-            android:textColor="@color/black_light"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:typeface="normal"
-            app:layout_constraintBottom_toTopOf="@+id/next_link"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <ImageButton
-            android:id="@+id/logo_button_link"
-            android:layout_width="0dp"
-            android:layout_height="172dp"
-            android:layout_marginStart="70dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="70dp"
-            android:background="#FFD200"
-            android:backgroundTint="#FFD200"
-            android:scaleType="centerInside"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.534"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/settings_linc"
-            app:srcCompat="@drawable/logo_on_page_jpg" />
-
-
-        <!--        <ImageButton-->
-        <!--            android:id="@+id/imageButton5"-->
-        <!--            style="@style/Widget.AppCompat.ImageButton"-->
-        <!--            android:layout_width="66dp"-->
-        <!--            android:layout_height="60dp"-->
-        <!--            android:layout_marginStart="150dp"-->
-        <!--            android:layout_marginEnd="150dp"-->
-        <!--            android:layout_marginBottom="5dp"-->
-        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--            app:layout_constraintEnd_toEndOf="parent"-->
-        <!--            app:layout_constraintHorizontal_bias="0.498"-->
-        <!--            app:layout_constraintStart_toStartOf="parent"-->
-        <!--            app:srcCompat="@mipmap/ic_launcher" />-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

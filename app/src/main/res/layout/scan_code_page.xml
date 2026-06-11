@@ -5,7 +5,7 @@
     android:id="@+id/scan_code_page"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fdd400"
+    android:background="@color/xura_black"
     tools:context=".view.ScanQrCode"
     tools:ignore="MissingDefaultResource">
 
@@ -14,8 +14,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:importantForAccessibility="no"
-        app:layout_constraintStart_toStartOf="parent"
-        />
-
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- XURA BRAND DESIGN SYSTEM                                        -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+
+    <!-- Backgrounds -->
+    <color name="xura_black">#000000</color>
+    <color name="xura_surface">#08081A</color>
+    <color name="xura_card">#0D0D20</color>
+
+    <!-- XURA Signature Gradient: Cyan → Blue → Indigo → Purple → Magenta → Pink → Orange → Gold -->
+    <color name="xura_cyan">#00D4FF</color>
+    <color name="xura_blue">#4080FF</color>
+    <color name="xura_indigo">#6040FF</color>
+    <color name="xura_purple">#9020D0</color>
+    <color name="xura_magenta">#D020A0</color>
+    <color name="xura_pink">#FF2080</color>
+    <color name="xura_orange">#FF5020</color>
+    <color name="xura_gold">#FFB000</color>
+
+    <!-- Text Hierarchy (AARRGGBB) -->
+    <color name="xura_text_primary">#FFFFFFFF</color>
+    <color name="xura_text_secondary">#CCFFFFFF</color>
+    <color name="xura_text_tertiary">#80FFFFFF</color>
+    <color name="xura_text_muted">#4DFFFFFF</color>
+    <color name="xura_text_link">#FF00D4FF</color>
+
+    <!-- Glass / Overlay (AARRGGBB) -->
+    <color name="xura_glass_fill">#1AFFFFFF</color>
+    <color name="xura_glass_border">#33FFFFFF</color>
+    <color name="xura_glass_border_strong">#4DFFFFFF</color>
+
+    <!-- State Colors -->
+    <color name="xura_success">#FF00FF88</color>
+    <color name="xura_error">#FFFF3060</color>
+    <color name="xura_warning">#FFFFB000</color>
+
+    <!-- Game Colors -->
+    <color name="xura_game_red_start">#FFFF2080</color>
+    <color name="xura_game_red_end">#FFFF0030</color>
+    <color name="xura_game_dark_start">#FF1A1A3E</color>
+    <color name="xura_game_dark_end">#FF0D0D20</color>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- LEGACY COLORS (kept for backward compatibility)                 -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
@@ -7,9 +52,6 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-
-
-
 
     <color name="yellow_1">#FFBF00</color>
     <color name="yellow_2">#BF9B30</color>

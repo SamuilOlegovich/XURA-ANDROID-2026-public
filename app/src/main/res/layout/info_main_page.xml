@@ -6,18 +6,15 @@
 
     android:id="@+id/info_main"
     android:layout_width="match_parent"
-
     android:layout_height="match_parent"
-    android:background="@color/yellow_6"
+    android:background="@color/xura_black"
     tools:context=".view.InfoMain"
     tools:ignore="MissingDefaultResource">
-
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
 
         <ScrollView
             android:layout_width="match_parent"
@@ -32,17 +29,18 @@
                 android:background="@drawable/info_list"
                 android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/logo4"
-                    android:layout_width="match_parent"
-                    android:layout_height="155dp"
-                    android:layout_marginStart="100dp"
-                    android:layout_marginTop="40dp"
-                    android:layout_marginEnd="100dp"
-                    android:src="@drawable/logo_on_page_jpg"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                <include
+            layout="@layout/logo_xura"
+            android:id="@+id/logo4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="100dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
 
                 <CheckedTextView
                     android:id="@+id/borrower_requirements_checked_text_view99"
@@ -52,7 +50,7 @@
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
                     android:textAlignment="textStart"
-                    android:textColor="@color/green_3"
+                    android:textColor="@color/xura_text_muted"
                     android:textSize="12sp" />
 
                 <TextView
@@ -65,8 +63,8 @@
                     android:fontFamily="@font/montserrat"
                     android:text="@string/info_main_text"
                     android:textAlignment="center"
-                    android:textColor="@color/black"
-                    android:textSize="30sp"
+                    android:textColor="@color/xura_text_primary"
+                    android:textSize="28sp"
                     android:textStyle="bold" />
 
                 <CheckedTextView
@@ -77,7 +75,7 @@
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
                     android:textAlignment="textStart"
-                    android:textColor="@color/green_3"
+                    android:textColor="@color/xura_text_muted"
                     android:textSize="12sp" />
 
                 <CheckedTextView
@@ -88,7 +86,7 @@
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
                     android:textAlignment="textStart"
-                    android:textColor="@color/green_3"
+                    android:textColor="@color/xura_text_muted"
                     android:textSize="12sp" />
 
                 <TextView
@@ -101,7 +99,7 @@
                     android:fontFamily="@font/montserrat"
                     android:text="@string/it_is_important_to_know"
                     android:textAlignment="center"
-                    android:textColor="@color/black"
+                    android:textColor="@color/xura_text_primary"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -113,9 +111,8 @@
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
                     android:textAlignment="textStart"
-                    android:textColor="@color/green_3"
+                    android:textColor="@color/xura_text_muted"
                     android:textSize="14sp" />
-
 
                 <CheckedTextView
                     android:id="@+id/it_is_important_to_know_view_1"
@@ -126,9 +123,8 @@
                     android:fontFamily="@font/montserrat"
                     android:text="@string/it_is_important_to_know_1"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="14sp" />
-
 
                 <CheckedTextView
                     android:id="@+id/borrower_requirements_checked_text_view"
@@ -138,7 +134,7 @@
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
                     android:textAlignment="textStart"
-                    android:textColor="@color/green_3"
+                    android:textColor="@color/xura_text_muted"
                     android:textSize="14sp" />
 
                 <CheckedTextView
@@ -150,7 +146,7 @@
                     android:fontFamily="@font/montserrat"
                     android:text="@string/it_is_important_to_know_2"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="14sp" />
 
                 <CheckedTextView
@@ -161,7 +157,7 @@
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
                     android:textAlignment="textStart"
-                    android:textColor="@color/green_3"
+                    android:textColor="@color/xura_text_muted"
                     android:textSize="14sp" />
 
                 <CheckedTextView
@@ -173,7 +169,7 @@
                     android:fontFamily="@font/montserrat"
                     android:text="@string/it_is_important_to_know_3"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="14sp" />
 
                 <CheckedTextView
@@ -184,7 +180,7 @@
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
                     android:textAlignment="textStart"
-                    android:textColor="@color/green_3"
+                    android:textColor="@color/xura_text_muted"
                     android:textSize="14sp" />
 
                 <CheckedTextView
@@ -196,7 +192,7 @@
                     android:fontFamily="@font/montserrat"
                     android:text="@string/it_is_important_to_know_4"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="14sp" />
 
                 <CheckedTextView
@@ -207,7 +203,7 @@
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
                     android:textAlignment="textStart"
-                    android:textColor="@color/green_3"
+                    android:textColor="@color/xura_text_muted"
                     android:textSize="14sp" />
 
                 <CheckedTextView
@@ -218,7 +214,7 @@
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
                     android:textAlignment="textStart"
-                    android:textColor="@color/green_3"
+                    android:textColor="@color/xura_text_muted"
                     android:textSize="14sp" />
 
                 <TextView
@@ -230,7 +226,7 @@
                     android:fontFamily="@font/montserrat"
                     android:text="@string/about_the_application"
                     android:textAlignment="center"
-                    android:textColor="@color/black"
+                    android:textColor="@color/xura_text_primary"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -242,7 +238,7 @@
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
                     android:textAlignment="textStart"
-                    android:textColor="@color/green_3"
+                    android:textColor="@color/xura_text_muted"
                     android:textSize="14sp" />
 
                 <CheckedTextView
@@ -254,7 +250,7 @@
                     android:fontFamily="@font/montserrat"
                     android:text="@string/about_the_application_1"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="14sp" />
 
                 <CheckedTextView
@@ -265,7 +261,7 @@
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="14sp" />
 
                 <CheckedTextView
@@ -277,7 +273,7 @@
                     android:fontFamily="@font/montserrat"
                     android:text="@string/about_the_application_2"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="14sp" />
 
                 <CheckedTextView
@@ -288,7 +284,7 @@
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="14sp" />
 
                 <CheckedTextView
@@ -300,7 +296,7 @@
                     android:fontFamily="@font/montserrat"
                     android:text="@string/about_the_application_3"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="14sp" />
 
                 <CheckedTextView
@@ -311,7 +307,7 @@
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="14sp" />
 
                 <CheckedTextView
@@ -323,7 +319,7 @@
                     android:fontFamily="@font/montserrat"
                     android:text="@string/about_the_application_4"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="14sp" />
 
                 <CheckedTextView
@@ -334,7 +330,7 @@
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="14sp" />
 
                 <CheckedTextView
@@ -346,7 +342,7 @@
                     android:fontFamily="@font/montserrat"
                     android:text="@string/about_the_application_5"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="14sp" />
 
                 <CheckedTextView
@@ -357,7 +353,7 @@
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="14sp" />
 
                 <CheckedTextView
@@ -369,7 +365,7 @@
                     android:fontFamily="@font/montserrat"
                     android:text="@string/about_the_application_6"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="14sp" />
 
                 <CheckedTextView
@@ -380,7 +376,7 @@
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="14sp" />
 
                 <CheckedTextView
@@ -392,7 +388,7 @@
                     android:fontFamily="@font/montserrat"
                     android:text="@string/about_the_application_7"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="14sp" />
 
                 <CheckedTextView
@@ -403,7 +399,7 @@
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="14sp" />
 
                 <CheckedTextView
@@ -415,7 +411,7 @@
                     android:fontFamily="@font/montserrat"
                     android:text="@string/about_the_application_8"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="14sp" />
 
                 <CheckedTextView
@@ -426,9 +422,8 @@
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="14sp" />
-
 
                 <CheckedTextView
                     android:id="@+id/borrower_requirements_checked_text_view19"
@@ -438,7 +433,7 @@
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="14sp" />
 
                 <TextView
@@ -450,7 +445,7 @@
                     android:fontFamily="@font/montserrat"
                     android:text="@string/advantages"
                     android:textAlignment="center"
-                    android:textColor="@color/black"
+                    android:textColor="@color/xura_text_primary"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -462,7 +457,7 @@
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="14sp" />
 
                 <CheckedTextView
@@ -474,7 +469,7 @@
                     android:fontFamily="@font/montserrat"
                     android:text="@string/advantages_1"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="14sp" />
 
                 <CheckedTextView
@@ -485,7 +480,7 @@
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="14sp" />
 
                 <CheckedTextView
@@ -497,7 +492,7 @@
                     android:fontFamily="@font/montserrat"
                     android:text="@string/advantages_2"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="14sp" />
 
                 <CheckedTextView
@@ -508,7 +503,7 @@
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="14sp" />
 
                 <CheckedTextView
@@ -520,7 +515,7 @@
                     android:fontFamily="@font/montserrat"
                     android:text="@string/advantages_3"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="14sp" />
 
                 <CheckedTextView
@@ -531,7 +526,7 @@
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="14sp" />
 
                 <CheckedTextView
@@ -543,7 +538,7 @@
                     android:fontFamily="@font/montserrat"
                     android:text="@string/advantages_4"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="14sp" />
 
                 <CheckedTextView
@@ -554,7 +549,7 @@
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="14sp" />
 
                 <CheckedTextView
@@ -566,7 +561,7 @@
                     android:fontFamily="@font/montserrat"
                     android:text="@string/advantages_5"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="14sp" />
 
                 <CheckedTextView
@@ -577,7 +572,7 @@
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="14sp" />
 
                 <CheckedTextView
@@ -589,7 +584,7 @@
                     android:fontFamily="@font/montserrat"
                     android:text="@string/advantages_6"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="14sp" />
 
                 <CheckedTextView
@@ -600,7 +595,7 @@
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="14sp" />
 
                 <CheckedTextView
@@ -612,7 +607,7 @@
                     android:fontFamily="@font/montserrat"
                     android:text="@string/advantages_7"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="14sp" />
 
                 <CheckedTextView
@@ -623,7 +618,7 @@
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="14sp" />
 
                 <CheckedTextView
@@ -634,7 +629,7 @@
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="14sp" />
 
                 <TextView
@@ -646,7 +641,7 @@
                     android:fontFamily="@font/montserrat"
                     android:text="@string/target"
                     android:textAlignment="center"
-                    android:textColor="@color/black"
+                    android:textColor="@color/xura_text_primary"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -658,9 +653,8 @@
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="14sp" />
-
 
                 <CheckedTextView
                     android:id="@+id/target_view_1"
@@ -671,7 +665,7 @@
                     android:fontFamily="@font/montserrat"
                     android:text="@string/target_1"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="14sp" />
 
                 <CheckedTextView
@@ -682,7 +676,7 @@
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="14sp" />
 
                 <CheckedTextView
@@ -694,7 +688,7 @@
                     android:fontFamily="@font/montserrat"
                     android:text="@string/target_2"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="14sp" />
 
                 <CheckedTextView
@@ -705,9 +699,8 @@
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="14sp" />
-
 
                 <CheckedTextView
                     android:id="@+id/target_view_3"
@@ -718,7 +711,7 @@
                     android:fontFamily="@font/montserrat"
                     android:text="@string/target_3"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="14sp" />
 
                 <CheckedTextView
@@ -729,7 +722,7 @@
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="14sp" />
 
                 <CheckedTextView
@@ -740,7 +733,7 @@
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="14sp" />
 
                 <TextView
@@ -752,7 +745,7 @@
                     android:fontFamily="@font/montserrat"
                     android:text="@string/advice"
                     android:textAlignment="center"
-                    android:textColor="@color/black"
+                    android:textColor="@color/xura_text_primary"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -764,9 +757,8 @@
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="14sp" />
-
 
                 <CheckedTextView
                     android:id="@+id/advice_view_1"
@@ -777,7 +769,7 @@
                     android:fontFamily="@font/montserrat"
                     android:text="@string/advice_1"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="14sp" />
 
                 <CheckedTextView
@@ -788,9 +780,8 @@
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="14sp" />
-
 
                 <CheckedTextView
                     android:id="@+id/loan_calculation_example_text_checked_text_view23rhehters"
@@ -800,7 +791,7 @@
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="14sp" />
 
                 <TextView
@@ -812,7 +803,7 @@
                     android:fontFamily="@font/montserrat"
                     android:text="@string/good_luck_and_thank_you_for_choosing_our_app"
                     android:textAlignment="center"
-                    android:textColor="@color/black"
+                    android:textColor="@color/xura_gold"
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
@@ -824,7 +815,7 @@
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="14sp" />
 
                 <CheckedTextView
@@ -835,7 +826,7 @@
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
                     android:textAlignment="textStart"
-                    android:textColor="@color/green_3"
+                    android:textColor="@color/xura_text_muted"
                     android:textSize="14sp" />
 
                 <CheckedTextView
@@ -846,7 +837,7 @@
                     android:layout_marginEnd="15dp"
                     android:fontFamily="@font/montserrat"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black_light"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="14sp" />
 
                 <TextView
@@ -855,6 +846,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:layout_marginEnd="15dp"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="18sp" />
 
                 <TextView
@@ -863,6 +855,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:layout_marginEnd="15dp"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="18sp" />
 
                 <TextView
@@ -871,10 +864,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:layout_marginEnd="15dp"
+                    android:textColor="@color/xura_text_secondary"
                     android:textSize="18sp" />
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

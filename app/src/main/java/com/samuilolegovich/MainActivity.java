@@ -14,7 +14,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.samuilolegovich.asyncAndRun.asyncTask.GetBalanceAsync;
@@ -48,7 +47,9 @@ import static com.samuilolegovich.view.Win.WIN_CLASS;
 
 
 // тут мы запросим придумать пароль к приложению либо оставим без пароля
-public class MainActivity extends AppCompatActivity {
+public class
+
+MainActivity extends AppCompatActivity {
     public static final String MAIN_ACTIVITY_CLASS = ".MainActivity";
     public static final long ONE_XRP_IN_DROPS = 1_000_000L;
 
@@ -77,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView send;
     private TextView info;
 
-    private ImageButton logoButton;
+    private View logoButton;
 
 
 
@@ -172,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
         transactionHistory = (TextView) findViewById(R.id.transaction_history_link);
         yourBalanceText = (TextView) findViewById(R.id.your_balance_text);
         lottoTextGo = (TextView) findViewById(R.id.lotto_text_go_link);
-        logoButton = (ImageButton) findViewById(R.id.logo_button_link);
+        logoButton = findViewById(R.id.logo_button_link);
         settings = (TextView) findViewById(R.id.settings_linc);
         request = (TextView) findViewById(R.id.request_link);
         balance = (TextView) findViewById(R.id.balance_linc);

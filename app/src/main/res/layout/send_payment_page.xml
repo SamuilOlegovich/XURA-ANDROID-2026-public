@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/send_payment_page"
-    android:background="#fdd400"
+    android:background="@color/xura_black"
     tools:context=".view.SendPayment"
     tools:ignore="MissingDefaultResource">
 
@@ -15,153 +15,180 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
-        <TextView
-            android:id="@+id/scan_linc"
+        <!-- XURA Logo -->
+        <include
+            layout="@layout/logo_xura"
+            android:id="@+id/imageViewLogo"
             android:layout_width="0dp"
-            android:layout_height="25dp"
-            android:layout_marginStart="70dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="70dp"
-            android:autoLink="all"
-            android:fontFamily="@font/montserrat"
-            android:text="@string/scan_qr_code"
-            android:textAlignment="center"
-            android:textColor="@color/black_light"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:typeface="normal"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="100dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/balance" />
+            app:layout_constraintTop_toTopOf="parent"
+            />
 
+        <!-- SEND PAYMENT title -->
+        <TextView
+            android:id="@+id/send_payment_page_text_view"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:text="@string/send_payment"
+            android:textAlignment="center"
+            android:textColor="@color/xura_text_primary"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:fontFamily="@font/montserrat"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewLogo" />
+
+        <!-- YOUR BALANCE label -->
         <TextView
             android:id="@+id/send_payment_page_text_view_tow"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="70dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="70dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
             android:text="@string/your_balance"
             android:textAlignment="center"
-            android:textColor="@color/black_light"
-            android:textSize="14sp"
-            android:textStyle="bold"
+            android:textColor="@color/xura_text_tertiary"
+            android:textSize="11sp"
+            android:textAllCaps="true"
+            android:letterSpacing="0.16"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/send_payment_page_text_view" />
 
-        <TextView
-            android:id="@+id/send_payment_page_text_view"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="15dp"
-            android:text="@string/send_payment"
-            android:textAlignment="center"
-            android:textColor="#614F02"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageViewLogo" />
-
-        <ImageView
-            android:id="@+id/imageViewLogo"
-            android:layout_width="0dp"
-            android:layout_height="155dp"
-            android:layout_marginStart="100dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="100dp"
-            android:src="@drawable/logo_on_page_jpg"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
+        <!-- Balance amount -->
         <TextView
             android:id="@+id/balance"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="24dp"
             android:text="97.456782  XRP"
             android:textAlignment="center"
-            android:textColor="@color/rad_1"
-            android:textSize="30sp"
+            android:textColor="@color/xura_text_primary"
+            android:textSize="28sp"
             android:textStyle="bold"
+            android:fontFamily="@font/montserrat"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/send_payment_page_text_view_tow" />
 
+        <!-- Scan QR Code link -->
         <TextView
-            android:id="@+id/send_linc"
+            android:id="@+id/scan_linc"
             android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="70dp"
-            android:layout_marginEnd="70dp"
-            android:layout_marginBottom="40dp"
-            android:autoLink="all"
+            android:layout_height="32dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
             android:fontFamily="@font/montserrat"
-            android:text="@string/send"
+            android:text="@string/scan_qr_code"
             android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="25sp"
-            android:textStyle="bold"
-            android:typeface="normal"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:textColor="@color/xura_text_link"
+            android:textSize="13sp"
+            android:letterSpacing="0.06"
+            android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <EditText
-            android:id="@+id/amount_field"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="70dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="70dp"
-            android:ems="10"
-            android:hint="@string/amount"
-            android:inputType="numberDecimal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/from_field" />
+            app:layout_constraintTop_toBottomOf="@+id/balance" />
 
+        <!-- To address input -->
         <EditText
             android:id="@+id/from_field"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="40dp"
+            android:layout_height="52dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/bg_input_xura"
             android:ems="10"
             android:hint="@string/to"
             android:inputType="textPersonName"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:textColor="@color/xura_text_primary"
+            android:textColorHint="@color/xura_text_muted"
+            android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/scan_linc" />
 
+        <!-- Amount input -->
+        <EditText
+            android:id="@+id/amount_field"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/bg_input_xura"
+            android:ems="10"
+            android:hint="@string/amount"
+            android:inputType="numberDecimal"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:textAlignment="center"
+            android:textColor="@color/xura_text_primary"
+            android:textColorHint="@color/xura_text_muted"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/from_field" />
+
+        <!-- Destination tag input -->
         <EditText
             android:id="@+id/tag_field"
             android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:layout_marginStart="100dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="100dp"
+            android:layout_height="52dp"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="48dp"
+            android:background="@drawable/bg_input_xura"
             android:ems="10"
             android:hint="@string/destination_tag"
             android:inputType="number"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:textAlignment="center"
+            android:textColor="@color/xura_text_primary"
+            android:textColorHint="@color/xura_text_muted"
+            android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/amount_field" />
+
+        <!-- SEND button -->
+        <TextView
+            android:id="@+id/send_linc"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="32dp"
+            android:background="@drawable/bg_button_primary"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/send"
+            android:textAlignment="center"
+            android:textColor="@color/xura_text_primary"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:letterSpacing="0.08"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -4,52 +4,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/lost"
     android:layout_width="match_parent"
-
     android:layout_height="match_parent"
-    android:background="@color/yellow_6"
+    android:background="@color/xura_black"
     tools:context=".view.Lost"
     tools:ignore="MissingDefaultResource">
 
-    <ImageView
-        android:id="@+id/logo3"
-        android:layout_width="0dp"
-        android:layout_height="155dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="100dp"
-        android:src="@drawable/logo_on_page_jpg"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <!-- XURA Logo -->
+    <include
+            layout="@layout/logo_xura"
+            android:id="@+id/logo3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="90dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginEnd="90dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
 
+    <!-- BET LOST headline -->
     <TextView
         android:id="@+id/last_text_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="10dp"
-        android:autoLink="all"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
         android:fontFamily="@font/montserrat"
         android:text="@string/bet_lost"
         android:textAlignment="center"
-        android:textColor="@color/black_light"
+        android:textColor="@color/xura_text_secondary"
         android:textSize="40sp"
         android:textStyle="bold"
-        android:typeface="normal"
+        android:letterSpacing="0.02"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logo3" />
 
+    <!-- Lost amount — scrolling marquee -->
     <TextView
         android:id="@+id/last_text_view_two"
         android:layout_width="0dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="15dp"
-        android:autoLink="all"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:ellipsize="marquee"
         android:focusable="true"
         android:focusableInTouchMode="true"
@@ -58,34 +58,30 @@
         android:scrollHorizontally="true"
         android:singleLine="true"
         android:textAlignment="center"
-        android:textColor="@color/black_light"
+        android:textColor="@color/xura_error"
         android:textSize="30sp"
         android:textStyle="bold"
-        android:typeface="normal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/last_text_view" />
 
+    <!-- Good luck -->
     <TextView
         android:id="@+id/last_text_view_tree"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="50dp"
-        android:autoLink="all"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="56dp"
         android:fontFamily="@font/montserrat"
         android:text="@string/good_luck"
         android:textAlignment="center"
-        android:textColor="@color/black_light"
-        android:textSize="40sp"
+        android:textColor="@color/xura_text_tertiary"
+        android:textSize="36sp"
         android:textStyle="bold"
-        android:typeface="normal"
+        android:letterSpacing="0.02"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

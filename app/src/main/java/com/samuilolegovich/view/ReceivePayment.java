@@ -108,23 +108,53 @@ public class ReceivePayment extends AppCompatActivity {
     private void setQrCode() {
         try {
             Map<EncodeHintType, Object> hints = new HashMap<>();
-            hints.put(EncodeHintType.MARGIN, 1);
-            BitMatrix matrix = new MultiFormatWriter().encode(classicAddress, BarcodeFormat.QR_CODE, 800, 800, hints);
+            hints.put(EncodeHintType.MARGIN, 2);
+            BitMatrix matrix = new MultiFormatWriter().encode(classicAddress, BarcodeFormat.QR_CODE, 600, 600, hints);
             int width = matrix.getWidth();
             int height = matrix.getHeight();
             int[] pixels = new int[width * height];
+
+            int[] gradColors = {0xFF00D4FF, 0xFF4040F0, 0xFF9020D0, 0xFFD02090, 0xFFFFB000};
+            float[] gradPos   = {0f, 0.25f, 0.5f, 0.75f, 1f};
+
             for (int y = 0; y < height; y++) {
-                int offset = y * width;
                 for (int x = 0; x < width; x++) {
-                    pixels[offset + x] = matrix.get(x, y) ? Color.BLACK : 500188;
+                    if (matrix.get(x, y)) {
+                        float t = (float)(x + y) / (float)(width + height);
+                        pixels[y * width + x] = interpolateGradient(gradColors, gradPos, t);
+                    } else {
+                        pixels[y * width + x] = 0xFFFFFFFF;
+                    }
                 }
             }
+
             Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
             bitmap.setPixels(pixels, 0, width, 0, 0, width, height);
             qrCode.setImageBitmap(bitmap);
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private int interpolateGradient(int[] colors, float[] positions, float t) {
+        if (t <= positions[0]) return colors[0];
+        if (t >= positions[positions.length - 1]) return colors[colors.length - 1];
+        for (int i = 0; i < positions.length - 1; i++) {
+            if (t >= positions[i] && t <= positions[i + 1]) {
+                float f = (t - positions[i]) / (positions[i + 1] - positions[i]);
+                return blendColors(colors[i], colors[i + 1], f);
+            }
+        }
+        return colors[colors.length - 1];
+    }
+
+    private int blendColors(int c1, int c2, float r) {
+        float inv = 1f - r;
+        int a = (int)(((c1 >> 24) & 0xFF) * inv + ((c2 >> 24) & 0xFF) * r);
+        int red = (int)(((c1 >> 16) & 0xFF) * inv + ((c2 >> 16) & 0xFF) * r);
+        int g = (int)(((c1 >> 8)  & 0xFF) * inv + ((c2 >> 8)  & 0xFF) * r);
+        int b = (int)(( c1        & 0xFF) * inv + ( c2        & 0xFF) * r);
+        return (a << 24) | (red << 16) | (g << 8) | b;
     }
 
 

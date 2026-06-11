@@ -1,16 +1,16 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Theme.FastLoan" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/black</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_200</item>
-        <item name="colorOnSecondary">@color/black</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
+    <style name="Theme.XGW" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/xura_black</item>
+        <item name="colorPrimaryVariant">@color/xura_surface</item>
+        <item name="colorOnPrimary">@color/xura_text_primary</item>
+        <item name="colorSecondary">@color/xura_cyan</item>
+        <item name="colorSecondaryVariant">@color/xura_indigo</item>
+        <item name="colorOnSecondary">@color/xura_black</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/xura_black</item>
+        <item name="android:navigationBarColor">@color/xura_black</item>
+        <item name="android:windowBackground">@color/xura_black</item>
+        <item name="android:textColor">@color/xura_text_primary</item>
+        <item name="android:colorBackground">@color/xura_black</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
     </style>
 </resources>

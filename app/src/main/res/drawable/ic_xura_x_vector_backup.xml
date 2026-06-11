@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+
+    <!--
+        X shape — 16-point polygon.
+        Arms width = 70px (35% of 200). Center notches at ±44px from edges.
+        Points (clockwise from top-left):
+        (0,0) → (70,0) → (100,44) → (130,0) → (200,0) →
+        (200,70) → (156,100) → (200,130) → (200,200) →
+        (130,200) → (100,156) → (70,200) → (0,200) →
+        (0,130) → (44,100) → (0,70) → close
+    -->
+    <path
+        android:pathData="M 0,0 L 70,0 L 100,44 L 130,0 L 200,0
+                          L 200,70 L 156,100 L 200,130 L 200,200
+                          L 130,200 L 100,156 L 70,200 L 0,200
+                          L 0,130 L 44,100 L 0,70 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:type="linear"
+                android:startX="0"
+                android:startY="0"
+                android:endX="200"
+                android:endY="200">
+                <item android:offset="0.00" android:color="#FF00D4FF" />
+                <item android:offset="0.30" android:color="#FF4040F0" />
+                <item android:offset="0.55" android:color="#FF9020D0" />
+                <item android:offset="0.75" android:color="#FFD02090" />
+                <item android:offset="1.00" android:color="#FFFFB000" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+</vector>
