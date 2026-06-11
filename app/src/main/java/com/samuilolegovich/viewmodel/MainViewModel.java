@@ -55,10 +55,15 @@ public class MainViewModel extends ViewModel {
     // Восстановить кошелёк → загрузить баланс → подключить сокет
     public void restoreAndInit(String seed) {
         executor.execute(() -> {
-            repository.restoreWallet(seed);
-            BigDecimal balance = repository.getBalance();
-            repository.updateBalance(balance);
-            connectSocket();
+            try {
+                Map<String, String> result = repository.restoreWallet(seed);
+                if (result == null || !result.containsKey("Classic Address")) return;
+                BigDecimal balance = repository.getBalance();
+                repository.updateBalance(balance);
+                connectSocket();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         });
     }
 

@@ -47,6 +47,7 @@ public class Cipher {
 
     // расшифровать соль
     private static String decryptStringForSalt(String string, String vedroId) {
+        if (string == null || string.isEmpty()) return "";
         StringBuilder stringBuilder = new StringBuilder(getFromBase64(string));
         stringBuilder.reverse();
         stringBuilder.replace(stringBuilder.length() - vedroId.length(),

@@ -29,3 +29,9 @@ local.properties
 # OS
 .DS_Store
 Thumbs.db
+
+# Docs and screenshots (not part of source)
+*.pdf
+*.html
+Снимок*.png
+Снимок\ *.png
