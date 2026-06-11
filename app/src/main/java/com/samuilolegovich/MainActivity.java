@@ -1,35 +1,31 @@
 package com.samuilolegovich;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.os.AsyncTask;
+import android.os.Bundle;
 import android.provider.Settings;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
-import com.samuilolegovich.asyncAndRun.asyncTask.GetBalanceAsync;
-import com.samuilolegovich.asyncAndRun.asyncTask.RestoreWalletAsync;
-import com.samuilolegovich.asyncAndRun.runnable.SubscriberRun;
 import com.samuilolegovich.enums.StringEnum;
-import com.samuilolegovich.utils.Lotto;
 import com.samuilolegovich.utils.Cipher;
+import com.samuilolegovich.utils.Lotto;
 import com.samuilolegovich.view.Lost;
 import com.samuilolegovich.view.Win;
 import com.samuilolegovich.view.YourReferral;
+import com.samuilolegovich.viewmodel.MainViewModel;
+import com.samuilolegovich.viewmodel.NavigationEvent;
 
-import java.math.BigDecimal;
 import java.util.Locale;
-import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
 import static com.samuilolegovich.view.EnterApplicationPassword.ENTER_APPLICATION_PASSWORD_CLASS;
 import static com.samuilolegovich.view.RestoreOrCreateNewWallet.RESTORE_OR_NEW_WALLET_CLASS;
@@ -46,10 +42,7 @@ import static com.samuilolegovich.view.Win.WIN_CLASS;
 
 
 
-// тут мы запросим придумать пароль к приложению либо оставим без пароля
-public class
-
-MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
     public static final String MAIN_ACTIVITY_CLASS = ".MainActivity";
     public static final long ONE_XRP_IN_DROPS = 1_000_000L;
 
@@ -64,9 +57,9 @@ MainActivity extends AppCompatActivity {
 
     private String GO_TO_THE_DARK_SIDE_FIND_THE_SECRET_BUTTON;
 
+    private MainViewModel viewModel;
     private SharedPreferences preferences;
     private Animation animTranslate;
-    private BigDecimal balanceXRP;
     private String lottoNow;
 
     private TextView transactionHistory;
@@ -85,69 +78,53 @@ MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        start();
-        setLocale();
-        setContentView(R.layout.activity_main);
-        lottoNow = Lotto.genLotto() + "";
         MAIN_ACTIVITY = this;
-        setButtons();
-        setLanguage();
-        setBalance();
-        listeners();
-        goText();
-    }
 
-
-
-    private void start() {
         preferences = getSharedPreferences(StringEnum.APP_PREFERENCES.getValue(), Context.MODE_PRIVATE);
         IS_REAL_GAME_MODE = preferences.getString(StringEnum.APP_GAME_MODE.getValue(), "false")
                 .equalsIgnoreCase("true");
         newLocale = new Locale(preferences.getString(StringEnum.APP_PREFERENCES_LOCALE.getValue(), "en"));
 
-        boolean isSetPassword = preferences.getString(StringEnum.APP_PREFERENCES_PASSWORD.getValue(), "")
-                .equalsIgnoreCase(StringEnum.APP_PREFERENCES_PASSWORD_NOT_INSTALLED.getValue());
-        boolean isPassword = preferences.contains(StringEnum.APP_PREFERENCES_PASSWORD.getValue());
-        boolean isSeed = preferences.contains(StringEnum.APP_PREFERENCES_SEED.getValue());
+        setLocale();
+        setContentView(R.layout.activity_main);
 
-        restoreWallet(isSeed);
+        viewModel = new ViewModelProvider(this).get(MainViewModel.class);
+        lottoNow = Lotto.genLotto() + "";
 
-        // если пароль вообще ни разу не устанавливался
-        if (!isPassword) {
-            goToAnotherPage(SET_AN_APP_PASSWORD_CLASS);
-        }
+        setButtons();
+        setLanguage();
+        listeners();
+        goText();
 
-        // если установка пароля пропущена и нет ни каого кошелька
-        else if (isPassword && isSetPassword && !isSeed) {
-            goToAnotherPage(RESTORE_OR_NEW_WALLET_CLASS);
-        }
+        viewModel.getBalance().observe(this, b ->
+                balance.setText(b.toString() + " XRP"));
 
-        // если пароль установлен и нет ни каого кошелька
-        else if (isPassword && !isSetPassword && !isSeed) {
-            goToAnotherPage(RESTORE_OR_NEW_WALLET_CLASS);
-        }
+        viewModel.getLottoText().observe(this, lotto -> {
+            lottoNow = lotto;
+            goText();
+        });
 
-        // если установка пароля пропущена и кошелек есть
-        else if (isPassword && isSetPassword && isSeed) {
-//            goToAnotherPage(WALLET_CLASS);
-            startSocket();
-        }
-
-        // если пароль установлен
-        else if (isPassword && !isSetPassword && isSeed) {
-            if (START_FLAG) {
-                startSocket();
-                goToAnotherPage(ENTER_APPLICATION_PASSWORD_CLASS);
+        viewModel.getNavigationEvent().observe(this, event -> {
+            if (event == null) return;
+            switch (event.type) {
+                case NavigationEvent.LOST:
+                    Lost.MASSAGE = event.message;
+                    goToAnotherPage(LOST_CLASS);
+                    break;
+                case NavigationEvent.WIN:
+                    Win.MASSAGE = event.message;
+                    goToAnotherPage(WIN_CLASS);
+                    break;
+                case NavigationEvent.YOUR_REFERRAL:
+                    YourReferral.MASSAGE = event.message;
+                    goToAnotherPage(YOUR_REFERRAL_CLASS);
+                    break;
             }
-        }
+        });
 
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
+        handleStartup();
     }
+
 
 
     public void setLocale() {
@@ -162,23 +139,49 @@ MainActivity extends AppCompatActivity {
     }
 
 
-    private void startSocket() {
-        Runnable runnable = new SubscriberRun();
-        Thread thread = new Thread(runnable);
-        thread.start();
+
+    @SuppressLint("HardwareIds")
+    private void handleStartup() {
+        boolean isSetPassword = preferences.getString(StringEnum.APP_PREFERENCES_PASSWORD.getValue(), "")
+                .equalsIgnoreCase(StringEnum.APP_PREFERENCES_PASSWORD_NOT_INSTALLED.getValue());
+        boolean isPassword = preferences.contains(StringEnum.APP_PREFERENCES_PASSWORD.getValue());
+        boolean isSeed = preferences.contains(StringEnum.APP_PREFERENCES_SEED.getValue());
+
+        if (!isPassword) {
+            goToAnotherPage(SET_AN_APP_PASSWORD_CLASS);
+            return;
+        }
+
+        if (!isSeed) {
+            goToAnotherPage(RESTORE_OR_NEW_WALLET_CLASS);
+            return;
+        }
+
+        // Кошелёк есть — восстанавливаем и запускаем сокет асинхронно
+        String seed = Cipher.decryptString(
+                preferences.getString(StringEnum.APP_PREFERENCES_SEED.getValue(), ""),
+                preferences.getString(StringEnum.APP_PREFERENCES_SALT.getValue(), ""),
+                Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
+
+        viewModel.restoreAndInit(seed);
+
+        if (!isSetPassword && START_FLAG) {
+            goToAnotherPage(ENTER_APPLICATION_PASSWORD_CLASS);
+        }
     }
 
 
+
     private void setButtons() {
-        transactionHistory = (TextView) findViewById(R.id.transaction_history_link);
-        yourBalanceText = (TextView) findViewById(R.id.your_balance_text);
-        lottoTextGo = (TextView) findViewById(R.id.lotto_text_go_link);
+        transactionHistory = findViewById(R.id.transaction_history_link);
+        yourBalanceText = findViewById(R.id.your_balance_text);
+        lottoTextGo = findViewById(R.id.lotto_text_go_link);
         logoButton = findViewById(R.id.logo_button_link);
-        settings = (TextView) findViewById(R.id.settings_linc);
-        request = (TextView) findViewById(R.id.request_link);
-        balance = (TextView) findViewById(R.id.balance_linc);
-        info = (TextView) findViewById(R.id.last_text_view);
-        send = (TextView) findViewById(R.id.next_link);
+        settings = findViewById(R.id.settings_linc);
+        request = findViewById(R.id.request_link);
+        balance = findViewById(R.id.balance_linc);
+        info = findViewById(R.id.last_text_view);
+        send = findViewById(R.id.next_link);
     }
 
 
@@ -195,179 +198,62 @@ MainActivity extends AppCompatActivity {
     }
 
 
-    @SuppressLint("SetTextI18n")
-    private void setBalance() {
-        balance.setText(balanceXRP.toString() + " XRP");
-    }
-
 
     private void listeners() {
         animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
 
-//        lottoTextGo.setOnClickListener(
-//                new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        v.startAnimation(animTranslate);
-//                        goToAnotherPage(SELECT_GAME_CLASS);
-//                    }
-//                }
-//        );
+        settings.setOnClickListener(v -> {
+            v.startAnimation(animTranslate);
+            goToAnotherPage(SETTINGS_CLASS);
+        });
 
-        settings.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        v.startAnimation(animTranslate);
-                        goToAnotherPage(SETTINGS_CLASS);
-                    }
-                }
-        );
+        request.setOnClickListener(v -> {
+            v.startAnimation(animTranslate);
+            goToAnotherPage(RECEIVE_PAYMENT_CLASS);
+        });
 
-        request.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        v.startAnimation(animTranslate);
-                        goToAnotherPage(RECEIVE_PAYMENT_CLASS);
-                    }
-                }
-        );
+        send.setOnClickListener(v -> {
+            v.startAnimation(animTranslate);
+            goToAnotherPage(SEND_PAYMENT_CLASS);
+        });
 
-        send.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        v.startAnimation(animTranslate);
-                        goToAnotherPage(SEND_PAYMENT_CLASS);
-                    }
-                }
-        );
+        info.setOnClickListener(v -> {
+            v.startAnimation(animTranslate);
+            goToAnotherPage(INFO_MAIN_CLASS);
+        });
 
-        info.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        v.startAnimation(animTranslate);
-                        goToAnotherPage(INFO_MAIN_CLASS);
-                    }
-                }
-        );
+        logoButton.setOnClickListener(v -> {
+            v.startAnimation(animTranslate);
+            goToAnotherPage(SELECT_GAME_CLASS);
+        });
 
-        logoButton.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        v.startAnimation(animTranslate);
-                        goToAnotherPage(SELECT_GAME_CLASS);
-                    }
-                }
-        );
-
-        transactionHistory.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        v.startAnimation(animTranslate);
-                        goToAnotherPage(TRANSACTION_HISTORY_CLASS);
-                    }
-                }
-        );
+        transactionHistory.setOnClickListener(v -> {
+            v.startAnimation(animTranslate);
+            goToAnotherPage(TRANSACTION_HISTORY_CLASS);
+        });
     }
 
 
-    // настройка для бегущей строки
+
     @SuppressLint("SetTextI18n")
     private void goText() {
-//        lottoTextGo.setText("WANT TO WIN LOTTO - "
-//                +  lottoNow
-//                + " XRP - CLICK ON THE LOGO AND START PLAYING!!!");
         lottoTextGo.setText(GO_TO_THE_DARK_SIDE_FIND_THE_SECRET_BUTTON);
         lottoTextGo.setSelected(true);
     }
 
 
-    @SuppressLint("HardwareIds")
-    private void restoreWallet(boolean isSeed) {
-        if (isSeed) {
-            AsyncTask<String, Void, Map<String, String>> asyncTask = new RestoreWalletAsync()
-                    .execute(Cipher.decryptString(preferences.getString(StringEnum.APP_PREFERENCES_SEED.getValue(), ""),
-                    preferences.getString(StringEnum.APP_PREFERENCES_SALT.getValue(), ""),
-                    Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID)));
-            getBalance();
-        } else {
-            balanceXRP = new BigDecimal("0.000000");
-        }
-    }
 
-
+    // Вызывается из других Activity после wallet-операций
     public void updateWallet() {
-        getBalance();
-        setBalance();
+        viewModel.loadBalance();
     }
 
-
-    public void updateBalance(BigDecimal balance) {
-        balanceXRP = balance;
-        setBalance();
-    }
-
-
-    public void setLottoNow(String lotto) {
-        new Thread() {
-            public void run() {
-                MAIN_ACTIVITY.runOnUiThread(new Runnable() {
-                    public void run() {
-                        //Do your UI operations like dialog opening or Toast here
-                        lottoNow = lotto;
-                        goText();
-                    }
-                });
-            }
-        }.start();
-    }
-
-
-    public void notifyAboutAnEvent(String massage, String lotto, int i) {
-        new Thread() {
-            public void run() {
-                MAIN_ACTIVITY.runOnUiThread(new Runnable() {
-                    public void run() {
-                        //Do your UI operations like dialog opening or Toast here
-                        if (i == 1) {
-                            Lost.MASSAGE = massage;
-                            goToAnotherPage(LOST_CLASS);
-                        } else if (i == 2) {
-                            Win.MASSAGE = massage;
-                            goToAnotherPage(WIN_CLASS);
-                        } else if (i == 3) {
-                            YourReferral.MASSAGE = massage;
-                            goToAnotherPage(YOUR_REFERRAL_CLASS);
-                        }
-                    }
-                });
-            }
-        }.start();
-    }
 
 
     public void setLanguageThread() {
-        new Thread() {
-            public void run() {
-                MAIN_ACTIVITY.runOnUiThread(new Runnable() {
-                    public void run() {
-                        executeRecreate();
-                    }
-
-                });
-            }
-        }.start();
+        runOnUiThread(this::recreate);
     }
 
-
-    private void executeRecreate() {
-        recreate();
-    }
 
 
     @Override
@@ -376,8 +262,6 @@ MainActivity extends AppCompatActivity {
         VISIBLE_ON_SCREEN = false;
     }
 
-
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -385,18 +269,8 @@ MainActivity extends AppCompatActivity {
     }
 
 
-    private void getBalance() {
-        AsyncTask<String, Void, BigDecimal>  getBalanceAsync = new GetBalanceAsync().execute("");
-        try {
-            balanceXRP = getBalanceAsync.get();
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
 
     private void goToAnotherPage(String namePage) {
-        // класс для перехода на другую страницу
         Intent intent = new Intent(namePage);
         startActivity(intent);
     }

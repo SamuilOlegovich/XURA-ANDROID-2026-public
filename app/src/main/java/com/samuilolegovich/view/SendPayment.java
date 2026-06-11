@@ -2,7 +2,6 @@ package com.samuilolegovich.view;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -13,24 +12,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
-import com.samuilolegovich.asyncAndRun.asyncTask.GetBalanceAsync;
-import com.samuilolegovich.asyncAndRun.asyncTask.SendPaymentAsync;
-
-
-import java.math.BigDecimal;
-import java.util.concurrent.ExecutionException;
+import com.samuilolegovich.viewmodel.SendPaymentViewModel;
 
 
 
-// тут страница для отсылки платежа
 public class SendPayment extends AppCompatActivity {
     public static final String SEND_PAYMENT_CLASS = ".SendPayment";
-    private static final String XRP = " XRP";
 
-    public static SendPayment SEND_PAYMENT;
+    // Заполняется ScanQrCode и читается в onResume
     public static String ADDRESS = "";
 
     private String YOUR_ACCOUNT_IS_NOT_ENOUGH_TO_SEND;
@@ -39,8 +32,8 @@ public class SendPayment extends AppCompatActivity {
     private String PAYMENT_AMOUNT_IS_INCORRECT;
     private String WRONG_DESTINATION_ADDRESS;
 
+    private SendPaymentViewModel viewModel;
     private Animation animTranslate;
-    private BigDecimal yourBalance;
 
     private TextView sendPaymentPageTextViewTwo;
     private TextView sendPaymentPageTextView;
@@ -58,24 +51,52 @@ public class SendPayment extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         MainActivity.MAIN_ACTIVITY.setLocale();
         setContentView(R.layout.send_payment_page);
+
+        viewModel = new ViewModelProvider(this).get(SendPaymentViewModel.class);
+
         setButtons();
         setLanguage();
-        setBalance();
         listeners();
-        SEND_PAYMENT = this;
+
+        viewModel.getBalance().observe(this, b ->
+                balance.setText(b.toString() + " XRP"));
+
+        viewModel.getError().observe(this, error -> {
+            if (error == null) return;
+            switch (error) {
+                case WRONG_ADDRESS:    showToast(WRONG_DESTINATION_ADDRESS); break;
+                case INVALID_AMOUNT:   showToast(PAYMENT_AMOUNT_IS_INCORRECT); break;
+                case AMOUNT_IS_ZERO:   showToast(IT_IS_NOT_POSSIBLE_TO_SEND_NULL); break;
+                case INSUFFICIENT_BALANCE: showToast(YOUR_ACCOUNT_IS_NOT_ENOUGH_TO_SEND); break;
+                case TAG_TOO_LONG:
+                case TAG_TOO_LARGE:    showToast(TAG_KNOWLEDGE_CANNOT_BE_MORE); break;
+                case PAYMENT_FAILED:   showToast(WRONG_DESTINATION_ADDRESS); break;
+            }
+        });
+
+        viewModel.getPaymentSuccess().observe(this, success -> {
+            if (Boolean.TRUE.equals(success)) {
+                showToast("PAYMENT SENT");
+                address.setText("");
+                amount.setText("");
+                tag.setText("");
+            }
+        });
+
+        viewModel.loadBalance();
     }
 
 
 
     private void setButtons() {
-        sendPaymentPageTextViewTwo = (TextView) findViewById(R.id.send_payment_page_text_view_tow);
-        sendPaymentPageTextView = (TextView) findViewById(R.id.send_payment_page_text_view);
-        amount = (EditText) findViewById(R.id.amount_field);
-        address = (EditText) findViewById(R.id.from_field);
-        balance = (TextView) findViewById(R.id.balance);
-        scan = (TextView) findViewById(R.id.scan_linc);
-        send = (TextView) findViewById(R.id.send_linc);
-        tag = (EditText) findViewById(R.id.tag_field);
+        sendPaymentPageTextViewTwo = findViewById(R.id.send_payment_page_text_view_tow);
+        sendPaymentPageTextView = findViewById(R.id.send_payment_page_text_view);
+        amount = findViewById(R.id.amount_field);
+        address = findViewById(R.id.from_field);
+        balance = findViewById(R.id.balance);
+        scan = findViewById(R.id.scan_linc);
+        send = findViewById(R.id.send_linc);
+        tag = findViewById(R.id.tag_field);
     }
 
 
@@ -92,198 +113,31 @@ public class SendPayment extends AppCompatActivity {
     }
 
 
-    @SuppressLint("SetTextI18n")
-    private void setBalance() {
-        AsyncTask<String, Void, BigDecimal> getBalanceAsync = new GetBalanceAsync().execute("");
-
-        try {
-            yourBalance = getBalanceAsync.get();
-            balance.setText(yourBalance.toString() + XRP);
-
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    @SuppressLint("SetTextI18n")
-    private void setNewText() {
-        new Thread() {
-            public void run() {
-                SEND_PAYMENT.runOnUiThread(new Runnable() {
-                    public void run() {
-                        balance.setText(yourBalance.toString() + XRP);
-                        address.setText("");
-                        amount.setText("");
-                        tag.setText("");
-                    }
-                });
-            }
-        }.start();
-    }
-
-
     private void listeners() {
         animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
 
-        send.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        v.startAnimation(animTranslate);
-                        sendThread(true);
+        send.setOnClickListener(v -> {
+            v.startAnimation(animTranslate);
+            viewModel.sendPayment(
+                    address.getText().toString(),
+                    amount.getText().toString(),
+                    tag.getText().toString()
+            );
+        });
 
-                    }
-                }
-        );
-
-        scan.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        v.startAnimation(animTranslate);
-                        goToAnotherPage(ScanQrCode.SCAN_QR_CODE_CLASS);
-                    }
-                }
-        );
+        scan.setOnClickListener(v -> {
+            v.startAnimation(animTranslate);
+            startActivity(new Intent(ScanQrCode.SCAN_QR_CODE_CLASS));
+        });
     }
 
 
-    private void sendThread(boolean b) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                String sendAmount = prepareTheShippingAmount(amount.getText().toString());
-                String sendAddress = address.getText().toString();
-                String sendTeg = tag.getText().toString();
-                if (checkData(sendAddress, sendAmount, sendTeg)) {
-                    setNewText();
-                    makeToast("PAYMENT SENT");
-                }
-            }
-        }).start();
-    }
-
-
-    private void makeToast(String massage) {
-        new Thread() {
-            public void run() {
-                SEND_PAYMENT.runOnUiThread(new Runnable() {
-                    public void run() {
-                        //Do your UI operations like dialog opening or Toast here
-                        Toast toast = Toast.makeText(getApplicationContext(), massage, Toast.LENGTH_LONG);
-                        toast.setGravity(Gravity.TOP, 0,110);   // import android.view.Gravity;
-                        toast.show();
-                    }
-                });
-            }
-        }.start();
-    }
-
-
-    private String prepareTheShippingAmount(String sendAmount) {
-        if (sendAmount.contains(".")) {
-            int i = sendAmount.indexOf(".");
-            int max = i + 6;
-            if (max < sendAmount.length()) {
-                return sendAmount.substring(0, max + 1);
-            }
-        }
-        return sendAmount;
-    }
-
-
-    private boolean checkData(String sendAddress, String sendAmount, String sendTeg) {
-        setBalance();
-        if (sendAddress == null || sendAddress.length() < 33) {
-            makeToast(WRONG_DESTINATION_ADDRESS);
-            return false;
-        }
-
-        if (sendAmount == null || sendAmount.length() < 1) {
-            makeToast(PAYMENT_AMOUNT_IS_INCORRECT);
-            return false;
-        }
-
-        if (new BigDecimal(sendAmount).compareTo(new BigDecimal("0.000000")) == 0) {
-            makeToast( IT_IS_NOT_POSSIBLE_TO_SEND_NULL);
-            return false;
-        }
-
-        if (new BigDecimal(sendAmount).compareTo(yourBalance) > 0) {
-            makeToast(YOUR_ACCOUNT_IS_NOT_ENOUGH_TO_SEND);
-            return false;
-        }
-
-        if (sendTeg != null && sendTeg.length() > 11) {
-            makeToast(TAG_KNOWLEDGE_CANNOT_BE_MORE);
-            return false;
-        }
-
-        if (sendTeg != null && !sendTeg.equals("") && Long.parseLong(sendTeg) >= Integer.MAX_VALUE) {
-            makeToast(TAG_KNOWLEDGE_CANNOT_BE_MORE);
-            return false;
-        }
-
-        return makePayment(sendAddress, sendAmount, sendTeg);
-    }
-
-
-    private boolean makePayment(String sendAddress, String sendAmount, String sendTeg) {
-        AsyncTask<String, Void, Boolean> asyncTask = new SendPaymentAsync().execute(sendAddress, sendAmount, sendTeg);
-        boolean b = false;
-
-        try {
-            b = asyncTask.get();
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        if (!b) {
-            makeToast(WRONG_DESTINATION_ADDRESS);
-        }
-
-        return b;
-    }
-
-
-    private void goToAnotherPage(String namePage) {
-        // класс для перехода на другую страницу
-        Intent intent = new Intent(namePage);
-        startActivity(intent);
-    }
-
-
-    @SuppressLint("SetTextI18n")
-    public void updateBalance(BigDecimal bigDecimal) {
-        yourBalance = bigDecimal;
-        balance.setText(yourBalance.toString());
-    }
-
-
-//    private void makeToast(String massage) {
-//        Toast toast = Toast.makeText(getApplicationContext(), massage, Toast.LENGTH_SHORT);
-//        toast.setGravity(Gravity.TOP, 0,110);   // import android.view.Gravity;
-//        toast.show();
-//    }
-
-
-    public void setAddress(String address) {
-        new Thread() {
-            public void run() {
-                SEND_PAYMENT.runOnUiThread(new Runnable() {
-                    public void run() {
-                        ADDRESS = address;
-                    }
-                });
-            }
-        }.start();
-    }
-
-
-    @Override
-    protected void onPause() {
-        super.onPause();
+    private void showToast(String message) {
+        runOnUiThread(() -> {
+            Toast toast = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 110);
+            toast.show();
+        });
     }
 
 
@@ -297,7 +151,6 @@ public class SendPayment extends AppCompatActivity {
     }
 
 
-    // при нажатии на кнопку назад будем возвращаться назад
     @Override
     public void onBackPressed() {
         super.onBackPressed();

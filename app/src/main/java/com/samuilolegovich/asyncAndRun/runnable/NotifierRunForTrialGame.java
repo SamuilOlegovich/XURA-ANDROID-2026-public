@@ -9,6 +9,7 @@ import com.samuilolegovich.enums.StringEnum;
 import com.samuilolegovich.enums.TestModeEnum;
 import com.samuilolegovich.view.Flasher;
 import com.samuilolegovich.view.YourReferral;
+import com.samuilolegovich.wallet.repository.WalletRepository;
 
 import java.util.Random;
 
@@ -104,7 +105,7 @@ public class NotifierRunForTrialGame implements Runnable {
                 : ((Double.parseDouble(Flasher.TEST_SAND_AMOUNT)) * 2.0) + "";
 
         String lotto = (random.nextInt(10001 - 4000) + 4000) + "";
-        MainActivity.MAIN_ACTIVITY.setLottoNow(lotto);
+        WalletRepository.getInstance().setLottoNow(lotto);
 
         if (tag.equals(StringEnum.NOT_WIN_GUESS_THE_COLOR.getValue())) {
             responseToBet(YOUR_BET_IS_LOST_TRY_AGAIN_AND_YOU_WILL_BE_LUCKY, lotto, 1);
@@ -127,20 +128,18 @@ public class NotifierRunForTrialGame implements Runnable {
     private void responseToBet(String text, String lotto, int i) {
         if (Flasher.VISIBLE_ON_SCREEN && Flasher.FLASHER != null) {
             switch (i) {
-                case 1 :
+                case 1:
                     Flasher.FLASHER.stopGame(text, false);
                     break;
-                case 2 : {
+                case 2:
                     Flasher.FLASHER.stopGame(text, true);
                     break;
-                } case 3 : {
-                    if (MainActivity.MAIN_ACTIVITY != null) {
-                        MainActivity.MAIN_ACTIVITY.notifyAboutAnEvent(text, lotto, i);
-                    }
-                }
+                case 3:
+                    WalletRepository.getInstance().notifyEvent(text, lotto, i);
+                    break;
             }
-        } else  if (MainActivity.MAIN_ACTIVITY != null) {
-            MainActivity.MAIN_ACTIVITY.notifyAboutAnEvent(text, lotto, i);
+        } else {
+            WalletRepository.getInstance().notifyEvent(text, lotto, i);
         }
     }
 }

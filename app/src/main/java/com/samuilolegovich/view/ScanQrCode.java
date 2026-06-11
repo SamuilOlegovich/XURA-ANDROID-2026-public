@@ -1,7 +1,5 @@
 package com.samuilolegovich.view;
 
-import static com.samuilolegovich.view.SendPayment.SEND_PAYMENT;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -78,7 +76,7 @@ public class ScanQrCode extends AppCompatActivity {
     public void qrCodeHandler(String qrCodeText) {
         Context context = this;
         runOnUiThread(() -> Toast.makeText(context, qrCodeText, Toast.LENGTH_LONG).show());
-        SEND_PAYMENT.setAddress(qrCodeText);
+        SendPayment.ADDRESS = qrCodeText;
         onBackPressed();
 
 //        new Thread(() -> {
