@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.samuilolegovich.viewmodel.NavigationEvent;
 import com.samuilolegovich.wallet.model.PaymentManager.PaymentAndSocketManagerXRPL;
 import com.samuilolegovich.wallet.model.sockets.enums.StreamSubscriptionEnum;
+import com.samuilolegovich.wallet.model.sockets.interfaces.CommandListener;
 import com.samuilolegovich.wallet.subscribers.interfaces.StreamSubscriber;
 
 import java.math.BigDecimal;
@@ -137,5 +138,10 @@ public class WalletRepository {
 
     public void unsubscribe(EnumSet<StreamSubscriptionEnum> streams) throws Exception {
         manager.unsubscribe(streams);
+    }
+
+    public String sendCommand(String command, Map<String, Object> parameters,
+                              CommandListener listener) throws Exception {
+        return manager.sendCommand(command, parameters, listener);
     }
 }
