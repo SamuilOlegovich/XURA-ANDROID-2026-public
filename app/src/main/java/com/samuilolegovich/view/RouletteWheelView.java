@@ -147,7 +147,7 @@ public class RouletteWheelView extends View {
         markerPath.lineTo(cx + mHW,  mBase);       // base right
         markerPath.close();
         canvas.drawPath(markerPath, markerPaint);  // gold fill
-        markerStrokePaint.setStrokeWidth(maxR * 0.009f);
+        markerStrokePaint.setStrokeWidth(maxR * 0.018f);
         canvas.drawPath(markerPath, markerStrokePaint); // white outline
     }
 
