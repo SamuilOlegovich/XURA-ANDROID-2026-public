@@ -28,6 +28,19 @@ android {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
+    packagingOptions {
+        resources {
+            excludes += [
+                'META-INF/INDEX.LIST',
+                'META-INF/io.netty.versions.properties',
+                'META-INF/DEPENDENCIES'
+            ]
+        }
+    }
+}
+
+configurations.all {
+    exclude group: 'com.google.guava', module: 'listenablefuture'
 }
 
 dependencies {
@@ -81,10 +94,8 @@ dependencies {
 //    implementation 'com.firebaseui:firebase-ui-database:6.2.1'
 
     // библиотеки для кошелька XRP
-    implementation 'org.xrpl:xrpl4j-address-codec:2.3.0'
-    implementation 'org.xrpl:xrpl4j-keypairs:2.3.0'
-    implementation 'org.xrpl:xrpl4j-model:2.3.0'
-    implementation 'org.xrpl:xrpl4j-client:2.3.0'
+    implementation 'org.xrpl:xrpl4j-core:3.3.0'
+    implementation 'org.xrpl:xrpl4j-client:3.3.0'
 
     implementation 'org.java-websocket:Java-WebSocket:1.5.7'
 
@@ -95,12 +106,6 @@ dependencies {
     // https://mvnrepository.com/artifact/com.sun/tools
 //    implementation 'com.sun:tools:1.5.0'
 
-    // https://mvnrepository.com/artifact/org.xrpl/xrpl4j-crypto-core
-    implementation group: 'org.xrpl', name: 'xrpl4j-crypto-core', version: '2.3.0'
-
-    // нужна чтобы заработал этот класс - SingleKeySignatureService
-    // https://mvnrepository.com/artifact/org.xrpl/xrpl4j-crypto-bouncycastle
-    implementation group: 'org.xrpl', name: 'xrpl4j-crypto-bouncycastle', version: '2.3.0'
 
     // для того чтобы не вылетало - xrplClient
     implementation 'io.github.openfeign:feign-jackson:11.8'

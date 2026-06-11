@@ -1,6 +1,5 @@
 package com.samuilolegovich.wallet.myClient;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Preconditions;
@@ -9,9 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xrpl.xrpl4j.client.JsonRpcClientErrorException;
 import org.xrpl.xrpl4j.client.JsonRpcRequest;
-import org.xrpl.xrpl4j.codec.binary.XrplBinaryCodec;
-import org.xrpl.xrpl4j.keypairs.DefaultKeyPairService;
-import org.xrpl.xrpl4j.keypairs.KeyPairService;
+import org.xrpl.xrpl4j.crypto.signing.SingleSignedTransaction;
 import org.xrpl.xrpl4j.model.client.XrplMethods;
 import org.xrpl.xrpl4j.model.client.accounts.AccountChannelsRequestParams;
 import org.xrpl.xrpl4j.model.client.accounts.AccountChannelsResult;
@@ -30,9 +27,8 @@ import org.xrpl.xrpl4j.model.client.ledger.LedgerRequestParams;
 import org.xrpl.xrpl4j.model.client.ledger.LedgerResult;
 import org.xrpl.xrpl4j.model.client.path.RipplePathFindRequestParams;
 import org.xrpl.xrpl4j.model.client.path.RipplePathFindResult;
-import org.xrpl.xrpl4j.model.client.server.ServerInfo;
-import org.xrpl.xrpl4j.model.client.server.ServerInfoResult;
-import org.xrpl.xrpl4j.model.client.transactions.SignedTransaction;
+import org.xrpl.xrpl4j.model.client.serverinfo.ServerInfo;
+import org.xrpl.xrpl4j.model.client.serverinfo.ServerInfoResult;
 import org.xrpl.xrpl4j.model.client.transactions.SubmitMultiSignedRequestParams;
 import org.xrpl.xrpl4j.model.client.transactions.SubmitMultiSignedResult;
 import org.xrpl.xrpl4j.model.client.transactions.SubmitRequestParams;
@@ -62,15 +58,12 @@ import org.xrpl.xrpl4j.model.transactions.SignerListSet;
 import org.xrpl.xrpl4j.model.transactions.Transaction;
 import org.xrpl.xrpl4j.model.transactions.TrustSet;
 import org.xrpl.xrpl4j.model.transactions.XrpCurrencyAmount;
-import org.xrpl.xrpl4j.wallet.Wallet;
 
 
 
 public class MyXrplClient {
     private static final Logger LOGGER = LoggerFactory.getLogger(MyXrplClient.class);
 
-    private final XrplBinaryCodec binaryCodec;
-    private final KeyPairService keyPairService;
     private final ObjectMapper objectMapper;
     private final ApiClient apiClient;
 
@@ -78,58 +71,21 @@ public class MyXrplClient {
 
     public MyXrplClient(String stringURL) {
         this.objectMapper = ObjectMapperFactory.create();
-        this.binaryCodec = new XrplBinaryCodec();
-        this.keyPairService = DefaultKeyPairService.getInstance();
         this.apiClient = new ApiClient(stringURL);
     }
 
 
 
     public <T extends Transaction> SubmitResult<T> submit(
-            Wallet wallet,
-            T unsignedTransaction
+            SingleSignedTransaction<T> signedTransaction
     ) throws JsonRpcClientErrorException {
-        Preconditions.checkArgument(
-                unsignedTransaction.signingPublicKey().isPresent(),
-                "Transaction.signingPublicKey() must be set."
-        );
-
-        SignedTransaction<T> signedTransaction = signTransaction(wallet, unsignedTransaction);
-        return submit(signedTransaction);
-    }
-
-
-
-    public <T extends Transaction> SubmitResult<T> submit(SignedTransaction<T> signedTransaction) throws JsonRpcClientErrorException {
-        JsonRpcRequest request = JsonRpcRequest.builder()
-                .method(XrplMethods.SUBMIT)
-                .addParams(SubmitRequestParams.of(signedTransaction.signedTransactionBlob()))
-                .build();
-        JavaType resultType = objectMapper.getTypeFactory()
-                .constructParametricType(SubmitResult.class, signedTransaction.signedTransaction().getClass());
-        return apiClient.send(request, resultType);
-    }
-
-
-
-    public <T extends Transaction> SubmitResult<T> submit(
-            final org.xrpl.xrpl4j.crypto.signing.SignedTransaction signedTransaction
-    ) throws JsonRpcClientErrorException, JsonProcessingException {
-
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("About to submit signedTransaction: {}", signedTransaction);
         }
-
-        String signedJson = objectMapper.writeValueAsString(signedTransaction.signedTransaction());
-        String signedBlob = binaryCodec.encode(signedJson); // <-- txBlob must be binary-encoded.
         JsonRpcRequest request = JsonRpcRequest.builder()
                 .method(XrplMethods.SUBMIT)
-                .addParams(SubmitRequestParams.of(signedBlob))
+                .addParams(SubmitRequestParams.of(signedTransaction.signedTransactionBytes().hexValue()))
                 .build();
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("About to submit JsonRpcRequest: {}", request);
-        }
-
         JavaType resultType = objectMapper.getTypeFactory()
                 .constructParametricType(SubmitResult.class, signedTransaction.unsignedTransaction().getClass());
         return apiClient.send(request, resultType);
@@ -201,7 +157,7 @@ public class MyXrplClient {
 
 
     public AccountTransactionsResult accountTransactions(Address address) throws JsonRpcClientErrorException {
-        return accountTransactions(AccountTransactionsRequestParams.builder()
+        return accountTransactions(AccountTransactionsRequestParams.unboundedBuilder()
                 .account(address)
                 .build());
     }
@@ -227,7 +183,6 @@ public class MyXrplClient {
                 .method(XrplMethods.TX)
                 .addParams(params)
                 .build();
-
         JavaType resultType = objectMapper.getTypeFactory().constructParametricType(TransactionResult.class, transactionType);
         return apiClient.send(request, resultType);
     }
@@ -239,7 +194,6 @@ public class MyXrplClient {
                 .method(XrplMethods.LEDGER)
                 .addParams(params)
                 .build();
-
         return apiClient.send(request, LedgerResult.class);
     }
 
@@ -281,108 +235,4 @@ public class MyXrplClient {
                 .build();
         return apiClient.send(request, ChannelVerifyResult.class);
     }
-
-
-
-    public <T extends Transaction> SignedTransaction<T> signTransaction(Wallet wallet, T unsignedTransaction) {
-        try {
-            String unsignedJson = objectMapper.writeValueAsString(unsignedTransaction);
-
-            String unsignedBinaryHex = binaryCodec.encodeForSigning(unsignedJson);
-            String signature = keyPairService.sign(unsignedBinaryHex, wallet.privateKey()
-                    .orElseThrow(() -> new RuntimeException("Wallet must provide a private key to sign the transaction.")));
-
-            T signedTransaction = (T) addSignature(unsignedTransaction, signature);
-
-            String signedJson = objectMapper.writeValueAsString(signedTransaction);
-            String signedBinary = binaryCodec.encode(signedJson);
-            return SignedTransaction.<T>builder()
-                    .signedTransaction(signedTransaction)
-                    .signedTransactionBlob(signedBinary)
-                    .build();
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-
-    private Transaction addSignature(Transaction unsignedTransaction, String signature) {
-        if (Payment.class.isAssignableFrom(unsignedTransaction.getClass())) {
-            return Payment.builder().from((Payment) unsignedTransaction)
-                    .transactionSignature(signature)
-                    .build();
-        } else if (AccountSet.class.isAssignableFrom(unsignedTransaction.getClass())) {
-            return AccountSet.builder().from((AccountSet) unsignedTransaction)
-                    .transactionSignature(signature)
-                    .build();
-        } else if (AccountDelete.class.isAssignableFrom(unsignedTransaction.getClass())) {
-            return AccountDelete.builder().from((AccountDelete) unsignedTransaction)
-                    .transactionSignature(signature)
-                    .build();
-        } else if (CheckCancel.class.isAssignableFrom(unsignedTransaction.getClass())) {
-            return CheckCancel.builder().from((CheckCancel) unsignedTransaction)
-                    .transactionSignature(signature)
-                    .build();
-        } else if (CheckCash.class.isAssignableFrom(unsignedTransaction.getClass())) {
-            return CheckCash.builder().from((CheckCash) unsignedTransaction)
-                    .transactionSignature(signature)
-                    .build();
-        } else if (CheckCreate.class.isAssignableFrom(unsignedTransaction.getClass())) {
-            return CheckCreate.builder().from((CheckCreate) unsignedTransaction)
-                    .transactionSignature(signature)
-                    .build();
-        } else if (DepositPreAuth.class.isAssignableFrom(unsignedTransaction.getClass())) {
-            return DepositPreAuth.builder().from((DepositPreAuth) unsignedTransaction)
-                    .transactionSignature(signature)
-                    .build();
-        } else if (EscrowCreate.class.isAssignableFrom(unsignedTransaction.getClass())) {
-            return EscrowCreate.builder().from((EscrowCreate) unsignedTransaction)
-                    .transactionSignature(signature)
-                    .build();
-        } else if (EscrowCancel.class.isAssignableFrom(unsignedTransaction.getClass())) {
-            return EscrowCancel.builder().from((EscrowCancel) unsignedTransaction)
-                    .transactionSignature(signature)
-                    .build();
-        } else if (EscrowFinish.class.isAssignableFrom(unsignedTransaction.getClass())) {
-            return EscrowFinish.builder().from((EscrowFinish) unsignedTransaction)
-                    .transactionSignature(signature)
-                    .build();
-        } else if (TrustSet.class.isAssignableFrom(unsignedTransaction.getClass())) {
-            return TrustSet.builder().from((TrustSet) unsignedTransaction)
-                    .transactionSignature(signature)
-                    .build();
-        } else if (OfferCreate.class.isAssignableFrom(unsignedTransaction.getClass())) {
-            return OfferCreate.builder().from((OfferCreate) unsignedTransaction)
-                    .transactionSignature(signature)
-                    .build();
-        } else if (OfferCancel.class.isAssignableFrom(unsignedTransaction.getClass())) {
-            return OfferCancel.builder().from((OfferCancel) unsignedTransaction)
-                    .transactionSignature(signature)
-                    .build();
-        } else if (PaymentChannelCreate.class.isAssignableFrom(unsignedTransaction.getClass())) {
-            return PaymentChannelCreate.builder().from((PaymentChannelCreate) unsignedTransaction)
-                    .transactionSignature(signature)
-                    .build();
-        } else if (PaymentChannelClaim.class.isAssignableFrom(unsignedTransaction.getClass())) {
-            return PaymentChannelClaim.builder().from((PaymentChannelClaim) unsignedTransaction)
-                    .transactionSignature(signature)
-                    .build();
-        } else if (PaymentChannelFund.class.isAssignableFrom(unsignedTransaction.getClass())) {
-            return PaymentChannelFund.builder().from((PaymentChannelFund) unsignedTransaction)
-                    .transactionSignature(signature)
-                    .build();
-        } else if (SetRegularKey.class.isAssignableFrom(unsignedTransaction.getClass())) {
-            return SetRegularKey.builder().from((SetRegularKey) unsignedTransaction)
-                    .transactionSignature(signature)
-                    .build();
-        } else if (SignerListSet.class.isAssignableFrom(unsignedTransaction.getClass())) {
-            return SignerListSet.builder().from((SignerListSet) unsignedTransaction)
-                    .transactionSignature(signature)
-                    .build();
-        }
-
-        throw new IllegalArgumentException("Signing fields could not be added to the unsignedTransaction.");
-    }
 }
-
