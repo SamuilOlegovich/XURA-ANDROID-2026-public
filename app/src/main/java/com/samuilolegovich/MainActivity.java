@@ -265,6 +265,12 @@ public class MainActivity extends BaseActivity {
         VISIBLE_ON_SCREEN = true;
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        MAIN_ACTIVITY = null;
+    }
+
 
 
     private void goToAnotherPage(String namePage) {

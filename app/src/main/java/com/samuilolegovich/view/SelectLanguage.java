@@ -2,7 +2,6 @@ package com.samuilolegovich.view;
 
 import static com.samuilolegovich.MainActivity.MAIN_ACTIVITY;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -25,9 +24,6 @@ import com.samuilolegovich.enums.StringEnum;
 public class SelectLanguage extends BaseActivity {
     public static final String SELECT_LANGUAGE_CLASS = ".SelectLanguage";
 
-    @SuppressLint("StaticFieldLeak")
-    public static volatile SelectLanguage SELECT_LANGUAGE_ACTIVITY;
-
     private SharedPreferences.Editor editor;
     private SharedPreferences preferences;
     private Animation animTranslate;
@@ -44,7 +40,6 @@ public class SelectLanguage extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_language);
-        SELECT_LANGUAGE_ACTIVITY = this;
         setButtons();
         setLanguage();
         getSettingsLanguage();

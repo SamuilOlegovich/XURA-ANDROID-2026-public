@@ -96,10 +96,15 @@ public class Settings extends BaseActivity {
     }
 
 
-    // при нажатии на кнопку назад будем возвращаться назад
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SETTINGS_ACTIVITY = null;
     }
 
 }

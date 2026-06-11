@@ -73,9 +73,14 @@ public class TransactionHistory  extends BaseActivity {
     }
 
 
-    // при нажатии на кнопку назад будем возвращаться назад
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        TRANSACTION_HISTORY = null;
     }
 }

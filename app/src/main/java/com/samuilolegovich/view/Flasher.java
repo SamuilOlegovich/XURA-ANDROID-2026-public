@@ -243,4 +243,10 @@ public class Flasher extends BaseActivity {
         FlasherRun.FLAG = false;
         super.onBackPressed();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        FLASHER = null;
+    }
 }
