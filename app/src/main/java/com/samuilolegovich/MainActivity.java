@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.content.Context;
@@ -117,6 +118,10 @@ public class MainActivity extends BaseActivity {
                     goToAnotherPage(YOUR_REFERRAL_CLASS);
                     break;
             }
+        });
+
+        viewModel.getWalletReady().observe(this, ready -> {
+            if (Boolean.TRUE.equals(ready)) startXrplSocketService();
         });
 
         handleStartup();
@@ -267,8 +272,18 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onDestroy() {
+        stopService(new Intent(this, XrplSocketService.class));
         super.onDestroy();
         MAIN_ACTIVITY = null;
+    }
+
+    private void startXrplSocketService() {
+        Intent intent = new Intent(this, XrplSocketService.class);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(intent);
+        } else {
+            startService(intent);
+        }
     }
 
 
