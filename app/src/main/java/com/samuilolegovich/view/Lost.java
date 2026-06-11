@@ -1,6 +1,8 @@
 package com.samuilolegovich.view;
 
 import android.annotation.SuppressLint;
+import android.graphics.LinearGradient;
+import android.graphics.Shader;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -44,6 +46,30 @@ public class Lost extends AppCompatActivity {
 
         lostMediaPlayer = MediaPlayer.create(this, R.raw.lost);
         lostMediaPlayer.start();
+
+        // BET LOST — purple → magenta → red
+        lastTextView.post(() -> {
+            LinearGradient gradient = new LinearGradient(
+                0f, 0f, lastTextView.getWidth(), 0f,
+                new int[]{0xFF9020D0, 0xFFD02090, 0xFFFF2040},
+                new float[]{0f, 0.5f, 1f},
+                Shader.TileMode.CLAMP
+            );
+            lastTextView.getPaint().setShader(gradient);
+            lastTextView.invalidate();
+        });
+
+        // GOOD LUCK — cyan → purple → gold
+        lastTextViewTree.post(() -> {
+            LinearGradient gradient = new LinearGradient(
+                0f, 0f, lastTextViewTree.getWidth(), 0f,
+                new int[]{0xFF00D4FF, 0xFF4040F0, 0xFF9020D0, 0xFFD02090, 0xFFFFB000},
+                new float[]{0f, 0.25f, 0.5f, 0.75f, 1f},
+                Shader.TileMode.CLAMP
+            );
+            lastTextViewTree.getPaint().setShader(gradient);
+            lastTextViewTree.invalidate();
+        });
     }
 
 

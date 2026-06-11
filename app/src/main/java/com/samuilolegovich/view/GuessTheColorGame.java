@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -67,7 +66,6 @@ public class GuessTheColorGame extends AppCompatActivity {
     private TextView rulesOfTheGameLink;
     private TextView nameGameTextView;
     private TextView balance;
-    private TextView outInfo;
     private TextView black;
     private TextView red;
     private EditText bet;
@@ -103,7 +101,6 @@ public class GuessTheColorGame extends AppCompatActivity {
         rulesOfTheGameLink = (TextView) findViewById(R.id.rules_of_the_game_link);
         nameGameTextView = (TextView) findViewById(R.id.name_game_text_view);
         balance = (TextView) findViewById(R.id.your_balance_xrp_text);
-        outInfo = (TextView) findViewById(R.id.info_output);
         black = (TextView) findViewById(R.id.color_black);
         red = (TextView) findViewById(R.id.color_red);
         bet = (EditText) findViewById(R.id.bet_field);
@@ -213,16 +210,7 @@ public class GuessTheColorGame extends AppCompatActivity {
                 GUESS_THE_COLOR_GAME.runOnUiThread(new Runnable() {
                     @SuppressLint("ResourceAsColor")
                     public void run() {
-                        if (b) {
-                            outInfo.setText(text);
-                            outInfo.setTextColor(Color.BLACK);
-                        } else if (text.equalsIgnoreCase("00"))  {
-                            outInfo.setText(text);
-                            outInfo.setTextColor(Color.parseColor("#007143"));
-                        } else {
-                            outInfo.setText(text);
-                            outInfo.setTextColor(Color.RED);
-                        }
+                        // result display removed
                     }
                 });
             }

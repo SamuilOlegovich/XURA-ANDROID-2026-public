@@ -123,7 +123,7 @@ public class ReceivePayment extends AppCompatActivity {
                         float t = (float)(x + y) / (float)(width + height);
                         pixels[y * width + x] = interpolateGradient(gradColors, gradPos, t);
                     } else {
-                        pixels[y * width + x] = 0xFFFFFFFF;
+                        pixels[y * width + x] = 0x00000000;
                     }
                 }
             }

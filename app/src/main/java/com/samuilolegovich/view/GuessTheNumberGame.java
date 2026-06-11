@@ -4,17 +4,21 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
+import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
+import android.widget.GridLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.core.content.res.ResourcesCompat;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -63,11 +67,12 @@ public class GuessTheNumberGame extends AppCompatActivity {
     private TextView nameGameTextViewTree;
     private TextView nameGameTextViewTwo;
     private TextView nameGameTextView;
+    private TextView selectedNumView = null;
+    private int selectedNumber = 0;
+
     private TextView placeBetLinc;
-    private EditText betNumber;
     private TextView rulesInfo;
     private TextView balance;
-    private TextView outInfo;
     private EditText bet;
 
 
@@ -106,11 +111,48 @@ public class GuessTheNumberGame extends AppCompatActivity {
         rulesInfo = (TextView) findViewById(R.id.rules_of_the_game_link);
         balance = (TextView) findViewById(R.id.your_balance_xrp_text);
         placeBetLinc = (TextView) findViewById(R.id.place_bet_linc);
-        betNumber = (EditText) findViewById(R.id.bet_number_field);
-        outInfo = (TextView) findViewById(R.id.number_info_text);
         bet = (EditText) findViewById(R.id.bet_field);
 
         soundPlay(casinoMediaPlayer);
+        setupNumberGrid();
+    }
+
+
+    private void setupNumberGrid() {
+        GridLayout grid = findViewById(R.id.numbers_grid);
+        int cellH = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 40, getResources().getDisplayMetrics());
+        Typeface font = ResourcesCompat.getFont(this, R.font.montserrat);
+
+        for (int i = 1; i <= 36; i++) {
+            final int num = i;
+            TextView tv = new TextView(this);
+            tv.setText(String.valueOf(i));
+            tv.setGravity(Gravity.CENTER);
+            tv.setTextColor(getResources().getColor(R.color.xura_text_primary, null));
+            tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+            tv.setTypeface(font, Typeface.BOLD);
+            tv.setBackground(getDrawable(R.drawable.bg_num_button));
+
+            GridLayout.LayoutParams p = new GridLayout.LayoutParams(
+                GridLayout.spec(GridLayout.UNDEFINED, 1f),
+                GridLayout.spec(GridLayout.UNDEFINED, 1f)
+            );
+            p.width = 0;
+            p.height = cellH;
+            p.setMargins(3, 3, 3, 3);
+            tv.setLayoutParams(p);
+
+            tv.setOnClickListener(v -> {
+                if (selectedNumView != null) {
+                    selectedNumView.setBackground(getDrawable(R.drawable.bg_num_button));
+                }
+                tv.setBackground(getDrawable(R.drawable.bg_button_primary));
+                selectedNumView = tv;
+                selectedNumber = num;
+            });
+
+            grid.addView(tv);
+        }
     }
 
 
@@ -170,7 +212,7 @@ public class GuessTheNumberGame extends AppCompatActivity {
 
     private void makeStack() {
         String sendAmount = prepareTheShippingAmount(bet.getText().toString());
-        String tag = betNumber.getText().toString();
+        String tag = selectedNumber > 0 ? String.valueOf(selectedNumber) : "";
         String tegNumber = testNumber(tag);
 
         if (myReferral == null) {
@@ -178,7 +220,13 @@ public class GuessTheNumberGame extends AppCompatActivity {
         }
 
         if (tegNumber != null && checkData(sendAmount, tegNumber + myReferral)) {
-            betNumber.setText("");
+            runOnUiThread(() -> {
+                if (selectedNumView != null) {
+                    selectedNumView.setBackground(getDrawable(R.drawable.bg_num_button));
+                    selectedNumView = null;
+                }
+                selectedNumber = 0;
+            });
             bet.setText("");
             makeToast(BET_IS_MADE_EXPECT_THE_RESULT);
             setBetParam(sendAmount, tag);
@@ -286,16 +334,7 @@ public class GuessTheNumberGame extends AppCompatActivity {
                 GUESS_THE_NUMBER_GAME.runOnUiThread(new Runnable() {
                     @SuppressLint("ResourceAsColor")
                     public void run() {
-                        if (b) {
-                            outInfo.setText(text);
-                            outInfo.setTextColor(Color.BLACK);
-                        } else if (text.equalsIgnoreCase("00"))  {
-                            outInfo.setText(text);
-                            outInfo.setTextColor(Color.parseColor("#007143"));
-                        } else {
-                            outInfo.setText(text);
-                            outInfo.setTextColor(Color.RED);
-                        }
+                        // result display removed
                     }
                 });
             }
@@ -359,7 +398,6 @@ public class GuessTheNumberGame extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     private void goText(String s) {
-        outInfo.setText(s);
     }
 
 

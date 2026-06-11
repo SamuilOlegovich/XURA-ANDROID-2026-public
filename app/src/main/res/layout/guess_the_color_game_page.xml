@@ -26,6 +26,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- XURA Logo -->
+    <include
+        layout="@layout/logo_xura"
+        android:id="@+id/imageViewLogo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="90dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="90dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rules_of_the_game_link" />
+
     <!-- GUESS THE COLOR title -->
     <TextView
         android:id="@+id/name_game_text_view"
@@ -44,7 +57,7 @@
         android:letterSpacing="0.02"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rules_of_the_game_link" />
+        app:layout_constraintTop_toBottomOf="@+id/imageViewLogo" />
 
     <!-- Subtitle -->
     <TextView
@@ -99,30 +112,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/your_balance_text_view" />
-
-    <!-- THE COLOR DISPLAY — dominant game element -->
-    <TextView
-        android:id="@+id/info_output"
-        android:layout_width="0dp"
-        android:layout_height="160dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:ellipsize="marquee"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:fontFamily="@font/montserrat"
-        android:marqueeRepeatLimit="marquee_forever"
-        android:scrollHorizontally="true"
-        android:singleLine="true"
-        android:text="88"
-        android:textAlignment="center"
-        android:textColor="@color/xura_text_primary"
-        android:textSize="110sp"
-        android:textStyle="bold"
-        android:gravity="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/your_balance_xrp_text" />
 
     <!-- Bet amount input -->
     <EditText

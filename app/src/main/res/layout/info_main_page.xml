@@ -26,7 +26,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/info_list"
+                android:background="@color/xura_black"
                 android:orientation="vertical">
 
                 <include
