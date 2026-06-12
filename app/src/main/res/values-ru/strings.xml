@@ -1,4 +1,7 @@
 <resources>
+    <string name="nav_wallet">Кошелёк</string>
+    <string name="nav_games">Игры</string>
+    <string name="nav_settings">Настройки</string>
 
     <string name="want_to_win"><u>ХОТИТЕ ВЫИГРАТЬ 386301 XRP - НАЖМИТЕ И НАЧНИТЕ ИГРАТЬ!</u></string>
     <string name="collect_and_renew_bet"><u>СОБРАТЬ И ПЕРЕНОВИТЬ СТАВКУ</u></string>

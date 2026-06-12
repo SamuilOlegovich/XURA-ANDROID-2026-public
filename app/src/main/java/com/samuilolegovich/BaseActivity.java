@@ -9,9 +9,12 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.samuilolegovich.enums.StringEnum;
 import com.samuilolegovich.utils.InactivityGuard;
 import com.samuilolegovich.utils.PrefsHelper;
+import com.samuilolegovich.view.SelectGame;
+import com.samuilolegovich.view.Settings;
 
 import java.util.Locale;
 import dagger.hilt.android.AndroidEntryPoint;
@@ -51,6 +54,42 @@ public abstract class BaseActivity extends AppCompatActivity {
         InactivityGuard.reset();
         MainActivity.START_FLAG = true;
         startActivity(new Intent(".EnterApplicationPassword"));
+    }
+
+    // Вызывать из onCreate после setContentView в MainActivity, SelectGame, Settings
+    protected void setupBottomNav() {
+        BottomNavigationView nav = findViewById(R.id.bottom_nav);
+        if (nav == null) return;
+
+        // Отмечаем текущую вкладку без триггера listener
+        if (this instanceof MainActivity) {
+            nav.setSelectedItemId(R.id.nav_wallet);
+        } else if (this instanceof SelectGame) {
+            nav.setSelectedItemId(R.id.nav_games);
+        } else if (this instanceof Settings) {
+            nav.setSelectedItemId(R.id.nav_settings);
+        }
+
+        nav.setOnItemSelectedListener(item -> {
+            int id = item.getItemId();
+            if (id == R.id.nav_wallet && !(this instanceof MainActivity)) {
+                navigateToTab(MainActivity.MAIN_ACTIVITY_CLASS);
+            } else if (id == R.id.nav_games && !(this instanceof SelectGame)) {
+                navigateToTab(SelectGame.SELECT_GAME_CLASS);
+            } else if (id == R.id.nav_settings && !(this instanceof Settings)) {
+                navigateToTab(Settings.SETTINGS_CLASS);
+            }
+            return true;
+        });
+    }
+
+    private void navigateToTab(String action) {
+        Intent intent = new Intent(action);
+        // Переиспользуем существующую Activity из стека без пересоздания
+        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        startActivity(intent);
+        // Убираем анимацию перехода — это смена вкладки, не навигация вглубь
+        overridePendingTransition(0, 0);
     }
 
     private void applyLocale() {

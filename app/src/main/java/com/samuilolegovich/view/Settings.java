@@ -52,6 +52,7 @@ public class Settings extends BaseActivity {
         setButtons();
         setLanguage();
         listeners();
+        setupBottomNav();
     }
 
 

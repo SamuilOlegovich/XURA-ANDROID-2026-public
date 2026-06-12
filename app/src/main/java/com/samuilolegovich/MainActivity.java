@@ -98,6 +98,7 @@ public class MainActivity extends BaseActivity {
         setLanguage();
         listeners();
         goText();
+        setupBottomNav();
 
         viewModel.getBalance().observe(this, b ->
                 balance.setText(b.toString() + " XRP"));

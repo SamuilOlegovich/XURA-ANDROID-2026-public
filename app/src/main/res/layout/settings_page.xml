@@ -60,7 +60,7 @@
             android:layout_height="56dp"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
-            android:layout_marginBottom="40dp"
+            android:layout_marginBottom="12dp"
             android:background="@drawable/bg_button_secondary"
             app:backgroundTint="@null"
             android:insetTop="0dp"
@@ -71,11 +71,9 @@
             android:textSize="16sp"
             android:textStyle="bold"
             android:letterSpacing="0.06"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/bottom_nav"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_constraintTop_toTopOf="parent"
-            tools:layout_constraintVertical_bias="0.95" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <!-- BIOMETRICS toggle button -->
         <com.google.android.material.button.MaterialButton
@@ -118,6 +116,21 @@
             android:textStyle="bold"
             android:letterSpacing="0.06"
             app:layout_constraintBottom_toTopOf="@+id/settings_select_english_linc"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <!-- Bottom Navigation Bar -->
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_nav"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/xura_surface"
+            app:itemIconTint="@color/bottom_nav_tint"
+            app:itemTextColor="@color/bottom_nav_tint"
+            app:itemRippleColor="@color/xura_glass_fill"
+            app:menu="@menu/bottom_nav_menu"
+            app:labelVisibilityMode="labeled"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 

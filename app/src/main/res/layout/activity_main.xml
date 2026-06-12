@@ -175,7 +175,7 @@
             android:layout_height="40dp"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="8dp"
             android:fontFamily="@font/montserrat"
             android:text="@string/transaction_history"
             android:textAlignment="center"
@@ -183,11 +183,24 @@
             android:textSize="13sp"
             android:letterSpacing="0.06"
             android:gravity="center"
+            app:layout_constraintBottom_toTopOf="@+id/bottom_nav"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <!-- Bottom Navigation Bar -->
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_nav"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/xura_surface"
+            app:itemIconTint="@color/bottom_nav_tint"
+            app:itemTextColor="@color/bottom_nav_tint"
+            app:itemRippleColor="@color/xura_glass_fill"
+            app:menu="@menu/bottom_nav_menu"
+            app:labelVisibilityMode="labeled"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_constraintTop_toTopOf="parent"
-            tools:layout_constraintVertical_bias="0.95" />
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

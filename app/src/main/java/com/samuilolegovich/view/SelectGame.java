@@ -47,6 +47,7 @@ public class SelectGame extends BaseActivity {
         setLanguage();
         setSound();
         listeners();
+        setupBottomNav();
     }
 
 
