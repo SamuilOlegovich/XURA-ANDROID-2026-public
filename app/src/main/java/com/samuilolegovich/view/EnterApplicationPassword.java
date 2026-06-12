@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.view.WindowManager;
 import android.view.Gravity;
 import android.view.View;
 import android.view.animation.Animation;
@@ -52,6 +53,7 @@ public class EnterApplicationPassword extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         setContentView(R.layout.enter_application_password);
         preferences = PrefsHelper.get(this);
 
