@@ -8,7 +8,6 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
@@ -17,8 +16,9 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.samuilolegovich.enums.StringEnum;
-import com.samuilolegovich.utils.Cipher;
 import com.samuilolegovich.utils.Lotto;
+import com.samuilolegovich.utils.PrefsHelper;
+import com.samuilolegovich.utils.SecureSeedStorage;
 import com.samuilolegovich.view.Lost;
 import com.samuilolegovich.view.Win;
 import com.samuilolegovich.view.YourReferral;
@@ -83,7 +83,7 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         MAIN_ACTIVITY = this;
 
-        preferences = getSharedPreferences(StringEnum.APP_PREFERENCES.getValue(), Context.MODE_PRIVATE);
+        preferences = PrefsHelper.get(this);
         IS_REAL_GAME_MODE = preferences.getString(StringEnum.APP_GAME_MODE.getValue(), "false")
                 .equalsIgnoreCase("true");
         // newLocale уже установлен BaseActivity.applyLocale() до super.onCreate()
@@ -145,7 +145,6 @@ public class MainActivity extends BaseActivity {
 
 
 
-    @SuppressLint("HardwareIds")
     private void handleStartup() {
         boolean isSetPassword = preferences.getString(StringEnum.APP_PREFERENCES_PASSWORD.getValue(), "")
                 .equalsIgnoreCase(StringEnum.APP_PREFERENCES_PASSWORD_NOT_INSTALLED.getValue());
@@ -162,11 +161,13 @@ public class MainActivity extends BaseActivity {
             return;
         }
 
-        // Кошелёк есть — восстанавливаем и запускаем сокет асинхронно
-        String seed = Cipher.decryptString(
-                preferences.getString(StringEnum.APP_PREFERENCES_SEED.getValue(), ""),
-                preferences.getString(StringEnum.APP_PREFERENCES_SALT.getValue(), ""),
-                Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
+        // Пробуем расшифровать через Keystore; null = старый формат или повреждено
+        String seed = SecureSeedStorage.load(preferences, StringEnum.APP_PREFERENCES_SEED.getValue());
+        if (seed == null) {
+            SecureSeedStorage.delete(preferences, StringEnum.APP_PREFERENCES_SEED.getValue());
+            goToAnotherPage(RESTORE_OR_NEW_WALLET_CLASS);
+            return;
+        }
 
         viewModel.restoreAndInit(seed);
 

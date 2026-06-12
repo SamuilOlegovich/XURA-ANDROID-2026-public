@@ -7,6 +7,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 
 import com.samuilolegovich.enums.StringEnum;
+import com.samuilolegovich.utils.PrefsHelper;
 
 import java.util.Locale;
 
@@ -30,8 +31,7 @@ public class XuraApp extends Application {
 
     // Ресурсы с локалью из SharedPreferences — безопасно вызывать из фоновых потоков
     public static Resources getLocalizedResources() {
-        SharedPreferences prefs = instance.getSharedPreferences(
-                StringEnum.APP_PREFERENCES.getValue(), Context.MODE_PRIVATE);
+        SharedPreferences prefs = PrefsHelper.get(instance);
         String lang = prefs.getString(StringEnum.APP_PREFERENCES_LOCALE.getValue(), "en");
         Configuration config = new Configuration(instance.getResources().getConfiguration());
         config.setLocale(new Locale(lang));

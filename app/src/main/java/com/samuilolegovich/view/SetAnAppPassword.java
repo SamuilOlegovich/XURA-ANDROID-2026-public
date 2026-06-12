@@ -20,6 +20,7 @@ import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 import com.samuilolegovich.enums.StringEnum;
 import com.samuilolegovich.utils.Cipher;
+import com.samuilolegovich.utils.PrefsHelper;
 
 import java.util.UUID;
 
@@ -124,7 +125,7 @@ public class SetAnAppPassword extends BaseActivity {
 
 
     private void setPasswordForApp(String password, boolean b) {
-        preferences = getSharedPreferences(StringEnum.APP_PREFERENCES.getValue(), Context.MODE_PRIVATE);
+        preferences = PrefsHelper.get(this);
 
         @SuppressLint("HardwareIds")
         String androidId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);

@@ -22,6 +22,7 @@ import com.samuilolegovich.R;
 import com.samuilolegovich.asyncAndRun.runnable.GenColorRun;
 import com.samuilolegovich.enums.StringEnum;
 import com.samuilolegovich.enums.TestModeEnum;
+import com.samuilolegovich.utils.PrefsHelper;
 import com.samuilolegovich.utils.Lotto;
 import com.samuilolegovich.viewmodel.GameBetError;
 import com.samuilolegovich.viewmodel.GuessColorViewModel;
@@ -184,7 +185,7 @@ public class GuessTheColorGame extends BaseActivity {
 
 
     private void getReferral() {
-        preferences = getSharedPreferences(StringEnum.APP_PREFERENCES.getValue(), Context.MODE_PRIVATE);
+        preferences = PrefsHelper.get(this);
         myReferral = preferences.contains(StringEnum.APP_PREFERENCES_REFERRAL.getValue())
                 ? preferences.getString(StringEnum.APP_PREFERENCES_REFERRAL.getValue(), "0")
                 : "0";

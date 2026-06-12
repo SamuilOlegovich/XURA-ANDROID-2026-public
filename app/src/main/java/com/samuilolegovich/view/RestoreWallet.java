@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.view.Gravity;
 import android.view.View;
 import android.view.animation.Animation;
@@ -19,7 +18,8 @@ import com.samuilolegovich.BaseActivity;
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 import com.samuilolegovich.enums.StringEnum;
-import com.samuilolegovich.utils.Cipher;
+import com.samuilolegovich.utils.PrefsHelper;
+import com.samuilolegovich.utils.SecureSeedStorage;
 import com.samuilolegovich.wallet.repository.WalletRepository;
 
 import java.util.Map;
@@ -40,8 +40,6 @@ public class RestoreWallet extends BaseActivity {
 
     private String ERROR_CHECK_THE_SEED_AND_TRY_AGAIN;
 
-    private SharedPreferences.Editor editor;
-    private SharedPreferences preferences;
     private Animation animTranslate;
 
     private TextView restoreWalletTextView;
@@ -112,16 +110,8 @@ public class RestoreWallet extends BaseActivity {
     }
 
 
-    @SuppressLint("HardwareIds")
     private void encryptAndWriteSeed(String seedRestore) {
-        preferences = getSharedPreferences(StringEnum.APP_PREFERENCES.getValue(),
-                Context.MODE_PRIVATE);
-        editor = preferences.edit();
-        editor.putString(StringEnum.APP_PREFERENCES_SEED.getValue(),
-                Cipher.encryptString(seedRestore,
-                        preferences.getString(StringEnum.APP_PREFERENCES_SALT.getValue(), ""),
-                        Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID)));
-        editor.apply();
+        SecureSeedStorage.save(PrefsHelper.get(this), StringEnum.APP_PREFERENCES_SEED.getValue(), seedRestore);
     }
 
 

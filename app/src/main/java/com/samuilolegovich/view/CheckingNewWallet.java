@@ -1,11 +1,9 @@
 package com.samuilolegovich.view;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.view.Gravity;
 import android.view.View;
 import android.view.animation.Animation;
@@ -19,7 +17,8 @@ import com.samuilolegovich.BaseActivity;
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 import com.samuilolegovich.enums.StringEnum;
-import com.samuilolegovich.utils.Cipher;
+import com.samuilolegovich.utils.PrefsHelper;
+import com.samuilolegovich.utils.SecureSeedStorage;
 import com.samuilolegovich.wallet.repository.WalletRepository;
 
 import javax.inject.Inject;
@@ -37,8 +36,6 @@ public class CheckingNewWallet extends BaseActivity {
     @Inject WalletRepository repository;
     public static final String CHECKING_NEW_WALLET_CLASS = ".CheckingNewWallet";
 
-    private SharedPreferences.Editor editor;
-    private SharedPreferences preferences;
     private Animation animTranslate;
 
     private TextView checkingNewWalletText;
@@ -111,25 +108,13 @@ public class CheckingNewWallet extends BaseActivity {
     }
 
 
-    @SuppressLint("HardwareIds")
     private String getPreSeed() {
-        preferences = getSharedPreferences(StringEnum.APP_PREFERENCES.getValue(), Context.MODE_PRIVATE);
-        return Cipher.decryptString(preferences.getString(
-                StringEnum.APP_PREFERENCES_PRE_SEED.getValue(), ""),
-                preferences.getString(StringEnum.APP_PREFERENCES_SALT.getValue(), ""),
-                Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
+        return SecureSeedStorage.load(PrefsHelper.get(this), StringEnum.APP_PREFERENCES_PRE_SEED.getValue());
     }
 
 
-    @SuppressLint("HardwareIds")
     private void setSeed(String newSeed) {
-        preferences = getSharedPreferences(StringEnum.APP_PREFERENCES.getValue(), Context.MODE_PRIVATE);
-        editor = preferences.edit();
-        editor.putString(StringEnum.APP_PREFERENCES_SEED.getValue(),
-                Cipher.encryptString(newSeed,
-                        preferences.getString(StringEnum.APP_PREFERENCES_SALT.getValue(), ""),
-                        Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID)));
-        editor.apply();
+        SecureSeedStorage.save(PrefsHelper.get(this), StringEnum.APP_PREFERENCES_SEED.getValue(), newSeed);
     }
 
 

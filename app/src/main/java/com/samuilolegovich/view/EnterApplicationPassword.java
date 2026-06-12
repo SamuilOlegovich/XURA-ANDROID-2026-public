@@ -20,6 +20,7 @@ import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 import com.samuilolegovich.enums.StringEnum;
 import com.samuilolegovich.utils.Cipher;
+import com.samuilolegovich.utils.PrefsHelper;
 
 
 import static com.samuilolegovich.view.RestoreOrCreateNewWallet.RESTORE_OR_NEW_WALLET_CLASS;
@@ -47,7 +48,7 @@ public class EnterApplicationPassword extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.enter_application_password);
-        preferences = getSharedPreferences(StringEnum.APP_PREFERENCES.getValue(), Context.MODE_PRIVATE);
+        preferences = PrefsHelper.get(this);
 
         setButtons();
         setLanguage();

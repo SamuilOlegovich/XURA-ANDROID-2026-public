@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.samuilolegovich.enums.StringEnum;
+import com.samuilolegovich.utils.PrefsHelper;
 
 import java.util.Locale;
 import dagger.hilt.android.AndroidEntryPoint;
@@ -26,8 +27,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     private void applyLocale() {
-        SharedPreferences prefs = getSharedPreferences(
-                StringEnum.APP_PREFERENCES.getValue(), MODE_PRIVATE);
+        SharedPreferences prefs = PrefsHelper.get(this);
         String lang = prefs.getString(StringEnum.APP_PREFERENCES_LOCALE.getValue(), "en");
         Locale locale = new Locale(lang);
 

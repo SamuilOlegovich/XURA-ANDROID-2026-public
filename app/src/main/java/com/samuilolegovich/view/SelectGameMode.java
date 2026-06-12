@@ -17,6 +17,7 @@ import com.samuilolegovich.BaseActivity;
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 import com.samuilolegovich.enums.StringEnum;
+import com.samuilolegovich.utils.PrefsHelper;
 import dagger.hilt.android.AndroidEntryPoint;
 
 
@@ -89,7 +90,7 @@ public class SelectGameMode  extends BaseActivity {
 
 
     private void makeStack(StringEnum stringEnum) {
-        preferences = getSharedPreferences(StringEnum.APP_PREFERENCES.getValue(), Context.MODE_PRIVATE);
+        preferences = PrefsHelper.get(this);
 
         editor = preferences.edit();
         editor.putString(StringEnum.APP_GAME_MODE.getValue(), stringEnum.getValue());

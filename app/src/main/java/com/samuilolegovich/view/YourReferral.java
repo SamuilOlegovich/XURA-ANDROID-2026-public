@@ -19,6 +19,7 @@ import com.samuilolegovich.BaseActivity;
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 import com.samuilolegovich.enums.StringEnum;
+import com.samuilolegovich.utils.PrefsHelper;
 import dagger.hilt.android.AndroidEntryPoint;
 
 
@@ -97,7 +98,7 @@ public class YourReferral  extends BaseActivity {
 
 
     private void setReferralForApp(String referral) {
-        preferences = getSharedPreferences(StringEnum.APP_PREFERENCES.getValue(), Context.MODE_PRIVATE);
+        preferences = PrefsHelper.get(this);
         editor = preferences.edit();
         editor.putString(StringEnum.APP_PREFERENCES_REFERRAL.getValue(), referral);
         editor.apply();

@@ -17,6 +17,7 @@ import com.samuilolegovich.BaseActivity;
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 import com.samuilolegovich.enums.StringEnum;
+import com.samuilolegovich.utils.PrefsHelper;
 import dagger.hilt.android.AndroidEntryPoint;
 
 
@@ -66,7 +67,7 @@ public class SelectLanguage extends BaseActivity {
 
 
     private void getSettingsLanguage() {
-        preferences = getSharedPreferences(StringEnum.APP_PREFERENCES.getValue(), Context.MODE_PRIVATE);
+        preferences = PrefsHelper.get(this);
         languageNow = preferences.getString(StringEnum.APP_PREFERENCES_LOCALE.getValue(), "en");
     }
 
@@ -108,7 +109,7 @@ public class SelectLanguage extends BaseActivity {
 
 
     private void makeStack(StringEnum stringEnum) {
-        preferences = getSharedPreferences(StringEnum.APP_PREFERENCES.getValue(), Context.MODE_PRIVATE);
+        preferences = PrefsHelper.get(this);
         preferences.edit()
                 .putString(StringEnum.APP_PREFERENCES_LOCALE.getValue(), stringEnum.getValue())
                 .apply();
