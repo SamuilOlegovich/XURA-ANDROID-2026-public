@@ -49,6 +49,11 @@ public class SetAnAppPassword extends BaseActivity {
 
 
     @Override
+    protected boolean isLockExempt() {
+        return true;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.set_password_for_app_page);

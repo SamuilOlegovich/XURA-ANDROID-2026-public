@@ -44,6 +44,11 @@ public class EnterApplicationPassword extends BaseActivity {
 
 
     @Override
+    protected boolean isLockExempt() {
+        return true;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
