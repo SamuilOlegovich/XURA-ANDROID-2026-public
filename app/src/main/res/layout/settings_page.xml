@@ -40,125 +40,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Wallet info card -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_wallet"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="24dp"
-            app:cardBackgroundColor="@color/xura_card"
-            app:cardCornerRadius="16dp"
-            app:strokeColor="@color/xura_glass_border"
-            app:strokeWidth="1dp"
-            app:cardElevation="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/settings_text_view"
-            app:layout_constraintBottom_toTopOf="@+id/settings_biometric_linc"
-            app:layout_constraintVertical_bias="0">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat"
-                    android:text="@string/settings_wallet_section"
-                    android:textColor="@color/xura_text_tertiary"
-                    android:textSize="10sp"
-                    android:letterSpacing="0.12" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:background="@color/xura_glass_border" />
-
-                <TextView
-                    android:id="@+id/tv_wallet_address"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat"
-                    android:textColor="@color/xura_text_primary"
-                    android:textSize="13sp"
-                    android:ellipsize="middle"
-                    android:singleLine="true" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:fontFamily="@font/montserrat"
-                    android:text="@string/settings_tap_to_copy"
-                    android:textColor="@color/xura_cyan"
-                    android:textSize="10sp"
-                    android:letterSpacing="0.04" />
-
-            </LinearLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <!-- App version card -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_version"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="24dp"
-            app:cardBackgroundColor="@color/xura_card"
-            app:cardCornerRadius="16dp"
-            app:strokeColor="@color/xura_glass_border"
-            app:strokeWidth="1dp"
-            app:cardElevation="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/card_wallet"
-            app:layout_constraintBottom_toTopOf="@+id/settings_biometric_linc"
-            app:layout_constraintVertical_bias="0">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat"
-                    android:text="@string/settings_version_section"
-                    android:textColor="@color/xura_text_tertiary"
-                    android:textSize="10sp"
-                    android:letterSpacing="0.12" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:background="@color/xura_glass_border" />
-
-                <TextView
-                    android:id="@+id/tv_app_version"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat"
-                    android:textColor="@color/xura_text_primary"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
         <!-- Test mode virtual balance card (visible only in test mode) -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/card_test_balance"
@@ -175,8 +56,8 @@
             app:cardElevation="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/card_version"
-            app:layout_constraintBottom_toTopOf="@+id/settings_biometric_linc"
+            app:layout_constraintTop_toBottomOf="@+id/settings_text_view"
+            app:layout_constraintBottom_toTopOf="@+id/settings_set_password_linc"
             app:layout_constraintVertical_bias="0">
 
             <LinearLayout
@@ -312,7 +193,7 @@
             android:textSize="16sp"
             android:textStyle="bold"
             android:letterSpacing="0.06"
-            app:layout_constraintBottom_toTopOf="@+id/settings_biometric_linc"
+            app:layout_constraintBottom_toTopOf="@+id/settings_select_english_linc"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -352,11 +233,11 @@
             android:insetBottom="0dp"
             android:fontFamily="@font/montserrat"
             android:text="@string/settings_set_password"
-            android:textColor="@color/xura_text_primary"
+            android:textColor="@color/xura_text_on_primary"
             android:textSize="16sp"
             android:textStyle="bold"
             android:letterSpacing="0.06"
-            app:layout_constraintBottom_toTopOf="@+id/settings_select_english_linc"
+            app:layout_constraintBottom_toTopOf="@+id/settings_biometric_linc"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 

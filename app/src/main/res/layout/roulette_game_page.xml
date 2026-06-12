@@ -226,7 +226,7 @@
                 android:textStyle="bold"
                 android:letterSpacing="0.12"
                 app:backgroundTint="@color/xura_gold"
-                app:cornerRadius="16dp"
+                app:cornerRadius="100dp"
                 app:rippleColor="#40000000" />
 
         </LinearLayout>

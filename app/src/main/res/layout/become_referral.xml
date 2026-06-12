@@ -85,7 +85,7 @@
             android:insetBottom="0dp"
             android:fontFamily="@font/montserrat"
             android:text="@string/set_referral"
-            android:textColor="@color/xura_text_primary"
+            android:textColor="@color/xura_text_on_primary"
             android:textSize="15sp"
             android:textStyle="bold"
             android:letterSpacing="0.06"

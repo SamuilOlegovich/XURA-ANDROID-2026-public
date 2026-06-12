@@ -21,6 +21,7 @@
 
     <!-- Text Hierarchy (AARRGGBB) -->
     <color name="xura_text_primary">#FFFFFFFF</color>
+    <color name="xura_text_on_primary">#FF0D0D20</color>
     <color name="xura_text_secondary">#CCFFFFFF</color>
     <color name="xura_text_tertiary">#80FFFFFF</color>
     <color name="xura_text_muted">#80FFFFFF</color>

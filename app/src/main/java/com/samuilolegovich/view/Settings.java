@@ -5,8 +5,6 @@ import static com.samuilolegovich.view.SelectLanguage.SELECT_LANGUAGE_CLASS;
 import static com.samuilolegovich.view.SettingsSetPasswordForApp.SETTINGS_SET_PASSWORD_FOR_APP_CLASS;
 
 import android.annotation.SuppressLint;
-import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -49,9 +47,6 @@ public class Settings extends BaseActivity {
     private TextView settingsSetPasswordLinc;
     private TextView settingsBiometricLinc;
     private TextView settingsTextView;
-    private MaterialCardView cardWallet;
-    private TextView tvWalletAddress;
-    private TextView tvAppVersion;
     private MaterialCardView cardTestBalance;
     private TextView tvTestBalance;
     private MaterialButton btnResetTestBalance;
@@ -78,9 +73,6 @@ public class Settings extends BaseActivity {
         settingsSetPasswordLinc = (TextView) findViewById(R.id.settings_set_password_linc);
         settingsBiometricLinc = (TextView) findViewById(R.id.settings_biometric_linc);
         settingsTextView = (TextView) findViewById(R.id.settings_text_view);
-        cardWallet = findViewById(R.id.card_wallet);
-        tvWalletAddress = findViewById(R.id.tv_wallet_address);
-        tvAppVersion = findViewById(R.id.tv_app_version);
         cardTestBalance = findViewById(R.id.card_test_balance);
         tvTestBalance = findViewById(R.id.tv_test_balance);
         btnResetTestBalance = findViewById(R.id.btn_reset_test_balance);
@@ -95,15 +87,6 @@ public class Settings extends BaseActivity {
         settingsTextView.setText(R.string.settings_text);
         settingsSetPasswordLinc.setText(R.string.settings_set_password);
         updateBiometricButton();
-
-        String address = repository.getClassicAddress();
-        tvWalletAddress.setText(address != null ? address : "—");
-
-        String version = "v1.0";
-        try {
-            version = "v" + getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
-        } catch (Exception ignored) {}
-        tvAppVersion.setText(version);
 
         updateGameModeButton();
         updateTestBalanceCard();
@@ -162,14 +145,6 @@ public class Settings extends BaseActivity {
 
     private void listeners() {
         animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
-
-        cardWallet.setOnClickListener(v -> {
-            String address = tvWalletAddress.getText().toString();
-            if (address.isEmpty() || address.equals("—")) return;
-            ClipboardManager cm = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-            cm.setPrimaryClip(ClipData.newPlainText("xrp_address", address));
-            Toast.makeText(this, R.string.settings_address_copied, Toast.LENGTH_SHORT).show();
-        });
 
         settingsSetPasswordLinc.setOnClickListener(v -> {
             v.startAnimation(animTranslate);

@@ -8,8 +8,8 @@
                 android:startColor="#00D4FF"
                 android:centerColor="#9020D0"
                 android:endColor="#FFB000"
-                android:angle="135" />
-            <corners android:radius="16dp" />
+                android:angle="0" />
+            <corners android:radius="100dp" />
         </shape>
     </item>
 </ripple>
