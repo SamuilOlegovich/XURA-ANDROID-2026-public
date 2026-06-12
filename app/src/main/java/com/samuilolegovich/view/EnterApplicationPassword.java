@@ -20,6 +20,7 @@ import com.samuilolegovich.BaseActivity;
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 import com.samuilolegovich.enums.StringEnum;
+import com.samuilolegovich.utils.BiometricHelper;
 import com.samuilolegovich.utils.Cipher;
 import com.samuilolegovich.utils.PrefsHelper;
 
@@ -41,6 +42,8 @@ public class EnterApplicationPassword extends BaseActivity {
     private TextView settingsSetPasswordAppTextView;
     private EditText password;
     private TextView next;
+
+    private boolean biometricPromptShown = false;
 
 
 
@@ -104,6 +107,39 @@ public class EnterApplicationPassword extends BaseActivity {
         );
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!biometricPromptShown) {
+            biometricPromptShown = true;
+            tryBiometric();
+        }
+    }
+
+    private void tryBiometric() {
+        boolean enabled = "true".equalsIgnoreCase(
+                preferences.getString(StringEnum.APP_PREFERENCES_BIOMETRIC_ENABLED.getValue(), "false"));
+        if (!enabled || !BiometricHelper.isAvailable(this)) return;
+
+        BiometricHelper.prompt(this,
+                getString(R.string.biometric_prompt_title),
+                getString(R.string.biometric_prompt_subtitle),
+                new BiometricHelper.Callback() {
+                    @Override public void onSuccess() { proceedAfterAuth(); }
+                    @Override public void onFallback() { /* пользователь вводит пароль вручную */ }
+                    @Override public void onError(String message) { /* вводит пароль вручную */ }
+                });
+    }
+
+    private void proceedAfterAuth() {
+        MainActivity.START_FLAG = false;
+        if (!preferences.contains(StringEnum.APP_PREFERENCES_SEED.getValue())) {
+            goToAnotherPage(RESTORE_OR_NEW_WALLET_CLASS);
+        } else {
+            closeThisPage();
+        }
+    }
 
     @SuppressLint("HardwareIds")
     private String getPassword(String password) {

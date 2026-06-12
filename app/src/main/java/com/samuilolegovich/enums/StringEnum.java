@@ -3,6 +3,7 @@ package com.samuilolegovich.enums;
 
 
 public enum StringEnum {
+    APP_PREFERENCES_BIOMETRIC_ENABLED("biometric_enabled"),
     APP_PREFERENCES_PASSWORD_NOT_INSTALLED("password not installed"),
     APP_PREFERENCES_REFERRAL_NOT_INSTALLED("0"),
     APP_PREFERENCES_PASSWORD("password"),

@@ -232,4 +232,13 @@
     <string name="our_goal_1"> • Our main goal is to make games available to everyone and anywhere in the world at any time you wish. And also so that everyone has the same and fair conditions both in the game and in the opportunity to earn in our system..</string>
     <string name="our_goal_2"> • Good luck and thank you for your trust in choosing our application.</string>
 
+    <string name="biometric_dialog_title">ВКЛЮЧИТЬ БИОМЕТРИЮ?</string>
+    <string name="biometric_dialog_message">Используйте отпечаток пальца или Face ID для разблокировки кошелька вместо пароля</string>
+    <string name="biometric_enable">ВКЛЮЧИТЬ</string>
+    <string name="biometric_skip">ПРОПУСТИТЬ</string>
+    <string name="biometric_use_password">ВВЕСТИ ПАРОЛЬ</string>
+    <string name="biometric_prompt_title">КОШЕЛЁК XURA</string>
+    <string name="biometric_prompt_subtitle">Подтвердите личность для продолжения</string>
+    <string name="settings_biometric"><u>БИОМЕТРИЯ</u></string>
+
 </resources>

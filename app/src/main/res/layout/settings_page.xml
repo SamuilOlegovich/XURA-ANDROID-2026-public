@@ -76,6 +76,27 @@
             tools:layout_constraintTop_toTopOf="parent"
             tools:layout_constraintVertical_bias="0.95" />
 
+        <!-- BIOMETRICS toggle button -->
+        <TextView
+            android:id="@+id/settings_biometric_linc"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/bg_button_secondary"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/settings_biometric"
+            android:textAlignment="center"
+            android:textColor="@color/xura_text_secondary"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:letterSpacing="0.06"
+            app:layout_constraintBottom_toTopOf="@+id/settings_set_password_linc"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
         <!-- SET PASSWORD button -->
         <TextView
             android:id="@+id/settings_set_password_linc"

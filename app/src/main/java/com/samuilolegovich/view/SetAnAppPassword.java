@@ -15,11 +15,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+
 import com.samuilolegovich.BaseActivity;
 
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 import com.samuilolegovich.enums.StringEnum;
+import com.samuilolegovich.utils.BiometricHelper;
 import com.samuilolegovich.utils.Cipher;
 import com.samuilolegovich.utils.PrefsHelper;
 
@@ -94,7 +97,7 @@ public class SetAnAppPassword extends BaseActivity {
 
                         if (one.length() > 3 && one.equals(two)) {
                             setPasswordForApp(one, true);
-                            goToAnotherPage(RESTORE_OR_NEW_WALLET_CLASS);
+                            offerBiometric();
                         } else {
                             passwordOne.setText("");
                             passwordTwo.setText("");
@@ -116,6 +119,34 @@ public class SetAnAppPassword extends BaseActivity {
         );
     }
 
+
+    private void offerBiometric() {
+        if (!BiometricHelper.isAvailable(this)) {
+            saveBiometricEnabled(false);
+            goToAnotherPage(RESTORE_OR_NEW_WALLET_CLASS);
+            return;
+        }
+        new AlertDialog.Builder(this)
+                .setTitle(getString(R.string.biometric_dialog_title))
+                .setMessage(getString(R.string.biometric_dialog_message))
+                .setCancelable(false)
+                .setPositiveButton(getString(R.string.biometric_enable), (d, w) -> {
+                    saveBiometricEnabled(true);
+                    goToAnotherPage(RESTORE_OR_NEW_WALLET_CLASS);
+                })
+                .setNegativeButton(getString(R.string.biometric_skip), (d, w) -> {
+                    saveBiometricEnabled(false);
+                    goToAnotherPage(RESTORE_OR_NEW_WALLET_CLASS);
+                })
+                .show();
+    }
+
+    private void saveBiometricEnabled(boolean enabled) {
+        PrefsHelper.get(this).edit()
+                .putString(StringEnum.APP_PREFERENCES_BIOMETRIC_ENABLED.getValue(),
+                        enabled ? "true" : "false")
+                .apply();
+    }
 
     private void goToAnotherPage(String namePage) {
         // класс для перехода на другую страницу

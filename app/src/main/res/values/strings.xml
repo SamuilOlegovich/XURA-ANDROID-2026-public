@@ -103,6 +103,14 @@
     <string name="bet_won">BET WON</string>
     <string name="amount">Amount</string>
     <string name="app_name">XURA</string>
+    <string name="biometric_dialog_title">ENABLE BIOMETRICS?</string>
+    <string name="biometric_dialog_message">Use fingerprint or Face ID to unlock the wallet instead of a password</string>
+    <string name="biometric_enable">ENABLE</string>
+    <string name="biometric_skip">SKIP</string>
+    <string name="biometric_use_password">USE PASSWORD</string>
+    <string name="biometric_prompt_title">XURA WALLET</string>
+    <string name="biometric_prompt_subtitle">Confirm your identity to continue</string>
+    <string name="settings_biometric"><u>BIOMETRICS</u></string>
     <string name="to">To</string>
 
 
