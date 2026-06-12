@@ -137,7 +137,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <!-- RED bet button — immersive game action -->
-    <TextView
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/color_red"
         android:layout_width="0dp"
         android:layout_height="64dp"
@@ -145,13 +145,14 @@
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/bg_game_card_red"
+        app:backgroundTint="@null"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
         android:fontFamily="@font/montserrat"
         android:text="@string/red"
-        android:textAlignment="center"
         android:textColor="@color/xura_text_primary"
         android:textSize="22sp"
         android:textStyle="bold"
-        android:gravity="center"
         android:letterSpacing="0.1"
         android:textAllCaps="true"
         app:layout_constraintBottom_toTopOf="@+id/color_black"
@@ -159,7 +160,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <!-- BLACK bet button — immersive game action -->
-    <TextView
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/color_black"
         android:layout_width="0dp"
         android:layout_height="64dp"
@@ -167,13 +168,14 @@
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
         android:background="@drawable/bg_game_card_dark"
+        app:backgroundTint="@null"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
         android:fontFamily="@font/montserrat"
         android:text="@string/black"
-        android:textAlignment="center"
         android:textColor="@color/xura_text_primary"
         android:textSize="22sp"
         android:textStyle="bold"
-        android:gravity="center"
         android:letterSpacing="0.1"
         android:textAllCaps="true"
         app:layout_constraintBottom_toBottomOf="parent"

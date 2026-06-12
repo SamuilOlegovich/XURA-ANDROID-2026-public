@@ -80,7 +80,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <!-- GUESS THE COLOR — primary action -->
-    <TextView
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/guess_the_color_linc"
         android:layout_width="0dp"
         android:layout_height="60dp"
@@ -88,20 +88,21 @@
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="12dp"
         android:background="@drawable/bg_button_primary"
+        app:backgroundTint="@null"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
         android:fontFamily="@font/montserrat"
         android:text="@string/name_guess_the_color"
-        android:textAlignment="center"
         android:textColor="@color/xura_text_primary"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:gravity="center"
         android:letterSpacing="0.04"
         app:layout_constraintBottom_toTopOf="@+id/double_your_bet_linc"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <!-- GUESS THE NUMBER — secondary action -->
-    <TextView
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/double_your_bet_linc"
         android:layout_width="0dp"
         android:layout_height="60dp"
@@ -109,13 +110,14 @@
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="12dp"
         android:background="@drawable/bg_button_secondary"
+        app:backgroundTint="@null"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
         android:fontFamily="@font/montserrat"
         android:text="@string/name_guess_the_number"
-        android:textAlignment="center"
         android:textColor="@color/xura_text_secondary"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:gravity="center"
         android:letterSpacing="0.04"
         app:layout_constraintBottom_toTopOf="@+id/roulette_linc"
         app:layout_constraintEnd_toEndOf="parent"

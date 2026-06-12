@@ -60,7 +60,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageViewLogo" />
 
     <!-- COMING SOON — styled like primary button -->
-    <TextView
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/roulette_game_message"
         android:layout_width="0dp"
         android:layout_height="60dp"
@@ -68,13 +68,14 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="24dp"
         android:background="@drawable/bg_button_primary"
+        app:backgroundTint="@null"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
         android:fontFamily="@font/montserrat"
         android:text="@string/coming_soon"
-        android:textAlignment="center"
         android:textColor="@color/xura_text_primary"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:gravity="center"
         android:letterSpacing="0.16"
         android:textAllCaps="true"
         app:layout_constraintEnd_toEndOf="parent"
