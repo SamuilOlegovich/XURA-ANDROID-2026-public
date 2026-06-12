@@ -8,9 +8,6 @@ import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.Gravity;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,7 +33,6 @@ public class YourReferral  extends BaseActivity {
 
     private ClipboardManager clipboardManager;
     private MediaPlayer erMediaPlayer;
-    private Animation animTranslate;
     private ClipData clipData;
 
     private SharedPreferences.Editor editor;
@@ -80,20 +76,14 @@ public class YourReferral  extends BaseActivity {
 
 
     private void listeners() {
-        animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
-        clipboardManager=(ClipboardManager)getSystemService(CLIPBOARD_SERVICE);
+        clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
 
-        copy.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        v.startAnimation(animTranslate);
-                        clipData = ClipData.newPlainText("text", CODE);
-                        clipboardManager.setPrimaryClip(clipData);
-                        makeToast(CODE_COPIED_TO_PHONE_BUFFER);
-                    }
-                }
-        );
+        copy.setOnClickListener(v -> {
+            pulse(v);
+            clipData = ClipData.newPlainText("text", CODE);
+            clipboardManager.setPrimaryClip(clipData);
+            makeToast(CODE_COPIED_TO_PHONE_BUFFER);
+        });
     }
 
 

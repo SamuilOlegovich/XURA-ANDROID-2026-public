@@ -12,8 +12,6 @@ import android.os.Bundle;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.samuilolegovich.enums.StringEnum;
@@ -63,7 +61,6 @@ public class MainActivity extends BaseActivity {
 
     private MainViewModel viewModel;
     private SharedPreferences preferences;
-    private Animation animTranslate;
 
     private TextView transactionHistory;
     private TextView yourBalanceText;
@@ -223,25 +220,23 @@ public class MainActivity extends BaseActivity {
 
 
     private void listeners() {
-        animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
-
         request.setOnClickListener(v -> {
-            v.startAnimation(animTranslate);
+            pulse(v);
             goToAnotherPage(RECEIVE_PAYMENT_CLASS);
         });
 
         send.setOnClickListener(v -> {
-            v.startAnimation(animTranslate);
+            pulse(v);
             goToAnotherPage(SEND_PAYMENT_CLASS);
         });
 
         info.setOnClickListener(v -> {
-            v.startAnimation(animTranslate);
+            pulse(v);
             goToAnotherPage(INFO_MAIN_CLASS);
         });
 
         transactionHistory.setOnClickListener(v -> {
-            v.startAnimation(animTranslate);
+            pulse(v);
             goToAnotherPage(TRANSACTION_HISTORY_CLASS);
         });
     }

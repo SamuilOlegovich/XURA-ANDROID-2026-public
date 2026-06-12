@@ -8,8 +8,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,8 +38,6 @@ public class Settings extends BaseActivity {
     public static volatile Settings SETTINGS_ACTIVITY;
 
     @Inject WalletRepository repository;
-
-    private Animation animTranslate;
 
     private TextView settingsSelectEnglishLinc;
     private TextView settingsSetPasswordLinc;
@@ -144,25 +140,23 @@ public class Settings extends BaseActivity {
 
 
     private void listeners() {
-        animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
-
         settingsSetPasswordLinc.setOnClickListener(v -> {
-            v.startAnimation(animTranslate);
+            pulse(v);
             goToAnotherPage(SETTINGS_SET_PASSWORD_FOR_APP_CLASS);
         });
 
         settingsSelectEnglishLinc.setOnClickListener(v -> {
-            v.startAnimation(animTranslate);
+            pulse(v);
             goToAnotherPage(SELECT_LANGUAGE_CLASS);
         });
 
         settingsBiometricLinc.setOnClickListener(v -> {
-            v.startAnimation(animTranslate);
+            pulse(v);
             handleBiometricToggle();
         });
 
         btnGameMode.setOnClickListener(v -> {
-            v.startAnimation(animTranslate);
+            pulse(v);
             boolean isReal = Boolean.TRUE.equals(MainActivity.IS_REAL_GAME_MODE);
             String title   = getString(isReal
                     ? R.string.settings_game_mode_switch_to_trial
@@ -183,12 +177,12 @@ public class Settings extends BaseActivity {
         });
 
         becomeReferralLinc.setOnClickListener(v -> {
-            v.startAnimation(animTranslate);
+            pulse(v);
             goToAnotherPage(BECOME_REFERRAL_CLASS);
         });
 
         btnResetTestBalance.setOnClickListener(v -> {
-            v.startAnimation(animTranslate);
+            pulse(v);
             new AlertDialog.Builder(this)
                     .setTitle(getString(R.string.settings_test_mode_section))
                     .setMessage(getString(R.string.settings_reset_test_balance_confirm))

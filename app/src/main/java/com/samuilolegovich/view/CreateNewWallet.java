@@ -8,9 +8,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.view.Gravity;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,8 +40,6 @@ public class CreateNewWallet extends BaseActivity {
 
     private ClipboardManager clipboardManager;
     private ClipData clipData;
-
-    private Animation animTranslate;
 
     private volatile boolean isNewWallet = false;
     private String seedString;
@@ -87,32 +82,24 @@ public class CreateNewWallet extends BaseActivity {
 
 
     private void listeners() {
-        animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
-
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                v.startAnimation(animTranslate);
-                if (isNewWallet) {
-                    MainActivity.START_FLAG = false;
-                    repository.loadBalance();
-                    goToAnotherPage(CHECKING_NEW_WALLET_CLASS);
-                } else {
-                    createNewWalletAsync();
-                }
+        next.setOnClickListener(v -> {
+            pulse(v);
+            if (isNewWallet) {
+                MainActivity.START_FLAG = false;
+                repository.loadBalance();
+                goToAnotherPage(CHECKING_NEW_WALLET_CLASS);
+            } else {
+                createNewWalletAsync();
             }
         });
 
         clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
 
-        copy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                v.startAnimation(animTranslate);
-                clipData = ClipData.newPlainText("text", seedString);
-                clipboardManager.setPrimaryClip(clipData);
-                makeToast(ADDRESS_COPIED_TO_PHONE_BUFFER);
-            }
+        copy.setOnClickListener(v -> {
+            pulse(v);
+            clipData = ClipData.newPlainText("text", seedString);
+            clipboardManager.setPrimaryClip(clipData);
+            makeToast(ADDRESS_COPIED_TO_PHONE_BUFFER);
         });
     }
 

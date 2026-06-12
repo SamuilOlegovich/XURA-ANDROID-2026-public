@@ -6,9 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.view.Gravity;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,8 +33,6 @@ public class CheckingNewWallet extends BaseActivity {
 
     @Inject WalletRepository repository;
     public static final String CHECKING_NEW_WALLET_CLASS = ".CheckingNewWallet";
-
-    private Animation animTranslate;
 
     private TextView checkingNewWalletText;
     private EditText seed;
@@ -71,28 +66,21 @@ public class CheckingNewWallet extends BaseActivity {
 
 
     private void listeners() {
-        animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
+        next.setOnClickListener(v -> {
+            pulse(v);
+            String seedOne = getPreSeed();
+            String seedTwo = seed.getText().toString();
 
-        next.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String seedOne = getPreSeed();
-                        String seedTwo = seed.getText().toString();
-                        v.startAnimation(animTranslate);
-
-                        if (seedOne.equals(seedTwo)) {
-                            setSeed(seedOne);
-                            MainActivity.START_FLAG = false;
-                            repository.loadBalance();
-                            goToAnotherPage(REFERRAL_CLASS);
-                        } else {
-                            seed.setText("");
-                            makeToast(StringEnum.SEED_DOES_NOT_MATCH.getValue());
-                        }
-                    }
-                }
-        );
+            if (seedOne.equals(seedTwo)) {
+                setSeed(seedOne);
+                MainActivity.START_FLAG = false;
+                repository.loadBalance();
+                goToAnotherPage(REFERRAL_CLASS);
+            } else {
+                seed.setText("");
+                makeToast(StringEnum.SEED_DOES_NOT_MATCH.getValue());
+            }
+        });
     }
 
 

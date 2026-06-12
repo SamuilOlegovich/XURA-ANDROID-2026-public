@@ -7,9 +7,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,8 +37,6 @@ public class BecomeReferral extends BaseActivity {
     private String PAYMENT_AMOUNT_IS_INCORRECT;
     private String WRONG_DESTINATION_ADDRESS;
     private String GET_BECOME_REFERRAL;
-
-    private Animation animTranslate;
 
     private TextView restoreReferral;
     private TextView becomeReferral;
@@ -86,8 +81,6 @@ public class BecomeReferral extends BaseActivity {
 
 
     private void listeners() {
-        animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
-
         infoReferral.setOnClickListener(v -> {
             Referral.FLAG = false;
             goToAnotherPage(INFO_REFERRAL_CLASS);
@@ -99,12 +92,12 @@ public class BecomeReferral extends BaseActivity {
         });
 
         restoreReferral.setOnClickListener(v -> {
-            v.startAnimation(animTranslate);
+            pulse(v);
             AppExecutors.io().execute(() -> makeStack(false));
         });
 
         becomeReferral.setOnClickListener(v -> {
-            v.startAnimation(animTranslate);
+            pulse(v);
             AppExecutors.io().execute(() -> makeStack(true));
         });
     }

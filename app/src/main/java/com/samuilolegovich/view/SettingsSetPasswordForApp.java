@@ -4,9 +4,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.view.Gravity;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,8 +23,6 @@ import dagger.hilt.android.AndroidEntryPoint;
 public class SettingsSetPasswordForApp extends BaseActivity {
     public static final String SETTINGS_SET_PASSWORD_FOR_APP_CLASS = ".SettingsSetPasswordForApp";
 
-
-    private Animation animTranslate;
 
     private EditText passwordOne;
     private EditText passwordTwo;
@@ -68,26 +63,19 @@ public class SettingsSetPasswordForApp extends BaseActivity {
 
 
     private void listeners() {
-        animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
+        confirm.setOnClickListener(v -> {
+            pulse(v);
+            String one = passwordOne.getText().toString();
+            String two = passwordTwo.getText().toString();
 
-        confirm.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        v.startAnimation(animTranslate);
-                        String one = passwordOne.getText().toString();
-                        String two = passwordTwo.getText().toString();
-
-                        if (one.length() > 3 && one.equals(two)) {
-                            setPasswordForApp(one, true);
-                        } else {
-                            passwordOne.setText("");
-                            passwordTwo.setText("");
-                            makeToast(StringEnum.PASSWORD_DOES_NOT_MATCH.getValue());
-                        }
-                    }
-                }
-        );
+            if (one.length() > 3 && one.equals(two)) {
+                setPasswordForApp(one, true);
+            } else {
+                passwordOne.setText("");
+                passwordTwo.setText("");
+                makeToast(StringEnum.PASSWORD_DOES_NOT_MATCH.getValue());
+            }
+        });
     }
 
 

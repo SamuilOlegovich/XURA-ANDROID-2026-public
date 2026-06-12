@@ -5,9 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.view.Gravity;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,7 +31,6 @@ public class EnterApplicationPassword extends BaseActivity {
     public static final String ENTER_APPLICATION_PASSWORD_CLASS = ".EnterApplicationPassword";
 
     private SharedPreferences preferences;
-    private Animation animTranslate;
 
     private TextView settingsSetPasswordAppTextView;
     private EditText password;
@@ -78,30 +74,22 @@ public class EnterApplicationPassword extends BaseActivity {
 
 
     private void listeners() {
-        animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
+        next.setOnClickListener(v -> {
+            pulse(v);
+            String one = getPassword(password.getText().toString());
+            String two = getEncryptedPassword();
 
-        next.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String one = getPassword(password.getText().toString());
-                        String two = getEncryptedPassword();
-                        v.startAnimation(animTranslate);
-
-                        if (one.equals(two)) {
-                            MainActivity.START_FLAG = false;
-                            if (!preferences.contains(StringEnum.APP_PREFERENCES_SEED.getValue())) {
-                                // если нет ни какого кошелька
-                                goToAnotherPage(RESTORE_OR_NEW_WALLET_CLASS);
-                            } else {
-                                closeThisPage();
-                            }
-                        } else {
-                            makeToast(StringEnum.PASSWORD_DOES_NOT_MATCH.getValue());
-                        }
-                    }
+            if (one.equals(two)) {
+                MainActivity.START_FLAG = false;
+                if (!preferences.contains(StringEnum.APP_PREFERENCES_SEED.getValue())) {
+                    goToAnotherPage(RESTORE_OR_NEW_WALLET_CLASS);
+                } else {
+                    closeThisPage();
                 }
-        );
+            } else {
+                makeToast(StringEnum.PASSWORD_DOES_NOT_MATCH.getValue());
+            }
+        });
     }
 
 

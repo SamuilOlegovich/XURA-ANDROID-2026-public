@@ -7,9 +7,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.view.Gravity;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,8 +37,6 @@ public class RestoreWallet extends BaseActivity {
     public static final String RESTORE_WALLET_CLASS = ".RestoreWallet";
 
     private String ERROR_CHECK_THE_SEED_AND_TRY_AGAIN;
-
-    private Animation animTranslate;
 
     private TextView restoreWalletTextView;
     private EditText seed;
@@ -76,19 +71,13 @@ public class RestoreWallet extends BaseActivity {
 
 
     private void listeners() {
-        animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
-
-        next.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onClick(View v) {
-                v.startAnimation(animTranslate);
-                String seedRestore = seed.getText().toString();
-                if (seedRestore.length() > 20) {
-                    recoverWalletAsync(seedRestore);
-                } else {
-                    makeToast(ERROR_CHECK_THE_SEED_AND_TRY_AGAIN);
-                }
+        next.setOnClickListener(v -> {
+            pulse(v);
+            String seedRestore = seed.getText().toString();
+            if (seedRestore.length() > 20) {
+                recoverWalletAsync(seedRestore);
+            } else {
+                makeToast(ERROR_CHECK_THE_SEED_AND_TRY_AGAIN);
             }
         });
     }

@@ -7,8 +7,6 @@ import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.Gravity;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,7 +55,6 @@ public class GuessTheColorGame extends BaseActivity {
     private MediaPlayer casinoMediaPlayer;
     private MediaPlayer errorMediaPlayer;
     private MediaPlayer betMediaPlayer;
-    private Animation animTranslate;
 
     // Сохраняем цвет ставки до получения ответа от ViewModel
     private boolean pendingColor;
@@ -163,8 +160,6 @@ public class GuessTheColorGame extends BaseActivity {
 
 
     private void listeners() {
-        animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
-
         chipGroupAmounts.setOnCheckedStateChangeListener((group, checkedIds) -> {
             if (checkedIds.contains(R.id.chip_1_xrp))  bet.setText("1");
             else if (checkedIds.contains(R.id.chip_5_xrp))  bet.setText("5");
@@ -180,12 +175,12 @@ public class GuessTheColorGame extends BaseActivity {
         });
 
         rulesOfTheGameLink.setOnClickListener(v -> {
-            v.startAnimation(animTranslate);
+            pulse(v);
             goToAnotherPage(RULES_OF_THE_GAME_GUESS_THE_COLOR_CLASS);
         });
 
         black.setOnClickListener(v -> {
-            v.startAnimation(animTranslate);
+            pulse(v);
             betMediaPlayer.start();
             pendingColor = true;
             Flasher.COLOR_BET = true;
@@ -196,7 +191,7 @@ public class GuessTheColorGame extends BaseActivity {
         });
 
         red.setOnClickListener(v -> {
-            v.startAnimation(animTranslate);
+            pulse(v);
             betMediaPlayer.start();
             pendingColor = false;
             Flasher.COLOR_BET = false;

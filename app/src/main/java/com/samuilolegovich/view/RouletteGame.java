@@ -9,8 +9,6 @@ import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
@@ -64,9 +62,6 @@ public class RouletteGame extends BaseActivity {
     private MediaPlayer casinoMediaPlayer;
     private MediaPlayer errorMediaPlayer;
     private MediaPlayer betMediaPlayer;
-
-    // ── Animation ────────────────────────────────────────────────────────
-    private Animation animTranslate;
 
     // ── Current bet selection ────────────────────────────────────────────
     private View   selectedView;
@@ -347,8 +342,6 @@ public class RouletteGame extends BaseActivity {
     // ════════════════════════════════════════════════════════════════════
 
     private void listeners() {
-        animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
-
         chipGroupAmounts.setOnCheckedStateChangeListener((group, checkedIds) -> {
             if      (checkedIds.contains(R.id.chip_1_xrp))  bet.setText("1");
             else if (checkedIds.contains(R.id.chip_5_xrp))  bet.setText("5");
@@ -364,7 +357,7 @@ public class RouletteGame extends BaseActivity {
         });
 
         rulesInfo.setOnClickListener(v -> {
-            v.startAnimation(animTranslate);
+            pulse(v);
             startActivity(new Intent(RULES_OF_THE_GAME_ROULETTE_CLASS));
         });
 
@@ -373,7 +366,7 @@ public class RouletteGame extends BaseActivity {
                 tilBetField.setError(getString(R.string.roulette_select_a_bet));
                 return;
             }
-            v.startAnimation(animTranslate);
+            pulse(v);
             betMediaPlayer.start();
             viewModel.placeBet(bet.getText().toString(), selectedBetTag, myReferral);
         });

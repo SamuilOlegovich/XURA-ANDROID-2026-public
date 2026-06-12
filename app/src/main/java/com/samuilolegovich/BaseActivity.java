@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.View;
+import android.view.animation.AnimationUtils;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -103,6 +105,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         startActivity(intent);
         // Убираем анимацию перехода — это смена вкладки, не навигация вглубь
         overridePendingTransition(0, 0);
+    }
+
+    protected void pulse(View v) {
+        v.startAnimation(AnimationUtils.loadAnimation(this, R.anim.anim_scale_pulse));
     }
 
     private void applyLocale() {

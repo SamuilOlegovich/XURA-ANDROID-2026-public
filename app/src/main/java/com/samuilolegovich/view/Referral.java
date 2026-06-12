@@ -5,9 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Gravity;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,7 +27,6 @@ public class Referral extends BaseActivity {
 
     private SharedPreferences.Editor editor;
     private SharedPreferences preferences;
-    private Animation animTranslate;
 
     private EditText enterReferralCode;
     private TextView referralTextView;
@@ -66,45 +62,33 @@ public class Referral extends BaseActivity {
 
 
     private void listeners() {
-        animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
+        set.setOnClickListener(v -> {
+            pulse(v);
+            String code = enterReferralCode.getText().toString();
 
-        set.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        v.startAnimation(animTranslate);
-                        String code = enterReferralCode.getText().toString();
-
-                        if (code.length() > 0
-                                && Long.parseLong(code) < Long.parseLong(StringEnum.MAX_REFERRALS.getValue())) {
-                            setReferralForApp(code);
-                            if (FLAG) {
-                                closeThisPage();
-                            } else {
-                                onBackPressed();
-                            }
-                        } else {
-                            enterReferralCode.setText("");
-                            makeToast(StringEnum.REFERRAL_DOES_NOT_MATCH.getValue());
-                        }
-                    }
+            if (code.length() > 0
+                    && Long.parseLong(code) < Long.parseLong(StringEnum.MAX_REFERRALS.getValue())) {
+                setReferralForApp(code);
+                if (FLAG) {
+                    closeThisPage();
+                } else {
+                    onBackPressed();
                 }
-        );
+            } else {
+                enterReferralCode.setText("");
+                makeToast(StringEnum.REFERRAL_DOES_NOT_MATCH.getValue());
+            }
+        });
 
-        skip.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        v.startAnimation(animTranslate);
-                        setReferralForApp(StringEnum.APP_PREFERENCES_REFERRAL_NOT_INSTALLED.getValue());
-                        if (FLAG) {
-                            closeThisPage();
-                        } else {
-                            onBackPressed();
-                        }
-                    }
-                }
-        );
+        skip.setOnClickListener(v -> {
+            pulse(v);
+            setReferralForApp(StringEnum.APP_PREFERENCES_REFERRAL_NOT_INSTALLED.getValue());
+            if (FLAG) {
+                closeThisPage();
+            } else {
+                onBackPressed();
+            }
+        });
     }
 
 

@@ -2,9 +2,6 @@ package com.samuilolegovich.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.samuilolegovich.BaseActivity;
@@ -25,7 +22,6 @@ public class RestoreOrCreateNewWallet extends BaseActivity {
     public static final String RESTORE_OR_NEW_WALLET_CLASS = ".RestoreOrCreateNewWallet";
 
     private TextView createNewWallet;
-    private Animation animTranslate;
     private TextView restoreWallet;
 
 
@@ -54,27 +50,15 @@ public class RestoreOrCreateNewWallet extends BaseActivity {
 
 
     private void listeners() {
-        animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
+        createNewWallet.setOnClickListener(v -> {
+            pulse(v);
+            goToAnotherPage(CREATE_NEW_WALLET_CLASS);
+        });
 
-        createNewWallet.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        v.startAnimation(animTranslate);
-                        goToAnotherPage(CREATE_NEW_WALLET_CLASS);
-                    }
-                }
-        );
-
-        restoreWallet.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        v.startAnimation(animTranslate);
-                        goToAnotherPage(RESTORE_WALLET_CLASS);
-                    }
-                }
-        );
+        restoreWallet.setOnClickListener(v -> {
+            pulse(v);
+            goToAnotherPage(RESTORE_WALLET_CLASS);
+        });
     }
 
 

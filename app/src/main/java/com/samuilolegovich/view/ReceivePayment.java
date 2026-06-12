@@ -6,9 +6,6 @@ import android.content.ClipboardManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,7 +40,6 @@ public class ReceivePayment extends BaseActivity {
     private String ADDRESS_COPIED_TO_PHONE_BUFFER;
 
     private ClipboardManager clipboardManager;
-    private Animation animTranslate;
     private ClipData clipData;
 
     private String classicAddress;
@@ -93,20 +89,14 @@ public class ReceivePayment extends BaseActivity {
 
 
     private void listeners() {
-        animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
-        clipboardManager=(ClipboardManager)getSystemService(CLIPBOARD_SERVICE);
+        clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
 
-        copy.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        v.startAnimation(animTranslate);
-                        clipData = ClipData.newPlainText("text", classicAddress);
-                        clipboardManager.setPrimaryClip(clipData);
-                        makeToast(ADDRESS_COPIED_TO_PHONE_BUFFER);
-                    }
-                }
-        );
+        copy.setOnClickListener(v -> {
+            pulse(v);
+            clipData = ClipData.newPlainText("text", classicAddress);
+            clipboardManager.setPrimaryClip(clipData);
+            makeToast(ADDRESS_COPIED_TO_PHONE_BUFFER);
+        });
     }
 
 

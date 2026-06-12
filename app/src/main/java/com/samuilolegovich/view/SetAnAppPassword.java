@@ -5,9 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.view.Gravity;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,8 +30,6 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class SetAnAppPassword extends BaseActivity {
     public static final String SET_AN_APP_PASSWORD_CLASS = ".SetAnAppPassword";
-
-    private Animation animTranslate;
 
     private EditText passwordOne;
     private EditText passwordTwo;
@@ -78,38 +73,26 @@ public class SetAnAppPassword extends BaseActivity {
 
 
     private void listeners() {
-        animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
+        confirm.setOnClickListener(v -> {
+            pulse(v);
+            String one = passwordOne.getText().toString();
+            String two = passwordTwo.getText().toString();
 
-        confirm.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        v.startAnimation(animTranslate);
-                        String one = passwordOne.getText().toString();
-                        String two = passwordTwo.getText().toString();
+            if (one.length() > 3 && one.equals(two)) {
+                setPasswordForApp(one, true);
+                offerBiometric();
+            } else {
+                passwordOne.setText("");
+                passwordTwo.setText("");
+                makeToast(StringEnum.PASSWORD_DOES_NOT_MATCH.getValue());
+            }
+        });
 
-                        if (one.length() > 3 && one.equals(two)) {
-                            setPasswordForApp(one, true);
-                            offerBiometric();
-                        } else {
-                            passwordOne.setText("");
-                            passwordTwo.setText("");
-                            makeToast(StringEnum.PASSWORD_DOES_NOT_MATCH.getValue());
-                        }
-                    }
-                }
-        );
-
-        skip.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        v.startAnimation(animTranslate);
-                        setPasswordForApp(StringEnum.APP_PREFERENCES_PASSWORD_NOT_INSTALLED.getValue(), false);
-                        goToAnotherPage(RESTORE_OR_NEW_WALLET_CLASS);
-                    }
-                }
-        );
+        skip.setOnClickListener(v -> {
+            pulse(v);
+            setPasswordForApp(StringEnum.APP_PREFERENCES_PASSWORD_NOT_INSTALLED.getValue(), false);
+            goToAnotherPage(RESTORE_OR_NEW_WALLET_CLASS);
+        });
     }
 
 

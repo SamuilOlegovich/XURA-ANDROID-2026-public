@@ -9,8 +9,6 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.Gravity;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.TextView;
@@ -62,7 +60,6 @@ public class GuessTheNumberGame extends BaseActivity {
     private MediaPlayer casinoMediaPlayer;
     private MediaPlayer errorMediaPlayer;
     private MediaPlayer betMediaPlayer;
-    private Animation animTranslate;
     private String myReferral;
 
     // Выбранная цифра — сохраняем до получения ответа от ViewModel
@@ -208,8 +205,6 @@ public class GuessTheNumberGame extends BaseActivity {
 
 
     private void listeners() {
-        animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
-
         chipGroupAmounts.setOnCheckedStateChangeListener((group, checkedIds) -> {
             if (checkedIds.contains(R.id.chip_1_xrp))  bet.setText("1");
             else if (checkedIds.contains(R.id.chip_5_xrp))  bet.setText("5");
@@ -225,12 +220,12 @@ public class GuessTheNumberGame extends BaseActivity {
         });
 
         rulesInfo.setOnClickListener(v -> {
-            v.startAnimation(animTranslate);
+            pulse(v);
             goToAnotherPage(RULES_OF_THE_GAME_GUESS_THE_NUMBER_CLASS);
         });
 
         placeBetLinc.setOnClickListener(v -> {
-            v.startAnimation(animTranslate);
+            pulse(v);
             betMediaPlayer.start();
             viewModel.placeBet(bet.getText().toString(), selectedNumber, myReferral);
         });

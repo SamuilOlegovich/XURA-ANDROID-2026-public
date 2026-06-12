@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,7 +37,6 @@ public class SendPayment extends BaseActivity {
     private String WRONG_DESTINATION_ADDRESS;
 
     private SendPaymentViewModel viewModel;
-    private Animation animTranslate;
 
     private TextView sendPaymentPageTextViewTwo;
     private TextView sendPaymentPageTextView;
@@ -122,10 +119,8 @@ public class SendPayment extends BaseActivity {
 
 
     private void listeners() {
-        animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
-
         send.setOnClickListener(v -> {
-            v.startAnimation(animTranslate);
+            pulse(v);
             setSendingState(true);
             viewModel.sendPayment(
                     address.getText().toString(),

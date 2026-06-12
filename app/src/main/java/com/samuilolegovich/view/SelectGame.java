@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.samuilolegovich.BaseActivity;
@@ -26,7 +24,6 @@ public class SelectGame extends BaseActivity {
     public static final String SELECT_GAME_CLASS = ".SelectGame";
 
     private MediaPlayer flourOfChoiceMediaPlayer;
-    private Animation animTranslate;
 
     private TextView selectTextView;
     private TextView guessTheNumber;
@@ -73,43 +70,26 @@ public class SelectGame extends BaseActivity {
 
 
     private void listeners() {
-        animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
+        guessTheColor.setOnClickListener(v -> {
+            pulse(v);
+            flourOfChoiceMediaPlayer.stop();
+            flourOfChoiceMediaPlayer.prepareAsync();
+            goToAnotherPage(GUESS_THE_COLOR_GAME_CLASS);
+        });
 
-        guessTheColor.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        v.startAnimation(animTranslate);
-                        flourOfChoiceMediaPlayer.stop();
-                        flourOfChoiceMediaPlayer.prepareAsync();
-                        goToAnotherPage(GUESS_THE_COLOR_GAME_CLASS);
-                    }
-                }
-        );
+        guessTheNumber.setOnClickListener(v -> {
+            pulse(v);
+            flourOfChoiceMediaPlayer.stop();
+            flourOfChoiceMediaPlayer.prepareAsync();
+            goToAnotherPage(GUESS_THE_NUMBER_GAME_CLASS);
+        });
 
-        guessTheNumber.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        v.startAnimation(animTranslate);
-                        flourOfChoiceMediaPlayer.stop();
-                        flourOfChoiceMediaPlayer.prepareAsync();
-                        goToAnotherPage(GUESS_THE_NUMBER_GAME_CLASS);
-                    }
-                }
-        );
-
-        roulette.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        v.startAnimation(animTranslate);
-                        flourOfChoiceMediaPlayer.stop();
-                        flourOfChoiceMediaPlayer.prepareAsync();
-                        goToAnotherPage(ROULETTE_GAME_CLASS);
-                    }
-                }
-        );
+        roulette.setOnClickListener(v -> {
+            pulse(v);
+            flourOfChoiceMediaPlayer.stop();
+            flourOfChoiceMediaPlayer.prepareAsync();
+            goToAnotherPage(ROULETTE_GAME_CLASS);
+        });
     }
 
 

@@ -6,9 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.samuilolegovich.AppExecutors;
@@ -30,7 +27,6 @@ public class SelectLanguage extends BaseActivity {
 
     private SharedPreferences.Editor editor;
     private SharedPreferences preferences;
-    private Animation animTranslate;
 
     private TextView settingsRussianLinc;
     private TextView settingsEnglishLinc;
@@ -73,33 +69,19 @@ public class SelectLanguage extends BaseActivity {
 
 
     private void listeners() {
-        animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
+        settingsRussianLinc.setOnClickListener(v -> {
+            pulse(v);
+            if (!languageNow.equalsIgnoreCase(StringEnum.APP_RUSSIAN_LANGUAGE.getValue())) {
+                makeStackThread(StringEnum.APP_RUSSIAN_LANGUAGE);
+            }
+        });
 
-        settingsRussianLinc.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        v.startAnimation(animTranslate);
-
-                        if (!languageNow.equalsIgnoreCase(StringEnum.APP_RUSSIAN_LANGUAGE.getValue())) {
-                            makeStackThread(StringEnum.APP_RUSSIAN_LANGUAGE);
-                        }
-                    }
-                }
-        );
-
-        settingsEnglishLinc.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        v.startAnimation(animTranslate);
-
-                        if (!languageNow.equalsIgnoreCase(StringEnum.APP_ENGLISH_LANGUAGE.getValue())) {
-                            makeStackThread(StringEnum.APP_ENGLISH_LANGUAGE);
-                        }
-                    }
-                }
-        );
+        settingsEnglishLinc.setOnClickListener(v -> {
+            pulse(v);
+            if (!languageNow.equalsIgnoreCase(StringEnum.APP_ENGLISH_LANGUAGE.getValue())) {
+                makeStackThread(StringEnum.APP_ENGLISH_LANGUAGE);
+            }
+        });
     }
 
 
