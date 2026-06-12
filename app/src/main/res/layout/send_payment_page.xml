@@ -167,6 +167,21 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- Sending progress indicator — shown while transaction is in flight -->
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/send_progress"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginBottom="12dp"
+            android:indeterminate="true"
+            android:visibility="gone"
+            app:indicatorColor="@color/xura_cyan"
+            app:trackColor="@color/xura_glass_fill"
+            app:trackThickness="3dp"
+            app:layout_constraintBottom_toTopOf="@+id/send_linc"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
         <!-- SEND button -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/send_linc"

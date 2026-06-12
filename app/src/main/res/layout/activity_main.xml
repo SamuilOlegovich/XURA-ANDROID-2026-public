@@ -15,23 +15,6 @@
         android:layout_height="match_parent"
         android:background="@color/xura_black">
 
-        <!-- Settings — top center -->
-        <TextView
-            android:id="@+id/settings_linc"
-            android:layout_width="wrap_content"
-            android:layout_height="36dp"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/montserrat"
-            android:text="@string/settings_main"
-            android:textAlignment="center"
-            android:textColor="@color/xura_text_tertiary"
-            android:textSize="11sp"
-            android:gravity="center"
-            android:letterSpacing="0.08"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <!-- XURA Logo — click opens game selection -->
         <include
             layout="@layout/logo_xura"
@@ -39,11 +22,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="80dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="24dp"
             android:layout_marginEnd="80dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/settings_linc" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <!-- Lotto ticker -->
         <TextView
@@ -87,6 +70,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/lotto_text_go_link" />
 
+        <!-- Balance loading spinner — shown while wallet connects -->
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/balance_loading"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_marginTop="10dp"
+            android:indeterminate="true"
+            android:visibility="visible"
+            app:indicatorColor="@color/xura_cyan"
+            app:trackColor="@color/xura_glass_fill"
+            app:trackThickness="3dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/your_balance_text" />
+
         <!-- Balance amount — the hero number -->
         <TextView
             android:id="@+id/balance_linc"
@@ -95,12 +93,12 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="6dp"
             android:layout_marginEnd="24dp"
-            android:text="97.456782 XRP"
             android:textAlignment="center"
             android:textColor="@color/xura_text_primary"
             android:textSize="40sp"
             android:textStyle="bold"
             android:fontFamily="@font/montserrat"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/your_balance_text" />
@@ -187,12 +185,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <!-- Bottom Navigation Bar -->
+        <!-- Bottom Navigation Bar — floating pill -->
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_nav"
+            app:selectedItemId="@id/nav_wallet"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@color/xura_surface"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/bg_bottom_nav"
+            android:clipToOutline="true"
+            android:elevation="8dp"
             app:itemIconTint="@color/bottom_nav_tint"
             app:itemTextColor="@color/bottom_nav_tint"
             app:itemRippleColor="@color/xura_glass_fill"

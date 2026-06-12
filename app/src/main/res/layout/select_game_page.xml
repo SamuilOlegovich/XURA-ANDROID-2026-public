@@ -129,12 +129,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <!-- Bottom Navigation Bar -->
+    <!-- Bottom Navigation Bar — floating pill -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav"
+        app:selectedItemId="@id/nav_games"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/xura_surface"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/bg_bottom_nav"
+        android:clipToOutline="true"
+        android:elevation="8dp"
         app:itemIconTint="@color/bottom_nav_tint"
         app:itemTextColor="@color/bottom_nav_tint"
         app:itemRippleColor="@color/xura_glass_fill"

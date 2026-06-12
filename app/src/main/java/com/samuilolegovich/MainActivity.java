@@ -36,7 +36,6 @@ import static com.samuilolegovich.view.SetAnAppPassword.SET_AN_APP_PASSWORD_CLAS
 import static com.samuilolegovich.view.ReceivePayment.RECEIVE_PAYMENT_CLASS;
 import static com.samuilolegovich.view.YourReferral.YOUR_REFERRAL_CLASS;
 import static com.samuilolegovich.view.SendPayment.SEND_PAYMENT_CLASS;
-import static com.samuilolegovich.view.SelectGame.SELECT_GAME_CLASS;
 import static com.samuilolegovich.view.InfoMain.INFO_MAIN_CLASS;
 import static com.samuilolegovich.view.Settings.SETTINGS_CLASS;
 import static com.samuilolegovich.view.Lost.LOST_CLASS;
@@ -62,6 +61,8 @@ public class MainActivity extends BaseActivity {
 
     private String GO_TO_THE_DARK_SIDE_FIND_THE_SECRET_BUTTON;
 
+    private static boolean rootWarningShown = false;
+
     private MainViewModel viewModel;
     private SharedPreferences preferences;
     private Animation animTranslate;
@@ -70,13 +71,12 @@ public class MainActivity extends BaseActivity {
     private TextView transactionHistory;
     private TextView yourBalanceText;
     private TextView lottoTextGo;
-    private TextView settings;
     private TextView balance;
     private TextView request;
     private TextView send;
     private TextView info;
 
-    private View logoButton;
+    private com.google.android.material.progressindicator.CircularProgressIndicator balanceLoading;
 
 
 
@@ -100,8 +100,12 @@ public class MainActivity extends BaseActivity {
         goText();
         setupBottomNav();
 
-        viewModel.getBalance().observe(this, b ->
-                balance.setText(b.toString() + " XRP"));
+        viewModel.getBalance().observe(this, b -> {
+            if (b == null) return;
+            balance.setText(b.toString() + " XRP");
+            balance.setVisibility(View.VISIBLE);
+            balanceLoading.setVisibility(View.GONE);
+        });
 
         viewModel.getLottoText().observe(this, lotto -> {
             lottoNow = lotto;
@@ -130,7 +134,7 @@ public class MainActivity extends BaseActivity {
             if (Boolean.TRUE.equals(ready)) startXrplSocketService();
         });
 
-        if (RootDetector.isRooted(this)) {
+        if (RootDetector.isRooted(this) && !rootWarningShown) {
             showRootWarning();
         } else {
             handleStartup();
@@ -140,6 +144,7 @@ public class MainActivity extends BaseActivity {
 
 
     private void showRootWarning() {
+        rootWarningShown = true;
         new AlertDialog.Builder(this)
                 .setTitle("Обнаружен root-доступ")
                 .setMessage(
@@ -149,7 +154,10 @@ public class MainActivity extends BaseActivity {
                         "Рекомендуем использовать XURA только на устройствах без root.")
                 .setCancelable(false)
                 .setPositiveButton("Продолжить на свой риск", (d, w) -> handleStartup())
-                .setNegativeButton("Выйти", (d, w) -> finishAffinity())
+                .setNegativeButton("Выйти", (d, w) -> {
+                    rootWarningShown = false;
+                    finishAffinity();
+                })
                 .show();
     }
 
@@ -205,10 +213,9 @@ public class MainActivity extends BaseActivity {
         transactionHistory = findViewById(R.id.transaction_history_link);
         yourBalanceText = findViewById(R.id.your_balance_text);
         lottoTextGo = findViewById(R.id.lotto_text_go_link);
-        logoButton = findViewById(R.id.logo_button_link);
-        settings = findViewById(R.id.settings_linc);
         request = findViewById(R.id.request_link);
         balance = findViewById(R.id.balance_linc);
+        balanceLoading = findViewById(R.id.balance_loading);
         info = findViewById(R.id.last_text_view);
         send = findViewById(R.id.next_link);
     }
@@ -220,7 +227,6 @@ public class MainActivity extends BaseActivity {
         transactionHistory.setText(R.string.transaction_history);
         yourBalanceText.setText(R.string.your_balance);
         lottoTextGo.setText(R.string.want_to_win);
-        settings.setText(R.string.settings_main);
         request.setText(R.string.request);
         send.setText(R.string.send);
         info.setText(R.string.info);
@@ -230,11 +236,6 @@ public class MainActivity extends BaseActivity {
 
     private void listeners() {
         animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
-
-        settings.setOnClickListener(v -> {
-            v.startAnimation(animTranslate);
-            goToAnotherPage(SETTINGS_CLASS);
-        });
 
         request.setOnClickListener(v -> {
             v.startAnimation(animTranslate);
@@ -249,11 +250,6 @@ public class MainActivity extends BaseActivity {
         info.setOnClickListener(v -> {
             v.startAnimation(animTranslate);
             goToAnotherPage(INFO_MAIN_CLASS);
-        });
-
-        logoButton.setOnClickListener(v -> {
-            v.startAnimation(animTranslate);
-            goToAnotherPage(SELECT_GAME_CLASS);
         });
 
         transactionHistory.setOnClickListener(v -> {
@@ -295,6 +291,9 @@ public class MainActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         VISIBLE_ON_SCREEN = true;
+        if (Boolean.TRUE.equals(viewModel.getWalletReady().getValue())) {
+            viewModel.loadBalance();
+        }
     }
 
     @Override

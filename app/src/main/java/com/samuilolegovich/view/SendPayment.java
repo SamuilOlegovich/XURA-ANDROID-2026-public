@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.textfield.TextInputLayout;
 
 import com.samuilolegovich.BaseActivity;
@@ -47,6 +48,7 @@ public class SendPayment extends BaseActivity {
     private EditText amount;
     private TextView send;
     private TextInputLayout scan;
+    private CircularProgressIndicator sendProgress;
     private EditText tag;
 
 
@@ -67,6 +69,7 @@ public class SendPayment extends BaseActivity {
 
         viewModel.getError().observe(this, error -> {
             if (error == null) return;
+            setSendingState(false);
             switch (error) {
                 case WRONG_ADDRESS:    showToast(WRONG_DESTINATION_ADDRESS); break;
                 case INVALID_AMOUNT:   showToast(PAYMENT_AMOUNT_IS_INCORRECT); break;
@@ -80,6 +83,7 @@ public class SendPayment extends BaseActivity {
 
         viewModel.getPaymentSuccess().observe(this, success -> {
             if (Boolean.TRUE.equals(success)) {
+                setSendingState(false);
                 showToast("PAYMENT SENT");
                 address.setText("");
                 amount.setText("");
@@ -100,6 +104,7 @@ public class SendPayment extends BaseActivity {
         balance = findViewById(R.id.balance);
         scan = findViewById(R.id.scan_linc);
         send = findViewById(R.id.send_linc);
+        sendProgress = findViewById(R.id.send_progress);
         tag = findViewById(R.id.tag_field);
     }
 
@@ -121,6 +126,7 @@ public class SendPayment extends BaseActivity {
 
         send.setOnClickListener(v -> {
             v.startAnimation(animTranslate);
+            setSendingState(true);
             viewModel.sendPayment(
                     address.getText().toString(),
                     amount.getText().toString(),
@@ -132,6 +138,14 @@ public class SendPayment extends BaseActivity {
                 startActivity(new Intent(ScanQrCode.SCAN_QR_CODE_CLASS)));
     }
 
+
+    private void setSendingState(boolean sending) {
+        runOnUiThread(() -> {
+            send.setEnabled(!sending);
+            send.setAlpha(sending ? 0.5f : 1f);
+            sendProgress.setVisibility(sending ? View.VISIBLE : View.GONE);
+        });
+    }
 
     private void showToast(String message) {
         runOnUiThread(() -> {
