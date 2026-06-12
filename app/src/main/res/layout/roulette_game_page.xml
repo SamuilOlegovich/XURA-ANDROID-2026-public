@@ -9,7 +9,7 @@
     tools:context=".view.RouletteGame"
     tools:ignore="MissingDefaultResource">
 
-    <!-- Rules link — top right -->
+    <!-- Rules link — top center -->
     <TextView
         android:id="@+id/rules_of_the_game_link"
         android:layout_width="wrap_content"
@@ -25,7 +25,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <!-- ROULETTE title -->
     <TextView
@@ -47,27 +46,122 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rules_of_the_game_link" />
 
-    <!-- COMING SOON — styled like primary button -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/roulette_game_message"
+    <!-- Locked teaser card -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/roulette_locked_card"
         android:layout_width="0dp"
-        android:layout_height="60dp"
+        android:layout_height="0dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
-        android:background="@drawable/bg_button_primary"
-        app:backgroundTint="@null"
-        android:insetTop="0dp"
-        android:insetBottom="0dp"
-        android:fontFamily="@font/montserrat"
-        android:text="@string/coming_soon"
-        android:textColor="@color/xura_text_primary"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:letterSpacing="0.16"
-        android:textAllCaps="true"
+        android:layout_marginBottom="40dp"
+        android:alpha="0.72"
+        app:cardBackgroundColor="@color/xura_card"
+        app:cardCornerRadius="16dp"
+        app:strokeColor="@color/xura_glass_border"
+        app:strokeWidth="1dp"
+        app:cardElevation="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/roulette_game_text_view" />
+        app:layout_constraintTop_toBottomOf="@+id/roulette_game_text_view">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!-- Lock icon -->
+            <ImageView
+                android:id="@+id/roulette_lock_icon"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginTop="40dp"
+                android:src="@drawable/ic_lock"
+                android:contentDescription="@string/coming_soon"
+                app:tint="@color/xura_text_tertiary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- COMING SOON label -->
+            <TextView
+                android:id="@+id/roulette_coming_soon_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="24dp"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/coming_soon"
+                android:textAlignment="center"
+                android:textColor="@color/xura_text_primary"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.16"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/roulette_lock_icon" />
+
+            <!-- Divider -->
+            <View
+                android:id="@+id/roulette_divider"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="32dp"
+                android:background="@color/xura_glass_border"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/roulette_coming_soon_label" />
+
+            <!-- Description -->
+            <TextView
+                android:id="@+id/roulette_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="24dp"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/roulette_coming_soon_desc"
+                android:textAlignment="center"
+                android:textColor="@color/xura_text_tertiary"
+                android:textSize="13sp"
+                android:lineSpacingMultiplier="1.4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/roulette_divider" />
+
+            <!-- Notify Me button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_notify_me"
+                android:layout_width="0dp"
+                android:layout_height="52dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="32dp"
+                android:background="@drawable/bg_button_secondary"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/notify_me"
+                android:textAllCaps="false"
+                android:textColor="@color/xura_text_primary"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.04"
+                app:backgroundTint="@android:color/transparent"
+                app:cornerRadius="16dp"
+                app:rippleColor="#40FFFFFF"
+                app:icon="@drawable/ic_notifications"
+                app:iconTint="@color/xura_text_primary"
+                app:iconGravity="textStart"
+                app:iconPadding="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

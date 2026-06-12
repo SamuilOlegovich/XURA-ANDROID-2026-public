@@ -35,6 +35,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         checkAutoLock();
+        syncBottomNavSelection();
     }
 
     // Экраны ввода/смены пароля переопределяют это чтобы не попасть в петлю блокировки
@@ -61,15 +62,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         BottomNavigationView nav = findViewById(R.id.bottom_nav);
         if (nav == null) return;
 
-        // Отмечаем текущую вкладку без триггера listener
-        if (this instanceof MainActivity) {
-            nav.setSelectedItemId(R.id.nav_wallet);
-        } else if (this instanceof SelectGame) {
-            nav.setSelectedItemId(R.id.nav_games);
-        } else if (this instanceof Settings) {
-            nav.setSelectedItemId(R.id.nav_settings);
-        }
-
         nav.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
             if (id == R.id.nav_wallet && !(this instanceof MainActivity)) {
@@ -81,6 +73,27 @@ public abstract class BaseActivity extends AppCompatActivity {
             }
             return true;
         });
+    }
+
+    // Вызывается в onResume — после onRestoreInstanceState, поэтому не перебивается
+    private void syncBottomNavSelection() {
+        BottomNavigationView nav = findViewById(R.id.bottom_nav);
+        if (nav == null) return;
+
+        int targetId;
+        if (this instanceof MainActivity) {
+            targetId = R.id.nav_wallet;
+        } else if (this instanceof SelectGame) {
+            targetId = R.id.nav_games;
+        } else if (this instanceof Settings) {
+            targetId = R.id.nav_settings;
+        } else {
+            return;
+        }
+
+        if (nav.getSelectedItemId() != targetId) {
+            nav.setSelectedItemId(targetId);
+        }
     }
 
     private void navigateToTab(String action) {

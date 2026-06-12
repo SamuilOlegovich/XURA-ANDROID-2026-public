@@ -526,11 +526,11 @@ Caption  : Montserrat Regular 12sp — минимум (заменить все 9
 | ✅ P1 | **`ListView` → `RecyclerView`** | transaction_history_page.xml + adapter | DONE |
 | ✅ P1 | **`Theme.Material3`** | themes.xml | DONE |
 | ✅ P1 | **Логотип только на главном** | убрать из 28 из 31 layout | DONE |
-| 🟢 P2 | **Loading/Error состояния** | все экраны | 1 день |
-| 🟢 P2 | **Win page — кнопки навигации** | win_page.xml | 1 час |
-| 🟢 P2 | **Roulette — карточка с тизером** | roulette_game_page.xml | 2 часа |
-| 🟢 P2 | **ChipGroup для быстрых ставок** | guess_the_color, guess_the_number | 2 часа |
-| 🟢 P2 | **Settings — добавить контент** | settings_page.xml | 2 часа |
+| ✅ P2 | **Loading/Error состояния** | все экраны | DONE |
+| ✅ P2 | **Win page — кнопки навигации** | win_page.xml | DONE |
+| ✅ P2 | **Roulette — карточка с тизером** | roulette_game_page.xml | DONE |
+| ✅ P2 | **ChipGroup для быстрых ставок** | guess_the_color, guess_the_number | DONE |
+| ✅ P2 | **Settings — добавить контент** | settings_page.xml | DONE |
 
 ---
 

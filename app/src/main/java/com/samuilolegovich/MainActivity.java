@@ -59,18 +59,14 @@ public class MainActivity extends BaseActivity {
     @SuppressLint("StaticFieldLeak")
     public static volatile MainActivity MAIN_ACTIVITY;
 
-    private String GO_TO_THE_DARK_SIDE_FIND_THE_SECRET_BUTTON;
-
     private static boolean rootWarningShown = false;
 
     private MainViewModel viewModel;
     private SharedPreferences preferences;
     private Animation animTranslate;
-    private String lottoNow;
 
     private TextView transactionHistory;
     private TextView yourBalanceText;
-    private TextView lottoTextGo;
     private TextView balance;
     private TextView request;
     private TextView send;
@@ -92,12 +88,10 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
 
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
-        lottoNow = Lotto.genLotto() + "";
 
         setButtons();
         setLanguage();
         listeners();
-        goText();
         setupBottomNav();
 
         viewModel.getBalance().observe(this, b -> {
@@ -107,10 +101,7 @@ public class MainActivity extends BaseActivity {
             balanceLoading.setVisibility(View.GONE);
         });
 
-        viewModel.getLottoText().observe(this, lotto -> {
-            lottoNow = lotto;
-            goText();
-        });
+
 
         viewModel.getNavigationEvent().observe(this, event -> {
             if (event == null) return;
@@ -212,7 +203,6 @@ public class MainActivity extends BaseActivity {
     private void setButtons() {
         transactionHistory = findViewById(R.id.transaction_history_link);
         yourBalanceText = findViewById(R.id.your_balance_text);
-        lottoTextGo = findViewById(R.id.lotto_text_go_link);
         request = findViewById(R.id.request_link);
         balance = findViewById(R.id.balance_linc);
         balanceLoading = findViewById(R.id.balance_loading);
@@ -223,10 +213,8 @@ public class MainActivity extends BaseActivity {
 
     @SuppressLint("SetTextI18n")
     private void setLanguage() {
-        GO_TO_THE_DARK_SIDE_FIND_THE_SECRET_BUTTON = getString(R.string.go_to_the_dark_side_find_the_secret_button);
         transactionHistory.setText(R.string.transaction_history);
         yourBalanceText.setText(R.string.your_balance);
-        lottoTextGo.setText(R.string.want_to_win);
         request.setText(R.string.request);
         send.setText(R.string.send);
         info.setText(R.string.info);
@@ -259,12 +247,6 @@ public class MainActivity extends BaseActivity {
     }
 
 
-
-    @SuppressLint("SetTextI18n")
-    private void goText() {
-        lottoTextGo.setText(GO_TO_THE_DARK_SIDE_FIND_THE_SECRET_BUTTON);
-        lottoTextGo.setSelected(true);
-    }
 
 
 

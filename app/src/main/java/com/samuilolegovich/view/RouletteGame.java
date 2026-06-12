@@ -7,9 +7,10 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.material.button.MaterialButton;
 import com.samuilolegovich.BaseActivity;
-
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 
@@ -28,8 +29,8 @@ public class RouletteGame extends BaseActivity {
     private Animation animTranslate;
 
     private TextView rouletteGameTextView;
-    private TextView rouletteGameMessage;
     private TextView rulesInfo;
+    private MaterialButton btnNotifyMe;
 
 
 
@@ -46,11 +47,10 @@ public class RouletteGame extends BaseActivity {
 
     private void setButtons() {
         rouletteGameTextView = (TextView) findViewById(R.id.roulette_game_text_view);
-        rouletteGameMessage = (TextView) findViewById(R.id.roulette_game_message);
         rulesInfo = (TextView) findViewById(R.id.rules_of_the_game_link);
+        btnNotifyMe = findViewById(R.id.btn_notify_me);
 
         casinoMediaPlayer = MediaPlayer.create(this, R.raw.in_casino);
-
         casinoMediaPlayer.setLooping(true);
         casinoMediaPlayer.start();
     }
@@ -58,7 +58,6 @@ public class RouletteGame extends BaseActivity {
 
     private void setLanguage() {
         rouletteGameTextView.setText(R.string.roulette_game);
-        rouletteGameMessage.setText(R.string.coming_soon);
         rulesInfo.setText(R.string.rules_of_the_game);
     }
 
@@ -66,20 +65,19 @@ public class RouletteGame extends BaseActivity {
     private void listeners() {
         animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
 
-        rulesInfo.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        v.startAnimation(animTranslate);
-                        goToAnotherPage(RULES_OF_THE_GAME_ROULETTE_CLASS);
-                    }
-                }
-        );
+        rulesInfo.setOnClickListener(v -> {
+            v.startAnimation(animTranslate);
+            goToAnotherPage(RULES_OF_THE_GAME_ROULETTE_CLASS);
+        });
+
+        btnNotifyMe.setOnClickListener(v -> {
+            v.startAnimation(animTranslate);
+            Toast.makeText(this, R.string.roulette_notify_toast, Toast.LENGTH_LONG).show();
+        });
     }
 
 
     private void goToAnotherPage(String namePage) {
-        // класс для перехода на другую страницу
         Intent intent = new Intent(namePage);
         startActivity(intent);
     }

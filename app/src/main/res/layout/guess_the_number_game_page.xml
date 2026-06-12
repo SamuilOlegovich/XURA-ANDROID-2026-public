@@ -108,15 +108,16 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginBottom="10dp"
         android:hint="@string/place_your_bet"
         app:boxBackgroundColor="@color/xura_glass_fill"
         app:boxStrokeColor="@color/xura_glass_border"
         app:boxStrokeErrorColor="@color/xura_error"
         app:hintTextColor="@color/xura_text_tertiary"
+        app:errorEnabled="true"
+        app:errorTextColor="@color/xura_error"
         app:suffixText="XRP"
         app:suffixTextColor="@color/xura_cyan"
-        app:layout_constraintBottom_toTopOf="@+id/numbers_grid"
+        app:layout_constraintBottom_toTopOf="@+id/chip_group_amounts"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/your_balance_xrp_text"
@@ -134,6 +135,62 @@
             android:textStyle="bold" />
 
     </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Quick bet amounts chip group -->
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chip_group_amounts"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="4dp"
+        app:singleSelection="true"
+        app:selectionRequired="false"
+        app:layout_constraintBottom_toTopOf="@+id/numbers_grid"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_1_xrp"
+            style="@style/Widget.Material3.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/chip_1_xrp"
+            android:textColor="@color/xura_text_primary"
+            app:chipBackgroundColor="@color/chip_bg_quick_bet"
+            app:chipStrokeColor="@color/chip_stroke_quick_bet"
+            app:chipStrokeWidth="1dp"
+            app:checkedIconVisible="false" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_5_xrp"
+            style="@style/Widget.Material3.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/chip_5_xrp"
+            android:textColor="@color/xura_text_primary"
+            app:chipBackgroundColor="@color/chip_bg_quick_bet"
+            app:chipStrokeColor="@color/chip_stroke_quick_bet"
+            app:chipStrokeWidth="1dp"
+            app:checkedIconVisible="false" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_10_xrp"
+            style="@style/Widget.Material3.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/chip_10_xrp"
+            android:textColor="@color/xura_text_primary"
+            app:chipBackgroundColor="@color/chip_bg_quick_bet"
+            app:chipStrokeColor="@color/chip_stroke_quick_bet"
+            app:chipStrokeWidth="1dp"
+            app:checkedIconVisible="false" />
+
+    </com.google.android.material.chip.ChipGroup>
 
     <!-- Number picker grid 1–36 -->
     <GridLayout

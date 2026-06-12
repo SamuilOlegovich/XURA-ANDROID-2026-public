@@ -132,7 +132,6 @@
     <!-- Bottom Navigation Bar — floating pill -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav"
-        app:selectedItemId="@id/nav_games"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -145,7 +144,7 @@
         app:itemTextColor="@color/bottom_nav_tint"
         app:itemRippleColor="@color/xura_glass_fill"
         app:menu="@menu/bottom_nav_menu"
-        app:labelVisibilityMode="labeled"
+        app:labelVisibilityMode="unlabeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

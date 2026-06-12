@@ -28,37 +28,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Lotto ticker -->
-        <TextView
-            android:id="@+id/lotto_text_go_link"
-            android:layout_width="0dp"
-            android:layout_height="24dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="24dp"
-            android:ellipsize="marquee"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:scrollHorizontally="true"
-            android:singleLine="true"
-            android:text="@string/want_to_win"
-            android:textAlignment="center"
-            android:textColor="@color/xura_text_muted"
-            android:textSize="10sp"
-            android:letterSpacing="0.12"
-            android:gravity="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/logo_button_link" />
-
         <!-- "YOUR BALANCE" label -->
         <TextView
             android:id="@+id/your_balance_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="32dp"
             android:layout_marginEnd="24dp"
             android:text="@string/your_balance"
             android:textAlignment="center"
@@ -68,7 +44,7 @@
             android:letterSpacing="0.16"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lotto_text_go_link" />
+            app:layout_constraintTop_toBottomOf="@+id/logo_button_link" />
 
         <!-- Balance loading spinner — shown while wallet connects -->
         <com.google.android.material.progressindicator.CircularProgressIndicator
@@ -188,7 +164,6 @@
         <!-- Bottom Navigation Bar — floating pill -->
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_nav"
-            app:selectedItemId="@id/nav_wallet"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -201,7 +176,7 @@
             app:itemTextColor="@color/bottom_nav_tint"
             app:itemRippleColor="@color/xura_glass_fill"
             app:menu="@menu/bottom_nav_menu"
-            app:labelVisibilityMode="labeled"
+            app:labelVisibilityMode="unlabeled"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

@@ -1,6 +1,8 @@
 package com.samuilolegovich.view;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,6 +31,8 @@ public class TransactionHistory extends BaseActivity {
 
     private TextView transactionHistoryTextView;
     private RecyclerView recyclerView;
+    private com.google.android.material.progressindicator.CircularProgressIndicator historyLoading;
+    private LinearLayout emptyState;
 
 
 
@@ -48,6 +52,8 @@ public class TransactionHistory extends BaseActivity {
     private void setViews() {
         transactionHistoryTextView = findViewById(R.id.transaction_history_text_view);
         recyclerView = findViewById(R.id.list_of_history);
+        historyLoading = findViewById(R.id.history_loading);
+        emptyState = findViewById(R.id.empty_state);
         adapter = new HistoryPaymentAdapter(this);
         recyclerView.setAdapter(adapter);
     }
@@ -65,8 +71,16 @@ public class TransactionHistory extends BaseActivity {
 
     public void selectTabButtonThread(ArrayList<HistoryPaymentDto> list) {
         runOnUiThread(() -> {
-            adapter.submitList(list);
-            recyclerView.scrollToPosition(0);
+            historyLoading.setVisibility(View.GONE);
+            if (list == null || list.isEmpty()) {
+                recyclerView.setVisibility(View.GONE);
+                emptyState.setVisibility(View.VISIBLE);
+            } else {
+                emptyState.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
+                adapter.submitList(list);
+                recyclerView.scrollToPosition(0);
+            }
         });
     }
 
