@@ -1,5 +1,6 @@
 package com.samuilolegovich;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import com.samuilolegovich.enums.StringEnum;
 import com.samuilolegovich.utils.Lotto;
 import com.samuilolegovich.utils.PrefsHelper;
+import com.samuilolegovich.utils.RootDetector;
 import com.samuilolegovich.utils.SecureSeedStorage;
 import com.samuilolegovich.view.Lost;
 import com.samuilolegovich.view.Win;
@@ -127,7 +129,27 @@ public class MainActivity extends BaseActivity {
             if (Boolean.TRUE.equals(ready)) startXrplSocketService();
         });
 
-        handleStartup();
+        if (RootDetector.isRooted(this)) {
+            showRootWarning();
+        } else {
+            handleStartup();
+        }
+    }
+
+
+
+    private void showRootWarning() {
+        new AlertDialog.Builder(this)
+                .setTitle("Обнаружен root-доступ")
+                .setMessage(
+                        "На этом устройстве обнаружен root-доступ или неофициальная прошивка.\n\n" +
+                        "Root открывает другим приложениям доступ к защищённым данным, " +
+                        "включая seed-фразу вашего кошелька.\n\n" +
+                        "Рекомендуем использовать XURA только на устройствах без root.")
+                .setCancelable(false)
+                .setPositiveButton("Продолжить на свой риск", (d, w) -> handleStartup())
+                .setNegativeButton("Выйти", (d, w) -> finishAffinity())
+                .show();
     }
 
 
