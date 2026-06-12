@@ -29,18 +29,6 @@
                 android:background="@color/xura_black"
                 android:orientation="vertical">
 
-                <include
-            layout="@layout/logo_xura"
-            android:id="@+id/logo4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="100dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="100dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
 
                 <CheckedTextView
                     android:id="@+id/borrower_requirements_checked_text_view99"

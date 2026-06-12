@@ -1,17 +1,15 @@
 package com.samuilolegovich.view;
 
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.samuilolegovich.AppExecutors;
 import com.samuilolegovich.BaseActivity;
-
-import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 import com.samuilolegovich.assistants.HistoryCreator;
-import com.samuilolegovich.assistants.HistoryPaymentArrayAdapter;
+import com.samuilolegovich.assistants.HistoryPaymentAdapter;
 import com.samuilolegovich.dto.HistoryPaymentDto;
 
 import java.util.ArrayList;
@@ -21,16 +19,16 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 
 @AndroidEntryPoint
-public class TransactionHistory  extends BaseActivity {
+public class TransactionHistory extends BaseActivity {
     public static final String TRANSACTION_HISTORY_CLASS = ".TransactionHistory";
 
     public static TransactionHistory TRANSACTION_HISTORY;
 
     private HistoryCreator historyCreator;
-    private ArrayList listHistory;
+    private HistoryPaymentAdapter adapter;
 
     private TextView transactionHistoryTextView;
-    private ListView listView;
+    private RecyclerView recyclerView;
 
 
 
@@ -39,7 +37,7 @@ public class TransactionHistory  extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.transaction_history_page);
         historyCreator = new HistoryCreator();
-        setButtons();
+        setViews();
         setLanguage();
         TRANSACTION_HISTORY = this;
         createHistoryThread();
@@ -47,9 +45,11 @@ public class TransactionHistory  extends BaseActivity {
 
 
 
-    private void setButtons() {
-        transactionHistoryTextView = (TextView) findViewById(R.id.transaction_history_text_view);
-        listView = (ListView) findViewById(R.id.list_of_history);
+    private void setViews() {
+        transactionHistoryTextView = findViewById(R.id.transaction_history_text_view);
+        recyclerView = findViewById(R.id.list_of_history);
+        adapter = new HistoryPaymentAdapter(this);
+        recyclerView.setAdapter(adapter);
     }
 
 
@@ -63,16 +63,11 @@ public class TransactionHistory  extends BaseActivity {
     }
 
 
-    public void selectTabButtonThread(ArrayList<HistoryPaymentDto> listHistory) {
-        runOnUiThread(() -> selectTabButton(listHistory));
-    }
-
-
-    private void selectTabButton(ArrayList<HistoryPaymentDto> in) {
-        ArrayAdapter<HistoryPaymentDto> adapter = new HistoryPaymentArrayAdapter(this, 0, in);
-        listView.setAdapter(adapter);
-        // для того чтобы лист показывался сверху вниз
-        listView.setSelection(0);
+    public void selectTabButtonThread(ArrayList<HistoryPaymentDto> list) {
+        runOnUiThread(() -> {
+            adapter.submitList(list);
+            recyclerView.scrollToPosition(0);
+        });
     }
 
 

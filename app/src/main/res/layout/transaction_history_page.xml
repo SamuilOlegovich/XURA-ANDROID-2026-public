@@ -20,19 +20,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <!-- XURA Logo -->
-        <include
-            layout="@layout/logo_xura"
-            android:id="@+id/logo"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="100dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="100dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
 
         <!-- TRANSACTION HISTORY title -->
         <TextView
@@ -40,7 +27,7 @@
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="40dp"
             android:layout_marginEnd="24dp"
             android:text="@string/transaction_history_text"
             android:textAlignment="center"
@@ -52,10 +39,10 @@
             android:letterSpacing="0.02"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/logo" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <!-- Transaction List -->
-        <ListView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list_of_history"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -63,10 +50,9 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="12dp"
             android:layout_marginBottom="16dp"
-            android:divider="@android:color/transparent"
-            android:dividerHeight="10dp"
-            android:stackFromBottom="true"
-            android:transcriptMode="alwaysScroll"
+            android:clipToPadding="false"
+            android:paddingBottom="8dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -522,10 +522,10 @@ Caption  : Montserrat Regular 12sp — минимум (заменить все 9
 | ✅ P0 | **Bottom Nav + Navigation Component** | BaseActivity + 3 layouts + 3 Activities | DONE |
 | ✅ P0 | **`TextView` → `MaterialButton` везде** | все 18 layout с кнопками | DONE |
 | ✅ P0 | **Исправить контраст `text_muted`** | colors.xml: #4D→#80FFFFFF (1.8→5.3:1) | DONE |
-| 🟡 P1 | **`EditText` → `TextInputLayout`** | send, receive, game, password экраны | 0.5 дня |
-| 🟡 P1 | **`ListView` → `RecyclerView`** | transaction_history_page.xml + adapter | 1 день |
-| 🟡 P1 | **`Theme.Material3`** | themes.xml | 0.5 дня |
-| 🟡 P1 | **Логотип только на главном** | убрать из 28 из 31 layout | 1 день |
+| ✅ P1 | **`EditText` → `TextInputLayout`** | send, receive, game, password экраны | DONE |
+| ✅ P1 | **`ListView` → `RecyclerView`** | transaction_history_page.xml + adapter | DONE |
+| ✅ P1 | **`Theme.Material3`** | themes.xml | DONE |
+| ✅ P1 | **Логотип только на главном** | убрать из 28 из 31 layout | DONE |
 | 🟢 P2 | **Loading/Error состояния** | все экраны | 1 день |
 | 🟢 P2 | **Win page — кнопки навигации** | win_page.xml | 1 час |
 | 🟢 P2 | **Roulette — карточка с тизером** | roulette_game_page.xml | 2 часа |

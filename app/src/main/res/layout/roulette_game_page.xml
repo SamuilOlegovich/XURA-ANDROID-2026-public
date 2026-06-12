@@ -26,18 +26,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- XURA Logo -->
-    <include
-        layout="@layout/logo_xura"
-        android:id="@+id/imageViewLogo"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="90dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="90dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rules_of_the_game_link" />
 
     <!-- ROULETTE title -->
     <TextView
@@ -45,7 +33,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="24dp"
         android:fontFamily="@font/montserrat"
         android:text="@string/roulette_game"
@@ -57,7 +45,7 @@
         android:letterSpacing="0.04"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewLogo" />
+        app:layout_constraintTop_toBottomOf="@+id/rules_of_the_game_link" />
 
     <!-- COMING SOON — styled like primary button -->
     <com.google.android.material.button.MaterialButton

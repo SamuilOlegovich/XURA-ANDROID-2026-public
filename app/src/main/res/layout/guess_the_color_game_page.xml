@@ -26,18 +26,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- XURA Logo -->
-    <include
-        layout="@layout/logo_xura"
-        android:id="@+id/imageViewLogo"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="90dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="90dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rules_of_the_game_link" />
 
     <!-- GUESS THE COLOR title -->
     <TextView
@@ -45,7 +33,7 @@
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="16dp"
         android:fontFamily="@font/montserrat"
         android:text="@string/guess_the_color"
@@ -57,7 +45,7 @@
         android:letterSpacing="0.02"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewLogo" />
+        app:layout_constraintTop_toBottomOf="@+id/rules_of_the_game_link" />
 
     <!-- Subtitle -->
     <TextView
@@ -114,27 +102,37 @@
         app:layout_constraintTop_toBottomOf="@+id/your_balance_text_view" />
 
     <!-- Bet amount input -->
-    <EditText
-        android:id="@+id/bet_field"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_bet_field"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
-        android:layout_height="52dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="12dp"
-        android:background="@drawable/fields"
-        android:ems="10"
         android:hint="@string/place_your_bet"
-        android:inputType="numberDecimal"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:textAlignment="center"
-        android:textColor="@color/xura_text_primary"
-        android:textColorHint="@color/xura_text_muted"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        app:boxBackgroundColor="@color/xura_glass_fill"
+        app:boxStrokeColor="@color/xura_glass_border"
+        app:boxStrokeErrorColor="@color/xura_error"
+        app:hintTextColor="@color/xura_text_tertiary"
+        app:suffixText="XRP"
+        app:suffixTextColor="@color/xura_cyan"
         app:layout_constraintBottom_toTopOf="@+id/color_red"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/bet_field"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:textAlignment="center"
+            android:textColor="@color/xura_text_primary"
+            android:textColorHint="@color/xura_text_muted"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <!-- RED bet button — immersive game action -->
     <com.google.android.material.button.MaterialButton

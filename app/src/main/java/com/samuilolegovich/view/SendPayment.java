@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputLayout;
+
 import com.samuilolegovich.BaseActivity;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -44,7 +46,7 @@ public class SendPayment extends BaseActivity {
     private EditText address;
     private EditText amount;
     private TextView send;
-    private TextView scan;
+    private TextInputLayout scan;
     private EditText tag;
 
 
@@ -110,7 +112,6 @@ public class SendPayment extends BaseActivity {
         WRONG_DESTINATION_ADDRESS = getString(R.string.wrong_destination_address);
         sendPaymentPageTextViewTwo.setText(R.string.your_balance);
         sendPaymentPageTextView.setText(R.string.send_payment);
-        scan.setText(R.string.scan_qr_code);
         send.setText(R.string.send);
     }
 
@@ -127,10 +128,8 @@ public class SendPayment extends BaseActivity {
             );
         });
 
-        scan.setOnClickListener(v -> {
-            v.startAnimation(animTranslate);
-            startActivity(new Intent(ScanQrCode.SCAN_QR_CODE_CLASS));
-        });
+        scan.setEndIconOnClickListener(v ->
+                startActivity(new Intent(ScanQrCode.SCAN_QR_CODE_CLASS)));
     }
 
 
