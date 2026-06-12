@@ -13,7 +13,6 @@ import com.samuilolegovich.BaseActivity;
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 
-import static com.samuilolegovich.view.BecomeReferral.BECOME_REFERRAL_CLASS;
 import static com.samuilolegovich.view.GuessTheNumberGame.GUESS_THE_NUMBER_GAME_CLASS;
 import static com.samuilolegovich.view.GuessTheColorGame.GUESS_THE_COLOR_GAME_CLASS;
 import static com.samuilolegovich.view.RouletteGame.ROULETTE_GAME_CLASS;
@@ -30,7 +29,6 @@ public class SelectGame extends BaseActivity {
     private Animation animTranslate;
 
     private TextView selectTextView;
-    private TextView becomeReferral;
     private TextView guessTheNumber;
     private TextView guessTheColor;
     private TextView roulette;
@@ -59,7 +57,6 @@ public class SelectGame extends BaseActivity {
 
 
     private void setButtons() {
-        becomeReferral = (TextView) findViewById(R.id.become_referral_linc);
         guessTheNumber = (TextView) findViewById(R.id.double_your_bet_linc);
         guessTheColor = (TextView) findViewById(R.id.guess_the_color_linc);
         selectTextView = (TextView) findViewById(R.id.select_text_view);
@@ -70,7 +67,6 @@ public class SelectGame extends BaseActivity {
     private void setLanguage() {
         guessTheNumber.setText(R.string.name_guess_the_number);
         guessTheColor.setText(R.string.name_guess_the_color);
-        becomeReferral.setText(R.string.become_a_referral);
         selectTextView.setText(R.string.select_game);
         roulette.setText(R.string.name_roulette);
     }
@@ -78,18 +74,6 @@ public class SelectGame extends BaseActivity {
 
     private void listeners() {
         animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
-
-        becomeReferral.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        v.startAnimation(animTranslate);
-                        flourOfChoiceMediaPlayer.stop();
-                        flourOfChoiceMediaPlayer.prepareAsync();
-                        goToAnotherPage(BECOME_REFERRAL_CLASS);
-                    }
-                }
-        );
 
         guessTheColor.setOnClickListener(
                 new View.OnClickListener() {

@@ -10,6 +10,19 @@
     tools:ignore="MissingDefaultResource">
 
 
+    <!-- XURA Logo -->
+    <include
+        layout="@layout/logo_xura"
+        android:id="@+id/logo_xura"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="80dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <!-- Info text -->
     <TextView
         android:id="@+id/create_new_wallet_text_view"
@@ -26,7 +39,7 @@
         android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/logo_xura" />
 
     <!-- Seed phrase display — shown in cyan for importance -->
     <TextView

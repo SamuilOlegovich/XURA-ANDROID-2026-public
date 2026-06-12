@@ -10,13 +10,26 @@
     tools:ignore="MissingDefaultResource">
 
 
+    <!-- XURA Logo -->
+    <include
+        layout="@layout/logo_xura"
+        android:id="@+id/logo_xura"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="80dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <!-- YOU WON! — the hero headline -->
     <TextView
         android:id="@+id/win_page_text_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:fontFamily="@font/montserrat"
         android:text="@string/bet_won"
@@ -27,7 +40,7 @@
         android:letterSpacing="0.02"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/logo_xura" />
 
     <!-- Win amount — scrolling marquee -->
     <TextView

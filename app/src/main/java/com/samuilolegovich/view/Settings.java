@@ -1,5 +1,6 @@
 package com.samuilolegovich.view;
 
+import static com.samuilolegovich.view.BecomeReferral.BECOME_REFERRAL_CLASS;
 import static com.samuilolegovich.view.SelectLanguage.SELECT_LANGUAGE_CLASS;
 import static com.samuilolegovich.view.SettingsSetPasswordForApp.SETTINGS_SET_PASSWORD_FOR_APP_CLASS;
 
@@ -55,6 +56,7 @@ public class Settings extends BaseActivity {
     private TextView tvTestBalance;
     private MaterialButton btnResetTestBalance;
     private MaterialButton btnGameMode;
+    private MaterialButton becomeReferralLinc;
 
 
 
@@ -83,6 +85,7 @@ public class Settings extends BaseActivity {
         tvTestBalance = findViewById(R.id.tv_test_balance);
         btnResetTestBalance = findViewById(R.id.btn_reset_test_balance);
         btnGameMode = findViewById(R.id.settings_game_mode_linc);
+        becomeReferralLinc = findViewById(R.id.become_referral_linc);
     }
 
 
@@ -202,6 +205,11 @@ public class Settings extends BaseActivity {
                     })
                     .setNegativeButton("CANCEL", null)
                     .show();
+        });
+
+        becomeReferralLinc.setOnClickListener(v -> {
+            v.startAnimation(animTranslate);
+            goToAnotherPage(BECOME_REFERRAL_CLASS);
         });
 
         btnResetTestBalance.setOnClickListener(v -> {

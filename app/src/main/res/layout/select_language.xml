@@ -20,13 +20,26 @@
         app:layout_constraintTop_toTopOf="parent">
 
 
+        <!-- XURA Logo -->
+        <include
+            layout="@layout/logo_xura"
+            android:id="@+id/logo_xura"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="80dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="80dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <!-- SELECT LANGUAGE title -->
         <TextView
             android:id="@+id/settings_text_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="24dp"
             android:layout_marginEnd="24dp"
             android:text="@string/select_language_text"
             android:textAlignment="center"
@@ -37,7 +50,7 @@
             android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/logo_xura" />
 
         <!-- ENGLISH button -->
         <com.google.android.material.button.MaterialButton

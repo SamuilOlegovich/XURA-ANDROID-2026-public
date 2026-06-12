@@ -9,24 +9,6 @@
     tools:context=".view.SelectGame"
     tools:ignore="MissingDefaultResource">
 
-    <!-- Become Referral — top center -->
-    <TextView
-        android:id="@+id/become_referral_linc"
-        android:layout_width="wrap_content"
-        android:layout_height="32dp"
-        android:layout_marginTop="16dp"
-        android:fontFamily="@font/montserrat"
-        android:text="@string/become_a_referral"
-        android:textAlignment="center"
-        android:textColor="@color/xura_text_tertiary"
-        android:textSize="11sp"
-        android:letterSpacing="0.06"
-        android:gravity="center"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
     <!-- SELECT GAME headline -->
     <TextView
         android:id="@+id/select_text_view"
@@ -44,7 +26,7 @@
         android:letterSpacing="0.04"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/become_referral_linc" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <!-- GUESS THE COLOR — primary action -->
