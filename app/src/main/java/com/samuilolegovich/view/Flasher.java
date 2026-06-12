@@ -36,8 +36,11 @@ public class Flasher extends BaseActivity {
 
     public static String TEST_SAND_AMOUNT;
     public static String NUMBER_BET;
-
     public static Boolean COLOR_BET;
+
+    // Roulette-specific fields
+    public static volatile String ROULETTE_BET_TAG;
+    public static volatile int ROULETTE_WIN_MULTIPLIER = 2;
 
     private volatile boolean FLAG;
 
@@ -170,6 +173,10 @@ public class Flasher extends BaseActivity {
 
 
     private int resolveDisplayNumber(boolean win) {
+        // For roulette the winning number is already stored in NUMBER_BET
+        if (TEST_MODE_ENUM == TestModeEnum.ROULETTE_GAME) {
+            try { return Integer.parseInt(NUMBER_BET); } catch (Exception e) { return 0; }
+        }
         if (win) {
             if (NUMBER_BET.equals("00") || NUMBER_BET.equals("0")) return 0;
             return Integer.parseInt(NUMBER_BET);

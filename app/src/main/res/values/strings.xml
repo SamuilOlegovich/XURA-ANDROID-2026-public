@@ -257,4 +257,11 @@
     <string name="roulette_coming_soon_desc">Classic roulette powered by XRP Ledger — maximum fairness through blockchain transparency.</string>
     <string name="roulette_notify_toast">We\'ll notify you when Roulette launches!</string>
 
+    <string name="roulette_spin">SPIN</string>
+    <string name="roulette_select_a_bet">TAP A CELL TO SELECT YOUR BET</string>
+    <string name="roulette_bet_number">BET ON NUMBER:</string>
+    <string name="roulette_first_dozen">1st 12</string>
+    <string name="roulette_second_dozen">2nd 12</string>
+    <string name="roulette_third_dozen">3rd 12</string>
+
 </resources>
