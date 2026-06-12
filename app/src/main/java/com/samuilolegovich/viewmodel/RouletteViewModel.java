@@ -46,16 +46,7 @@ public class RouletteViewModel extends ViewModel {
         executor.execute(() -> repository.updateBalance(repository.getBalance()));
     }
 
-    public void simulateBalanceDeduct(String amount) {
-        try { repository.deductTestBalance(new BigDecimal(amount)); }
-        catch (NumberFormatException ignored) {}
-    }
-
-    public void simulateBalanceCredit(double wonAmount) {
-        repository.creditTestBalance(BigDecimal.valueOf(wonAmount));
-    }
-
-    public void placeBet(String rawAmount, String betTag, String myReferral) {
+public void placeBet(String rawAmount, String betTag, String myReferral) {
         executor.execute(() -> {
             String amount = prepareAmount(rawAmount);
             GameBetError error = validateAmount(amount);

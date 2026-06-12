@@ -54,6 +54,7 @@ public class Settings extends BaseActivity {
     private MaterialCardView cardTestBalance;
     private TextView tvTestBalance;
     private MaterialButton btnResetTestBalance;
+    private MaterialButton btnGameMode;
 
 
 
@@ -81,6 +82,7 @@ public class Settings extends BaseActivity {
         cardTestBalance = findViewById(R.id.card_test_balance);
         tvTestBalance = findViewById(R.id.tv_test_balance);
         btnResetTestBalance = findViewById(R.id.btn_reset_test_balance);
+        btnGameMode = findViewById(R.id.settings_game_mode_linc);
     }
 
 
@@ -100,7 +102,17 @@ public class Settings extends BaseActivity {
         } catch (Exception ignored) {}
         tvAppVersion.setText(version);
 
-        // Test mode card — visible only in test mode
+        updateGameModeButton();
+        updateTestBalanceCard();
+    }
+
+    private void updateGameModeButton() {
+        boolean isReal = Boolean.TRUE.equals(MainActivity.IS_REAL_GAME_MODE);
+        String state = isReal ? "  ●  LIVE" : "  ○  TRIAL";
+        btnGameMode.setText(getString(R.string.settings_game_mode) + state);
+    }
+
+    private void updateTestBalanceCard() {
         if (!Boolean.TRUE.equals(MainActivity.IS_REAL_GAME_MODE)) {
             cardTestBalance.setVisibility(View.VISIBLE);
             updateTestBalanceDisplay();
@@ -134,6 +146,16 @@ public class Settings extends BaseActivity {
                 .apply();
     }
 
+    private void saveGameMode(boolean isReal) {
+        String value = isReal
+                ? StringEnum.APP_GAME_MODE_REAL.getValue()
+                : StringEnum.APP_GAME_MODE_TEST.getValue();
+        PrefsHelper.get(this).edit()
+                .putString(StringEnum.APP_GAME_MODE.getValue(), value)
+                .apply();
+        MainActivity.IS_REAL_GAME_MODE = isReal;
+    }
+
 
     private void listeners() {
         animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
@@ -159,6 +181,27 @@ public class Settings extends BaseActivity {
         settingsBiometricLinc.setOnClickListener(v -> {
             v.startAnimation(animTranslate);
             handleBiometricToggle();
+        });
+
+        btnGameMode.setOnClickListener(v -> {
+            v.startAnimation(animTranslate);
+            boolean isReal = Boolean.TRUE.equals(MainActivity.IS_REAL_GAME_MODE);
+            String title   = getString(isReal
+                    ? R.string.settings_game_mode_switch_to_trial
+                    : R.string.settings_game_mode_switch_to_live);
+            String message = getString(isReal
+                    ? R.string.settings_game_mode_trial_info
+                    : R.string.settings_game_mode_live_warning);
+            new AlertDialog.Builder(this)
+                    .setTitle(title)
+                    .setMessage(message)
+                    .setPositiveButton("CONFIRM", (d, w) -> {
+                        saveGameMode(!isReal);
+                        updateGameModeButton();
+                        updateTestBalanceCard();
+                    })
+                    .setNegativeButton("CANCEL", null)
+                    .show();
         });
 
         btnResetTestBalance.setOnClickListener(v -> {

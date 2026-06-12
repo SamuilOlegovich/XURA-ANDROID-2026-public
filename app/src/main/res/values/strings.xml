@@ -114,6 +114,11 @@
     <string name="biometric_prompt_title">XURA WALLET</string>
     <string name="biometric_prompt_subtitle">Confirm your identity to continue</string>
     <string name="settings_biometric"><u>BIOMETRICS</u></string>
+    <string name="settings_game_mode">GAME MODE</string>
+    <string name="settings_game_mode_switch_to_live">Switch to LIVE mode?</string>
+    <string name="settings_game_mode_switch_to_trial">Switch to TRIAL mode?</string>
+    <string name="settings_game_mode_live_warning">Real XRP will be used for bets.</string>
+    <string name="settings_game_mode_trial_info">Virtual balance will be used. No real XRP involved.</string>
     <string name="to">To</string>
 
 

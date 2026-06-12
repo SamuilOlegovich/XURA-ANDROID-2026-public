@@ -78,6 +78,11 @@ public class NotifierRunForTrialGame implements Runnable {
         String lotto = String.valueOf(random.nextInt(10001 - 4000) + 4000);
         WalletRepository.getInstance().setLottoNow(lotto);
 
+        if (win && !Boolean.TRUE.equals(MainActivity.IS_REAL_GAME_MODE)) {
+            try { WalletRepository.getInstance().creditTestBalance(new java.math.BigDecimal(amountWin)); }
+            catch (Exception ignored) {}
+        }
+
         String msg = win
                 ? String.format(CONGRATULATIONS_YOUR_BET_IS_WON, amountWin)
                 : YOUR_BET_IS_LOST_TRY_AGAIN_AND_YOU_WILL_BE_LUCKY;

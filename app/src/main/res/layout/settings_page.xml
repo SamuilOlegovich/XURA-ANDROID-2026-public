@@ -272,6 +272,28 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
+        <!-- GAME MODE toggle button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/settings_game_mode_linc"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/bg_button_secondary"
+            app:backgroundTint="@null"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/settings_game_mode"
+            android:textColor="@color/xura_text_secondary"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.06"
+            app:layout_constraintBottom_toTopOf="@+id/settings_biometric_linc"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
         <!-- BIOMETRICS toggle button -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/settings_biometric_linc"
@@ -290,7 +312,7 @@
             android:textSize="16sp"
             android:textStyle="bold"
             android:letterSpacing="0.06"
-            app:layout_constraintBottom_toTopOf="@+id/settings_set_password_linc"
+            app:layout_constraintBottom_toTopOf="@+id/settings_game_mode_linc"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
