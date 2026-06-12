@@ -1,11 +1,8 @@
 package com.samuilolegovich.view;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.view.WindowManager;
 import android.view.Gravity;
 import android.view.View;
@@ -141,11 +138,9 @@ public class EnterApplicationPassword extends BaseActivity {
         }
     }
 
-    @SuppressLint("HardwareIds")
     private String getPassword(String password) {
-        return Cipher.encryptStringIrreversibly(password,
-                preferences.getString(StringEnum.APP_PREFERENCES_SALT.getValue(), ""),
-                Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
+        String salt = preferences.getString(StringEnum.APP_PREFERENCES_SALT.getValue(), "");
+        return Cipher.hashPassword(password, salt);
     }
 
 

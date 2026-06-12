@@ -1,11 +1,8 @@
 package com.samuilolegovich.view;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.view.WindowManager;
 import android.view.Gravity;
 import android.view.View;
@@ -26,8 +23,6 @@ import com.samuilolegovich.utils.BiometricHelper;
 import com.samuilolegovich.utils.Cipher;
 import com.samuilolegovich.utils.PrefsHelper;
 
-import java.util.UUID;
-
 import static com.samuilolegovich.view.RestoreOrCreateNewWallet.RESTORE_OR_NEW_WALLET_CLASS;
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -39,8 +34,6 @@ import dagger.hilt.android.AndroidEntryPoint;
 public class SetAnAppPassword extends BaseActivity {
     public static final String SET_AN_APP_PASSWORD_CLASS = ".SetAnAppPassword";
 
-    private SharedPreferences.Editor editor;
-    private SharedPreferences preferences;
     private Animation animTranslate;
 
     private EditText passwordOne;
@@ -163,23 +156,17 @@ public class SetAnAppPassword extends BaseActivity {
 
 
     private void setPasswordForApp(String password, boolean b) {
-        preferences = PrefsHelper.get(this);
-
-        @SuppressLint("HardwareIds")
-        String androidId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
-        String salt = UUID.randomUUID().toString();
-        String saltEncrypt = Cipher.encryptStringForSalt(salt, androidId);
-
-        editor = preferences.edit();
-        editor.putString(StringEnum.APP_PREFERENCES_SALT.getValue(), saltEncrypt);
-
+        SharedPreferences.Editor edit = PrefsHelper.get(this).edit();
         if (b) {
-            editor.putString(StringEnum.APP_PREFERENCES_PASSWORD.getValue(),
-                    Cipher.encryptStringIrreversibly(password, saltEncrypt, androidId));
+            String salt = Cipher.generateSalt();
+            edit.putString(StringEnum.APP_PREFERENCES_SALT.getValue(), salt);
+            edit.putString(StringEnum.APP_PREFERENCES_PASSWORD.getValue(),
+                    Cipher.hashPassword(password, salt));
         } else {
-            editor.putString(StringEnum.APP_PREFERENCES_PASSWORD.getValue(), password);
+            edit.putString(StringEnum.APP_PREFERENCES_PASSWORD.getValue(),
+                    StringEnum.APP_PREFERENCES_PASSWORD_NOT_INSTALLED.getValue());
         }
-        editor.apply();
+        edit.apply();
     }
 
 
