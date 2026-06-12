@@ -24,48 +24,33 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingTop="12dp"
+            android:paddingTop="8dp"
             android:paddingBottom="32dp">
 
-            <!-- Rules link -->
-            <TextView
-                android:id="@+id/rules_of_the_game_link"
-                android:layout_width="wrap_content"
-                android:layout_height="32dp"
-                android:layout_gravity="center_horizontal"
-                android:fontFamily="@font/montserrat"
-                android:text="@string/rules_of_the_game"
-                android:textColor="@color/xura_text_tertiary"
-                android:textSize="11sp"
-                android:gravity="center"
-                android:letterSpacing="0.06" />
-
-            <!-- ROULETTE title -->
-            <TextView
-                android:id="@+id/roulette_game_text_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="24dp"
-                android:fontFamily="@font/montserrat"
-                android:text="@string/roulette_game"
-                android:textAlignment="center"
-                android:textColor="@color/xura_text_primary"
-                android:textSize="26sp"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:letterSpacing="0.12" />
-
-            <!-- Balance row -->
+            <!-- Rules + Balance row -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="24dp">
+                android:gravity="center_vertical"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp">
+
+                <TextView
+                    android:id="@+id/rules_of_the_game_link"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="@string/rules_of_the_game"
+                    android:textColor="@color/xura_text_tertiary"
+                    android:textSize="11sp"
+                    android:gravity="center"
+                    android:letterSpacing="0.06" />
+
+                <android.widget.Space
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -73,28 +58,117 @@
                     android:fontFamily="@font/montserrat"
                     android:text="@string/your_balance"
                     android:textColor="@color/xura_text_tertiary"
-                    android:textSize="12sp" />
+                    android:textSize="11sp" />
 
                 <TextView
                     android:id="@+id/your_balance_xrp_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginStart="6dp"
                     android:fontFamily="@font/montserrat"
                     android:textColor="@color/xura_gold"
-                    android:textSize="14sp"
+                    android:textSize="13sp"
                     android:textStyle="bold"
                     tools:text="42.50 XRP" />
 
             </LinearLayout>
 
-            <!-- Casino table card -->
+            <!-- ROULETTE title -->
+            <TextView
+                android:id="@+id/roulette_game_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/roulette_game"
+                android:textAlignment="center"
+                android:textColor="@color/xura_text_primary"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:letterSpacing="0.12" />
+
+            <!-- ═══════════════════════════════════════
+                 WHEEL CARD — hidden until SPIN pressed
+                 ═══════════════════════════════════════ -->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/roulette_wheel_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="10dp"
+                android:visibility="gone"
+                app:cardBackgroundColor="@color/xura_card"
+                app:cardCornerRadius="16dp"
+                app:strokeColor="@color/xura_glass_border"
+                app:strokeWidth="1dp"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="12dp">
+
+                    <com.samuilolegovich.view.RouletteWheelView
+                        android:id="@+id/roulette_wheel_view"
+                        android:layout_width="220dp"
+                        android:layout_height="220dp" />
+
+                    <!-- Result block — GONE until spin completes -->
+                    <LinearLayout
+                        android:id="@+id/roulette_result_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:paddingTop="12dp"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/roulette_result_number"
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            android:fontFamily="@font/montserrat"
+                            android:gravity="center"
+                            android:textSize="22sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/xura_text_primary"
+                            tools:text="7" />
+
+                        <TextView
+                            android:id="@+id/roulette_result_message"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:fontFamily="@font/montserrat"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            android:letterSpacing="0.08"
+                            tools:text="WON  +42.0 XRP"
+                            tools:textColor="@color/xura_gold" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ═══════════════════════════════════════
+                 CASINO TABLE CARD — vertical layout
+                 ═══════════════════════════════════════ -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/roulette_table_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:layout_marginEnd="12dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="10dp"
                 app:cardBackgroundColor="@color/xura_card"
                 app:cardCornerRadius="12dp"
                 app:strokeColor="@color/xura_glass_border"
@@ -120,51 +194,18 @@
                         android:textSize="11sp"
                         android:letterSpacing="0.08" />
 
-                    <!-- Table in HorizontalScrollView -->
-                    <HorizontalScrollView
+                    <!-- Vertical table — populated in RouletteGame.java -->
+                    <LinearLayout
+                        android:id="@+id/roulette_table_container"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:scrollbars="none">
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-
-                            <!-- Number grid: 0 + 1-36 in 3 rows + 2:1 column buttons
-                                 Populated programmatically in RouletteGame.java -->
-                            <GridLayout
-                                android:id="@+id/roulette_numbers_grid"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:columnCount="15"
-                                android:rowCount="3" />
-
-                            <!-- Dozens row: 1st 12 | 2nd 12 | 3rd 12
-                                 Populated programmatically to align with number grid -->
-                            <LinearLayout
-                                android:id="@+id/roulette_dozens_row"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal" />
-
-                            <!-- Outside bets row: 1-18 | EVEN | RED | BLACK | ODD | 19-36
-                                 Populated programmatically -->
-                            <LinearLayout
-                                android:id="@+id/roulette_outside_row"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal" />
-
-                        </LinearLayout>
-
-                    </HorizontalScrollView>
+                        android:orientation="vertical" />
 
                 </LinearLayout>
 
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Bet input -->
+            <!-- BET INPUT -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_bet_field"
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
@@ -172,7 +213,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="14dp"
                 android:hint="@string/place_your_bet"
                 app:boxStrokeColor="@color/xura_glass_border"
                 app:hintTextColor="@color/xura_text_tertiary">
@@ -187,7 +228,7 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Quick amounts label -->
+            <!-- Quick amounts -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -198,7 +239,6 @@
                 android:textColor="@color/xura_text_tertiary"
                 android:textSize="11sp" />
 
-            <!-- Chips -->
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/chip_group_amounts"
                 android:layout_width="wrap_content"

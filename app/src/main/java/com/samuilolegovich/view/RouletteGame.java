@@ -6,8 +6,11 @@ import android.graphics.drawable.GradientDrawable;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
@@ -20,18 +23,20 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputLayout;
 import com.samuilolegovich.BaseActivity;
+import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 import com.samuilolegovich.enums.StringEnum;
 import com.samuilolegovich.enums.TestModeEnum;
 import com.samuilolegovich.utils.PrefsHelper;
-import com.samuilolegovich.viewmodel.GameBetError;
 import com.samuilolegovich.viewmodel.RouletteViewModel;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
 import static com.samuilolegovich.view.Flasher.FLASHER_CLASS;
@@ -53,22 +58,32 @@ public class RouletteGame extends BaseActivity {
     private static final Set<Integer> BLACK_NUMS = new HashSet<>(Arrays.asList(
             2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35));
 
-    private static final int CELL_DP = 36;
+    private static final int CELL_H = 44;
 
+    // ── ViewModel + prefs ────────────────────────────────────────────────
     private RouletteViewModel viewModel;
     private SharedPreferences preferences;
-    private MediaPlayer casinoMediaPlayer;
-    private MediaPlayer errorMediaPlayer;
-    private MediaPlayer betMediaPlayer;
-    private Animation animTranslate;
     private String myReferral;
 
-    // Current bet selection
-    private android.view.View selectedView;
-    private String selectedBetTag;
-    private int selectedWinMultiplier;
-    private int selectedBgColor;
+    // ── Sound ────────────────────────────────────────────────────────────
+    private MediaPlayer casinoMediaPlayer;
+    private MediaPlayer rouletteSpinMediaPlayer;
+    private MediaPlayer winMediaPlayer;
+    private MediaPlayer lostMediaPlayer;
+    private MediaPlayer errorMediaPlayer;
+    private MediaPlayer betMediaPlayer;
 
+    // ── Animation ────────────────────────────────────────────────────────
+    private Animation animTranslate;
+    private Animation animSlideInDown;
+
+    // ── Current bet selection ────────────────────────────────────────────
+    private View   selectedView;
+    private String selectedBetTag;
+    private int    selectedWinMultiplier;
+    private int    selectedBgColor;
+
+    // ── Error strings ────────────────────────────────────────────────────
     private String YOUR_ACCOUNT_IS_NOT_ENOUGH_TO_SEND;
     private String IT_IS_NOT_POSSIBLE_TO_SEND_NULL;
     private String BET_IS_MADE_EXPECT_THE_RESULT;
@@ -77,13 +92,20 @@ public class RouletteGame extends BaseActivity {
     private String BET_CANNOT_BE_MORE_THAN;
     private String BET_CANNOT_BE_LESS_THAN;
 
-    private TextView rulesInfo;
-    private TextView balance;
-    private TextView selectedBetLabel;
-    private EditText bet;
-    private ChipGroup chipGroupAmounts;
+    // ── Views ────────────────────────────────────────────────────────────
+    private MaterialCardView   wheelCard;
+    private RouletteWheelView  wheelView;
+    private LinearLayout       resultLayout;
+    private TextView           resultNumberText;
+    private TextView           resultMessageText;
+
+    private TextView        rulesInfo;
+    private TextView        balance;
+    private TextView        selectedBetLabel;
+    private EditText        bet;
+    private ChipGroup       chipGroupAmounts;
     private TextInputLayout tilBetField;
-    private MaterialButton btnSpin;
+    private MaterialButton  btnSpin;
 
 
 
@@ -122,9 +144,14 @@ public class RouletteGame extends BaseActivity {
             if (preparedAmount == null) return;
             tilBetField.setError(null);
             bet.setText("");
-            setBetParams(preparedAmount);
-            startActivity(new Intent(FLASHER_CLASS));
-            showToast(BET_IS_MADE_EXPECT_THE_RESULT);
+
+            if (Boolean.TRUE.equals(MainActivity.IS_REAL_GAME_MODE)) {
+                setBetParamsForFlasher(preparedAmount);
+                startActivity(new Intent(FLASHER_CLASS));
+                showToast(BET_IS_MADE_EXPECT_THE_RESULT);
+            } else {
+                startTestSpin(preparedAmount);
+            }
         });
 
         viewModel.loadBalance();
@@ -132,7 +159,17 @@ public class RouletteGame extends BaseActivity {
 
 
 
+    // ════════════════════════════════════════════════════════════════════
+    //  View setup
+    // ════════════════════════════════════════════════════════════════════
+
     private void setViews() {
+        wheelCard        = findViewById(R.id.roulette_wheel_card);
+        wheelView        = findViewById(R.id.roulette_wheel_view);
+        resultLayout     = findViewById(R.id.roulette_result_layout);
+        resultNumberText = findViewById(R.id.roulette_result_number);
+        resultMessageText = findViewById(R.id.roulette_result_message);
+
         rulesInfo        = findViewById(R.id.rules_of_the_game_link);
         balance          = findViewById(R.id.your_balance_xrp_text);
         selectedBetLabel = findViewById(R.id.roulette_selected_bet_label);
@@ -141,15 +178,17 @@ public class RouletteGame extends BaseActivity {
         chipGroupAmounts = findViewById(R.id.chip_group_amounts);
         btnSpin          = findViewById(R.id.btn_spin_roulette);
 
-        casinoMediaPlayer = MediaPlayer.create(this, R.raw.in_casino);
-        errorMediaPlayer  = MediaPlayer.create(this, R.raw.error);
-        betMediaPlayer    = MediaPlayer.create(this, R.raw.bet);
+        casinoMediaPlayer       = MediaPlayer.create(this, R.raw.in_casino);
+        rouletteSpinMediaPlayer = MediaPlayer.create(this, R.raw.roulette_spin);
+        winMediaPlayer          = MediaPlayer.create(this, R.raw.win);
+        lostMediaPlayer         = MediaPlayer.create(this, R.raw.lost);
+        errorMediaPlayer        = MediaPlayer.create(this, R.raw.error);
+        betMediaPlayer          = MediaPlayer.create(this, R.raw.bet);
 
-        casinoMediaPlayer.setVolume(0.5f, 0.5f);
+        casinoMediaPlayer.setVolume(0.4f, 0.4f);
         casinoMediaPlayer.setLooping(true);
         casinoMediaPlayer.start();
     }
-
 
     private void setLanguage() {
         YOUR_ACCOUNT_IS_NOT_ENOUGH_TO_SEND = getString(R.string.your_account_is_not_enough_to_send);
@@ -163,45 +202,180 @@ public class RouletteGame extends BaseActivity {
     }
 
 
-    // ── Casino table builder ────────────────────────────────────────────
 
-    private void buildTable() {
-        GridLayout grid       = findViewById(R.id.roulette_numbers_grid);
-        LinearLayout dozRow   = findViewById(R.id.roulette_dozens_row);
-        LinearLayout outsRow  = findViewById(R.id.roulette_outside_row);
+    // ════════════════════════════════════════════════════════════════════
+    //  TEST MODE — inline spin
+    // ════════════════════════════════════════════════════════════════════
 
-        int cellPx = dp(CELL_DP);
-        Typeface font = ResourcesCompat.getFont(this, R.font.montserrat);
+    private void startTestSpin(String betAmount) {
+        viewModel.simulateBalanceDeduct(betAmount);
 
-        buildNumberGrid(grid, cellPx, font);
-        buildDozensRow(dozRow, cellPx, font);
-        buildOutsideRow(outsRow, cellPx, font);
+        // Show wheel with slide-in animation (first spin) or just re-spin
+        resultLayout.setVisibility(View.GONE);
+        if (wheelCard.getVisibility() != View.VISIBLE) {
+            wheelCard.setVisibility(View.VISIBLE);
+            wheelCard.startAnimation(animSlideInDown);
+        }
+
+        btnSpin.setEnabled(false);
+        btnSpin.setAlpha(0.5f);
+
+        if (rouletteSpinMediaPlayer.isPlaying()) rouletteSpinMediaPlayer.pause();
+        rouletteSpinMediaPlayer.seekTo(0);
+        rouletteSpinMediaPlayer.start();
+        wheelView.startSpinning();
+
+        new Handler(Looper.getMainLooper()).postDelayed(() -> {
+            int winNumber = new Random().nextInt(37);
+            boolean win   = evaluateBet(selectedBetTag, winNumber);
+
+            wheelView.stopAtNumber(winNumber, () -> {
+                if (rouletteSpinMediaPlayer.isPlaying()) {
+                    rouletteSpinMediaPlayer.pause();
+                    rouletteSpinMediaPlayer.seekTo(0);
+                }
+                showSpinResult(winNumber, win, betAmount);
+                btnSpin.setEnabled(true);
+                btnSpin.setAlpha(1f);
+            });
+        }, 3500);
     }
 
 
-    private void buildNumberGrid(GridLayout grid, int cellPx, Typeface font) {
-        // "0" cell spans all 3 rows (col 0)
-        TextView zero = makeCell("0", COLOR_GREEN, cellPx, cellPx * 3, font, true);
-        GridLayout.LayoutParams zp = new GridLayout.LayoutParams(
-                GridLayout.spec(0, 3, 1f), GridLayout.spec(0, 1, 1f));
-        zp.width  = cellPx;
-        zp.height = cellPx * 3;
-        zp.setMargins(2, 2, 2, 2);
-        zero.setLayoutParams(zp);
-        zero.setOnClickListener(v -> selectBet(v, "N:0", 36, COLOR_GREEN));
-        grid.addView(zero);
+    private void showSpinResult(int winNumber, boolean win, String betAmount) {
+        if (winNumber == 0)                      wheelView.setCenterColor(COLOR_GREEN);
+        else if (BLACK_NUMS.contains(winNumber)) wheelView.setCenterColor(COLOR_BLACK);
+        else                                     wheelView.setCenterColor(COLOR_RED);
 
-        // Rows:  top=3,6,...,36  mid=2,5,...,35  bot=1,4,...,34
-        for (int row = 0; row < 3; row++) {
-            for (int col = 0; col < 12; col++) {
-                int num = (col + 1) * 3 - row; // top row: 3,6,9...  mid: 2,5,8...  bot: 1,4,7...
+        int badgeBg = winNumber == 0 ? COLOR_GREEN
+                    : BLACK_NUMS.contains(winNumber) ? COLOR_BLACK : COLOR_RED;
+        resultNumberText.setText(String.valueOf(winNumber));
+        resultNumberText.setBackground(circleBg(badgeBg));
+        resultNumberText.setTextColor(COLOR_GOLD);
+
+        if (win) {
+            double wonAmount = Double.parseDouble(betAmount) * selectedWinMultiplier;
+            String formatted = formatAmount(wonAmount);
+            resultMessageText.setText(getString(R.string.roulette_result_win, formatted));
+            resultMessageText.setTextColor(COLOR_GOLD);
+            resultLayout.setVisibility(View.VISIBLE);
+
+            viewModel.simulateBalanceCredit(wonAmount);
+            winMediaPlayer.seekTo(0);
+            winMediaPlayer.start();
+
+            new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                Win.MASSAGE = getString(R.string.roulette_result_win, formatted);
+                startActivity(new Intent(Win.WIN_CLASS));
+            }, 1500);
+        } else {
+            resultMessageText.setText(getString(R.string.roulette_result_loss));
+            resultMessageText.setTextColor(0xFFFF3060);
+            resultLayout.setVisibility(View.VISIBLE);
+            lostMediaPlayer.seekTo(0);
+            lostMediaPlayer.start();
+        }
+
+        // Scroll to top so user sees the wheel result
+        View scroll = findViewById(R.id.roulette_scroll);
+        if (scroll instanceof android.widget.ScrollView)
+            ((android.widget.ScrollView) scroll).smoothScrollTo(0, 0);
+    }
+
+
+    private boolean evaluateBet(String tag, int n) {
+        if (tag == null) return false;
+        if (tag.startsWith("N:")) return Integer.parseInt(tag.substring(2)) == n;
+        if (n == 0) return false;
+        switch (tag) {
+            case "RED":   return !BLACK_NUMS.contains(n);
+            case "BLACK": return  BLACK_NUMS.contains(n);
+            case "ODD":   return n % 2 != 0;
+            case "EVEN":  return n % 2 == 0;
+            case "LOW":   return n <= 18;
+            case "HIGH":  return n >= 19;
+            case "D1":    return n <= 12;
+            case "D2":    return n >= 13 && n <= 24;
+            case "D3":    return n >= 25;
+            case "C1":    return n % 3 == 1;
+            case "C2":    return n % 3 == 2;
+            case "C3":    return n % 3 == 0;
+            default:      return false;
+        }
+    }
+
+
+
+    // ════════════════════════════════════════════════════════════════════
+    //  REAL MODE — params for Flasher
+    // ════════════════════════════════════════════════════════════════════
+
+    private void setBetParamsForFlasher(String amount) {
+        Flasher.TEST_MODE_ENUM          = TestModeEnum.ROULETTE_GAME;
+        Flasher.TEST_SAND_AMOUNT        = amount;
+        Flasher.ROULETTE_BET_TAG        = selectedBetTag;
+        Flasher.ROULETTE_WIN_MULTIPLIER = selectedWinMultiplier;
+
+        if (selectedBetTag != null && selectedBetTag.startsWith("N:")) {
+            int num = Integer.parseInt(selectedBetTag.substring(2));
+            Flasher.NUMBER_BET = String.valueOf(num);
+            Flasher.COLOR_BET  = (num != 0) && !BLACK_NUMS.contains(num);
+        } else {
+            Flasher.NUMBER_BET = "0";
+            Flasher.COLOR_BET  = "RED".equals(selectedBetTag);
+        }
+    }
+
+
+
+    // ════════════════════════════════════════════════════════════════════
+    //  Casino table builder — vertical layout
+    // ════════════════════════════════════════════════════════════════════
+
+    private void buildTable() {
+        LinearLayout container = findViewById(R.id.roulette_table_container);
+        int  cellH = dp(CELL_H);
+        Typeface font = ResourcesCompat.getFont(this, R.font.montserrat);
+
+        buildZeroCell(container, cellH, font);
+        buildNumberGrid(container, cellH, font);
+        buildColBetsRow(container, cellH, font);
+        buildDozensRow(container, cellH, font);
+        buildOutsideRows(container, cellH, font);
+    }
+
+
+    // "0" — full width green cell
+    private void buildZeroCell(LinearLayout container, int cellH, Typeface font) {
+        TextView zero = makeCell("0", COLOR_GREEN, 0, cellH, font, true);
+        LinearLayout.LayoutParams lp =
+                new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, cellH);
+        lp.setMargins(2, 2, 2, 2);
+        zero.setLayoutParams(lp);
+        zero.setOnClickListener(v -> selectBet(v, "N:0", 36, COLOR_GREEN));
+        container.addView(zero);
+    }
+
+
+    // Numbers 1–36 in a 3×12 GridLayout filling parent width
+    private void buildNumberGrid(LinearLayout container, int cellH, Typeface font) {
+        GridLayout grid = new GridLayout(this);
+        grid.setColumnCount(3);
+        grid.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
+
+        for (int row = 0; row < 12; row++) {
+            for (int col = 0; col < 3; col++) {
+                int num = row * 3 + col + 1; // 1,2,3 / 4,5,6 / … / 34,35,36
                 int bg  = BLACK_NUMS.contains(num) ? COLOR_BLACK : COLOR_RED;
 
-                TextView cell = makeCell(String.valueOf(num), bg, cellPx, cellPx, font, true);
+                TextView cell = makeCell(String.valueOf(num), bg, 0, cellH, font, true);
                 GridLayout.LayoutParams p = new GridLayout.LayoutParams(
-                        GridLayout.spec(row, 1, 1f), GridLayout.spec(col + 1, 1, 1f));
-                p.width  = cellPx;
-                p.height = cellPx;
+                        GridLayout.spec(row, 1, GridLayout.FILL, 1f),
+                        GridLayout.spec(col, 1, GridLayout.FILL, 1f));
+                p.width  = 0;
+                p.height = cellH;
                 p.setMargins(2, 2, 2, 2);
                 cell.setLayoutParams(p);
 
@@ -211,66 +385,67 @@ public class RouletteGame extends BaseActivity {
                 grid.addView(cell);
             }
         }
+        container.addView(grid);
+    }
 
-        // "2:1" column-bet buttons (col 13), one per row
-        //   row 0 → top row numbers (3,6,...,36) → C3
-        //   row 1 → mid row numbers (2,5,...,35) → C2
-        //   row 2 → bot row numbers (1,4,...,34) → C1
-        String[] colTags = {"C3", "C2", "C1"};
-        for (int row = 0; row < 3; row++) {
-            TextView cb = makeCell("2:1", COLOR_CARD, cellPx, cellPx, font, false);
-            GridLayout.LayoutParams p = new GridLayout.LayoutParams(
-                    GridLayout.spec(row, 1, 1f), GridLayout.spec(13, 1, 1f));
-            p.width  = cellPx;
-            p.height = cellPx;
-            p.setMargins(2, 2, 2, 2);
-            cb.setLayoutParams(p);
 
-            final String tag = colTags[row];
-            cb.setOnClickListener(v -> selectBet(v, tag, 3, COLOR_CARD));
-            grid.addView(cb);
+    // "2:1" column-bet buttons: C1 / C2 / C3
+    private void buildColBetsRow(LinearLayout container, int cellH, Typeface font) {
+        LinearLayout row = makeHRow(container);
+        String[] tags = {"C1", "C2", "C3"};
+        for (String tag : tags) {
+            TextView btn = makeCell("2:1", COLOR_CARD, 0, cellH, font, false);
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, cellH, 1f);
+            lp.setMargins(2, 2, 2, 2);
+            btn.setLayoutParams(lp);
+            btn.setOnClickListener(v -> selectBet(v, tag, 3, COLOR_CARD));
+            row.addView(btn);
         }
     }
 
 
-    private void buildDozensRow(LinearLayout row, int cellPx, Typeface font) {
-        // Left spacer aligns with the "0" column
-        row.addView(spacer(cellPx + 4, cellPx));
-
+    // 1st 12 / 2nd 12 / 3rd 12
+    private void buildDozensRow(LinearLayout container, int cellH, Typeface font) {
+        LinearLayout row = makeHRow(container);
         String[] labels = {
             getString(R.string.roulette_first_dozen),
             getString(R.string.roulette_second_dozen),
             getString(R.string.roulette_third_dozen)
         };
         String[] tags = {"D1", "D2", "D3"};
-
         for (int i = 0; i < 3; i++) {
-            int w = cellPx * 4 - 4;
-            TextView btn = makeCell(labels[i], COLOR_CARD, w, cellPx, font, false);
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(w, cellPx);
+            TextView btn = makeCell(labels[i], COLOR_CARD, 0, cellH, font, false);
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, cellH, 1f);
             lp.setMargins(2, 2, 2, 2);
             btn.setLayoutParams(lp);
             final String tag = tags[i];
             btn.setOnClickListener(v -> selectBet(v, tag, 3, COLOR_CARD));
             row.addView(btn);
         }
-
-        // Right spacer aligns with the "2:1" column
-        row.addView(spacer(cellPx + 4, cellPx));
     }
 
 
-    private void buildOutsideRow(LinearLayout row, int cellPx, Typeface font) {
-        row.addView(spacer(cellPx + 4, cellPx));
+    // Outside bets: two rows of 3
+    private void buildOutsideRows(LinearLayout container, int cellH, Typeface font) {
+        // Row 1: 1–18 | EVEN | RED●
+        String[] labels1 = {"1–18", "EVEN", "●"};
+        String[] tags1   = {"LOW",  "EVEN", "RED"};
+        int[]    colors1 = {COLOR_CARD, COLOR_CARD, COLOR_RED};
+        addOutsideRow(container, cellH, font, labels1, tags1, colors1);
 
-        String[] labels = {"1–18", "EVEN", "●", "●", "ODD", "19–36"};
-        String[] tags   = {"LOW",  "EVEN", "RED", "BLACK", "ODD", "HIGH"};
-        int[]    colors = {COLOR_CARD, COLOR_CARD, COLOR_RED, COLOR_BLACK, COLOR_CARD, COLOR_CARD};
+        // Row 2: 19–36 | ODD | BLACK●
+        String[] labels2 = {"19–36", "ODD", "●"};
+        String[] tags2   = {"HIGH",  "ODD", "BLACK"};
+        int[]    colors2 = {COLOR_CARD, COLOR_CARD, COLOR_BLACK};
+        addOutsideRow(container, cellH, font, labels2, tags2, colors2);
+    }
 
-        for (int i = 0; i < 6; i++) {
-            int w = cellPx * 2 - 4;
-            TextView btn = makeCell(labels[i], colors[i], w, cellPx, font, false);
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(w, cellPx);
+    private void addOutsideRow(LinearLayout container, int cellH, Typeface font,
+                               String[] labels, String[] tags, int[] colors) {
+        LinearLayout row = makeHRow(container);
+        for (int i = 0; i < 3; i++) {
+            TextView btn = makeCell(labels[i], colors[i], 0, cellH, font, false);
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, cellH, 1f);
             lp.setMargins(2, 2, 2, 2);
             btn.setLayoutParams(lp);
             final String tag = tags[i];
@@ -278,36 +453,26 @@ public class RouletteGame extends BaseActivity {
             btn.setOnClickListener(v -> selectBet(v, tag, 2, c));
             row.addView(btn);
         }
+    }
 
-        row.addView(spacer(cellPx + 4, cellPx));
+    // Creates a horizontal LinearLayout, adds it to container and returns it
+    private LinearLayout makeHRow(LinearLayout container) {
+        LinearLayout row = new LinearLayout(this);
+        row.setOrientation(LinearLayout.HORIZONTAL);
+        row.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
+        container.addView(row);
+        return row;
     }
 
 
-    // ── Cell factory ────────────────────────────────────────────────────
 
-    private TextView makeCell(String text, int bg, int w, int h, Typeface font, boolean goldText) {
-        TextView tv = new TextView(this);
-        tv.setText(text);
-        tv.setGravity(Gravity.CENTER);
-        tv.setTextColor(goldText ? COLOR_GOLD : 0xFFFFFFFF);
-        tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11);
-        tv.setTypeface(font, Typeface.BOLD);
-        tv.setBackground(roundedBg(bg, false));
-        tv.setMinWidth(w);
-        tv.setMinHeight(h);
-        return tv;
-    }
+    // ════════════════════════════════════════════════════════════════════
+    //  Bet selection
+    // ════════════════════════════════════════════════════════════════════
 
-    private android.view.View spacer(int w, int h) {
-        android.view.View v = new android.view.View(this);
-        v.setLayoutParams(new LinearLayout.LayoutParams(w, h));
-        return v;
-    }
-
-
-    // ── Selection ───────────────────────────────────────────────────────
-
-    private void selectBet(android.view.View v, String betTag, int multiplier, int bgColor) {
+    private void selectBet(View v, String betTag, int multiplier, int bgColor) {
         if (selectedView != null) {
             selectedView.setBackground(roundedBg(selectedBgColor, false));
         }
@@ -323,7 +488,7 @@ public class RouletteGame extends BaseActivity {
     }
 
     private String buildBetLabel(String tag) {
-        if (tag.startsWith("N:")) return getString(R.string.roulette_bet_number) + " " + tag.substring(2);
+        if (tag.startsWith("N:")) return getString(R.string.roulette_bet_number) + " " + tag.substring(2) + "  (×36)";
         switch (tag) {
             case "RED":   return "RED  ●  (×2)";
             case "BLACK": return "BLACK  ●  (×2)";
@@ -342,26 +507,14 @@ public class RouletteGame extends BaseActivity {
     }
 
 
-    // ── Drawables ───────────────────────────────────────────────────────
 
-    private GradientDrawable roundedBg(int color, boolean selected) {
-        GradientDrawable d = new GradientDrawable();
-        d.setShape(GradientDrawable.RECTANGLE);
-        d.setColor(color);
-        d.setCornerRadius(dp(4));
-        if (selected) {
-            d.setStroke(dp(2), COLOR_GOLD);
-        } else {
-            d.setStroke(dp(1), 0x33FFFFFF);
-        }
-        return d;
-    }
-
-
-    // ── Listeners ───────────────────────────────────────────────────────
+    // ════════════════════════════════════════════════════════════════════
+    //  Listeners
+    // ════════════════════════════════════════════════════════════════════
 
     private void listeners() {
-        animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
+        animTranslate  = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
+        animSlideInDown = AnimationUtils.loadAnimation(this, R.anim.slide_in_down);
 
         chipGroupAmounts.setOnCheckedStateChangeListener((group, checkedIds) -> {
             if      (checkedIds.contains(R.id.chip_1_xrp))  bet.setText("1");
@@ -370,8 +523,8 @@ public class RouletteGame extends BaseActivity {
         });
 
         bet.addTextChangedListener(new android.text.TextWatcher() {
-            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
+            @Override public void beforeTextChanged(CharSequence s, int i, int c, int a) {}
+            @Override public void onTextChanged(CharSequence s, int i, int b, int c) {
                 tilBetField.setError(null);
             }
             @Override public void afterTextChanged(android.text.Editable s) {}
@@ -394,26 +547,51 @@ public class RouletteGame extends BaseActivity {
     }
 
 
-    // ── Bet params for Flasher ──────────────────────────────────────────
 
-    private void setBetParams(String amount) {
-        Flasher.TEST_MODE_ENUM         = TestModeEnum.ROULETTE_GAME;
-        Flasher.TEST_SAND_AMOUNT       = amount;
-        Flasher.ROULETTE_BET_TAG       = selectedBetTag;
-        Flasher.ROULETTE_WIN_MULTIPLIER = selectedWinMultiplier;
+    // ════════════════════════════════════════════════════════════════════
+    //  View / drawable helpers
+    // ════════════════════════════════════════════════════════════════════
 
-        if (selectedBetTag != null && selectedBetTag.startsWith("N:")) {
-            int num = Integer.parseInt(selectedBetTag.substring(2));
-            Flasher.NUMBER_BET = String.valueOf(num);
-            Flasher.COLOR_BET  = num == 0 ? false : !BLACK_NUMS.contains(num);
-        } else {
-            Flasher.NUMBER_BET = "0";
-            Flasher.COLOR_BET  = "RED".equals(selectedBetTag);
-        }
+    private TextView makeCell(String text, int bg, int w, int h, Typeface font, boolean goldText) {
+        TextView tv = new TextView(this);
+        tv.setText(text);
+        tv.setGravity(Gravity.CENTER);
+        tv.setTextColor(goldText ? COLOR_GOLD : 0xFFFFFFFF);
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
+        tv.setTypeface(font, Typeface.BOLD);
+        tv.setBackground(roundedBg(bg, false));
+        if (w > 0) tv.setMinWidth(w);
+        tv.setMinHeight(h);
+        return tv;
+    }
+
+    private GradientDrawable roundedBg(int color, boolean selected) {
+        GradientDrawable d = new GradientDrawable();
+        d.setShape(GradientDrawable.RECTANGLE);
+        d.setColor(color);
+        d.setCornerRadius(dp(4));
+        d.setStroke(dp(selected ? 2 : 1), selected ? COLOR_GOLD : 0x33FFFFFF);
+        return d;
+    }
+
+    private GradientDrawable circleBg(int color) {
+        GradientDrawable d = new GradientDrawable();
+        d.setShape(GradientDrawable.OVAL);
+        d.setColor(color);
+        d.setStroke(dp(2), COLOR_GOLD);
+        return d;
     }
 
 
-    // ── Helpers ─────────────────────────────────────────────────────────
+
+    // ════════════════════════════════════════════════════════════════════
+    //  Misc helpers
+    // ════════════════════════════════════════════════════════════════════
+
+    private String formatAmount(double amount) {
+        if (amount == (long) amount) return String.valueOf((long) amount);
+        return String.format("%.2f", amount);
+    }
 
     private void getReferral() {
         preferences = PrefsHelper.get(this);
@@ -436,9 +614,24 @@ public class RouletteGame extends BaseActivity {
     }
 
 
+
+    // ════════════════════════════════════════════════════════════════════
+    //  Lifecycle
+    // ════════════════════════════════════════════════════════════════════
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (wheelView != null) wheelView.stopSpinning();
+        if (rouletteSpinMediaPlayer != null && rouletteSpinMediaPlayer.isPlaying())
+            rouletteSpinMediaPlayer.pause();
+    }
+
     @Override
     public void onBackPressed() {
         casinoMediaPlayer.stop();
+        if (rouletteSpinMediaPlayer != null && rouletteSpinMediaPlayer.isPlaying())
+            rouletteSpinMediaPlayer.pause();
         super.onBackPressed();
     }
 }

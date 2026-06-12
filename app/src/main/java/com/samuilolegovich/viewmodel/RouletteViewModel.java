@@ -46,6 +46,15 @@ public class RouletteViewModel extends ViewModel {
         executor.execute(() -> repository.updateBalance(repository.getBalance()));
     }
 
+    public void simulateBalanceDeduct(String amount) {
+        try { repository.deductTestBalance(new BigDecimal(amount)); }
+        catch (NumberFormatException ignored) {}
+    }
+
+    public void simulateBalanceCredit(double wonAmount) {
+        repository.creditTestBalance(BigDecimal.valueOf(wonAmount));
+    }
+
     public void placeBet(String rawAmount, String betTag, String myReferral) {
         executor.execute(() -> {
             String amount = prepareAmount(rawAmount);
@@ -87,10 +96,8 @@ public class RouletteViewModel extends ViewModel {
 
         if (a.compareTo(BigDecimal.ZERO) == 0) return GameBetError.AMOUNT_IS_ZERO;
 
-        if (Boolean.TRUE.equals(MainActivity.IS_REAL_GAME_MODE)) {
-            BigDecimal balance = repository.getBalanceLiveData().getValue();
-            if (balance != null && a.compareTo(balance) > 0) return GameBetError.INSUFFICIENT_BALANCE;
-        }
+        BigDecimal balance = repository.getBalanceLiveData().getValue();
+        if (balance != null && a.compareTo(balance) > 0) return GameBetError.INSUFFICIENT_BALANCE;
 
         if (a.compareTo(new BigDecimal(StringEnum.MAX_BET_ROULETTE.getValue())) > 0)
             return GameBetError.BET_TOO_HIGH;

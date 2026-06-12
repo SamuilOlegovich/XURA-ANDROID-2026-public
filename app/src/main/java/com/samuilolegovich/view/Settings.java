@@ -16,6 +16,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
+import android.view.View;
+
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.samuilolegovich.BaseActivity;
 import com.samuilolegovich.MainActivity;
@@ -48,6 +51,9 @@ public class Settings extends BaseActivity {
     private MaterialCardView cardWallet;
     private TextView tvWalletAddress;
     private TextView tvAppVersion;
+    private MaterialCardView cardTestBalance;
+    private TextView tvTestBalance;
+    private MaterialButton btnResetTestBalance;
 
 
 
@@ -72,6 +78,9 @@ public class Settings extends BaseActivity {
         cardWallet = findViewById(R.id.card_wallet);
         tvWalletAddress = findViewById(R.id.tv_wallet_address);
         tvAppVersion = findViewById(R.id.tv_app_version);
+        cardTestBalance = findViewById(R.id.card_test_balance);
+        tvTestBalance = findViewById(R.id.tv_test_balance);
+        btnResetTestBalance = findViewById(R.id.btn_reset_test_balance);
     }
 
 
@@ -90,6 +99,20 @@ public class Settings extends BaseActivity {
             version = "v" + getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
         } catch (Exception ignored) {}
         tvAppVersion.setText(version);
+
+        // Test mode card — visible only in test mode
+        if (!Boolean.TRUE.equals(MainActivity.IS_REAL_GAME_MODE)) {
+            cardTestBalance.setVisibility(View.VISIBLE);
+            updateTestBalanceDisplay();
+        } else {
+            cardTestBalance.setVisibility(View.GONE);
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void updateTestBalanceDisplay() {
+        java.math.BigDecimal balance = repository.getBalance();
+        tvTestBalance.setText(balance.setScale(2, java.math.RoundingMode.DOWN).toPlainString() + " XRP");
     }
 
 
@@ -136,6 +159,21 @@ public class Settings extends BaseActivity {
         settingsBiometricLinc.setOnClickListener(v -> {
             v.startAnimation(animTranslate);
             handleBiometricToggle();
+        });
+
+        btnResetTestBalance.setOnClickListener(v -> {
+            v.startAnimation(animTranslate);
+            new AlertDialog.Builder(this)
+                    .setTitle(getString(R.string.settings_test_mode_section))
+                    .setMessage(getString(R.string.settings_reset_test_balance_confirm))
+                    .setPositiveButton(getString(R.string.settings_reset_test_balance), (d, w) -> {
+                        repository.resetTestBalance();
+                        updateTestBalanceDisplay();
+                        Toast.makeText(this, R.string.settings_reset_test_balance_done,
+                                Toast.LENGTH_SHORT).show();
+                    })
+                    .setNegativeButton("CANCEL", null)
+                    .show();
         });
     }
 

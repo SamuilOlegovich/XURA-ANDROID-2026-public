@@ -1,8 +1,13 @@
 package com.samuilolegovich.wallet.repository;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.samuilolegovich.MainActivity;
+import com.samuilolegovich.XuraApp;
 import com.samuilolegovich.viewmodel.NavigationEvent;
 import com.samuilolegovich.wallet.model.PaymentManager.PaymentAndSocketManagerXRPL;
 import com.samuilolegovich.wallet.model.sockets.enums.StreamSubscriptionEnum;
@@ -26,6 +31,10 @@ public class WalletRepository {
     private final MutableLiveData<String> lottoTextLiveData = new MutableLiveData<>("");
     private final MutableLiveData<NavigationEvent> navigationEventLiveData = new MutableLiveData<>();
     private final MutableLiveData<Boolean> walletReadyLiveData = new MutableLiveData<>(false);
+
+    private static final String TEST_PREFS       = "xura_test";
+    private static final String KEY_TEST_BALANCE = "test_virtual_balance";
+    public  static final String DEFAULT_TEST_BALANCE = "1000.000000";
 
 
 
@@ -53,7 +62,13 @@ public class WalletRepository {
 
     // Обновление состояния из фоновых потоков (postValue безопасен вне главного потока)
 
-    public void updateBalance(BigDecimal balance) { balanceLiveData.postValue(balance); }
+    public void updateBalance(BigDecimal balance) {
+        balanceLiveData.postValue(balance);
+        if (!Boolean.TRUE.equals(MainActivity.IS_REAL_GAME_MODE)) {
+            saveTestBalance(balance);
+        }
+    }
+
     public void setLottoNow(String lotto) { lottoTextLiveData.postValue(lotto); }
     public void notifyEvent(String message, String lotto, int type) {
         navigationEventLiveData.postValue(new NavigationEvent(type, message, lotto));
@@ -63,17 +78,47 @@ public class WalletRepository {
 
     // Баланс
 
-    // Загрузить баланс асинхронно и обновить LiveData
     public void loadBalance() {
         executor.execute(() -> updateBalance(getBalance()));
     }
 
     public BigDecimal getBalance() {
-        return manager.getBalance(true);
+        if (Boolean.TRUE.equals(MainActivity.IS_REAL_GAME_MODE)) {
+            return manager.getBalance(true);
+        }
+        return loadTestBalance();
     }
 
     public BigDecimal getAllBalance() {
         return manager.getAllBalance(true);
+    }
+
+    // Виртуальный баланс для тест-режима
+
+    public void deductTestBalance(BigDecimal amount) {
+        updateBalance(loadTestBalance().subtract(amount));
+    }
+
+    public void creditTestBalance(BigDecimal amount) {
+        updateBalance(loadTestBalance().add(amount));
+    }
+
+    public void resetTestBalance() {
+        updateBalance(new BigDecimal(DEFAULT_TEST_BALANCE));
+    }
+
+    private BigDecimal loadTestBalance() {
+        String stored = testPrefs().getString(KEY_TEST_BALANCE, DEFAULT_TEST_BALANCE);
+        try { return new BigDecimal(stored); }
+        catch (Exception e) { return new BigDecimal(DEFAULT_TEST_BALANCE); }
+    }
+
+    private void saveTestBalance(BigDecimal balance) {
+        testPrefs().edit().putString(KEY_TEST_BALANCE, balance.toPlainString()).apply();
+    }
+
+    private SharedPreferences testPrefs() {
+        return XuraApp.get().getSharedPreferences(TEST_PREFS, Context.MODE_PRIVATE);
     }
 
 

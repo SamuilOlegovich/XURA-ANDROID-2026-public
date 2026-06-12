@@ -248,6 +248,11 @@
     <string name="settings_wallet_section">WALLET</string>
     <string name="settings_version_section">APP VERSION</string>
     <string name="settings_tap_to_copy">Tap to copy</string>
+    <string name="settings_test_mode_section">TEST MODE</string>
+    <string name="settings_test_balance_label">Virtual balance</string>
+    <string name="settings_reset_test_balance">Reset to 1000 XRP</string>
+    <string name="settings_reset_test_balance_confirm">Reset virtual balance to 1000 XRP?</string>
+    <string name="settings_reset_test_balance_done">Virtual balance reset to 1000 XRP</string>
     <string name="settings_address_copied">Address copied!</string>
     <string name="quick_amounts">Quick amounts:</string>
     <string name="chip_1_xrp">1 XRP</string>
@@ -263,5 +268,7 @@
     <string name="roulette_first_dozen">1st 12</string>
     <string name="roulette_second_dozen">2nd 12</string>
     <string name="roulette_third_dozen">3rd 12</string>
+    <string name="roulette_result_win">WON  +%s XRP</string>
+    <string name="roulette_result_loss">LOST</string>
 
 </resources>

@@ -1,5 +1,6 @@
 package com.samuilolegovich.asyncAndRun.runnable;
 
+import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 import com.samuilolegovich.XuraApp;
 import com.samuilolegovich.enums.StringEnum;
@@ -143,9 +144,17 @@ public class NotifierRunForTrialGame implements Runnable {
             responseToBet(YOUR_BET_IS_LOST_TRY_AGAIN_AND_YOU_WILL_BE_LUCKY, lotto, 1);
 
         } else if (tag.equals(StringEnum.BET_WIN_GUESS_THE_COLOR.getValue())) {
+            if (!Boolean.TRUE.equals(MainActivity.IS_REAL_GAME_MODE)) {
+                try { WalletRepository.getInstance().creditTestBalance(new java.math.BigDecimal(amountWin)); }
+                catch (Exception ignored) {}
+            }
             responseToBet(String.format(CONGRATULATIONS_YOUR_BET_IS_WON, amountWin), lotto, 2);
 
         } else if (tag.equals(StringEnum.LOTTO_WIN_GUESS_THE_COLOR.getValue())) {
+            if (!Boolean.TRUE.equals(MainActivity.IS_REAL_GAME_MODE)) {
+                try { WalletRepository.getInstance().creditTestBalance(new java.math.BigDecimal(amountWin)); }
+                catch (Exception ignored) {}
+            }
             responseToBet(String.format(CONGRATULATIONS_YOUR_BET_IS_WON_LOTTO, amountWin), lotto, 2);
 
 

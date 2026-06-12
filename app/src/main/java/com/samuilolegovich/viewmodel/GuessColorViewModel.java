@@ -70,7 +70,11 @@ public class GuessColorViewModel extends ViewModel {
             }
 
             if (success) {
-                repository.updateBalance(repository.getBalance());
+                if (Boolean.TRUE.equals(MainActivity.IS_REAL_GAME_MODE)) {
+                    repository.updateBalance(repository.getBalance());
+                } else {
+                    repository.deductTestBalance(new BigDecimal(amount));
+                }
                 betSuccessLiveData.postValue(amount);
             } else {
                 errorLiveData.postValue(GameBetError.PAYMENT_FAILED);
@@ -89,10 +93,8 @@ public class GuessColorViewModel extends ViewModel {
 
         if (a.compareTo(BigDecimal.ZERO) == 0) return GameBetError.AMOUNT_IS_ZERO;
 
-        if (Boolean.TRUE.equals(MainActivity.IS_REAL_GAME_MODE)) {
-            BigDecimal balance = repository.getBalanceLiveData().getValue();
-            if (balance != null && a.compareTo(balance) > 0) return GameBetError.INSUFFICIENT_BALANCE;
-        }
+        BigDecimal balance = repository.getBalanceLiveData().getValue();
+        if (balance != null && a.compareTo(balance) > 0) return GameBetError.INSUFFICIENT_BALANCE;
 
         if (a.compareTo(new BigDecimal(StringEnum.MAX_BET_GUESS_THE_COLOR.getValue())) > 0)
             return GameBetError.BET_TOO_HIGH;
