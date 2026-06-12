@@ -12,6 +12,7 @@ import org.json.JSONObject;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.nio.charset.StandardCharsets;
 
 
 
@@ -36,13 +37,13 @@ public class NotifierRun implements Runnable {
     public void run() {
         try {
             JSONObject message = new JSONObject(stringMassage);
-            // если это транзакция и есть тех и она входящаяя
-            if (message.getJSONObject("transaction").has("DestinationTag")
+            // входящая транзакция с memo (ответ сервера игроку)
+            if (message.getJSONObject("transaction").has("Memos")
                     && !message.getJSONObject("transaction").getString("Destination")
                     .equals(StringEnum.SERVER_ADDRESS_GUESS_THE_COLOR.getValue())) {
                 responseToBet(message);
             }
-        } catch (JSONException e ) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }
@@ -59,35 +60,51 @@ public class NotifierRun implements Runnable {
 
     private void responseToBet(JSONObject message) {
         try {
-            String tagResponse = message.getJSONObject("transaction").getInt("DestinationTag") + "";
+            String hexMemo = message.getJSONObject("transaction")
+                    .getJSONArray("Memos")
+                    .getJSONObject(0)
+                    .getJSONObject("Memo")
+                    .getString("MemoData");
+            String memoText = new String(hexToBytes(hexMemo), StandardCharsets.UTF_8).toUpperCase();
+
             String amountWin = new BigDecimal(message.getJSONObject("meta").getString("delivered_amount"))
                     .divide(BigDecimal.valueOf(1_000_000L), MathContext.DECIMAL128)
                     .toString();
 
-            if (tagResponse.length() > 3) {
-                String tag = tagResponse.substring(0, 3);
-                String lotto = tagResponse.substring(3);
-                WalletRepository.getInstance().setLottoNow(lotto);
+            // формат memo ответа сервера: CMD:lotto
+            String[] parts = memoText.split(":", 2);
+            String cmd = parts[0];
+            String lotto = parts.length > 1 ? parts[1] : "0";
 
-                if (tag.equals(StringEnum.NOT_WIN_GUESS_THE_COLOR.getValue())) {
+            WalletRepository.getInstance().setLottoNow(lotto);
+
+            switch (cmd) {
+                case "LOSE":
                     responseToBet(YOUR_BET_IS_LOST_TRY_AGAIN_AND_YOU_WILL_BE_LUCKY, lotto, 1);
-
-                } else if (tag.equals(StringEnum.BET_WIN_GUESS_THE_COLOR.getValue())) {
+                    break;
+                case "WIN":
                     responseToBet(String.format(CONGRATULATIONS_YOUR_BET_IS_WON, amountWin), lotto, 2);
-
-                } else if (tag.equals(StringEnum.LOTTO_WIN_GUESS_THE_COLOR.getValue())) {
+                    break;
+                case "JKPT":
                     responseToBet(String.format(CONGRATULATIONS_YOUR_BET_IS_WON_LOTTO, amountWin), lotto, 2);
-
-
-                }  else if (tag.equals(StringEnum.BECOME_A_REFERRAL.getValue())) {
+                    break;
+                case "REF":
                     YourReferral.CODE = lotto;
-                    String s = YOUR_REFERRAL_CODE + " \n" + tag;
-                    responseToBet(s, lotto, 3);
-                }
+                    responseToBet(YOUR_REFERRAL_CODE + " \n" + lotto, lotto, 3);
+                    break;
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+
+    private static byte[] hexToBytes(String hex) {
+        byte[] bytes = new byte[hex.length() / 2];
+        for (int i = 0; i < hex.length(); i += 2) {
+            bytes[i / 2] = (byte) Integer.parseInt(hex.substring(i, i + 2), 16);
+        }
+        return bytes;
     }
 
 

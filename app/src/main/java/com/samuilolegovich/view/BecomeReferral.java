@@ -37,7 +37,6 @@ public class BecomeReferral extends BaseActivity {
 
     private String YOUR_ACCOUNT_IS_NOT_ENOUGH_TO_SEND;
     private String GET_RECOVERY_BECOME_REFERRAL;
-    private String TAG_KNOWLEDGE_CANNOT_BE_MORE;
     private String PAYMENT_AMOUNT_IS_INCORRECT;
     private String WRONG_DESTINATION_ADDRESS;
     private String GET_BECOME_REFERRAL;
@@ -75,7 +74,6 @@ public class BecomeReferral extends BaseActivity {
     private void setLanguage() {
         YOUR_ACCOUNT_IS_NOT_ENOUGH_TO_SEND = getString(R.string.your_account_is_not_enough_to_send);
         GET_RECOVERY_BECOME_REFERRAL       = getString(R.string.get_recovery_become_referral);
-        TAG_KNOWLEDGE_CANNOT_BE_MORE       = getString(R.string.tag_knowledge_cannot_be_more);
         PAYMENT_AMOUNT_IS_INCORRECT        = getString(R.string.payment_amount_is_incorrect);
         WRONG_DESTINATION_ADDRESS          = getString(R.string.wrong_destination_address);
         GET_BECOME_REFERRAL                = getString(R.string.get_becom_referral_enum);
@@ -117,17 +115,15 @@ public class BecomeReferral extends BaseActivity {
         String sendAmount = b
                 ? StringEnum.REFERRAL_COST.getValue()
                 : StringEnum.REFERRAL_RECOVERY_COST.getValue();
-        String sendTag = b
-                ? StringEnum.BECOME_A_REFERRAL.getValue()
-                : StringEnum.RECOVERY_BECOME_A_REFERRAL.getValue();
+        String memo = b ? "REF" : "REF:REC";
 
-        if (checkData(sendAmount, sendTag)) {
+        if (checkData(sendAmount, memo)) {
             makeToast(b ? GET_BECOME_REFERRAL : GET_RECOVERY_BECOME_REFERRAL);
         }
     }
 
 
-    private boolean checkData(String sendAmount, String sendTag) {
+    private boolean checkData(String sendAmount, String memo) {
         if (sendAmount == null) {
             makeToast(PAYMENT_AMOUNT_IS_INCORRECT);
             return false;
@@ -137,27 +133,17 @@ public class BecomeReferral extends BaseActivity {
             makeToast(YOUR_ACCOUNT_IS_NOT_ENOUGH_TO_SEND);
             return false;
         }
-        if (sendTag != null && !sendTag.isEmpty() && Long.parseLong(sendTag) >= Integer.MAX_VALUE) {
-            makeToast(TAG_KNOWLEDGE_CANNOT_BE_MORE);
-            return false;
-        }
-        return makePayment(sendAmount, sendTag);
+        return makePayment(sendAmount, memo);
     }
 
 
-    private boolean makePayment(String sendAmount, String sendTag) {
+    private boolean makePayment(String sendAmount, String memo) {
         boolean success;
         try {
-            if (sendTag == null || sendTag.isEmpty()) {
-                success = repository
-                        .sendPayment(StringEnum.SERVER_ADDRESS_BECOME_REFERRAL.getValue(),
-                                new BigDecimal(sendAmount));
-            } else {
-                success = repository
-                        .sendPayment(StringEnum.SERVER_ADDRESS_BECOME_REFERRAL.getValue(),
-                                Integer.parseInt(sendTag),
-                                new BigDecimal(sendAmount));
-            }
+            success = repository
+                    .sendPayment(StringEnum.SERVER_ADDRESS_BECOME_REFERRAL.getValue(),
+                            memo,
+                            new BigDecimal(sendAmount));
         } catch (Exception e) {
             e.printStackTrace();
             success = false;

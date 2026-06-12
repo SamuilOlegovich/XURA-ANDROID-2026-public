@@ -24,6 +24,8 @@ import org.xrpl.xrpl4j.model.client.transactions.TransactionRequestParams;
 import org.xrpl.xrpl4j.model.client.transactions.TransactionResult;
 import org.xrpl.xrpl4j.model.immutables.FluentCompareTo;
 import org.xrpl.xrpl4j.model.transactions.Address;
+import org.xrpl.xrpl4j.model.transactions.Memo;
+import org.xrpl.xrpl4j.model.transactions.MemoWrapper;
 import org.xrpl.xrpl4j.model.transactions.Payment;
 import org.xrpl.xrpl4j.model.transactions.Transaction;
 import org.xrpl.xrpl4j.model.transactions.XAddress;
@@ -31,8 +33,10 @@ import org.xrpl.xrpl4j.model.transactions.XrpCurrencyAmount;
 import org.xrpl.xrpl4j.codec.addresses.AddressCodec;
 
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -191,6 +195,50 @@ public class WalletXRP implements MyWallets {
         return true;
     }
 
+    public boolean sendPaymentToAddressXRP(String address, String memo, BigDecimal numberOfXRP) {
+        try {
+            createConnect();
+            getInformationAboutYourAccount();
+
+            FeeResult feeResult = xrplClient.fee();
+            XrpCurrencyAmount openLedgerFee = feeResult.drops().openLedgerFee();
+
+            LedgerIndex validatedLedger = xrplClient.ledger(LedgerRequestParams.builder()
+                    .ledgerSpecifier(LedgerSpecifier.VALIDATED)
+                    .build())
+                    .ledgerIndex()
+                    .orElseThrow(() -> new RuntimeException("LedgerIndex not available."));
+
+            lastLedgerSequence = validatedLedger.plus(UnsignedInteger.valueOf(4)).unsignedIntegerValue();
+
+            MemoWrapper memoWrapper = MemoWrapper.builder()
+                    .memo(Memo.builder()
+                            .memoData(toHex(memo))
+                            .build())
+                    .build();
+
+            Payment payment = Payment.builder()
+                    .account(classicAddress)
+                    .amount(XrpCurrencyAmount.ofXrp(numberOfXRP))
+                    .destination(Address.of(address))
+                    .sequence(sequence)
+                    .fee(openLedgerFee)
+                    .signingPublicKey(keyPair.publicKey())
+                    .lastLedgerSequence(lastLedgerSequence)
+                    .memos(List.of(memoWrapper))
+                    .build();
+
+            BcSignatureService signatureService = new BcSignatureService();
+            signedPayment = signatureService.sign(keyPair.privateKey(), payment);
+
+            SubmitResult<Payment> prelimResult = xrplClient.submit(signedPayment);
+            System.out.println("Submit Result Transaction:  -- >  " + prelimResult);
+        } catch (NullPointerException | JsonRpcClientErrorException e) {
+            return false;
+        }
+        return true;
+    }
+
     public boolean sendPaymentToAddressXRP(String address, BigDecimal numberOfXRP) {
         try {
             createConnect();
@@ -293,6 +341,14 @@ public class WalletXRP implements MyWallets {
                 e.printStackTrace();
             }
         }
+    }
+
+    private static String toHex(String text) {
+        StringBuilder sb = new StringBuilder();
+        for (byte b : text.getBytes(StandardCharsets.UTF_8)) {
+            sb.append(String.format("%02X", b));
+        }
+        return sb.toString();
     }
 
     private void createConnect() {

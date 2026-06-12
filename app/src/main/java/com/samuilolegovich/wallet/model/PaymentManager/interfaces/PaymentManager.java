@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Map;
 
 public interface PaymentManager {
+    boolean sendPayment(String address, String memo, BigDecimal numberOfXRP, boolean isReal);
     boolean sendPayment(String address, Integer tag, BigDecimal numberOfXRP, boolean isReal);
     boolean sendPayment(String address, BigDecimal numberOfXRP, boolean isReal);
     void setterWallet(boolean isReal);

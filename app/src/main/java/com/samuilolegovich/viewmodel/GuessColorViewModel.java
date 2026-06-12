@@ -55,18 +55,16 @@ public class GuessColorViewModel extends ViewModel {
                 return;
             }
 
-            String sendTag = colorTag + myReferral;
+            String memoCmd = colorTag.equals(StringEnum.TAG_RED_GUESS_THE_COLOR.getValue())
+                    ? "BET:RED" : "BET:BLK";
+            String memo = memoCmd + ":" + myReferral;
+
             boolean success;
             if (Boolean.TRUE.equals(MainActivity.IS_REAL_GAME_MODE)) {
-                try {
-                    success = repository.sendPayment(
-                            StringEnum.SERVER_ADDRESS_GUESS_THE_COLOR.getValue(),
-                            Integer.parseInt(sendTag),
-                            new BigDecimal(amount));
-                } catch (NumberFormatException e) {
-                    errorLiveData.postValue(GameBetError.TAG_TOO_LARGE);
-                    return;
-                }
+                success = repository.sendPayment(
+                        StringEnum.SERVER_ADDRESS_GUESS_THE_COLOR.getValue(),
+                        memo,
+                        new BigDecimal(amount));
             } else {
                 success = true;
             }

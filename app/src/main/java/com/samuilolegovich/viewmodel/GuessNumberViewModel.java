@@ -48,13 +48,9 @@ public class GuessNumberViewModel extends ViewModel {
 
     public void placeBet(String rawAmount, int selectedNumber, String myReferral) {
         executor.execute(() -> {
-            if (selectedNumber <= 0) {
-                errorLiveData.postValue(GameBetError.NO_NUMBER_SELECTED);
-                return;
-            }
-
-            String tagPrefix = buildNumberTag(selectedNumber);
-            if (tagPrefix == null) {
+            int min = Integer.parseInt(StringEnum.MIN_BET_GUESS_THE_NUMBER.getValue());
+            int max = Integer.parseInt(StringEnum.MAX_BET_GUESS_THE_NUMBER.getValue());
+            if (selectedNumber <= 0 || selectedNumber < min || selectedNumber > max) {
                 errorLiveData.postValue(GameBetError.NO_NUMBER_SELECTED);
                 return;
             }
@@ -66,18 +62,14 @@ public class GuessNumberViewModel extends ViewModel {
                 return;
             }
 
-            String sendTag = tagPrefix + myReferral;
+            String memo = "BET:N:" + selectedNumber + ":" + myReferral;
+
             boolean success;
             if (Boolean.TRUE.equals(MainActivity.IS_REAL_GAME_MODE)) {
-                try {
-                    success = repository.sendPayment(
-                            StringEnum.SERVER_ADDRESS_GUESS_THE_NUMBER.getValue(),
-                            Integer.parseInt(sendTag),
-                            new BigDecimal(amount));
-                } catch (NumberFormatException e) {
-                    errorLiveData.postValue(GameBetError.TAG_TOO_LARGE);
-                    return;
-                }
+                success = repository.sendPayment(
+                        StringEnum.SERVER_ADDRESS_GUESS_THE_NUMBER.getValue(),
+                        memo,
+                        new BigDecimal(amount));
             } else {
                 success = true;
             }
@@ -89,18 +81,6 @@ public class GuessNumberViewModel extends ViewModel {
                 errorLiveData.postValue(GameBetError.PAYMENT_FAILED);
             }
         });
-    }
-
-
-
-    // Возвращает null если число вне диапазона [MIN..MAX] или некорректно
-    private String buildNumberTag(int number) {
-        int min = Integer.parseInt(StringEnum.MIN_BET_GUESS_THE_NUMBER.getValue());
-        int max = Integer.parseInt(StringEnum.MAX_BET_GUESS_THE_NUMBER.getValue());
-        if (number >= min && number <= max) {
-            return (100 + number) + "";
-        }
-        return null;
     }
 
     private GameBetError validateAmount(String amount) {

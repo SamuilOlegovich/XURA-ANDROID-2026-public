@@ -11,6 +11,7 @@ import org.json.JSONObject;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -58,24 +59,31 @@ public class HistoryCreator {
             JSONArray jsonArray = json.getJSONObject("result").getJSONArray("transactions");
 
             for (int i = 0; i < jsonArray.length(); i++) {
-                String acc = jsonArray.getJSONObject(i).getJSONObject("tx").get("Destination").toString();
-                String account =  acc.equals(myAccount)
-                        ? jsonArray.getJSONObject(i).getJSONObject("tx").get("Account").toString()
-                        : jsonArray.getJSONObject(i).getJSONObject("tx").get("Destination").toString();
+                JSONObject tx = jsonArray.getJSONObject(i).getJSONObject("tx");
 
-                String amount =  acc.equals(myAccount) ?
-                        new BigDecimal(jsonArray.getJSONObject(i).getJSONObject("tx").get("Amount").toString())
-                                .divide(BigDecimal.valueOf(MainActivity.ONE_XRP_IN_DROPS), MathContext.DECIMAL128).toString()
+                String acc     = tx.get("Destination").toString();
+                String account = acc.equals(myAccount)
+                        ? tx.get("Account").toString()
+                        : tx.get("Destination").toString();
 
-                        : "-" + new BigDecimal(jsonArray.getJSONObject(i).getJSONObject("tx").get("Amount").toString())
+                BigDecimal raw = new BigDecimal(tx.get("Amount").toString())
                         .divide(BigDecimal.valueOf(MainActivity.ONE_XRP_IN_DROPS), MathContext.DECIMAL128);
+                String amount = (acc.equals(myAccount) ? raw.toString() : "-" + raw) + " XRP";
 
-                String destinationTag = jsonArray.getJSONObject(i).getJSONObject("tx").has("DestinationTag")
-                        ? jsonArray.getJSONObject(i).getJSONObject("tx").get("DestinationTag").toString()
-                        :  "---";
-                amount = amount + " XRP";
+                String label;
+                if (tx.has("Memos")) {
+                    String hexMemo = tx.getJSONArray("Memos")
+                            .getJSONObject(0)
+                            .getJSONObject("Memo")
+                            .getString("MemoData");
+                    label = new String(hexToBytes(hexMemo), StandardCharsets.UTF_8);
+                } else if (tx.has("DestinationTag")) {
+                    label = tx.get("DestinationTag").toString();
+                } else {
+                    label = "---";
+                }
 
-                list.add(new HistoryPaymentDto(account, amount, destinationTag));
+                list.add(new HistoryPaymentDto(account, amount, label));
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -84,6 +92,15 @@ public class HistoryCreator {
 
         TransactionHistory.TRANSACTION_HISTORY.selectTabButtonThread(list);
 
+    }
+
+
+    private static byte[] hexToBytes(String hex) {
+        byte[] bytes = new byte[hex.length() / 2];
+        for (int i = 0; i < hex.length(); i += 2) {
+            bytes[i / 2] = (byte) Integer.parseInt(hex.substring(i, i + 2), 16);
+        }
+        return bytes;
     }
 
 }

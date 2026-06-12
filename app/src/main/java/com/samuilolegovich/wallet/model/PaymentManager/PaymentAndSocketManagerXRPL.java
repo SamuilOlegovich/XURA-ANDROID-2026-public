@@ -67,6 +67,12 @@ public class PaymentAndSocketManagerXRPL implements PaymentManager, SocketManage
     // Payment *********************************************************************************************************
 
     @Override
+    public boolean sendPayment(String address, String memo, BigDecimal numberOfXRP, boolean isReal) {
+        if (isReal && wallet != null) { return wallet.sendPaymentToAddressXRP(address, memo, numberOfXRP); }
+        return false;
+    }
+
+    @Override
     public boolean sendPayment(String address, Integer tag, BigDecimal numberOfXRP, boolean isReal) {
         if (isReal && wallet != null) { return wallet.sendPaymentToAddressXRP(address, tag, numberOfXRP); }
         return false;

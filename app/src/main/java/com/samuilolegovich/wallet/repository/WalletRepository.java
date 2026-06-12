@@ -120,6 +120,10 @@ public class WalletRepository {
         return manager.sendPayment(address, amount, true);
     }
 
+    public boolean sendPayment(String address, String memo, BigDecimal amount) {
+        return manager.sendPayment(address, memo, amount, true);
+    }
+
     public boolean sendPayment(String address, Integer tag, BigDecimal amount) {
         return manager.sendPayment(address, tag, amount, true);
     }
