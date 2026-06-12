@@ -1,4 +1,7 @@
 <resources>
+    <string name="nav_wallet">Wallet</string>
+    <string name="nav_games">Games</string>
+    <string name="nav_settings">Settings</string>
     <string name="want_to_win"><u>WANT TO WIN 386301 XRP - PRESS AND START PLAYING!</u></string>
     <string name="collect_and_renew_bet"><u>COLLECT AND RENEW BET</u></string>
     <string name="settings_select_language"><u>SELECT LANGUAGE</u></string>
@@ -237,5 +240,21 @@
     <string name="our_goal">OUR GOAL</string>
     <string name="our_goal_1"> • Our main goal is to make games available to everyone and anywhere in the world at any time you wish. And also so that everyone has the same and fair conditions both in the game and in the opportunity to earn in our system..</string>
     <string name="our_goal_2"> • Good luck and thank you for your trust in choosing our application.</string>
+
+    <string name="play_again">PLAY AGAIN</string>
+    <string name="back_to_games">BACK TO GAMES</string>
+    <string name="no_transactions_yet">No transactions yet</string>
+    <string name="no_transactions_desc">Your transaction history will appear here</string>
+    <string name="settings_wallet_section">WALLET</string>
+    <string name="settings_version_section">APP VERSION</string>
+    <string name="settings_tap_to_copy">Tap to copy</string>
+    <string name="settings_address_copied">Address copied!</string>
+    <string name="quick_amounts">Quick amounts:</string>
+    <string name="chip_1_xrp">1 XRP</string>
+    <string name="chip_5_xrp">5 XRP</string>
+    <string name="chip_10_xrp">10 XRP</string>
+    <string name="notify_me">Notify Me</string>
+    <string name="roulette_coming_soon_desc">Classic roulette powered by XRP Ledger — maximum fairness through blockchain transparency.</string>
+    <string name="roulette_notify_toast">We\'ll notify you when Roulette launches!</string>
 
 </resources>

@@ -26,19 +26,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- XURA Logo -->
-    <include
-            layout="@layout/logo_xura"
-            android:id="@+id/become_referral_text_view"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="90dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="90dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/become_referral_linc"
-            />
 
     <!-- SELECT GAME headline -->
     <TextView
@@ -46,7 +33,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="24dp"
         android:fontFamily="@font/montserrat"
         android:text="@string/select_game"
@@ -57,7 +44,7 @@
         android:letterSpacing="0.04"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/become_referral_text_view" />
+        app:layout_constraintTop_toBottomOf="@+id/become_referral_linc" />
 
     <!-- Select mode label -->
     <TextView
@@ -80,7 +67,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <!-- GUESS THE COLOR — primary action -->
-    <TextView
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/guess_the_color_linc"
         android:layout_width="0dp"
         android:layout_height="60dp"
@@ -88,20 +75,21 @@
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="12dp"
         android:background="@drawable/bg_button_primary"
+        app:backgroundTint="@null"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
         android:fontFamily="@font/montserrat"
         android:text="@string/name_guess_the_color"
-        android:textAlignment="center"
         android:textColor="@color/xura_text_primary"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:gravity="center"
         android:letterSpacing="0.04"
         app:layout_constraintBottom_toTopOf="@+id/double_your_bet_linc"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <!-- GUESS THE NUMBER — secondary action -->
-    <TextView
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/double_your_bet_linc"
         android:layout_width="0dp"
         android:layout_height="60dp"
@@ -109,13 +97,14 @@
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="12dp"
         android:background="@drawable/bg_button_secondary"
+        app:backgroundTint="@null"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
         android:fontFamily="@font/montserrat"
         android:text="@string/name_guess_the_number"
-        android:textAlignment="center"
         android:textColor="@color/xura_text_secondary"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:gravity="center"
         android:letterSpacing="0.04"
         app:layout_constraintBottom_toTopOf="@+id/roulette_linc"
         app:layout_constraintEnd_toEndOf="parent"
@@ -128,7 +117,7 @@
         android:layout_height="48dp"
         android:layout_marginStart="48dp"
         android:layout_marginEnd="48dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="8dp"
         android:fontFamily="@font/montserrat"
         android:text="@string/name_roulette"
         android:textAlignment="center"
@@ -136,10 +125,28 @@
         android:textSize="16sp"
         android:gravity="center"
         android:letterSpacing="0.06"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_nav"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Bottom Navigation Bar — floating pill -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_nav"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/bg_bottom_nav"
+        android:clipToOutline="true"
+        android:elevation="8dp"
+        app:itemIconTint="@color/bottom_nav_tint"
+        app:itemTextColor="@color/bottom_nav_tint"
+        app:itemRippleColor="@color/xura_glass_fill"
+        app:menu="@menu/bottom_nav_menu"
+        app:labelVisibilityMode="unlabeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_constraintTop_toTopOf="parent"
-        tools:layout_constraintVertical_bias="0.95" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

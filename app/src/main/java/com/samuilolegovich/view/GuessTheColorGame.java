@@ -13,6 +13,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.chip.ChipGroup;
+import com.google.android.material.textfield.TextInputLayout;
+
 import com.samuilolegovich.AppExecutors;
 import com.samuilolegovich.BaseActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -68,6 +71,8 @@ public class GuessTheColorGame extends BaseActivity {
     private TextView black;
     private TextView red;
     private EditText bet;
+    private ChipGroup chipGroupAmounts;
+    private TextInputLayout tilBetField;
 
 
 
@@ -89,19 +94,22 @@ public class GuessTheColorGame extends BaseActivity {
         viewModel.getError().observe(this, error -> {
             if (error == null) return;
             errorMediaPlayer.start();
+            String msg;
             switch (error) {
-                case INVALID_AMOUNT:       showToast(PAYMENT_AMOUNT_IS_INCORRECT); break;
-                case AMOUNT_IS_ZERO:       showToast(IT_IS_NOT_POSSIBLE_TO_SEND_NULL); break;
-                case INSUFFICIENT_BALANCE: showToast(YOUR_ACCOUNT_IS_NOT_ENOUGH_TO_SEND); break;
-                case BET_TOO_HIGH:         showToast(BET_CANNOT_BE_MORE_THAN + StringEnum.MAX_BET_GUESS_THE_COLOR.getValue() + " XRP"); break;
-                case BET_TOO_LOW:          showToast(BET_CANNOT_BE_LESS_THAN + StringEnum.MIN_BET_GUESS_THE_COLOR.getValue() + " XRP"); break;
-                case TAG_TOO_LARGE:        showToast(TAG_KNOWLEDGE_CANNOT_BE_MORE); break;
-                default:                   showToast(WRONG_DESTINATION_ADDRESS); break;
+                case INVALID_AMOUNT:       msg = PAYMENT_AMOUNT_IS_INCORRECT; break;
+                case AMOUNT_IS_ZERO:       msg = IT_IS_NOT_POSSIBLE_TO_SEND_NULL; break;
+                case INSUFFICIENT_BALANCE: msg = YOUR_ACCOUNT_IS_NOT_ENOUGH_TO_SEND; break;
+                case BET_TOO_HIGH:         msg = BET_CANNOT_BE_MORE_THAN + StringEnum.MAX_BET_GUESS_THE_COLOR.getValue() + " XRP"; break;
+                case BET_TOO_LOW:          msg = BET_CANNOT_BE_LESS_THAN + StringEnum.MIN_BET_GUESS_THE_COLOR.getValue() + " XRP"; break;
+                case TAG_TOO_LARGE:        msg = TAG_KNOWLEDGE_CANNOT_BE_MORE; break;
+                default:                   msg = WRONG_DESTINATION_ADDRESS; break;
             }
+            tilBetField.setError(msg);
         });
 
         viewModel.getBetSuccess().observe(this, preparedAmount -> {
             if (preparedAmount == null) return;
+            tilBetField.setError(null);
             bet.setText("");
             setBetParam(preparedAmount, pendingColor);
             goToAnotherPage(FLASHER_CLASS);
@@ -123,6 +131,8 @@ public class GuessTheColorGame extends BaseActivity {
         black = findViewById(R.id.color_black);
         red = findViewById(R.id.color_red);
         bet = findViewById(R.id.bet_field);
+        tilBetField = findViewById(R.id.til_bet_field);
+        chipGroupAmounts = findViewById(R.id.chip_group_amounts);
 
         casinoMediaPlayer = MediaPlayer.create(this, R.raw.in_casino);
         errorMediaPlayer = MediaPlayer.create(this, R.raw.error);
@@ -154,6 +164,20 @@ public class GuessTheColorGame extends BaseActivity {
 
     private void listeners() {
         animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
+
+        chipGroupAmounts.setOnCheckedStateChangeListener((group, checkedIds) -> {
+            if (checkedIds.contains(R.id.chip_1_xrp))  bet.setText("1");
+            else if (checkedIds.contains(R.id.chip_5_xrp))  bet.setText("5");
+            else if (checkedIds.contains(R.id.chip_10_xrp)) bet.setText("10");
+        });
+
+        bet.addTextChangedListener(new android.text.TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
+                tilBetField.setError(null);
+            }
+            @Override public void afterTextChanged(android.text.Editable s) {}
+        });
 
         rulesOfTheGameLink.setOnClickListener(v -> {
             v.startAnimation(animTranslate);

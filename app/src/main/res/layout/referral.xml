@@ -19,19 +19,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <!-- XURA Logo -->
-        <include
-            layout="@layout/logo_xura"
-            android:id="@+id/imageViewLogo"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="90dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="90dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
 
         <!-- Referral info text -->
         <TextView
@@ -39,7 +26,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="40dp"
             android:layout_marginEnd="24dp"
             android:text="@string/referral_text"
             android:textAlignment="center"
@@ -50,30 +37,38 @@
             android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageViewLogo" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <!-- Referral code input -->
-        <EditText
-            android:id="@+id/referral_code_field"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_referral_code_field"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
-            android:layout_height="52dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="48dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="48dp"
-            android:background="@drawable/bg_input_xura"
-            android:ems="10"
             android:hint="@string/enter_referral_code"
-            android:inputType="number"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:textAlignment="center"
-            android:textColor="@color/xura_text_primary"
-            android:textColorHint="@color/xura_text_muted"
-            android:textSize="18sp"
-            android:fontFamily="@font/montserrat"
+            app:boxBackgroundColor="@color/xura_glass_fill"
+            app:boxStrokeColor="@color/xura_glass_border"
+            app:boxStrokeErrorColor="@color/xura_error"
+            app:hintTextColor="@color/xura_text_tertiary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/referral_text_view" />
+            app:layout_constraintTop_toBottomOf="@+id/referral_text_view">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/referral_code_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:textAlignment="center"
+                android:textColor="@color/xura_text_primary"
+                android:textColorHint="@color/xura_text_muted"
+                android:textSize="18sp"
+                android:fontFamily="@font/montserrat" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <!-- SKIP link -->
         <TextView
@@ -97,7 +92,7 @@
             tools:layout_constraintVertical_bias="0.95" />
 
         <!-- SET button -->
-        <TextView
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/referral_set_linc"
             android:layout_width="0dp"
             android:layout_height="56dp"
@@ -105,13 +100,14 @@
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="12dp"
             android:background="@drawable/bg_button_primary"
+            app:backgroundTint="@null"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
             android:fontFamily="@font/montserrat"
             android:text="@string/set"
-            android:textAlignment="center"
             android:textColor="@color/xura_text_primary"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:gravity="center"
             android:letterSpacing="0.08"
             app:layout_constraintBottom_toTopOf="@+id/referral_skip_linc"
             app:layout_constraintEnd_toEndOf="parent"

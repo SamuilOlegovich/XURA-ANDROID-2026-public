@@ -15,19 +15,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- XURA Logo -->
-        <include
-            layout="@layout/logo_xura"
-            android:id="@+id/imageViewLogo"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="100dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="100dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
 
         <!-- SEND PAYMENT title -->
         <TextView
@@ -46,7 +33,7 @@
             android:fontFamily="@font/montserrat"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageViewLogo" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <!-- YOUR BALANCE label -->
         <TextView
@@ -54,7 +41,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="40dp"
             android:layout_marginEnd="24dp"
             android:text="@string/your_balance"
             android:textAlignment="center"
@@ -84,93 +71,119 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/send_payment_page_text_view_tow" />
 
-        <!-- Scan QR Code link -->
-        <TextView
+        <!-- To address input with QR scan icon -->
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/scan_linc"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
-            android:layout_height="32dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="24dp"
-            android:fontFamily="@font/montserrat"
-            android:text="@string/scan_qr_code"
-            android:textAlignment="center"
-            android:textColor="@color/xura_text_link"
-            android:textSize="13sp"
-            android:letterSpacing="0.06"
-            android:gravity="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/balance" />
-
-        <!-- To address input -->
-        <EditText
-            android:id="@+id/from_field"
-            android:layout_width="0dp"
-            android:layout_height="52dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="24dp"
-            android:background="@drawable/bg_input_xura"
-            android:ems="10"
             android:hint="@string/to"
-            android:inputType="textPersonName"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:textColor="@color/xura_text_primary"
-            android:textColorHint="@color/xura_text_muted"
-            android:textSize="15sp"
+            app:boxBackgroundColor="@color/xura_glass_fill"
+            app:boxStrokeColor="@color/xura_glass_border"
+            app:boxStrokeErrorColor="@color/xura_error"
+            app:hintTextColor="@color/xura_text_tertiary"
+            app:endIconMode="custom"
+            app:endIconDrawable="@drawable/ic_qr_scan"
+            app:endIconTint="@color/xura_cyan"
+            app:endIconContentDescription="@string/scan_qr_code"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/scan_linc" />
+            app:layout_constraintTop_toBottomOf="@+id/balance">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/from_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:textColor="@color/xura_text_primary"
+                android:textColorHint="@color/xura_text_muted"
+                android:textSize="15sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Amount input -->
-        <EditText
-            android:id="@+id/amount_field"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_amount_field"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
-            android:layout_height="52dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="24dp"
-            android:background="@drawable/bg_input_xura"
-            android:ems="10"
             android:hint="@string/amount"
-            android:inputType="numberDecimal"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:textAlignment="center"
-            android:textColor="@color/xura_text_primary"
-            android:textColorHint="@color/xura_text_muted"
-            android:textSize="20sp"
-            android:textStyle="bold"
+            app:boxBackgroundColor="@color/xura_glass_fill"
+            app:boxStrokeColor="@color/xura_glass_border"
+            app:boxStrokeErrorColor="@color/xura_error"
+            app:hintTextColor="@color/xura_text_tertiary"
+            app:suffixText="XRP"
+            app:suffixTextColor="@color/xura_cyan"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/from_field" />
+            app:layout_constraintTop_toBottomOf="@+id/scan_linc">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/amount_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:textAlignment="center"
+                android:textColor="@color/xura_text_primary"
+                android:textColorHint="@color/xura_text_muted"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Destination tag input -->
-        <EditText
-            android:id="@+id/tag_field"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_tag_field"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
-            android:layout_height="52dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="48dp"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="48dp"
-            android:background="@drawable/bg_input_xura"
-            android:ems="10"
             android:hint="@string/destination_tag"
-            android:inputType="number"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:textAlignment="center"
-            android:textColor="@color/xura_text_primary"
-            android:textColorHint="@color/xura_text_muted"
-            android:textSize="15sp"
+            app:boxBackgroundColor="@color/xura_glass_fill"
+            app:boxStrokeColor="@color/xura_glass_border"
+            app:boxStrokeErrorColor="@color/xura_error"
+            app:hintTextColor="@color/xura_text_tertiary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/amount_field" />
+            app:layout_constraintTop_toBottomOf="@+id/til_amount_field">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tag_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:textAlignment="center"
+                android:textColor="@color/xura_text_primary"
+                android:textColorHint="@color/xura_text_muted"
+                android:textSize="15sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Sending progress indicator — shown while transaction is in flight -->
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/send_progress"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginBottom="12dp"
+            android:indeterminate="true"
+            android:visibility="gone"
+            app:indicatorColor="@color/xura_cyan"
+            app:trackColor="@color/xura_glass_fill"
+            app:trackThickness="3dp"
+            app:layout_constraintBottom_toTopOf="@+id/send_linc"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <!-- SEND button -->
-        <TextView
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/send_linc"
             android:layout_width="0dp"
             android:layout_height="56dp"
@@ -178,13 +191,14 @@
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="32dp"
             android:background="@drawable/bg_button_primary"
+            app:backgroundTint="@null"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
             android:fontFamily="@font/montserrat"
             android:text="@string/send"
-            android:textAlignment="center"
             android:textColor="@color/xura_text_primary"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:gravity="center"
             android:letterSpacing="0.08"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

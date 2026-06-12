@@ -26,18 +26,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- XURA Logo -->
-    <include
-        layout="@layout/logo_xura"
-        android:id="@+id/imageViewLogo"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="90dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="90dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rules_of_the_game_link" />
 
     <!-- GUESS THE COLOR title -->
     <TextView
@@ -45,7 +33,7 @@
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="16dp"
         android:fontFamily="@font/montserrat"
         android:text="@string/guess_the_color"
@@ -57,7 +45,7 @@
         android:letterSpacing="0.02"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewLogo" />
+        app:layout_constraintTop_toBottomOf="@+id/rules_of_the_game_link" />
 
     <!-- Subtitle -->
     <TextView
@@ -114,30 +102,97 @@
         app:layout_constraintTop_toBottomOf="@+id/your_balance_text_view" />
 
     <!-- Bet amount input -->
-    <EditText
-        android:id="@+id/bet_field"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_bet_field"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
-        android:layout_height="52dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginBottom="12dp"
-        android:background="@drawable/fields"
-        android:ems="10"
         android:hint="@string/place_your_bet"
-        android:inputType="numberDecimal"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:textAlignment="center"
-        android:textColor="@color/xura_text_primary"
-        android:textColorHint="@color/xura_text_muted"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        app:boxBackgroundColor="@color/xura_glass_fill"
+        app:boxStrokeColor="@color/xura_glass_border"
+        app:boxStrokeErrorColor="@color/xura_error"
+        app:hintTextColor="@color/xura_text_tertiary"
+        app:errorEnabled="true"
+        app:errorTextColor="@color/xura_error"
+        app:suffixText="XRP"
+        app:suffixTextColor="@color/xura_cyan"
+        app:layout_constraintBottom_toTopOf="@+id/chip_group_amounts"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/bet_field"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:textAlignment="center"
+            android:textColor="@color/xura_text_primary"
+            android:textColorHint="@color/xura_text_muted"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Quick bet amounts chip group -->
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chip_group_amounts"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="10dp"
+        app:singleSelection="true"
+        app:selectionRequired="false"
         app:layout_constraintBottom_toTopOf="@+id/color_red"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_1_xrp"
+            style="@style/Widget.Material3.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/chip_1_xrp"
+            android:textColor="@color/xura_text_primary"
+            app:chipBackgroundColor="@color/chip_bg_quick_bet"
+            app:chipStrokeColor="@color/chip_stroke_quick_bet"
+            app:chipStrokeWidth="1dp"
+            app:checkedIconVisible="false" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_5_xrp"
+            style="@style/Widget.Material3.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/chip_5_xrp"
+            android:textColor="@color/xura_text_primary"
+            app:chipBackgroundColor="@color/chip_bg_quick_bet"
+            app:chipStrokeColor="@color/chip_stroke_quick_bet"
+            app:chipStrokeWidth="1dp"
+            app:checkedIconVisible="false" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_10_xrp"
+            style="@style/Widget.Material3.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/chip_10_xrp"
+            android:textColor="@color/xura_text_primary"
+            app:chipBackgroundColor="@color/chip_bg_quick_bet"
+            app:chipStrokeColor="@color/chip_stroke_quick_bet"
+            app:chipStrokeWidth="1dp"
+            app:checkedIconVisible="false" />
+
+    </com.google.android.material.chip.ChipGroup>
 
     <!-- RED bet button — immersive game action -->
-    <TextView
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/color_red"
         android:layout_width="0dp"
         android:layout_height="64dp"
@@ -145,13 +200,14 @@
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/bg_game_card_red"
+        app:backgroundTint="@null"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
         android:fontFamily="@font/montserrat"
         android:text="@string/red"
-        android:textAlignment="center"
         android:textColor="@color/xura_text_primary"
         android:textSize="22sp"
         android:textStyle="bold"
-        android:gravity="center"
         android:letterSpacing="0.1"
         android:textAllCaps="true"
         app:layout_constraintBottom_toTopOf="@+id/color_black"
@@ -159,7 +215,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <!-- BLACK bet button — immersive game action -->
-    <TextView
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/color_black"
         android:layout_width="0dp"
         android:layout_height="64dp"
@@ -167,13 +223,14 @@
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
         android:background="@drawable/bg_game_card_dark"
+        app:backgroundTint="@null"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
         android:fontFamily="@font/montserrat"
         android:text="@string/black"
-        android:textAlignment="center"
         android:textColor="@color/xura_text_primary"
         android:textSize="22sp"
         android:textStyle="bold"
-        android:gravity="center"
         android:letterSpacing="0.1"
         android:textAllCaps="true"
         app:layout_constraintBottom_toBottomOf="parent"

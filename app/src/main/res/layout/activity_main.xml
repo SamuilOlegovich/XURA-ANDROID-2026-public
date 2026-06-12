@@ -15,23 +15,6 @@
         android:layout_height="match_parent"
         android:background="@color/xura_black">
 
-        <!-- Settings — top center -->
-        <TextView
-            android:id="@+id/settings_linc"
-            android:layout_width="wrap_content"
-            android:layout_height="36dp"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/montserrat"
-            android:text="@string/settings_main"
-            android:textAlignment="center"
-            android:textColor="@color/xura_text_tertiary"
-            android:textSize="11sp"
-            android:gravity="center"
-            android:letterSpacing="0.08"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <!-- XURA Logo — click opens game selection -->
         <include
             layout="@layout/logo_xura"
@@ -39,35 +22,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="80dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="24dp"
             android:layout_marginEnd="80dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/settings_linc" />
-
-        <!-- Lotto ticker -->
-        <TextView
-            android:id="@+id/lotto_text_go_link"
-            android:layout_width="0dp"
-            android:layout_height="24dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="24dp"
-            android:ellipsize="marquee"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:scrollHorizontally="true"
-            android:singleLine="true"
-            android:text="@string/want_to_win"
-            android:textAlignment="center"
-            android:textColor="@color/xura_text_muted"
-            android:textSize="10sp"
-            android:letterSpacing="0.12"
-            android:gravity="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/logo_button_link" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <!-- "YOUR BALANCE" label -->
         <TextView
@@ -75,7 +34,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="32dp"
             android:layout_marginEnd="24dp"
             android:text="@string/your_balance"
             android:textAlignment="center"
@@ -85,7 +44,22 @@
             android:letterSpacing="0.16"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lotto_text_go_link" />
+            app:layout_constraintTop_toBottomOf="@+id/logo_button_link" />
+
+        <!-- Balance loading spinner — shown while wallet connects -->
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/balance_loading"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_marginTop="10dp"
+            android:indeterminate="true"
+            android:visibility="visible"
+            app:indicatorColor="@color/xura_cyan"
+            app:trackColor="@color/xura_glass_fill"
+            app:trackThickness="3dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/your_balance_text" />
 
         <!-- Balance amount — the hero number -->
         <TextView
@@ -95,12 +69,12 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="6dp"
             android:layout_marginEnd="24dp"
-            android:text="97.456782 XRP"
             android:textAlignment="center"
             android:textColor="@color/xura_text_primary"
             android:textSize="40sp"
             android:textStyle="bold"
             android:fontFamily="@font/montserrat"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/your_balance_text" />
@@ -125,7 +99,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <!-- SEND — primary gradient button -->
-        <TextView
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/next_link"
             android:layout_width="0dp"
             android:layout_height="56dp"
@@ -133,20 +107,21 @@
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="12dp"
             android:background="@drawable/bg_button_primary"
+            app:backgroundTint="@null"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
             android:fontFamily="@font/montserrat"
             android:text="@string/send"
-            android:textAlignment="center"
             android:textColor="@color/xura_text_primary"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:gravity="center"
             android:letterSpacing="0.08"
             app:layout_constraintBottom_toTopOf="@+id/request_link"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <!-- REQUEST — secondary glass button -->
-        <TextView
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/request_link"
             android:layout_width="0dp"
             android:layout_height="56dp"
@@ -154,13 +129,14 @@
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="12dp"
             android:background="@drawable/bg_button_secondary"
+            app:backgroundTint="@null"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
             android:fontFamily="@font/montserrat"
             android:text="@string/request"
-            android:textAlignment="center"
             android:textColor="@color/xura_text_secondary"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:gravity="center"
             android:letterSpacing="0.08"
             app:layout_constraintBottom_toTopOf="@+id/transaction_history_link"
             app:layout_constraintEnd_toEndOf="parent"
@@ -173,7 +149,7 @@
             android:layout_height="40dp"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="8dp"
             android:fontFamily="@font/montserrat"
             android:text="@string/transaction_history"
             android:textAlignment="center"
@@ -181,11 +157,29 @@
             android:textSize="13sp"
             android:letterSpacing="0.06"
             android:gravity="center"
+            app:layout_constraintBottom_toTopOf="@+id/bottom_nav"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <!-- Bottom Navigation Bar — floating pill -->
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_nav"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/bg_bottom_nav"
+            android:clipToOutline="true"
+            android:elevation="8dp"
+            app:itemIconTint="@color/bottom_nav_tint"
+            app:itemTextColor="@color/bottom_nav_tint"
+            app:itemRippleColor="@color/xura_glass_fill"
+            app:menu="@menu/bottom_nav_menu"
+            app:labelVisibilityMode="unlabeled"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_constraintTop_toTopOf="parent"
-            tools:layout_constraintVertical_bias="0.95" />
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

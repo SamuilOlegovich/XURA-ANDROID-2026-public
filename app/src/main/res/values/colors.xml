@@ -23,7 +23,7 @@
     <color name="xura_text_primary">#FFFFFFFF</color>
     <color name="xura_text_secondary">#CCFFFFFF</color>
     <color name="xura_text_tertiary">#80FFFFFF</color>
-    <color name="xura_text_muted">#4DFFFFFF</color>
+    <color name="xura_text_muted">#80FFFFFF</color>
     <color name="xura_text_link">#FF00D4FF</color>
 
     <!-- Glass / Overlay (AARRGGBB) -->

@@ -19,19 +19,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <!-- XURA Logo -->
-        <include
-            layout="@layout/logo_xura"
-            android:id="@+id/logo"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="90dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="90dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
 
         <!-- SETTINGS title -->
         <TextView
@@ -39,7 +26,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="40dp"
             android:layout_marginEnd="24dp"
             android:text="@string/settings_text"
             android:textAlignment="center"
@@ -51,33 +38,151 @@
             android:letterSpacing="0.02"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/logo" />
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Wallet info card -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_wallet"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            app:cardBackgroundColor="@color/xura_card"
+            app:cardCornerRadius="16dp"
+            app:strokeColor="@color/xura_glass_border"
+            app:strokeWidth="1dp"
+            app:cardElevation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/settings_text_view"
+            app:layout_constraintBottom_toTopOf="@+id/settings_biometric_linc"
+            app:layout_constraintVertical_bias="0">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat"
+                    android:text="@string/settings_wallet_section"
+                    android:textColor="@color/xura_text_tertiary"
+                    android:textSize="10sp"
+                    android:letterSpacing="0.12" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@color/xura_glass_border" />
+
+                <TextView
+                    android:id="@+id/tv_wallet_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat"
+                    android:textColor="@color/xura_text_primary"
+                    android:textSize="13sp"
+                    android:ellipsize="middle"
+                    android:singleLine="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="@string/settings_tap_to_copy"
+                    android:textColor="@color/xura_cyan"
+                    android:textSize="10sp"
+                    android:letterSpacing="0.04" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- App version card -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_version"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="24dp"
+            app:cardBackgroundColor="@color/xura_card"
+            app:cardCornerRadius="16dp"
+            app:strokeColor="@color/xura_glass_border"
+            app:strokeWidth="1dp"
+            app:cardElevation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/card_wallet"
+            app:layout_constraintBottom_toTopOf="@+id/settings_biometric_linc"
+            app:layout_constraintVertical_bias="0">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat"
+                    android:text="@string/settings_version_section"
+                    android:textColor="@color/xura_text_tertiary"
+                    android:textSize="10sp"
+                    android:letterSpacing="0.12" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@color/xura_glass_border" />
+
+                <TextView
+                    android:id="@+id/tv_app_version"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat"
+                    android:textColor="@color/xura_text_primary"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
 
         <!-- SELECT LANGUAGE button -->
-        <TextView
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/settings_select_english_linc"
             android:layout_width="0dp"
             android:layout_height="56dp"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
-            android:layout_marginBottom="40dp"
+            android:layout_marginBottom="12dp"
             android:background="@drawable/bg_button_secondary"
+            app:backgroundTint="@null"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
             android:fontFamily="@font/montserrat"
             android:text="@string/settings_select_language"
-            android:textAlignment="center"
             android:textColor="@color/xura_text_secondary"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:gravity="center"
             android:letterSpacing="0.06"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/bottom_nav"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_constraintTop_toTopOf="parent"
-            tools:layout_constraintVertical_bias="0.95" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <!-- BIOMETRICS toggle button -->
-        <TextView
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/settings_biometric_linc"
             android:layout_width="0dp"
             android:layout_height="56dp"
@@ -85,20 +190,21 @@
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="12dp"
             android:background="@drawable/bg_button_secondary"
+            app:backgroundTint="@null"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
             android:fontFamily="@font/montserrat"
             android:text="@string/settings_biometric"
-            android:textAlignment="center"
             android:textColor="@color/xura_text_secondary"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:gravity="center"
             android:letterSpacing="0.06"
             app:layout_constraintBottom_toTopOf="@+id/settings_set_password_linc"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <!-- SET PASSWORD button -->
-        <TextView
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/settings_set_password_linc"
             android:layout_width="0dp"
             android:layout_height="56dp"
@@ -106,15 +212,36 @@
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="12dp"
             android:background="@drawable/bg_button_primary"
+            app:backgroundTint="@null"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
             android:fontFamily="@font/montserrat"
             android:text="@string/settings_set_password"
-            android:textAlignment="center"
             android:textColor="@color/xura_text_primary"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:gravity="center"
             android:letterSpacing="0.06"
             app:layout_constraintBottom_toTopOf="@+id/settings_select_english_linc"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <!-- Bottom Navigation Bar — floating pill -->
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_nav"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/bg_bottom_nav"
+            android:clipToOutline="true"
+            android:elevation="8dp"
+            app:itemIconTint="@color/bottom_nav_tint"
+            app:itemTextColor="@color/bottom_nav_tint"
+            app:itemRippleColor="@color/xura_glass_fill"
+            app:menu="@menu/bottom_nav_menu"
+            app:labelVisibilityMode="unlabeled"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 

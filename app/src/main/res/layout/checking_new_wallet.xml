@@ -9,19 +9,6 @@
     tools:context=".view.CheckingNewWallet"
     tools:ignore="MissingDefaultResource">
 
-    <!-- XURA Logo -->
-    <include
-            layout="@layout/logo_xura"
-            android:id="@+id/imageViewLogo"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="90dp"
-            android:layout_marginTop="36dp"
-            android:layout_marginEnd="90dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
 
     <!-- Instruction text -->
     <TextView
@@ -40,33 +27,41 @@
         android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewLogo" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Seed input -->
-    <EditText
-        android:id="@+id/password_field"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_password_field"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
-        android:layout_height="52dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="24dp"
-        android:background="@drawable/bg_input_xura"
-        android:ems="10"
         android:hint="ssG3xqRQSnxfYfFsThoHfy7fNEZZctDc3Dx"
-        android:inputType="text"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:textAlignment="textStart"
-        android:textColor="@color/xura_cyan"
-        android:textColorHint="@color/xura_text_muted"
-        android:textSize="13sp"
-        android:fontFamily="@font/montserrat"
+        app:boxBackgroundColor="@color/xura_glass_fill"
+        app:boxStrokeColor="@color/xura_glass_border"
+        app:boxStrokeErrorColor="@color/xura_error"
+        app:hintTextColor="@color/xura_text_tertiary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checking_new_wallet_text" />
+        app:layout_constraintTop_toBottomOf="@+id/checking_new_wallet_text">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/password_field"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:textAlignment="textStart"
+            android:textColor="@color/xura_cyan"
+            android:textColorHint="@color/xura_text_muted"
+            android:textSize="13sp"
+            android:fontFamily="@font/montserrat" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <!-- NEXT button -->
-    <TextView
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/next_link"
         android:layout_width="0dp"
         android:layout_height="56dp"
@@ -74,13 +69,14 @@
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="40dp"
         android:background="@drawable/bg_button_primary"
+        app:backgroundTint="@null"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
         android:fontFamily="@font/montserrat"
         android:text="@string/next"
-        android:textAlignment="center"
         android:textColor="@color/xura_text_primary"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:gravity="center"
         android:letterSpacing="0.08"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

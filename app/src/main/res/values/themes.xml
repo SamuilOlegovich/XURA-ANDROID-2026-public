@@ -1,16 +1,47 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <style name="Theme.XGW" parent="Theme.AppCompat.NoActionBar">
-        <item name="colorPrimary">@color/xura_black</item>
-        <item name="colorPrimaryVariant">@color/xura_surface</item>
-        <item name="colorOnPrimary">@color/xura_text_primary</item>
-        <item name="colorSecondary">@color/xura_cyan</item>
-        <item name="colorSecondaryVariant">@color/xura_indigo</item>
-        <item name="colorOnSecondary">@color/xura_black</item>
-        <item name="android:statusBarColor" tools:targetApi="l">@color/xura_black</item>
-        <item name="android:navigationBarColor">@color/xura_black</item>
-        <item name="android:windowBackground">@color/xura_black</item>
-        <item name="android:textColor">@color/xura_text_primary</item>
+    <style name="Theme.XGW" parent="Theme.Material3.DayNight.NoActionBar">
+
+        <!-- Primary = xura_cyan: интерактивные элементы, selected state -->
+        <item name="colorPrimary">@color/xura_cyan</item>
+        <item name="colorOnPrimary">@color/xura_black</item>
+        <item name="colorPrimaryContainer">@color/xura_surface</item>
+        <item name="colorOnPrimaryContainer">@color/xura_cyan</item>
+
+        <!-- Secondary = xura_purple: акценты, BottomNav indicator -->
+        <item name="colorSecondary">@color/xura_purple</item>
+        <item name="colorOnSecondary">@color/xura_text_primary</item>
+        <item name="colorSecondaryContainer">@color/xura_card</item>
+        <item name="colorOnSecondaryContainer">@color/xura_purple</item>
+
+        <!-- Tertiary = xura_gold: победы, успех -->
+        <item name="colorTertiary">@color/xura_gold</item>
+        <item name="colorOnTertiary">@color/xura_black</item>
+        <item name="colorTertiaryContainer">@color/xura_surface</item>
+        <item name="colorOnTertiaryContainer">@color/xura_gold</item>
+
+        <!-- Surface: карточки, диалоги, BottomSheet -->
+        <item name="colorSurface">@color/xura_surface</item>
+        <item name="colorOnSurface">@color/xura_text_primary</item>
+        <item name="colorSurfaceVariant">@color/xura_card</item>
+        <item name="colorOnSurfaceVariant">@color/xura_text_tertiary</item>
+
+        <!-- Error -->
+        <item name="colorError">@color/xura_error</item>
+        <item name="colorOnError">@color/xura_text_primary</item>
+        <item name="colorErrorContainer">@color/xura_surface</item>
+        <item name="colorOnErrorContainer">@color/xura_error</item>
+
+        <!-- Outline: граница TextInputLayout.OutlinedBox в пассивном состоянии -->
+        <item name="colorOutline">@color/xura_glass_border</item>
+        <item name="colorOutlineVariant">@color/xura_glass_fill</item>
+
+        <!-- Background -->
         <item name="android:colorBackground">@color/xura_black</item>
+
+        <!-- System bars -->
+        <item name="android:statusBarColor">@color/xura_black</item>
+        <item name="android:navigationBarColor">@color/xura_black</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
+
     </style>
 </resources>
