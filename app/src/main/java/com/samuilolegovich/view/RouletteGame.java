@@ -195,7 +195,7 @@ public class RouletteGame extends BaseActivity {
 
 
     // ════════════════════════════════════════════════════════════════════
-    //  Casino table builder — vertical layout
+    //  Casino table builder — real layout: dozens left, 2:1 right
     // ════════════════════════════════════════════════════════════════════
 
     private void buildTable() {
@@ -203,119 +203,101 @@ public class RouletteGame extends BaseActivity {
         int      cellH = dp(CELL_H);
         Typeface font  = ResourcesCompat.getFont(this, R.font.montserrat);
 
-        buildZeroCell(container, cellH, font);
-        buildNumberGrid(container, cellH, font);
-        buildColBetsRow(container, cellH, font);
-        buildDozensRow(container, cellH, font);
-        buildOutsideRows(container, cellH, font);
-    }
-
-    private void buildZeroCell(LinearLayout container, int cellH, Typeface font) {
-        TextView zero = makeCell("0", COLOR_GREEN, 0, cellH, font, true);
-        LinearLayout.LayoutParams lp =
-                new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, cellH);
-        lp.setMargins(2, 2, 2, 2);
-        zero.setLayoutParams(lp);
-        zero.setOnClickListener(v -> selectBet(v, "N:0", 36, COLOR_GREEN));
-        container.addView(zero);
-    }
-
-    private void buildNumberGrid(LinearLayout container, int cellH, Typeface font) {
+        // 5 columns: [dozen | num | num | num | 2:1]
+        // 13 rows:   row 0 = zero, rows 1–12 = numbers
         GridLayout grid = new GridLayout(this);
-        grid.setColumnCount(3);
+        grid.setColumnCount(5);
+        grid.setRowCount(13);
         grid.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
 
+        // Row 0: Zero — spans all 5 columns
+        addCell(grid, "0", COLOR_GREEN, 0, 0, 1, 5, cellH, 1f, 12, font, true,
+                v -> selectBet(v, "N:0", 36, COLOR_GREEN));
+
+        // Rows 1–12, cols 1–3: number cells
         for (int row = 0; row < 12; row++) {
             for (int col = 0; col < 3; col++) {
                 int num = row * 3 + col + 1;
                 int bg  = BLACK_NUMS.contains(num) ? COLOR_BLACK : COLOR_RED;
-
-                TextView cell = makeCell(String.valueOf(num), bg, 0, cellH, font, true);
-                GridLayout.LayoutParams p = new GridLayout.LayoutParams(
-                        GridLayout.spec(row, 1, GridLayout.FILL, 1f),
-                        GridLayout.spec(col, 1, GridLayout.FILL, 1f));
-                p.width  = 0;
-                p.height = cellH;
-                p.setMargins(2, 2, 2, 2);
-                cell.setLayoutParams(p);
-
-                final int n = num;
-                final int c = bg;
-                cell.setOnClickListener(v -> selectBet(v, "N:" + n, 36, c));
-                grid.addView(cell);
+                final int n = num, c = bg;
+                addCell(grid, String.valueOf(num), bg, row + 1, col + 1, 1, 1,
+                        cellH, 1f, 12, font, true,
+                        v -> selectBet(v, "N:" + n, 36, c));
             }
         }
-        container.addView(grid);
-    }
 
-    private void buildColBetsRow(LinearLayout container, int cellH, Typeface font) {
-        LinearLayout row = makeHRow(container);
-        for (String tag : new String[]{"C1", "C2", "C3"}) {
-            TextView btn = makeCell("2:1", COLOR_CARD, 0, cellH, font, false);
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, cellH, 1f);
-            lp.setMargins(2, 2, 2, 2);
-            btn.setLayoutParams(lp);
-            btn.setOnClickListener(v -> selectBet(v, tag, 3, COLOR_CARD));
-            row.addView(btn);
-        }
-    }
-
-    private void buildDozensRow(LinearLayout container, int cellH, Typeface font) {
-        LinearLayout row = makeHRow(container);
-        String[] labels = {
+        // Col 0: Dozen bets — each spans 4 rows
+        String[] dozLabels = {
             getString(R.string.roulette_first_dozen),
             getString(R.string.roulette_second_dozen),
             getString(R.string.roulette_third_dozen)
         };
-        String[] tags = {"D1", "D2", "D3"};
+        String[] dozTags = {"D1", "D2", "D3"};
         for (int i = 0; i < 3; i++) {
-            TextView btn = makeCell(labels[i], COLOR_CARD, 0, cellH, font, false);
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, cellH, 1f);
-            lp.setMargins(2, 2, 2, 2);
-            btn.setLayoutParams(lp);
-            final String tag = tags[i];
-            btn.setOnClickListener(v -> selectBet(v, tag, 3, COLOR_CARD));
-            row.addView(btn);
+            final String tag = dozTags[i];
+            addCell(grid, dozLabels[i], COLOR_CARD, 1 + i * 4, 0, 4, 1,
+                    0, 0.55f, 9, font, false,
+                    v -> selectBet(v, tag, 3, COLOR_CARD));
         }
-    }
 
-    private void buildOutsideRows(LinearLayout container, int cellH, Typeface font) {
-        addOutsideRow(container, cellH, font,
-                new String[]{"1–18",  "EVEN", "●"},
-                new String[]{"LOW",   "EVEN", "RED"},
-                new int[]   {COLOR_CARD, COLOR_CARD, COLOR_RED});
-
-        addOutsideRow(container, cellH, font,
-                new String[]{"19–36", "ODD",  "●"},
-                new String[]{"HIGH",  "ODD",  "BLACK"},
-                new int[]   {COLOR_CARD, COLOR_CARD, COLOR_BLACK});
-    }
-
-    private void addOutsideRow(LinearLayout container, int cellH, Typeface font,
-                               String[] labels, String[] tags, int[] colors) {
-        LinearLayout row = makeHRow(container);
+        // Col 4: Column bets 2:1 — each spans 4 rows
         for (int i = 0; i < 3; i++) {
-            TextView btn = makeCell(labels[i], colors[i], 0, cellH, font, false);
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, cellH, 1f);
-            lp.setMargins(2, 2, 2, 2);
-            btn.setLayoutParams(lp);
-            final String tag = tags[i];
-            final int c = colors[i];
-            btn.setOnClickListener(v -> selectBet(v, tag, 2, c));
-            row.addView(btn);
+            final String tag = "C" + (i + 1);
+            addCell(grid, "2:1", COLOR_CARD, 1 + i * 4, 4, 4, 1,
+                    0, 0.55f, 11, font, false,
+                    v -> selectBet(v, tag, 3, COLOR_CARD));
         }
+
+        container.addView(grid);
+        buildOutsideRow(container, cellH, font);
     }
 
-    private LinearLayout makeHRow(LinearLayout container) {
+    private void addCell(GridLayout grid, String text, int bg,
+                         int gridRow, int gridCol, int rowSpan, int colSpan,
+                         int height, float colWeight, int textSizeSp,
+                         Typeface font, boolean goldText,
+                         View.OnClickListener listener) {
+        TextView tv = makeCell(text, bg, 0, height > 0 ? height : dp(CELL_H), font, goldText);
+        tv.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, textSizeSp);
+        tv.setMaxLines(4);
+        GridLayout.LayoutParams lp = new GridLayout.LayoutParams(
+                GridLayout.spec(gridRow, rowSpan, GridLayout.FILL, 1f),
+                GridLayout.spec(gridCol, colSpan, GridLayout.FILL, colWeight));
+        lp.width  = 0;
+        lp.height = height;
+        lp.setMargins(2, 2, 2, 2);
+        tv.setLayoutParams(lp);
+        tv.setOnClickListener(listener);
+        grid.addView(tv);
+    }
+
+    private void buildOutsideRow(LinearLayout container, int cellH, Typeface font) {
         LinearLayout row = new LinearLayout(this);
         row.setOrientation(LinearLayout.HORIZONTAL);
         row.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
         container.addView(row);
-        return row;
+
+        addOutsideBtn(row, "1–18",  "LOW",   COLOR_CARD,  cellH, font);
+        addOutsideBtn(row, "EVEN",  "EVEN",  COLOR_CARD,  cellH, font);
+        addOutsideBtn(row, "●",     "RED",   COLOR_RED,   cellH, font);
+        addOutsideBtn(row, "●",     "BLACK", COLOR_BLACK, cellH, font);
+        addOutsideBtn(row, "ODD",   "ODD",   COLOR_CARD,  cellH, font);
+        addOutsideBtn(row, "19–36", "HIGH",  COLOR_CARD,  cellH, font);
+    }
+
+    private void addOutsideBtn(LinearLayout row, String label, String tag,
+                                int color, int cellH, Typeface font) {
+        TextView btn = makeCell(label, color, 0, cellH, font, false);
+        btn.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, 10);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, cellH, 1f);
+        lp.setMargins(2, 2, 2, 2);
+        btn.setLayoutParams(lp);
+        btn.setOnClickListener(v -> selectBet(v, tag, 2, color));
+        row.addView(btn);
     }
 
 
