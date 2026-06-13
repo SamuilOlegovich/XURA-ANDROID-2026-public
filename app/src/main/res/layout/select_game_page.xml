@@ -174,17 +174,63 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/number_title" />
 
-        <ImageView
+        <FrameLayout
             android:id="@+id/icon_number"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="58dp"
+            android:layout_height="42dp"
             android:layout_marginEnd="12dp"
-            android:alpha="0.18"
-            android:src="@drawable/ic_game_number"
             android:importantForAccessibility="no"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat"
+                android:text="7"
+                android:textColor="#5500D4FF"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:rotation="-14"
+                android:layout_gravity="top|start" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat"
+                android:text="36"
+                android:textColor="#4400D4FF"
+                android:textSize="9sp"
+                android:textStyle="bold"
+                android:rotation="10"
+                android:layout_gravity="bottom|start"
+                android:layout_marginStart="2dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat"
+                android:text="13"
+                android:textColor="#3300D4FF"
+                android:textSize="8sp"
+                android:rotation="-6"
+                android:layout_gravity="center"
+                android:layout_marginEnd="18dp"
+                android:layout_marginBottom="4dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat"
+                android:text="?"
+                android:textColor="#00D4FF"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:rotation="6"
+                android:layout_gravity="end|center_vertical" />
+
+        </FrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
