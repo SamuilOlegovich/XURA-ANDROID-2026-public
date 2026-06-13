@@ -176,59 +176,95 @@
 
         <FrameLayout
             android:id="@+id/icon_number"
-            android:layout_width="58dp"
-            android:layout_height="42dp"
-            android:layout_marginEnd="12dp"
+            android:layout_width="64dp"
+            android:layout_height="46dp"
+            android:layout_marginEnd="10dp"
             android:importantForAccessibility="no"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
+            <!-- Число 1 — верхний левый угол -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat"
-                android:text="7"
-                android:textColor="#5500D4FF"
-                android:textSize="11sp"
+                android:text="1"
+                android:textColor="#66FFFFFF"
+                android:textSize="12sp"
                 android:textStyle="bold"
-                android:rotation="-14"
-                android:layout_gravity="top|start" />
+                android:rotation="-22"
+                android:layout_gravity="top|start"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="2dp" />
 
+            <!-- Число 36 — верхний правый угол -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat"
                 android:text="36"
-                android:textColor="#4400D4FF"
-                android:textSize="9sp"
+                android:textColor="#55FFFFFF"
+                android:textSize="10sp"
                 android:textStyle="bold"
-                android:rotation="10"
-                android:layout_gravity="bottom|start"
-                android:layout_marginStart="2dp" />
+                android:rotation="18"
+                android:layout_gravity="top|end"
+                android:layout_marginEnd="2dp"
+                android:layout_marginTop="0dp" />
 
+            <!-- Число 7 — нижний левый -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat"
+                android:text="7"
+                android:textColor="#50FFFFFF"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:rotation="14"
+                android:layout_gravity="bottom|start"
+                android:layout_marginStart="4dp"
+                android:layout_marginBottom="2dp" />
+
+            <!-- Число 13 — нижний правый -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat"
                 android:text="13"
-                android:textColor="#3300D4FF"
-                android:textSize="8sp"
-                android:rotation="-6"
-                android:layout_gravity="center"
-                android:layout_marginEnd="18dp"
-                android:layout_marginBottom="4dp" />
+                android:textColor="#44FFFFFF"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:rotation="-16"
+                android:layout_gravity="bottom|end"
+                android:layout_marginEnd="2dp"
+                android:layout_marginBottom="0dp" />
 
+            <!-- Число 21 — центр, совсем приглушённое -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat"
+                android:text="21"
+                android:textColor="#33FFFFFF"
+                android:textSize="9sp"
+                android:rotation="-8"
+                android:layout_gravity="center"
+                android:layout_marginStart="6dp"
+                android:layout_marginBottom="8dp" />
+
+            <!-- Знак вопроса — поверх всего, по центру, яркий -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat"
                 android:text="?"
                 android:textColor="#00D4FF"
-                android:textSize="24sp"
+                android:textSize="26sp"
                 android:textStyle="bold"
-                android:rotation="6"
-                android:layout_gravity="end|center_vertical" />
+                android:rotation="8"
+                android:layout_gravity="center"
+                android:layout_marginStart="10dp" />
 
         </FrameLayout>
 
