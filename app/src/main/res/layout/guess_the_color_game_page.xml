@@ -191,52 +191,132 @@
 
     </com.google.android.material.chip.ChipGroup>
 
-    <!-- RED bet button — immersive game action -->
-    <com.google.android.material.button.MaterialButton
+    <!-- RED bet card -->
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/color_red"
         android:layout_width="0dp"
-        android:layout_height="64dp"
+        android:layout_height="80dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/bg_game_card_red"
-        app:backgroundTint="@null"
-        android:insetTop="0dp"
-        android:insetBottom="0dp"
-        android:fontFamily="@font/montserrat"
-        android:text="@string/red"
-        android:textColor="@color/xura_text_primary"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:letterSpacing="0.1"
-        android:textAllCaps="true"
+        android:background="@drawable/bg_card_send"
+        android:clickable="true"
+        android:focusable="true"
+        android:contentDescription="@string/red"
         app:layout_constraintBottom_toTopOf="@+id/color_black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent">
 
-    <!-- BLACK bet button — immersive game action -->
-    <com.google.android.material.button.MaterialButton
+        <TextView
+            android:id="@+id/red_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/red"
+            android:textColor="@color/xura_pink"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.03"
+            app:layout_constraintBottom_toTopOf="@+id/red_subtitle"
+            app:layout_constraintEnd_toStartOf="@+id/red_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/red_subtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/btn_sub_red"
+            android:textColor="#99FFFFFF"
+            android:textSize="11sp"
+            android:letterSpacing="0.02"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/red_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/red_title" />
+
+        <ImageView
+            android:id="@+id/red_icon"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_favorite"
+            android:importantForAccessibility="no"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- BLACK bet card -->
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/color_black"
         android:layout_width="0dp"
-        android:layout_height="64dp"
+        android:layout_height="80dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
-        android:background="@drawable/bg_game_card_dark"
-        app:backgroundTint="@null"
-        android:insetTop="0dp"
-        android:insetBottom="0dp"
-        android:fontFamily="@font/montserrat"
-        android:text="@string/black"
-        android:textColor="@color/xura_text_primary"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:letterSpacing="0.1"
-        android:textAllCaps="true"
+        android:background="@drawable/bg_card_white_outline"
+        android:clickable="true"
+        android:focusable="true"
+        android:contentDescription="@string/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_constraintTop_toTopOf="parent"
-        tools:layout_constraintVertical_bias="0.95" />
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/black_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/black"
+            android:textColor="@color/xura_text_secondary"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.03"
+            app:layout_constraintBottom_toTopOf="@+id/black_subtitle"
+            app:layout_constraintEnd_toStartOf="@+id/black_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/black_subtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/btn_sub_black"
+            android:textColor="@color/xura_text_tertiary"
+            android:textSize="11sp"
+            android:letterSpacing="0.02"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/black_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/black_title" />
+
+        <ImageView
+            android:id="@+id/black_icon"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_clubs"
+            android:importantForAccessibility="no"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

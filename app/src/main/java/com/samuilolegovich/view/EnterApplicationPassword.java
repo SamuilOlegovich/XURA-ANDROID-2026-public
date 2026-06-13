@@ -7,6 +7,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.material.textfield.TextInputLayout;
@@ -36,7 +37,7 @@ public class EnterApplicationPassword extends BaseActivity {
     private TextView settingsSetPasswordAppTextView;
     private TextInputLayout tilPassword;
     private EditText password;
-    private TextView next;
+    private View next;
 
     private boolean biometricPromptShown = false;
 
@@ -66,13 +67,12 @@ public class EnterApplicationPassword extends BaseActivity {
         settingsSetPasswordAppTextView = (TextView) findViewById(R.id.settings_set_password_app_text_view);
         tilPassword = findViewById(R.id.til_enter_application_password_field);
         password = (EditText) findViewById(R.id.enter_application_password_field);
-        next = (TextView) findViewById(R.id.enter_application_password_next_link);
+        next = findViewById(R.id.enter_application_password_next_link);
     }
 
 
     private void setLanguage() {
         settingsSetPasswordAppTextView.setText(R.string.enter_password);
-        next.setText(R.string.next);
     }
 
 

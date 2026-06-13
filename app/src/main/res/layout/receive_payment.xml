@@ -85,34 +85,138 @@
             android:background="@drawable/bg_card_glass"
             android:padding="12dp"
             android:scaleType="fitCenter"
-            app:layout_constraintBottom_toTopOf="@+id/copy_linc"
+            app:layout_constraintBottom_toTopOf="@+id/share_linc"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/address" />
 
-        <!-- COPY button -->
-        <com.google.android.material.button.MaterialButton
+        <!-- COPY button — glass card -->
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/copy_linc"
             android:layout_width="0dp"
-            android:layout_height="56dp"
+            android:layout_height="80dp"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="32dp"
-            android:background="@drawable/bg_button_secondary"
-            app:backgroundTint="@null"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
-            android:fontFamily="@font/montserrat"
-            android:text="@string/copy"
-            android:textColor="@color/xura_text_secondary"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:letterSpacing="0.08"
+            android:background="@drawable/bg_card_glass_clickable"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="@string/copy"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_constraintTop_toTopOf="parent"
-            tools:layout_constraintVertical_bias="0.9" />
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/receive_copy_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/copy"
+                android:textColor="@color/xura_text_primary"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.03"
+                app:layout_constraintBottom_toTopOf="@+id/receive_copy_subtitle"
+                app:layout_constraintEnd_toStartOf="@+id/receive_copy_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <TextView
+                android:id="@+id/receive_copy_subtitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/btn_sub_copy"
+                android:textColor="@color/xura_text_tertiary"
+                android:textSize="11sp"
+                android:letterSpacing="0.02"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/receive_copy_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/receive_copy_title" />
+
+            <ImageView
+                android:id="@+id/receive_copy_icon"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/ic_copy"
+                android:importantForAccessibility="no"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- SHARE button — cyan card -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/share_linc"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/bg_card_action_primary"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="@string/share"
+            app:layout_constraintBottom_toTopOf="@+id/copy_linc"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/receive_share_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/share"
+                android:textColor="@color/xura_cyan"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.03"
+                app:layout_constraintBottom_toTopOf="@+id/receive_share_subtitle"
+                app:layout_constraintEnd_toStartOf="@+id/receive_share_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <TextView
+                android:id="@+id/receive_share_subtitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/btn_sub_share"
+                android:textColor="@color/xura_text_tertiary"
+                android:textSize="11sp"
+                android:letterSpacing="0.02"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/receive_share_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/receive_share_title" />
+
+            <ImageView
+                android:id="@+id/receive_share_icon"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/ic_share"
+                android:importantForAccessibility="no"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

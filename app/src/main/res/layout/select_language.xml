@@ -53,50 +53,133 @@
             app:layout_constraintTop_toBottomOf="@+id/logo_xura" />
 
         <!-- ENGLISH button -->
-        <com.google.android.material.button.MaterialButton
+        <!-- ENGLISH — glass card -->
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/settings_english_linc"
             android:layout_width="0dp"
-            android:layout_height="56dp"
+            android:layout_height="80dp"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="40dp"
-            android:background="@drawable/bg_button_secondary"
-            app:backgroundTint="@null"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
-            android:fontFamily="@font/montserrat"
-            android:text="@string/select_language_english"
-            android:textColor="@color/xura_text_secondary"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:letterSpacing="0.08"
+            android:background="@drawable/bg_card_glass_clickable"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="@string/select_language_english"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_constraintTop_toTopOf="parent"
-            tools:layout_constraintVertical_bias="0.95" />
+            app:layout_constraintStart_toStartOf="parent">
 
-        <!-- RUSSIAN button -->
-        <com.google.android.material.button.MaterialButton
+            <TextView
+                android:id="@+id/english_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/select_language_english"
+                android:textColor="@color/xura_text_primary"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.03"
+                app:layout_constraintBottom_toTopOf="@+id/english_subtitle"
+                app:layout_constraintEnd_toStartOf="@+id/english_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <TextView
+                android:id="@+id/english_subtitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/btn_sub_english"
+                android:textColor="@color/xura_text_tertiary"
+                android:textSize="11sp"
+                android:letterSpacing="0.02"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/english_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/english_title" />
+
+            <ImageView
+                android:id="@+id/english_icon"
+                android:layout_width="36dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/ic_flag_en"
+                android:importantForAccessibility="no"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- RUSSIAN — cyan card -->
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/settings_russian_linc"
             android:layout_width="0dp"
-            android:layout_height="56dp"
+            android:layout_height="80dp"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="12dp"
-            android:background="@drawable/bg_button_primary"
-            app:backgroundTint="@null"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
-            android:fontFamily="@font/montserrat"
-            android:text="@string/select_language_russian"
-            android:textColor="@color/xura_text_on_primary"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:letterSpacing="0.08"
+            android:background="@drawable/bg_card_action_primary"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="@string/select_language_russian"
             app:layout_constraintBottom_toTopOf="@+id/settings_english_linc"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/russian_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/select_language_russian"
+                android:textColor="@color/xura_cyan"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.03"
+                app:layout_constraintBottom_toTopOf="@+id/russian_subtitle"
+                app:layout_constraintEnd_toStartOf="@+id/russian_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <TextView
+                android:id="@+id/russian_subtitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/btn_sub_russian"
+                android:textColor="@color/xura_text_tertiary"
+                android:textSize="11sp"
+                android:letterSpacing="0.02"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/russian_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/russian_title" />
+
+            <ImageView
+                android:id="@+id/russian_icon"
+                android:layout_width="36dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/ic_flag_ru"
+                android:importantForAccessibility="no"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

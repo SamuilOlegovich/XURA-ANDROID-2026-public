@@ -9,68 +9,184 @@
     tools:context=".view.Lost"
     tools:ignore="MissingDefaultResource">
 
+    <!-- XURA Logo -->
+    <include
+        layout="@layout/logo_xura"
+        android:id="@+id/logo_xura"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="80dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- BET LOST headline -->
+    <!-- BET LOST — gradient applied in Java -->
     <TextView
         android:id="@+id/last_text_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:fontFamily="@font/montserrat"
         android:text="@string/bet_lost"
         android:textAlignment="center"
-        android:textColor="@color/xura_text_secondary"
-        android:textSize="40sp"
+        android:textColor="@color/xura_pink"
+        android:textSize="52sp"
         android:textStyle="bold"
         android:letterSpacing="0.02"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/logo_xura" />
 
-    <!-- Lost amount — scrolling marquee -->
+    <!-- Lost amount — glass card -->
     <TextView
         android:id="@+id/last_text_view_two"
         android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="16dp"
-        android:ellipsize="marquee"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/bg_card_glass"
+        android:padding="14dp"
         android:fontFamily="@font/montserrat"
-        android:marqueeRepeatLimit="marquee_forever"
-        android:scrollHorizontally="true"
-        android:singleLine="true"
         android:textAlignment="center"
         android:textColor="@color/xura_error"
-        android:textSize="30sp"
+        android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/last_text_view" />
 
-    <!-- Good luck -->
-    <TextView
-        android:id="@+id/last_text_view_tree"
+    <!-- PLAY AGAIN — cyan card -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/btn_play_again"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="56dp"
-        android:fontFamily="@font/montserrat"
-        android:text="@string/good_luck"
-        android:textAlignment="center"
-        android:textColor="@color/xura_text_tertiary"
-        android:textSize="36sp"
-        android:textStyle="bold"
-        android:letterSpacing="0.02"
+        android:layout_height="80dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/bg_card_action_primary"
+        android:clickable="true"
+        android:focusable="true"
+        android:contentDescription="@string/play_again"
+        app:layout_constraintBottom_toTopOf="@+id/btn_back_to_games"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/play_again_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/play_again"
+            android:textColor="@color/xura_cyan"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.03"
+            app:layout_constraintBottom_toTopOf="@+id/play_again_subtitle"
+            app:layout_constraintEnd_toStartOf="@+id/play_again_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/play_again_subtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/btn_sub_play_again"
+            android:textColor="@color/xura_text_tertiary"
+            android:textSize="11sp"
+            android:letterSpacing="0.02"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/play_again_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/play_again_title" />
+
+        <ImageView
+            android:id="@+id/play_again_icon"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_gamepad"
+            android:importantForAccessibility="no"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/xura_cyan" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- BACK TO GAMES — glass card -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/btn_back_to_games"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/bg_card_glass_clickable"
+        android:clickable="true"
+        android:focusable="true"
+        android:contentDescription="@string/back_to_games"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_constraintTop_toTopOf="parent"
-        tools:layout_constraintVertical_bias="0.9" />
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/back_to_games_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/back_to_games"
+            android:textColor="@color/xura_text_primary"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.03"
+            app:layout_constraintBottom_toTopOf="@+id/back_to_games_subtitle"
+            app:layout_constraintEnd_toStartOf="@+id/back_to_games_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/back_to_games_subtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/btn_sub_back_to_games"
+            android:textColor="@color/xura_text_tertiary"
+            android:textSize="11sp"
+            android:letterSpacing="0.02"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/back_to_games_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/back_to_games_title" />
+
+        <ImageView
+            android:id="@+id/back_to_games_icon"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_scattered_games"
+            android:importantForAccessibility="no"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

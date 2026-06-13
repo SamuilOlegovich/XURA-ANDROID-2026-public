@@ -121,27 +121,70 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <!-- Back to game button — same style as Send -->
-    <com.google.android.material.button.MaterialButton
+    <!-- Back to game — cyan card -->
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/btn_back_to_game"
         android:layout_width="0dp"
-        android:layout_height="56dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         android:layout_marginBottom="32dp"
-        android:background="@drawable/bg_button_primary"
-        app:backgroundTint="@null"
-        android:insetTop="0dp"
-        android:insetBottom="0dp"
-        android:fontFamily="@font/montserrat"
-        android:text="@string/flasher_back_to_game"
-        android:textColor="@color/xura_text_on_primary"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        android:letterSpacing="0.08"
+        android:background="@drawable/bg_card_action_primary"
+        android:clickable="true"
+        android:focusable="true"
+        android:contentDescription="@string/flasher_back_to_game"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/back_to_game_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/flasher_back_to_game"
+            android:textColor="@color/xura_cyan"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.03"
+            app:layout_constraintBottom_toTopOf="@+id/back_to_game_subtitle"
+            app:layout_constraintEnd_toStartOf="@+id/back_to_game_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/back_to_game_subtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/btn_sub_back_to_game"
+            android:textColor="@color/xura_text_tertiary"
+            android:textSize="11sp"
+            android:letterSpacing="0.02"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/back_to_game_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/back_to_game_title" />
+
+        <ImageView
+            android:id="@+id/back_to_game_icon"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_gamepad"
+            android:importantForAccessibility="no"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/xura_cyan" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

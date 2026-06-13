@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.samuilolegovich.AppExecutors;
@@ -28,8 +29,8 @@ public class SelectLanguage extends BaseActivity {
     private SharedPreferences.Editor editor;
     private SharedPreferences preferences;
 
-    private TextView settingsRussianLinc;
-    private TextView settingsEnglishLinc;
+    private View settingsRussianLinc;
+    private View settingsEnglishLinc;
     private TextView settingsTextView;
 
     private String languageNow;
@@ -49,15 +50,13 @@ public class SelectLanguage extends BaseActivity {
 
 
     private void setButtons() {
-        settingsRussianLinc = (TextView) findViewById(R.id.settings_russian_linc);
-        settingsEnglishLinc = (TextView) findViewById(R.id.settings_english_linc);
+        settingsRussianLinc = findViewById(R.id.settings_russian_linc);
+        settingsEnglishLinc = findViewById(R.id.settings_english_linc);
         settingsTextView = (TextView) findViewById(R.id.settings_text_view);
     }
 
 
     private void setLanguage() {
-        settingsRussianLinc.setText(R.string.select_language_russian);
-        settingsEnglishLinc.setText(R.string.select_language_english);
         settingsTextView.setText(R.string.select_language_text);
     }
 

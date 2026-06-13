@@ -183,28 +183,70 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <!-- SEND button -->
-        <com.google.android.material.button.MaterialButton
+        <!-- SEND — cyan card -->
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/send_linc"
             android:layout_width="0dp"
-            android:layout_height="56dp"
+            android:layout_height="80dp"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="32dp"
-            android:background="@drawable/bg_button_primary"
-            app:backgroundTint="@null"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
-            android:fontFamily="@font/montserrat"
-            android:text="@string/send"
-            android:textColor="@color/xura_text_on_primary"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:letterSpacing="0.08"
+            android:background="@drawable/bg_card_action_primary"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="@string/send"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_constraintTop_toTopOf="parent"
-            tools:layout_constraintVertical_bias="0.9" />
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/send_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/send"
+                android:textColor="@color/xura_cyan"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.03"
+                app:layout_constraintBottom_toTopOf="@+id/send_subtitle"
+                app:layout_constraintEnd_toStartOf="@+id/send_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <TextView
+                android:id="@+id/send_subtitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/btn_sub_send"
+                android:textColor="@color/xura_text_tertiary"
+                android:textSize="11sp"
+                android:letterSpacing="0.02"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/send_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/send_title" />
+
+            <ImageView
+                android:id="@+id/send_icon"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/ic_send_arrow"
+                android:importantForAccessibility="no"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/xura_cyan" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

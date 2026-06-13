@@ -7,6 +7,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -37,8 +38,8 @@ public class SetAnAppPassword extends BaseActivity {
     private TextInputLayout tilPasswordTwo;
 
     private TextView settingsSetPasswordAppTextView;
-    private TextView confirm;
-    private TextView skip;
+    private View confirm;
+    private View skip;
 
 
 
@@ -62,16 +63,14 @@ public class SetAnAppPassword extends BaseActivity {
         settingsSetPasswordAppTextView = (TextView) findViewById(R.id.settings_set_password_app_text_view);
         tilPasswordTwo = findViewById(R.id.til_settings_set_password_app_field_tow);
         passwordTwo = (EditText) findViewById(R.id.settings_set_password_app_field_tow);
-        confirm = (TextView) findViewById(R.id.settings_set_password_app_confirm_link);
+        confirm = findViewById(R.id.settings_set_password_app_confirm_link);
         passwordOne = (EditText) findViewById(R.id.settings_set_password_app_field);
-        skip = (TextView) findViewById(R.id.settings_set_password_app_skip_linc);
+        skip = findViewById(R.id.settings_set_password_app_skip_linc);
     }
 
 
     private void setLanguage() {
         settingsSetPasswordAppTextView.setText(R.string.set_password_to_enter_application);
-        confirm.setText(R.string.set_password);
-        skip.setText(R.string.skip);
     }
 
 

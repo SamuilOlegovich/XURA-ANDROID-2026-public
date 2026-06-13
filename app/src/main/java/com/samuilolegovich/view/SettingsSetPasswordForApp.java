@@ -6,6 +6,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.material.textfield.TextInputLayout;
@@ -29,7 +30,7 @@ public class SettingsSetPasswordForApp extends BaseActivity {
     private EditText passwordTwo;
     private TextInputLayout tilPasswordTwo;
     private TextView textView;
-    private TextView confirm;
+    private View confirm;
 
 
 
@@ -55,13 +56,12 @@ public class SettingsSetPasswordForApp extends BaseActivity {
         tilPasswordTwo = findViewById(R.id.til_edit_text_passport_tow);
         passwordTwo = (EditText) findViewById(R.id.edit_text_passport_tow);
         passwordOne = (EditText) findViewById(R.id.password_field);
-        confirm = (TextView) findViewById(R.id.confirm_link);
+        confirm = findViewById(R.id.confirm_link);
     }
 
 
     private void setLanguage() {
         textView.setText(R.string.set_password_to_enter_application);
-        confirm.setText(R.string.set_password);
     }
 
 

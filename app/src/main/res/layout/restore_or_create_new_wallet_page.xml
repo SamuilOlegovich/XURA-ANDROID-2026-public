@@ -23,50 +23,133 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- RESTORE WALLET — secondary action -->
-    <com.google.android.material.button.MaterialButton
+    <!-- RESTORE WALLET — pink card -->
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/restore_wallet_linc"
         android:layout_width="0dp"
-        android:layout_height="56dp"
+        android:layout_height="80dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="40dp"
-        android:background="@drawable/bg_button_secondary"
-        app:backgroundTint="@null"
-        android:insetTop="0dp"
-        android:insetBottom="0dp"
-        android:fontFamily="@font/montserrat"
-        android:text="@string/restore_wallet"
-        android:textColor="@color/xura_text_secondary"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:letterSpacing="0.08"
+        android:background="@drawable/bg_card_action_primary"
+        android:clickable="true"
+        android:focusable="true"
+        android:contentDescription="@string/restore_wallet"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_constraintTop_toTopOf="parent"
-        tools:layout_constraintVertical_bias="0.95" />
+        app:layout_constraintStart_toStartOf="parent">
 
-    <!-- CREATE NEW WALLET — primary action -->
-    <com.google.android.material.button.MaterialButton
+        <TextView
+            android:id="@+id/restore_wallet_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/restore_wallet"
+            android:textColor="@color/xura_cyan"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.03"
+            app:layout_constraintBottom_toTopOf="@+id/restore_wallet_subtitle"
+            app:layout_constraintEnd_toStartOf="@+id/restore_wallet_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/restore_wallet_subtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/btn_sub_restore_wallet"
+            android:textColor="@color/xura_text_tertiary"
+            android:textSize="11sp"
+            android:letterSpacing="0.02"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/restore_wallet_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/restore_wallet_title" />
+
+        <ImageView
+            android:id="@+id/restore_wallet_icon"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_clock_restore"
+            android:importantForAccessibility="no"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- CREATE NEW WALLET — gold card -->
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/create_new_wallet_linc"
         android:layout_width="0dp"
-        android:layout_height="56dp"
+        android:layout_height="80dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="12dp"
-        android:background="@drawable/bg_button_primary"
-        app:backgroundTint="@null"
-        android:insetTop="0dp"
-        android:insetBottom="0dp"
-        android:fontFamily="@font/montserrat"
-        android:text="@string/create_new_wallet"
-        android:textColor="@color/xura_text_on_primary"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:letterSpacing="0.08"
+        android:background="@drawable/bg_card_gold"
+        android:clickable="true"
+        android:focusable="true"
+        android:contentDescription="@string/create_new_wallet"
         app:layout_constraintBottom_toTopOf="@+id/restore_wallet_linc"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/create_new_wallet_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/create_new_wallet"
+            android:textColor="@color/xura_gold"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.03"
+            app:layout_constraintBottom_toTopOf="@+id/create_new_wallet_subtitle"
+            app:layout_constraintEnd_toStartOf="@+id/create_new_wallet_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/create_new_wallet_subtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/btn_sub_create_wallet"
+            android:textColor="@color/xura_text_tertiary"
+            android:textSize="11sp"
+            android:letterSpacing="0.02"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/create_new_wallet_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/create_new_wallet_title" />
+
+        <ImageView
+            android:id="@+id/create_new_wallet_icon"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_nav_wallet"
+            app:tint="@color/xura_gold"
+            android:importantForAccessibility="no"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

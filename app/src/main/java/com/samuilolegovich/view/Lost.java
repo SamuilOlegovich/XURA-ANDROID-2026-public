@@ -1,18 +1,17 @@
 package com.samuilolegovich.view;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.LinearGradient;
 import android.graphics.Shader;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.samuilolegovich.BaseActivity;
-
-import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 import dagger.hilt.android.AndroidEntryPoint;
-
 
 
 
@@ -22,11 +21,11 @@ public class Lost extends BaseActivity {
     public static String MASSAGE = "";
 
     private MediaPlayer lostMediaPlayer;
-    private TextView lastTextViewTree;
-    private TextView lastTextViewTow;
-    private TextView lastTextView;
 
-    private String TICKER;
+    private TextView lastTextViewTwo;
+    private TextView lastTextView;
+    private View btnPlayAgain;
+    private View btnBackToGames;
 
 
 
@@ -42,9 +41,10 @@ public class Lost extends BaseActivity {
 
 
     private void setButtons() {
-        lastTextViewTree = (TextView) findViewById(R.id.last_text_view_tree);
-        lastTextViewTow = (TextView) findViewById(R.id.last_text_view_two);
-        lastTextView = (TextView) findViewById(R.id.last_text_view);
+        lastTextViewTwo = (TextView) findViewById(R.id.last_text_view_two);
+        lastTextView    = (TextView) findViewById(R.id.last_text_view);
+        btnPlayAgain    = findViewById(R.id.btn_play_again);
+        btnBackToGames  = findViewById(R.id.btn_back_to_games);
 
         lostMediaPlayer = MediaPlayer.create(this, R.raw.lost);
         lostMediaPlayer.start();
@@ -61,37 +61,33 @@ public class Lost extends BaseActivity {
             lastTextView.invalidate();
         });
 
-        // GOOD LUCK — cyan → purple → gold
-        lastTextViewTree.post(() -> {
-            LinearGradient gradient = new LinearGradient(
-                0f, 0f, lastTextViewTree.getWidth(), 0f,
-                new int[]{0xFF00D4FF, 0xFF4040F0, 0xFF9020D0, 0xFFD02090, 0xFFFFB000},
-                new float[]{0f, 0.25f, 0.5f, 0.75f, 1f},
-                Shader.TileMode.CLAMP
-            );
-            lastTextViewTree.getPaint().setShader(gradient);
-            lastTextViewTree.invalidate();
+        btnPlayAgain.setOnClickListener(v -> {
+            lostMediaPlayer.stop();
+            finish();
+        });
+
+        btnBackToGames.setOnClickListener(v -> {
+            lostMediaPlayer.stop();
+            Intent intent = new Intent(SelectGame.SELECT_GAME_CLASS);
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+            overridePendingTransition(0, 0);
+            finish();
         });
     }
 
 
     private void setLanguage() {
-        lastTextViewTree.setText(R.string.good_luck);
         lastTextView.setText(R.string.bet_lost);
-
-        TICKER = getString(R.string.last_text_two);
     }
 
 
-    // настройка для бегущей строки
     @SuppressLint("SetTextI18n")
     private void goText() {
-        lastTextViewTow.setText(TICKER);
-        lastTextViewTow.setSelected(true);
+        lastTextViewTwo.setText(MASSAGE);
     }
 
 
-    // при нажатии на кнопку назад будем возвращаться назад
     @Override
     public void onBackPressed() {
         lostMediaPlayer.stop();

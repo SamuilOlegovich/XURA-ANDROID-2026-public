@@ -24,7 +24,7 @@
     <string name="scan_qr_code"><u>СКАНИРОВАТЬ QR КОД</u></string>
     <string name="select_language_russian"><u>РУССКИЙ</u></string>
     <string name="rules_of_the_game"><u>ПРАВИЛА ИГРЫ</u></string>
-    <string name="place_bet_linc"><u>СДЕЛАТЬ СТАВКУ</u></string>
+    <string name="place_bet_linc">УГАДАТЬ!</string>
     <string name="settings_text_linc"><u>НАСТРОЙКИ</u></string>
     <string name="settings_language"><u>АНГЛИЙСКИЙ</u></string>
     <string name="select_game_mode"><u>РЕЖИМ ИГРЫ</u></string>
@@ -42,6 +42,8 @@
     <string name="black"><u>ЧЕРНЫЙ</u></string>
     <string name="red"><u>КРАСНЫЙ</u></string>
     <string name="next"><u>ДАЛЕЕ</u></string>
+    <string name="verify"><u>ПРОВЕРИТЬ</u></string>
+    <string name="btn_sub_verify">Проверить seed-фразу</string>
 
 
 

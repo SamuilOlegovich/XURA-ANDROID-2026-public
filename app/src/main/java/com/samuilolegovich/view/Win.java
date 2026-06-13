@@ -8,7 +8,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import com.google.android.material.button.MaterialButton;
+import android.view.View;
 import com.samuilolegovich.BaseActivity;
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
@@ -27,8 +27,8 @@ public class Win extends BaseActivity {
     private TextView winPageTextViewTree;
     private TextView winPageTextViewTwo;
     private TextView winPageTextView;
-    private MaterialButton btnPlayAgain;
-    private MaterialButton btnBackToGames;
+    private View btnPlayAgain;
+    private View btnBackToGames;
 
 
 

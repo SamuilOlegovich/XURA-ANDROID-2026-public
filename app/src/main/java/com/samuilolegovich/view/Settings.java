@@ -16,6 +16,7 @@ import androidx.appcompat.app.AlertDialog;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
+import androidx.core.content.ContextCompat;
 import com.samuilolegovich.BaseActivity;
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
@@ -38,16 +39,19 @@ public class Settings extends BaseActivity {
 
     @Inject WalletRepository repository;
 
-    private TextView settingsSelectEnglishLinc;
-    private TextView settingsSetPasswordLinc;
-    private TextView settingsBiometricLinc;
+    private View settingsSelectEnglishLinc;
+    private View settingsSetPasswordLinc;
+    private View settingsBiometricLinc;
+    private TextView biometricTitleText;
+    private android.widget.ImageView setPasswordIcon;
     private TextView settingsTextView;
     private MaterialCardView cardTestBalance;
     private TextView tvTestBalance;
     private MaterialButton btnResetTestBalance;
-    private MaterialButton btnGameMode;
-    private MaterialButton becomeReferralLinc;
-    private MaterialButton infoLinc;
+    private View btnGameMode;
+    private TextView gameModeTitle;
+    private View becomeReferralLinc;
+    private View infoLinc;
     private View root;
 
 
@@ -67,14 +71,17 @@ public class Settings extends BaseActivity {
 
 
     private void setButtons() {
-        settingsSelectEnglishLinc = (TextView) findViewById(R.id.settings_select_english_linc);
-        settingsSetPasswordLinc = (TextView) findViewById(R.id.settings_set_password_linc);
-        settingsBiometricLinc = (TextView) findViewById(R.id.settings_biometric_linc);
+        settingsSelectEnglishLinc = findViewById(R.id.settings_select_english_linc);
+        settingsSetPasswordLinc = findViewById(R.id.settings_set_password_linc);
+        settingsBiometricLinc = findViewById(R.id.settings_biometric_linc);
+        biometricTitleText = findViewById(R.id.biometric_title);
+        setPasswordIcon = findViewById(R.id.set_password_icon);
         settingsTextView = (TextView) findViewById(R.id.settings_text_view);
         cardTestBalance = findViewById(R.id.card_test_balance);
         tvTestBalance = findViewById(R.id.tv_test_balance);
         btnResetTestBalance = findViewById(R.id.btn_reset_test_balance);
         btnGameMode = findViewById(R.id.settings_game_mode_linc);
+        gameModeTitle = findViewById(R.id.game_mode_title);
         becomeReferralLinc = findViewById(R.id.become_referral_linc);
         infoLinc = findViewById(R.id.info_settings_linc);
     }
@@ -82,19 +89,25 @@ public class Settings extends BaseActivity {
 
     @SuppressLint("SetTextI18n")
     private void setLanguage() {
-        settingsSelectEnglishLinc.setText(R.string.settings_select_language);
         settingsTextView.setText(R.string.settings_text);
-        settingsSetPasswordLinc.setText(R.string.settings_set_password);
         updateBiometricButton();
-
         updateGameModeButton();
         updateTestBalanceCard();
+        updatePasswordIcon();
     }
 
+    @SuppressLint("SetTextI18n")
     private void updateGameModeButton() {
         boolean isReal = Boolean.TRUE.equals(MainActivity.IS_REAL_GAME_MODE);
         String state = isReal ? "  ●  LIVE" : "  ○  TRIAL";
-        btnGameMode.setText(getString(R.string.settings_game_mode) + state);
+        gameModeTitle.setText(getString(R.string.settings_game_mode) + state);
+        if (isReal) {
+            btnGameMode.setBackgroundResource(R.drawable.bg_card_send);
+            gameModeTitle.setTextColor(ContextCompat.getColor(this, R.color.xura_pink));
+        } else {
+            btnGameMode.setBackgroundResource(R.drawable.bg_card_history);
+            gameModeTitle.setTextColor(ContextCompat.getColor(this, R.color.xura_gold));
+        }
     }
 
     private void updateTestBalanceCard() {
@@ -115,7 +128,20 @@ public class Settings extends BaseActivity {
 
     private void updateBiometricButton() {
         String state = isBiometricEnabled() ? "  ●  ON" : "  ○  OFF";
-        settingsBiometricLinc.setText(getString(R.string.settings_biometric) + state);
+        biometricTitleText.setText(getString(R.string.settings_biometric) + state);
+    }
+
+    private void updatePasswordIcon() {
+        boolean hasPassword = isPasswordSet();
+        setPasswordIcon.setImageResource(hasPassword ? R.drawable.ic_lock : R.drawable.ic_lock_open);
+    }
+
+    private boolean isPasswordSet() {
+        String stored = PrefsHelper.get(this).getString(
+                StringEnum.APP_PREFERENCES_PASSWORD.getValue(), "");
+        return stored != null
+                && !stored.isEmpty()
+                && !stored.equals(StringEnum.APP_PREFERENCES_PASSWORD_NOT_INSTALLED.getValue());
     }
 
     private boolean isBiometricEnabled() {

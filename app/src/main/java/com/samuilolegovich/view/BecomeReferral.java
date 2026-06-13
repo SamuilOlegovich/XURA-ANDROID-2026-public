@@ -38,11 +38,11 @@ public class BecomeReferral extends BaseActivity {
 
     private View root;
 
-    private TextView restoreReferral;
-    private TextView becomeReferral;
-    private TextView infoReferral;
+    private View restoreReferral;
+    private View becomeReferral;
+    private View infoReferral;
     private TextView textReferral;
-    private TextView setReferral;
+    private View setReferral;
 
 
 
@@ -59,11 +59,11 @@ public class BecomeReferral extends BaseActivity {
 
 
     private void setButtons() {
-        restoreReferral = (TextView) findViewById(R.id.restore_referral);
-        infoReferral    = (TextView) findViewById(R.id.referral_info_linc);
+        restoreReferral = findViewById(R.id.restore_referral);
+        infoReferral    = findViewById(R.id.referral_info_linc);
         textReferral    = (TextView) findViewById(R.id.text_referral_view);
-        becomeReferral  = (TextView) findViewById(R.id.become_referral);
-        setReferral     = (TextView) findViewById(R.id.set_referral_linc);
+        becomeReferral  = findViewById(R.id.become_referral);
+        setReferral     = findViewById(R.id.set_referral_linc);
     }
 
 
@@ -74,10 +74,6 @@ public class BecomeReferral extends BaseActivity {
         WRONG_DESTINATION_ADDRESS          = getString(R.string.wrong_destination_address);
         GET_BECOME_REFERRAL                = getString(R.string.get_becom_referral_enum);
         textReferral.setText(R.string.become_referral_and_start_earning);
-        restoreReferral.setText(R.string.restore_referral);
-        becomeReferral.setText(R.string.become_referral);
-        setReferral.setText(R.string.set_referral);
-        infoReferral.setText(R.string.info);
     }
 
 

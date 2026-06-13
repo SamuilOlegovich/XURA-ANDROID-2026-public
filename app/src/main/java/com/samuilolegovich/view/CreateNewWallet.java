@@ -1,7 +1,5 @@
 package com.samuilolegovich.view;
 
-import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -34,18 +32,12 @@ public class CreateNewWallet extends BaseActivity {
     @Inject WalletRepository repository;
     public static final String CREATE_NEW_WALLET_CLASS = ".CreateNewWallet";
 
-    private String ADDRESS_COPIED_TO_PHONE_BUFFER;
-
-    private ClipboardManager clipboardManager;
-    private ClipData clipData;
-
     private volatile boolean isNewWallet = false;
     private String seedString;
 
     private TextView createNewWalletText;
-    private TextView copy;
     private TextView seed;
-    private TextView next;
+    private View next;
 
 
 
@@ -65,23 +57,17 @@ public class CreateNewWallet extends BaseActivity {
     private void setButtons() {
         createNewWalletText = (TextView) findViewById(R.id.create_new_wallet_text_view);
         seed = (TextView) findViewById(R.id.seed_field);
-        next = (TextView) findViewById(R.id.next_link);
-        copy = (TextView) findViewById(R.id.copy_linc);
+        next = findViewById(R.id.next_link);
     }
 
 
     private void setLanguage() {
-        ADDRESS_COPIED_TO_PHONE_BUFFER = getString(R.string.addres_copied_to_phone_buffer);
         createNewWalletText.setText(R.string.lead_the_seed);
         seed.setText(R.string.wrong_restart_please);
-        next.setText(R.string.next);
-        copy.setText(R.string.copy);
     }
 
 
     private void listeners() {
-        View root = findViewById(android.R.id.content);
-
         next.setOnClickListener(v -> {
             pulse(v);
             if (isNewWallet) {
@@ -91,15 +77,6 @@ public class CreateNewWallet extends BaseActivity {
             } else {
                 createNewWalletAsync();
             }
-        });
-
-        clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-
-        copy.setOnClickListener(v -> {
-            pulse(v);
-            clipData = ClipData.newPlainText("text", seedString);
-            clipboardManager.setPrimaryClip(clipData);
-            showSnackbar(root, ADDRESS_COPIED_TO_PHONE_BUFFER, SnackbarType.INFO);
         });
     }
 
