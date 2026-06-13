@@ -2,14 +2,12 @@ package com.samuilolegovich.view;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.view.WindowManager;
-import android.view.Gravity;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.samuilolegovich.AppExecutors;
 import com.samuilolegovich.BaseActivity;
@@ -82,6 +80,8 @@ public class CreateNewWallet extends BaseActivity {
 
 
     private void listeners() {
+        View root = findViewById(android.R.id.content);
+
         next.setOnClickListener(v -> {
             pulse(v);
             if (isNewWallet) {
@@ -99,7 +99,7 @@ public class CreateNewWallet extends BaseActivity {
             pulse(v);
             clipData = ClipData.newPlainText("text", seedString);
             clipboardManager.setPrimaryClip(clipData);
-            makeToast(ADDRESS_COPIED_TO_PHONE_BUFFER);
+            showSnackbar(root, ADDRESS_COPIED_TO_PHONE_BUFFER, SnackbarType.INFO);
         });
     }
 
@@ -127,13 +127,6 @@ public class CreateNewWallet extends BaseActivity {
 
     private void goToAnotherPage(String namePage) {
         startActivity(new Intent(namePage));
-    }
-
-
-    private void makeToast(String massage) {
-        Toast toast = Toast.makeText(getApplicationContext(), massage, Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.TOP, 0, 110);
-        toast.show();
     }
 
 

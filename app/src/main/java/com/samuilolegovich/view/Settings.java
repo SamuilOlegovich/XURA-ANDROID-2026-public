@@ -9,11 +9,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.TextView;
-import android.widget.Toast;
+import android.view.View;
 
 import androidx.appcompat.app.AlertDialog;
-
-import android.view.View;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
@@ -48,6 +46,7 @@ public class Settings extends BaseActivity {
     private MaterialButton btnResetTestBalance;
     private MaterialButton btnGameMode;
     private MaterialButton becomeReferralLinc;
+    private View root;
 
 
 
@@ -56,6 +55,7 @@ public class Settings extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_page);
         SETTINGS_ACTIVITY = this;
+        root = findViewById(android.R.id.content);
         setButtons();
         setLanguage();
         listeners();
@@ -189,8 +189,7 @@ public class Settings extends BaseActivity {
                     .setPositiveButton(getString(R.string.settings_reset_test_balance), (d, w) -> {
                         repository.resetTestBalance();
                         updateTestBalanceDisplay();
-                        Toast.makeText(this, R.string.settings_reset_test_balance_done,
-                                Toast.LENGTH_SHORT).show();
+                        showSnackbar(root, getString(R.string.settings_reset_test_balance_done), SnackbarType.INFO);
                     })
                     .setNegativeButton("CANCEL", null)
                     .show();
@@ -199,8 +198,7 @@ public class Settings extends BaseActivity {
 
     private void handleBiometricToggle() {
         if (!BiometricHelper.isAvailable(this)) {
-            Toast.makeText(this,
-                    "Biometrics not set up on this device", Toast.LENGTH_SHORT).show();
+            showSnackbar(root, getString(R.string.biometrics_not_set_up), SnackbarType.ERROR);
             return;
         }
 

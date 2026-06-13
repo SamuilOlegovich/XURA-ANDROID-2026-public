@@ -1,7 +1,6 @@
 package com.samuilolegovich.view;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
@@ -9,10 +8,10 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputLayout;
@@ -84,6 +83,7 @@ public class GuessTheNumberGame extends BaseActivity {
         setContentView(R.layout.guess_the_number_game_page);
 
         viewModel = new ViewModelProvider(this).get(GuessNumberViewModel.class);
+        View root = findViewById(android.R.id.content);
 
         setButtons();
         setLanguage();
@@ -117,7 +117,7 @@ public class GuessTheNumberGame extends BaseActivity {
             bet.setText("");
             setBetParam(preparedAmount, String.valueOf(selectedNumber));
             goToAnotherPage(FLASHER_CLASS);
-            showToast(BET_IS_MADE_EXPECT_THE_RESULT);
+            showSnackbar(root, BET_IS_MADE_EXPECT_THE_RESULT, SnackbarType.INFO);
         });
 
         viewModel.loadBalance();
@@ -255,15 +255,6 @@ public class GuessTheNumberGame extends BaseActivity {
         Flasher.COLOR_BET = Lotto.getRandomColorForNumber(tag);
         Flasher.TEST_SAND_AMOUNT = amount;
         Flasher.NUMBER_BET = tag;
-    }
-
-
-    private void showToast(String message) {
-        runOnUiThread(() -> {
-            Toast toast = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG);
-            toast.setGravity(Gravity.TOP, 0, 110);
-            toast.show();
-        });
     }
 
 

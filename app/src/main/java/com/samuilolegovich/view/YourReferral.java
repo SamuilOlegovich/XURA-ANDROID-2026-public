@@ -3,13 +3,11 @@ package com.samuilolegovich.view;
 import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.ClipboardManager;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.view.Gravity;
+import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.samuilolegovich.BaseActivity;
 
@@ -23,7 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 
 @AndroidEntryPoint
-public class YourReferral  extends BaseActivity {
+public class YourReferral extends BaseActivity {
     public static final String YOUR_REFERRAL_CLASS = ".YourReferral";
     public static String MASSAGE = "";
     public static String CODE = "";
@@ -64,7 +62,6 @@ public class YourReferral  extends BaseActivity {
 
         erMediaPlayer = MediaPlayer.create(this, R.raw.error);
         erMediaPlayer.start();
-
     }
 
 
@@ -76,13 +73,14 @@ public class YourReferral  extends BaseActivity {
 
 
     private void listeners() {
+        View root = findViewById(android.R.id.content);
         clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
 
         copy.setOnClickListener(v -> {
             pulse(v);
             clipData = ClipData.newPlainText("text", CODE);
             clipboardManager.setPrimaryClip(clipData);
-            makeToast(CODE_COPIED_TO_PHONE_BUFFER);
+            showSnackbar(root, CODE_COPIED_TO_PHONE_BUFFER, SnackbarType.INFO);
         });
     }
 
@@ -92,13 +90,6 @@ public class YourReferral  extends BaseActivity {
         editor = preferences.edit();
         editor.putString(StringEnum.APP_PREFERENCES_REFERRAL.getValue(), referral);
         editor.apply();
-    }
-
-
-    private void makeToast(String massage) {
-        Toast toast = Toast.makeText(getApplicationContext(), massage, Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.TOP, 0,110);   // import android.view.Gravity;
-        toast.show();
     }
 
 

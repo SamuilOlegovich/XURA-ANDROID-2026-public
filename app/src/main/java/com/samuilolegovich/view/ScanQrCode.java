@@ -1,10 +1,9 @@
 package com.samuilolegovich.view;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.widget.Toast;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import com.samuilolegovich.BaseActivity;
@@ -42,6 +41,7 @@ public class ScanQrCode extends BaseActivity {
 
     private ImageCapture imageCapture;
     private PreviewView mPreviewView;
+    private View root;
 
     public boolean isProcess;
 
@@ -51,6 +51,7 @@ public class ScanQrCode extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.scan_code_page);
+        root = findViewById(android.R.id.content);
         setButtons();
         performCheck();
     }
@@ -76,8 +77,7 @@ public class ScanQrCode extends BaseActivity {
     // в нашем случаи надо сделать чтобы через это время он установил адрес сосканированного
     // поля в нужное нам поле и закрыл страницу
     public void qrCodeHandler(String qrCodeText) {
-        Context context = this;
-        runOnUiThread(() -> Toast.makeText(context, qrCodeText, Toast.LENGTH_LONG).show());
+        runOnUiThread(() -> showSnackbar(root, qrCodeText, SnackbarType.INFO));
         SendPayment.ADDRESS = qrCodeText;
         onBackPressed();
 

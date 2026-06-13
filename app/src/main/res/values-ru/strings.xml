@@ -74,6 +74,10 @@
     <string name="bet_cannot_be_less_than">СТАВКА НЕ МОЖЕТ БЫТЬ МЕНЬШЕ - </string>
     <string name="bet_cannot_be_more_than">СТАВКА НЕ МОЖЕТ БЫТЬ БОЛЕЕ - </string>
     <string name="wrong_destination_address">НЕВЕРНЫЙ АДРЕС НАЗНАЧЕНИЯ</string>
+    <string name="payment_sent">Платёж отправлен</string>
+    <string name="biometrics_not_set_up">Биометрия не настроена на этом устройстве</string>
+    <string name="flasher_back_to_game">ВЕРНУТЬСЯ В ИГРУ</string>
+    <string name="flasher_return_in">Возврат через %d…</string>
     <string name="payment_amount_is_incorrect">НЕВЕРНАЯ СУММА ОПЛАТЫ</string>
     <string name="and_double_the_bet">И ПОЛУЧИТЕ В 2 РАЗА БОЛЬШЕ</string>
     <string name="enter_number_1_36">Введите число от 1 до 36</string>

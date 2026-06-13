@@ -1,13 +1,12 @@
 package com.samuilolegovich.view;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.textfield.TextInputLayout;
@@ -44,7 +43,9 @@ public class SendPayment extends BaseActivity {
     private EditText address;
     private EditText amount;
     private TextView send;
-    private TextInputLayout scan;
+    private TextInputLayout tilAddress;
+    private TextInputLayout tilAmount;
+    private TextInputLayout tilTag;
     private CircularProgressIndicator sendProgress;
     private EditText tag;
 
@@ -55,6 +56,7 @@ public class SendPayment extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.send_payment_page);
 
+        View root = findViewById(android.R.id.content);
         viewModel = new ViewModelProvider(this).get(SendPaymentViewModel.class);
 
         setButtons();
@@ -68,20 +70,20 @@ public class SendPayment extends BaseActivity {
             if (error == null) return;
             setSendingState(false);
             switch (error) {
-                case WRONG_ADDRESS:    showToast(WRONG_DESTINATION_ADDRESS); break;
-                case INVALID_AMOUNT:   showToast(PAYMENT_AMOUNT_IS_INCORRECT); break;
-                case AMOUNT_IS_ZERO:   showToast(IT_IS_NOT_POSSIBLE_TO_SEND_NULL); break;
-                case INSUFFICIENT_BALANCE: showToast(YOUR_ACCOUNT_IS_NOT_ENOUGH_TO_SEND); break;
+                case WRONG_ADDRESS:        tilAddress.setError(WRONG_DESTINATION_ADDRESS); break;
+                case INVALID_AMOUNT:       tilAmount.setError(PAYMENT_AMOUNT_IS_INCORRECT); break;
+                case AMOUNT_IS_ZERO:       tilAmount.setError(IT_IS_NOT_POSSIBLE_TO_SEND_NULL); break;
+                case INSUFFICIENT_BALANCE: showSnackbar(root, YOUR_ACCOUNT_IS_NOT_ENOUGH_TO_SEND, SnackbarType.ERROR); break;
                 case TAG_TOO_LONG:
-                case TAG_TOO_LARGE:    showToast(TAG_KNOWLEDGE_CANNOT_BE_MORE); break;
-                case PAYMENT_FAILED:   showToast(WRONG_DESTINATION_ADDRESS); break;
+                case TAG_TOO_LARGE:        tilTag.setError(TAG_KNOWLEDGE_CANNOT_BE_MORE); break;
+                case PAYMENT_FAILED:       showSnackbar(root, WRONG_DESTINATION_ADDRESS, SnackbarType.ERROR); break;
             }
         });
 
         viewModel.getPaymentSuccess().observe(this, success -> {
             if (Boolean.TRUE.equals(success)) {
                 setSendingState(false);
-                showToast("PAYMENT SENT");
+                showSnackbar(root, getString(R.string.payment_sent), SnackbarType.SUCCESS);
                 address.setText("");
                 amount.setText("");
                 tag.setText("");
@@ -99,7 +101,9 @@ public class SendPayment extends BaseActivity {
         amount = findViewById(R.id.amount_field);
         address = findViewById(R.id.from_field);
         balance = findViewById(R.id.balance);
-        scan = findViewById(R.id.scan_linc);
+        tilAddress = findViewById(R.id.scan_linc);
+        tilAmount = findViewById(R.id.til_amount_field);
+        tilTag = findViewById(R.id.til_tag_field);
         send = findViewById(R.id.send_linc);
         sendProgress = findViewById(R.id.send_progress);
         tag = findViewById(R.id.tag_field);
@@ -129,8 +133,12 @@ public class SendPayment extends BaseActivity {
             );
         });
 
-        scan.setEndIconOnClickListener(v ->
+        tilAddress.setEndIconOnClickListener(v ->
                 startActivity(new Intent(ScanQrCode.SCAN_QR_CODE_CLASS)));
+
+        address.addTextChangedListener(clearErrorWatcher(tilAddress));
+        amount.addTextChangedListener(clearErrorWatcher(tilAmount));
+        tag.addTextChangedListener(clearErrorWatcher(tilTag));
     }
 
 
@@ -142,12 +150,12 @@ public class SendPayment extends BaseActivity {
         });
     }
 
-    private void showToast(String message) {
-        runOnUiThread(() -> {
-            Toast toast = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG);
-            toast.setGravity(Gravity.TOP, 0, 110);
-            toast.show();
-        });
+    private TextWatcher clearErrorWatcher(TextInputLayout til) {
+        return new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) { til.setError(null); }
+            @Override public void afterTextChanged(Editable s) {}
+        };
     }
 
 

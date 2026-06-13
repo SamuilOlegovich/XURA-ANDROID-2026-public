@@ -2,12 +2,13 @@ package com.samuilolegovich.view;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.WindowManager;
-import android.view.Gravity;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.samuilolegovich.BaseActivity;
 
 import com.samuilolegovich.R;
@@ -26,6 +27,7 @@ public class SettingsSetPasswordForApp extends BaseActivity {
 
     private EditText passwordOne;
     private EditText passwordTwo;
+    private TextInputLayout tilPasswordTwo;
     private TextView textView;
     private TextView confirm;
 
@@ -50,6 +52,7 @@ public class SettingsSetPasswordForApp extends BaseActivity {
 
     private void setButtons() {
         textView = (TextView) findViewById(R.id.settings_set_password_app_text_view);
+        tilPasswordTwo = findViewById(R.id.til_edit_text_passport_tow);
         passwordTwo = (EditText) findViewById(R.id.edit_text_passport_tow);
         passwordOne = (EditText) findViewById(R.id.password_field);
         confirm = (TextView) findViewById(R.id.confirm_link);
@@ -73,17 +76,15 @@ public class SettingsSetPasswordForApp extends BaseActivity {
             } else {
                 passwordOne.setText("");
                 passwordTwo.setText("");
-                makeToast(StringEnum.PASSWORD_DOES_NOT_MATCH.getValue());
+                tilPasswordTwo.setError(StringEnum.PASSWORD_DOES_NOT_MATCH.getValue());
             }
         });
-    }
 
-
-    private void makeToast(String massage) {
-        // import android.view.Gravity
-        Toast toast = Toast.makeText(getApplicationContext(), massage, Toast.LENGTH_LONG);
-        toast.setGravity(Gravity.TOP, 0,110);
-        toast.show();
+        passwordTwo.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) { tilPasswordTwo.setError(null); }
+            @Override public void afterTextChanged(Editable s) {}
+        });
     }
 
 

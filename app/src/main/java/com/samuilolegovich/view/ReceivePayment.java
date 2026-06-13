@@ -3,12 +3,10 @@ package com.samuilolegovich.view;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.view.Gravity;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.samuilolegovich.BaseActivity;
 import com.samuilolegovich.R;
@@ -89,13 +87,14 @@ public class ReceivePayment extends BaseActivity {
 
 
     private void listeners() {
+        View root = findViewById(android.R.id.content);
         clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
 
         copy.setOnClickListener(v -> {
             pulse(v);
             clipData = ClipData.newPlainText("text", classicAddress);
             clipboardManager.setPrimaryClip(clipData);
-            makeToast(ADDRESS_COPIED_TO_PHONE_BUFFER);
+            showSnackbar(root, ADDRESS_COPIED_TO_PHONE_BUFFER, SnackbarType.INFO);
         });
     }
 
@@ -150,13 +149,6 @@ public class ReceivePayment extends BaseActivity {
         int g = (int)(((c1 >> 8)  & 0xFF) * inv + ((c2 >> 8)  & 0xFF) * r);
         int b = (int)(( c1        & 0xFF) * inv + ( c2        & 0xFF) * r);
         return (a << 24) | (red << 16) | (g << 8) | b;
-    }
-
-
-    private void makeToast(String massage) {
-        Toast toast = Toast.makeText(getApplicationContext(), massage, Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.TOP, 0,110);   // import android.view.Gravity;
-        toast.show();
     }
 
 

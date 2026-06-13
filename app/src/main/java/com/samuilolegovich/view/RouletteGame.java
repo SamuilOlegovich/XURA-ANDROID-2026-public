@@ -13,7 +13,6 @@ import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.core.content.res.ResourcesCompat;
 import androidx.lifecycle.ViewModelProvider;
@@ -411,14 +410,6 @@ public class RouletteGame extends BaseActivity {
         myReferral  = preferences.contains(StringEnum.APP_PREFERENCES_REFERRAL.getValue())
                 ? preferences.getString(StringEnum.APP_PREFERENCES_REFERRAL.getValue(), "0")
                 : "0";
-    }
-
-    private void showToast(String message) {
-        runOnUiThread(() -> {
-            Toast toast = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG);
-            toast.setGravity(Gravity.TOP, 0, 110);
-            toast.show();
-        });
     }
 
     private int dp(int value) {

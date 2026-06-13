@@ -1,16 +1,15 @@
 package com.samuilolegovich.view;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.WindowManager;
-import android.view.Gravity;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.samuilolegovich.AppExecutors;
 import com.samuilolegovich.BaseActivity;
 import com.samuilolegovich.MainActivity;
@@ -39,6 +38,7 @@ public class RestoreWallet extends BaseActivity {
     private String ERROR_CHECK_THE_SEED_AND_TRY_AGAIN;
 
     private TextView restoreWalletTextView;
+    private TextInputLayout tilSeed;
     private EditText seed;
     private TextView next;
 
@@ -58,6 +58,7 @@ public class RestoreWallet extends BaseActivity {
 
     private void setButtons() {
         restoreWalletTextView = (TextView) findViewById(R.id.restore_wallet_text_view);
+        tilSeed = findViewById(R.id.til_restore_wallet_seed_field);
         seed = (EditText) findViewById(R.id.restore_wallet_seed_field);
         next = (TextView) findViewById(R.id.restore_wallet_next_link);
     }
@@ -77,8 +78,14 @@ public class RestoreWallet extends BaseActivity {
             if (seedRestore.length() > 20) {
                 recoverWalletAsync(seedRestore);
             } else {
-                makeToast(ERROR_CHECK_THE_SEED_AND_TRY_AGAIN);
+                tilSeed.setError(ERROR_CHECK_THE_SEED_AND_TRY_AGAIN);
             }
+        });
+
+        seed.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) { tilSeed.setError(null); }
+            @Override public void afterTextChanged(Editable s) {}
         });
     }
 
@@ -94,7 +101,7 @@ public class RestoreWallet extends BaseActivity {
                     repository.loadBalance();
                     goToAnotherPage(REFERRAL_CLASS);
                 } else {
-                    makeToast(ERROR_CHECK_THE_SEED_AND_TRY_AGAIN);
+                    tilSeed.setError(ERROR_CHECK_THE_SEED_AND_TRY_AGAIN);
                 }
             });
         });
@@ -103,13 +110,6 @@ public class RestoreWallet extends BaseActivity {
 
     private void encryptAndWriteSeed(String seedRestore) {
         SecureSeedStorage.save(PrefsHelper.get(this), StringEnum.APP_PREFERENCES_SEED.getValue(), seedRestore);
-    }
-
-
-    private void makeToast(String massage) {
-        Toast toast = Toast.makeText(getApplicationContext(), massage, Toast.LENGTH_LONG);
-        toast.setGravity(Gravity.TOP, 0, 110);
-        toast.show();
     }
 
 

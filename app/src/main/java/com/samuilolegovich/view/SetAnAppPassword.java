@@ -3,14 +3,15 @@ package com.samuilolegovich.view;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.WindowManager;
-import android.view.Gravity;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.samuilolegovich.BaseActivity;
 
 import com.samuilolegovich.MainActivity;
@@ -33,6 +34,7 @@ public class SetAnAppPassword extends BaseActivity {
 
     private EditText passwordOne;
     private EditText passwordTwo;
+    private TextInputLayout tilPasswordTwo;
 
     private TextView settingsSetPasswordAppTextView;
     private TextView confirm;
@@ -58,6 +60,7 @@ public class SetAnAppPassword extends BaseActivity {
 
     private void setButtons() {
         settingsSetPasswordAppTextView = (TextView) findViewById(R.id.settings_set_password_app_text_view);
+        tilPasswordTwo = findViewById(R.id.til_settings_set_password_app_field_tow);
         passwordTwo = (EditText) findViewById(R.id.settings_set_password_app_field_tow);
         confirm = (TextView) findViewById(R.id.settings_set_password_app_confirm_link);
         passwordOne = (EditText) findViewById(R.id.settings_set_password_app_field);
@@ -84,7 +87,7 @@ public class SetAnAppPassword extends BaseActivity {
             } else {
                 passwordOne.setText("");
                 passwordTwo.setText("");
-                makeToast(StringEnum.PASSWORD_DOES_NOT_MATCH.getValue());
+                tilPasswordTwo.setError(StringEnum.PASSWORD_DOES_NOT_MATCH.getValue());
             }
         });
 
@@ -92,6 +95,12 @@ public class SetAnAppPassword extends BaseActivity {
             pulse(v);
             setPasswordForApp(StringEnum.APP_PREFERENCES_PASSWORD_NOT_INSTALLED.getValue(), false);
             goToAnotherPage(RESTORE_OR_NEW_WALLET_CLASS);
+        });
+
+        passwordTwo.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) { tilPasswordTwo.setError(null); }
+            @Override public void afterTextChanged(Editable s) {}
         });
     }
 
@@ -125,16 +134,8 @@ public class SetAnAppPassword extends BaseActivity {
     }
 
     private void goToAnotherPage(String namePage) {
-        // класс для перехода на другую страницу
         Intent intent = new Intent(namePage);
         startActivity(intent);
-    }
-
-
-    private void makeToast(String massage) {
-        Toast toast = Toast.makeText(getApplicationContext(), massage, Toast.LENGTH_LONG);
-        toast.setGravity(Gravity.TOP, 0,110);   // import android.view.Gravity;
-        toast.show();
     }
 
 

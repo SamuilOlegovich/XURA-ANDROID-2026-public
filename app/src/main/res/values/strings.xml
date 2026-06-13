@@ -69,6 +69,10 @@
     <string name="code_copied_to_phone_buffer">CODE COPIED TO PHONE BUFFER</string>
     <string name="and_get_a_hundred_times_more">AND GET A 36 TIMES MORE</string>
     <string name="wrong_destination_address">WRONG DESTINATION ADDRESS</string>
+    <string name="payment_sent">Payment sent</string>
+    <string name="biometrics_not_set_up">Biometrics not set up on this device</string>
+    <string name="flasher_back_to_game">BACK TO GAME</string>
+    <string name="flasher_return_in">Return in %d…</string>
     <string name="bet_cannot_be_more_than">BET CANNOT BE MORE THAN - </string>
     <string name="bet_cannot_be_less_than">BET CANNOT BE LESS THAN - </string>
     <string name="restore_from_backup_seed">RESTORE FROM BACKUP SEED</string>

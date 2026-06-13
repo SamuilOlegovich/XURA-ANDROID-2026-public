@@ -1,14 +1,14 @@
 package com.samuilolegovich.view;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.Gravity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.samuilolegovich.BaseActivity;
 
 import com.samuilolegovich.MainActivity;
@@ -28,6 +28,7 @@ public class Referral extends BaseActivity {
     private SharedPreferences.Editor editor;
     private SharedPreferences preferences;
 
+    private TextInputLayout tilReferralCode;
     private EditText enterReferralCode;
     private TextView referralTextView;
     private TextView skip;
@@ -48,6 +49,7 @@ public class Referral extends BaseActivity {
 
     private void setButtons() {
         referralTextView = (TextView) findViewById(R.id.referral_text_view);
+        tilReferralCode = findViewById(R.id.til_referral_code_field);
         enterReferralCode = (EditText) findViewById(R.id.referral_code_field);
         skip = (TextView) findViewById(R.id.referral_skip_linc);
         set = (TextView) findViewById(R.id.referral_set_linc);
@@ -76,7 +78,7 @@ public class Referral extends BaseActivity {
                 }
             } else {
                 enterReferralCode.setText("");
-                makeToast(StringEnum.REFERRAL_DOES_NOT_MATCH.getValue());
+                tilReferralCode.setError(StringEnum.REFERRAL_DOES_NOT_MATCH.getValue());
             }
         });
 
@@ -89,6 +91,12 @@ public class Referral extends BaseActivity {
                 onBackPressed();
             }
         });
+
+        enterReferralCode.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) { tilReferralCode.setError(null); }
+            @Override public void afterTextChanged(Editable s) {}
+        });
     }
 
 
@@ -97,13 +105,6 @@ public class Referral extends BaseActivity {
         editor = preferences.edit();
         editor.putString(StringEnum.APP_PREFERENCES_REFERRAL.getValue(), referral);
         editor.apply();
-    }
-
-
-    private void makeToast(String massage) {
-        Toast toast = Toast.makeText(getApplicationContext(), massage, Toast.LENGTH_LONG);
-        toast.setGravity(Gravity.TOP, 0,110);   // import android.view.Gravity;
-        toast.show();
     }
 
 

@@ -1,15 +1,15 @@
 package com.samuilolegovich.view;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.WindowManager;
-import android.view.Gravity;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.samuilolegovich.BaseActivity;
 
 import com.samuilolegovich.MainActivity;
@@ -35,6 +35,7 @@ public class CheckingNewWallet extends BaseActivity {
     public static final String CHECKING_NEW_WALLET_CLASS = ".CheckingNewWallet";
 
     private TextView checkingNewWalletText;
+    private TextInputLayout tilSeed;
     private EditText seed;
     private TextView next;
 
@@ -54,6 +55,7 @@ public class CheckingNewWallet extends BaseActivity {
 
     private void setButtons() {
         checkingNewWalletText = (TextView) findViewById(R.id.checking_new_wallet_text);
+        tilSeed = findViewById(R.id.til_password_field);
         seed = (EditText) findViewById(R.id.password_field);
         next = (TextView) findViewById(R.id.next_link);
     }
@@ -78,21 +80,19 @@ public class CheckingNewWallet extends BaseActivity {
                 goToAnotherPage(REFERRAL_CLASS);
             } else {
                 seed.setText("");
-                makeToast(StringEnum.SEED_DOES_NOT_MATCH.getValue());
+                tilSeed.setError(StringEnum.SEED_DOES_NOT_MATCH.getValue());
             }
+        });
+
+        seed.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) { tilSeed.setError(null); }
+            @Override public void afterTextChanged(Editable s) {}
         });
     }
 
 
-    private void makeToast(String massage) {
-        Toast toast = Toast.makeText(getApplicationContext(), massage, Toast.LENGTH_LONG);
-        toast.setGravity(Gravity.TOP, 0,110);   // import android.view.Gravity;
-        toast.show();
-    }
-
-
     private void goToAnotherPage(String namePage) {
-        // класс для перехода на другую страницу
         Intent intent = new Intent(namePage);
         startActivity(intent);
     }

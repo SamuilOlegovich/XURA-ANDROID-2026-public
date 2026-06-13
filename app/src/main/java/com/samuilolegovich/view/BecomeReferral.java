@@ -3,12 +3,10 @@ package com.samuilolegovich.view;
 import static com.samuilolegovich.view.InfoReferral.INFO_REFERRAL_CLASS;
 import static com.samuilolegovich.view.Referral.REFERRAL_CLASS;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
+import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.samuilolegovich.AppExecutors;
 import com.samuilolegovich.BaseActivity;
@@ -38,6 +36,8 @@ public class BecomeReferral extends BaseActivity {
     private String WRONG_DESTINATION_ADDRESS;
     private String GET_BECOME_REFERRAL;
 
+    private View root;
+
     private TextView restoreReferral;
     private TextView becomeReferral;
     private TextView infoReferral;
@@ -50,6 +50,7 @@ public class BecomeReferral extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.become_referral);
+        root = findViewById(android.R.id.content);
         setButtons();
         setLanguage();
         listeners();
@@ -111,19 +112,21 @@ public class BecomeReferral extends BaseActivity {
         String memo = b ? "REF" : "REF:REC";
 
         if (checkData(sendAmount, memo)) {
-            makeToast(b ? GET_BECOME_REFERRAL : GET_RECOVERY_BECOME_REFERRAL);
+            String msg = b ? GET_BECOME_REFERRAL : GET_RECOVERY_BECOME_REFERRAL;
+            SnackbarType type = b ? SnackbarType.SUCCESS : SnackbarType.INFO;
+            runOnUiThread(() -> showSnackbar(root, msg, type));
         }
     }
 
 
     private boolean checkData(String sendAmount, String memo) {
         if (sendAmount == null) {
-            makeToast(PAYMENT_AMOUNT_IS_INCORRECT);
+            runOnUiThread(() -> showSnackbar(root, PAYMENT_AMOUNT_IS_INCORRECT, SnackbarType.ERROR));
             return false;
         }
         BigDecimal balance = repository.getBalance();
         if (new BigDecimal(sendAmount).compareTo(balance) > 0) {
-            makeToast(YOUR_ACCOUNT_IS_NOT_ENOUGH_TO_SEND);
+            runOnUiThread(() -> showSnackbar(root, YOUR_ACCOUNT_IS_NOT_ENOUGH_TO_SEND, SnackbarType.ERROR));
             return false;
         }
         return makePayment(sendAmount, memo);
@@ -141,22 +144,13 @@ public class BecomeReferral extends BaseActivity {
             e.printStackTrace();
             success = false;
         }
-        if (!success) makeToast(WRONG_DESTINATION_ADDRESS);
+        if (!success) runOnUiThread(() -> showSnackbar(root, WRONG_DESTINATION_ADDRESS, SnackbarType.ERROR));
         return success;
     }
 
 
     private void goToAnotherPage(String namePage) {
         startActivity(new Intent(namePage));
-    }
-
-
-    private void makeToast(String massage) {
-        runOnUiThread(() -> {
-            Toast toast = Toast.makeText(getApplicationContext(), massage, Toast.LENGTH_LONG);
-            toast.setGravity(Gravity.TOP, 0, 110);
-            toast.show();
-        });
     }
 
 

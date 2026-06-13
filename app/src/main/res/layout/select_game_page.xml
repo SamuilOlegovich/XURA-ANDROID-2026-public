@@ -9,13 +9,26 @@
     tools:context=".view.SelectGame"
     tools:ignore="MissingDefaultResource">
 
+    <!-- LOGO -->
+    <include
+        layout="@layout/logo_xura"
+        android:id="@+id/logo_xura"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="80dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <!-- SELECT GAME headline -->
     <TextView
         android:id="@+id/select_text_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
         android:fontFamily="@font/montserrat"
         android:text="@string/select_game"
@@ -26,10 +39,10 @@
         android:letterSpacing="0.04"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/logo_xura" />
 
 
-    <!-- GUESS THE COLOR — primary action -->
+    <!-- GUESS THE COLOR — красный спектр угасает в темноте -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/guess_the_color_linc"
         android:layout_width="0dp"
@@ -37,13 +50,13 @@
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="12dp"
-        android:background="@drawable/bg_button_primary"
+        android:background="@drawable/bg_button_color_game"
         app:backgroundTint="@null"
         android:insetTop="0dp"
         android:insetBottom="0dp"
         android:fontFamily="@font/montserrat"
         android:text="@string/name_guess_the_color"
-        android:textColor="@color/xura_text_on_primary"
+        android:textColor="@color/xura_text_primary"
         android:textSize="18sp"
         android:textStyle="bold"
         android:letterSpacing="0.04"
@@ -51,7 +64,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <!-- GUESS THE NUMBER — secondary action -->
+    <!-- GUESS THE NUMBER — XURA-радуга -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/double_your_bet_linc"
         android:layout_width="0dp"
@@ -59,13 +72,13 @@
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="12dp"
-        android:background="@drawable/bg_button_secondary"
+        android:background="@drawable/bg_button_number_game"
         app:backgroundTint="@null"
         android:insetTop="0dp"
         android:insetBottom="0dp"
         android:fontFamily="@font/montserrat"
         android:text="@string/name_guess_the_number"
-        android:textColor="@color/xura_text_secondary"
+        android:textColor="@color/xura_text_primary"
         android:textSize="18sp"
         android:textStyle="bold"
         android:letterSpacing="0.04"
@@ -73,21 +86,24 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <!-- ROULETTE — coming soon -->
-    <TextView
+    <!-- ROULETTE — казино-фетр → золото -->
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/roulette_linc"
         android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginEnd="48dp"
-        android:layout_marginBottom="8dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/bg_button_roulette"
+        app:backgroundTint="@null"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
         android:fontFamily="@font/montserrat"
         android:text="@string/name_roulette"
-        android:textAlignment="center"
-        android:textColor="@color/xura_text_tertiary"
-        android:textSize="16sp"
-        android:gravity="center"
-        android:letterSpacing="0.06"
+        android:textColor="@color/xura_text_primary"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:letterSpacing="0.04"
         app:layout_constraintBottom_toTopOf="@+id/bottom_nav"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

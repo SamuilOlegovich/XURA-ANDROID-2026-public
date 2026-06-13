@@ -7,11 +7,14 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AnimationUtils;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.samuilolegovich.enums.StringEnum;
 import com.samuilolegovich.utils.InactivityGuard;
 import com.samuilolegovich.utils.PrefsHelper;
@@ -105,6 +108,31 @@ public abstract class BaseActivity extends AppCompatActivity {
         startActivity(intent);
         // Убираем анимацию перехода — это смена вкладки, не навигация вглубь
         overridePendingTransition(0, 0);
+    }
+
+    public enum SnackbarType { SUCCESS, ERROR, INFO }
+
+    protected void showSnackbar(View root, String message, SnackbarType type) {
+        String prefix;
+        int colorRes;
+        switch (type) {
+            case SUCCESS:
+                prefix = "✓ ";
+                colorRes = R.color.xura_cyan;
+                break;
+            case ERROR:
+                prefix = "✗ ";
+                colorRes = R.color.xura_error;
+                break;
+            default:
+                prefix = "";
+                colorRes = R.color.xura_text_primary;
+                break;
+        }
+        Snackbar snackbar = Snackbar.make(root, prefix + message, Snackbar.LENGTH_LONG);
+        TextView tv = snackbar.getView().findViewById(com.google.android.material.R.id.snackbar_text);
+        tv.setTextColor(ContextCompat.getColor(this, colorRes));
+        snackbar.show();
     }
 
     protected void pulse(View v) {

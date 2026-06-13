@@ -6,9 +6,12 @@ import android.graphics.Shader;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.android.material.button.MaterialButton;
 import com.samuilolegovich.AppExecutors;
 import com.samuilolegovich.BaseActivity;
 import androidx.core.content.ContextCompat;
@@ -53,6 +56,11 @@ public class Flasher extends BaseActivity {
     private TextView infoThree;
     private TextView infoTwo;
     private TextView winInfo;
+    private MaterialButton btnBackToGame;
+    private TextView tvCountdown;
+
+    private Handler countdownHandler;
+    private Runnable countdownRunnable;
 
     private String CONGRATULATIONS;
     private String GOOD_LUCK;
@@ -92,11 +100,18 @@ public class Flasher extends BaseActivity {
 
 
     private void setButtons() {
-        wheelView  = (RouletteWheelView) findViewById(R.id.roulette_wheel);
-        infoThree  = (TextView) findViewById(R.id.last_text_view_tree);
-        numberInfo = (TextView) findViewById(R.id.number_info_text);
-        infoTwo    = (TextView) findViewById(R.id.last_text_view_two);
-        winInfo    = (TextView) findViewById(R.id.last_text_view);
+        wheelView      = (RouletteWheelView) findViewById(R.id.roulette_wheel);
+        infoThree      = (TextView) findViewById(R.id.last_text_view_tree);
+        numberInfo     = (TextView) findViewById(R.id.number_info_text);
+        infoTwo        = (TextView) findViewById(R.id.last_text_view_two);
+        winInfo        = (TextView) findViewById(R.id.last_text_view);
+        btnBackToGame  = findViewById(R.id.btn_back_to_game);
+        tvCountdown    = findViewById(R.id.tv_countdown);
+
+        btnBackToGame.setOnClickListener(v -> {
+            cancelCountdown();
+            onBackPressed();
+        });
     }
 
 
@@ -130,7 +145,7 @@ public class Flasher extends BaseActivity {
         wheelView.stopAtNumber(displayNumber, () -> {
             wheelView.setCenterColor(sectorColor(displayNumber));
             numberInfo.setText(win ? NUMBER_BET : String.valueOf(displayNumber));
-            numberInfo.setTextColor(0xFFFFB000); // gold
+            numberInfo.setTextColor(0xFFFFB000);
             numberInfo.setVisibility(View.VISIBLE);
 
             winInfo.setText(win ? BET_WON : BET_LOST);
@@ -141,8 +156,11 @@ public class Flasher extends BaseActivity {
             infoThree.setVisibility(View.VISIBLE);
 
             infoTwo.setText(text);
-            infoTwo.setSelected(true);
             infoTwo.setVisibility(View.VISIBLE);
+
+            btnBackToGame.setVisibility(View.VISIBLE);
+            tvCountdown.setVisibility(View.VISIBLE);
+            startCountdown();
 
             if (win) {
                 winMediaPlayer.start();
@@ -150,6 +168,33 @@ public class Flasher extends BaseActivity {
                 lostMediaPlayer.start();
             }
         });
+    }
+
+
+    private void startCountdown() {
+        final int[] seconds = {5};
+        tvCountdown.setText(getString(R.string.flasher_return_in, seconds[0]));
+
+        countdownHandler = new Handler(Looper.getMainLooper());
+        countdownRunnable = new Runnable() {
+            @Override public void run() {
+                seconds[0]--;
+                if (seconds[0] <= 0) {
+                    onBackPressed();
+                } else {
+                    tvCountdown.setText(getString(R.string.flasher_return_in, seconds[0]));
+                    countdownHandler.postDelayed(this, 1000);
+                }
+            }
+        };
+        countdownHandler.postDelayed(countdownRunnable, 1000);
+    }
+
+
+    private void cancelCountdown() {
+        if (countdownHandler != null && countdownRunnable != null) {
+            countdownHandler.removeCallbacks(countdownRunnable);
+        }
     }
 
 
@@ -173,7 +218,6 @@ public class Flasher extends BaseActivity {
 
 
     private int resolveDisplayNumber(boolean win) {
-        // For roulette the winning number is already stored in NUMBER_BET
         if (TEST_MODE_ENUM == TestModeEnum.ROULETTE_GAME) {
             try { return Integer.parseInt(NUMBER_BET); } catch (Exception e) { return 0; }
         }
@@ -185,11 +229,9 @@ public class Flasher extends BaseActivity {
             int i = Lotto.getRandomNumberForColor(true);
             return i == 0 ? i + 1 : i;
         } else if (COLOR_BET) {
-            // bet was red — wheel shows a black number
             int i = Lotto.getRandomNumberForColor(false);
             return i == 0 ? i + 1 : i;
         } else {
-            // bet was black — wheel shows a red number
             int i = Lotto.getRandomNumberForColor(true);
             return i == 0 ? i + 2 : i;
         }
@@ -227,6 +269,7 @@ public class Flasher extends BaseActivity {
         super.onPause();
         VISIBLE_ON_SCREEN = false;
         FlasherRun.FLAG = false;
+        cancelCountdown();
         if (wheelView != null) wheelView.stopSpinning();
     }
 
@@ -245,6 +288,7 @@ public class Flasher extends BaseActivity {
 
     @Override
     public void onBackPressed() {
+        cancelCountdown();
         if (wheelView != null) wheelView.stopSpinning();
         rouletteSpinMediaPlayer.stop();
         lostMediaPlayer.stop();

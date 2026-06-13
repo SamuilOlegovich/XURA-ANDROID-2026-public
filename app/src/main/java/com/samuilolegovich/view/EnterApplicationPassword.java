@@ -3,12 +3,13 @@ package com.samuilolegovich.view;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.WindowManager;
-import android.view.Gravity;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.samuilolegovich.BaseActivity;
 
 import com.samuilolegovich.MainActivity;
@@ -33,6 +34,7 @@ public class EnterApplicationPassword extends BaseActivity {
     private SharedPreferences preferences;
 
     private TextView settingsSetPasswordAppTextView;
+    private TextInputLayout tilPassword;
     private EditText password;
     private TextView next;
 
@@ -62,6 +64,7 @@ public class EnterApplicationPassword extends BaseActivity {
 
     private void setButtons() {
         settingsSetPasswordAppTextView = (TextView) findViewById(R.id.settings_set_password_app_text_view);
+        tilPassword = findViewById(R.id.til_enter_application_password_field);
         password = (EditText) findViewById(R.id.enter_application_password_field);
         next = (TextView) findViewById(R.id.enter_application_password_next_link);
     }
@@ -87,8 +90,14 @@ public class EnterApplicationPassword extends BaseActivity {
                     closeThisPage();
                 }
             } else {
-                makeToast(StringEnum.PASSWORD_DOES_NOT_MATCH.getValue());
+                tilPassword.setError(StringEnum.PASSWORD_DOES_NOT_MATCH.getValue());
             }
+        });
+
+        password.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) { tilPassword.setError(null); }
+            @Override public void afterTextChanged(Editable s) {}
         });
     }
 
@@ -138,7 +147,6 @@ public class EnterApplicationPassword extends BaseActivity {
 
 
     private void goToAnotherPage(String namePage) {
-        // класс для перехода на другую страницу
         Intent intent = new Intent(namePage);
         startActivity(intent);
     }
@@ -149,13 +157,6 @@ public class EnterApplicationPassword extends BaseActivity {
     public void onBackPressed() {
         // оставляем пустым чтобы не работал возврат обратно
         // и не попадали на главную страницу кошелька
-    }
-
-
-    private void makeToast(String massage) {
-        Toast toast = Toast.makeText(getApplicationContext(), massage, Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.TOP, 0,110);   // import android.view.Gravity;
-        toast.show();
     }
 
 

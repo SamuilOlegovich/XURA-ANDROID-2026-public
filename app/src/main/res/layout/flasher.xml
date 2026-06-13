@@ -32,52 +32,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Win amount (marquee) — appears after wheel stops -->
-    <TextView
-        android:id="@+id/last_text_view_two"
-        android:layout_width="0dp"
-        android:layout_height="36dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:ellipsize="marquee"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:fontFamily="@font/montserrat"
-        android:marqueeRepeatLimit="marquee_forever"
-        android:scrollHorizontally="true"
-        android:singleLine="true"
-        android:textAlignment="center"
-        android:textColor="@color/xura_cyan"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/last_text_view_tree" />
-
-    <!-- CONGRATULATIONS / GOOD LUCK — bottom anchor -->
-    <TextView
-        android:id="@+id/last_text_view_tree"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="36dp"
-        android:fontFamily="@font/montserrat"
-        android:textAlignment="center"
-        android:textColor="@color/xura_gold"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_constraintTop_toTopOf="parent"
-        tools:layout_constraintVertical_bias="0.9" />
-
-    <!-- Roulette wheel — fills space between top label and bottom texts -->
+    <!-- Roulette wheel — fills space between top label and win-amount text -->
     <com.samuilolegovich.view.RouletteWheelView
         android:id="@+id/roulette_wheel"
         android:layout_width="0dp"
@@ -90,7 +45,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Result number overlay — centered over wheel inner circle, shown after stop -->
+    <!-- Result number overlay — centered over wheel inner circle -->
     <TextView
         android:id="@+id/number_info_text"
         android:layout_width="wrap_content"
@@ -106,5 +61,87 @@
         app:layout_constraintBottom_toBottomOf="@id/roulette_wheel"
         app:layout_constraintStart_toStartOf="@id/roulette_wheel"
         app:layout_constraintEnd_toEndOf="@id/roulette_wheel" />
+
+    <!-- Win amount — appears after wheel stops, no marquee -->
+    <TextView
+        android:id="@+id/last_text_view_two"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="@font/montserrat"
+        android:textAlignment="center"
+        android:textColor="@color/xura_cyan"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:maxLines="2"
+        android:visibility="invisible"
+        app:autoSizeTextType="uniform"
+        app:autoSizeMinTextSize="12sp"
+        app:autoSizeMaxTextSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/last_text_view_tree" />
+
+    <!-- CONGRATULATIONS / GOOD LUCK -->
+    <TextView
+        android:id="@+id/last_text_view_tree"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="@font/montserrat"
+        android:textAlignment="center"
+        android:textColor="@color/xura_gold"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/tv_countdown"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Countdown text — "Возврат через 5..." -->
+    <TextView
+        android:id="@+id/tv_countdown"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="@font/montserrat"
+        android:textAlignment="center"
+        android:textColor="@color/xura_text_muted"
+        android:textSize="13sp"
+        android:gravity="center"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/btn_back_to_game"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Back to game button — same style as Send -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_back_to_game"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/bg_button_primary"
+        app:backgroundTint="@null"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:fontFamily="@font/montserrat"
+        android:text="@string/flasher_back_to_game"
+        android:textColor="@color/xura_text_on_primary"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:letterSpacing="0.08"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
