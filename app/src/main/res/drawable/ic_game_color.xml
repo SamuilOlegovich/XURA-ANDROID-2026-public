@@ -7,9 +7,5 @@
     <!-- Paint drop -->
     <path
         android:fillColor="#FFFFFF"
-        android:pathData="M12,2 C12,2 4,11 4,16 C4,20.42 7.58,24 12,24 C16.42,24 20,20.42 20,16 C20,11 12,2 Z" />
-    <!-- Specular highlight -->
-    <path
-        android:fillColor="#40FFFFFF"
-        android:pathData="M9,13 C9,13 7,15 7,17 A2,2,0,0,0,9,17 C9,15.5 10,14 10,14 Z" />
+        android:pathData="M12,2 C16,6 20,12 20,18 C20,22 16,24 12,24 C8,24 4,22 4,18 C4,12 8,6 12,2 Z" />
 </vector>
