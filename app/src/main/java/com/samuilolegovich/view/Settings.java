@@ -1,6 +1,7 @@
 package com.samuilolegovich.view;
 
 import static com.samuilolegovich.view.BecomeReferral.BECOME_REFERRAL_CLASS;
+import static com.samuilolegovich.view.InfoMain.INFO_MAIN_CLASS;
 import static com.samuilolegovich.view.SelectLanguage.SELECT_LANGUAGE_CLASS;
 import static com.samuilolegovich.view.SettingsSetPasswordForApp.SETTINGS_SET_PASSWORD_FOR_APP_CLASS;
 
@@ -46,6 +47,7 @@ public class Settings extends BaseActivity {
     private MaterialButton btnResetTestBalance;
     private MaterialButton btnGameMode;
     private MaterialButton becomeReferralLinc;
+    private MaterialButton infoLinc;
     private View root;
 
 
@@ -74,6 +76,7 @@ public class Settings extends BaseActivity {
         btnResetTestBalance = findViewById(R.id.btn_reset_test_balance);
         btnGameMode = findViewById(R.id.settings_game_mode_linc);
         becomeReferralLinc = findViewById(R.id.become_referral_linc);
+        infoLinc = findViewById(R.id.info_settings_linc);
     }
 
 
@@ -179,6 +182,11 @@ public class Settings extends BaseActivity {
         becomeReferralLinc.setOnClickListener(v -> {
             pulse(v);
             goToAnotherPage(BECOME_REFERRAL_CLASS);
+        });
+
+        infoLinc.setOnClickListener(v -> {
+            pulse(v);
+            goToAnotherPage(INFO_MAIN_CLASS);
         });
 
         btnResetTestBalance.setOnClickListener(v -> {

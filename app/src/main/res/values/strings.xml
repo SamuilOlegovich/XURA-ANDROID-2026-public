@@ -283,4 +283,8 @@
     <string name="roulette_result_win">WON  +%s XRP</string>
     <string name="roulette_result_loss">LOST</string>
 
+    <string name="wallet_send_subtitle">Transfer XRP to any address</string>
+    <string name="wallet_request_subtitle">Receive XRP · Share QR code</string>
+    <string name="wallet_history_subtitle">All your transactions</string>
+
 </resources>
