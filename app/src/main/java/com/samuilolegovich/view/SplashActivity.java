@@ -2,15 +2,11 @@ package com.samuilolegovich.view;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.content.Intent;
-import android.graphics.drawable.ClipDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.view.Gravity;
-import android.view.animation.DecelerateInterpolator;
+import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,25 +33,23 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void animateLogo(ImageView logo) {
-        Drawable original = logo.getDrawable().mutate();
-        // Прорисовка слева направо: level 0 = скрыто, 10000 = полностью видно
-        ClipDrawable clip = new ClipDrawable(original, Gravity.START, ClipDrawable.HORIZONTAL);
-        logo.setImageDrawable(clip);
+        logo.setScaleX(0f);
+        logo.setScaleY(0f);
         logo.setAlpha(0f);
 
-        // Фаза 1: логотип "рисуется" слева направо
-        ValueAnimator drawAnim = ValueAnimator.ofInt(0, 10000);
-        drawAnim.setDuration(1100);
-        drawAnim.setInterpolator(new DecelerateInterpolator(1.2f));
-        drawAnim.addUpdateListener(anim -> clip.setLevel((int) anim.getAnimatedValue()));
+        ObjectAnimator scaleX = ObjectAnimator.ofFloat(logo, "scaleX", 0f, 1f);
+        ObjectAnimator scaleY = ObjectAnimator.ofFloat(logo, "scaleY", 0f, 1f);
+        ObjectAnimator alpha  = ObjectAnimator.ofFloat(logo, "alpha",  0f, 1f);
 
-        // Фаза 2: плавное появление (убирает жёсткую левую границу)
-        ObjectAnimator fadeAnim = ObjectAnimator.ofFloat(logo, "alpha", 0f, 1f);
-        fadeAnim.setDuration(700);
-        fadeAnim.setStartDelay(150);
+        OvershootInterpolator overshoot = new OvershootInterpolator(1.3f);
+        scaleX.setInterpolator(overshoot);
+        scaleY.setInterpolator(overshoot);
+        scaleX.setDuration(850);
+        scaleY.setDuration(850);
+        alpha.setDuration(550);
 
         AnimatorSet set = new AnimatorSet();
-        set.playTogether(drawAnim, fadeAnim);
+        set.playTogether(scaleX, scaleY, alpha);
         set.start();
     }
 }

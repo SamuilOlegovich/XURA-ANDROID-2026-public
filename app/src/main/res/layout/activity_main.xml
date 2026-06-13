@@ -18,11 +18,11 @@
         <!-- XURA Logo — click opens game selection -->
         <include
             layout="@layout/logo_xura"
-            android:id="@+id/logo_button_link"
+            android:id="@+id/logo_xura"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="80dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="32dp"
             android:layout_marginEnd="80dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -44,7 +44,7 @@
             android:letterSpacing="0.16"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/logo_button_link" />
+            app:layout_constraintTop_toBottomOf="@+id/logo_xura" />
 
         <!-- Balance loading spinner — shown while wallet connects -->
         <com.google.android.material.progressindicator.CircularProgressIndicator
@@ -79,87 +79,199 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/your_balance_text" />
 
-        <!-- Info link -->
-        <TextView
-            android:id="@+id/last_text_view"
-            android:layout_width="0dp"
-            android:layout_height="32dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="8dp"
-            android:fontFamily="@font/montserrat"
-            android:text="@string/info"
-            android:textAlignment="center"
-            android:textColor="@color/xura_text_tertiary"
-            android:textSize="14sp"
-            android:letterSpacing="0.06"
-            android:gravity="center"
-            app:layout_constraintBottom_toTopOf="@+id/next_link"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <!-- SEND — primary gradient button -->
-        <com.google.android.material.button.MaterialButton
+        <!-- SEND card -->
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/next_link"
             android:layout_width="0dp"
-            android:layout_height="56dp"
+            android:layout_height="80dp"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="12dp"
-            android:background="@drawable/bg_button_primary"
-            app:backgroundTint="@null"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
-            android:fontFamily="@font/montserrat"
-            android:text="@string/send"
-            android:textColor="@color/xura_text_on_primary"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:letterSpacing="0.08"
+            android:background="@drawable/bg_card_send"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="@string/send"
             app:layout_constraintBottom_toTopOf="@+id/request_link"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintVertical_chainStyle="spread">
 
-        <!-- REQUEST — secondary glass button -->
-        <com.google.android.material.button.MaterialButton
+            <TextView
+                android:id="@+id/send_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/send"
+                android:textColor="@color/xura_pink"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.03"
+                app:layout_constraintBottom_toTopOf="@+id/send_subtitle"
+                app:layout_constraintEnd_toStartOf="@+id/icon_send"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <TextView
+                android:id="@+id/send_subtitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/wallet_send_subtitle"
+                android:textColor="@color/xura_text_tertiary"
+                android:textSize="11sp"
+                android:letterSpacing="0.02"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/icon_send"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/send_title" />
+
+            <ImageView
+                android:id="@+id/icon_send"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/ic_send_arrow"
+                android:importantForAccessibility="no"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- REQUEST card -->
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/request_link"
             android:layout_width="0dp"
-            android:layout_height="56dp"
+            android:layout_height="80dp"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="12dp"
-            android:background="@drawable/bg_button_secondary"
-            app:backgroundTint="@null"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
-            android:fontFamily="@font/montserrat"
-            android:text="@string/request"
-            android:textColor="@color/xura_text_secondary"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:letterSpacing="0.08"
+            android:background="@drawable/bg_card_request"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="@string/request"
             app:layout_constraintBottom_toTopOf="@+id/transaction_history_link"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent">
 
-        <!-- Transaction History link -->
-        <TextView
+            <TextView
+                android:id="@+id/request_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/request"
+                android:textColor="@color/xura_cyan"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.03"
+                app:layout_constraintBottom_toTopOf="@+id/request_subtitle"
+                app:layout_constraintEnd_toStartOf="@+id/icon_request"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <TextView
+                android:id="@+id/request_subtitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/wallet_request_subtitle"
+                android:textColor="@color/xura_text_tertiary"
+                android:textSize="11sp"
+                android:letterSpacing="0.02"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/icon_request"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/request_title" />
+
+            <ImageView
+                android:id="@+id/icon_request"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/ic_receive_arrow"
+                android:importantForAccessibility="no"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- TRANSACTION HISTORY card -->
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/transaction_history_link"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="80dp"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
-            android:layout_marginBottom="8dp"
-            android:fontFamily="@font/montserrat"
-            android:text="@string/transaction_history"
-            android:textAlignment="center"
-            android:textColor="@color/xura_text_tertiary"
-            android:textSize="15sp"
-            android:letterSpacing="0.06"
-            android:gravity="center"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/bg_card_history"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="@string/transaction_history"
             app:layout_constraintBottom_toTopOf="@+id/bottom_nav"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/history_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/transaction_history"
+                android:textColor="@color/xura_gold"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.03"
+                app:layout_constraintBottom_toTopOf="@+id/history_subtitle"
+                app:layout_constraintEnd_toStartOf="@+id/icon_history"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <TextView
+                android:id="@+id/history_subtitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/wallet_history_subtitle"
+                android:textColor="@color/xura_text_tertiary"
+                android:textSize="11sp"
+                android:letterSpacing="0.02"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/icon_history"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/history_title" />
+
+            <ImageView
+                android:id="@+id/icon_history"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/ic_history"
+                android:importantForAccessibility="no"
+                app:tint="@color/xura_gold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <!-- Bottom Navigation Bar — floating pill -->
         <com.google.android.material.bottomnavigation.BottomNavigationView
