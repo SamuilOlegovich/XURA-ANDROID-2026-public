@@ -43,7 +43,7 @@
                     android:fontFamily="@font/montserrat"
                     android:text="@string/rules_of_the_game"
                     android:textColor="@color/xura_text_tertiary"
-                    android:textSize="11sp"
+                    android:textSize="13sp"
                     android:gravity="center"
                     android:letterSpacing="0.06" />
 
