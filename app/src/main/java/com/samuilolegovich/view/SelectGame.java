@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+
 import com.samuilolegovich.BaseActivity;
 
 import com.samuilolegovich.MainActivity;
@@ -26,9 +27,9 @@ public class SelectGame extends BaseActivity {
     private MediaPlayer flourOfChoiceMediaPlayer;
 
     private TextView selectTextView;
-    private TextView guessTheNumber;
-    private TextView guessTheColor;
-    private TextView roulette;
+    private View guessTheNumber;
+    private View guessTheColor;
+    private View roulette;
 
 
 
@@ -54,18 +55,15 @@ public class SelectGame extends BaseActivity {
 
 
     private void setButtons() {
-        guessTheNumber = (TextView) findViewById(R.id.double_your_bet_linc);
-        guessTheColor = (TextView) findViewById(R.id.guess_the_color_linc);
+        guessTheNumber = findViewById(R.id.double_your_bet_linc);
+        guessTheColor = findViewById(R.id.guess_the_color_linc);
         selectTextView = (TextView) findViewById(R.id.select_text_view);
-        roulette = (TextView) findViewById(R.id.roulette_linc);
+        roulette = findViewById(R.id.roulette_linc);
     }
 
 
     private void setLanguage() {
-        guessTheNumber.setText(R.string.name_guess_the_number);
-        guessTheColor.setText(R.string.name_guess_the_color);
         selectTextView.setText(R.string.select_game);
-        roulette.setText(R.string.name_roulette);
     }
 
 

@@ -8,6 +8,9 @@
     <string name="transaction_history"><u>TRANSACTION HISTORY</u></string>
     <string name="name_guess_the_number"><u>GUESS THE NUMBER</u></string>
     <string name="name_guess_the_color"><u>GUESS THE COLOR</u></string>
+    <string name="game_color_subtitle">Guess the color — double your bet</string>
+    <string name="game_number_subtitle">Pick 1–36 and win ×36</string>
+    <string name="game_roulette_subtitle">European · powered by XRP</string>
     <string name="create_new_wallet"><u>CREATE NEW WALLET</u></string>
     <string name="rules_of_the_game"><u>RULES OF THE GAME</u></string>
     <string name="become_a_referral"><u>BECOME A REFERRAL</u></string>
