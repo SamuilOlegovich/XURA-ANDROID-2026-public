@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
+import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.material.textfield.TextInputLayout;
@@ -31,8 +32,8 @@ public class Referral extends BaseActivity {
     private TextInputLayout tilReferralCode;
     private EditText enterReferralCode;
     private TextView referralTextView;
-    private TextView skip;
-    private TextView set;
+    private View skip;
+    private View set;
 
 
 
@@ -51,15 +52,13 @@ public class Referral extends BaseActivity {
         referralTextView = (TextView) findViewById(R.id.referral_text_view);
         tilReferralCode = findViewById(R.id.til_referral_code_field);
         enterReferralCode = (EditText) findViewById(R.id.referral_code_field);
-        skip = (TextView) findViewById(R.id.referral_skip_linc);
-        set = (TextView) findViewById(R.id.referral_set_linc);
+        skip = findViewById(R.id.referral_skip_linc);
+        set = findViewById(R.id.referral_set_linc);
     }
 
 
     private void setLanguage() {
         referralTextView.setText(R.string.referral_text);
-        skip.setText(R.string.skip);
-        set.setText(R.string.set);
     }
 
 

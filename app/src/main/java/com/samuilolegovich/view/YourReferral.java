@@ -37,7 +37,7 @@ public class YourReferral extends BaseActivity {
     private SharedPreferences preferences;
 
     private TextView yourReferralPageTextView;
-    private TextView copy;
+    private View copy;
     private TextView code;
 
 
@@ -57,7 +57,7 @@ public class YourReferral extends BaseActivity {
 
     private void setButtons() {
         yourReferralPageTextView = (TextView) findViewById(R.id.your_referral_page_text_view);
-        copy = (TextView) findViewById(R.id.your_referral_page_copy_linc);
+        copy = findViewById(R.id.your_referral_page_copy_linc);
         code = (TextView) findViewById(R.id.your_referral_page_code);
 
         erMediaPlayer = MediaPlayer.create(this, R.raw.error);
@@ -68,7 +68,6 @@ public class YourReferral extends BaseActivity {
     private void setLanguage() {
         CODE_COPIED_TO_PHONE_BUFFER = getString(R.string.code_copied_to_phone_buffer);
         yourReferralPageTextView.setText(R.string.your_referral_code);
-        copy.setText(R.string.copy);
     }
 
 

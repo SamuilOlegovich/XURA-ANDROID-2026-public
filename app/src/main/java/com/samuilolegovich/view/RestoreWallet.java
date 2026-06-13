@@ -7,6 +7,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.material.textfield.TextInputLayout;
@@ -40,7 +41,7 @@ public class RestoreWallet extends BaseActivity {
     private TextView restoreWalletTextView;
     private TextInputLayout tilSeed;
     private EditText seed;
-    private TextView next;
+    private View next;
 
 
 
@@ -60,14 +61,13 @@ public class RestoreWallet extends BaseActivity {
         restoreWalletTextView = (TextView) findViewById(R.id.restore_wallet_text_view);
         tilSeed = findViewById(R.id.til_restore_wallet_seed_field);
         seed = (EditText) findViewById(R.id.restore_wallet_seed_field);
-        next = (TextView) findViewById(R.id.restore_wallet_next_link);
+        next = findViewById(R.id.restore_wallet_next_link);
     }
 
 
     private void setLanguage() {
         ERROR_CHECK_THE_SEED_AND_TRY_AGAIN = getString(R.string.error_check_the_seed_and_try_again);
         restoreWalletTextView.setText(R.string.restore_from_backup_seed);
-        next.setText(R.string.next);
     }
 
 

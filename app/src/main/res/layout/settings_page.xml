@@ -9,280 +9,519 @@
     tools:context=".view.Settings"
     tools:ignore="MissingDefaultResource">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/LayoutSetAnAppPassword"
+    <!-- Bottom Navigation Bar — fixed at bottom -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_nav"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@color/xura_black"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/bg_bottom_nav"
+        android:clipToOutline="true"
+        android:elevation="8dp"
+        app:itemIconTint="@color/bottom_nav_tint"
+        app:itemTextColor="@color/bottom_nav_tint"
+        app:itemRippleColor="@color/xura_glass_fill"
+        app:menu="@menu/bottom_nav_menu"
+        app:labelVisibilityMode="unlabeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Scrollable content area -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:scrollbarStyle="outsideOverlay"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_nav"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintEnd_toEndOf="parent">
 
-
-        <!-- SETTINGS title -->
-        <TextView
-            android:id="@+id/settings_text_view"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:id="@+id/LayoutSetAnAppPassword"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="24dp"
-            android:text="@string/settings_text"
-            android:textAlignment="center"
-            android:textColor="@color/xura_text_primary"
-            android:textSize="28sp"
-            android:textStyle="bold"
-            android:fontFamily="@font/montserrat"
-            android:gravity="center"
-            android:letterSpacing="0.02"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:orientation="vertical"
+            android:paddingBottom="12dp">
 
-        <!-- Test mode virtual balance card (visible only in test mode) -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_test_balance"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="24dp"
-            android:visibility="gone"
-            app:cardBackgroundColor="@color/xura_card"
-            app:cardCornerRadius="16dp"
-            app:strokeColor="@color/xura_gold"
-            app:strokeWidth="1dp"
-            app:cardElevation="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/settings_text_view"
-            app:layout_constraintBottom_toTopOf="@+id/settings_set_password_linc"
-            app:layout_constraintVertical_bias="0">
-
-            <LinearLayout
+            <!-- SETTINGS title -->
+            <TextView
+                android:id="@+id/settings_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="16dp"
+                android:text="@string/settings_text"
+                android:textAlignment="center"
+                android:textColor="@color/xura_text_primary"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/montserrat"
+                android:gravity="center"
+                android:letterSpacing="0.02" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat"
-                    android:text="@string/settings_test_mode_section"
-                    android:textColor="@color/xura_gold"
-                    android:textSize="10sp"
-                    android:letterSpacing="0.12" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:background="@color/xura_glass_border" />
+            <!-- Test mode virtual balance card (visible only in test mode) -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_test_balance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="12dp"
+                android:visibility="gone"
+                app:cardBackgroundColor="@color/xura_card"
+                app:cardCornerRadius="16dp"
+                app:strokeColor="@color/xura_gold"
+                app:strokeWidth="1dp"
+                app:cardElevation="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
                     <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/montserrat"
-                        android:text="@string/settings_test_balance_label"
-                        android:textColor="@color/xura_text_tertiary"
-                        android:textSize="13sp" />
-
-                    <TextView
-                        android:id="@+id/tv_test_balance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat"
+                        android:text="@string/settings_test_mode_section"
                         android:textColor="@color/xura_gold"
-                        android:textSize="16sp"
+                        android:textSize="10sp"
+                        android:letterSpacing="0.12" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@color/xura_glass_border" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/montserrat"
+                            android:text="@string/settings_test_balance_label"
+                            android:textColor="@color/xura_text_tertiary"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/tv_test_balance"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat"
+                            android:textColor="@color/xura_gold"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            tools:text="1000.00 XRP" />
+
+                    </LinearLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_reset_test_balance"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:layout_marginTop="12dp"
+                        android:insetTop="0dp"
+                        android:insetBottom="0dp"
+                        android:fontFamily="@font/montserrat"
+                        android:text="@string/settings_reset_test_balance"
+                        android:textAllCaps="false"
+                        android:textColor="@color/xura_black"
+                        android:textSize="13sp"
                         android:textStyle="bold"
-                        tools:text="1000.00 XRP" />
+                        android:letterSpacing="0.06"
+                        app:backgroundTint="@color/xura_gold"
+                        app:cornerRadius="12dp"
+                        app:rippleColor="#40000000" />
 
                 </LinearLayout>
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_reset_test_balance"
-                    android:layout_width="match_parent"
-                    android:layout_height="44dp"
-                    android:layout_marginTop="12dp"
-                    android:insetTop="0dp"
-                    android:insetBottom="0dp"
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- SET PASSWORD — pink card -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/settings_set_password_linc"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/bg_card_send"
+                android:clickable="true"
+                android:focusable="true"
+                android:contentDescription="@string/settings_set_password">
+
+                <TextView
+                    android:id="@+id/set_password_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="8dp"
                     android:fontFamily="@font/montserrat"
-                    android:text="@string/settings_reset_test_balance"
-                    android:textAllCaps="false"
-                    android:textColor="@color/xura_black"
-                    android:textSize="13sp"
+                    android:text="@string/settings_set_password"
+                    android:textColor="@color/xura_pink"
+                    android:textSize="15sp"
                     android:textStyle="bold"
-                    android:letterSpacing="0.06"
-                    app:backgroundTint="@color/xura_gold"
-                    app:cornerRadius="12dp"
-                    app:rippleColor="#40000000" />
+                    android:letterSpacing="0.03"
+                    app:layout_constraintBottom_toTopOf="@+id/set_password_subtitle"
+                    app:layout_constraintEnd_toStartOf="@+id/set_password_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="packed" />
 
-            </LinearLayout>
+                <TextView
+                    android:id="@+id/set_password_subtitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="8dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="@string/btn_sub_set_password"
+                    android:textColor="@color/xura_text_tertiary"
+                    android:textSize="11sp"
+                    android:letterSpacing="0.02"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/set_password_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/set_password_title" />
 
-        </com.google.android.material.card.MaterialCardView>
+                <ImageView
+                    android:id="@+id/set_password_icon"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/ic_lock"
+                    android:importantForAccessibility="no"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/xura_pink" />
 
-        <!-- BECOME REFERRAL button -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/become_referral_linc"
-            android:layout_width="0dp"
-            android:layout_height="56dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="12dp"
-            android:background="@drawable/bg_button_secondary"
-            app:backgroundTint="@null"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
-            android:fontFamily="@font/montserrat"
-            android:text="@string/become_a_referral"
-            android:textColor="@color/xura_text_secondary"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:letterSpacing="0.06"
-            app:layout_constraintBottom_toTopOf="@+id/info_settings_linc"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <!-- INFO button -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/info_settings_linc"
-            android:layout_width="0dp"
-            android:layout_height="56dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="12dp"
-            android:background="@drawable/bg_button_secondary"
-            app:backgroundTint="@null"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
-            android:fontFamily="@font/montserrat"
-            android:text="@string/info"
-            android:textColor="@color/xura_text_secondary"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:letterSpacing="0.06"
-            app:layout_constraintBottom_toTopOf="@+id/bottom_nav"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            <!-- BIOMETRICS — cyan card -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/settings_biometric_linc"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/bg_card_action_primary"
+                android:clickable="true"
+                android:focusable="true"
+                android:contentDescription="@string/settings_biometric">
 
-        <!-- SELECT LANGUAGE button -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/settings_select_english_linc"
-            android:layout_width="0dp"
-            android:layout_height="56dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="12dp"
-            android:background="@drawable/bg_button_secondary"
-            app:backgroundTint="@null"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
-            android:fontFamily="@font/montserrat"
-            android:text="@string/settings_select_language"
-            android:textColor="@color/xura_text_secondary"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:letterSpacing="0.06"
-            app:layout_constraintBottom_toTopOf="@+id/become_referral_linc"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+                <TextView
+                    android:id="@+id/biometric_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="@string/settings_biometric"
+                    android:textColor="@color/xura_cyan"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.03"
+                    app:layout_constraintBottom_toTopOf="@+id/biometric_subtitle"
+                    app:layout_constraintEnd_toStartOf="@+id/biometric_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="packed" />
 
-        <!-- GAME MODE toggle button -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/settings_game_mode_linc"
-            android:layout_width="0dp"
-            android:layout_height="56dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="12dp"
-            android:background="@drawable/bg_button_secondary"
-            app:backgroundTint="@null"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
-            android:fontFamily="@font/montserrat"
-            android:text="@string/settings_game_mode"
-            android:textColor="@color/xura_text_secondary"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:letterSpacing="0.06"
-            app:layout_constraintBottom_toTopOf="@+id/settings_select_english_linc"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+                <TextView
+                    android:id="@+id/biometric_subtitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="8dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="@string/btn_sub_biometric"
+                    android:textColor="@color/xura_text_tertiary"
+                    android:textSize="11sp"
+                    android:letterSpacing="0.02"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/biometric_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/biometric_title" />
 
-        <!-- BIOMETRICS toggle button -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/settings_biometric_linc"
-            android:layout_width="0dp"
-            android:layout_height="56dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="12dp"
-            android:background="@drawable/bg_button_secondary"
-            app:backgroundTint="@null"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
-            android:fontFamily="@font/montserrat"
-            android:text="@string/settings_biometric"
-            android:textColor="@color/xura_text_secondary"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:letterSpacing="0.06"
-            app:layout_constraintBottom_toTopOf="@+id/settings_game_mode_linc"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+                <ImageView
+                    android:id="@+id/biometric_icon"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/ic_fingerprint"
+                    android:importantForAccessibility="no"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/xura_cyan" />
 
-        <!-- SET PASSWORD button -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/settings_set_password_linc"
-            android:layout_width="0dp"
-            android:layout_height="56dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="12dp"
-            android:background="@drawable/bg_button_primary"
-            app:backgroundTint="@null"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
-            android:fontFamily="@font/montserrat"
-            android:text="@string/settings_set_password"
-            android:textColor="@color/xura_text_on_primary"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:letterSpacing="0.06"
-            app:layout_constraintBottom_toTopOf="@+id/settings_biometric_linc"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <!-- Bottom Navigation Bar — floating pill -->
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottom_nav"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/bg_bottom_nav"
-            android:clipToOutline="true"
-            android:elevation="8dp"
-            app:itemIconTint="@color/bottom_nav_tint"
-            app:itemTextColor="@color/bottom_nav_tint"
-            app:itemRippleColor="@color/xura_glass_fill"
-            app:menu="@menu/bottom_nav_menu"
-            app:labelVisibilityMode="unlabeled"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            <!-- GAME MODE — gold (TRIAL) / pink (LIVE) card -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/settings_game_mode_linc"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/bg_card_history"
+                android:clickable="true"
+                android:focusable="true"
+                android:contentDescription="@string/settings_game_mode">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/game_mode_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="@string/settings_game_mode"
+                    android:textColor="@color/xura_gold"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.03"
+                    app:layout_constraintBottom_toTopOf="@+id/game_mode_subtitle"
+                    app:layout_constraintEnd_toStartOf="@+id/game_mode_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="packed" />
+
+                <TextView
+                    android:id="@+id/game_mode_subtitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="8dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="@string/btn_sub_game_mode"
+                    android:textColor="@color/xura_text_tertiary"
+                    android:textSize="11sp"
+                    android:letterSpacing="0.02"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/game_mode_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/game_mode_title" />
+
+                <ImageView
+                    android:id="@+id/game_mode_icon"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/ic_nav_games"
+                    android:importantForAccessibility="no"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/xura_gold" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- SELECT LANGUAGE — glass card -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/settings_select_english_linc"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/bg_card_glass_clickable"
+                android:clickable="true"
+                android:focusable="true"
+                android:contentDescription="@string/settings_select_language">
+
+                <TextView
+                    android:id="@+id/select_language_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="@string/settings_select_language"
+                    android:textColor="@color/xura_text_primary"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.03"
+                    app:layout_constraintBottom_toTopOf="@+id/select_language_subtitle"
+                    app:layout_constraintEnd_toStartOf="@+id/select_language_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="packed" />
+
+                <TextView
+                    android:id="@+id/select_language_subtitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="8dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="@string/btn_sub_select_language"
+                    android:textColor="@color/xura_text_tertiary"
+                    android:textSize="11sp"
+                    android:letterSpacing="0.02"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/select_language_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/select_language_title" />
+
+                <ImageView
+                    android:id="@+id/select_language_icon"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/ic_language"
+                    android:importantForAccessibility="no"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- BECOME REFERRAL — glass card -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/become_referral_linc"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/bg_card_glass_clickable"
+                android:clickable="true"
+                android:focusable="true"
+                android:contentDescription="@string/become_a_referral">
+
+                <TextView
+                    android:id="@+id/become_referral_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="@string/become_a_referral"
+                    android:textColor="@color/xura_text_primary"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.03"
+                    app:layout_constraintBottom_toTopOf="@+id/become_referral_subtitle"
+                    app:layout_constraintEnd_toStartOf="@+id/become_referral_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="packed" />
+
+                <TextView
+                    android:id="@+id/become_referral_subtitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="8dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="@string/btn_sub_become_referral"
+                    android:textColor="@color/xura_text_tertiary"
+                    android:textSize="11sp"
+                    android:letterSpacing="0.02"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/become_referral_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/become_referral_title" />
+
+                <ImageView
+                    android:id="@+id/become_referral_icon"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/ic_referral"
+                    android:importantForAccessibility="no"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- INFO — glass card -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/info_settings_linc"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/bg_card_glass_clickable"
+                android:clickable="true"
+                android:focusable="true"
+                android:contentDescription="@string/info">
+
+                <TextView
+                    android:id="@+id/info_settings_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="@string/info"
+                    android:textColor="@color/xura_text_primary"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.03"
+                    app:layout_constraintBottom_toTopOf="@+id/info_settings_subtitle"
+                    app:layout_constraintEnd_toStartOf="@+id/info_settings_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="packed" />
+
+                <TextView
+                    android:id="@+id/info_settings_subtitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="8dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="@string/btn_sub_info"
+                    android:textColor="@color/xura_text_tertiary"
+                    android:textSize="11sp"
+                    android:letterSpacing="0.02"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/info_settings_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/info_settings_title" />
+
+                <ImageView
+                    android:id="@+id/info_settings_icon"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/ic_info"
+                    android:importantForAccessibility="no"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,10 +3,17 @@ package com.samuilolegovich.view;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.core.content.FileProvider;
+
+import java.io.File;
+import java.io.FileOutputStream;
 
 import com.samuilolegovich.BaseActivity;
 import com.samuilolegovich.R;
@@ -46,7 +53,9 @@ public class ReceivePayment extends BaseActivity {
     private TextView receivePaymentTextView;
     private ImageView qrCode;
     private TextView address;
-    private TextView copy;
+    private View copy;
+    private View share;
+    private Bitmap qrBitmap;
 
 
 
@@ -68,7 +77,8 @@ public class ReceivePayment extends BaseActivity {
         receivePaymentTextView = (TextView) findViewById(R.id.receive_payment_text_view);
         qrCode = (ImageView) findViewById(R.id.qr_code);
         address = (TextView) findViewById(R.id.address);
-        copy = (TextView) findViewById(R.id.copy_linc);
+        copy = findViewById(R.id.copy_linc);
+        share = findViewById(R.id.share_linc);
     }
 
 
@@ -76,7 +86,6 @@ public class ReceivePayment extends BaseActivity {
         ADDRESS_COPIED_TO_PHONE_BUFFER = getString(R.string.addres_copied_to_phone_buffer);
         receivePaymentTextViewTow.setText(R.string.your_address);
         receivePaymentTextView.setText(R.string.requesr_xrp);
-        copy.setText(R.string.copy);
     }
 
 
@@ -96,6 +105,33 @@ public class ReceivePayment extends BaseActivity {
             clipboardManager.setPrimaryClip(clipData);
             showSnackbar(root, ADDRESS_COPIED_TO_PHONE_BUFFER, SnackbarType.INFO);
         });
+
+        share.setOnClickListener(v -> {
+            pulse(v);
+            shareAddressWithQr();
+        });
+    }
+
+    private void shareAddressWithQr() {
+        try {
+            File imagesDir = new File(getCacheDir(), "images");
+            imagesDir.mkdirs();
+            File qrFile = new File(imagesDir, "xura_qr.png");
+            try (FileOutputStream out = new FileOutputStream(qrFile)) {
+                qrBitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+            }
+            Uri qrUri = FileProvider.getUriForFile(this,
+                    getPackageName() + ".fileprovider", qrFile);
+
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("image/png");
+            intent.putExtra(Intent.EXTRA_TEXT, classicAddress);
+            intent.putExtra(Intent.EXTRA_STREAM, qrUri);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            startActivity(Intent.createChooser(intent, classicAddress));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -122,9 +158,9 @@ public class ReceivePayment extends BaseActivity {
                 }
             }
 
-            Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-            bitmap.setPixels(pixels, 0, width, 0, 0, width, height);
-            qrCode.setImageBitmap(bitmap);
+            qrBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+            qrBitmap.setPixels(pixels, 0, width, 0, 0, width, height);
+            qrCode.setImageBitmap(qrBitmap);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -70,26 +70,69 @@
             app:layout_constraintTop_toBottomOf="@+id/your_referral_page_text_view" />
 
         <!-- COPY button -->
-        <com.google.android.material.button.MaterialButton
+        <!-- COPY — glass card -->
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/your_referral_page_copy_linc"
             android:layout_width="0dp"
-            android:layout_height="56dp"
+            android:layout_height="80dp"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="40dp"
-            android:background="@drawable/bg_button_secondary"
-            app:backgroundTint="@null"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
-            android:fontFamily="@font/montserrat"
-            android:text="@string/copy"
-            android:textColor="@color/xura_text_secondary"
-            android:textSize="17sp"
-            android:textStyle="bold"
-            android:letterSpacing="0.06"
+            android:background="@drawable/bg_card_glass_clickable"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="@string/copy"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/referral_copy_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/copy"
+                android:textColor="@color/xura_text_primary"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.03"
+                app:layout_constraintBottom_toTopOf="@+id/referral_copy_subtitle"
+                app:layout_constraintEnd_toStartOf="@+id/referral_copy_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <TextView
+                android:id="@+id/referral_copy_subtitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/btn_sub_copy"
+                android:textColor="@color/xura_text_tertiary"
+                android:textSize="11sp"
+                android:letterSpacing="0.02"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/referral_copy_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/referral_copy_title" />
+
+            <ImageView
+                android:id="@+id/referral_copy_icon"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/ic_copy"
+                android:importantForAccessibility="no"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

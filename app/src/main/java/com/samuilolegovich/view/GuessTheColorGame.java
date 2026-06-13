@@ -63,8 +63,8 @@ public class GuessTheColorGame extends BaseActivity {
     private TextView rulesOfTheGameLink;
     private TextView nameGameTextView;
     private TextView balance;
-    private TextView black;
-    private TextView red;
+    private View black;
+    private View red;
     private EditText bet;
     private ChipGroup chipGroupAmounts;
     private TextInputLayout tilBetField;
@@ -153,8 +153,6 @@ public class GuessTheColorGame extends BaseActivity {
         rulesOfTheGameLink.setText(R.string.rules_of_the_game);
         yourBalanceTextView.setText(R.string.your_balance);
         nameGameTextView.setText(R.string.guess_the_color);
-        black.setText(R.string.black);
-        red.setText(R.string.red);
     }
 
 

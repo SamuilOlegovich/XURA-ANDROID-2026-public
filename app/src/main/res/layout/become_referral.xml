@@ -53,94 +53,261 @@
             app:layout_constraintTop_toBottomOf="@+id/logo_xura" />
 
         <!-- Info button -->
-        <com.google.android.material.button.MaterialButton
+        <!-- INFO — glass card -->
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/referral_info_linc"
             android:layout_width="0dp"
-            android:layout_height="56dp"
+            android:layout_height="80dp"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="12dp"
-            android:background="@drawable/bg_button_secondary"
-            app:backgroundTint="@null"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
-            android:fontFamily="@font/montserrat"
-            android:text="@string/info"
-            android:textColor="@color/xura_text_secondary"
-            android:textSize="17sp"
-            android:textStyle="bold"
-            android:letterSpacing="0.06"
-            app:layout_constraintBottom_toTopOf="@+id/set_referral_linc"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <!-- SET REFERRAL button -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/set_referral_linc"
-            android:layout_width="0dp"
-            android:layout_height="56dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="12dp"
-            android:background="@drawable/bg_button_primary"
-            app:backgroundTint="@null"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
-            android:fontFamily="@font/montserrat"
-            android:text="@string/set_referral"
-            android:textColor="@color/xura_text_on_primary"
-            android:textSize="17sp"
-            android:textStyle="bold"
-            android:letterSpacing="0.06"
-            app:layout_constraintBottom_toTopOf="@+id/restore_referral"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <!-- RESTORE REFERRAL button -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/restore_referral"
-            android:layout_width="0dp"
-            android:layout_height="56dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="12dp"
-            android:background="@drawable/bg_button_secondary"
-            app:backgroundTint="@null"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
-            android:fontFamily="@font/montserrat"
-            android:text="@string/restore_referral"
-            android:textColor="@color/xura_text_secondary"
-            android:textSize="17sp"
-            android:textStyle="bold"
-            android:letterSpacing="0.06"
+            android:background="@drawable/bg_card_glass_clickable"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="@string/info"
             app:layout_constraintBottom_toTopOf="@+id/become_referral"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent">
 
-        <!-- BECOME REFERRAL button -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/become_referral"
+            <TextView
+                android:id="@+id/referral_info_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/info"
+                android:textColor="@color/xura_text_primary"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.03"
+                app:layout_constraintBottom_toTopOf="@+id/referral_info_subtitle"
+                app:layout_constraintEnd_toStartOf="@+id/referral_info_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <TextView
+                android:id="@+id/referral_info_subtitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/btn_sub_info"
+                android:textColor="@color/xura_text_tertiary"
+                android:textSize="11sp"
+                android:letterSpacing="0.02"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/referral_info_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/referral_info_title" />
+
+            <ImageView
+                android:id="@+id/referral_info_icon"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/ic_info"
+                android:importantForAccessibility="no"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- SET REFERRAL — cyan card -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/set_referral_linc"
             android:layout_width="0dp"
-            android:layout_height="56dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/bg_card_send"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="@string/set_referral"
+            app:layout_constraintBottom_toTopOf="@+id/restore_referral"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/set_referral_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/set_referral"
+                android:textColor="@color/xura_pink"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.03"
+                app:layout_constraintBottom_toTopOf="@+id/set_referral_subtitle"
+                app:layout_constraintEnd_toStartOf="@+id/set_referral_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <TextView
+                android:id="@+id/set_referral_subtitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/btn_sub_set_referral"
+                android:textColor="@color/xura_text_tertiary"
+                android:textSize="11sp"
+                android:letterSpacing="0.02"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/set_referral_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/set_referral_title" />
+
+            <ImageView
+                android:id="@+id/set_referral_icon"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/ic_share_pink"
+                android:importantForAccessibility="no"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- RESTORE REFERRAL — pink card -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/restore_referral"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="40dp"
-            android:background="@drawable/bg_card_glass"
-            app:backgroundTint="@null"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
-            android:fontFamily="@font/montserrat"
-            android:text="@string/become_referral"
-            android:textColor="@color/xura_text_secondary"
-            android:textSize="17sp"
-            android:textStyle="bold"
-            android:letterSpacing="0.06"
+            android:background="@drawable/bg_card_action_primary"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="@string/restore_referral"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_constraintTop_toTopOf="parent"
-            tools:layout_constraintVertical_bias="0.95" />
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/restore_referral_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/restore_referral"
+                android:textColor="@color/xura_cyan"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.03"
+                app:layout_constraintBottom_toTopOf="@+id/restore_referral_subtitle"
+                app:layout_constraintEnd_toStartOf="@+id/restore_referral_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <TextView
+                android:id="@+id/restore_referral_subtitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/btn_sub_restore_referral"
+                android:textColor="@color/xura_text_tertiary"
+                android:textSize="11sp"
+                android:letterSpacing="0.02"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/restore_referral_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/restore_referral_title" />
+
+            <ImageView
+                android:id="@+id/restore_referral_icon"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/ic_referral_restore"
+                android:importantForAccessibility="no"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- BECOME REFERRAL — gold border card -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/become_referral"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/bg_card_gold"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="@string/become_referral"
+            app:layout_constraintBottom_toTopOf="@+id/set_referral_linc"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/become_referral_card_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/become_referral"
+                android:textColor="@color/xura_gold"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.03"
+                app:layout_constraintBottom_toTopOf="@+id/become_referral_card_subtitle"
+                app:layout_constraintEnd_toStartOf="@+id/become_referral_card_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <TextView
+                android:id="@+id/become_referral_card_subtitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/btn_sub_become_referral"
+                android:textColor="@color/xura_text_tertiary"
+                android:textSize="11sp"
+                android:letterSpacing="0.02"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/become_referral_card_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/become_referral_card_title" />
+
+            <ImageView
+                android:id="@+id/become_referral_card_icon"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/ic_referral_gold"
+                android:importantForAccessibility="no"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

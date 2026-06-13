@@ -61,50 +61,68 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/create_new_wallet_text_view" />
 
-    <!-- COPY button -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/copy_linc"
-        android:layout_width="0dp"
-        android:layout_height="56dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="12dp"
-        android:background="@drawable/bg_button_secondary"
-        app:backgroundTint="@null"
-        android:insetTop="0dp"
-        android:insetBottom="0dp"
-        android:fontFamily="@font/montserrat"
-        android:text="@string/copy"
-        android:textColor="@color/xura_text_secondary"
-        android:textSize="17sp"
-        android:textStyle="bold"
-        android:letterSpacing="0.06"
-        app:layout_constraintBottom_toTopOf="@+id/next_link"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <!-- NEXT button -->
-    <com.google.android.material.button.MaterialButton
+    <!-- I'VE SAVED IT — gold card -->
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/next_link"
         android:layout_width="0dp"
-        android:layout_height="56dp"
+        android:layout_height="80dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="40dp"
-        android:background="@drawable/bg_button_primary"
-        app:backgroundTint="@null"
-        android:insetTop="0dp"
-        android:insetBottom="0dp"
-        android:fontFamily="@font/montserrat"
-        android:text="@string/next"
-        android:textColor="@color/xura_text_on_primary"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:letterSpacing="0.08"
+        android:background="@drawable/bg_card_gold"
+        android:clickable="true"
+        android:focusable="true"
+        android:contentDescription="@string/i_ve_saved_it"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_constraintTop_toTopOf="parent"
-        tools:layout_constraintVertical_bias="0.95" />
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/create_next_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/i_ve_saved_it"
+            android:textColor="@color/xura_gold"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.03"
+            app:layout_constraintBottom_toTopOf="@+id/create_next_subtitle"
+            app:layout_constraintEnd_toStartOf="@+id/create_next_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/create_next_subtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/btn_sub_saved_it"
+            android:textColor="@color/xura_text_tertiary"
+            android:textSize="11sp"
+            android:letterSpacing="0.02"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/create_next_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/create_next_title" />
+
+        <ImageView
+            android:id="@+id/create_next_icon"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_edit"
+            android:importantForAccessibility="no"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

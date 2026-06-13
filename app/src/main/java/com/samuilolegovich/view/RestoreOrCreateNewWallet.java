@@ -2,7 +2,7 @@ package com.samuilolegovich.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.TextView;
+import android.view.View;
 
 import com.samuilolegovich.BaseActivity;
 
@@ -21,8 +21,8 @@ import dagger.hilt.android.AndroidEntryPoint;
 public class RestoreOrCreateNewWallet extends BaseActivity {
     public static final String RESTORE_OR_NEW_WALLET_CLASS = ".RestoreOrCreateNewWallet";
 
-    private TextView createNewWallet;
-    private TextView restoreWallet;
+    private View createNewWallet;
+    private View restoreWallet;
 
 
 
@@ -31,21 +31,14 @@ public class RestoreOrCreateNewWallet extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.restore_or_create_new_wallet_page);
         setButtons();
-        setLanguage();
         listeners();
     }
 
 
 
     private void setButtons() {
-        createNewWallet = (TextView) findViewById(R.id.create_new_wallet_linc);
-        restoreWallet = (TextView) findViewById(R.id.restore_wallet_linc);
-    }
-
-
-    private void setLanguage() {
-        createNewWallet.setText(R.string.create_new_wallet);
-        restoreWallet.setText(R.string.restore_wallet);
+        createNewWallet = findViewById(R.id.create_new_wallet_linc);
+        restoreWallet = findViewById(R.id.restore_wallet_linc);
     }
 
 

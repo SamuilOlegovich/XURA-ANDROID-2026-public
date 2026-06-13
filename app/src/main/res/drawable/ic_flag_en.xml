@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="36dp"
+    android:height="24dp"
+    android:viewportWidth="36"
+    android:viewportHeight="24">
+  <!-- blue background -->
+  <path android:fillColor="#012169" android:pathData="M0,0 H36 V24 H0 Z"/>
+  <!-- white St Andrew diag 1 -->
+  <path android:fillColor="#FFFFFF" android:pathData="M0,0 L4,0 L36,20 L36,24 L32,24 L0,4 Z"/>
+  <!-- white St Andrew diag 2 -->
+  <path android:fillColor="#FFFFFF" android:pathData="M36,0 L36,4 L4,24 L0,24 L0,20 L32,0 Z"/>
+  <!-- red St Patrick diag 1 -->
+  <path android:fillColor="#C8102E" android:pathData="M0,0 L2,0 L36,22 L36,24 L34,24 L0,2 Z"/>
+  <!-- red St Patrick diag 2 -->
+  <path android:fillColor="#C8102E" android:pathData="M36,0 L36,2 L2,24 L0,24 L0,22 L34,0 Z"/>
+  <!-- white St George horizontal -->
+  <path android:fillColor="#FFFFFF" android:pathData="M0,9 H36 V15 H0 Z"/>
+  <!-- white St George vertical -->
+  <path android:fillColor="#FFFFFF" android:pathData="M14,0 H22 V24 H14 Z"/>
+  <!-- red St George horizontal -->
+  <path android:fillColor="#C8102E" android:pathData="M0,10.5 H36 V13.5 H0 Z"/>
+  <!-- red St George vertical -->
+  <path android:fillColor="#C8102E" android:pathData="M15.5,0 H20.5 V24 H15.5 Z"/>
+</vector>

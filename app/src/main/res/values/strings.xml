@@ -27,7 +27,7 @@
     <string name="settings_language">RUSSIAN</string>
     <string name="set_referral">SET REFERRAL</string>
     <string name="scan_qr_code">SCAN QR CODE</string>
-    <string name="place_bet_linc">PLACE BET</string>
+    <string name="place_bet_linc">GUESS!</string>
     <string name="settings_main">SETTINGS</string>
     <string name="name_roulette">ROULETTE</string>
     <string name="set_password">CONFIRM</string>
@@ -37,8 +37,10 @@
     <string name="info">INFO</string>
     <string name="send">SEND</string>
     <string name="copy">COPY</string>
+    <string name="share">SHARE</string>
     <string name="skip">SKIP</string>
     <string name="next">NEXT</string>
+    <string name="verify">VERIFY</string>
     <string name="red">RED</string>
     <string name="set">SET</string>
 
@@ -286,5 +288,37 @@
     <string name="wallet_send_subtitle">Transfer XRP to any address</string>
     <string name="wallet_request_subtitle">Receive XRP · Share QR code</string>
     <string name="wallet_history_subtitle">All your transactions</string>
+
+    <!-- Card Action subtitles -->
+    <string name="btn_sub_create_wallet">Создать новый кошелёк XRP</string>
+    <string name="btn_sub_restore_wallet">Восстановить из сид-фразы</string>
+    <string name="btn_sub_next">Продолжить</string>
+    <string name="btn_sub_verify">Проверить seed-фразу</string>
+    <string name="unlock">UNLOCK</string>
+    <string name="btn_sub_unlock">Разблокировать доступ к приложению</string>
+    <string name="i_ve_saved_it">I\'VE SAVED IT</string>
+    <string name="btn_sub_saved_it">Я записал фразу и готов продолжить</string>
+    <string name="btn_sub_skip">Пропустить этот шаг</string>
+    <string name="btn_sub_copy">Скопировать в буфер обмена</string>
+    <string name="btn_sub_share">Поделиться адресом и QR-кодом</string>
+    <string name="btn_sub_send">Перевести XRP на адрес</string>
+    <string name="btn_sub_set_password">Защитить доступ к приложению</string>
+    <string name="btn_sub_biometric">Отпечаток пальца или Face ID</string>
+    <string name="btn_sub_select_language">Изменить язык отображения</string>
+    <string name="btn_sub_become_referral">Вступить в реферальную программу</string>
+    <string name="btn_sub_set_referral">Активировать реферальный код</string>
+    <string name="btn_sub_restore_referral">Восстановить реферальную ссылку</string>
+    <string name="btn_sub_info">Как это работает</string>
+    <string name="btn_sub_place_bet">Угадать выбранное число и сделать ставку</string>
+    <string name="btn_sub_red">Поставить ставку на красный</string>
+    <string name="btn_sub_black">Поставить ставку на чёрный</string>
+    <string name="btn_sub_back_to_game">Вернуться к текущей игре</string>
+    <string name="btn_sub_play_again">Начать новый раунд</string>
+    <string name="btn_sub_back_to_games">Вернуться к выбору игры</string>
+    <string name="btn_sub_set">Применить и сохранить</string>
+    <string name="btn_sub_russian">Переключить на русский</string>
+    <string name="btn_sub_english">Switch to English</string>
+    <string name="btn_sub_game_mode">Тестовый или реальный режим</string>
+    <string name="btn_sub_spin">Крутить колесо рулетки</string>
 
 </resources>

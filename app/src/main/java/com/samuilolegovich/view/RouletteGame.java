@@ -83,7 +83,7 @@ public class RouletteGame extends BaseActivity {
     private EditText        bet;
     private ChipGroup       chipGroupAmounts;
     private TextInputLayout tilBetField;
-    private MaterialButton  btnSpin;
+    private View btnSpin;
 
 
 

@@ -11,7 +11,6 @@ import android.os.Looper;
 import android.view.View;
 import android.widget.TextView;
 
-import com.google.android.material.button.MaterialButton;
 import com.samuilolegovich.AppExecutors;
 import com.samuilolegovich.BaseActivity;
 import androidx.core.content.ContextCompat;
@@ -56,7 +55,7 @@ public class Flasher extends BaseActivity {
     private TextView infoThree;
     private TextView infoTwo;
     private TextView winInfo;
-    private MaterialButton btnBackToGame;
+    private View btnBackToGame;
     private TextView tvCountdown;
 
     private Handler countdownHandler;

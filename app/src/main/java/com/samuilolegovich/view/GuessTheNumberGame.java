@@ -68,7 +68,7 @@ public class GuessTheNumberGame extends BaseActivity {
     private TextView nameGameTextViewTree;
     private TextView nameGameTextViewTwo;
     private TextView nameGameTextView;
-    private TextView placeBetLinc;
+    private View placeBetLinc;
     private TextView rulesInfo;
     private TextView balance;
     private EditText bet;
@@ -200,7 +200,6 @@ public class GuessTheNumberGame extends BaseActivity {
         nameGameTextView.setText(R.string.guess_the_number);
         nameGameTextViewTree.setText(R.string.your_balance);
         rulesInfo.setText(R.string.rules_of_the_game);
-        placeBetLinc.setText(R.string.place_bet_linc);
     }
 
 

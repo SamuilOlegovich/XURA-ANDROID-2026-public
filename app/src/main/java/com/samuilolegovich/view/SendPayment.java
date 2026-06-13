@@ -42,7 +42,7 @@ public class SendPayment extends BaseActivity {
     private TextView balance;
     private EditText address;
     private EditText amount;
-    private TextView send;
+    private View send;
     private TextInputLayout tilAddress;
     private TextInputLayout tilAmount;
     private TextInputLayout tilTag;
@@ -118,7 +118,6 @@ public class SendPayment extends BaseActivity {
         WRONG_DESTINATION_ADDRESS = getString(R.string.wrong_destination_address);
         sendPaymentPageTextViewTwo.setText(R.string.your_balance);
         sendPaymentPageTextView.setText(R.string.send_payment);
-        send.setText(R.string.send);
     }
 
 
