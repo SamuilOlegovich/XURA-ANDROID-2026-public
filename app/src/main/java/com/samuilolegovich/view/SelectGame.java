@@ -1,9 +1,15 @@
 package com.samuilolegovich.view;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.OvershootInterpolator;
 import android.widget.TextView;
 
 
@@ -24,12 +30,20 @@ import dagger.hilt.android.AndroidEntryPoint;
 public class SelectGame extends BaseActivity {
     public static final String SELECT_GAME_CLASS = ".SelectGame";
 
+    private static final long WAVE_INITIAL_DELAY  = 600L;   // ждём пока доиграет логотип
+    private static final long WAVE_REPEAT_DELAY   = 3500L;  // пауза между волнами
+    private static final int  WAVE_STAGGER_MS     = 100;    // задержка между карточками
+    private static final int  WAVE_BOUNCE_DP      = 20;     // высота подпрыгивания
+
     private MediaPlayer flourOfChoiceMediaPlayer;
 
     private TextView selectTextView;
     private View guessTheNumber;
     private View guessTheColor;
     private View roulette;
+
+    private Handler waveHandler;
+    private Runnable waveRunnable;
 
 
 
@@ -42,6 +56,7 @@ public class SelectGame extends BaseActivity {
         setSound();
         listeners();
         setupBottomNav();
+        waveHandler = new Handler(Looper.getMainLooper());
     }
 
 
@@ -101,6 +116,7 @@ public class SelectGame extends BaseActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        stopWave();
     }
 
 
@@ -109,6 +125,57 @@ public class SelectGame extends BaseActivity {
         flourOfChoiceMediaPlayer.setLooping(true);
         flourOfChoiceMediaPlayer.start();
         super.onResume();
+        startWave();
+    }
+
+
+    // ─── Wave bounce animation ────────────────────────────────────────────────
+
+    private void startWave() {
+        stopWave();
+        waveRunnable = new Runnable() {
+            @Override
+            public void run() {
+                playWave();
+                waveHandler.postDelayed(this, WAVE_REPEAT_DELAY);
+            }
+        };
+        // Первая волна — после логотипной анимации (600ms), потом каждые 3.5s
+        waveHandler.postDelayed(waveRunnable, WAVE_INITIAL_DELAY);
+    }
+
+    private void stopWave() {
+        if (waveRunnable != null) {
+            waveHandler.removeCallbacks(waveRunnable);
+            waveRunnable = null;
+        }
+    }
+
+    private void playWave() {
+        // Порядок: снизу вверх → roulette первая, guessTheNumber вторая, guessTheColor третья
+        View[] cards = { roulette, guessTheNumber, guessTheColor };
+        float bounceY = WAVE_BOUNCE_DP * getResources().getDisplayMetrics().density;
+
+        for (int i = 0; i < cards.length; i++) {
+            animateBounce(cards[i], (long) i * WAVE_STAGGER_MS, bounceY);
+        }
+    }
+
+    private void animateBounce(View card, long startDelay, float bounceY) {
+        // Вверх: быстро, с замедлением в пике
+        ObjectAnimator up = ObjectAnimator.ofFloat(card, "translationY", 0f, -bounceY);
+        up.setDuration(170);
+        up.setInterpolator(new DecelerateInterpolator(1.5f));
+
+        // Вниз: с пружинкой при приземлении
+        ObjectAnimator down = ObjectAnimator.ofFloat(card, "translationY", -bounceY, 0f);
+        down.setDuration(230);
+        down.setInterpolator(new OvershootInterpolator(1.8f));
+
+        AnimatorSet bounce = new AnimatorSet();
+        bounce.playSequentially(up, down);
+        bounce.setStartDelay(startDelay);
+        bounce.start();
     }
 
 
