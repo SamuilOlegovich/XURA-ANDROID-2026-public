@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -37,7 +38,7 @@ public class CheckingNewWallet extends BaseActivity {
     private TextView checkingNewWalletText;
     private TextInputLayout tilSeed;
     private EditText seed;
-    private TextView next;
+    private View next;
 
 
 
@@ -57,13 +58,12 @@ public class CheckingNewWallet extends BaseActivity {
         checkingNewWalletText = (TextView) findViewById(R.id.checking_new_wallet_text);
         tilSeed = findViewById(R.id.til_password_field);
         seed = (EditText) findViewById(R.id.password_field);
-        next = (TextView) findViewById(R.id.next_link);
+        next = findViewById(R.id.next_link);
     }
 
 
     private void setLanguage() {
         checkingNewWalletText.setText(R.string.lead_the_seed);
-        next.setText(R.string.next);
     }
 
 

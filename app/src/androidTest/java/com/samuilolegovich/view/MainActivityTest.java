@@ -1,8 +1,7 @@
 package com.samuilolegovich.view;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.provider.Settings;
+import android.content.SharedPreferences;
 
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -11,11 +10,14 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 import com.samuilolegovich.enums.StringEnum;
-import com.samuilolegovich.utils.Cipher;
+import com.samuilolegovich.utils.PrefsHelper;
+import com.samuilolegovich.utils.SecureSeedStorage;
 
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
@@ -26,47 +28,38 @@ import static org.junit.Assert.*;
 /**
  * Инструментальные UI-тесты для MainActivity.
  *
- * setUp() записывает в SharedPreferences минимально необходимые данные
- * (пароль = "не установлен" + зашифрованный тестовый seed), чтобы
+ * setUp() записывает в EncryptedSharedPreferences минимально необходимые данные
+ * (пароль = "не установлен" + seed через SecureSeedStorage/Android Keystore), чтобы
  * handleStartup() не делал редирект и MainActivity оставалась на главном экране.
  */
 @RunWith(AndroidJUnit4.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class MainActivityTest {
 
-    // Тестовый seed — ненастоящий, нужен только чтобы пройти Cipher.decryptString без NPE
     private static final String TEST_SEED = "sEdVXzobfHcDjDFxpXPMKzGYGVVULVU";
 
     private Context context;
 
-    @SuppressLint("HardwareIds")
     @Before
     public void setUp() {
         context = InstrumentationRegistry.getInstrumentation().getTargetContext();
         MainActivity.START_FLAG = true;
 
-        String androidId = Settings.Secure.getString(
-                context.getContentResolver(), Settings.Secure.ANDROID_ID);
-
-        // salt хранится пустым если не задана — берём пустую строку
-        String encryptedSeed = Cipher.encryptString(TEST_SEED, "", androidId);
-
-        context.getSharedPreferences(StringEnum.APP_PREFERENCES.getValue(), Context.MODE_PRIVATE)
-                .edit()
-                .clear()
-                // пароль = "password not installed" → handleStartup() считает пароль не установленным
-                // → не редиректит на экран ввода пароля
+        SharedPreferences prefs = PrefsHelper.get(context);
+        // commit() обеспечивает синхронную запись до старта Activity
+        prefs.edit()
                 .putString(StringEnum.APP_PREFERENCES_PASSWORD.getValue(),
                         StringEnum.APP_PREFERENCES_PASSWORD_NOT_INSTALLED.getValue())
-                // зашифрованный seed → handleStartup() не редиректит на экран создания кошелька
-                .putString(StringEnum.APP_PREFERENCES_SEED.getValue(), encryptedSeed)
-                .apply();
+                .commit();
+
+        SecureSeedStorage.save(prefs, StringEnum.APP_PREFERENCES_SEED.getValue(), TEST_SEED);
     }
 
     // ── Smoke ──────────────────────────────────────────────────────────────────
 
     /** Приложение запускается без краша */
     @Test
-    public void app_launchesWithoutCrash() {
+    public void a_app_launchesWithoutCrash() {
         try (ActivityScenario<MainActivity> scenario = ActivityScenario.launch(MainActivity.class)) {
             scenario.onActivity(activity -> assertNotNull(activity));
         }
@@ -76,7 +69,7 @@ public class MainActivityTest {
 
     /** Без кошелька приложение открывает экран настройки */
     @Test
-    public void firstLaunch_opensWalletSetupScreen() {
+    public void b_firstLaunch_opensWalletSetupScreen() {
         try (ActivityScenario<CheckingNewWallet> scenario =
                      ActivityScenario.launch(CheckingNewWallet.class)) {
             scenario.onActivity(activity -> assertNotNull(activity));
@@ -87,7 +80,7 @@ public class MainActivityTest {
 
     /** Кнопка баланса видна на главном экране */
     @Test
-    public void mainScreen_showsBalanceButton() {
+    public void c_mainScreen_showsBalanceButton() {
         try (ActivityScenario<MainActivity> scenario = ActivityScenario.launch(MainActivity.class)) {
             onView(withId(R.id.balance_linc)).check(matches(isDisplayed()));
         }
@@ -95,7 +88,7 @@ public class MainActivityTest {
 
     /** Кнопка SEND видна на главном экране */
     @Test
-    public void mainScreen_showsSendButton() {
+    public void d_mainScreen_showsSendButton() {
         try (ActivityScenario<MainActivity> scenario = ActivityScenario.launch(MainActivity.class)) {
             onView(withId(R.id.next_link)).check(matches(isDisplayed()));
         }
@@ -103,7 +96,7 @@ public class MainActivityTest {
 
     /** Кнопка REQUEST видна на главном экране */
     @Test
-    public void mainScreen_showsRequestButton() {
+    public void e_mainScreen_showsRequestButton() {
         try (ActivityScenario<MainActivity> scenario = ActivityScenario.launch(MainActivity.class)) {
             onView(withId(R.id.request_link)).check(matches(isDisplayed()));
         }
@@ -111,17 +104,17 @@ public class MainActivityTest {
 
     /** Кнопка TRANSACTION HISTORY видна на главном экране */
     @Test
-    public void mainScreen_showsTransactionHistoryButton() {
+    public void f_mainScreen_showsTransactionHistoryButton() {
         try (ActivityScenario<MainActivity> scenario = ActivityScenario.launch(MainActivity.class)) {
             onView(withId(R.id.transaction_history_link)).check(matches(isDisplayed()));
         }
     }
 
-    /** Логотип видна на главном экране */
+    /** Заголовок баланса (YOUR BALANCE) виден на главном экране */
     @Test
-    public void mainScreen_showsLogoButton() {
+    public void g_mainScreen_showsLogoButton() {
         try (ActivityScenario<MainActivity> scenario = ActivityScenario.launch(MainActivity.class)) {
-            onView(withId(R.id.logo_button_link)).check(matches(isDisplayed()));
+            onView(withId(R.id.your_balance_text)).check(matches(isDisplayed()));
         }
     }
 
@@ -129,7 +122,7 @@ public class MainActivityTest {
 
     /** Package name приложения соответствует ожидаемому */
     @Test
-    public void app_hasCorrectPackageName() {
+    public void h_app_hasCorrectPackageName() {
         assertEquals("com.samuil.olegovich", context.getPackageName());
     }
 }
