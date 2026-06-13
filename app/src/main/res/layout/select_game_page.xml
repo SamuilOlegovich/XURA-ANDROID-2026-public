@@ -50,15 +50,14 @@
         android:layout_height="80dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
+        android:layout_marginBottom="12dp"
         android:background="@drawable/bg_card_color_game"
         android:clickable="true"
         android:focusable="true"
         android:contentDescription="@string/name_guess_the_color"
         app:layout_constraintBottom_toTopOf="@+id/double_your_bet_linc"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/select_text_view"
-        app:layout_constraintVertical_chainStyle="spread">
+        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
             android:id="@+id/color_title"
@@ -138,14 +137,14 @@
         android:layout_height="80dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
+        android:layout_marginBottom="12dp"
         android:background="@drawable/bg_card_number_game"
         android:clickable="true"
         android:focusable="true"
         android:contentDescription="@string/name_guess_the_number"
         app:layout_constraintBottom_toTopOf="@+id/roulette_linc"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/guess_the_color_linc">
+        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
             android:id="@+id/number_title"
@@ -266,14 +265,14 @@
         android:layout_height="80dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
+        android:layout_marginBottom="12dp"
         android:background="@drawable/bg_card_roulette_game"
         android:clickable="true"
         android:focusable="true"
         android:contentDescription="@string/name_roulette"
         app:layout_constraintBottom_toTopOf="@+id/bottom_nav"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/double_your_bet_linc">
+        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
             android:id="@+id/roulette_title"

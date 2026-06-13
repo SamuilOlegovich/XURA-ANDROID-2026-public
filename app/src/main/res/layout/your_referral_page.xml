@@ -69,27 +69,27 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/your_referral_page_text_view" />
 
-        <!-- COPY link -->
-        <TextView
+        <!-- COPY button -->
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/your_referral_page_copy_linc"
             android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="80dp"
-            android:layout_marginEnd="80dp"
-            android:layout_marginBottom="48dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="40dp"
+            android:background="@drawable/bg_button_secondary"
+            app:backgroundTint="@null"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
             android:fontFamily="@font/montserrat"
             android:text="@string/copy"
-            android:textAlignment="center"
-            android:textColor="@color/xura_text_link"
-            android:textSize="20sp"
+            android:textColor="@color/xura_text_secondary"
+            android:textSize="17sp"
             android:textStyle="bold"
-            android:gravity="center"
-            android:letterSpacing="0.08"
+            android:letterSpacing="0.06"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_constraintTop_toTopOf="parent"
-            tools:layout_constraintVertical_bias="0.9" />
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
