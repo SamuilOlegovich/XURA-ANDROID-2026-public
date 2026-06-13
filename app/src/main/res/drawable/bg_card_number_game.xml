@@ -9,26 +9,16 @@
     </item>
     <item>
         <layer-list>
-            <!-- Gradient border -->
             <item>
                 <shape android:shape="rectangle">
-                    <gradient
-                        android:type="linear"
-                        android:startColor="#00D4FF"
-                        android:endColor="#FFB000"
-                        android:angle="0" />
+                    <solid android:color="#0D0D20" />
                     <corners android:radius="20dp" />
                 </shape>
             </item>
-            <!-- Glass fill with 1.5dp inset -->
-            <item
-                android:left="1.5dp"
-                android:top="1.5dp"
-                android:right="1.5dp"
-                android:bottom="1.5dp">
+            <item>
                 <shape android:shape="rectangle">
-                    <solid android:color="#1AFFFFFF" />
-                    <corners android:radius="19dp" />
+                    <stroke android:color="#00D4FF" android:width="1.5dp" />
+                    <corners android:radius="20dp" />
                 </shape>
             </item>
         </layer-list>
