@@ -91,7 +91,7 @@ public class GuessTheNumberGame extends BaseActivity {
         listeners();
 
         viewModel.getBalance().observe(this, b ->
-                balance.setText(b.toString() + "  XRP"));
+                balance.setText(b.stripTrailingZeros().toPlainString() + "  XRP"));
 
         viewModel.getError().observe(this, error -> {
             if (error == null) return;

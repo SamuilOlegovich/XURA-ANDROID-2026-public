@@ -34,7 +34,6 @@ import static com.samuilolegovich.view.SetAnAppPassword.SET_AN_APP_PASSWORD_CLAS
 import static com.samuilolegovich.view.ReceivePayment.RECEIVE_PAYMENT_CLASS;
 import static com.samuilolegovich.view.YourReferral.YOUR_REFERRAL_CLASS;
 import static com.samuilolegovich.view.SendPayment.SEND_PAYMENT_CLASS;
-import static com.samuilolegovich.view.InfoMain.INFO_MAIN_CLASS;
 import static com.samuilolegovich.view.Settings.SETTINGS_CLASS;
 import static com.samuilolegovich.view.Lost.LOST_CLASS;
 import static com.samuilolegovich.view.Win.WIN_CLASS;
@@ -62,12 +61,11 @@ public class MainActivity extends BaseActivity {
     private MainViewModel viewModel;
     private SharedPreferences preferences;
 
-    private TextView transactionHistory;
+    private View transactionHistory;
     private TextView yourBalanceText;
     private TextView balance;
-    private TextView request;
-    private TextView send;
-    private TextView info;
+    private View request;
+    private View send;
 
     private com.google.android.material.progressindicator.CircularProgressIndicator balanceLoading;
 
@@ -93,7 +91,7 @@ public class MainActivity extends BaseActivity {
 
         viewModel.getBalance().observe(this, b -> {
             if (b == null) return;
-            balance.setText(b.toString() + " XRP");
+            balance.setText(b.stripTrailingZeros().toPlainString() + " XRP");
             balance.setVisibility(View.VISIBLE);
             balanceLoading.setVisibility(View.GONE);
         });
@@ -203,18 +201,13 @@ public class MainActivity extends BaseActivity {
         request = findViewById(R.id.request_link);
         balance = findViewById(R.id.balance_linc);
         balanceLoading = findViewById(R.id.balance_loading);
-        info = findViewById(R.id.last_text_view);
         send = findViewById(R.id.next_link);
     }
 
 
     @SuppressLint("SetTextI18n")
     private void setLanguage() {
-        transactionHistory.setText(R.string.transaction_history);
         yourBalanceText.setText(R.string.your_balance);
-        request.setText(R.string.request);
-        send.setText(R.string.send);
-        info.setText(R.string.info);
     }
 
 
@@ -228,11 +221,6 @@ public class MainActivity extends BaseActivity {
         send.setOnClickListener(v -> {
             pulse(v);
             goToAnotherPage(SEND_PAYMENT_CLASS);
-        });
-
-        info.setOnClickListener(v -> {
-            pulse(v);
-            goToAnotherPage(INFO_MAIN_CLASS);
         });
 
         transactionHistory.setOnClickListener(v -> {

@@ -1,5 +1,7 @@
 package com.samuilolegovich;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -7,6 +9,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AnimationUtils;
+import android.view.animation.OvershootInterpolator;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -41,6 +44,31 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onResume();
         checkAutoLock();
         syncBottomNavSelection();
+        animateLogo();
+    }
+
+    private void animateLogo() {
+        View logo = findViewById(R.id.logo_xura);
+        if (logo == null) return;
+
+        logo.setScaleX(0f);
+        logo.setScaleY(0f);
+        logo.setAlpha(0f);
+
+        ObjectAnimator scaleX = ObjectAnimator.ofFloat(logo, "scaleX", 0f, 1f);
+        ObjectAnimator scaleY = ObjectAnimator.ofFloat(logo, "scaleY", 0f, 1f);
+        ObjectAnimator alpha  = ObjectAnimator.ofFloat(logo, "alpha",  0f, 1f);
+
+        OvershootInterpolator overshoot = new OvershootInterpolator(1.3f);
+        scaleX.setInterpolator(overshoot);
+        scaleY.setInterpolator(overshoot);
+        scaleX.setDuration(550);
+        scaleY.setDuration(550);
+        alpha.setDuration(350);
+
+        AnimatorSet set = new AnimatorSet();
+        set.playTogether(scaleX, scaleY, alpha);
+        set.start();
     }
 
     // Экраны ввода/смены пароля переопределяют это чтобы не попасть в петлю блокировки
