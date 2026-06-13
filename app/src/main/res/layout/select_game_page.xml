@@ -312,11 +312,10 @@
 
         <ImageView
             android:id="@+id/icon_roulette"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginEnd="12dp"
-            android:alpha="0.18"
-            android:src="@drawable/ic_game_roulette"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/ic_roulette_wheel"
             android:importantForAccessibility="no"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
