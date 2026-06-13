@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+
 import com.samuilolegovich.AppExecutors;
 import com.samuilolegovich.BaseActivity;
 
@@ -32,6 +34,8 @@ public class SelectLanguage extends BaseActivity {
     private View settingsRussianLinc;
     private View settingsEnglishLinc;
     private TextView settingsTextView;
+    private TextView russianTitle;
+    private TextView englishTitle;
 
     private String languageNow;
 
@@ -52,7 +56,9 @@ public class SelectLanguage extends BaseActivity {
     private void setButtons() {
         settingsRussianLinc = findViewById(R.id.settings_russian_linc);
         settingsEnglishLinc = findViewById(R.id.settings_english_linc);
-        settingsTextView = (TextView) findViewById(R.id.settings_text_view);
+        settingsTextView    = findViewById(R.id.settings_text_view);
+        russianTitle        = findViewById(R.id.russian_title);
+        englishTitle        = findViewById(R.id.english_title);
     }
 
 
@@ -64,6 +70,22 @@ public class SelectLanguage extends BaseActivity {
     private void getSettingsLanguage() {
         preferences = PrefsHelper.get(this);
         languageNow = preferences.getString(StringEnum.APP_PREFERENCES_LOCALE.getValue(), "en");
+        highlightSelectedLanguage();
+    }
+
+
+    private void highlightSelectedLanguage() {
+        boolean isRussian = languageNow.equalsIgnoreCase(StringEnum.APP_RUSSIAN_LANGUAGE.getValue());
+
+        settingsRussianLinc.setBackground(ContextCompat.getDrawable(this,
+                isRussian ? R.drawable.bg_card_action_primary : R.drawable.bg_card_glass_clickable));
+        settingsEnglishLinc.setBackground(ContextCompat.getDrawable(this,
+                isRussian ? R.drawable.bg_card_glass_clickable : R.drawable.bg_card_action_primary));
+
+        russianTitle.setTextColor(ContextCompat.getColor(this,
+                isRussian ? R.color.xura_cyan : R.color.xura_text_primary));
+        englishTitle.setTextColor(ContextCompat.getColor(this,
+                isRussian ? R.color.xura_text_primary : R.color.xura_cyan));
     }
 
 

@@ -50,6 +50,7 @@ public class Settings extends BaseActivity {
     private MaterialButton btnResetTestBalance;
     private View btnGameMode;
     private TextView gameModeTitle;
+    private android.widget.ImageView gameModeIcon;
     private View becomeReferralLinc;
     private View infoLinc;
     private View root;
@@ -80,8 +81,9 @@ public class Settings extends BaseActivity {
         cardTestBalance = findViewById(R.id.card_test_balance);
         tvTestBalance = findViewById(R.id.tv_test_balance);
         btnResetTestBalance = findViewById(R.id.btn_reset_test_balance);
-        btnGameMode = findViewById(R.id.settings_game_mode_linc);
+        btnGameMode   = findViewById(R.id.settings_game_mode_linc);
         gameModeTitle = findViewById(R.id.game_mode_title);
+        gameModeIcon  = findViewById(R.id.game_mode_icon);
         becomeReferralLinc = findViewById(R.id.become_referral_linc);
         infoLinc = findViewById(R.id.info_settings_linc);
     }
@@ -101,13 +103,12 @@ public class Settings extends BaseActivity {
         boolean isReal = Boolean.TRUE.equals(MainActivity.IS_REAL_GAME_MODE);
         String state = isReal ? "  ●  LIVE" : "  ○  TRIAL";
         gameModeTitle.setText(getString(R.string.settings_game_mode) + state);
-        if (isReal) {
-            btnGameMode.setBackgroundResource(R.drawable.bg_card_send);
-            gameModeTitle.setTextColor(ContextCompat.getColor(this, R.color.xura_pink));
-        } else {
-            btnGameMode.setBackgroundResource(R.drawable.bg_card_history);
-            gameModeTitle.setTextColor(ContextCompat.getColor(this, R.color.xura_gold));
-        }
+        int bgRes   = isReal ? R.drawable.bg_card_gold      : R.drawable.bg_card_send;
+        int colorRes = isReal ? R.color.xura_gold            : R.color.xura_pink;
+        btnGameMode.setBackgroundResource(bgRes);
+        int color = ContextCompat.getColor(this, colorRes);
+        gameModeTitle.setTextColor(color);
+        gameModeIcon.setImageTintList(android.content.res.ColorStateList.valueOf(color));
     }
 
     private void updateTestBalanceCard() {

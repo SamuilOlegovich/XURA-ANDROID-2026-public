@@ -71,26 +71,30 @@ public class NotifierRun implements Runnable {
                     .divide(BigDecimal.valueOf(1_000_000L), MathContext.DECIMAL128)
                     .toString();
 
-            // формат memo ответа сервера: CMD:lotto
+            // формат memo ответа сервера: CMD:serverNumber
             String[] parts = memoText.split(":", 2);
-            String cmd = parts[0];
-            String lotto = parts.length > 1 ? parts[1] : "0";
+            String cmd          = parts[0];
+            String serverNumber = parts.length > 1 ? parts[1] : "0";
 
-            WalletRepository.getInstance().setLottoNow(lotto);
+            WalletRepository.getInstance().setLottoNow(serverNumber);
 
             switch (cmd) {
                 case "LOSE":
-                    responseToBet(YOUR_BET_IS_LOST_TRY_AGAIN_AND_YOU_WILL_BE_LUCKY, lotto, 1);
+                    Flasher.NUMBER_BET = serverNumber;
+                    responseToBet(YOUR_BET_IS_LOST_TRY_AGAIN_AND_YOU_WILL_BE_LUCKY, serverNumber, 1);
                     break;
                 case "WIN":
-                    responseToBet(String.format(CONGRATULATIONS_YOUR_BET_IS_WON, amountWin), lotto, 2);
+                    Flasher.NUMBER_BET = serverNumber;
+                    responseToBet(String.format(CONGRATULATIONS_YOUR_BET_IS_WON, amountWin), serverNumber, 2);
                     break;
                 case "JKPT":
-                    responseToBet(String.format(CONGRATULATIONS_YOUR_BET_IS_WON_LOTTO, amountWin), lotto, 2);
+                case "LOTO":
+                    Flasher.NUMBER_BET = serverNumber;
+                    responseToBet(String.format(CONGRATULATIONS_YOUR_BET_IS_WON_LOTTO, amountWin), serverNumber, 2);
                     break;
                 case "REF":
-                    YourReferral.CODE = lotto;
-                    responseToBet(YOUR_REFERRAL_CODE + " \n" + lotto, lotto, 3);
+                    YourReferral.CODE = serverNumber;
+                    responseToBet(YOUR_REFERRAL_CODE + " \n" + serverNumber, serverNumber, 3);
                     break;
             }
         } catch (JSONException e) {
@@ -108,7 +112,7 @@ public class NotifierRun implements Runnable {
     }
 
 
-    private void responseToBet(String text, String lotto, int i) {
+    private void responseToBet(String text, String serverNumber, int i) {
         if (Flasher.VISIBLE_ON_SCREEN && Flasher.FLASHER != null) {
             switch (i) {
                 case 1:
@@ -118,11 +122,11 @@ public class NotifierRun implements Runnable {
                     Flasher.FLASHER.stopGame(text, true);
                     break;
                 case 3:
-                    WalletRepository.getInstance().notifyEvent(text, lotto, i);
+                    WalletRepository.getInstance().notifyEvent(text, serverNumber, i);
                     break;
             }
         } else {
-            WalletRepository.getInstance().notifyEvent(text, lotto, i);
+            WalletRepository.getInstance().notifyEvent(text, serverNumber, i);
         }
     }
 }

@@ -62,7 +62,7 @@ public class Flasher extends BaseActivity {
     private Runnable countdownRunnable;
 
     private String CONGRATULATIONS;
-    private String GOOD_LUCK;
+    private String DONT_GIVE_UP;
     private String BET_LOST;
     private String BET_WON;
 
@@ -116,9 +116,9 @@ public class Flasher extends BaseActivity {
 
     private void setLanguage() {
         CONGRATULATIONS = getString(R.string.congratulations);
-        GOOD_LUCK = getString(R.string.good_luck);
-        BET_LOST = getString(R.string.bet_lost);
-        BET_WON = getString(R.string.bet_won);
+        DONT_GIVE_UP    = getString(R.string.dont_give_up);
+        BET_LOST        = getString(R.string.bet_lost);
+        BET_WON         = getString(R.string.bet_won);
     }
 
 
@@ -151,7 +151,7 @@ public class Flasher extends BaseActivity {
             winInfo.setVisibility(View.VISIBLE);
             winInfo.post(() -> applyTextGradient(winInfo, win));
 
-            infoThree.setText(win ? CONGRATULATIONS : GOOD_LUCK);
+            infoThree.setText(win ? CONGRATULATIONS : DONT_GIVE_UP);
             infoThree.setVisibility(View.VISIBLE);
 
             infoTwo.setText(text);
@@ -171,7 +171,7 @@ public class Flasher extends BaseActivity {
 
 
     private void startCountdown() {
-        final int[] seconds = {5};
+        final int[] seconds = {10};
         tvCountdown.setText(getString(R.string.flasher_return_in, seconds[0]));
 
         countdownHandler = new Handler(Looper.getMainLooper());
@@ -217,23 +217,11 @@ public class Flasher extends BaseActivity {
 
 
     private int resolveDisplayNumber(boolean win) {
-        if (TEST_MODE_ENUM == TestModeEnum.ROULETTE_GAME) {
-            try { return Integer.parseInt(NUMBER_BET); } catch (Exception e) { return 0; }
-        }
-        if (win) {
-            if (NUMBER_BET.equals("00") || NUMBER_BET.equals("0")) return 0;
-            return Integer.parseInt(NUMBER_BET);
-        }
-        if (NUMBER_BET.equals("00") || NUMBER_BET.equals("0")) {
-            int i = Lotto.getRandomNumberForColor(true);
-            return i == 0 ? i + 1 : i;
-        } else if (COLOR_BET) {
-            int i = Lotto.getRandomNumberForColor(false);
-            return i == 0 ? i + 1 : i;
-        } else {
-            int i = Lotto.getRandomNumberForColor(true);
-            return i == 0 ? i + 2 : i;
-        }
+        try {
+            int n = Integer.parseInt(NUMBER_BET);
+            if (n >= 0 && n <= 36) return n;
+        } catch (Exception ignored) {}
+        return 0;
     }
 
 
@@ -292,7 +280,7 @@ public class Flasher extends BaseActivity {
         rouletteSpinMediaPlayer.stop();
         lostMediaPlayer.stop();
         winMediaPlayer.stop();
-        setColorNavigation(0);
+        setColorNavigation(1);
         FlasherRun.FLAG = false;
         super.onBackPressed();
     }

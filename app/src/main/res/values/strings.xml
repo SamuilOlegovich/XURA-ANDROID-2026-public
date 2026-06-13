@@ -110,6 +110,7 @@
     <string name="roulette_game">ROULETTE</string>
     <string name="settings_text">SETTINGS</string>
     <string name="good_luck">GOOD LUCK</string>
+    <string name="dont_give_up">DON\'T GIVE UP</string>
     <string name="password">Password</string>
     <string name="bet_lost">BET LOST</string>
     <string name="bet_won">BET WON</string>

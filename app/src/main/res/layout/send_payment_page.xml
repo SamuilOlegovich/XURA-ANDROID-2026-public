@@ -191,7 +191,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="32dp"
-            android:background="@drawable/bg_card_action_primary"
+            android:background="@drawable/bg_card_send"
             android:clickable="true"
             android:focusable="true"
             android:contentDescription="@string/send"
@@ -207,7 +207,7 @@
                 android:layout_marginEnd="8dp"
                 android:fontFamily="@font/montserrat"
                 android:text="@string/send"
-                android:textColor="@color/xura_cyan"
+                android:textColor="@color/xura_pink"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 android:letterSpacing="0.03"
@@ -244,7 +244,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/xura_cyan" />
+                app:tint="@color/xura_pink" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
