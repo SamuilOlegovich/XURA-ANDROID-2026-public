@@ -5,7 +5,7 @@
     android:id="@+id/select_game"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/xura_surface"
+    android:background="@color/xura_black"
     tools:context=".view.SelectGame"
     tools:ignore="MissingDefaultResource">
 
@@ -249,8 +249,8 @@
             <!-- Знак вопроса — поверх всего -->
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat" android:text="?"
-                android:textColor="#00D4FF" android:textSize="28sp" android:textStyle="bold"
-                android:rotation="8" android:layout_gravity="center"
+                android:textColor="#00D4FF" android:textSize="36sp" android:textStyle="bold"
+                android:rotation="15" android:layout_gravity="center"
                 android:layout_marginStart="12dp" />
 
         </FrameLayout>
