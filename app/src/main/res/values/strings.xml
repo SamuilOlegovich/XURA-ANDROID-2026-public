@@ -262,8 +262,10 @@
     <string name="settings_wallet_section">WALLET</string>
     <string name="settings_version_section">APP VERSION</string>
     <string name="settings_tap_to_copy">Tap to copy</string>
-    <string name="settings_test_mode_section">TEST MODE</string>
-    <string name="settings_test_balance_label">Virtual balance</string>
+    <string name="settings_test_mode_section">TRIAL MODE</string>
+    <string name="settings_testnet_badge">⬡ XRP TESTNET</string>
+    <string name="settings_testnet_note">Not real funds — testnet only</string>
+    <string name="settings_test_balance_label">Testnet balance</string>
     <string name="settings_reset_test_balance">Reset to 1000 XRP</string>
     <string name="settings_reset_test_balance_confirm">Reset virtual balance to 1000 XRP?</string>
     <string name="settings_reset_test_balance_done">Virtual balance reset to 1000 XRP</string>

@@ -322,8 +322,10 @@
     <string name="settings_game_mode_switch_to_trial">Переключить в TRIAL?</string>
     <string name="settings_game_mode_live_warning">Будут использоваться реальные XRP.</string>
     <string name="settings_game_mode_trial_info">Виртуальный баланс. Реальные XRP не задействованы.</string>
-    <string name="settings_test_mode_section">ТЕСТОВЫЙ РЕЖИМ</string>
-    <string name="settings_test_balance_label">Виртуальный баланс</string>
+    <string name="settings_test_mode_section">ПРОБНЫЙ РЕЖИМ</string>
+    <string name="settings_testnet_badge">⬡ XRP TESTNET</string>
+    <string name="settings_testnet_note">Не настоящие средства — только тестовая сеть</string>
+    <string name="settings_test_balance_label">Баланс тестовой сети</string>
     <string name="settings_reset_test_balance">Сбросить до 1000 XRP</string>
     <string name="settings_reset_test_balance_confirm">Сбросить виртуальный баланс до 1000 XRP?</string>
     <string name="settings_reset_test_balance_done">Виртуальный баланс сброшен до 1000 XRP</string>

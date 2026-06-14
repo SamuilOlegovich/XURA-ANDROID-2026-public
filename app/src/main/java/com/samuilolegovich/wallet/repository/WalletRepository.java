@@ -82,6 +82,17 @@ public class WalletRepository {
         executor.execute(() -> updateBalance(getBalance()));
     }
 
+    // Fetches real on-chain balance regardless of game mode (used after faucet in DEV)
+    public void loadNetworkBalance() {
+        executor.execute(() -> {
+            BigDecimal balance = manager.getBalance(true);
+            balanceLiveData.postValue(balance);
+            if (!Boolean.TRUE.equals(MainActivity.IS_REAL_GAME_MODE)) {
+                saveTestBalance(balance);
+            }
+        });
+    }
+
     public BigDecimal getBalance() {
         if (Boolean.TRUE.equals(MainActivity.IS_REAL_GAME_MODE)) {
             return manager.getBalance(true);

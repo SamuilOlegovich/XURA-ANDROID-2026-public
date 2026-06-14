@@ -134,6 +134,12 @@ public class Settings extends BaseActivity {
         setLanguage();
         listeners();
         setupBottomNav();
+        repository.getBalanceLiveData().observe(this, balance -> {
+            if (!Boolean.TRUE.equals(MainActivity.IS_REAL_GAME_MODE) && tvTestBalance != null) {
+                tvTestBalance.setText(
+                    balance.setScale(2, java.math.RoundingMode.DOWN).toPlainString() + " XRP");
+            }
+        });
     }
 
 
@@ -287,6 +293,8 @@ public class Settings extends BaseActivity {
                 btnDevFaucet.setEnabled(true);
                 if (success) {
                     showSnackbar(root, getString(R.string.dev_faucet_success), SnackbarType.INFO);
+                    new Handler(Looper.getMainLooper()).postDelayed(
+                            () -> repository.loadNetworkBalance(), 4000);
                 } else {
                     showSnackbar(root, getString(R.string.dev_faucet_error), SnackbarType.ERROR);
                 }
@@ -515,6 +523,10 @@ public class Settings extends BaseActivity {
                         getString(success ? R.string.dev_wallet_fund_success
                                           : R.string.dev_wallet_fund_error),
                         success ? SnackbarType.INFO : SnackbarType.ERROR);
+                if (success) {
+                    new Handler(Looper.getMainLooper()).postDelayed(
+                            () -> repository.loadNetworkBalance(), 4000);
+                }
             });
         });
     }
