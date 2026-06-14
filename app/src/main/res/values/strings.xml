@@ -98,6 +98,8 @@
     <string name="enter_password">ENTER PASSWORD</string>
     <string name="place_your_bet">Place your bet</string>
     <string name="lead_the_seed">LEAD THE SEED</string>
+    <string name="seed_generating">Generating your seed phrase…</string>
+    <string name="seed_input_hint">Enter your seed phrase here</string>
     <string name="your_address">YOUR ADDRESS:</string>
     <string name="settings_settings">SETTINGS</string>
     <string name="info_referral">INFORMATION</string>

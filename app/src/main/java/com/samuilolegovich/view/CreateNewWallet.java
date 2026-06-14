@@ -62,8 +62,10 @@ public class CreateNewWallet extends BaseActivity {
 
 
     private void setLanguage() {
-        createNewWalletText.setText(R.string.lead_the_seed);
-        seed.setText(R.string.wrong_restart_please);
+        seed.setText(R.string.seed_generating);
+        next.setAlpha(0.4f);
+        next.setClickable(false);
+        next.setFocusable(false);
     }
 
 
@@ -91,6 +93,14 @@ public class CreateNewWallet extends BaseActivity {
                     seed.setText(seedString);
                     setPreSeed(seedString);
                     isNewWallet = true;
+                    next.setAlpha(1f);
+                    next.setClickable(true);
+                    next.setFocusable(true);
+                } else {
+                    seed.setText(R.string.wrong_restart_please);
+                    next.setAlpha(1f);
+                    next.setClickable(true);
+                    next.setFocusable(true);
                 }
             });
         });
