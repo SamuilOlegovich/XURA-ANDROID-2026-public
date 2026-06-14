@@ -25,12 +25,10 @@
     <string name="select_language_russian">РУССКИЙ</string>
     <string name="rules_of_the_game">ПРАВИЛА ИГРЫ</string>
     <string name="place_bet_linc">УГАДАТЬ!</string>
-    <string name="settings_text_linc">НАСТРОЙКИ</string>
     <string name="settings_language">АНГЛИЙСКИЙ</string>
     <string name="select_game_mode">РЕЖИМ ИГРЫ</string>
     <string name="transaction_history">ИСТОРИЯ</string>
     <string name="set_password">ПОДТВЕРДИТЬ</string>
-    <string name="settings_main">НАСТРОЙКИ</string>
     <string name="name_roulette">РУЛЕТКА</string>
     <string name="next_one">ДАЛЕЕ >></string>
     <string name="request">ПОЛУЧИТЬ</string>
@@ -38,7 +36,7 @@
     <string name="skip">ПРОПУСТИТЬ</string>
     <string name="set">УСТАНОВИТЬ</string>
     <string name="send">ОТПРАВИТЬ</string>
-    <string name="info">ОПИСАНИЕ</string>
+    <string name="info">ИНФОРМАЦИЯ</string>
     <string name="black">ЧЕРНЫЙ</string>
     <string name="red">КРАСНЫЙ</string>
     <string name="next">ДАЛЕЕ</string>
@@ -84,20 +82,20 @@
     <string name="rules_roulette">В НАСТОЯЩЕЕ ВРЕМЯ ИГРА НАХОДИТСЯ В РАЗРАБОТКЕ. МЫ ХОТИМ РЕАЛИЗОВАТЬ КЛАССИЧЕСКУЮ ИГРУ В РУЛЕТКУ С МАКСИМАЛЬНЫМ КАЧЕСТВОМ</string>
     <string name="congratulations_yoyr_bet_is_won_loto">ПОЗДРАВЛЯЕМ! ВАША СТАВКА ВЫИГРАЛА В ЛОТО! ВЫИГРЫШ СОСТАВЛЯЕТ - %s XRP - ИГРАЙТЕ И ПОБЕЖДАЙТЕ!</string>
     <string name="congratulations_yoyr_bet_is_won">ПОЗДРАВЛЯЕМ! ВАША СТАВКА ВЫИГРАЛА! ВЫИГРЫШ СОСТАВЛЯЕТ - %s XRP - ИГРАЙТЕ И ПОБЕЖДАЙТЕ!</string>
-    <string name="your_bet_is_lost_try_again">ВАША СТАВКА ПРОИГРАЛА - ПОПРОБУЙТЕ СНОВА И ВАМ ОБЯЗАТЕЛЬНО УЛЫБНЕТСЯ УДАЧА!</string>
-    <string name="guessed_number_should_not_be_less_than">УГАДЫВАЕМОЕ ЧИСЛО НЕ ДОЛЖНО БЫТЬ МЕНЬШЕ - 1 - И БОЛЬШЕ - 36</string>
-    <string name="get_recovery_become_referral">ЗАКАЗА УСПЕШНО ОТПРАВЛЕН - ПОЖАЛУЙСТА, ПОДОЖДИТЕ ОТВЕТА ОТ СЕРВЕРА</string>
+    <string name="your_bet_is_lost_try_again">ВАША СТАВКА ПРОИГРАЛА — ПОПРОБУЙТЕ СНОВА, УДАЧА ПРИДЁТ!</string>
+    <string name="guessed_number_should_not_be_less_than">Число должно быть от 1 до 36</string>
+    <string name="get_recovery_become_referral">Запрос восстановления реферала отправлен — ожидайте ответа сервера</string>
     <string name="go_to_the_dark_side_find_the_secret_button">ПЕРЕХОДИ НА ТЕМНУЮ СТОРОНУ - НАЙДИ СЕКРЕТНУЮ КНОПКУ</string>
-    <string name="get_becom_referral_enum">ЗАКАЗ УСПЕШНО ОТПРАВЛЕН - ПОЖАЛУЙСТА, ПОДОЖДИТЕ ОТВЕТА ОТ СЕРВЕРА</string>
+    <string name="get_becom_referral_enum">Заявка на реферала отправлена — ожидайте ответа сервера</string>
     <string name="create_new_wallet_text">ОБЯЗАТЕЛЬНО СОХРАНИТЕ КЛЮЧ И НЕ ПЕРЕДАВАЙТЕ ЕГО ТРЕТЬИМ ЛИЦАМ</string>
     <string name="your_account_is_not_enough_to_send">НА ВАШЕМ СЧЕТУ НЕ ДОСТАТОЧНО СРЕДСТВ ДЛЯ ОТПРАВКИ</string>
-    <string name="error_check_the_seed_and_try_again">ОШИБКА - ПРОВЕРЬТЕ КЛЮЧ И ПОПРОБУЙТЕ ЕЩЕ РАЗ</string>
+    <string name="error_check_the_seed_and_try_again">Ошибка: проверьте seed-фразу и попробуйте ещё раз</string>
     <string name="tag_knowledge_cannot_be_more">Значение тега слишком большое</string>
     <string name="last_text_two">НЕ РАССТРАИВАЙТЕСЬ - ИГРАЙТЕ ДАЛЬШЕ И ВАМ ОБЯЗАТЕЛЬНО ПОВЕЗЕТ</string>
     <string name="set_password_to_enter_application">УСТАНОВИТЕ ПАРОЛЬ ДЛЯ ВХОДА В ПРИЛОЖЕНИЕ</string>
     <string name="become_referral_and_start_earning">СТАНЬТЕ РЕФЕРАЛОМ И НАЧНИТЕ ЗАРАБАТЫВАТЬ</string>
-    <string name="check_the_seed_and_try_again">ОШИБКА - проверьте ключ и попробуйте еще раз</string>
-    <string name="bet_is_made_expect_the_result">СТАВКА СДЕЛАНА - ОЖИДАЙТЕ РЕЗУЛЬТАТ</string>
+    <string name="check_the_seed_and_try_again">Ошибка: проверьте seed-фразу и попробуйте ещё раз.</string>
+    <string name="bet_is_made_expect_the_result">СТАВКА ПРИНЯТА — ОЖИДАЙТЕ РЕЗУЛЬТАТ</string>
     <string name="addres_copied_to_phone_buffer">Адрес скопирован в буфер обмена</string>
     <string name="code_copied_to_phone_buffer">Код скопирован в буфер обмена</string>
     <string name="it_is_not_possible_to_send_null">Сумма не может быть пустой</string>
@@ -127,7 +125,6 @@
     <string name="enter_password">ВВЕДИТЕ ПАРОЛЬ</string>
     <string name="guess_the_color">УГАДАЙТЕ ЦВЕТ</string>
     <string name="congratulations">ПОЗДРАВЛЯЕМ</string>
-    <string name="settings_settings">НАСТРОЙКИ</string>
     <string name="repeat_enter">Повторите ввод</string>
     <string name="lead_the_seed">Введите ключ</string>
     <string name="seed_generating">Генерация seed-фразы…</string>
@@ -191,7 +188,7 @@
 
 
 
-    <string name="info_main_text">ОПИСАНИЕ</string>
+    <string name="info_main_text">ИНФОРМАЦИЯ</string>
 
     <string name="it_is_important_to_know">Важно знать:</string>
     <string name="it_is_important_to_know_1"> • Мы не являемся официальным кошельком компании XRP или Ripple.</string>
@@ -269,35 +266,35 @@
     <string name="about_benefits_9"> • Более 90% всех проигранных ставок ежедневно разыгрываются между активными игроками дня.</string>
 
     <string name="about_benefits">О ПРЕИМУЩЕСТВАХ</string>
-    <string name="it_s_important_to_know_1"> • Our application is the embodiment of our vision of the future - where games and the wallet are one.</string>
-    <string name="it_s_important_to_know_2"> • You no longer need to transfer your money somewhere, top up your balance, register - remember passwords and keys.</string>
-    <string name="it_s_important_to_know_3"> • We do not store or send your keys anywhere.</string>
-    <string name="it_s_important_to_know_4"> • You will no longer risk funds - transferring them somewhere.</string>
-    <string name="it_s_important_to_know_5"> • No one can block you or take away your money.</string>
-    <string name="it_s_important_to_know_6"> • In our vision of future games, all these moments should be replaced by just one recovery phrase from your wallet.</string>
-    <string name="it_s_important_to_know_7"> • Your key to your wallet is also the key to everything.</string>
-    <string name="it_s_important_to_know_8"> • As soon as you have restored your wallet, you are immediately ready to play, nothing else is needed.</string>
-    <string name="it_s_important_to_know_9"> • You can use our wallet without any restrictions - it is not necessary to play, everything is only according to your desire.</string>
-    <string name="it_s_important_to_know_10"> • For active users, we provide rewards. Any of our users playing our games can win our SUPER LOTTO and more.</string>
-    <string name="it_s_important_to_know_11"> • Any user can become our referral and earn 5% of the attracted funds, as well as from the prize pool.</string>
-    <string name="it_s_important_to_know_12"> • Другие комиссии или сборы: отсутствуют</string>
+    <string name="it_s_important_to_know_1"> • Наше приложение — воплощение нашего видения будущего, где игры и кошелёк едины.</string>
+    <string name="it_s_important_to_know_2"> • Больше не нужно переводить деньги, пополнять баланс, регистрироваться и помнить пароли.</string>
+    <string name="it_s_important_to_know_3"> • Мы не храним и не передаём ваши ключи куда-либо.</string>
+    <string name="it_s_important_to_know_4"> • Вы больше не рискуете средствами, переводя их куда-либо.</string>
+    <string name="it_s_important_to_know_5"> • Никто не может вас заблокировать или забрать ваши деньги.</string>
+    <string name="it_s_important_to_know_6"> • В нашем видении будущего всё это заменяет одна фраза восстановления кошелька.</string>
+    <string name="it_s_important_to_know_7"> • Ключ от вашего кошелька — это ключ ко всему.</string>
+    <string name="it_s_important_to_know_8"> • Как только вы восстановили кошелёк — вы сразу готовы к игре, больше ничего не нужно.</string>
+    <string name="it_s_important_to_know_9"> • Вы можете использовать наш кошелёк без ограничений — играть необязательно, всё только по вашему желанию.</string>
+    <string name="it_s_important_to_know_10"> • Активным пользователям мы предоставляем вознаграждения. Любой игрок может выиграть СУПЕР ЛОТО и многое другое.</string>
+    <string name="it_s_important_to_know_11"> • Любой пользователь может стать нашим рефералом и зарабатывать 5% от привлечённых средств и призового фонда.</string>
+    <string name="it_s_important_to_know_12"> • Другие комиссии или сборы: отсутствуют.</string>
 
-    <string name="our_advantages">OUR ADVANTAGES</string>
-    <string name="our_advantages_1"> • The whole system works fully automatically.</string>
-    <string name="our_advantages_2"> • The system is as loyal and democratic as possible, and takes into account the interests of the user as much as possible.</string>
-    <string name="our_advantages_3"> • Part of the system code is already in the public domain.</string>
-    <string name="our_advantages_4"> • Further, after we finish everything and bring it to perfection, as well as take into account and implement your wishes, we will put all the code in the public domain.</string>
-    <string name="our_advantages_5"> • We strive for the most fair and honest conditions for everyone.</string>
-    <string name="our_advantages_6"> • We do not track your location and other data.</string>
-    <string name="our_advantages_7"> • We do not divide our users into classes.</string>
-    <string name="our_advantages_8"> • All actions performed in our games are fully accounted for and permanently recorded in the XRP ledger.</string>
-    <string name="our_advantages_9"> • We make the system as automatic and secure as possible, as well as decentralized.</string>
-    <string name="our_advantages_10"> • And we do not have endpoints of access to our servers, therefore it is impossible to attack them, as well as to find them - all communication with the server goes through the blockchain.</string>
-    <string name="our_advantages_11"> • We plan to develop further, increase functionality and expand the range of gaming options.</string>
+    <string name="our_advantages">НАШИ ПРЕИМУЩЕСТВА</string>
+    <string name="our_advantages_1"> • Система работает полностью автоматически.</string>
+    <string name="our_advantages_2"> • Система максимально лояльна и демократична, учитывает интересы пользователя.</string>
+    <string name="our_advantages_3"> • Часть кода системы уже находится в открытом доступе.</string>
+    <string name="our_advantages_4"> • В дальнейшем, после завершения и доработки с учётом ваших пожеланий, мы откроем весь код.</string>
+    <string name="our_advantages_5"> • Мы стремимся к максимально честным и справедливым условиям для всех.</string>
+    <string name="our_advantages_6"> • Мы не отслеживаем ваше местоположение и другие данные.</string>
+    <string name="our_advantages_7"> • Мы не делим пользователей на категории.</string>
+    <string name="our_advantages_8"> • Все действия в наших играх полностью учитываются и навсегда записываются в реестр XRP.</string>
+    <string name="our_advantages_9"> • Мы делаем систему максимально автоматической, безопасной и децентрализованной.</string>
+    <string name="our_advantages_10"> • У нас нет открытых точек доступа к серверам — атаковать или найти их невозможно, так как всё общение идёт через блокчейн.</string>
+    <string name="our_advantages_11"> • Мы планируем развиваться, расширять функциональность и игровые возможности.</string>
 
-    <string name="our_goal">OUR GOAL</string>
-    <string name="our_goal_1"> • Our main goal is to make games available to everyone and anywhere in the world at any time you wish. And also so that everyone has the same and fair conditions both in the game and in the opportunity to earn in our system..</string>
-    <string name="our_goal_2"> • Good luck and thank you for your trust in choosing our application.</string>
+    <string name="our_goal">НАША ЦЕЛЬ</string>
+    <string name="our_goal_1"> • Наша главная цель — сделать игры доступными для всех, везде и в любое время. А также обеспечить равные и справедливые условия как в игре, так и в возможности зарабатывать в нашей системе.</string>
+    <string name="our_goal_2"> • Удачи и спасибо, что доверились нашему приложению.</string>
 
     <string name="biometric_dialog_title">ВКЛЮЧИТЬ БИОМЕТРИЮ?</string>
     <string name="biometric_dialog_message">Используйте отпечаток пальца или Face ID для разблокировки кошелька вместо пароля</string>
