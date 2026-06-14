@@ -34,9 +34,11 @@ public class SelectLanguage extends BaseActivity {
 
     private View settingsRussianLinc;
     private View settingsEnglishLinc;
+    private View settingsChineseLinc;
     private TextView settingsTextView;
     private TextView russianTitle;
     private TextView englishTitle;
+    private TextView chineseTitle;
 
     private String languageNow;
 
@@ -55,11 +57,13 @@ public class SelectLanguage extends BaseActivity {
 
 
     private void setButtons() {
-        settingsRussianLinc = findViewById(R.id.settings_russian_linc);
-        settingsEnglishLinc = findViewById(R.id.settings_english_linc);
-        settingsTextView    = findViewById(R.id.settings_text_view);
-        russianTitle        = findViewById(R.id.russian_title);
-        englishTitle        = findViewById(R.id.english_title);
+        settingsRussianLinc  = findViewById(R.id.settings_russian_linc);
+        settingsEnglishLinc  = findViewById(R.id.settings_english_linc);
+        settingsChineseLinc  = findViewById(R.id.settings_chinese_linc);
+        settingsTextView     = findViewById(R.id.settings_text_view);
+        russianTitle         = findViewById(R.id.russian_title);
+        englishTitle         = findViewById(R.id.english_title);
+        chineseTitle         = findViewById(R.id.chinese_title);
     }
 
 
@@ -76,17 +80,23 @@ public class SelectLanguage extends BaseActivity {
 
 
     private void highlightSelectedLanguage() {
-        boolean isRussian = languageNow.equalsIgnoreCase(StringEnum.APP_RUSSIAN_LANGUAGE.getValue());
+        boolean isRussian  = languageNow.equalsIgnoreCase(StringEnum.APP_RUSSIAN_LANGUAGE.getValue());
+        boolean isChinese  = languageNow.equalsIgnoreCase(StringEnum.APP_CHINESE_LANGUAGE.getValue());
+        boolean isEnglish  = !isRussian && !isChinese;
 
         settingsRussianLinc.setBackground(ContextCompat.getDrawable(this,
                 isRussian ? R.drawable.bg_card_action_primary : R.drawable.bg_card_glass_clickable));
         settingsEnglishLinc.setBackground(ContextCompat.getDrawable(this,
-                isRussian ? R.drawable.bg_card_glass_clickable : R.drawable.bg_card_action_primary));
+                isEnglish ? R.drawable.bg_card_action_primary : R.drawable.bg_card_glass_clickable));
+        settingsChineseLinc.setBackground(ContextCompat.getDrawable(this,
+                isChinese ? R.drawable.bg_card_action_primary : R.drawable.bg_card_glass_clickable));
 
         russianTitle.setTextColor(ContextCompat.getColor(this,
                 isRussian ? R.color.xura_cyan : R.color.xura_text_primary));
         englishTitle.setTextColor(ContextCompat.getColor(this,
-                isRussian ? R.color.xura_text_primary : R.color.xura_cyan));
+                isEnglish ? R.color.xura_cyan : R.color.xura_text_primary));
+        chineseTitle.setTextColor(ContextCompat.getColor(this,
+                isChinese ? R.color.xura_cyan : R.color.xura_text_primary));
     }
 
 
@@ -102,6 +112,13 @@ public class SelectLanguage extends BaseActivity {
             pulse(v);
             if (!languageNow.equalsIgnoreCase(StringEnum.APP_ENGLISH_LANGUAGE.getValue())) {
                 makeStackThread(StringEnum.APP_ENGLISH_LANGUAGE);
+            }
+        });
+
+        settingsChineseLinc.setOnClickListener(v -> {
+            pulse(v);
+            if (!languageNow.equalsIgnoreCase(StringEnum.APP_CHINESE_LANGUAGE.getValue())) {
+                makeStackThread(StringEnum.APP_CHINESE_LANGUAGE);
             }
         });
     }

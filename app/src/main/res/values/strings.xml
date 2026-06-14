@@ -323,6 +323,8 @@
     <string name="btn_sub_set">Apply and save</string>
     <string name="btn_sub_russian">Переключить на русский</string>
     <string name="btn_sub_english">Switch to English</string>
+    <string name="select_language_chinese">中文</string>
+    <string name="btn_sub_chinese">切换到中文</string>
     <string name="btn_sub_game_mode">Trial or live mode</string>
     <string name="btn_sub_spin">Spin the roulette wheel</string>
 

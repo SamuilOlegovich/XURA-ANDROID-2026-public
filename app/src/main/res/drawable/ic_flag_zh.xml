@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="36dp"
+    android:height="24dp"
+    android:viewportWidth="36"
+    android:viewportHeight="24">
+  <!-- red background -->
+  <path android:fillColor="#DE2910" android:pathData="M0,0 H36 V24 H0 Z"/>
+  <!-- large star (5-pointed, centre ~5,5) -->
+  <path android:fillColor="#FFDE00"
+      android:pathData="M5,1.8 L5.9,4.6 L8.9,4.6 L6.5,6.3 L7.4,9.1 L5,7.4 L2.6,9.1 L3.5,6.3 L1.1,4.6 L4.1,4.6 Z"/>
+  <!-- small star 1 -->
+  <path android:fillColor="#FFDE00"
+      android:pathData="M10,0.8 L10.5,2.3 L12.1,2.3 L10.8,3.2 L11.3,4.7 L10,3.8 L8.7,4.7 L9.2,3.2 L7.9,2.3 L9.5,2.3 Z"/>
+  <!-- small star 2 -->
+  <path android:fillColor="#FFDE00"
+      android:pathData="M12.5,3.5 L13,5 L14.6,5 L13.3,5.9 L13.8,7.4 L12.5,6.5 L11.2,7.4 L11.7,5.9 L10.4,5 L12,5 Z"/>
+  <!-- small star 3 -->
+  <path android:fillColor="#FFDE00"
+      android:pathData="M12.5,7 L13,8.5 L14.6,8.5 L13.3,9.4 L13.8,10.9 L12.5,10 L11.2,10.9 L11.7,9.4 L10.4,8.5 L12,8.5 Z"/>
+  <!-- small star 4 -->
+  <path android:fillColor="#FFDE00"
+      android:pathData="M10,9.8 L10.5,11.3 L12.1,11.3 L10.8,12.2 L11.3,13.7 L10,12.8 L8.7,13.7 L9.2,12.2 L7.9,11.3 L9.5,11.3 Z"/>
+</vector>

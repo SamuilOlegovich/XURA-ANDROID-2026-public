@@ -68,6 +68,8 @@
     <string name="btn_sub_set">Применить и сохранить</string>
     <string name="btn_sub_russian">Переключить на русский</string>
     <string name="btn_sub_english">Switch to English</string>
+    <string name="select_language_chinese">中文</string>
+    <string name="btn_sub_chinese">切换到中文</string>
     <string name="btn_sub_game_mode">Тестовый или реальный режим</string>
     <string name="btn_sub_spin">Крутить колесо рулетки</string>
 
