@@ -159,6 +159,10 @@ public class SelectGame extends BaseActivity {
         for (int i = 0; i < cards.length; i++) {
             animateBounce(cards[i], (long) i * WAVE_STAGGER_MS, bounceY);
         }
+
+        // Когда волна дошла до верхней карточки — логотип получает толчок снизу
+        long logoDelay = (long) (cards.length - 1) * WAVE_STAGGER_MS + 170L;
+        animateLogoJolt(logoDelay);
     }
 
     private void animateBounce(View card, long startDelay, float bounceY) {
@@ -176,6 +180,28 @@ public class SelectGame extends BaseActivity {
         bounce.playSequentially(up, down);
         bounce.setStartDelay(startDelay);
         bounce.start();
+    }
+
+    private void animateLogoJolt(long startDelay) {
+        View logo = findViewById(R.id.logo_xura);
+        if (logo == null) return;
+
+        float joltY = 8 * getResources().getDisplayMetrics().density; // лёгкий толчок — 8dp
+
+        // Вниз: волна "давит" на лого снизу — оно чуть просаживается
+        ObjectAnimator down = ObjectAnimator.ofFloat(logo, "translationY", 0f, joltY);
+        down.setDuration(80);
+        down.setInterpolator(new DecelerateInterpolator());
+
+        // Вверх: пружинит с небольшим overshoot
+        ObjectAnimator up = ObjectAnimator.ofFloat(logo, "translationY", joltY, 0f);
+        up.setDuration(200);
+        up.setInterpolator(new OvershootInterpolator(2.5f));
+
+        AnimatorSet jolt = new AnimatorSet();
+        jolt.playSequentially(down, up);
+        jolt.setStartDelay(startDelay);
+        jolt.start();
     }
 
 
