@@ -197,19 +197,28 @@ public class MainActivity extends BaseActivity {
 
 
 
+    private TextView tvTestnetBadge;
+
     private void setButtons() {
         transactionHistory = findViewById(R.id.transaction_history_link);
-        yourBalanceText = findViewById(R.id.your_balance_text);
-        request = findViewById(R.id.request_link);
-        balance = findViewById(R.id.balance_linc);
-        balanceLoading = findViewById(R.id.balance_loading);
-        send = findViewById(R.id.next_link);
+        yourBalanceText    = findViewById(R.id.your_balance_text);
+        request            = findViewById(R.id.request_link);
+        balance            = findViewById(R.id.balance_linc);
+        balanceLoading     = findViewById(R.id.balance_loading);
+        send               = findViewById(R.id.next_link);
+        tvTestnetBadge     = findViewById(R.id.tv_testnet_badge);
     }
 
 
     @SuppressLint("SetTextI18n")
     private void setLanguage() {
         yourBalanceText.setText(R.string.your_balance);
+        updateTestnetBadge();
+    }
+
+    private void updateTestnetBadge() {
+        if (tvTestnetBadge == null) return;
+        tvTestnetBadge.setVisibility(NetworkConfig.IS_TESTNET ? View.VISIBLE : View.GONE);
     }
 
 
@@ -258,6 +267,7 @@ public class MainActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         VISIBLE_ON_SCREEN = true;
+        updateTestnetBadge();
         if (Boolean.TRUE.equals(viewModel.getWalletReady().getValue())) {
             viewModel.loadBalance();
         }

@@ -361,6 +361,7 @@ public class WalletXRP implements MyWallets {
 
     private void getInformationAboutYourAccount() {
         try {
+            createConnect(); // always use current network (testnet/mainnet may have changed)
             requestParams = AccountInfoRequestParams.builder()
                     .ledgerSpecifier(LedgerSpecifier.VALIDATED)
                     .account(classicAddress)

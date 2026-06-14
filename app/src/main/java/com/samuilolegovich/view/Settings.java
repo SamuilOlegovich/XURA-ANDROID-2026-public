@@ -439,10 +439,13 @@ public class Settings extends BaseActivity {
 
         // Network switch
         devNetworkSwitch.setOnCheckedChangeListener((btn, isTestnet) -> {
-            NetworkConfig.IS_TESTNET = isTestnet;
-            NetworkConfig.save(PrefsHelper.get(this));
+            NetworkConfig.switchNetwork(PrefsHelper.get(this), isTestnet);
             updateNetworkLabel(isTestnet);
             btnDevFaucet.setVisibility(isTestnet ? View.VISIBLE : View.GONE);
+            // Reload address fields for the newly selected network
+            etDevRoulette.setText(NetworkConfig.SERVER_ROULETTE);
+            etDevColor.setText(NetworkConfig.SERVER_COLOR);
+            etDevNumber.setText(NetworkConfig.SERVER_NUMBER);
             String msg = isTestnet
                     ? getString(R.string.dev_network_switched_testnet)
                     : getString(R.string.dev_network_switched_mainnet);
