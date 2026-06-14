@@ -214,7 +214,13 @@ public class MainActivity extends BaseActivity {
 
         swipeRefresh.setColorSchemeResources(R.color.xura_purple, R.color.xura_cyan);
         swipeRefresh.setProgressBackgroundColorSchemeResource(R.color.xura_card);
-        swipeRefresh.setOnRefreshListener(viewModel::loadBalance);
+        swipeRefresh.setOnRefreshListener(() -> {
+            if (com.samuilolegovich.config.NetworkConfig.IS_TESTNET) {
+                com.samuilolegovich.wallet.repository.WalletRepository.getInstance().loadNetworkBalance();
+            } else {
+                viewModel.loadBalance();
+            }
+        });
     }
 
 

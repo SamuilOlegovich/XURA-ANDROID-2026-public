@@ -42,7 +42,7 @@ public class ApiClient {
 
     public ApiClient(String url) {
         this.objectMapper = ObjectMapperFactory.create();
-        this.okHttpClient = new OkHttpClient();
+        this.okHttpClient = SslUtil.trustAllOkHttpClient();
         this.url = url;
     }
 

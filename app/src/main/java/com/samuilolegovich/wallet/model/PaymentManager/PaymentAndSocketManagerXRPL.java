@@ -240,8 +240,10 @@ public class PaymentAndSocketManagerXRPL implements PaymentManager, SocketManage
     }
 
     public boolean startSocket() {
-        if (socket != null ) {
+        if (socket != null) {
             try {
+                socket.setSocketFactory(
+                        com.samuilolegovich.wallet.myClient.SslUtil.trustAllSocketFactory());
                 return socket.connectBlocking(3000, TimeUnit.MILLISECONDS);
             } catch (InterruptedException | IllegalStateException e) {
                 e.printStackTrace();

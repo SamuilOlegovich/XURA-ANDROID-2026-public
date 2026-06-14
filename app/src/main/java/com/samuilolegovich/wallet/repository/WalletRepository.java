@@ -82,12 +82,14 @@ public class WalletRepository {
         executor.execute(() -> updateBalance(getBalance()));
     }
 
-    // Fetches real on-chain balance regardless of game mode (used after faucet in DEV)
+    // Fetches real on-chain balance regardless of game mode (used after faucet and swipe-refresh in DEV/testnet)
     public void loadNetworkBalance() {
         executor.execute(() -> {
             BigDecimal balance = manager.getBalance(true);
             balanceLiveData.postValue(balance);
-            if (!Boolean.TRUE.equals(MainActivity.IS_REAL_GAME_MODE)) {
+            // Only persist if we got a real value — 0 usually means query failed, not empty wallet
+            if (!Boolean.TRUE.equals(MainActivity.IS_REAL_GAME_MODE)
+                    && balance.compareTo(BigDecimal.ZERO) > 0) {
                 saveTestBalance(balance);
             }
         });
