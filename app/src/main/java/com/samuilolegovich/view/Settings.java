@@ -169,7 +169,6 @@ public class Settings extends BaseActivity {
         } else {
             cardTestBalance.setVisibility(View.GONE);
         }
-        devTxHistoryLinc.setVisibility(isReal ? View.GONE : View.VISIBLE);
     }
 
     @SuppressLint("SetTextI18n")

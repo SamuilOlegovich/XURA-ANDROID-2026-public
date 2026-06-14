@@ -525,68 +525,6 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <!-- DEV: история транзакций с тестовыми данными — убрать перед релизом -->
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/dev_tx_history_linc"
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="24dp"
-                android:layout_marginBottom="12dp"
-                android:background="@drawable/bg_card_glass_clickable"
-                android:clickable="true"
-                android:focusable="true"
-                android:contentDescription="@string/transaction_history_text">
-
-                <TextView
-                    android:id="@+id/dev_tx_history_title"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="8dp"
-                    android:fontFamily="@font/montserrat"
-                    android:text="@string/transaction_history_text"
-                    android:textColor="@color/xura_purple"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:letterSpacing="0.03"
-                    app:layout_constraintBottom_toTopOf="@+id/dev_tx_history_subtitle"
-                    app:layout_constraintEnd_toStartOf="@+id/dev_tx_history_icon"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_chainStyle="packed" />
-
-                <TextView
-                    android:id="@+id/dev_tx_history_subtitle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginEnd="8dp"
-                    android:fontFamily="@font/montserrat"
-                    android:text="DEV · тестовые данные"
-                    android:textColor="@color/xura_text_tertiary"
-                    android:textSize="11sp"
-                    android:letterSpacing="0.02"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/dev_tx_history_icon"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/dev_tx_history_title" />
-
-                <ImageView
-                    android:id="@+id/dev_tx_history_icon"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="16dp"
-                    android:src="@drawable/ic_history"
-                    android:importantForAccessibility="no"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/xura_purple" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
             <!-- DEV card — hidden, unlocked by 7 taps on the settings title -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card_dev_network"
@@ -763,6 +701,28 @@
                             app:cornerRadius="12dp" />
 
                     </LinearLayout>
+
+                    <!-- TX History button -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/dev_tx_history_linc"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:layout_marginTop="8dp"
+                        android:insetTop="0dp"
+                        android:insetBottom="0dp"
+                        android:fontFamily="@font/montserrat"
+                        android:text="@string/transaction_history_text"
+                        android:textAllCaps="false"
+                        android:textColor="@color/xura_purple"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        app:backgroundTint="@color/xura_glass_fill"
+                        app:strokeColor="@color/xura_purple"
+                        app:strokeWidth="1dp"
+                        app:cornerRadius="12dp"
+                        app:icon="@drawable/ic_history"
+                        app:iconTint="@color/xura_purple"
+                        app:iconGravity="textStart" />
 
                 </LinearLayout>
 
