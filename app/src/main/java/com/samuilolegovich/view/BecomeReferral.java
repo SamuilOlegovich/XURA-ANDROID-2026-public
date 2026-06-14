@@ -72,7 +72,7 @@ public class BecomeReferral extends BaseActivity {
         GET_RECOVERY_BECOME_REFERRAL       = getString(R.string.get_recovery_become_referral);
         PAYMENT_AMOUNT_IS_INCORRECT        = getString(R.string.payment_amount_is_incorrect);
         WRONG_DESTINATION_ADDRESS          = getString(R.string.wrong_destination_address);
-        GET_BECOME_REFERRAL                = getString(R.string.get_becom_referral_enum);
+        GET_BECOME_REFERRAL                = getString(R.string.get_become_referral_enum);
         textReferral.setText(R.string.become_referral_and_start_earning);
     }
 

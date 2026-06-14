@@ -196,7 +196,7 @@ public class GuessTheNumberGame extends BaseActivity {
         WRONG_DESTINATION_ADDRESS = getString(R.string.wrong_destination_address);
         BET_CANNOT_BE_MORE_THAN = getString(R.string.bet_cannot_be_more_than);
         BET_CANNOT_BE_LESS_THAN = getString(R.string.bet_cannot_be_less_than);
-        nameGameTextViewTwo.setText(R.string.and_get_a_hundred_times_more);
+        nameGameTextViewTwo.setText(R.string.and_get_36_times_more);
         nameGameTextView.setText(R.string.guess_the_number);
         nameGameTextViewTree.setText(R.string.your_balance);
         rulesInfo.setText(R.string.rules_of_the_game);

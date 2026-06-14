@@ -83,9 +83,9 @@ public class ReceivePayment extends BaseActivity {
 
 
     private void setLanguage() {
-        ADDRESS_COPIED_TO_PHONE_BUFFER = getString(R.string.addres_copied_to_phone_buffer);
+        ADDRESS_COPIED_TO_PHONE_BUFFER = getString(R.string.address_copied_to_phone_buffer);
         receivePaymentTextViewTow.setText(R.string.your_address);
-        receivePaymentTextView.setText(R.string.requesr_xrp);
+        receivePaymentTextView.setText(R.string.request_xrp);
     }
 
 
