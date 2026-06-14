@@ -1,14 +1,18 @@
 package com.samuilolegovich.assistants;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.core.widget.ImageViewCompat;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
@@ -36,6 +40,7 @@ public class HistoryPaymentAdapter extends ListAdapter<HistoryPaymentDto, Histor
                 }
             };
 
+    // Локализованные метки (загружаются один раз в конструкторе)
     private final String referralRecoveryHistory;
     private final String referralOrderHistory;
     private final String wonTheLottoHistory;
@@ -91,13 +96,41 @@ public class HistoryPaymentAdapter extends ListAdapter<HistoryPaymentDto, Histor
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         HistoryPaymentDto item = getItem(position);
-        holder.address.setText(item.getAddress());
-        holder.amount.setText(item.getTag().startsWith("-")
-                ? item.getAmount()
-                : item.getAmount() + processTag(item.getTag()));
+        Context ctx = holder.itemView.getContext();
+
+        String tag = item.getTag();
+        String amt = item.getAmount();
+        boolean incoming = amt.startsWith("+");
+
+        // Сумма: зелёная для входящих, розовая для исходящих
+        int amountColor = incoming
+                ? ContextCompat.getColor(ctx, R.color.xura_success)
+                : ContextCompat.getColor(ctx, R.color.xura_pink);
+        holder.amount.setText(amt);
+        holder.amount.setTextColor(amountColor);
+
+        // Метка типа операции
+        holder.label.setText(getDisplayLabel(tag));
+        holder.label.setTextColor(getLabelColor(ctx, tag, incoming));
+
+        // Адрес контрагента — сокращаем до rXXXXX…XXXX
+        holder.address.setText(truncateAddress(item.getAddress()));
+
+        // Иконка с цветным tint
+        holder.icon.setImageResource(getIconRes(tag, incoming));
+        ImageViewCompat.setImageTintList(
+                holder.icon,
+                ColorStateList.valueOf(getIconColor(ctx, tag, incoming))
+        );
     }
 
 
+
+    // ─── Метка типа ──────────────────────────────────────────────────────────
+
+    private String getDisplayLabel(String tag) {
+        return processTag(tag).trim();
+    }
 
     private String processTag(String tag) {
         if (tag.startsWith("BET:RED")) return " " + betOnRedHistory;
@@ -113,21 +146,79 @@ public class HistoryPaymentAdapter extends ListAdapter<HistoryPaymentDto, Histor
         if (tag.equals("JKPT") || tag.startsWith("JKPT:")) return " " + wonTheLottoHistory;
         if (tag.equals("DON")  || tag.startsWith("DON:"))  return " " + donationHistory;
         if (tag.equals("RFD")  || tag.startsWith("RFD:"))  return " " + refundHistory;
-        if (tag.equals("REF"))     return " " + referralOrderHistory;
-        if (tag.equals("REF:REC")) return " " + referralRecoveryHistory;
-        if (tag.startsWith("REF:")) return " " + referralHistory + " " + tag.substring(4);
+        if (tag.equals("REF"))                              return " " + referralOrderHistory;
+        if (tag.equals("REF:REC"))                         return " " + referralRecoveryHistory;
+        if (tag.startsWith("REF:"))                        return " " + referralHistory + " " + truncateAddress(tag.substring(4));
 
         return " " + tagHistory + " " + tag;
     }
 
 
+    // ─── Цвет метки ──────────────────────────────────────────────────────────
+
+    private int getLabelColor(Context ctx, String tag, boolean incoming) {
+        if (tag.equals("JKPT") || tag.startsWith("JKPT:")) return ContextCompat.getColor(ctx, R.color.xura_gold);
+        if (tag.equals("WIN")  || tag.startsWith("WIN:"))  return ContextCompat.getColor(ctx, R.color.xura_success);
+        if (tag.equals("LOSE") || tag.startsWith("LOSE:")) return ContextCompat.getColor(ctx, R.color.xura_error);
+        if (tag.equals("REF")  || tag.startsWith("REF:"))  return ContextCompat.getColor(ctx, R.color.xura_text_primary);
+        return incoming
+                ? ContextCompat.getColor(ctx, R.color.xura_cyan)
+                : ContextCompat.getColor(ctx, R.color.xura_text_secondary);
+    }
+
+
+    // ─── Иконка ──────────────────────────────────────────────────────────────
+
+    private int getIconRes(String tag, boolean incoming) {
+        if (tag.equals("WIN")  || tag.startsWith("WIN:"))  return R.drawable.ic_check_circle;
+        if (tag.equals("LOSE") || tag.startsWith("LOSE:")) return R.drawable.ic_lost_x;
+        if (tag.equals("JKPT") || tag.startsWith("JKPT:")) return R.drawable.ic_bolt;
+        if (tag.startsWith("BET:RED"))                     return R.drawable.ic_favorite;
+        if (tag.startsWith("BET:BLK"))                     return R.drawable.ic_clubs;
+        if (tag.startsWith("BET:N:"))                      return R.drawable.ic_target;
+        if (tag.equals("RFD")  || tag.startsWith("RFD:"))  return R.drawable.ic_restore;
+        if (tag.equals("DON")  || tag.startsWith("DON:"))  return R.drawable.ic_favorite;
+        if (tag.equals("REF:REC"))                         return R.drawable.ic_referral_restore;
+        if (tag.equals("REF")  || tag.startsWith("REF:"))  return R.drawable.ic_referral;
+        return incoming ? R.drawable.ic_receive_arrow : R.drawable.ic_send_arrow;
+    }
+
+    private int getIconColor(Context ctx, String tag, boolean incoming) {
+        if (tag.equals("WIN")  || tag.startsWith("WIN:"))  return ContextCompat.getColor(ctx, R.color.xura_success);
+        if (tag.equals("LOSE") || tag.startsWith("LOSE:")) return ContextCompat.getColor(ctx, R.color.xura_error);
+        if (tag.equals("JKPT") || tag.startsWith("JKPT:")) return ContextCompat.getColor(ctx, R.color.xura_gold);
+        if (tag.startsWith("BET:RED"))                     return ContextCompat.getColor(ctx, R.color.xura_pink);
+        if (tag.startsWith("BET:BLK"))                     return ContextCompat.getColor(ctx, R.color.xura_text_secondary);
+        if (tag.startsWith("BET:N:"))                      return ContextCompat.getColor(ctx, R.color.xura_cyan);
+        if (tag.equals("RFD")  || tag.startsWith("RFD:"))  return ContextCompat.getColor(ctx, R.color.xura_cyan);
+        if (tag.equals("DON")  || tag.startsWith("DON:"))  return ContextCompat.getColor(ctx, R.color.xura_gold);
+        if (tag.startsWith("REF:"))                        return ContextCompat.getColor(ctx, R.color.xura_cyan);
+        if (tag.equals("REF"))                             return ContextCompat.getColor(ctx, R.color.xura_text_primary);
+        return incoming
+                ? ContextCompat.getColor(ctx, R.color.xura_cyan)
+                : ContextCompat.getColor(ctx, R.color.xura_text_tertiary);
+    }
+
+
+    // ─── Утилиты ─────────────────────────────────────────────────────────────
+
+    private String truncateAddress(String addr) {
+        if (addr == null || addr.length() <= 14) return addr;
+        return addr.substring(0, 6) + "…" + addr.substring(addr.length() - 4);
+    }
+
+
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        final TextView address;
-        final TextView amount;
+        final ImageView icon;
+        final TextView  label;
+        final TextView  address;
+        final TextView  amount;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
+            icon    = itemView.findViewById(R.id.ic_tx_type);
+            label   = itemView.findViewById(R.id.tx_label);
             address = itemView.findViewById(R.id.address);
             amount  = itemView.findViewById(R.id.amount_field);
         }
