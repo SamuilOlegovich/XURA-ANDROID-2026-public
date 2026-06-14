@@ -29,13 +29,36 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <!-- SETTINGS title — outside ScrollView so 7-tap dev unlock works reliably -->
+    <TextView
+        android:id="@+id/settings_text_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/settings_text"
+        android:textAlignment="center"
+        android:textColor="@color/xura_text_primary"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/montserrat"
+        android:gravity="center"
+        android:letterSpacing="0.02"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <!-- Scrollable content area -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fillViewport="true"
         android:scrollbarStyle="outsideOverlay"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settings_text_view"
         app:layout_constraintBottom_toTopOf="@+id/bottom_nav"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -46,24 +69,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingBottom="12dp">
-
-            <!-- SETTINGS title -->
-            <TextView
-                android:id="@+id/settings_text_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="40dp"
-                android:layout_marginEnd="24dp"
-                android:layout_marginBottom="16dp"
-                android:text="@string/settings_text"
-                android:textAlignment="center"
-                android:textColor="@color/xura_text_primary"
-                android:textSize="28sp"
-                android:textStyle="bold"
-                android:fontFamily="@font/montserrat"
-                android:gravity="center"
-                android:letterSpacing="0.02" />
 
             <!-- Test mode virtual balance card (visible only in test mode) -->
             <com.google.android.material.card.MaterialCardView
