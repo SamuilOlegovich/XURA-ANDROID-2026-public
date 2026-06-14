@@ -9,6 +9,11 @@
     android:background="@color/xura_black"
     tools:context=".MainActivity">
 
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
@@ -59,7 +64,7 @@
             android:paddingTop="4dp"
             android:paddingBottom="4dp"
             android:text="@string/settings_testnet_badge"
-            android:textColor="@color/xura_black"
+            android:textColor="@color/xura_text_primary"
             android:textSize="9sp"
             android:textStyle="bold"
             android:letterSpacing="0.1"
@@ -316,5 +321,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -2,6 +2,7 @@ package com.samuilolegovich;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
@@ -96,6 +97,7 @@ public class MainActivity extends BaseActivity {
             balance.setText(b.stripTrailingZeros().toPlainString() + " XRP");
             balance.setVisibility(View.VISIBLE);
             balanceLoading.setVisibility(View.GONE);
+            if (swipeRefresh != null) swipeRefresh.setRefreshing(false);
         });
 
 
@@ -197,7 +199,8 @@ public class MainActivity extends BaseActivity {
 
 
 
-    private TextView tvTestnetBadge;
+    private TextView           tvTestnetBadge;
+    private SwipeRefreshLayout swipeRefresh;
 
     private void setButtons() {
         transactionHistory = findViewById(R.id.transaction_history_link);
@@ -207,6 +210,11 @@ public class MainActivity extends BaseActivity {
         balanceLoading     = findViewById(R.id.balance_loading);
         send               = findViewById(R.id.next_link);
         tvTestnetBadge     = findViewById(R.id.tv_testnet_badge);
+        swipeRefresh       = findViewById(R.id.swipe_refresh);
+
+        swipeRefresh.setColorSchemeResources(R.color.xura_purple, R.color.xura_cyan);
+        swipeRefresh.setProgressBackgroundColorSchemeResource(R.color.xura_card);
+        swipeRefresh.setOnRefreshListener(viewModel::loadBalance);
     }
 
 
