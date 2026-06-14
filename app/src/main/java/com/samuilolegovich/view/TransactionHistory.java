@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.samuilolegovich.AppExecutors;
 import com.samuilolegovich.BaseActivity;
+import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 import com.samuilolegovich.assistants.HistoryCreator;
 import com.samuilolegovich.assistants.HistoryPaymentAdapter;
@@ -65,9 +66,11 @@ public class TransactionHistory extends BaseActivity {
 
 
     private void createHistoryThread() {
-        // TODO: убрать injectTestData() и раскомментировать настоящий вызов перед релизом
-        injectTestData();
-        // AppExecutors.io().execute(() -> historyCreator.createHistory());
+        if (Boolean.TRUE.equals(MainActivity.IS_REAL_GAME_MODE)) {
+            AppExecutors.io().execute(() -> historyCreator.createHistory());
+        } else {
+            injectTestData();
+        }
     }
 
     // Тестовые данные — все возможные типы записей для визуального ревью

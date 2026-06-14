@@ -115,12 +115,14 @@ public class Settings extends BaseActivity {
     }
 
     private void updateTestBalanceCard() {
-        if (!Boolean.TRUE.equals(MainActivity.IS_REAL_GAME_MODE)) {
+        boolean isReal = Boolean.TRUE.equals(MainActivity.IS_REAL_GAME_MODE);
+        if (!isReal) {
             cardTestBalance.setVisibility(View.VISIBLE);
             updateTestBalanceDisplay();
         } else {
             cardTestBalance.setVisibility(View.GONE);
         }
+        devTxHistoryLinc.setVisibility(isReal ? View.GONE : View.VISIBLE);
     }
 
     @SuppressLint("SetTextI18n")
