@@ -280,13 +280,16 @@
     <string name="roulette_notify_toast">We\'ll notify you when Roulette launches!</string>
 
     <string name="roulette_spin">SPIN</string>
-    <string name="roulette_select_a_bet">TAP A CELL TO SELECT YOUR BET</string>
+    <string name="roulette_select_a_bet">ENTER AMOUNT, THEN TAP A CELL TO PLACE A BET</string>
     <string name="roulette_bet_number">BET ON NUMBER:</string>
     <string name="roulette_first_dozen">1st 12</string>
     <string name="roulette_second_dozen">2nd 12</string>
     <string name="roulette_third_dozen">3rd 12</string>
     <string name="roulette_result_win">WON  +%s XRP</string>
     <string name="roulette_result_loss">LOST</string>
+    <string name="roulette_enter_amount_first">ENTER BET AMOUNT FIRST</string>
+    <string name="roulette_bets_summary">%1$d bet(s) · Total: %2$s XRP</string>
+    <string name="roulette_clear_bets">CLEAR</string>
 
     <string name="wallet_send_subtitle">Transfer XRP to any address</string>
     <string name="wallet_request_subtitle">Receive XRP · Share QR code</string>
@@ -323,5 +326,21 @@
     <string name="btn_sub_english">Switch to English</string>
     <string name="btn_sub_game_mode">Trial or live mode</string>
     <string name="btn_sub_spin">Spin the roulette wheel</string>
+
+    <!-- DEV section (hidden, 7 taps on title) -->
+    <string name="dev_section_title">DEV · NETWORK</string>
+    <string name="dev_network_mainnet">● MAINNET</string>
+    <string name="dev_network_testnet">◉ TESTNET</string>
+    <string name="dev_server_roulette_hint">Roulette server address</string>
+    <string name="dev_server_color_hint">Guess Color server address</string>
+    <string name="dev_server_number_hint">Guess Number server address</string>
+    <string name="dev_save_btn">SAVE</string>
+    <string name="dev_faucet_btn">GET TESTNET XRP</string>
+    <string name="dev_faucet_loading">Requesting…</string>
+    <string name="dev_faucet_success">Funded! Check balance in a few seconds.</string>
+    <string name="dev_faucet_error">Faucet request failed. Try again.</string>
+    <string name="dev_saved_toast">Settings saved.</string>
+    <string name="dev_network_switched_mainnet">Switched to MAINNET. Restart recommended.</string>
+    <string name="dev_network_switched_testnet">Switched to TESTNET. Restart recommended.</string>
 
 </resources>

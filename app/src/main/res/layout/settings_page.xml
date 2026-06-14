@@ -582,6 +582,187 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <!-- DEV card — hidden, unlocked by 7 taps on the settings title -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_dev_network"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="12dp"
+                android:visibility="gone"
+                app:cardBackgroundColor="@color/xura_card"
+                app:cardCornerRadius="16dp"
+                app:strokeColor="@color/xura_purple"
+                app:strokeWidth="1dp"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <!-- Section label -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat"
+                        android:text="@string/dev_section_title"
+                        android:textColor="@color/xura_purple"
+                        android:textSize="10sp"
+                        android:letterSpacing="0.12" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="12dp"
+                        android:background="@color/xura_glass_border" />
+
+                    <!-- Network toggle -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="12dp">
+
+                        <TextView
+                            android:id="@+id/dev_network_label"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/montserrat"
+                            android:text="@string/dev_network_mainnet"
+                            android:textColor="@color/xura_text_primary"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <com.google.android.material.switchmaterial.SwitchMaterial
+                            android:id="@+id/dev_network_switch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false" />
+
+                    </LinearLayout>
+
+                    <!-- Server: Roulette -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_dev_roulette"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:hint="@string/dev_server_roulette_hint"
+                        app:boxStrokeColor="@color/xura_purple"
+                        app:hintTextColor="@color/xura_text_tertiary">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_dev_roulette"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat"
+                            android:inputType="text"
+                            android:textColor="@color/xura_text_primary"
+                            android:textSize="11sp" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- Server: Guess Color -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_dev_color"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:hint="@string/dev_server_color_hint"
+                        app:boxStrokeColor="@color/xura_purple"
+                        app:hintTextColor="@color/xura_text_tertiary">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_dev_color"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat"
+                            android:inputType="text"
+                            android:textColor="@color/xura_text_primary"
+                            android:textSize="11sp" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- Server: Guess Number -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_dev_number"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:hint="@string/dev_server_number_hint"
+                        app:boxStrokeColor="@color/xura_purple"
+                        app:hintTextColor="@color/xura_text_tertiary">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_dev_number"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat"
+                            android:inputType="text"
+                            android:textColor="@color/xura_text_primary"
+                            android:textSize="11sp" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- Save + Faucet buttons -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_dev_save"
+                            android:layout_width="0dp"
+                            android:layout_height="44dp"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="4dp"
+                            android:insetTop="0dp"
+                            android:insetBottom="0dp"
+                            android:fontFamily="@font/montserrat"
+                            android:text="@string/dev_save_btn"
+                            android:textAllCaps="false"
+                            android:textColor="@color/xura_black"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            app:backgroundTint="@color/xura_purple"
+                            app:cornerRadius="12dp"
+                            app:rippleColor="#40000000" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_dev_faucet"
+                            android:layout_width="0dp"
+                            android:layout_height="44dp"
+                            android:layout_weight="1"
+                            android:layout_marginStart="4dp"
+                            android:insetTop="0dp"
+                            android:insetBottom="0dp"
+                            android:fontFamily="@font/montserrat"
+                            android:text="@string/dev_faucet_btn"
+                            android:textAllCaps="false"
+                            android:textColor="@color/xura_text_primary"
+                            android:textSize="11sp"
+                            android:visibility="gone"
+                            app:backgroundTint="@color/xura_glass_fill"
+                            app:strokeColor="@color/xura_purple"
+                            app:strokeWidth="1dp"
+                            app:cornerRadius="12dp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

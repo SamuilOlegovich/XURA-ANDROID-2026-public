@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.samuilolegovich.MainActivity;
+import com.samuilolegovich.config.NetworkConfig;
 import com.samuilolegovich.enums.StringEnum;
 import com.samuilolegovich.wallet.repository.WalletRepository;
 
@@ -67,7 +68,7 @@ public class GuessNumberViewModel extends ViewModel {
             boolean success;
             if (Boolean.TRUE.equals(MainActivity.IS_REAL_GAME_MODE)) {
                 success = repository.sendPayment(
-                        StringEnum.SERVER_ADDRESS_GUESS_THE_NUMBER.getValue(),
+                        NetworkConfig.SERVER_NUMBER,
                         memo,
                         new BigDecimal(amount));
             } else {

@@ -139,6 +139,30 @@
     <string name="your_balance">ВАШ БАЛАНС</string>
     <string name="send_payment">ОТПРАВИТЬ</string>
     <string name="roulette_game">РУЛЕТКА</string>
+    <string name="roulette_select_a_bet">ВВЕДИТЕ СУММУ, ЗАТЕМ НАЖМИТЕ НА ЯЧЕЙКУ</string>
+    <string name="roulette_bet_number">СТАВКА НА НОМЕР:</string>
+    <string name="roulette_first_dozen">1–12</string>
+    <string name="roulette_second_dozen">13–24</string>
+    <string name="roulette_third_dozen">25–36</string>
+    <string name="roulette_enter_amount_first">СНАЧАЛА ВВЕДИТЕ СУММУ СТАВКИ</string>
+    <string name="roulette_bets_summary">%1$d ставк(и) · Итого: %2$s XRP</string>
+    <string name="roulette_clear_bets">СБРОСИТЬ</string>
+
+    <!-- DEV section -->
+    <string name="dev_section_title">DEV · СЕТЬ</string>
+    <string name="dev_network_mainnet">● MAINNET</string>
+    <string name="dev_network_testnet">◉ TESTNET</string>
+    <string name="dev_server_roulette_hint">Адрес сервера рулетки</string>
+    <string name="dev_server_color_hint">Адрес сервера «угадай цвет»</string>
+    <string name="dev_server_number_hint">Адрес сервера «угадай число»</string>
+    <string name="dev_save_btn">СОХРАНИТЬ</string>
+    <string name="dev_faucet_btn">ПОЛУЧИТЬ TESTNET XRP</string>
+    <string name="dev_faucet_loading">Запрос…</string>
+    <string name="dev_faucet_success">Готово! Баланс обновится через несколько секунд.</string>
+    <string name="dev_faucet_error">Ошибка faucet. Попробуйте ещё раз.</string>
+    <string name="dev_saved_toast">Настройки сохранены.</string>
+    <string name="dev_network_switched_mainnet">Переключено на MAINNET. Рекомендуется перезапуск.</string>
+    <string name="dev_network_switched_testnet">Переключено на TESTNET. Рекомендуется перезапуск.</string>
     <string name="requesr_xrp">ПОЛУЧИТЬ</string>
     <string name="coming_soon">СКОРО</string>
     <string name="bet_lost">ПЕЧАЛЬКА</string>

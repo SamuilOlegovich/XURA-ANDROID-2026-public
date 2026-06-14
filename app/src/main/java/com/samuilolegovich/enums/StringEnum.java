@@ -64,11 +64,8 @@ public enum StringEnum {
 //    WSS_REAL_3("wss://xrpl.link"),
 
     FAUCET_CLIENT_HTTP_URL_TEST("https://faucet.altnet.rippletest.net"),
-//    ADDRESS_FOR_SEND_TEST("rPT1Sjq2YGrBMTttX4GZHjKu9dyfzbpAYe"),
-//    NET_TEST("https://s.altnet.rippletest.net:51234/"),
-//    WSS_TEST("wss://s.altnet.rippletest.net:51233"),
-//    SEED_TEST("sn3nxiW7v8KXzPzAqzyHXbSSKNuN9"),
-//    WSS_PORT_TEST("51233"),
+    NET_TEST("https://s.altnet.rippletest.net:51234/"),
+    WSS_TEST("wss://s.altnet.rippletest.net:51233"),
 
     ACTIVATION_PAYMENT_SOCKET("10000000"),
     ACTIVATION_PAYMENT("10.000000"),

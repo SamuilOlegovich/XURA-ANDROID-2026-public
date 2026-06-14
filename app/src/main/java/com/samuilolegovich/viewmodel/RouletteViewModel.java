@@ -5,10 +5,14 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.samuilolegovich.MainActivity;
+import com.samuilolegovich.config.NetworkConfig;
+import com.samuilolegovich.enums.RouletteBetCode;
 import com.samuilolegovich.enums.StringEnum;
 import com.samuilolegovich.wallet.repository.WalletRepository;
 
 import java.math.BigDecimal;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -38,6 +42,7 @@ public class RouletteViewModel extends ViewModel {
 
     public LiveData<BigDecimal> getBalance() { return repository.getBalanceLiveData(); }
     public LiveData<GameBetError> getError() { return errorLiveData; }
+    /** Posts total bet amount (XRP, plain string) on successful bet submission. */
     public LiveData<String> getBetSuccess() { return betSuccessLiveData; }
 
 
@@ -46,65 +51,104 @@ public class RouletteViewModel extends ViewModel {
         executor.execute(() -> repository.updateBalance(repository.getBalance()));
     }
 
-public void placeBet(String rawAmount, String betTag, String myReferral) {
+    /**
+     * Places one or more bets on the roulette table.
+     *
+     * In REAL mode: sends a single XRP payment to the server. The memo encodes every
+     * bet using compact codes from {@link RouletteBetCode}:
+     *   BET:R:n5@1.5,r@2.0,d1@0.5:referralCode
+     * Total XRP sent = sum of all individual bet amounts.
+     *
+     * In DEMO mode: does no network call — the existing NotifierRunForTrialGame
+     * evaluates the result locally (unchanged).
+     *
+     * @param bets      ordered map of bet tag → amount (e.g. "N:5" → 1.5)
+     * @param referral  player's referral code appended to memo
+     */
+    public void placeBets(LinkedHashMap<String, BigDecimal> bets, String referral) {
         executor.execute(() -> {
-            String amount = prepareAmount(rawAmount);
-            GameBetError error = validateAmount(amount);
-            if (error != null) {
-                errorLiveData.postValue(error);
+            if (bets == null || bets.isEmpty()) {
+                errorLiveData.postValue(GameBetError.NO_NUMBER_SELECTED);
                 return;
             }
 
-            String memo = "BET:R:" + betTag + ":" + myReferral;
+            // Validate each bet and accumulate total
+            BigDecimal total = BigDecimal.ZERO;
+            for (Map.Entry<String, BigDecimal> entry : bets.entrySet()) {
+                BigDecimal amount = roundToDrops(entry.getValue());
+                GameBetError err = validateSingleBetAmount(amount);
+                if (err != null) {
+                    errorLiveData.postValue(err);
+                    return;
+                }
+                total = total.add(amount);
+            }
+
+            // Check total against balance
+            BigDecimal balance = repository.getBalanceLiveData().getValue();
+            if (balance != null && total.compareTo(balance) > 0) {
+                errorLiveData.postValue(GameBetError.INSUFFICIENT_BALANCE);
+                return;
+            }
 
             boolean success;
             if (Boolean.TRUE.equals(MainActivity.IS_REAL_GAME_MODE)) {
+                String memo = buildMemo(bets, referral);
                 success = repository.sendPayment(
-                        StringEnum.SERVER_ADDRESS_ROULETTE.getValue(),
+                        NetworkConfig.SERVER_ROULETTE,
                         memo,
-                        new BigDecimal(amount));
+                        total);
             } else {
                 success = true;
             }
 
             if (success) {
                 repository.updateBalance(repository.getBalance());
-                betSuccessLiveData.postValue(amount);
+                betSuccessLiveData.postValue(total.toPlainString());
             } else {
                 errorLiveData.postValue(GameBetError.PAYMENT_FAILED);
             }
         });
     }
 
+    /**
+     * Builds the XRP memo string encoding all placed bets.
+     *
+     * Format:  BET:R:{code1}@{amt1},{code2}@{amt2},...:{referral}
+     * Example: BET:R:n5@1.5,r@2.0,d1@0.5:ref123
+     */
+    private String buildMemo(LinkedHashMap<String, BigDecimal> bets, String referral) {
+        StringBuilder sb = new StringBuilder("BET:R:");
+        boolean first = true;
+        for (Map.Entry<String, BigDecimal> entry : bets.entrySet()) {
+            if (!first) sb.append(",");
+            sb.append(RouletteBetCode.tagToCode(entry.getKey()));
+            sb.append("@");
+            sb.append(entry.getValue().stripTrailingZeros().toPlainString());
+            first = false;
+        }
+        sb.append(":").append(referral != null ? referral : "0");
+        return sb.toString();
+    }
 
-
-    private GameBetError validateAmount(String amount) {
-        if (amount == null || amount.isEmpty()) return GameBetError.INVALID_AMOUNT;
-
-        BigDecimal a;
-        try { a = new BigDecimal(amount); }
-        catch (NumberFormatException e) { return GameBetError.INVALID_AMOUNT; }
-
+    private GameBetError validateSingleBetAmount(BigDecimal a) {
+        if (a == null) return GameBetError.INVALID_AMOUNT;
         if (a.compareTo(BigDecimal.ZERO) == 0) return GameBetError.AMOUNT_IS_ZERO;
-
-        BigDecimal balance = repository.getBalanceLiveData().getValue();
-        if (balance != null && a.compareTo(balance) > 0) return GameBetError.INSUFFICIENT_BALANCE;
-
         if (a.compareTo(new BigDecimal(StringEnum.MAX_BET_ROULETTE.getValue())) > 0)
             return GameBetError.BET_TOO_HIGH;
         if (a.compareTo(new BigDecimal(StringEnum.MIN_BET_ROULETTE.getValue())) < 0)
             return GameBetError.BET_TOO_LOW;
-
         return null;
     }
 
-    private String prepareAmount(String amount) {
-        if (amount.contains(".")) {
-            int i = amount.indexOf(".");
-            int max = i + 6;
-            if (max < amount.length()) return amount.substring(0, max + 1);
-        }
-        return amount;
+    /** Truncates to 6 decimal places (XRP drop precision). */
+    private BigDecimal roundToDrops(BigDecimal value) {
+        if (value == null) return BigDecimal.ZERO;
+        String s = value.toPlainString();
+        int dot = s.indexOf('.');
+        if (dot >= 0 && dot + 7 < s.length()) s = s.substring(0, dot + 7);
+        try { return new BigDecimal(s); }
+        catch (NumberFormatException e) { return BigDecimal.ZERO; }
     }
 
 

@@ -58,7 +58,7 @@ public class PaymentAndSocketManagerXRPL implements PaymentManager, SocketManage
     // подумаь может можно сделать более элегантную проверку на нулл -- чтобы не предавать его дадльше
     private WebSocketClient createNewSocket(boolean b) {
         try {
-            return new SocketXRP(StringEnum.WSS_REAL.getValue());
+            return new SocketXRP(com.samuilolegovich.config.NetworkConfig.getWssUrl());
         } catch (URISyntaxException e) { e.printStackTrace(); }
         return null;
     }
