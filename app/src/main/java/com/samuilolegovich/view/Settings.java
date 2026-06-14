@@ -4,6 +4,7 @@ import static com.samuilolegovich.view.BecomeReferral.BECOME_REFERRAL_CLASS;
 import static com.samuilolegovich.view.InfoMain.INFO_MAIN_CLASS;
 import static com.samuilolegovich.view.SelectLanguage.SELECT_LANGUAGE_CLASS;
 import static com.samuilolegovich.view.SettingsSetPasswordForApp.SETTINGS_SET_PASSWORD_FOR_APP_CLASS;
+import static com.samuilolegovich.view.TransactionHistory.TRANSACTION_HISTORY_CLASS;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -53,6 +54,7 @@ public class Settings extends BaseActivity {
     private android.widget.ImageView gameModeIcon;
     private View becomeReferralLinc;
     private View infoLinc;
+    private View devTxHistoryLinc;
     private View root;
 
 
@@ -86,6 +88,7 @@ public class Settings extends BaseActivity {
         gameModeIcon  = findViewById(R.id.game_mode_icon);
         becomeReferralLinc = findViewById(R.id.become_referral_linc);
         infoLinc = findViewById(R.id.info_settings_linc);
+        devTxHistoryLinc = findViewById(R.id.dev_tx_history_linc);
     }
 
 
@@ -214,6 +217,11 @@ public class Settings extends BaseActivity {
         infoLinc.setOnClickListener(v -> {
             pulse(v);
             goToAnotherPage(INFO_MAIN_CLASS);
+        });
+
+        devTxHistoryLinc.setOnClickListener(v -> {
+            pulse(v);
+            goToAnotherPage(TRANSACTION_HISTORY_CLASS);
         });
 
         btnResetTestBalance.setOnClickListener(v -> {
