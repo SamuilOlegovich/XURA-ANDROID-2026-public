@@ -724,6 +724,100 @@
                         app:iconTint="@color/xura_purple"
                         app:iconGravity="textStart" />
 
+                    <!-- Test Wallet Generator -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="12dp"
+                        android:background="@color/xura_glass_border" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:fontFamily="@font/montserrat"
+                        android:text="@string/dev_wallet_section"
+                        android:textColor="@color/xura_purple"
+                        android:textSize="10sp"
+                        android:letterSpacing="0.12" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_dev_gen_wallet"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:insetTop="0dp"
+                        android:insetBottom="0dp"
+                        android:fontFamily="@font/montserrat"
+                        android:text="@string/dev_gen_wallet_btn"
+                        android:textAllCaps="false"
+                        android:textColor="@color/xura_text_primary"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        app:backgroundTint="@color/xura_glass_fill"
+                        app:strokeColor="@color/xura_purple"
+                        app:strokeWidth="1dp"
+                        app:cornerRadius="12dp" />
+
+                    <LinearLayout
+                        android:id="@+id/layout_dev_wallet_result"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="8dp"
+                        android:visibility="gone">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/til_dev_wallet_address"
+                            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:hint="@string/dev_wallet_address_hint"
+                            app:boxStrokeColor="@color/xura_purple"
+                            app:hintTextColor="@color/xura_text_tertiary"
+                            app:endIconMode="custom"
+                            app:endIconDrawable="@drawable/ic_copy"
+                            app:endIconTint="@color/xura_purple">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/et_dev_wallet_address"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/montserrat"
+                                android:inputType="none"
+                                android:focusable="false"
+                                android:textColor="@color/xura_text_primary"
+                                android:textSize="11sp" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/til_dev_wallet_seed"
+                            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/dev_wallet_seed_hint"
+                            app:boxStrokeColor="@color/xura_purple"
+                            app:hintTextColor="@color/xura_text_tertiary"
+                            app:endIconMode="custom"
+                            app:endIconDrawable="@drawable/ic_copy"
+                            app:endIconTint="@color/xura_purple">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/et_dev_wallet_seed"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/montserrat"
+                                android:inputType="none"
+                                android:focusable="false"
+                                android:textColor="@color/xura_text_primary"
+                                android:textSize="11sp" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                    </LinearLayout>
+
                 </LinearLayout>
 
             </com.google.android.material.card.MaterialCardView>

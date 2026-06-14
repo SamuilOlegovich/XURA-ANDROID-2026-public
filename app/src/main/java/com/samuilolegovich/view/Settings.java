@@ -7,6 +7,9 @@ import static com.samuilolegovich.view.SettingsSetPasswordForApp.SETTINGS_SET_PA
 import static com.samuilolegovich.view.TransactionHistory.TRANSACTION_HISTORY_CLASS;
 
 import android.annotation.SuppressLint;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -34,7 +37,15 @@ import com.samuilolegovich.utils.BiometricHelper;
 import com.samuilolegovich.utils.PrefsHelper;
 import com.samuilolegovich.wallet.repository.WalletRepository;
 
+import org.xrpl.xrpl4j.codec.addresses.AddressBase58;
+import org.xrpl.xrpl4j.codec.addresses.Decoded;
+import org.xrpl.xrpl4j.crypto.keys.KeyPair;
+import org.xrpl.xrpl4j.crypto.keys.Seed;
+
+import com.google.common.primitives.UnsignedInteger;
+
 import java.io.IOException;
+import java.util.Collections;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -84,6 +95,12 @@ public class Settings extends BaseActivity {
     private EditText         etDevNumber;
     private MaterialButton   btnDevSave;
     private MaterialButton   btnDevFaucet;
+    private MaterialButton   btnDevGenWallet;
+    private View             layoutDevWalletResult;
+    private TextInputLayout  tilDevWalletAddress;
+    private TextInputLayout  tilDevWalletSeed;
+    private EditText         etDevWalletAddress;
+    private EditText         etDevWalletSeed;
 
     // ── DEV unlock: 7 taps on title ──────────────────────────────────────
     private static final int  UNLOCK_TAPS    = 7;
@@ -133,8 +150,14 @@ public class Settings extends BaseActivity {
         etDevRoulette    = findViewById(R.id.et_dev_roulette);
         etDevColor       = findViewById(R.id.et_dev_color);
         etDevNumber      = findViewById(R.id.et_dev_number);
-        btnDevSave       = findViewById(R.id.btn_dev_save);
-        btnDevFaucet     = findViewById(R.id.btn_dev_faucet);
+        btnDevSave          = findViewById(R.id.btn_dev_save);
+        btnDevFaucet        = findViewById(R.id.btn_dev_faucet);
+        btnDevGenWallet     = findViewById(R.id.btn_dev_gen_wallet);
+        layoutDevWalletResult = findViewById(R.id.layout_dev_wallet_result);
+        tilDevWalletAddress = findViewById(R.id.til_dev_wallet_address);
+        tilDevWalletSeed    = findViewById(R.id.til_dev_wallet_seed);
+        etDevWalletAddress  = findViewById(R.id.et_dev_wallet_address);
+        etDevWalletSeed     = findViewById(R.id.et_dev_wallet_seed);
     }
 
 
@@ -386,6 +409,42 @@ public class Settings extends BaseActivity {
             pulse(v);
             requestFaucet();
         });
+
+        btnDevGenWallet.setOnClickListener(v -> {
+            pulse(v);
+            generateTestWallet();
+        });
+
+        tilDevWalletAddress.setEndIconOnClickListener(v ->
+                copyToClipboard("address", etDevWalletAddress.getText().toString(),
+                        getString(R.string.dev_wallet_copied_address)));
+
+        tilDevWalletSeed.setEndIconOnClickListener(v ->
+                copyToClipboard("seed", etDevWalletSeed.getText().toString(),
+                        getString(R.string.dev_wallet_copied_seed)));
+    }
+
+    private void generateTestWallet() {
+        Seed seed = Seed.ed25519Seed();
+        KeyPair keyPair = seed.deriveKeyPair();
+        String address = keyPair.publicKey().deriveAddress().toString();
+
+        Decoded decoded = seed.decodedSeed();
+        String seedBase58 = AddressBase58.encode(
+                decoded.bytes(),
+                Collections.singletonList(decoded.version()),
+                UnsignedInteger.valueOf(16));
+
+        etDevWalletAddress.setText(address);
+        etDevWalletSeed.setText(seedBase58);
+        layoutDevWalletResult.setVisibility(View.VISIBLE);
+    }
+
+    private void copyToClipboard(String label, String text, String toast) {
+        if (text == null || text.isEmpty()) return;
+        ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        cm.setPrimaryClip(ClipData.newPlainText(label, text));
+        showSnackbar(root, toast, SnackbarType.INFO);
     }
 
 

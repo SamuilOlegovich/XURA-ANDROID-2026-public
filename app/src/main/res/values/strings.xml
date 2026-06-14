@@ -337,6 +337,12 @@
     <string name="dev_faucet_success">Funded! Check balance in a few seconds.</string>
     <string name="dev_faucet_error">Faucet request failed. Try again.</string>
     <string name="dev_saved_toast">Settings saved.</string>
+    <string name="dev_wallet_section">TEST WALLET</string>
+    <string name="dev_gen_wallet_btn">GENERATE WALLET</string>
+    <string name="dev_wallet_address_hint">Address</string>
+    <string name="dev_wallet_seed_hint">Seed phrase</string>
+    <string name="dev_wallet_copied_address">Address copied to clipboard</string>
+    <string name="dev_wallet_copied_seed">Seed copied to clipboard</string>
     <string name="dev_network_switched_mainnet">Switched to MAINNET. Restart recommended.</string>
     <string name="dev_network_switched_testnet">Switched to TESTNET. Restart recommended.</string>
 
