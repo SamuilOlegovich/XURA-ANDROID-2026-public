@@ -15,7 +15,7 @@
     <string name="rules_of_the_game">RULES OF THE GAME</string>
     <string name="become_a_referral">BECOME A REFERRAL</string>
     <string name="settings_set_password">SET PASSWORD</string>
-    <string name="select_game_mode">SELECT MODE GAME</string>
+    <string name="select_game_mode">SELECT GAME MODE</string>
     <string name="become_referral">BECOME A REFERRAL</string>
     <string name="restore_referral">RESTORE REFERRAL</string>
     <string name="select_game_mode_text_test">TRIAL</string>
@@ -52,9 +52,9 @@
     <string name="rules_guess_the_color">The rules of this game are very simple. You place a bet and indicate which color. If the color is guessed - your bet will be doubled. If the bet is lost, it goes to the savings fund - lotto. Absolutely any user can win a lotto, regardless of what and how much he bet - if the lotto sector falls out. And you can also win a mini lotto - it is one tenth of the lotto.\n\nThe minimum bet is 0.1 XRP, the maximum is 100 XRP.</string>
     <string name="referral_text">IF YOU HAVE A REFERRAL CODE - BE SURE TO ENTER IT - IT WILL GIVE YOU EXTRA LIVES ON YOUR BETS AND PARTICIPATION IN THE DAILY PRIZE DRAW</string>
     <string name="rules_roulette">CURRENTLY THE GAME IS UNDER DEVELOPMENT. WE WANT TO IMPLEMENT THE CLASSIC ROULETTE GAME WITH THE MAXIMUM QUALITY.</string>
-    <string name="congratulations_yoyr_bet_is_won_loto">CONGRATULATIONS!  YOUR BET IS WON THE LOTTO! THE WIN IS - %s XRP - PLAY AND KEEP WINING!</string>
+    <string name="congratulations_yoyr_bet_is_won_loto">CONGRATULATIONS! YOUR BET WON THE LOTTO! THE WIN IS %s XRP — PLAY AND KEEP WINNING!</string>
     <string name="get_recovery_become_referral">RECOVERY ORDER REFERRAL SUCCESSFULLY SENT - PLEASE WAIT FOR REPLY FROM THE SERVER</string>
-    <string name="congratulations_yoyr_bet_is_won">CONGRATULATIONS! YOUR BET IS WON! THE WIN IS - %s XRP - PLAY AND KEEP WINING!</string>
+    <string name="congratulations_yoyr_bet_is_won">CONGRATULATIONS! YOUR BET WON! THE WIN IS %s XRP — PLAY AND KEEP WINNING!</string>
     <string name="guessed_number_should_not_be_less_than">GUESSED NUMBER SHOULD NOT BE LESS THAN - 1 - AND MORE THAN - 36</string>
     <string name="get_becom_referral_enum">ORDER FOR REFERRAL SUCCESSFULLY SENT - PLEASE WAIT FOR REPLY FROM THE SERVER</string>
     <string name="go_to_the_dark_side_find_the_secret_button">GO TO THE DARK SIDE - FIND THE SECRET BUTTON!</string>
@@ -62,16 +62,16 @@
     <string name="create_new_wallet_text">BE SURE TO SAVE THE SEED AND DO NOT GIVE IT TO ANYONE</string>
     <string name="set_password_to_enter_application">SET A PASSWORD TO ENTER THE APPLICATION</string>
     <string name="error_check_the_seed_and_try_again">ERROR - CHECK THE SEED AND TRY AGAIN</string>
-    <string name="tag_knowledge_cannot_be_more">TAG KNOWLEDGE CANNOT BE MORE - 2147483647</string>
+    <string name="tag_knowledge_cannot_be_more">Destination tag value is too large</string>
     <string name="your_account_is_not_enough_to_send">YOUR ACCOUNT IS NOT ENOUGH TO SEND</string>
     <string name="become_referral_and_start_earning">BECOME A REFERRAL AND START EARNING</string>
     <string name="check_the_seed_and_try_again">ERROR - check the seed and try again.</string>
-    <string name="it_is_not_possible_to_send_null">IT IS NOT POSSIBLE TO SEND NULL</string>
+    <string name="it_is_not_possible_to_send_null">Amount cannot be empty</string>
     <string name="bet_is_made_expect_the_result">BET IS MADE - EXPECT THE RESULT</string>
-    <string name="last_text_two">DONT WORRY - PLAY FURTHER AND YOU WILL BE LUCKY</string>
-    <string name="addres_copied_to_phone_buffer">ADDRESS COPIED TO PHONE BUFFER</string>
+    <string name="last_text_two">DON\'T WORRY — KEEP PLAYING AND LUCK WILL COME!</string>
+    <string name="addres_copied_to_phone_buffer">Address copied to clipboard</string>
     <string name="payment_amount_is_incorrect">PAYMENT AMOUNT IS INCORRECT</string>
-    <string name="code_copied_to_phone_buffer">CODE COPIED TO PHONE BUFFER</string>
+    <string name="code_copied_to_phone_buffer">Code copied to clipboard</string>
     <string name="and_get_a_hundred_times_more">AND GET A 36 TIMES MORE</string>
     <string name="wrong_destination_address">WRONG DESTINATION ADDRESS</string>
     <string name="payment_sent">Payment sent</string>
@@ -82,7 +82,7 @@
     <string name="bet_cannot_be_less_than">BET CANNOT BE LESS THAN - </string>
     <string name="restore_from_backup_seed">RESTORE FROM BACKUP SEED</string>
     <string name="transaction_history_text">TRANSACTION HISTORY</string>
-    <string name="wrong_restart_please">Wrong, restart please.</string>
+    <string name="wrong_restart_please">Incorrect seed phrase. Please try again.</string>
     <string name="enter_referral_code">Enter referral code</string>
     <string name="enter_password_low_case">Enter password</string>
     <string name="select_game_mode_text">SELECT GAME MODE</string>
@@ -255,7 +255,7 @@
     <string name="our_advantages_11"> • We plan to develop further, increase functionality and expand the range of gaming options.</string>
 
     <string name="our_goal">OUR GOAL</string>
-    <string name="our_goal_1"> • Our main goal is to make games available to everyone and anywhere in the world at any time you wish. And also so that everyone has the same and fair conditions both in the game and in the opportunity to earn in our system..</string>
+    <string name="our_goal_1"> • Our main goal is to make games available to everyone and anywhere in the world at any time you wish. And also so that everyone has the same and fair conditions both in the game and in the opportunity to earn in our system.</string>
     <string name="our_goal_2"> • Good luck and thank you for your trust in choosing our application.</string>
 
     <string name="play_again">PLAY AGAIN</string>

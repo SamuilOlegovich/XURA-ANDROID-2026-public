@@ -92,18 +92,18 @@
     <string name="create_new_wallet_text">ОБЯЗАТЕЛЬНО СОХРАНИТЕ КЛЮЧ И НЕ ПЕРЕДАВАЙТЕ ЕГО ТРЕТЬИМ ЛИЦАМ</string>
     <string name="your_account_is_not_enough_to_send">НА ВАШЕМ СЧЕТУ НЕ ДОСТАТОЧНО СРЕДСТВ ДЛЯ ОТПРАВКИ</string>
     <string name="error_check_the_seed_and_try_again">ОШИБКА - ПРОВЕРЬТЕ КЛЮЧ И ПОПРОБУЙТЕ ЕЩЕ РАЗ</string>
-    <string name="tag_knowledge_cannot_be_more">ЗНАЧЕНИЕ ТЕГА НЕ МОЖЕТ БЫТЬ БОЛЬШЕ - 2147483647</string>
+    <string name="tag_knowledge_cannot_be_more">Значение тега слишком большое</string>
     <string name="last_text_two">НЕ РАССТРАИВАЙТЕСЬ - ИГРАЙТЕ ДАЛЬШЕ И ВАМ ОБЯЗАТЕЛЬНО ПОВЕЗЕТ</string>
     <string name="set_password_to_enter_application">УСТАНОВИТЕ ПАРОЛЬ ДЛЯ ВХОДА В ПРИЛОЖЕНИЕ</string>
     <string name="become_referral_and_start_earning">СТАНЬТЕ РЕФЕРАЛОМ И НАЧНИТЕ ЗАРАБАТЫВАТЬ</string>
     <string name="check_the_seed_and_try_again">ОШИБКА - проверьте ключ и попробуйте еще раз</string>
     <string name="bet_is_made_expect_the_result">СТАВКА СДЕЛАНА - ОЖИДАЙТЕ РЕЗУЛЬТАТ</string>
-    <string name="addres_copied_to_phone_buffer">АДРЕС СКОПИРОВАН В БУФФЕР ТЕЛЕФОНА</string>
-    <string name="code_copied_to_phone_buffer">КОД СКОПИРОВАН В БУФФЕР ТЕЛЕФОНА</string>
-    <string name="it_is_not_possible_to_send_null">НЕВОЗМОЖНО ОТПРАВИТЬ NULL</string>
+    <string name="addres_copied_to_phone_buffer">Адрес скопирован в буфер обмена</string>
+    <string name="code_copied_to_phone_buffer">Код скопирован в буфер обмена</string>
+    <string name="it_is_not_possible_to_send_null">Сумма не может быть пустой</string>
     <string name="restore_from_backup_seed">ВОССТАНОВИТЬ ИЗ РЕЗЕРВНОГО КЛЮЧА</string>
     <string name="and_get_a_hundred_times_more">И ПОЛУЧИТЕ В 36 РАЗ БОЛЬШЕ</string>
-    <string name="wrong_restart_please">Неверно, перезапустите, пожалуйста</string>
+    <string name="wrong_restart_please">Неверная seed-фраза. Попробуйте ещё раз.</string>
     <string name="bet_cannot_be_less_than">СТАВКА НЕ МОЖЕТ БЫТЬ МЕНЬШЕ - </string>
     <string name="bet_cannot_be_more_than">СТАВКА НЕ МОЖЕТ БЫТЬ БОЛЕЕ - </string>
     <string name="wrong_destination_address">НЕВЕРНЫЙ АДРЕС НАЗНАЧЕНИЯ</string>
@@ -165,7 +165,7 @@
     <string name="dev_network_switched_testnet">Переключено на TESTNET. Рекомендуется перезапуск.</string>
     <string name="requesr_xrp">ПОЛУЧИТЬ</string>
     <string name="coming_soon">СКОРО</string>
-    <string name="bet_lost">ПЕЧАЛЬКА</string>
+    <string name="bet_lost">ПРОИГРЫШ</string>
     <string name="good_luck">УДАЧИ</string>
     <string name="dont_give_up">НЕ СДАВАЙСЯ</string>
     <string name="password">Пароль</string>
@@ -176,15 +176,15 @@
 
 
 
-    <string name="referral_recovery_history">восстановление реферрала</string>
-    <string name="referral_order_history">заказ реферрала</string>
+    <string name="referral_recovery_history">восстановление реферала</string>
+    <string name="referral_order_history">заказ реферала</string>
     <string name="won_the_lotto_history">выиграл ЛОТО :)</string>
     <string name="bet_on_black_history">ставка на черное</string>
     <string name="bet_on_red_history">ставка на красное</string>
     <string name="bet_lost_history">ставка проиграна :(</string>
     <string name="bet_won_history">ставка выиграна :)</string>
     <string name="donation_history">пожертвование :)</string>
-    <string name="referral_history">реферрал:</string>
+    <string name="referral_history">реферал:</string>
     <string name="bet_on_history">ставка на: </string>
     <string name="refund_history">возврат</string>
     <string name="tag_history">тег:</string>
@@ -207,7 +207,7 @@
     <string name="about_the_application_5"> • После восстановления кошелька вы сразу готовы к игре.</string>
     <string name="about_the_application_6"> • Наш кошелек без ограничений, и его использование – по вашему усмотрению.</string>
     <string name="about_the_application_7"> • Активные пользователи получают награды и участвуют в СУПЕР ЛОТО.</string>
-    <string name="about_the_application_8"> • Любой пользователь может стать реферралом.</string>
+    <string name="about_the_application_8"> • Любой пользователь может стать рефералом.</string>
 
     <string name="advantages">Преимущества:</string>
     <string name="advantages_1"> • Система работает автоматически.</string>
