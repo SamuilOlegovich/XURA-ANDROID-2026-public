@@ -343,6 +343,12 @@
     <string name="dev_wallet_seed_hint">Seed phrase</string>
     <string name="dev_wallet_copied_address">Address copied to clipboard</string>
     <string name="dev_wallet_copied_seed">Seed copied to clipboard</string>
+    <string name="dev_wallet_fund_btn">FUND VIA FAUCET</string>
+    <string name="dev_wallet_paste_btn">→ PASTE ADDRESS TO GAME SERVER:</string>
+    <string name="dev_wallet_pasted">Address pasted</string>
+    <string name="dev_wallet_fund_loading">Requesting funds…</string>
+    <string name="dev_wallet_fund_success">Funded! Check balance in a few seconds.</string>
+    <string name="dev_wallet_fund_error">Faucet failed. Try again.</string>
     <string name="dev_network_switched_mainnet">Switched to MAINNET. Restart recommended.</string>
     <string name="dev_network_switched_testnet">Switched to TESTNET. Restart recommended.</string>
 

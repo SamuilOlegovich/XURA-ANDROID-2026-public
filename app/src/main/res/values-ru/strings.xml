@@ -164,6 +164,12 @@
     <string name="dev_wallet_seed_hint">Seed-фраза</string>
     <string name="dev_wallet_copied_address">Адрес скопирован в буфер обмена</string>
     <string name="dev_wallet_copied_seed">Seed скопирован в буфер обмена</string>
+    <string name="dev_wallet_fund_btn">ПОПОЛНИТЬ ЧЕРЕЗ FAUCET</string>
+    <string name="dev_wallet_paste_btn">→ ВСТАВИТЬ АДРЕС В СЕРВЕР ИГРЫ:</string>
+    <string name="dev_wallet_pasted">Адрес вставлен</string>
+    <string name="dev_wallet_fund_loading">Запрашиваем монеты…</string>
+    <string name="dev_wallet_fund_success">Готово! Баланс обновится через несколько секунд.</string>
+    <string name="dev_wallet_fund_error">Faucet не ответил. Попробуйте ещё раз.</string>
     <string name="dev_network_switched_mainnet">Переключено на MAINNET. Рекомендуется перезапуск.</string>
     <string name="dev_network_switched_testnet">Переключено на TESTNET. Рекомендуется перезапуск.</string>
     <string name="request_xrp">ПОЛУЧИТЬ</string>

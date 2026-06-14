@@ -797,6 +797,7 @@
                             style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
                             android:hint="@string/dev_wallet_seed_hint"
                             app:boxStrokeColor="@color/xura_purple"
                             app:hintTextColor="@color/xura_text_tertiary"
@@ -815,6 +816,97 @@
                                 android:textSize="11sp" />
 
                         </com.google.android.material.textfield.TextInputLayout>
+
+                        <!-- Fund button -->
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_dev_fund_wallet"
+                            android:layout_width="match_parent"
+                            android:layout_height="44dp"
+                            android:layout_marginBottom="12dp"
+                            android:insetTop="0dp"
+                            android:insetBottom="0dp"
+                            android:fontFamily="@font/montserrat"
+                            android:text="@string/dev_wallet_fund_btn"
+                            android:textAllCaps="false"
+                            android:textColor="@color/xura_text_primary"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            app:backgroundTint="@color/xura_glass_fill"
+                            app:strokeColor="@color/xura_purple"
+                            app:strokeWidth="1dp"
+                            app:cornerRadius="12dp" />
+
+                        <!-- Paste to individual game fields -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="6dp"
+                            android:fontFamily="@font/montserrat"
+                            android:text="@string/dev_wallet_paste_btn"
+                            android:textColor="@color/xura_text_tertiary"
+                            android:textSize="10sp"
+                            android:letterSpacing="0.08" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="3">
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btn_dev_paste_roulette"
+                                android:layout_width="0dp"
+                                android:layout_height="36dp"
+                                android:layout_weight="1"
+                                android:layout_marginEnd="4dp"
+                                android:insetTop="0dp"
+                                android:insetBottom="0dp"
+                                android:fontFamily="@font/montserrat"
+                                android:text="ROULETTE"
+                                android:textAllCaps="false"
+                                android:textColor="@color/xura_black"
+                                android:textSize="9sp"
+                                android:textStyle="bold"
+                                app:backgroundTint="@color/xura_purple"
+                                app:cornerRadius="10dp"
+                                app:rippleColor="#40000000" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btn_dev_paste_color"
+                                android:layout_width="0dp"
+                                android:layout_height="36dp"
+                                android:layout_weight="1"
+                                android:layout_marginEnd="4dp"
+                                android:insetTop="0dp"
+                                android:insetBottom="0dp"
+                                android:fontFamily="@font/montserrat"
+                                android:text="COLOR"
+                                android:textAllCaps="false"
+                                android:textColor="@color/xura_black"
+                                android:textSize="9sp"
+                                android:textStyle="bold"
+                                app:backgroundTint="@color/xura_purple"
+                                app:cornerRadius="10dp"
+                                app:rippleColor="#40000000" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btn_dev_paste_number"
+                                android:layout_width="0dp"
+                                android:layout_height="36dp"
+                                android:layout_weight="1"
+                                android:insetTop="0dp"
+                                android:insetBottom="0dp"
+                                android:fontFamily="@font/montserrat"
+                                android:text="NUMBER"
+                                android:textAllCaps="false"
+                                android:textColor="@color/xura_black"
+                                android:textSize="9sp"
+                                android:textStyle="bold"
+                                app:backgroundTint="@color/xura_purple"
+                                app:cornerRadius="10dp"
+                                app:rippleColor="#40000000" />
+
+                        </LinearLayout>
 
                     </LinearLayout>
 

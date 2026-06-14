@@ -96,6 +96,10 @@ public class Settings extends BaseActivity {
     private MaterialButton   btnDevSave;
     private MaterialButton   btnDevFaucet;
     private MaterialButton   btnDevGenWallet;
+    private MaterialButton   btnDevFundWallet;
+    private MaterialButton   btnDevPasteRoulette;
+    private MaterialButton   btnDevPasteColor;
+    private MaterialButton   btnDevPasteNumber;
     private View             layoutDevWalletResult;
     private TextInputLayout  tilDevWalletAddress;
     private TextInputLayout  tilDevWalletSeed;
@@ -152,12 +156,16 @@ public class Settings extends BaseActivity {
         etDevNumber      = findViewById(R.id.et_dev_number);
         btnDevSave          = findViewById(R.id.btn_dev_save);
         btnDevFaucet        = findViewById(R.id.btn_dev_faucet);
-        btnDevGenWallet     = findViewById(R.id.btn_dev_gen_wallet);
+        btnDevGenWallet       = findViewById(R.id.btn_dev_gen_wallet);
+        btnDevFundWallet      = findViewById(R.id.btn_dev_fund_wallet);
+        btnDevPasteRoulette   = findViewById(R.id.btn_dev_paste_roulette);
+        btnDevPasteColor      = findViewById(R.id.btn_dev_paste_color);
+        btnDevPasteNumber     = findViewById(R.id.btn_dev_paste_number);
         layoutDevWalletResult = findViewById(R.id.layout_dev_wallet_result);
-        tilDevWalletAddress = findViewById(R.id.til_dev_wallet_address);
-        tilDevWalletSeed    = findViewById(R.id.til_dev_wallet_seed);
-        etDevWalletAddress  = findViewById(R.id.et_dev_wallet_address);
-        etDevWalletSeed     = findViewById(R.id.et_dev_wallet_seed);
+        tilDevWalletAddress   = findViewById(R.id.til_dev_wallet_address);
+        tilDevWalletSeed      = findViewById(R.id.til_dev_wallet_seed);
+        etDevWalletAddress    = findViewById(R.id.et_dev_wallet_address);
+        etDevWalletSeed       = findViewById(R.id.et_dev_wallet_seed);
     }
 
 
@@ -415,6 +423,23 @@ public class Settings extends BaseActivity {
             generateTestWallet();
         });
 
+        btnDevFundWallet.setOnClickListener(v -> {
+            pulse(v);
+            fundGeneratedWallet();
+        });
+
+        btnDevPasteRoulette.setOnClickListener(v -> {
+            pasteAddressToGame(etDevRoulette, "ROULETTE");
+        });
+
+        btnDevPasteColor.setOnClickListener(v -> {
+            pasteAddressToGame(etDevColor, "COLOR");
+        });
+
+        btnDevPasteNumber.setOnClickListener(v -> {
+            pasteAddressToGame(etDevNumber, "NUMBER");
+        });
+
         tilDevWalletAddress.setEndIconOnClickListener(v ->
                 copyToClipboard("address", etDevWalletAddress.getText().toString(),
                         getString(R.string.dev_wallet_copied_address)));
@@ -438,6 +463,36 @@ public class Settings extends BaseActivity {
         etDevWalletAddress.setText(address);
         etDevWalletSeed.setText(seedBase58);
         layoutDevWalletResult.setVisibility(View.VISIBLE);
+    }
+
+    private void fundGeneratedWallet() {
+        String address = etDevWalletAddress.getText() != null
+                ? etDevWalletAddress.getText().toString().trim() : "";
+        if (address.isEmpty()) return;
+
+        btnDevFundWallet.setText(getString(R.string.dev_wallet_fund_loading));
+        btnDevFundWallet.setEnabled(false);
+
+        executor.execute(() -> {
+            boolean success = callFaucet(address);
+            new Handler(Looper.getMainLooper()).post(() -> {
+                btnDevFundWallet.setText(getString(R.string.dev_wallet_fund_btn));
+                btnDevFundWallet.setEnabled(true);
+                showSnackbar(root,
+                        getString(success ? R.string.dev_wallet_fund_success
+                                          : R.string.dev_wallet_fund_error),
+                        success ? SnackbarType.INFO : SnackbarType.ERROR);
+            });
+        });
+    }
+
+    private void pasteAddressToGame(EditText target, String gameName) {
+        String address = etDevWalletAddress.getText() != null
+                ? etDevWalletAddress.getText().toString().trim() : "";
+        if (address.isEmpty()) return;
+        target.setText(address);
+        showSnackbar(root, getString(R.string.dev_wallet_pasted) + " → " + gameName,
+                SnackbarType.INFO);
     }
 
     private void copyToClipboard(String label, String text, String toast) {
