@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.samuilolegovich.MainActivity;
+import com.samuilolegovich.config.NetworkConfig;
 import com.samuilolegovich.enums.RouletteBetCode;
 import com.samuilolegovich.enums.StringEnum;
 import com.samuilolegovich.wallet.repository.WalletRepository;
@@ -94,7 +95,7 @@ public class RouletteViewModel extends ViewModel {
             if (Boolean.TRUE.equals(MainActivity.IS_REAL_GAME_MODE)) {
                 String memo = buildMemo(bets, referral);
                 success = repository.sendPayment(
-                        StringEnum.SERVER_ADDRESS_ROULETTE.getValue(),
+                        NetworkConfig.SERVER_ROULETTE,
                         memo,
                         total);
             } else {

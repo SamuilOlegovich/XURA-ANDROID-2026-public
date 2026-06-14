@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.samuilolegovich.MainActivity;
+import com.samuilolegovich.config.NetworkConfig;
 import com.samuilolegovich.enums.StringEnum;
 import com.samuilolegovich.wallet.repository.WalletRepository;
 
@@ -62,7 +63,7 @@ public class GuessColorViewModel extends ViewModel {
             boolean success;
             if (Boolean.TRUE.equals(MainActivity.IS_REAL_GAME_MODE)) {
                 success = repository.sendPayment(
-                        StringEnum.SERVER_ADDRESS_GUESS_THE_COLOR.getValue(),
+                        NetworkConfig.SERVER_COLOR,
                         memo,
                         new BigDecimal(amount));
             } else {

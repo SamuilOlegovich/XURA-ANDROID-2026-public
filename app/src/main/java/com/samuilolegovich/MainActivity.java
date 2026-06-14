@@ -37,6 +37,7 @@ import static com.samuilolegovich.view.SendPayment.SEND_PAYMENT_CLASS;
 import static com.samuilolegovich.view.Settings.SETTINGS_CLASS;
 import static com.samuilolegovich.view.Lost.LOST_CLASS;
 import static com.samuilolegovich.view.Win.WIN_CLASS;
+import com.samuilolegovich.config.NetworkConfig;
 import dagger.hilt.android.AndroidEntryPoint;
 
 
@@ -79,6 +80,7 @@ public class MainActivity extends BaseActivity {
         preferences = PrefsHelper.get(this);
         IS_REAL_GAME_MODE = preferences.getString(StringEnum.APP_GAME_MODE.getValue(), "false")
                 .equalsIgnoreCase("true");
+        NetworkConfig.load(preferences);
         // newLocale уже установлен BaseActivity.applyLocale() до super.onCreate()
         setContentView(R.layout.activity_main);
 

@@ -352,20 +352,8 @@ public class WalletXRP implements MyWallets {
     }
 
     private void createConnect() {
-        String s = "0";
-        String stringURL = "null";
-        switch (s) {
-            case "0":
-                stringURL = StringEnum.NET_REAL_POST_URL_ONE.getValue();
-                break;
-            case "1":
-                stringURL = StringEnum.NET_REAL_POST_URL_TWO.getValue();
-                break;
-            case "2":
-                stringURL = StringEnum.NET_REAL_GET_URL.getValue();
-        }
         try {
-            xrplClient = new MyXrplClient(stringURL);
+            xrplClient = new MyXrplClient(com.samuilolegovich.config.NetworkConfig.getRpcUrl());
         } catch (Exception e) {
             e.printStackTrace();
         }
