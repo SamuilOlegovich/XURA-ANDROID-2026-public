@@ -45,9 +45,17 @@ import org.xrpl.xrpl4j.crypto.keys.Seed;
 import com.google.common.primitives.UnsignedInteger;
 
 import java.io.IOException;
+import java.security.SecureRandom;
+import java.security.cert.X509Certificate;
 import java.util.Collections;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 import javax.inject.Inject;
 import dagger.hilt.android.AndroidEntryPoint;
@@ -288,7 +296,7 @@ public class Settings extends BaseActivity {
 
     private boolean callFaucet(String address) {
         try {
-            OkHttpClient client = new OkHttpClient();
+            OkHttpClient client = buildDevHttpClient();
             String json = "{\"destination\":\"" + address + "\"}";
             RequestBody body = RequestBody.create(json,
                     MediaType.parse("application/json; charset=utf-8"));
@@ -299,9 +307,34 @@ public class Settings extends BaseActivity {
             try (Response response = client.newCall(request).execute()) {
                 return response.isSuccessful();
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    // DEV-only: testnet faucet uses a cert not trusted by the emulator's store
+    @SuppressLint("TrustAllX509TrustManager")
+    private OkHttpClient buildDevHttpClient() {
+        try {
+            TrustManager[] trustAll = new TrustManager[]{
+                new X509TrustManager() {
+                    public void checkClientTrusted(X509Certificate[] c, String a) {}
+                    public void checkServerTrusted(X509Certificate[] c, String a) {}
+                    public X509Certificate[] getAcceptedIssuers() { return new X509Certificate[0]; }
+                }
+            };
+            SSLContext ctx = SSLContext.getInstance("TLS");
+            ctx.init(null, trustAll, new SecureRandom());
+            SSLSocketFactory sf = ctx.getSocketFactory();
+            return new OkHttpClient.Builder()
+                    .sslSocketFactory(sf, (X509TrustManager) trustAll[0])
+                    .hostnameVerifier((h, s) -> true)
+                    .connectTimeout(30, TimeUnit.SECONDS)
+                    .readTimeout(30, TimeUnit.SECONDS)
+                    .build();
+        } catch (Exception e) {
+            return new OkHttpClient();
         }
     }
 
