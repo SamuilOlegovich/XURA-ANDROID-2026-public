@@ -119,6 +119,11 @@ public class HistoryPaymentAdapter extends ListAdapter<HistoryPaymentDto, Histor
         // Адрес контрагента — сокращаем до rXXXXX…XXXX
         holder.address.setText(truncateAddress(item.getAddress()));
 
+        // Время транзакции
+        String time = item.getTime();
+        holder.time.setText(time);
+        holder.time.setVisibility(time != null && !time.isEmpty() ? View.VISIBLE : View.GONE);
+
         // Иконка
         holder.icon.setImageResource(getIconRes(tag, incoming));
         ImageViewCompat.setImageTintList(holder.icon, ColorStateList.valueOf(typeColor));
@@ -203,6 +208,7 @@ public class HistoryPaymentAdapter extends ListAdapter<HistoryPaymentDto, Histor
         final TextView  label;
         final TextView  address;
         final TextView  amount;
+        final TextView  time;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -210,6 +216,7 @@ public class HistoryPaymentAdapter extends ListAdapter<HistoryPaymentDto, Histor
             label   = itemView.findViewById(R.id.tx_label);
             address = itemView.findViewById(R.id.address);
             amount  = itemView.findViewById(R.id.amount_field);
+            time    = itemView.findViewById(R.id.tx_time);
         }
     }
 }

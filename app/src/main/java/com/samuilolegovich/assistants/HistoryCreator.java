@@ -12,8 +12,11 @@ import org.json.JSONObject;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 
@@ -83,7 +86,15 @@ public class HistoryCreator {
                     label = "---";
                 }
 
-                list.add(new HistoryPaymentDto(account, amount, label));
+                // XRP Epoch: секунды с 2000-01-01 UTC → Java ms
+                String time = "";
+                if (tx.has("date")) {
+                    long xrpSec = tx.getLong("date");
+                    Date date = new Date((xrpSec + 946684800L) * 1000L);
+                    time = new SimpleDateFormat("dd MMM HH:mm", Locale.getDefault()).format(date);
+                }
+
+                list.add(new HistoryPaymentDto(account, amount, label, time));
             }
         } catch (JSONException e) {
             e.printStackTrace();

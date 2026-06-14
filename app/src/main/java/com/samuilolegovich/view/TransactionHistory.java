@@ -80,27 +80,27 @@ public class TransactionHistory extends BaseActivity {
         String user    = "rUserSomebody8payerAddr1234x";
 
         // Выигрыши (входящие от сервера)
-        list.add(new HistoryPaymentDto(server, "+180.00 XRP",  "WIN"));
-        list.add(new HistoryPaymentDto(server, "+3 600.00 XRP","JKPT"));
-        list.add(new HistoryPaymentDto(server, "+10.00 XRP",   "WIN"));
-        list.add(new HistoryPaymentDto(server, "+360.00 XRP",  "JKPT"));
-        list.add(new HistoryPaymentDto(server, "+1.00 XRP",    "RFD"));
+        list.add(new HistoryPaymentDto(server, "+180.00 XRP",   "WIN",                          "14 Jun 23:41"));
+        list.add(new HistoryPaymentDto(server, "+3 600.00 XRP", "JKPT",                         "14 Jun 23:40"));
+        list.add(new HistoryPaymentDto(server, "+10.00 XRP",    "WIN",                          "14 Jun 22:17"));
+        list.add(new HistoryPaymentDto(server, "+360.00 XRP",   "JKPT",                         "14 Jun 21:55"));
+        list.add(new HistoryPaymentDto(server, "+1.00 XRP",     "RFD",                          "14 Jun 20:03"));
 
         // Ставки (исходящие к серверу)
-        list.add(new HistoryPaymentDto(server, "-5.00 XRP",    "BET:RED"));
-        list.add(new HistoryPaymentDto(server, "-5.00 XRP",    "BET:BLK"));
-        list.add(new HistoryPaymentDto(server, "-10.00 XRP",   "BET:N:7"));
-        list.add(new HistoryPaymentDto(server, "-1.00 XRP",    "BET:N:23"));
-        list.add(new HistoryPaymentDto(server, "-2.50 XRP",    "LOSE"));
+        list.add(new HistoryPaymentDto(server, "-5.00 XRP",     "BET:RED",                      "14 Jun 23:41"));
+        list.add(new HistoryPaymentDto(server, "-5.00 XRP",     "BET:BLK",                      "14 Jun 22:17"));
+        list.add(new HistoryPaymentDto(server, "-10.00 XRP",    "BET:N:7",                      "14 Jun 21:55"));
+        list.add(new HistoryPaymentDto(server, "-1.00 XRP",     "BET:N:23",                     "14 Jun 19:30"));
+        list.add(new HistoryPaymentDto(server, "-2.50 XRP",     "LOSE",                         "14 Jun 18:44"));
 
         // Реферальная программа
-        list.add(new HistoryPaymentDto(ref,    "-66.00 XRP",   "REF"));
-        list.add(new HistoryPaymentDto(ref,    "-13.00 XRP",   "REF:REC"));
-        list.add(new HistoryPaymentDto(user,   "+3.30 XRP",    "REF:rUserSomebody8payerAddr"));
+        list.add(new HistoryPaymentDto(ref,    "-66.00 XRP",    "REF",                          "13 Jun 15:20"));
+        list.add(new HistoryPaymentDto(ref,    "-13.00 XRP",    "REF:REC",                      "12 Jun 09:05"));
+        list.add(new HistoryPaymentDto(user,   "+3.30 XRP",     "REF:rUserSomebody8payerAddr",  "11 Jun 17:48"));
 
         // Прочее
-        list.add(new HistoryPaymentDto(user,   "+0.10 XRP",    "DON"));
-        list.add(new HistoryPaymentDto(server, "-5.00 XRP",    "BET:RED"));
+        list.add(new HistoryPaymentDto(user,   "+0.10 XRP",     "DON",                          "10 Jun 11:22"));
+        list.add(new HistoryPaymentDto(server, "-5.00 XRP",     "BET:RED",                      "10 Jun 10:58"));
 
         selectTabButtonThread(list);
     }

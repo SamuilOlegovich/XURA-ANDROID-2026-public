@@ -54,7 +54,7 @@
         app:layout_constraintStart_toEndOf="@+id/ic_tx_type"
         app:layout_constraintTop_toBottomOf="@+id/tx_label" />
 
-    <!-- RIGHT: сумма (зелёная / розовая) -->
+    <!-- RIGHT top: сумма (зелёная / розовая) -->
     <TextView
         android:id="@+id/amount_field"
         android:layout_width="wrap_content"
@@ -64,8 +64,24 @@
         android:textSize="13sp"
         android:textStyle="bold"
         android:maxLines="1"
+        app:layout_constraintBottom_toTopOf="@+id/tx_time"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <!-- RIGHT bottom: время транзакции -->
+    <TextView
+        android:id="@+id/tx_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="@font/montserrat"
+        android:textColor="@color/xura_text_tertiary"
+        android:textSize="11sp"
+        android:maxLines="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/amount_field" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
