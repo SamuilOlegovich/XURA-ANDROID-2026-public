@@ -1,6 +1,7 @@
 package com.samuilolegovich.view;
 
 import static com.samuilolegovich.MainActivity.MAIN_ACTIVITY;
+import static com.samuilolegovich.view.SelectGame.SELECT_GAME_ACTIVITY;
 
 import android.content.Context;
 import android.content.Intent;
@@ -119,10 +120,12 @@ public class SelectLanguage extends BaseActivity {
 
         // BaseActivity.applyLocale() прочитает новую локаль при recreate()
         runOnUiThread(this::recreate);
-        if (MainActivity.MAIN_ACTIVITY != null)
-            MainActivity.MAIN_ACTIVITY.runOnUiThread(MainActivity.MAIN_ACTIVITY::recreate);
+        if (MAIN_ACTIVITY != null)
+            MAIN_ACTIVITY.runOnUiThread(MAIN_ACTIVITY::recreate);
         if (Settings.SETTINGS_ACTIVITY != null)
             Settings.SETTINGS_ACTIVITY.runOnUiThread(Settings.SETTINGS_ACTIVITY::recreate);
+        if (SELECT_GAME_ACTIVITY != null)
+            SELECT_GAME_ACTIVITY.runOnUiThread(SELECT_GAME_ACTIVITY::recreate);
     }
 
 

@@ -30,6 +30,8 @@ import dagger.hilt.android.AndroidEntryPoint;
 public class SelectGame extends BaseActivity {
     public static final String SELECT_GAME_CLASS = ".SelectGame";
 
+    public static volatile SelectGame SELECT_GAME_ACTIVITY;
+
     private static final long WAVE_INITIAL_DELAY  = 600L;   // ждём пока доиграет логотип
     private static final long WAVE_REPEAT_DELAY   = 3500L;  // пауза между волнами
     private static final int  WAVE_STAGGER_MS     = 100;    // задержка между карточками
@@ -51,6 +53,7 @@ public class SelectGame extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_game_page);
+        SELECT_GAME_ACTIVITY = this;
         setButtons();
         setLanguage();
         setSound();
@@ -210,5 +213,11 @@ public class SelectGame extends BaseActivity {
     public void onBackPressed() {
         flourOfChoiceMediaPlayer.stop();
         super.onBackPressed();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SELECT_GAME_ACTIVITY = null;
     }
 }
