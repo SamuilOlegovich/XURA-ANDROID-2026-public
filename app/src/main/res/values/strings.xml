@@ -217,15 +217,15 @@
 
     <!--    <string name="info_main">INFORMATION</string>-->
 <!--    <string name="it_s_important_to_know">IT S IMPORTANT TO KNOW</string>-->
-    <string name="about_benefits_1"> • We are not an extra XRP wallet.</string>
-    <string name="about_benefits_2"> • We do not store or send your keys anywhere.</string>
-    <string name="about_benefits_3"> • By starting to use our application, you confirm that you are over 18 years old.</string>
-    <string name="about_benefits_4"> • To activate only that the created wallet should be replenished with 10 XRP - this is not required, these are the rules of the XRP network to avoid spamming on the network.</string>
-    <string name="about_benefits_5"> • Become a referral and get a number - 10 XRP.</string>
-    <string name="about_benefits_6"> • Referral number recovery - 5 XRP.</string>
-    <string name="about_benefits_7"> • Each participant who has a referral number and made one bet per day becomes a participant in the evening prize draw.</string>
-    <string name="about_benefits_8"> • Each participant with a referral code gets the opportunity to replay if his bet is lost.</string>
-    <string name="about_benefits_9"> • More than 90 percent of the lost bets at the end of the day will be played between the participants who played that day..</string>
+    <string name="about_benefits_1"> • We are not an official XRP or Ripple wallet.</string>
+    <string name="about_benefits_2"> • Your keys are stored only on your device and never shared.</string>
+    <string name="about_benefits_3"> • By using this app, you confirm you are 18 years of age or older.</string>
+    <string name="about_benefits_4"> • Activating a new XRP wallet requires a one-time reserve of 10 XRP — this is a network rule, not our fee.</string>
+    <string name="about_benefits_5"> • Become a referral by investing 66 XRP and start earning from your network.</string>
+    <string name="about_benefits_6"> • Lost your referral code? You can recover it for 13 XRP.</string>
+    <string name="about_benefits_7"> • Referrals who place at least one bet per day are entered into the evening prize draw.</string>
+    <string name="about_benefits_8"> • Users with a referral code get an extra life — one automatic replay on any lost bet.</string>
+    <string name="about_benefits_9"> • Over 90% of all lost bets are redistributed daily among that day\'s active players.</string>
 
     <string name="about_benefits">ABOUT BENEFITS</string>
     <string name="it_s_important_to_know_1"> • Our application is the embodiment of our vision of the future - where games and the wallet are one.</string>

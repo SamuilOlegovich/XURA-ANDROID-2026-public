@@ -14,7 +14,7 @@
     <string name="restore_referral">ВОССТАНОВИТЬ РЕФЕРАЛ</string>
     <string name="name_guess_the_number">ОТГАДАТЬ ЧИСЛО</string>
     <string name="restore_wallet">ВОССТАНОВИТЬ КОШЕЛЕК</string>
-    <string name="select_game_mode_text_test">TECTОВЫЙ</string>
+    <string name="select_game_mode_text_test">ТЕСТОВЫЙ</string>
     <string name="select_game_mode_text_real">РЕАЛЬНЫЙ</string>
     <string name="name_guess_the_color">ОТГАДАТЬ ЦВЕТ</string>
     <string name="select_language_english">АНГЛИЙСКИЙ</string>
@@ -129,7 +129,7 @@
     <string name="congratulations">ПОЗДРАВЛЯЕМ</string>
     <string name="settings_settings">НАСТРОЙКИ</string>
     <string name="repeat_enter">Повторите ввод</string>
-    <string name="lead_the_seed">Ведите ключ</string>
+    <string name="lead_the_seed">Введите ключ</string>
     <string name="seed_generating">Генерация seed-фразы…</string>
     <string name="seed_input_hint">Введите вашу seed-фразу</string>
     <string name="select_game">ВЫБЕРИТЕ ИГРУ</string>
@@ -258,17 +258,17 @@
 
 
 
-    <string name="about_benefits_1"> • We are not an extra XRP wallet.</string>
-    <string name="about_benefits_2"> • We do not store or send your keys anywhere.</string>
-    <string name="about_benefits_3"> • By starting to use our application, you confirm that you are over 18 years old.</string>
-    <string name="about_benefits_4"> • To activate only that the created wallet should be replenished with 10 XRP - this is not required, these are the rules of the XRP network to avoid spamming on the network.</string>
-    <string name="about_benefits_5"> • Become a referral and get a number - 10 XRP.</string>
-    <string name="about_benefits_6"> • Referral number recovery - 5 XRP.</string>
-    <string name="about_benefits_7"> • Each participant who has a referral number and made one bet per day becomes a participant in the evening prize draw.</string>
-    <string name="about_benefits_8"> • Each participant with a referral code gets the opportunity to replay if his bet is lost.</string>
-    <string name="about_benefits_9"> • More than 90 percent of the lost bets at the end of the day will be played between the participants who played that day..</string>
+    <string name="about_benefits_1"> • Мы не являемся официальным кошельком XRP или Ripple.</string>
+    <string name="about_benefits_2"> • Ваши ключи хранятся только на вашем устройстве и никуда не передаются.</string>
+    <string name="about_benefits_3"> • Используя приложение, вы подтверждаете, что вам исполнилось 18 лет.</string>
+    <string name="about_benefits_4"> • Активация нового кошелька XRP требует единоразового резерва 10 XRP — это правило сети, а не наша комиссия.</string>
+    <string name="about_benefits_5"> • Станьте рефералом, вложив 66 XRP, и начните зарабатывать со своей сети.</string>
+    <string name="about_benefits_6"> • Потеряли реферальный код? Восстановите его за 13 XRP.</string>
+    <string name="about_benefits_7"> • Рефералы, сделавшие хотя бы одну ставку в день, участвуют в вечернем розыгрыше призов.</string>
+    <string name="about_benefits_8"> • Пользователи с реферальным кодом получают дополнительную жизнь — автоматический переигрыш при проигрыше.</string>
+    <string name="about_benefits_9"> • Более 90% всех проигранных ставок ежедневно разыгрываются между активными игроками дня.</string>
 
-    <string name="about_benefits">ABOUT BENEFITS</string>
+    <string name="about_benefits">О ПРЕИМУЩЕСТВАХ</string>
     <string name="it_s_important_to_know_1"> • Our application is the embodiment of our vision of the future - where games and the wallet are one.</string>
     <string name="it_s_important_to_know_2"> • You no longer need to transfer your money somewhere, top up your balance, register - remember passwords and keys.</string>
     <string name="it_s_important_to_know_3"> • We do not store or send your keys anywhere.</string>
