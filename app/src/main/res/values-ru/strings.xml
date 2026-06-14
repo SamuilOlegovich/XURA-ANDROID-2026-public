@@ -102,6 +102,8 @@
     <string name="settings_settings">НАСТРОЙКИ</string>
     <string name="repeat_enter">Повторите ввод</string>
     <string name="lead_the_seed">Ведите ключ</string>
+    <string name="seed_generating">Генерация seed-фразы…</string>
+    <string name="seed_input_hint">Введите вашу seed-фразу</string>
     <string name="select_game">ВЫБЕРИТЕ ИГРУ</string>
     <string name="info_referral">ИНФОРМАЦИЯ</string>
     <string name="your_address">ВАШ АДРЕС:</string>

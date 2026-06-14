@@ -51,7 +51,7 @@
         android:layout_marginEnd="24dp"
         android:background="@drawable/bg_card_glass"
         android:padding="16dp"
-        android:text="@string/wrong_restart_please"
+        android:text="@string/seed_generating"
         android:textAlignment="center"
         android:textColor="@color/xura_cyan"
         android:textSize="16sp"
