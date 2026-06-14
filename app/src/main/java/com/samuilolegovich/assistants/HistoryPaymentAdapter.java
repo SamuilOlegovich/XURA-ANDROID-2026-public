@@ -109,19 +109,19 @@ public class HistoryPaymentAdapter extends ListAdapter<HistoryPaymentDto, Histor
         holder.amount.setText(amt);
         holder.amount.setTextColor(amountColor);
 
+        // Единый цвет — иконка и метка всегда совпадают
+        int typeColor = getTypeColor(ctx, tag, incoming);
+
         // Метка типа операции
         holder.label.setText(getDisplayLabel(tag));
-        holder.label.setTextColor(getLabelColor(ctx, tag, incoming));
+        holder.label.setTextColor(typeColor);
 
         // Адрес контрагента — сокращаем до rXXXXX…XXXX
         holder.address.setText(truncateAddress(item.getAddress()));
 
-        // Иконка с цветным tint
+        // Иконка
         holder.icon.setImageResource(getIconRes(tag, incoming));
-        ImageViewCompat.setImageTintList(
-                holder.icon,
-                ColorStateList.valueOf(getIconColor(ctx, tag, incoming))
-        );
+        ImageViewCompat.setImageTintList(holder.icon, ColorStateList.valueOf(typeColor));
     }
 
 
@@ -154,49 +154,38 @@ public class HistoryPaymentAdapter extends ListAdapter<HistoryPaymentDto, Histor
     }
 
 
-    // ─── Цвет метки ──────────────────────────────────────────────────────────
+    // ─── Единый цвет: иконка и метка всегда одного цвета ────────────────────
 
-    private int getLabelColor(Context ctx, String tag, boolean incoming) {
-        if (tag.equals("JKPT") || tag.startsWith("JKPT:")) return ContextCompat.getColor(ctx, R.color.xura_gold);
-        if (tag.equals("WIN")  || tag.startsWith("WIN:"))  return ContextCompat.getColor(ctx, R.color.xura_success);
-        if (tag.equals("LOSE") || tag.startsWith("LOSE:")) return ContextCompat.getColor(ctx, R.color.xura_error);
-        if (tag.equals("REF")  || tag.startsWith("REF:"))  return ContextCompat.getColor(ctx, R.color.xura_text_primary);
+    private int getTypeColor(Context ctx, String tag, boolean incoming) {
+        if (tag.equals("WIN")    || tag.startsWith("WIN:"))  return ContextCompat.getColor(ctx, R.color.xura_success);
+        if (tag.equals("LOSE")   || tag.startsWith("LOSE:")) return ContextCompat.getColor(ctx, R.color.xura_error);
+        if (tag.equals("JKPT")   || tag.startsWith("JKPT:")) return ContextCompat.getColor(ctx, R.color.xura_gold);
+        if (tag.startsWith("BET:RED"))                        return ContextCompat.getColor(ctx, R.color.xura_pink);
+        if (tag.startsWith("BET:BLK"))                        return ContextCompat.getColor(ctx, R.color.xura_text_secondary);
+        if (tag.startsWith("BET:N:"))                         return ContextCompat.getColor(ctx, R.color.xura_cyan);
+        if (tag.equals("RFD")    || tag.startsWith("RFD:"))   return ContextCompat.getColor(ctx, R.color.xura_cyan);
+        if (tag.equals("DON")    || tag.startsWith("DON:"))   return ContextCompat.getColor(ctx, R.color.xura_gold);
+        if (tag.equals("REF")    || tag.startsWith("REF:"))   return ContextCompat.getColor(ctx, R.color.xura_gold);
         return incoming
                 ? ContextCompat.getColor(ctx, R.color.xura_cyan)
-                : ContextCompat.getColor(ctx, R.color.xura_text_secondary);
+                : ContextCompat.getColor(ctx, R.color.xura_text_tertiary);
     }
 
 
     // ─── Иконка ──────────────────────────────────────────────────────────────
 
     private int getIconRes(String tag, boolean incoming) {
-        if (tag.equals("WIN")  || tag.startsWith("WIN:"))  return R.drawable.ic_check_circle;
-        if (tag.equals("LOSE") || tag.startsWith("LOSE:")) return R.drawable.ic_lost_x;
-        if (tag.equals("JKPT") || tag.startsWith("JKPT:")) return R.drawable.ic_bolt;
-        if (tag.startsWith("BET:RED"))                     return R.drawable.ic_favorite;
-        if (tag.startsWith("BET:BLK"))                     return R.drawable.ic_clubs;
-        if (tag.startsWith("BET:N:"))                      return R.drawable.ic_target;
-        if (tag.equals("RFD")  || tag.startsWith("RFD:"))  return R.drawable.ic_restore;
-        if (tag.equals("DON")  || tag.startsWith("DON:"))  return R.drawable.ic_favorite;
-        if (tag.equals("REF:REC"))                         return R.drawable.ic_referral_restore;
-        if (tag.equals("REF")  || tag.startsWith("REF:"))  return R.drawable.ic_referral;
+        if (tag.equals("WIN")    || tag.startsWith("WIN:"))  return R.drawable.ic_check_circle;
+        if (tag.equals("LOSE")   || tag.startsWith("LOSE:")) return R.drawable.ic_lost_x;
+        if (tag.equals("JKPT")   || tag.startsWith("JKPT:")) return R.drawable.ic_bolt;
+        if (tag.startsWith("BET:RED"))                        return R.drawable.ic_favorite;
+        if (tag.startsWith("BET:BLK"))                        return R.drawable.ic_clubs;
+        if (tag.startsWith("BET:N:"))                         return R.drawable.ic_target;
+        if (tag.equals("RFD")    || tag.startsWith("RFD:"))   return R.drawable.ic_restore;
+        if (tag.equals("DON")    || tag.startsWith("DON:"))   return R.drawable.ic_favorite;
+        if (tag.equals("REF:REC"))                            return R.drawable.ic_referral_restore;
+        if (tag.equals("REF")    || tag.startsWith("REF:"))   return R.drawable.ic_referral;
         return incoming ? R.drawable.ic_receive_arrow : R.drawable.ic_send_arrow;
-    }
-
-    private int getIconColor(Context ctx, String tag, boolean incoming) {
-        if (tag.equals("WIN")  || tag.startsWith("WIN:"))  return ContextCompat.getColor(ctx, R.color.xura_success);
-        if (tag.equals("LOSE") || tag.startsWith("LOSE:")) return ContextCompat.getColor(ctx, R.color.xura_error);
-        if (tag.equals("JKPT") || tag.startsWith("JKPT:")) return ContextCompat.getColor(ctx, R.color.xura_gold);
-        if (tag.startsWith("BET:RED"))                     return ContextCompat.getColor(ctx, R.color.xura_pink);
-        if (tag.startsWith("BET:BLK"))                     return ContextCompat.getColor(ctx, R.color.xura_text_secondary);
-        if (tag.startsWith("BET:N:"))                      return ContextCompat.getColor(ctx, R.color.xura_cyan);
-        if (tag.equals("RFD")  || tag.startsWith("RFD:"))  return ContextCompat.getColor(ctx, R.color.xura_cyan);
-        if (tag.equals("DON")  || tag.startsWith("DON:"))  return ContextCompat.getColor(ctx, R.color.xura_gold);
-        if (tag.startsWith("REF:"))                        return ContextCompat.getColor(ctx, R.color.xura_cyan);
-        if (tag.equals("REF"))                             return ContextCompat.getColor(ctx, R.color.xura_text_primary);
-        return incoming
-                ? ContextCompat.getColor(ctx, R.color.xura_cyan)
-                : ContextCompat.getColor(ctx, R.color.xura_text_tertiary);
     }
 
 
