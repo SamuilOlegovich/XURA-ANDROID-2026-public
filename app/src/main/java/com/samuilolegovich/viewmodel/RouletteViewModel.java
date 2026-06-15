@@ -72,7 +72,7 @@ public class RouletteViewModel extends ViewModel {
                 return;
             }
 
-            // Validate each bet and accumulate total
+            // Validate each position (min only) and accumulate total
             BigDecimal total = BigDecimal.ZERO;
             for (Map.Entry<String, BigDecimal> entry : bets.entrySet()) {
                 BigDecimal amount = roundToDrops(entry.getValue());
@@ -82,6 +82,12 @@ public class RouletteViewModel extends ViewModel {
                     return;
                 }
                 total = total.add(amount);
+            }
+
+            // Total across all positions must not exceed MAX_BET_ROULETTE
+            if (total.compareTo(new BigDecimal(StringEnum.MAX_BET_ROULETTE.getValue())) > 0) {
+                errorLiveData.postValue(GameBetError.BET_TOO_HIGH);
+                return;
             }
 
             // Check total against balance
@@ -134,8 +140,6 @@ public class RouletteViewModel extends ViewModel {
     private GameBetError validateSingleBetAmount(BigDecimal a) {
         if (a == null) return GameBetError.INVALID_AMOUNT;
         if (a.compareTo(BigDecimal.ZERO) == 0) return GameBetError.AMOUNT_IS_ZERO;
-        if (a.compareTo(new BigDecimal(StringEnum.MAX_BET_ROULETTE.getValue())) > 0)
-            return GameBetError.BET_TOO_HIGH;
         if (a.compareTo(new BigDecimal(StringEnum.MIN_BET_ROULETTE.getValue())) < 0)
             return GameBetError.BET_TOO_LOW;
         return null;

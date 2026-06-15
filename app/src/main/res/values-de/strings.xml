@@ -71,8 +71,8 @@ MEHRFACHEINSATZ: auf mehrere Positionen in einem Dreh setzen.
 
 NULL: Nur der Direkteinsatz auf 0 gewinnt. Alle anderen Einsätze verlieren bei Null.
 
-Mindesteinsatz: 0,1 XRP
-Maximaleinsatz: 100 XRP
+Mindesteinsatz pro Position: 0,1 XRP
+Gesamtlimit pro Runde: 100 XRP
 
 Spielen Sie verantwortungsvoll. Ab 18 Jahren.</string>
     <string name="congratulations_your_bet_is_won_loto">Glückwunsch! Ihr Einsatz hat LOTTO gewonnen! Preis: %s XRP — weiterspielen!</string>

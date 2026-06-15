@@ -66,8 +66,8 @@
 
 零：只有直接押0才获胜，其他所有下注在出现0时均输。
 
-最低下注：0.1 XRP
-最高下注：100 XRP
+最低每注：0.1 XRP
+所有注总额上限：100 XRP
 
 请理性博彩。年满18岁。</string>
     <string name="congratulations_your_bet_is_won_loto">恭喜！您的押注赢得了 LOTTO！奖励为 %s XRP — 继续游戏，继续获胜！</string>

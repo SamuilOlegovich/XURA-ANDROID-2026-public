@@ -71,8 +71,8 @@ APUESTA MÚLTIPLE: apuesta en varias posiciones en un solo giro.
 
 CERO: solo gana la apuesta directa al 0.
 
-Apuesta mínima: 0.1 XRP
-Máxima: 100 XRP
+Apuesta mínima por posición: 0.1 XRP
+Total máximo por ronda: 100 XRP
 
 Juega con responsabilidad. Mayores de 18 años.</string>
     <string name="congratulations_your_bet_is_won_loto">¡Felicidades! ¡Tu apuesta ganó el LOTTO! Premio: %s XRP — ¡sigue jugando!</string>
