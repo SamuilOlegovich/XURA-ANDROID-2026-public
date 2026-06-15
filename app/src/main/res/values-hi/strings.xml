@@ -347,4 +347,11 @@
     <string name="dev_wallet_fund_error">फॉसेट विफल। पुनः प्रयास करें।</string>
     <string name="dev_network_switched_mainnet">मेननेट पर स्विच किया। पुनः आरंभ अनुशंसित।</string>
     <string name="dev_network_switched_testnet">टेस्टनेट पर स्विच किया। पुनः आरंभ अनुशंसित।</string>
+    <string name="roulette_bet_history">रूलेट दांव</string>
+    <string name="detail_bets_breakdown">दांव का विवरण</string>
+    <string name="detail_full_address">पता</string>
+    <string name="detail_dest_tag">डेस्टिनेशन टैग</string>
+    <string name="continue_browsing">जारी रखें →</string>
+    <string name="continue_browsing_hint">परिणाम स्वचालित रूप से आएगा</string>
+
 </resources>

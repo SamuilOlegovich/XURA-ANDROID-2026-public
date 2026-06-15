@@ -353,4 +353,11 @@
     <string name="btn_sub_portuguese">切换到葡萄牙语</string>
     <string name="select_language_bengali">孟加拉语</string>
     <string name="btn_sub_bengali">切换到孟加拉语</string>
+    <string name="roulette_bet_history">轮盘赌注</string>
+    <string name="detail_bets_breakdown">投注明细</string>
+    <string name="detail_full_address">地址</string>
+    <string name="detail_dest_tag">目标标签</string>
+    <string name="continue_browsing">继续 →</string>
+    <string name="continue_browsing_hint">结果将自动到达</string>
+
 </resources>

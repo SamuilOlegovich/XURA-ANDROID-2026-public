@@ -347,4 +347,11 @@
     <string name="dev_wallet_fund_error">فشل الصنبور. حاول مجدداً.</string>
     <string name="dev_network_switched_mainnet">تم التبديل إلى الشبكة الرئيسية. يُنصح بإعادة التشغيل.</string>
     <string name="dev_network_switched_testnet">تم التبديل إلى شبكة الاختبار. يُنصح بإعادة التشغيل.</string>
+    <string name="roulette_bet_history">رهان الروليت</string>
+    <string name="detail_bets_breakdown">تفاصيل الرهانات</string>
+    <string name="detail_full_address">العنوان</string>
+    <string name="detail_dest_tag">علامة الوجهة</string>
+    <string name="continue_browsing">متابعة →</string>
+    <string name="continue_browsing_hint">ستصل النتيجة تلقائيًا</string>
+
 </resources>

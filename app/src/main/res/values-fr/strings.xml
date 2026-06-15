@@ -347,4 +347,11 @@
     <string name="dev_wallet_fund_error">Faucet échoué. Réessayez.</string>
     <string name="dev_network_switched_mainnet">Basculé vers Mainnet. Redémarrage recommandé.</string>
     <string name="dev_network_switched_testnet">Basculé vers Testnet. Redémarrage recommandé.</string>
+    <string name="roulette_bet_history">mise roulette</string>
+    <string name="detail_bets_breakdown">DÉTAIL DES MISES</string>
+    <string name="detail_full_address">Adresse</string>
+    <string name="detail_dest_tag">Tag de destination</string>
+    <string name="continue_browsing">Continuer →</string>
+    <string name="continue_browsing_hint">Le résultat arrivera automatiquement</string>
+
 </resources>

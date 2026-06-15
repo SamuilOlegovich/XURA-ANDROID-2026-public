@@ -347,4 +347,11 @@
     <string name="dev_wallet_fund_error">Faucet fehlgeschlagen. Erneut versuchen.</string>
     <string name="dev_network_switched_mainnet">Zu Mainnet gewechselt. Neustart empfohlen.</string>
     <string name="dev_network_switched_testnet">Zu Testnet gewechselt. Neustart empfohlen.</string>
+    <string name="roulette_bet_history">Roulette-Einsatz</string>
+    <string name="detail_bets_breakdown">EINSATZ-DETAILS</string>
+    <string name="detail_full_address">Adresse</string>
+    <string name="detail_dest_tag">Ziel-Tag</string>
+    <string name="continue_browsing">Weiter →</string>
+    <string name="continue_browsing_hint">Ergebnis kommt automatisch</string>
+
 </resources>

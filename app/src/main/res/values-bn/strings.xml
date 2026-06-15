@@ -351,4 +351,11 @@
     <string name="dev_wallet_fund_error">ফসেট ব্যর্থ। আবার চেষ্টা করুন।</string>
     <string name="dev_network_switched_mainnet">মেইননেটে পরিবর্তিত। পুনরায় চালু করার পরামর্শ।</string>
     <string name="dev_network_switched_testnet">টেস্টনেটে পরিবর্তিত। পুনরায় চালু করার পরামর্শ।</string>
+    <string name="roulette_bet_history">রুলেট বাজি</string>
+    <string name="detail_bets_breakdown">বাজির বিবরণ</string>
+    <string name="detail_full_address">ঠিকানা</string>
+    <string name="detail_dest_tag">গন্তব্য ট্যাগ</string>
+    <string name="continue_browsing">চালিয়ে যান →</string>
+    <string name="continue_browsing_hint">ফলাফল স্বয়ংক্রিয়ভাবে আসবে</string>
+
 </resources>

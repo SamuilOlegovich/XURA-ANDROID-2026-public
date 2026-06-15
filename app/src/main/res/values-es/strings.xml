@@ -347,4 +347,11 @@
     <string name="dev_wallet_fund_error">Faucet fallido. Inténtalo de nuevo.</string>
     <string name="dev_network_switched_mainnet">Cambiado a Mainnet. Se recomienda reiniciar.</string>
     <string name="dev_network_switched_testnet">Cambiado a Testnet. Se recomienda reiniciar.</string>
+    <string name="roulette_bet_history">apuesta ruleta</string>
+    <string name="detail_bets_breakdown">DETALLE DE APUESTAS</string>
+    <string name="detail_full_address">Dirección</string>
+    <string name="detail_dest_tag">Etiqueta de destino</string>
+    <string name="continue_browsing">Continuar →</string>
+    <string name="continue_browsing_hint">El resultado llegará automáticamente</string>
+
 </resources>
