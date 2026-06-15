@@ -347,4 +347,11 @@
     <string name="select_language_bengali">বাংলা</string>
     <string name="btn_sub_bengali">বাংলায় পরিবর্তন করুন</string>
 
+    <string name="roulette_bet_history">ставка на рулетку</string>
+    <string name="detail_bets_breakdown">ДЕТАЛИ СТАВОК</string>
+    <string name="detail_full_address">Адрес</string>
+    <string name="detail_dest_tag">Тег назначения</string>
+    <string name="continue_browsing">Продолжить →</string>
+    <string name="continue_browsing_hint">Результат придёт автоматически</string>
+
 </resources>
