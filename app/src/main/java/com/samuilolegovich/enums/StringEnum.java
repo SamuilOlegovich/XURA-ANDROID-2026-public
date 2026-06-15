@@ -22,6 +22,8 @@ public enum StringEnum {
     APP_FRENCH_LANGUAGE("fr"),
     APP_GERMAN_LANGUAGE("de"),
     APP_ARABIC_LANGUAGE("ar"),
+    APP_PORTUGUESE_LANGUAGE("pt"),
+    APP_BENGALI_LANGUAGE("bn"),
     APP_GAME_MODE("game_mode"),
     APP_GAME_MODE_REAL("true"),
 

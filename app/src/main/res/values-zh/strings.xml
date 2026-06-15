@@ -349,4 +349,8 @@
     <string name="btn_sub_german">切换到德语</string>
     <string name="select_language_arabic">阿拉伯语</string>
     <string name="btn_sub_arabic">切换到阿拉伯语</string>
+    <string name="select_language_portuguese">葡萄牙语</string>
+    <string name="btn_sub_portuguese">切换到葡萄牙语</string>
+    <string name="select_language_bengali">孟加拉语</string>
+    <string name="btn_sub_bengali">切换到孟加拉语</string>
 </resources>

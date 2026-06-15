@@ -9,26 +9,13 @@
     tools:context=".view.SelectLanguage"
     tools:ignore="MissingDefaultResource">
 
-    <!-- XURA Logo -->
-    <include
-        layout="@layout/logo_xura"
-        android:id="@+id/logo_xura"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="80dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <!-- SELECT LANGUAGE title -->
+    <!-- Title -->
     <TextView
         android:id="@+id/settings_text_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="24dp"
         android:text="@string/select_language_text"
         android:textAlignment="center"
@@ -39,7 +26,7 @@
         android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logo_xura" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Scrollable language list -->
     <androidx.core.widget.NestedScrollView
@@ -520,6 +507,122 @@
                     android:layout_height="24dp"
                     android:layout_marginEnd="16dp"
                     android:src="@drawable/ic_flag_ar"
+                    android:importantForAccessibility="no"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- PORTUGUESE -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/settings_portuguese_linc"
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/bg_card_glass_clickable"
+                android:clickable="true"
+                android:focusable="true"
+                android:contentDescription="@string/select_language_portuguese">
+
+                <TextView
+                    android:id="@+id/portuguese_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="@string/select_language_portuguese"
+                    android:textColor="@color/xura_text_primary"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.03"
+                    app:layout_constraintBottom_toTopOf="@+id/portuguese_subtitle"
+                    app:layout_constraintEnd_toStartOf="@+id/portuguese_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="packed" />
+
+                <TextView
+                    android:id="@+id/portuguese_subtitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginEnd="8dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="@string/btn_sub_portuguese"
+                    android:textColor="@color/xura_text_tertiary"
+                    android:textSize="10sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/portuguese_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/portuguese_title" />
+
+                <ImageView
+                    android:id="@+id/portuguese_icon"
+                    android:layout_width="36dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/ic_flag_pt"
+                    android:importantForAccessibility="no"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- BENGALI -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/settings_bengali_linc"
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/bg_card_glass_clickable"
+                android:clickable="true"
+                android:focusable="true"
+                android:contentDescription="@string/select_language_bengali">
+
+                <TextView
+                    android:id="@+id/bengali_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="@string/select_language_bengali"
+                    android:textColor="@color/xura_text_primary"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.03"
+                    app:layout_constraintBottom_toTopOf="@+id/bengali_subtitle"
+                    app:layout_constraintEnd_toStartOf="@+id/bengali_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="packed" />
+
+                <TextView
+                    android:id="@+id/bengali_subtitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginEnd="8dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="@string/btn_sub_bengali"
+                    android:textColor="@color/xura_text_tertiary"
+                    android:textSize="10sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/bengali_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/bengali_title" />
+
+                <ImageView
+                    android:id="@+id/bengali_icon"
+                    android:layout_width="36dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/ic_flag_bn"
                     android:importantForAccessibility="no"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

@@ -35,6 +35,8 @@ public class SelectLanguage extends BaseActivity {
     private View settingsFrenchLinc;
     private View settingsGermanLinc;
     private View settingsArabicLinc;
+    private View settingsPortugueseLinc;
+    private View settingsBengaliLinc;
 
     private TextView settingsTextView;
     private TextView englishTitle;
@@ -45,6 +47,8 @@ public class SelectLanguage extends BaseActivity {
     private TextView frenchTitle;
     private TextView germanTitle;
     private TextView arabicTitle;
+    private TextView portugueseTitle;
+    private TextView bengaliTitle;
 
     private String languageNow;
 
@@ -63,14 +67,16 @@ public class SelectLanguage extends BaseActivity {
 
 
     private void setButtons() {
-        settingsEnglishLinc  = findViewById(R.id.settings_english_linc);
-        settingsRussianLinc  = findViewById(R.id.settings_russian_linc);
-        settingsChineseLinc  = findViewById(R.id.settings_chinese_linc);
-        settingsHindiLinc    = findViewById(R.id.settings_hindi_linc);
-        settingsSpanishLinc  = findViewById(R.id.settings_spanish_linc);
-        settingsFrenchLinc   = findViewById(R.id.settings_french_linc);
-        settingsGermanLinc   = findViewById(R.id.settings_german_linc);
-        settingsArabicLinc   = findViewById(R.id.settings_arabic_linc);
+        settingsEnglishLinc    = findViewById(R.id.settings_english_linc);
+        settingsRussianLinc    = findViewById(R.id.settings_russian_linc);
+        settingsChineseLinc    = findViewById(R.id.settings_chinese_linc);
+        settingsHindiLinc      = findViewById(R.id.settings_hindi_linc);
+        settingsSpanishLinc    = findViewById(R.id.settings_spanish_linc);
+        settingsFrenchLinc     = findViewById(R.id.settings_french_linc);
+        settingsGermanLinc     = findViewById(R.id.settings_german_linc);
+        settingsArabicLinc     = findViewById(R.id.settings_arabic_linc);
+        settingsPortugueseLinc = findViewById(R.id.settings_portuguese_linc);
+        settingsBengaliLinc    = findViewById(R.id.settings_bengali_linc);
 
         settingsTextView = findViewById(R.id.settings_text_view);
         englishTitle     = findViewById(R.id.english_title);
@@ -81,6 +87,8 @@ public class SelectLanguage extends BaseActivity {
         frenchTitle      = findViewById(R.id.french_title);
         germanTitle      = findViewById(R.id.german_title);
         arabicTitle      = findViewById(R.id.arabic_title);
+        portugueseTitle  = findViewById(R.id.portuguese_title);
+        bengaliTitle     = findViewById(R.id.bengali_title);
     }
 
 
@@ -115,6 +123,10 @@ public class SelectLanguage extends BaseActivity {
                 lang.equals(StringEnum.APP_GERMAN_LANGUAGE.getValue()));
         setCardHighlight(settingsArabicLinc, arabicTitle,
                 lang.equals(StringEnum.APP_ARABIC_LANGUAGE.getValue()));
+        setCardHighlight(settingsPortugueseLinc, portugueseTitle,
+                lang.equals(StringEnum.APP_PORTUGUESE_LANGUAGE.getValue()));
+        setCardHighlight(settingsBengaliLinc, bengaliTitle,
+                lang.equals(StringEnum.APP_BENGALI_LANGUAGE.getValue()));
     }
 
 
@@ -166,6 +178,16 @@ public class SelectLanguage extends BaseActivity {
             pulse(v);
             if (!languageNow.equalsIgnoreCase(StringEnum.APP_ARABIC_LANGUAGE.getValue()))
                 makeStackThread(StringEnum.APP_ARABIC_LANGUAGE);
+        });
+        settingsPortugueseLinc.setOnClickListener(v -> {
+            pulse(v);
+            if (!languageNow.equalsIgnoreCase(StringEnum.APP_PORTUGUESE_LANGUAGE.getValue()))
+                makeStackThread(StringEnum.APP_PORTUGUESE_LANGUAGE);
+        });
+        settingsBengaliLinc.setOnClickListener(v -> {
+            pulse(v);
+            if (!languageNow.equalsIgnoreCase(StringEnum.APP_BENGALI_LANGUAGE.getValue()))
+                makeStackThread(StringEnum.APP_BENGALI_LANGUAGE);
         });
     }
 

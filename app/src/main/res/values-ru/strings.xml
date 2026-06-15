@@ -342,5 +342,9 @@
     <string name="btn_sub_german">Auf Deutsch wechseln</string>
     <string name="select_language_arabic">العربية</string>
     <string name="btn_sub_arabic">التبديل إلى العربية</string>
+    <string name="select_language_portuguese">Português</string>
+    <string name="btn_sub_portuguese">Mudar para português</string>
+    <string name="select_language_bengali">বাংলা</string>
+    <string name="btn_sub_bengali">বাংলায় পরিবর্তন করুন</string>
 
 </resources>
