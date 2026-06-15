@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.GridLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.chip.ChipGroup;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.textfield.TextInputLayout;
 import com.samuilolegovich.BaseActivity;
 import com.samuilolegovich.R;
@@ -87,14 +89,16 @@ public class RouletteGame extends BaseActivity {
     private String ENTER_AMOUNT_FIRST;
 
     // ── Views ────────────────────────────────────────────────────────────
-    private TextView        rulesInfo;
-    private TextView        balance;
-    private TextView        selectedBetLabel;
-    private EditText        bet;
-    private ChipGroup       chipGroupAmounts;
-    private TextInputLayout tilBetField;
-    private View            btnSpin;
-    private View            btnClearBets;
+    private TextView                   rulesInfo;
+    private TextView                   balance;
+    private TextView                   selectedBetLabel;
+    private EditText                   bet;
+    private ChipGroup                  chipGroupAmounts;
+    private TextInputLayout            tilBetField;
+    private View                       btnSpin;
+    private View                       btnClearBets;
+    private ImageView                  spinIcon;
+    private CircularProgressIndicator  spinProgress;
 
 
 
@@ -116,6 +120,7 @@ public class RouletteGame extends BaseActivity {
 
         viewModel.getError().observe(this, error -> {
             if (error == null) return;
+            setSpinningState(false);
             errorMediaPlayer.start();
             String msg;
             switch (error) {
@@ -131,6 +136,7 @@ public class RouletteGame extends BaseActivity {
 
         viewModel.getBetSuccess().observe(this, totalAmount -> {
             if (totalAmount == null) return;
+            setSpinningState(false);
             tilBetField.setError(null);
             bet.setText("");
             setBetParamsForFlasher(totalAmount);
@@ -156,6 +162,8 @@ public class RouletteGame extends BaseActivity {
         chipGroupAmounts = findViewById(R.id.chip_group_amounts);
         btnSpin          = findViewById(R.id.btn_spin_roulette);
         btnClearBets     = findViewById(R.id.btn_clear_bets);
+        spinIcon         = findViewById(R.id.spin_icon);
+        spinProgress     = findViewById(R.id.spin_progress);
 
         casinoMediaPlayer = MediaPlayer.create(this, R.raw.in_casino);
         errorMediaPlayer  = MediaPlayer.create(this, R.raw.error);
@@ -452,6 +460,7 @@ public class RouletteGame extends BaseActivity {
             pendingPrimaryMultiplier = RouletteBetCode.multiplierForTag(pendingPrimaryTag);
 
             pulse(v);
+            setSpinningState(true);
             betMediaPlayer.start();
             viewModel.placeBets(new LinkedHashMap<>(tableBets), myReferral);
         });
@@ -519,6 +528,17 @@ public class RouletteGame extends BaseActivity {
     private int dp(int value) {
         return (int) TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP, value, getResources().getDisplayMetrics());
+    }
+
+
+
+    private void setSpinningState(boolean spinning) {
+        runOnUiThread(() -> {
+            btnSpin.setEnabled(!spinning);
+            btnSpin.setAlpha(spinning ? 0.7f : 1f);
+            spinIcon.setVisibility(spinning ? View.GONE : View.VISIBLE);
+            spinProgress.setVisibility(spinning ? View.VISIBLE : View.GONE);
+        });
     }
 
 
