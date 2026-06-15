@@ -11,7 +11,10 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.GridLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputLayout;
@@ -68,12 +71,14 @@ public class GuessTheNumberGame extends BaseActivity {
     private TextView nameGameTextViewTree;
     private TextView nameGameTextViewTwo;
     private TextView nameGameTextView;
-    private View placeBetLinc;
-    private TextView rulesInfo;
-    private TextView balance;
-    private EditText bet;
-    private ChipGroup chipGroupAmounts;
-    private TextInputLayout tilBetField;
+    private View                      placeBetLinc;
+    private TextView                  rulesInfo;
+    private TextView                  balance;
+    private EditText                  bet;
+    private ChipGroup                 chipGroupAmounts;
+    private TextInputLayout           tilBetField;
+    private ImageView                 placeBetIcon;
+    private CircularProgressIndicator placeBetProgress;
 
 
 
@@ -95,6 +100,7 @@ public class GuessTheNumberGame extends BaseActivity {
 
         viewModel.getError().observe(this, error -> {
             if (error == null) return;
+            setBettingState(false);
             errorMediaPlayer.start();
             String msg;
             switch (error) {
@@ -112,6 +118,7 @@ public class GuessTheNumberGame extends BaseActivity {
 
         viewModel.getBetSuccess().observe(this, preparedAmount -> {
             if (preparedAmount == null) return;
+            setBettingState(false);
             tilBetField.setError(null);
             resetNumberSelection();
             bet.setText("");
@@ -140,6 +147,8 @@ public class GuessTheNumberGame extends BaseActivity {
         bet = findViewById(R.id.bet_field);
         tilBetField = findViewById(R.id.til_bet_field);
         chipGroupAmounts = findViewById(R.id.chip_group_amounts);
+        placeBetIcon = findViewById(R.id.place_bet_icon);
+        placeBetProgress = findViewById(R.id.place_bet_progress);
 
         casinoMediaPlayer.setVolume(0.5f, 0.5f);
         casinoMediaPlayer.setLooping(true);
@@ -225,6 +234,7 @@ public class GuessTheNumberGame extends BaseActivity {
 
         placeBetLinc.setOnClickListener(v -> {
             pulse(v);
+            setBettingState(true);
             betMediaPlayer.start();
             viewModel.placeBet(bet.getText().toString(), selectedNumber, myReferral);
         });
@@ -256,6 +266,15 @@ public class GuessTheNumberGame extends BaseActivity {
         Flasher.NUMBER_BET = tag;
     }
 
+
+    private void setBettingState(boolean betting) {
+        runOnUiThread(() -> {
+            placeBetLinc.setEnabled(!betting);
+            placeBetLinc.setAlpha(betting ? 0.7f : 1f);
+            placeBetIcon.setVisibility(betting ? View.GONE : View.VISIBLE);
+            placeBetProgress.setVisibility(betting ? View.VISIBLE : View.GONE);
+        });
+    }
 
     private void goThread() {
         AppExecutors.io().execute(new GenNumberRun());

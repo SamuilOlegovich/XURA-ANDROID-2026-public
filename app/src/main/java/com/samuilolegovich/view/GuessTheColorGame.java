@@ -7,7 +7,10 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputLayout;
@@ -56,18 +59,23 @@ public class GuessTheColorGame extends BaseActivity {
 
     // Сохраняем цвет ставки до получения ответа от ViewModel
     private boolean pendingColor;
+    private boolean lastBetWasRed = true;
     private String myReferral;
 
-    private TextView nameGameTextViewTwo;
-    private TextView yourBalanceTextView;
-    private TextView rulesOfTheGameLink;
-    private TextView nameGameTextView;
-    private TextView balance;
-    private View black;
-    private View red;
-    private EditText bet;
-    private ChipGroup chipGroupAmounts;
-    private TextInputLayout tilBetField;
+    private TextView                  nameGameTextViewTwo;
+    private TextView                  yourBalanceTextView;
+    private TextView                  rulesOfTheGameLink;
+    private TextView                  nameGameTextView;
+    private TextView                  balance;
+    private View                      black;
+    private View                      red;
+    private EditText                  bet;
+    private ChipGroup                 chipGroupAmounts;
+    private TextInputLayout           tilBetField;
+    private ImageView                 redIcon;
+    private ImageView                 blackIcon;
+    private CircularProgressIndicator redProgress;
+    private CircularProgressIndicator blackProgress;
 
 
 
@@ -89,6 +97,7 @@ public class GuessTheColorGame extends BaseActivity {
 
         viewModel.getError().observe(this, error -> {
             if (error == null) return;
+            setBettingState(false);
             errorMediaPlayer.start();
             String msg;
             switch (error) {
@@ -105,6 +114,7 @@ public class GuessTheColorGame extends BaseActivity {
 
         viewModel.getBetSuccess().observe(this, preparedAmount -> {
             if (preparedAmount == null) return;
+            setBettingState(false);
             tilBetField.setError(null);
             bet.setText("");
             setBetParam(preparedAmount, pendingColor);
@@ -129,6 +139,10 @@ public class GuessTheColorGame extends BaseActivity {
         bet = findViewById(R.id.bet_field);
         tilBetField = findViewById(R.id.til_bet_field);
         chipGroupAmounts = findViewById(R.id.chip_group_amounts);
+        redIcon = findViewById(R.id.red_icon);
+        blackIcon = findViewById(R.id.black_icon);
+        redProgress = findViewById(R.id.red_progress);
+        blackProgress = findViewById(R.id.black_progress);
 
         casinoMediaPlayer = MediaPlayer.create(this, R.raw.in_casino);
         errorMediaPlayer = MediaPlayer.create(this, R.raw.error);
@@ -178,6 +192,8 @@ public class GuessTheColorGame extends BaseActivity {
 
         black.setOnClickListener(v -> {
             pulse(v);
+            lastBetWasRed = false;
+            setBettingState(true);
             betMediaPlayer.start();
             pendingColor = true;
             Flasher.COLOR_BET = true;
@@ -189,6 +205,8 @@ public class GuessTheColorGame extends BaseActivity {
 
         red.setOnClickListener(v -> {
             pulse(v);
+            lastBetWasRed = true;
+            setBettingState(true);
             betMediaPlayer.start();
             pendingColor = false;
             Flasher.COLOR_BET = false;
@@ -216,6 +234,22 @@ public class GuessTheColorGame extends BaseActivity {
         Flasher.COLOR_BET = color;
     }
 
+
+    private void setBettingState(boolean betting) {
+        runOnUiThread(() -> {
+            red.setEnabled(!betting);
+            black.setEnabled(!betting);
+            red.setAlpha(betting ? 0.7f : 1f);
+            black.setAlpha(betting ? 0.7f : 1f);
+            if (lastBetWasRed) {
+                redIcon.setVisibility(betting ? View.GONE : View.VISIBLE);
+                redProgress.setVisibility(betting ? View.VISIBLE : View.GONE);
+            } else {
+                blackIcon.setVisibility(betting ? View.GONE : View.VISIBLE);
+                blackProgress.setVisibility(betting ? View.VISIBLE : View.GONE);
+            }
+        });
+    }
 
     private void goThread() {
         AppExecutors.io().execute(new GenColorRun());
