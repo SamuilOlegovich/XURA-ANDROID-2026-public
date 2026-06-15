@@ -392,7 +392,7 @@ public class Settings extends BaseActivity {
                     .show();
         });
 
-        // 7 taps on title → reveal DEV card
+        // 7 taps on title → toggle DEV card (show if hidden, hide if visible)
         settingsTextView.setOnClickListener(v -> {
             long now = System.currentTimeMillis();
             if (tapCount == 0 || now - firstTapTime > UNLOCK_WINDOW) {
@@ -403,8 +403,12 @@ public class Settings extends BaseActivity {
             }
             if (tapCount >= UNLOCK_TAPS) {
                 tapCount = 0;
-                cardDevNetwork.setVisibility(View.VISIBLE);
-                pulse(cardDevNetwork);
+                if (cardDevNetwork.getVisibility() == View.VISIBLE) {
+                    cardDevNetwork.setVisibility(View.GONE);
+                } else {
+                    cardDevNetwork.setVisibility(View.VISIBLE);
+                    pulse(cardDevNetwork);
+                }
             }
         });
 

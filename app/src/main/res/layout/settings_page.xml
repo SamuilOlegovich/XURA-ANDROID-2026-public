@@ -695,51 +695,42 @@
 
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <!-- Save + Faucet buttons -->
-                    <LinearLayout
+                    <!-- Save button — always full width -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_dev_save"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
+                        android:layout_height="44dp"
+                        android:layout_marginBottom="8dp"
+                        android:insetTop="0dp"
+                        android:insetBottom="0dp"
+                        android:fontFamily="@font/montserrat"
+                        android:text="@string/dev_save_btn"
+                        android:textAllCaps="false"
+                        android:textColor="@color/xura_black"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        app:backgroundTint="@color/xura_purple"
+                        app:cornerRadius="12dp"
+                        app:rippleColor="#40000000" />
 
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/btn_dev_save"
-                            android:layout_width="0dp"
-                            android:layout_height="44dp"
-                            android:layout_weight="1"
-                            android:layout_marginEnd="4dp"
-                            android:insetTop="0dp"
-                            android:insetBottom="0dp"
-                            android:fontFamily="@font/montserrat"
-                            android:text="@string/dev_save_btn"
-                            android:textAllCaps="false"
-                            android:textColor="@color/xura_black"
-                            android:textSize="12sp"
-                            android:textStyle="bold"
-                            app:backgroundTint="@color/xura_purple"
-                            app:cornerRadius="12dp"
-                            app:rippleColor="#40000000" />
-
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/btn_dev_faucet"
-                            android:layout_width="0dp"
-                            android:layout_height="44dp"
-                            android:layout_weight="1"
-                            android:layout_marginStart="4dp"
-                            android:insetTop="0dp"
-                            android:insetBottom="0dp"
-                            android:fontFamily="@font/montserrat"
-                            android:text="@string/dev_faucet_btn"
-                            android:textAllCaps="false"
-                            android:textColor="@color/xura_text_primary"
-                            android:textSize="11sp"
-                            android:visibility="gone"
-                            app:backgroundTint="@color/xura_glass_fill"
-                            app:strokeColor="@color/xura_purple"
-                            app:strokeWidth="1dp"
-                            app:cornerRadius="12dp" />
-
-                    </LinearLayout>
+                    <!-- Faucet — full width, only in testnet mode -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_dev_faucet"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:layout_marginBottom="8dp"
+                        android:insetTop="0dp"
+                        android:insetBottom="0dp"
+                        android:fontFamily="@font/montserrat"
+                        android:text="@string/dev_faucet_btn"
+                        android:textAllCaps="false"
+                        android:textColor="@color/xura_text_primary"
+                        android:textSize="12sp"
+                        android:visibility="gone"
+                        app:backgroundTint="@color/xura_glass_fill"
+                        app:strokeColor="@color/xura_purple"
+                        app:strokeWidth="1dp"
+                        app:cornerRadius="12dp" />
 
                     <!-- TX History button -->
                     <com.google.android.material.button.MaterialButton
