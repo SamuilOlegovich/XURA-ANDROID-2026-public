@@ -145,6 +145,10 @@
     <string name="refund_history">refund</string>
     <string name="tag_history">tag:</string>
     <string name="roulette_bet_history">roulette bet</string>
+    <string name="detail_bets_breakdown">BETS BREAKDOWN</string>
+    <string name="detail_full_address">Address</string>
+    <string name="detail_dest_tag">Destination tag</string>
+    <string name="detail_multiplier_fmt">×%d</string>
 
 
 

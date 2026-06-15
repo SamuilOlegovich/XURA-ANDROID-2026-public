@@ -25,6 +25,16 @@ import com.samuilolegovich.dto.HistoryPaymentDto;
 
 public class HistoryPaymentAdapter extends ListAdapter<HistoryPaymentDto, HistoryPaymentAdapter.ViewHolder> {
 
+    public interface OnItemClickListener {
+        void onItemClick(HistoryPaymentDto dto);
+    }
+
+    private OnItemClickListener clickListener;
+
+    public void setOnItemClickListener(OnItemClickListener l) {
+        this.clickListener = l;
+    }
+
     private static final DiffUtil.ItemCallback<HistoryPaymentDto> DIFF_CALLBACK =
             new DiffUtil.ItemCallback<HistoryPaymentDto>() {
                 @Override
@@ -129,6 +139,11 @@ public class HistoryPaymentAdapter extends ListAdapter<HistoryPaymentDto, Histor
         // Иконка
         holder.icon.setImageResource(getIconRes(tag, incoming));
         ImageViewCompat.setImageTintList(holder.icon, ColorStateList.valueOf(typeColor));
+
+        // Тап → детали
+        holder.itemView.setOnClickListener(v -> {
+            if (clickListener != null) clickListener.onItemClick(item);
+        });
     }
 
 

@@ -1,8 +1,8 @@
 package com.samuilolegovich.dto;
 
+import java.io.Serializable;
 
-
-public class HistoryPaymentDto {
+public class HistoryPaymentDto implements Serializable {
     private String address;
     private String amount;
     private String tag;
