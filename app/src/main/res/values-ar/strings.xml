@@ -353,5 +353,26 @@
     <string name="detail_dest_tag">علامة الوجهة</string>
     <string name="continue_browsing">متابعة →</string>
     <string name="continue_browsing_hint">ستصل النتيجة تلقائيًا</string>
+    <string name="info_main">معلومات</string>
+    <string name="it_s_important_to_know">مهم للمعرفة</string>
+    <string name="select_language_bengali">বাংলা</string>
+    <string name="btn_sub_bengali">বাংলায় পরিবর্তন করুন</string>
+    <string name="select_language_portuguese">Português</string>
+    <string name="btn_sub_portuguese">Mudar para português</string>
+    <string name="detail_col_bet">الرهان</string>
+    <string name="detail_col_amount">المبلغ</string>
+    <string name="detail_col_odds">المضاعف</string>
+    <string name="detail_total">المجموع</string>
+    <string name="detail_memo">ملاحظة</string>
+    <string name="detail_multiplier_fmt">×%d</string>
+    <string name="detail_bet_number">رقم %s</string>
+    <string name="detail_bet_red">أحمر</string>
+    <string name="detail_bet_black">أسود</string>
+    <string name="detail_bet_odd">فردي</string>
+    <string name="detail_bet_even">زوجي</string>
+    <string name="detail_bet_low">1 – 18</string>
+    <string name="detail_bet_high">19 – 36</string>
+    <string name="detail_bet_dozen">عشرة %d</string>
+    <string name="detail_bet_column">عمود %d</string>
 
 </resources>

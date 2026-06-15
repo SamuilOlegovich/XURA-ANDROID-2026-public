@@ -357,5 +357,22 @@
     <string name="detail_dest_tag">Tag de destino</string>
     <string name="continue_browsing">Continuar →</string>
     <string name="continue_browsing_hint">O resultado chegará automaticamente</string>
+    <string name="info_main">INFORMAÇÕES</string>
+    <string name="it_s_important_to_know">IMPORTANTE SABER</string>
+    <string name="detail_col_bet">APOSTA</string>
+    <string name="detail_col_amount">VALOR</string>
+    <string name="detail_col_odds">ODD</string>
+    <string name="detail_total">TOTAL</string>
+    <string name="detail_memo">MEMO</string>
+    <string name="detail_multiplier_fmt">×%d</string>
+    <string name="detail_bet_number">Número %s</string>
+    <string name="detail_bet_red">Vermelho</string>
+    <string name="detail_bet_black">Preto</string>
+    <string name="detail_bet_odd">Ímpar</string>
+    <string name="detail_bet_even">Par</string>
+    <string name="detail_bet_low">1 – 18</string>
+    <string name="detail_bet_high">19 – 36</string>
+    <string name="detail_bet_dozen">Dezena %d</string>
+    <string name="detail_bet_column">Coluna %d</string>
 
 </resources>

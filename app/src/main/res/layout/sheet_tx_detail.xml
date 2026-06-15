@@ -171,7 +171,7 @@
                     android:letterSpacing="0.08"
                     android:textSize="9sp"
                     android:textColor="@color/xura_text_muted"
-                    android:text="BET" />
+                    android:text="@string/detail_col_bet" />
 
                 <TextView
                     android:layout_width="70dp"
@@ -182,7 +182,7 @@
                     android:textSize="9sp"
                     android:textColor="@color/xura_text_muted"
                     android:gravity="end"
-                    android:text="AMOUNT" />
+                    android:text="@string/detail_col_amount" />
 
                 <TextView
                     android:layout_width="44dp"
@@ -193,7 +193,7 @@
                     android:textSize="9sp"
                     android:textColor="@color/xura_text_muted"
                     android:gravity="end"
-                    android:text="ODDS" />
+                    android:text="@string/detail_col_odds" />
 
             </LinearLayout>
 
@@ -232,7 +232,7 @@
                     android:textStyle="bold"
                     android:textSize="12sp"
                     android:textColor="@color/xura_text_primary"
-                    android:text="TOTAL" />
+                    android:text="@string/detail_total" />
 
                 <TextView
                     android:id="@+id/detail_bets_total"

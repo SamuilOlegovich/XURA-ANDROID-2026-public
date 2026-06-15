@@ -359,5 +359,22 @@
     <string name="detail_dest_tag">目标标签</string>
     <string name="continue_browsing">继续 →</string>
     <string name="continue_browsing_hint">结果将自动到达</string>
+    <string name="info_main">信息</string>
+    <string name="it_s_important_to_know">重要须知</string>
+    <string name="detail_col_bet">投注</string>
+    <string name="detail_col_amount">金额</string>
+    <string name="detail_col_odds">赔率</string>
+    <string name="detail_total">总计</string>
+    <string name="detail_memo">备注</string>
+    <string name="detail_multiplier_fmt">×%d</string>
+    <string name="detail_bet_number">数字 %s</string>
+    <string name="detail_bet_red">红色</string>
+    <string name="detail_bet_black">黑色</string>
+    <string name="detail_bet_odd">单数</string>
+    <string name="detail_bet_even">双数</string>
+    <string name="detail_bet_low">1 – 18</string>
+    <string name="detail_bet_high">19 – 36</string>
+    <string name="detail_bet_dozen">第%d打</string>
+    <string name="detail_bet_column">第%d列</string>
 
 </resources>

@@ -353,5 +353,26 @@
     <string name="detail_dest_tag">Etiqueta de destino</string>
     <string name="continue_browsing">Continuar →</string>
     <string name="continue_browsing_hint">El resultado llegará automáticamente</string>
+    <string name="info_main">INFORMACIÓN</string>
+    <string name="it_s_important_to_know">IMPORTANTE SABER</string>
+    <string name="select_language_bengali">বাংলা</string>
+    <string name="btn_sub_bengali">বাংলায় পরিবর্তন করুন</string>
+    <string name="select_language_portuguese">Português</string>
+    <string name="btn_sub_portuguese">Mudar para português</string>
+    <string name="detail_col_bet">APUESTA</string>
+    <string name="detail_col_amount">CANTIDAD</string>
+    <string name="detail_col_odds">CUOTA</string>
+    <string name="detail_total">TOTAL</string>
+    <string name="detail_memo">MEMO</string>
+    <string name="detail_multiplier_fmt">×%d</string>
+    <string name="detail_bet_number">Número %s</string>
+    <string name="detail_bet_red">Rojo</string>
+    <string name="detail_bet_black">Negro</string>
+    <string name="detail_bet_odd">Impar</string>
+    <string name="detail_bet_even">Par</string>
+    <string name="detail_bet_low">1 – 18</string>
+    <string name="detail_bet_high">19 – 36</string>
+    <string name="detail_bet_dozen">Docena %d</string>
+    <string name="detail_bet_column">Columna %d</string>
 
 </resources>

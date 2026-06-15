@@ -357,5 +357,22 @@
     <string name="detail_dest_tag">গন্তব্য ট্যাগ</string>
     <string name="continue_browsing">চালিয়ে যান →</string>
     <string name="continue_browsing_hint">ফলাফল স্বয়ংক্রিয়ভাবে আসবে</string>
+    <string name="info_main">তথ্য</string>
+    <string name="it_s_important_to_know">জানা জরুরি</string>
+    <string name="detail_col_bet">বাজি</string>
+    <string name="detail_col_amount">পরিমাণ</string>
+    <string name="detail_col_odds">গুণক</string>
+    <string name="detail_total">মোট</string>
+    <string name="detail_memo">মেমো</string>
+    <string name="detail_multiplier_fmt">×%d</string>
+    <string name="detail_bet_number">সংখ্যা %s</string>
+    <string name="detail_bet_red">লাল</string>
+    <string name="detail_bet_black">কালো</string>
+    <string name="detail_bet_odd">বিজোড়</string>
+    <string name="detail_bet_even">জোড়</string>
+    <string name="detail_bet_low">1 – 18</string>
+    <string name="detail_bet_high">19 – 36</string>
+    <string name="detail_bet_dozen">ডজন %d</string>
+    <string name="detail_bet_column">কলাম %d</string>
 
 </resources>

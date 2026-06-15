@@ -137,7 +137,7 @@ public class TxDetailSheet extends BottomSheetDialogFragment {
             value.setText(tag);
         } else if (isRawMemo) {
             section.setVisibility(View.VISIBLE);
-            label.setText("MEMO");
+            label.setText(getString(R.string.detail_memo));
             value.setText(tag);
         } else {
             section.setVisibility(View.GONE);
@@ -287,20 +287,20 @@ public class TxDetailSheet extends BottomSheetDialogFragment {
     }
 
     private String tagToDisplayName(String fullTag) {
-        if (fullTag.startsWith("N:")) return "Number " + fullTag.substring(2);
+        if (fullTag.startsWith("N:")) return getString(R.string.detail_bet_number, fullTag.substring(2));
         switch (fullTag) {
-            case "RED":   return "Red";
-            case "BLACK": return "Black";
-            case "ODD":   return "Odd";
-            case "EVEN":  return "Even";
-            case "LOW":   return "1 – 18";
-            case "HIGH":  return "19 – 36";
-            case "D1":    return "Dozen 1";
-            case "D2":    return "Dozen 2";
-            case "D3":    return "Dozen 3";
-            case "C1":    return "Column 1";
-            case "C2":    return "Column 2";
-            case "C3":    return "Column 3";
+            case "RED":   return getString(R.string.detail_bet_red);
+            case "BLACK": return getString(R.string.detail_bet_black);
+            case "ODD":   return getString(R.string.detail_bet_odd);
+            case "EVEN":  return getString(R.string.detail_bet_even);
+            case "LOW":   return getString(R.string.detail_bet_low);
+            case "HIGH":  return getString(R.string.detail_bet_high);
+            case "D1":    return getString(R.string.detail_bet_dozen, 1);
+            case "D2":    return getString(R.string.detail_bet_dozen, 2);
+            case "D3":    return getString(R.string.detail_bet_dozen, 3);
+            case "C1":    return getString(R.string.detail_bet_column, 1);
+            case "C2":    return getString(R.string.detail_bet_column, 2);
+            case "C3":    return getString(R.string.detail_bet_column, 3);
             default:      return fullTag;
         }
     }
