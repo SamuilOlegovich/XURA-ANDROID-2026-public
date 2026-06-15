@@ -551,6 +551,12 @@ public class RouletteGame extends BaseActivity {
     // ════════════════════════════════════════════════════════════════════
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        viewModel.loadBalance();
+    }
+
+    @Override
     public void onBackPressed() {
         if (casinoMediaPlayer != null) casinoMediaPlayer.stop();
         super.onBackPressed();

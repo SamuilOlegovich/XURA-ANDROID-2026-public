@@ -277,6 +277,7 @@ public class GuessTheColorGame extends BaseActivity {
         super.onResume();
         VISIBLE_ON_SCREEN = true;
         GenColorRun.FLAG = true;
+        viewModel.loadBalance();
         goThread();
     }
 

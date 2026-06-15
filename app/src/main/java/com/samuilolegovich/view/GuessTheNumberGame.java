@@ -300,6 +300,7 @@ public class GuessTheNumberGame extends BaseActivity {
         super.onResume();
         VISIBLE_ON_SCREEN = true;
         GenNumberRun.FLAG = true;
+        viewModel.loadBalance();
         goThread();
     }
 

@@ -358,6 +358,7 @@ public class Settings extends BaseActivity {
                         saveGameMode(!isReal);
                         updateGameModeButton();
                         updateTestBalanceCard();
+                        repository.loadBalance();
                     })
                     .setNegativeButton("CANCEL", null)
                     .show();
