@@ -72,7 +72,7 @@ public class GuessTheNumberGame extends BaseActivity {
     private TextView nameGameTextViewTwo;
     private TextView nameGameTextView;
     private View                      placeBetLinc;
-    private TextView                  rulesInfo;
+    private View                      rulesInfo;
     private TextView                  balance;
     private EditText                  bet;
     private ChipGroup                 chipGroupAmounts;
@@ -208,7 +208,6 @@ public class GuessTheNumberGame extends BaseActivity {
         nameGameTextViewTwo.setText(R.string.and_get_36_times_more);
         nameGameTextView.setText(R.string.guess_the_number);
         nameGameTextViewTree.setText(R.string.your_balance);
-        rulesInfo.setText(R.string.rules_of_the_game);
     }
 
 

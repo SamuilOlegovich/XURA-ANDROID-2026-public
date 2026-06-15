@@ -9,20 +9,20 @@
     tools:context=".view.GuessTheColorGame"
     tools:ignore="MissingDefaultResource">
 
-    <!-- Rules link — top right -->
-    <TextView
+    <!-- Rules info button — top right -->
+    <ImageView
         android:id="@+id/rules_of_the_game_link"
-        android:layout_width="wrap_content"
-        android:layout_height="32dp"
-        android:layout_marginTop="16dp"
-        android:fontFamily="@font/montserrat"
-        android:text="@string/rules_of_the_game"
-        android:textAlignment="center"
-        android:textColor="@color/xura_text_tertiary"
-        android:textSize="13sp"
-        android:letterSpacing="0.06"
-        android:gravity="center"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="12dp"
+        android:padding="12dp"
+        android:src="@drawable/ic_info"
+        android:background="@drawable/bg_btn_info"
+        android:clickable="true"
+        android:focusable="true"
+        android:contentDescription="@string/rules_of_the_game"
+        app:tint="@color/xura_gold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

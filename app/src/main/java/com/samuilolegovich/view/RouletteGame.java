@@ -89,7 +89,7 @@ public class RouletteGame extends BaseActivity {
     private String ENTER_AMOUNT_FIRST;
 
     // ── Views ────────────────────────────────────────────────────────────
-    private TextView                   rulesInfo;
+    private View                       rulesInfo;
     private TextView                   balance;
     private TextView                   selectedBetLabel;
     private EditText                   bet;
@@ -182,7 +182,6 @@ public class RouletteGame extends BaseActivity {
         BET_CANNOT_BE_MORE_THAN            = getString(R.string.bet_cannot_be_more_than);
         BET_CANNOT_BE_LESS_THAN            = getString(R.string.bet_cannot_be_less_than);
         ENTER_AMOUNT_FIRST                 = getString(R.string.roulette_enter_amount_first);
-        rulesInfo.setText(R.string.rules_of_the_game);
     }
 
 

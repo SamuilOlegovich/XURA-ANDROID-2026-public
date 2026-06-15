@@ -64,7 +64,7 @@ public class GuessTheColorGame extends BaseActivity {
 
     private TextView                  nameGameTextViewTwo;
     private TextView                  yourBalanceTextView;
-    private TextView                  rulesOfTheGameLink;
+    private View                      rulesOfTheGameLink;
     private TextView                  nameGameTextView;
     private TextView                  balance;
     private View                      black;
@@ -164,7 +164,7 @@ public class GuessTheColorGame extends BaseActivity {
         BET_CANNOT_BE_MORE_THAN = getString(R.string.bet_cannot_be_more_than);
         BET_CANNOT_BE_LESS_THAN = getString(R.string.bet_cannot_be_less_than);
         nameGameTextViewTwo.setText(R.string.and_double_the_bet);
-        rulesOfTheGameLink.setText(R.string.rules_of_the_game);
+
         yourBalanceTextView.setText(R.string.your_balance);
         nameGameTextView.setText(R.string.guess_the_color);
     }
