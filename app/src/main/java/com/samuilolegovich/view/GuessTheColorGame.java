@@ -76,6 +76,7 @@ public class GuessTheColorGame extends BaseActivity {
     private ImageView                 blackIcon;
     private CircularProgressIndicator redProgress;
     private CircularProgressIndicator blackProgress;
+    private View                      llContinueBet;
 
 
 
@@ -143,6 +144,7 @@ public class GuessTheColorGame extends BaseActivity {
         blackIcon = findViewById(R.id.black_icon);
         redProgress = findViewById(R.id.red_progress);
         blackProgress = findViewById(R.id.black_progress);
+        llContinueBet = findViewById(R.id.ll_continue_bet);
 
         casinoMediaPlayer = MediaPlayer.create(this, R.raw.in_casino);
         errorMediaPlayer = MediaPlayer.create(this, R.raw.error);
@@ -189,6 +191,10 @@ public class GuessTheColorGame extends BaseActivity {
             pulse(v);
             goToAnotherPage(RULES_OF_THE_GAME_GUESS_THE_COLOR_CLASS);
         });
+
+        if (llContinueBet != null) {
+            llContinueBet.setOnClickListener(v -> finish());
+        }
 
         black.setOnClickListener(v -> {
             pulse(v);
@@ -247,6 +253,9 @@ public class GuessTheColorGame extends BaseActivity {
             } else {
                 blackIcon.setVisibility(betting ? View.GONE : View.VISIBLE);
                 blackProgress.setVisibility(betting ? View.VISIBLE : View.GONE);
+            }
+            if (llContinueBet != null) {
+                llContinueBet.setVisibility(betting ? View.VISIBLE : View.GONE);
             }
         });
     }

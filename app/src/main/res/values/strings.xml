@@ -149,6 +149,8 @@
     <string name="detail_full_address">Address</string>
     <string name="detail_dest_tag">Destination tag</string>
     <string name="detail_multiplier_fmt">×%d</string>
+    <string name="continue_browsing">Continue browsing →</string>
+    <string name="continue_browsing_hint">We\'ll notify you of the result automatically</string>
 
 
 

@@ -202,9 +202,44 @@
         android:layout_marginBottom="10dp"
         android:columnCount="6"
         android:rowCount="6"
-        app:layout_constraintBottom_toTopOf="@+id/place_bet_linc"
+        app:layout_constraintBottom_toTopOf="@+id/ll_continue_bet"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Continue browsing link -->
+    <LinearLayout
+        android:id="@+id/ll_continue_bet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="8dp"
+        android:visibility="gone"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintBottom_toTopOf="@+id/place_bet_linc"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat"
+            android:textStyle="bold"
+            android:textSize="13sp"
+            android:textColor="@color/xura_cyan"
+            android:text="@string/continue_browsing" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:fontFamily="@font/montserrat"
+            android:textSize="10sp"
+            android:textColor="@color/xura_text_muted"
+            android:text="@string/continue_browsing_hint" />
+
+    </LinearLayout>
 
     <!-- PLACE BET — gradient border card -->
     <androidx.constraintlayout.widget.ConstraintLayout

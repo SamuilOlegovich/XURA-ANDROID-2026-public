@@ -146,7 +146,7 @@
         android:layout_marginBottom="10dp"
         app:singleSelection="true"
         app:selectionRequired="false"
-        app:layout_constraintBottom_toTopOf="@+id/color_red"
+        app:layout_constraintBottom_toTopOf="@+id/ll_continue_bet"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -190,6 +190,41 @@
             app:checkedIconVisible="false" />
 
     </com.google.android.material.chip.ChipGroup>
+
+    <!-- Continue browsing link -->
+    <LinearLayout
+        android:id="@+id/ll_continue_bet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="8dp"
+        android:visibility="gone"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintBottom_toTopOf="@+id/color_red"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat"
+            android:textStyle="bold"
+            android:textSize="13sp"
+            android:textColor="@color/xura_cyan"
+            android:text="@string/continue_browsing" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:fontFamily="@font/montserrat"
+            android:textSize="10sp"
+            android:textColor="@color/xura_text_muted"
+            android:text="@string/continue_browsing_hint" />
+
+    </LinearLayout>
 
     <!-- RED bet card -->
     <androidx.constraintlayout.widget.ConstraintLayout

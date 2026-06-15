@@ -236,6 +236,39 @@
 
             </com.google.android.material.chip.ChipGroup>
 
+            <!-- Continue browsing link — visible only while bet is in-flight -->
+            <LinearLayout
+                android:id="@+id/ll_continue_bet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginTop="12dp"
+                android:padding="8dp"
+                android:visibility="gone"
+                android:clickable="true"
+                android:focusable="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat"
+                    android:textStyle="bold"
+                    android:textSize="13sp"
+                    android:textColor="@color/xura_cyan"
+                    android:text="@string/continue_browsing" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="@font/montserrat"
+                    android:textSize="10sp"
+                    android:textColor="@color/xura_text_muted"
+                    android:text="@string/continue_browsing_hint" />
+
+            </LinearLayout>
+
             <!-- SPIN — gold card -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/btn_spin_roulette"
