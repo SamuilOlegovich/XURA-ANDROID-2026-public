@@ -1,6 +1,7 @@
 package com.samuilolegovich.view;
 
 import android.os.Bundle;
+import android.text.Html;
 import android.widget.TextView;
 
 import com.samuilolegovich.BaseActivity;
@@ -38,7 +39,7 @@ public class RulesOfTheGameRoulette extends BaseActivity {
 
 
     private void setLanguage() {
-        rulesOfTheGameRouletteGuessTheColorRules.setText(R.string.rules_roulette);
+        rulesOfTheGameRouletteGuessTheColorRules.setText(Html.fromHtml(getString(R.string.rules_roulette), Html.FROM_HTML_MODE_COMPACT));
         rulesOfTheGameRouletteGuessTheColor.setText(R.string.roulette_game);
     }
 

@@ -1,6 +1,7 @@
 package com.samuilolegovich.view;
 
 import android.os.Bundle;
+import android.text.Html;
 import android.widget.TextView;
 
 import com.samuilolegovich.BaseActivity;
@@ -48,7 +49,7 @@ public class RulesOfTheGameGuessTheColor extends BaseActivity {
 
 
     private void setText() {
-        rules.setText(RULES);
+        rules.setText(Html.fromHtml(RULES, Html.FROM_HTML_MODE_COMPACT));
     }
 
 

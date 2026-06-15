@@ -36,25 +36,31 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Rules text -->
-        <TextView
-            android:id="@+id/guess_the_color_rules"
+        <!-- Rules text — scrollable -->
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/rules_scroll"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="24dp"
+            android:layout_marginTop="24dp"
             android:layout_marginBottom="24dp"
-            android:text="@string/rules_double_your_bet"
-            android:textAlignment="center"
-            android:textColor="@color/xura_text_secondary"
-            android:textSize="14sp"
-            android:textStyle="italic"
-            android:fontFamily="@font/montserrat"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/guess_the_color_text_view" />
+            app:layout_constraintTop_toBottomOf="@+id/guess_the_color_text_view">
+
+            <TextView
+                android:id="@+id/guess_the_color_rules"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:paddingBottom="16dp"
+                android:textColor="@color/xura_text_secondary"
+                android:textSize="13sp"
+                android:lineSpacingMultiplier="1.4"
+                android:fontFamily="@font/montserrat" />
+
+        </androidx.core.widget.NestedScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

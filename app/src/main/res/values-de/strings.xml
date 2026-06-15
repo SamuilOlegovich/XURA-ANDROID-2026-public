@@ -49,32 +49,12 @@
     <string name="red">Rot</string>
     <string name="set">Setzen</string>
 
-    <string name="rules_guess_the_number_text">Die Regeln dieses Spiels sind sehr einfach.\n\nSie wählen eine Zahl (1 bis 36) für Ihren Einsatz.\n\nBei richtiger Vorhersage wird Ihr Einsatz mit 36 multipliziert.\n\nBei Verlust geht der Betrag in den LOTTO-Fonds.\n\nJeder Nutzer kann LOTTO gewinnen, unabhängig vom Einsatz — wenn der LOTTO-Sektor erscheint.\n\nMindest-Einsatz: 0,1 XRP, Maximum: 100 XRP.</string>
+    <string name="rules_guess_the_number_text"><![CDATA[<font color="#FFB000"><b>SO GEHT ES</b></font><br><br>Wählen Sie eine Zahl von <font color="#00D4FF"><b>1 bis 36</b></font> und setzen Sie.<br>Fällt Ihre Zahl — gewinnen Sie <font color="#FFB000"><b>×36</b></font> Ihres Einsatzes!<br><br><font color="#FFB000"><b>LOTTO-FONDS</b></font><br>Verlorene Einsätze fließen in den LOTTO-Sparfonds.<br>Jeder Spieler kann LOTTO gewinnen, wenn der Null-Sektor fällt.<br>Mini-LOTTO = 1/10 von LOTTO.<br><br><font color="#FFB000"><b>LIMITS</b></font><br>Mindesteinsatz: <font color="#00D4FF">0,1 XRP</font><br>Maximaleinsatz: <font color="#00D4FF">100 XRP</font><br><br><font color="#555577"><i>Spielen Sie verantwortungsvoll. Ab 18 Jahren.</i></font>]]></string>
     <string name="rules_double_your_bet">Wählen Sie eine Zahl von 1 bis 36. Bei richtiger Vorhersage wird Ihr Einsatz mit 36 multipliziert. Bei Verlust geht der Betrag in den LOTTO-Fonds. Min: 0,1 XRP, Max: 100 XRP.</string>
-    <string name="rules_guess_the_color_text">Die Regeln dieses Spiels sind sehr einfach.\n\nSie setzen und wählen eine Farbe.\n\nRichtige Farbe — Einsatz verdoppelt sich.\n\nBei Verlust geht der Betrag in den LOTTO-Fonds.\n\nMindest-Einsatz: 0,1 XRP, Maximum: 100 XRP.</string>
+    <string name="rules_guess_the_color_text"><![CDATA[<font color="#FFB000"><b>SO GEHT ES</b></font><br><br>Setzen Sie und wählen Sie — <font color="#FF2080"><b>Rot</b></font> oder <b>Schwarz</b>.<br>Stimmt das Ergebnis mit Ihrer Farbe überein, wird Ihr Einsatz verdoppelt!<br><br><font color="#FF2080"><b>×2</b></font> &nbsp; Rot oder Schwarz<br><br><font color="#FFB000"><b>LOTTO-FONDS</b></font><br>Verlorene Einsätze fließen in den LOTTO-Sparfonds.<br>Jeder Spieler kann LOTTO gewinnen, wenn der Null-Sektor fällt.<br>Mini-LOTTO = 1/10 von LOTTO.<br><br><font color="#FFB000"><b>LIMITS</b></font><br>Mindesteinsatz: <font color="#00D4FF">0,1 XRP</font><br>Maximaleinsatz: <font color="#00D4FF">100 XRP</font><br><br><font color="#555577"><i>Spielen Sie verantwortungsvoll. Ab 18 Jahren.</i></font>]]></string>
     <string name="rules_guess_the_color">Setzen und Farbe wählen. Richtige Farbe verdoppelt den Einsatz. Bei Verlust geht der Betrag in den LOTTO-Fonds. Min: 0,1 XRP, Max: 100 XRP.</string>
     <string name="referral_text">Wenn Sie einen Referral-Code haben — geben Sie ihn unbedingt ein — dies gibt Ihnen zusätzliche Spielchancen und Teilnahme an der täglichen Verlosung</string>
-    <string name="rules_roulette">Europäisches Roulette auf der XRP Ledger Blockchain.
-
-Jedes Drehergebnis wird transparent durch XRP-Netzwerkdaten bestimmt.
-
-EINSATZTYPEN UND AUSZAHLUNGEN:
-
-• Bestimmte Zahl (0–36)  →  ×36
-• Rot / Schwarz          →  ×2
-• Ungerade / Gerade      →  ×2
-• Niedrig 1–18 / Hoch 19–36  →  ×2
-• Dutzend (1–12, 13–24, 25–36)  →  ×3
-• Kolonne  →  ×3
-
-MEHRFACHEINSATZ: auf mehrere Positionen in einem Dreh setzen.
-
-NULL: Nur der Direkteinsatz auf 0 gewinnt. Alle anderen Einsätze verlieren bei Null.
-
-Mindesteinsatz pro Position: 0,1 XRP
-Gesamtlimit pro Runde: 100 XRP
-
-Spielen Sie verantwortungsvoll. Ab 18 Jahren.</string>
+    <string name="rules_roulette"><![CDATA[Europäisches Roulette auf der XRP Ledger Blockchain.<br>Jedes Drehergebnis wird transparent durch XRP-Netzwerkdaten bestimmt.<br><br><font color="#FFB000"><b>EINSATZTYPEN UND AUSZAHLUNGEN</b></font><br><br>• Bestimmte Zahl (0–36) &nbsp; <font color="#FFB000"><b>×36</b></font><br>• Rot / Schwarz &nbsp; <font color="#FF2080"><b>×2</b></font><br>• Ungerade / Gerade &nbsp; <b>×2</b><br>• Niedrig 1–18 / Hoch 19–36 &nbsp; <b>×2</b><br>• Dutzend (1–12, 13–24, 25–36) &nbsp; <font color="#00D4FF"><b>×3</b></font><br>• Kolonne &nbsp; <font color="#00D4FF"><b>×3</b></font><br><br><font color="#FFB000"><b>MEHRFACHEINSATZ</b></font><br>Auf mehrere Positionen in einem Dreh setzen — Beträge werden als eine Zahlung zusammengefasst.<br><br><font color="#FF2080"><b>NULL</b></font><br>Nur der Direkteinsatz auf 0 gewinnt. Alle anderen Einsätze verlieren bei Null.<br><br><font color="#FFB000"><b>LIMITS</b></font><br>Min. pro Position: <font color="#00D4FF">0,1 XRP</font><br>Max. Gesamt pro Runde: <font color="#00D4FF">100 XRP</font><br><br><font color="#555577"><i>Spielen Sie verantwortungsvoll. Ab 18 Jahren.</i></font>]]></string>
     <string name="congratulations_your_bet_is_won_loto">Glückwunsch! Ihr Einsatz hat LOTTO gewonnen! Preis: %s XRP — weiterspielen!</string>
     <string name="get_recovery_become_referral">Referral-Wiederherstellungsanfrage gesendet — warten Sie auf die Serverantwort</string>
     <string name="congratulations_your_bet_is_won">Glückwunsch! Ihr Einsatz hat gewonnen! Preis: %s XRP — weiterspielen!</string>
