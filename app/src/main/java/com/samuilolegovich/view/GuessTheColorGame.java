@@ -172,9 +172,12 @@ public class GuessTheColorGame extends BaseActivity {
 
     private void listeners() {
         chipGroupAmounts.setOnCheckedStateChangeListener((group, checkedIds) -> {
-            if (checkedIds.contains(R.id.chip_1_xrp))  bet.setText("1");
+            if      (checkedIds.contains(R.id.chip_01_xrp)) bet.setText("0.1");
+            else if (checkedIds.contains(R.id.chip_05_xrp)) bet.setText("0.5");
+            else if (checkedIds.contains(R.id.chip_1_xrp))  bet.setText("1");
             else if (checkedIds.contains(R.id.chip_5_xrp))  bet.setText("5");
             else if (checkedIds.contains(R.id.chip_10_xrp)) bet.setText("10");
+            else if (checkedIds.contains(R.id.chip_20_xrp)) bet.setText("20");
         });
 
         bet.addTextChangedListener(new android.text.TextWatcher() {

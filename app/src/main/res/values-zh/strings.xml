@@ -377,4 +377,7 @@
     <string name="detail_bet_dozen">第%d打</string>
     <string name="detail_bet_column">第%d列</string>
 
+    <string name="chip_01_xrp">0.1 XRP</string>
+    <string name="chip_05_xrp">0.5 XRP</string>
+    <string name="chip_20_xrp">20 XRP</string>
 </resources>

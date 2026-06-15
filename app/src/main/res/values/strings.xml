@@ -391,4 +391,7 @@
     <string name="dev_network_switched_mainnet">Switched to MAINNET. Restart recommended.</string>
     <string name="dev_network_switched_testnet">Switched to TESTNET. Restart recommended.</string>
 
+    <string name="chip_01_xrp">0.1 XRP</string>
+    <string name="chip_05_xrp">0.5 XRP</string>
+    <string name="chip_20_xrp">20 XRP</string>
 </resources>

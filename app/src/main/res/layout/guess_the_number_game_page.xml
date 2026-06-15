@@ -152,6 +152,32 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <com.google.android.material.chip.Chip
+            android:id="@+id/chip_01_xrp"
+            style="@style/Widget.Material3.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/chip_01_xrp"
+            android:textColor="@color/xura_text_primary"
+            app:chipBackgroundColor="@color/chip_bg_quick_bet"
+            app:chipStrokeColor="@color/chip_stroke_quick_bet"
+            app:chipStrokeWidth="1dp"
+            app:checkedIconVisible="false" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_05_xrp"
+            style="@style/Widget.Material3.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/chip_05_xrp"
+            android:textColor="@color/xura_text_primary"
+            app:chipBackgroundColor="@color/chip_bg_quick_bet"
+            app:chipStrokeColor="@color/chip_stroke_quick_bet"
+            app:chipStrokeWidth="1dp"
+            app:checkedIconVisible="false" />
+
+        <com.google.android.material.chip.Chip
             android:id="@+id/chip_1_xrp"
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
@@ -184,6 +210,19 @@
             android:layout_height="36dp"
             android:fontFamily="@font/montserrat"
             android:text="@string/chip_10_xrp"
+            android:textColor="@color/xura_text_primary"
+            app:chipBackgroundColor="@color/chip_bg_quick_bet"
+            app:chipStrokeColor="@color/chip_stroke_quick_bet"
+            app:chipStrokeWidth="1dp"
+            app:checkedIconVisible="false" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_20_xrp"
+            style="@style/Widget.Material3.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/chip_20_xrp"
             android:textColor="@color/xura_text_primary"
             app:chipBackgroundColor="@color/chip_bg_quick_bet"
             app:chipStrokeColor="@color/chip_stroke_quick_bet"
