@@ -71,7 +71,7 @@ public class HistoryCreator {
 
                 BigDecimal raw = new BigDecimal(tx.get("Amount").toString())
                         .divide(BigDecimal.valueOf(MainActivity.ONE_XRP_IN_DROPS), MathContext.DECIMAL128);
-                String amount = (acc.equals(myAccount) ? raw.toString() : "-" + raw) + " XRP";
+                String amount = (acc.equals(myAccount) ? "+" + raw : "-" + raw) + " XRP";
 
                 String label;
                 if (tx.has("Memos")) {
