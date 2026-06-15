@@ -97,7 +97,7 @@
                 android:id="@+id/from_field"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPersonName"
+                android:inputType="textNoSuggestions"
                 android:textColor="@color/xura_text_primary"
                 android:textColorHint="@color/xura_text_muted"
                 android:textSize="15sp" />
@@ -151,6 +151,10 @@
             app:boxStrokeColor="@color/xura_glass_border"
             app:boxStrokeErrorColor="@color/xura_error"
             app:hintTextColor="@color/xura_text_tertiary"
+            app:endIconMode="custom"
+            app:endIconDrawable="@drawable/ic_copy"
+            app:endIconTint="@color/xura_cyan"
+            app:endIconContentDescription="@string/copy"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/til_amount_field">

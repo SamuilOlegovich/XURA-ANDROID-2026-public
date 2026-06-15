@@ -1,5 +1,8 @@
 package com.samuilolegovich.view;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -134,6 +137,16 @@ public class SendPayment extends BaseActivity {
 
         tilAddress.setEndIconOnClickListener(v ->
                 startActivity(new Intent(ScanQrCode.SCAN_QR_CODE_CLASS)));
+
+        tilTag.setEndIconOnClickListener(v -> {
+            ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+            if (cm != null && cm.hasPrimaryClip()) {
+                ClipData.Item item = cm.getPrimaryClip().getItemAt(0);
+                if (item != null && item.getText() != null) {
+                    tag.setText(item.getText().toString().trim());
+                }
+            }
+        });
 
         address.addTextChangedListener(clearErrorWatcher(tilAddress));
         amount.addTextChangedListener(clearErrorWatcher(tilAmount));
