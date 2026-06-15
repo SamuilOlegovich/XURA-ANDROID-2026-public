@@ -97,7 +97,7 @@
                 android:id="@+id/from_field"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPersonName"
+                android:inputType="textNoSuggestions"
                 android:textColor="@color/xura_text_primary"
                 android:textColorHint="@color/xura_text_muted"
                 android:textSize="15sp" />

@@ -10,6 +10,7 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,7 +18,6 @@ import android.widget.TextView;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputLayout;
 import com.samuilolegovich.BaseActivity;
@@ -68,14 +68,12 @@ public class RouletteGame extends BaseActivity {
     private MediaPlayer betMediaPlayer;
 
     // ── Multi-bet table state ─────────────────────────────────────────────
-    // tag → amount placed on that cell
-    private final LinkedHashMap<String, BigDecimal> tableBets = new LinkedHashMap<>();
-    // tag → view reference (for highlight toggling)
-    private final Map<String, View>    betViews    = new HashMap<>();
-    // tag → original background color (for restoring on removal)
-    private final Map<String, Integer> betBgColors = new HashMap<>();
+    private final LinkedHashMap<String, BigDecimal> tableBets   = new LinkedHashMap<>();
+    private final Map<String, View>                 betViews    = new HashMap<>();
+    private final Map<String, Integer>              betBgColors = new HashMap<>();
+    // chip overlay TextView per bet tag — shows the placed amount on the cell
+    private final Map<String, TextView>             chipViews   = new HashMap<>();
 
-    // Snapshot of the primary bet taken when SPIN is pressed (used for Flasher / demo mode)
     private String pendingPrimaryTag        = null;
     private int    pendingPrimaryMultiplier = 2;
 
@@ -131,7 +129,6 @@ public class RouletteGame extends BaseActivity {
             tilBetField.setError(msg);
         });
 
-        // Both test and real mode go through Flasher for the full-screen spin experience
         viewModel.getBetSuccess().observe(this, totalAmount -> {
             if (totalAmount == null) return;
             tilBetField.setError(null);
@@ -183,7 +180,7 @@ public class RouletteGame extends BaseActivity {
 
 
     // ════════════════════════════════════════════════════════════════════
-    //  Flasher params — snapshot taken at SPIN time
+    //  Flasher params — snapshot at SPIN time
     // ════════════════════════════════════════════════════════════════════
 
     private void setBetParamsForFlasher(String totalAmount) {
@@ -206,7 +203,7 @@ public class RouletteGame extends BaseActivity {
 
 
     // ════════════════════════════════════════════════════════════════════
-    //  Casino table builder — real layout: dozens left, 2:1 right
+    //  Casino table — each cell is FrameLayout (label + chip overlay)
     // ════════════════════════════════════════════════════════════════════
 
     private void buildTable() {
@@ -214,8 +211,6 @@ public class RouletteGame extends BaseActivity {
         int      cellH = dp(CELL_H);
         Typeface font  = ResourcesCompat.getFont(this, R.font.montserrat);
 
-        // 5 columns: [dozen | num | num | num | 2:1]
-        // 13 rows:   row 0 = zero, rows 1–12 = numbers
         GridLayout grid = new GridLayout(this);
         grid.setColumnCount(5);
         grid.setRowCount(13);
@@ -224,18 +219,15 @@ public class RouletteGame extends BaseActivity {
                 LinearLayout.LayoutParams.WRAP_CONTENT));
 
         // Row 0: Zero — spans all 5 columns
-        addCell(grid, "0", COLOR_GREEN, 0, 0, 1, 5, cellH, 1f, 12, font, true,
-                v -> toggleBet(v, "N:0", 36, COLOR_GREEN));
+        addCell(grid, "0", COLOR_GREEN, 0, 0, 1, 5, cellH, 1f, 12, font, true, "N:0");
 
         // Rows 1–12, cols 1–3: number cells
         for (int row = 0; row < 12; row++) {
             for (int col = 0; col < 3; col++) {
                 int num = row * 3 + col + 1;
                 int bg  = BLACK_NUMS.contains(num) ? COLOR_BLACK : COLOR_RED;
-                final int n = num, c = bg;
                 addCell(grid, String.valueOf(num), bg, row + 1, col + 1, 1, 1,
-                        cellH, 1f, 12, font, true,
-                        v -> toggleBet(v, "N:" + n, 36, c));
+                        cellH, 1f, 12, font, true, "N:" + num);
             }
         }
 
@@ -247,18 +239,14 @@ public class RouletteGame extends BaseActivity {
         };
         String[] dozTags = {"D1", "D2", "D3"};
         for (int i = 0; i < 3; i++) {
-            final String tag = dozTags[i];
             addCell(grid, dozLabels[i], COLOR_CARD, 1 + i * 4, 0, 4, 1,
-                    0, 0.55f, 9, font, false,
-                    v -> toggleBet(v, tag, 3, COLOR_CARD));
+                    0, 0.55f, 9, font, false, dozTags[i]);
         }
 
         // Col 4: Column bets 2:1 — each spans 4 rows
         for (int i = 0; i < 3; i++) {
-            final String tag = "C" + (i + 1);
             addCell(grid, "2:1", COLOR_CARD, 1 + i * 4, 4, 4, 1,
-                    0, 0.55f, 11, font, false,
-                    v -> toggleBet(v, tag, 3, COLOR_CARD));
+                    0, 0.55f, 11, font, false, "C" + (i + 1));
         }
 
         container.addView(grid);
@@ -268,20 +256,37 @@ public class RouletteGame extends BaseActivity {
     private void addCell(GridLayout grid, String text, int bg,
                          int gridRow, int gridCol, int rowSpan, int colSpan,
                          int height, float colWeight, int textSizeSp,
-                         Typeface font, boolean goldText,
-                         View.OnClickListener listener) {
+                         Typeface font, boolean goldText, String betTag) {
+
+        FrameLayout frame = new FrameLayout(this);
+        frame.setClickable(true);
+        frame.setFocusable(true);
+
+        // Cell label — holds the rounded-rect background (toggled on bet)
         TextView tv = makeCell(text, bg, 0, height > 0 ? height : dp(CELL_H), font, goldText);
-        tv.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, textSizeSp);
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSizeSp);
         tv.setMaxLines(4);
+        frame.addView(tv, new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT));
+
+        // Chip overlay — gold circle, top-right corner, shows bet amount
+        TextView chip = makeChip(font);
+        FrameLayout.LayoutParams chipLp = new FrameLayout.LayoutParams(dp(22), dp(22));
+        chipLp.gravity = Gravity.TOP | Gravity.END;
+        chipLp.setMargins(0, dp(3), dp(3), 0);
+        frame.addView(chip, chipLp);
+        chipViews.put(betTag, chip);
+
         GridLayout.LayoutParams lp = new GridLayout.LayoutParams(
                 GridLayout.spec(gridRow, rowSpan, GridLayout.FILL, 1f),
                 GridLayout.spec(gridCol, colSpan, GridLayout.FILL, colWeight));
         lp.width  = 0;
         lp.height = height;
         lp.setMargins(2, 2, 2, 2);
-        tv.setLayoutParams(lp);
-        tv.setOnClickListener(listener);
-        grid.addView(tv);
+        frame.setLayoutParams(lp);
+        frame.setOnClickListener(v -> toggleBet(tv, betTag, bg));
+        grid.addView(frame);
     }
 
     private void buildOutsideRow(LinearLayout container, int cellH, Typeface font) {
@@ -302,13 +307,28 @@ public class RouletteGame extends BaseActivity {
 
     private void addOutsideBtn(LinearLayout row, String label, String tag,
                                 int color, int cellH, Typeface font) {
-        TextView btn = makeCell(label, color, 0, cellH, font, false);
-        btn.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, 10);
+        FrameLayout frame = new FrameLayout(this);
+        frame.setClickable(true);
+        frame.setFocusable(true);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, cellH, 1f);
         lp.setMargins(2, 2, 2, 2);
-        btn.setLayoutParams(lp);
-        btn.setOnClickListener(v -> toggleBet(v, tag, 2, color));
-        row.addView(btn);
+        frame.setLayoutParams(lp);
+
+        TextView btn = makeCell(label, color, 0, cellH, font, false);
+        btn.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
+        frame.addView(btn, new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT));
+
+        TextView chip = makeChip(font);
+        FrameLayout.LayoutParams chipLp = new FrameLayout.LayoutParams(dp(22), dp(22));
+        chipLp.gravity = Gravity.TOP | Gravity.END;
+        chipLp.setMargins(0, dp(3), dp(3), 0);
+        frame.addView(chip, chipLp);
+        chipViews.put(tag, chip);
+
+        frame.setOnClickListener(v -> toggleBet(btn, tag, color));
+        row.addView(frame);
     }
 
 
@@ -317,19 +337,15 @@ public class RouletteGame extends BaseActivity {
     //  Multi-bet logic
     // ════════════════════════════════════════════════════════════════════
 
-    /**
-     * Toggles a bet on a table cell:
-     * - If the cell already has a bet → removes it and restores the cell.
-     * - If no bet yet → tries to place one using the currently entered amount.
-     *   Returns early with an error hint if the amount field is empty or invalid.
-     */
-    private void toggleBet(View v, String betTag, int multiplier, int bgColor) {
+    private void toggleBet(View v, String betTag, int bgColor) {
         if (tableBets.containsKey(betTag)) {
-            // Remove existing bet
+            // Remove bet: restore cell bg, hide chip
             tableBets.remove(betTag);
             betViews.remove(betTag);
             betBgColors.remove(betTag);
             v.setBackground(roundedBg(bgColor, false));
+            TextView chip = chipViews.get(betTag);
+            if (chip != null) chip.setVisibility(View.GONE);
             updateBetsLabel();
             return;
         }
@@ -348,16 +364,21 @@ public class RouletteGame extends BaseActivity {
             return;
         }
 
-        // Place bet
+        // Place bet: highlight cell, show chip with amount
         tableBets.put(betTag, amount);
         betViews.put(betTag, v);
         betBgColors.put(betTag, bgColor);
         v.setBackground(roundedBg(bgColor, true));
+
+        TextView chip = chipViews.get(betTag);
+        if (chip != null) {
+            chip.setText(amount.stripTrailingZeros().toPlainString());
+            chip.setVisibility(View.VISIBLE);
+        }
         tilBetField.setError(null);
         updateBetsLabel();
     }
 
-    /** Updates the summary label below the table. */
     private void updateBetsLabel() {
         if (tableBets.isEmpty()) {
             selectedBetLabel.setText(getString(R.string.roulette_select_a_bet));
@@ -374,13 +395,12 @@ public class RouletteGame extends BaseActivity {
         if (btnClearBets != null) btnClearBets.setVisibility(View.VISIBLE);
     }
 
-    /** Removes all placed bets and resets all highlighted cells. */
     private void clearAllBets() {
         for (Map.Entry<String, View> entry : betViews.entrySet()) {
             Integer bgColor = betBgColors.get(entry.getKey());
-            if (bgColor != null) {
-                entry.getValue().setBackground(roundedBg(bgColor, false));
-            }
+            if (bgColor != null) entry.getValue().setBackground(roundedBg(bgColor, false));
+            TextView chip = chipViews.get(entry.getKey());
+            if (chip != null) chip.setVisibility(View.GONE);
         }
         tableBets.clear();
         betViews.clear();
@@ -428,7 +448,6 @@ public class RouletteGame extends BaseActivity {
                 tilBetField.setError(getString(R.string.roulette_select_a_bet));
                 return;
             }
-            // Snapshot primary bet for demo-mode Flasher evaluation (first placed bet)
             pendingPrimaryTag        = tableBets.keySet().iterator().next();
             pendingPrimaryMultiplier = RouletteBetCode.multiplierForTag(pendingPrimaryTag);
 
@@ -437,7 +456,7 @@ public class RouletteGame extends BaseActivity {
             viewModel.placeBets(new LinkedHashMap<>(tableBets), myReferral);
         });
 
-        updateBetsLabel(); // initialise label with hint text
+        updateBetsLabel();
     }
 
 
@@ -457,6 +476,22 @@ public class RouletteGame extends BaseActivity {
         if (w > 0) tv.setMinWidth(w);
         tv.setMinHeight(h);
         return tv;
+    }
+
+    private TextView makeChip(Typeface font) {
+        TextView chip = new TextView(this);
+        chip.setVisibility(View.GONE);
+        chip.setGravity(Gravity.CENTER);
+        chip.setTextColor(0xFF1A1A2E);
+        chip.setTextSize(TypedValue.COMPLEX_UNIT_SP, 7);
+        chip.setTypeface(font, Typeface.BOLD);
+        chip.setSingleLine(true);
+        GradientDrawable bg = new GradientDrawable();
+        bg.setShape(GradientDrawable.OVAL);
+        bg.setColor(COLOR_GOLD);
+        bg.setStroke(dp(1), 0xCC000000);
+        chip.setBackground(bg);
+        return chip;
     }
 
     private GradientDrawable roundedBg(int color, boolean selected) {
