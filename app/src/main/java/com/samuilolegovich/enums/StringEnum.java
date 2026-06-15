@@ -17,6 +17,11 @@ public enum StringEnum {
     APP_RUSSIAN_LANGUAGE("ru"),
     APP_ENGLISH_LANGUAGE("en"),
     APP_CHINESE_LANGUAGE("zh"),
+    APP_HINDI_LANGUAGE("hi"),
+    APP_SPANISH_LANGUAGE("es"),
+    APP_FRENCH_LANGUAGE("fr"),
+    APP_GERMAN_LANGUAGE("de"),
+    APP_ARABIC_LANGUAGE("ar"),
     APP_GAME_MODE("game_mode"),
     APP_GAME_MODE_REAL("true"),
 

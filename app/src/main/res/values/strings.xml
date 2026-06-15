@@ -325,6 +325,16 @@
     <string name="btn_sub_english">Switch to English</string>
     <string name="select_language_chinese">中文</string>
     <string name="btn_sub_chinese">切换到中文</string>
+    <string name="select_language_hindi">हिंदी</string>
+    <string name="btn_sub_hindi">हिंदी में स्विच करें</string>
+    <string name="select_language_spanish">Español</string>
+    <string name="btn_sub_spanish">Cambiar al español</string>
+    <string name="select_language_french">Français</string>
+    <string name="btn_sub_french">Passer au français</string>
+    <string name="select_language_german">Deutsch</string>
+    <string name="btn_sub_german">Auf Deutsch wechseln</string>
+    <string name="select_language_arabic">العربية</string>
+    <string name="btn_sub_arabic">التبديل إلى العربية</string>
     <string name="btn_sub_game_mode">Trial or live mode</string>
     <string name="btn_sub_spin">Spin the roulette wheel</string>
 

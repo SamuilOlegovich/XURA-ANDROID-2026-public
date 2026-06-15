@@ -338,4 +338,15 @@
     <string name="dev_wallet_fund_error">水龙头失败，请重试。</string>
     <string name="dev_network_switched_mainnet">已切换到主网。建议重启。</string>
     <string name="dev_network_switched_testnet">已切换到测试网。建议重启。</string>
+
+    <string name="select_language_hindi">印地语</string>
+    <string name="btn_sub_hindi">切换到印地语</string>
+    <string name="select_language_spanish">西班牙语</string>
+    <string name="btn_sub_spanish">切换到西班牙语</string>
+    <string name="select_language_french">法语</string>
+    <string name="btn_sub_french">切换到法语</string>
+    <string name="select_language_german">德语</string>
+    <string name="btn_sub_german">切换到德语</string>
+    <string name="select_language_arabic">阿拉伯语</string>
+    <string name="btn_sub_arabic">切换到阿拉伯语</string>
 </resources>

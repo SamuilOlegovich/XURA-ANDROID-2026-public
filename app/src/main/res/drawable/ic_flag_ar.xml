@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="36dp"
+    android:height="24dp"
+    android:viewportWidth="36"
+    android:viewportHeight="24">
+  <!-- green background (Saudi Arabia) -->
+  <path android:fillColor="#006C35" android:pathData="M0,0 H36 V24 H0 Z"/>
+  <!-- white simplified sword + text area -->
+  <path android:fillColor="#FFFFFF"
+      android:pathData="M6,10 H30 V11.5 H6 Z"/>
+  <path android:fillColor="#FFFFFF"
+      android:pathData="M6,12.5 H26 V14 H6 Z"/>
+  <!-- sword blade -->
+  <path android:fillColor="#FFFFFF"
+      android:pathData="M6,14 L8,16 L28,14 Z"/>
+</vector>
