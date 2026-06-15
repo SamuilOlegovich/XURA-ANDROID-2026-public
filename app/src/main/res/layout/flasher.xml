@@ -117,9 +117,75 @@
         android:textSize="13sp"
         android:gravity="center"
         android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/btn_back_to_game"
+        app:layout_constraintBottom_toTopOf="@+id/ll_continue_bet"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Continue browsing — visible while wheel spins, hidden when result arrives -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ll_continue_bet"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/bg_card_send"
+        android:clickable="true"
+        android:focusable="true"
+        android:contentDescription="@string/continue_browsing"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/btn_back_to_game"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/continue_browsing_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/continue_browsing"
+            android:textColor="@color/xura_gold"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.03"
+            app:layout_constraintBottom_toTopOf="@+id/continue_browsing_subtitle"
+            app:layout_constraintEnd_toStartOf="@+id/continue_browsing_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/continue_browsing_subtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/continue_browsing_hint"
+            android:textColor="@color/xura_text_tertiary"
+            android:textSize="11sp"
+            android:letterSpacing="0.02"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/continue_browsing_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/continue_browsing_title" />
+
+        <ImageView
+            android:id="@+id/continue_browsing_icon"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_send_arrow"
+            android:importantForAccessibility="no"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/xura_gold" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- Back to game — cyan card -->
     <androidx.constraintlayout.widget.ConstraintLayout

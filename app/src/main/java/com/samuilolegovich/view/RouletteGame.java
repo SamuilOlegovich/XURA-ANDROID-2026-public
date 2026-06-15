@@ -97,7 +97,6 @@ public class RouletteGame extends BaseActivity {
     private TextInputLayout            tilBetField;
     private View                       btnSpin;
     private View                       btnClearBets;
-    private View                       llContinueBet;
     private ImageView                  spinIcon;
     private CircularProgressIndicator  spinProgress;
 
@@ -163,7 +162,6 @@ public class RouletteGame extends BaseActivity {
         chipGroupAmounts = findViewById(R.id.chip_group_amounts);
         btnSpin          = findViewById(R.id.btn_spin_roulette);
         btnClearBets     = findViewById(R.id.btn_clear_bets);
-        llContinueBet    = findViewById(R.id.ll_continue_bet);
         spinIcon         = findViewById(R.id.spin_icon);
         spinProgress     = findViewById(R.id.spin_progress);
 
@@ -446,9 +444,6 @@ public class RouletteGame extends BaseActivity {
             startActivity(new Intent(RULES_OF_THE_GAME_ROULETTE_CLASS));
         });
 
-        if (llContinueBet != null) {
-            llContinueBet.setOnClickListener(v -> finish());
-        }
 
         if (btnClearBets != null) {
             btnClearBets.setOnClickListener(v -> {
@@ -544,9 +539,6 @@ public class RouletteGame extends BaseActivity {
             btnSpin.setAlpha(spinning ? 0.7f : 1f);
             spinIcon.setVisibility(spinning ? View.GONE : View.VISIBLE);
             spinProgress.setVisibility(spinning ? View.VISIBLE : View.GONE);
-            if (llContinueBet != null) {
-                llContinueBet.setVisibility(spinning ? View.VISIBLE : View.GONE);
-            }
         });
     }
 

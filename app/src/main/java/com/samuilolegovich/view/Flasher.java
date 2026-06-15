@@ -56,6 +56,7 @@ public class Flasher extends BaseActivity {
     private TextView infoTwo;
     private TextView winInfo;
     private View btnBackToGame;
+    private View llContinueBet;
     private TextView tvCountdown;
 
     private Handler countdownHandler;
@@ -105,12 +106,15 @@ public class Flasher extends BaseActivity {
         infoTwo        = (TextView) findViewById(R.id.last_text_view_two);
         winInfo        = (TextView) findViewById(R.id.last_text_view);
         btnBackToGame  = findViewById(R.id.btn_back_to_game);
+        llContinueBet  = findViewById(R.id.ll_continue_bet);
         tvCountdown    = findViewById(R.id.tv_countdown);
 
         btnBackToGame.setOnClickListener(v -> {
             cancelCountdown();
             onBackPressed();
         });
+
+        llContinueBet.setOnClickListener(v -> onBackPressed());
     }
 
 
@@ -157,6 +161,7 @@ public class Flasher extends BaseActivity {
             infoTwo.setText(text);
             infoTwo.setVisibility(View.VISIBLE);
 
+            llContinueBet.setVisibility(View.GONE);
             btnBackToGame.setVisibility(View.VISIBLE);
             tvCountdown.setVisibility(View.VISIBLE);
             startCountdown();

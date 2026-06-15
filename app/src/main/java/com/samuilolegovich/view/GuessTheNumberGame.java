@@ -79,7 +79,6 @@ public class GuessTheNumberGame extends BaseActivity {
     private TextInputLayout           tilBetField;
     private ImageView                 placeBetIcon;
     private CircularProgressIndicator placeBetProgress;
-    private View                      llContinueBet;
 
 
 
@@ -150,7 +149,6 @@ public class GuessTheNumberGame extends BaseActivity {
         chipGroupAmounts = findViewById(R.id.chip_group_amounts);
         placeBetIcon = findViewById(R.id.place_bet_icon);
         placeBetProgress = findViewById(R.id.place_bet_progress);
-        llContinueBet = findViewById(R.id.ll_continue_bet);
 
         casinoMediaPlayer.setVolume(0.5f, 0.5f);
         casinoMediaPlayer.setLooping(true);
@@ -234,10 +232,6 @@ public class GuessTheNumberGame extends BaseActivity {
             goToAnotherPage(RULES_OF_THE_GAME_GUESS_THE_NUMBER_CLASS);
         });
 
-        if (llContinueBet != null) {
-            llContinueBet.setOnClickListener(v -> finish());
-        }
-
         placeBetLinc.setOnClickListener(v -> {
             pulse(v);
             setBettingState(true);
@@ -279,9 +273,6 @@ public class GuessTheNumberGame extends BaseActivity {
             placeBetLinc.setAlpha(betting ? 0.7f : 1f);
             placeBetIcon.setVisibility(betting ? View.GONE : View.VISIBLE);
             placeBetProgress.setVisibility(betting ? View.VISIBLE : View.GONE);
-            if (llContinueBet != null) {
-                llContinueBet.setVisibility(betting ? View.VISIBLE : View.GONE);
-            }
         });
     }
 
