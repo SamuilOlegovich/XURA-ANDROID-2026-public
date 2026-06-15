@@ -54,7 +54,27 @@
     <string name="rules_guess_the_color_text">Die Regeln dieses Spiels sind sehr einfach.\n\nSie setzen und wählen eine Farbe.\n\nRichtige Farbe — Einsatz verdoppelt sich.\n\nBei Verlust geht der Betrag in den LOTTO-Fonds.\n\nMindest-Einsatz: 0,1 XRP, Maximum: 100 XRP.</string>
     <string name="rules_guess_the_color">Setzen und Farbe wählen. Richtige Farbe verdoppelt den Einsatz. Bei Verlust geht der Betrag in den LOTTO-Fonds. Min: 0,1 XRP, Max: 100 XRP.</string>
     <string name="referral_text">Wenn Sie einen Referral-Code haben — geben Sie ihn unbedingt ein — dies gibt Ihnen zusätzliche Spielchancen und Teilnahme an der täglichen Verlosung</string>
-    <string name="rules_roulette">Dieses Spiel befindet sich noch in der Entwicklung. Wir möchten das klassische Roulette in höchster Qualität umsetzen.</string>
+    <string name="rules_roulette">Europäisches Roulette auf der XRP Ledger Blockchain.
+
+Jedes Drehergebnis wird transparent durch XRP-Netzwerkdaten bestimmt.
+
+EINSATZTYPEN UND AUSZAHLUNGEN:
+
+• Bestimmte Zahl (0–36)  →  ×36
+• Rot / Schwarz          →  ×2
+• Ungerade / Gerade      →  ×2
+• Niedrig 1–18 / Hoch 19–36  →  ×2
+• Dutzend (1–12, 13–24, 25–36)  →  ×3
+• Kolonne  →  ×3
+
+MEHRFACHEINSATZ: auf mehrere Positionen in einem Dreh setzen.
+
+NULL: Nur der Direkteinsatz auf 0 gewinnt. Alle anderen Einsätze verlieren bei Null.
+
+Mindesteinsatz: 0,1 XRP
+Maximaleinsatz: 100 XRP
+
+Spielen Sie verantwortungsvoll. Ab 18 Jahren.</string>
     <string name="congratulations_your_bet_is_won_loto">Glückwunsch! Ihr Einsatz hat LOTTO gewonnen! Preis: %s XRP — weiterspielen!</string>
     <string name="get_recovery_become_referral">Referral-Wiederherstellungsanfrage gesendet — warten Sie auf die Serverantwort</string>
     <string name="congratulations_your_bet_is_won">Glückwunsch! Ihr Einsatz hat gewonnen! Preis: %s XRP — weiterspielen!</string>

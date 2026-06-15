@@ -54,7 +54,27 @@
     <string name="rules_guess_the_color_text">Les règles de ce jeu sont très simples.\n\nMisez et choisissez une couleur.\n\nBonne couleur — la mise est doublée.\n\nEn cas de perte — le montant va dans le fonds LOTTO.\n\nMise minimale : 0,1 XRP, maximale : 100 XRP.</string>
     <string name="rules_guess_the_color">Misez et choisissez une couleur. Bonne couleur double la mise. En cas de perte, va dans le LOTTO. Min : 0,1 XRP, Max : 100 XRP.</string>
     <string name="referral_text">Si vous avez un code de parrainage — entrez-le — cela vous donnera des chances de jeu supplémentaires et la participation au tirage quotidien</string>
-    <string name="rules_roulette">Ce jeu est en cours de développement. Nous voulons implémenter la roulette classique avec la plus haute qualité.</string>
+    <string name="rules_roulette">Roulette européenne sur la blockchain XRP Ledger.
+
+Le résultat de chaque tour est déterminé de façon transparente par les données du réseau XRP.
+
+TYPES DE MISE ET GAINS:
+
+• Numéro exact (0–36)  →  ×36
+• Rouge / Noir         →  ×2
+• Impair / Pair        →  ×2
+• Petite 1–18 / Grande 19–36  →  ×2
+• Douzaine (1–12, 13–24, 25–36)  →  ×3
+• Colonne  →  ×3
+
+MISES MULTIPLES: misez sur plusieurs positions en un seul tour.
+
+ZÉRO: seule la mise directe sur 0 gagne.
+
+Mise minimale: 0,1 XRP
+Maximale: 100 XRP
+
+Jouez de manière responsable. 18 ans minimum.</string>
     <string name="congratulations_your_bet_is_won_loto">Félicitations ! Votre mise a gagné le LOTTO ! Prix : %s XRP — continuez à jouer !</string>
     <string name="get_recovery_become_referral">Demande de récupération de parrainage envoyée — attendez la réponse du serveur</string>
     <string name="congratulations_your_bet_is_won">Félicitations ! Votre mise a gagné ! Prix : %s XRP — continuez à gagner !</string>

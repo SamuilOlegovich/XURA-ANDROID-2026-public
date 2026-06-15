@@ -54,7 +54,27 @@
     <string name="rules_guess_the_color_text">Las reglas de este juego son muy simples.\n\nApuesta y elige un color.\n\nColor correcto — la apuesta se duplica.\n\nSi pierdes — el importe va al fondo LOTTO.\n\nApuesta mínima: 0,1 XRP, máxima: 100 XRP.</string>
     <string name="rules_guess_the_color">Apuesta y elige un color. Color correcto duplica la apuesta. Si pierdes, va al LOTTO. Mín: 0,1 XRP, Máx: 100 XRP.</string>
     <string name="referral_text">Si tienes un código de referido — ingrésalo — te dará oportunidades de juego adicionales y participación en el sorteo diario</string>
-    <string name="rules_roulette">Este juego está en desarrollo. Queremos implementar la ruleta clásica con la más alta calidad.</string>
+    <string name="rules_roulette">Ruleta europea en la blockchain XRP Ledger.
+
+El resultado de cada giro se determina de forma transparente mediante los datos de la red XRP.
+
+TIPOS DE APUESTA Y PAGOS:
+
+• Número exacto (0–36)  →  ×36
+• Rojo / Negro          →  ×2
+• Impar / Par           →  ×2
+• Bajo 1–18 / Alto 19–36  →  ×2
+• Docena (1–12, 13–24, 25–36)  →  ×3
+• Columna  →  ×3
+
+APUESTA MÚLTIPLE: apuesta en varias posiciones en un solo giro.
+
+CERO: solo gana la apuesta directa al 0.
+
+Apuesta mínima: 0.1 XRP
+Máxima: 100 XRP
+
+Juega con responsabilidad. Mayores de 18 años.</string>
     <string name="congratulations_your_bet_is_won_loto">¡Felicidades! ¡Tu apuesta ganó el LOTTO! Premio: %s XRP — ¡sigue jugando!</string>
     <string name="get_recovery_become_referral">Solicitud de recuperación de referido enviada — espera la respuesta del servidor</string>
     <string name="congratulations_your_bet_is_won">¡Felicidades! ¡Tu apuesta ganó! Premio: %s XRP — ¡sigue ganando!</string>
