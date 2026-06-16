@@ -21,7 +21,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
-import com.samuilolegovich.asyncAndRun.runnable.GenColorRun;
+import com.samuilolegovich.async.runnable.GenColorRun;
 import com.samuilolegovich.enums.StringEnum;
 import com.samuilolegovich.enums.TestModeEnum;
 import com.samuilolegovich.utils.PrefsHelper;

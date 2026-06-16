@@ -355,7 +355,7 @@ public class Settings extends BaseActivity {
 
     /** Создаёт HTTP-клиент с доверием ко всем сертификатам — допустимо только для DEV-запросов к тестовому фасету. */
     private OkHttpClient buildDevHttpClient() {
-        return com.samuilolegovich.wallet.myClient.SslUtil.trustAllOkHttpClient();
+        return com.samuilolegovich.wallet.client.SslUtil.trustAllOkHttpClient();
     }
 
     /** Возвращает текст поля ввода (обрезанный), либо запасное значение, если поле пустое. */

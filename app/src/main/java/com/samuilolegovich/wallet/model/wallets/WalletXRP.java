@@ -1,8 +1,8 @@
 package com.samuilolegovich.wallet.model.wallets;
 
 import com.google.common.primitives.UnsignedInteger;
-import com.samuilolegovich.wallet.model.wallets.interfaces.MyWallets;
-import com.samuilolegovich.wallet.myClient.MyXrplClient;
+import com.samuilolegovich.wallet.model.wallets.interfaces.Wallet;
+import com.samuilolegovich.wallet.client.XrplClientWrapper;
 
 import org.xrpl.xrpl4j.client.JsonRpcClientErrorException;
 import org.xrpl.xrpl4j.codec.addresses.AddressBase58;
@@ -47,13 +47,13 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * из сид-фразы, запрос баланса и сиквенса счёта через RPC, формирование, подпись
  * и отправка платёжных транзакций (обычных, с мемо или с destination tag).
  */
-public class WalletXRP implements MyWallets {
+public class WalletXRP implements Wallet {
     private AccountInfoRequestParams requestParams;
     private AccountInfoResult accountInfoResult;
     private UnsignedInteger lastLedgerSequence;
     private UnsignedInteger sequence;
     private Address classicAddress;
-    private MyXrplClient xrplClient;
+    private XrplClientWrapper xrplClient;
     private KeyPair keyPair;
     private Seed seed;
     private String seedBase58;
@@ -373,7 +373,7 @@ public class WalletXRP implements MyWallets {
     /** Создаёт новый RPC-клиент к текущей сети (testnet/mainnet), так как сеть может быть переключена пользователем в любой момент. */
     private void createConnect() {
         try {
-            xrplClient = new MyXrplClient(com.samuilolegovich.config.NetworkConfig.getRpcUrl());
+            xrplClient = new XrplClientWrapper(com.samuilolegovich.config.NetworkConfig.getRpcUrl());
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -13,7 +13,7 @@ import androidx.core.app.NotificationCompat;
 
 import com.samuilolegovich.wallet.model.sockets.enums.StreamSubscriptionEnum;
 import com.samuilolegovich.wallet.repository.WalletRepository;
-import com.samuilolegovich.wallet.subscribers.MyStreamSubscriber;
+import com.samuilolegovich.wallet.subscribers.StreamSubscriberImpl;
 
 import java.util.EnumSet;
 import java.util.HashMap;
@@ -87,7 +87,7 @@ public class XrplSocketService extends Service {
                 Map<String, Object> params = new HashMap<>();
                 params.put("accounts", List.of(address));
                 repo.subscribe(EnumSet.of(StreamSubscriptionEnum.ACCOUNT_CHANNELS),
-                        params, new MyStreamSubscriber());
+                        params, new StreamSubscriberImpl());
             } catch (Exception e) {
                 e.printStackTrace();
             }

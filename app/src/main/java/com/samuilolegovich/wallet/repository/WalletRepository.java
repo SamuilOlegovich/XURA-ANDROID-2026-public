@@ -9,7 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.XuraApp;
 import com.samuilolegovich.viewmodel.NavigationEvent;
-import com.samuilolegovich.wallet.model.PaymentManager.PaymentAndSocketManagerXRPL;
+import com.samuilolegovich.wallet.model.paymentmanager.PaymentAndSocketManagerXRPL;
 import com.samuilolegovich.wallet.model.sockets.enums.StreamSubscriptionEnum;
 import com.samuilolegovich.wallet.model.sockets.interfaces.CommandListener;
 import com.samuilolegovich.wallet.subscribers.interfaces.StreamSubscriber;
@@ -87,6 +87,13 @@ public class WalletRepository {
     /** Публикует новое событие навигации/уведомления с сообщением, текстом лото и типом события. */
     public void notifyEvent(String message, String lotto, int type) {
         navigationEventLiveData.postValue(new NavigationEvent(type, message, lotto));
+    }
+
+    /** Сбрасывает событие навигации после того, как Activity его обработала — иначе оно повторно
+     *  доставится следующему наблюдателю (например, при пересоздании MainActivity) и вызовет
+     *  повторный переход на экран выигрыша/проигрыша. */
+    public void clearNavigationEvent() {
+        navigationEventLiveData.setValue(null);
     }
 
 

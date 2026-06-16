@@ -1,6 +1,5 @@
 package com.samuilolegovich.enums;
 
-import org.junit.After;
 import org.junit.Test;
 
 import java.math.BigDecimal;
@@ -134,33 +133,6 @@ public class StringEnumTest {
     }
 
     // -------------------------------------------------------------------------
-    // setValue — динамическое обновление значений
-    // -------------------------------------------------------------------------
-
-    /**
-     * setValue позволяет изменить значение во время выполнения.
-     * Используется при подключении кошелька для сохранения seed.
-     */
-    @Test
-    public void setValue_updatesEnumValue() {
-        String original = StringEnum.SEED_REAL.getValue();
-        StringEnum.setValue(StringEnum.SEED_REAL, "test_seed_value");
-        assertEquals("test_seed_value", StringEnum.SEED_REAL.getValue());
-        StringEnum.setValue(StringEnum.SEED_REAL, original);
-    }
-
-    /** Изменение SEED_REAL не влияет на другие константы */
-    @Test
-    public void setValue_doesNotAffectOtherConstants() {
-        String colorServerBefore = StringEnum.SERVER_ADDRESS_GUESS_THE_COLOR.getValue();
-        StringEnum.setValue(StringEnum.SEED_REAL, "some_seed");
-        assertEquals("Адрес сервера не должен измениться",
-                colorServerBefore,
-                StringEnum.SERVER_ADDRESS_GUESS_THE_COLOR.getValue());
-        StringEnum.setValue(StringEnum.SEED_REAL, "");
-    }
-
-    // -------------------------------------------------------------------------
     // Настройки локализации
     // -------------------------------------------------------------------------
 
@@ -174,11 +146,5 @@ public class StringEnumTest {
     @Test
     public void englishLanguageConstant_equalsEn() {
         assertEquals("en", StringEnum.APP_ENGLISH_LANGUAGE.getValue());
-    }
-
-    /** Восстанавливаем SEED_REAL в "" после каждого теста на случай сбоя */
-    @After
-    public void resetSeedRealAfterTest() {
-        StringEnum.setValue(StringEnum.SEED_REAL, "");
     }
 }

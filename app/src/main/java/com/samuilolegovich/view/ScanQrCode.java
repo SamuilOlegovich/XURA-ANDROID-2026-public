@@ -20,7 +20,7 @@ import androidx.lifecycle.LifecycleOwner;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
-import com.samuilolegovich.qrScaner.QRCodeDecoder;
+import com.samuilolegovich.qrscanner.QRCodeDecoder;
 
 import org.jetbrains.annotations.NotNull;
 

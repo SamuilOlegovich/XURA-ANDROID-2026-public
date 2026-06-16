@@ -130,6 +130,7 @@ public class MainActivity extends BaseActivity {
                     goToAnotherPage(YOUR_REFERRAL_CLASS);
                     break;
             }
+            viewModel.clearNavigationEvent();
         });
 
         viewModel.getWalletReady().observe(this, ready -> {

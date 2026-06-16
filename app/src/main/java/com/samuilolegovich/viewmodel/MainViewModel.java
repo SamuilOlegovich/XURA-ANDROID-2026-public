@@ -68,6 +68,11 @@ public class MainViewModel extends ViewModel {
         repository.loadBalance();
     }
 
+    /** Сбрасывает событие навигации после обработки, чтобы оно не доставилось повторно следующему наблюдателю. */
+    public void clearNavigationEvent() {
+        repository.clearNavigationEvent();
+    }
+
     /** Восстанавливает кошелёк из сид-фразы и загружает баланс; сокет запускает XrplSocketService. */
     public void restoreAndInit(String seed) {
         executor.execute(() -> {
