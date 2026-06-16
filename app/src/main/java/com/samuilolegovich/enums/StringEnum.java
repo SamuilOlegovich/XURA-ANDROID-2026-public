@@ -66,8 +66,6 @@ public enum StringEnum {
     SEED_DOES_NOT_MATCH("SEED DOES NOT MATCH PLEASE BE CAREFUL"),
     REFERRAL_DOES_NOT_MATCH("REFERRAL DOES NOT MATCH"),
 
-    SEED_REAL(""),
-
     NET_REAL_POST_URL_ONE("https://s1.ripple.com:51234"),
     NET_REAL_POST_URL_TWO("https://s2.ripple.com:51234"),
     NET_REAL_GET_URL("https://data.ripple.com"),

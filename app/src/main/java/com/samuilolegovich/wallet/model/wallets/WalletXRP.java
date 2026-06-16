@@ -1,7 +1,6 @@
 package com.samuilolegovich.wallet.model.wallets;
 
 import com.google.common.primitives.UnsignedInteger;
-import com.samuilolegovich.enums.StringEnum;
 import com.samuilolegovich.wallet.model.wallets.interfaces.MyWallets;
 import com.samuilolegovich.wallet.myClient.MyXrplClient;
 
@@ -132,7 +131,6 @@ public class WalletXRP implements MyWallets {
                 Collections.singletonList(decoded.version()),
                 UnsignedInteger.valueOf(16));
 
-        StringEnum.setValue(StringEnum.SEED_REAL, seedBase58);
         createConnect();
         getInformationAboutYourAccount();
 
