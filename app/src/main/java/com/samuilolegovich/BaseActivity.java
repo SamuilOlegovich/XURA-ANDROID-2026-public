@@ -13,12 +13,14 @@ import android.view.animation.OvershootInterpolator;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.samuilolegovich.enums.StringEnum;
+import com.samuilolegovich.utils.AntiDebugDetector;
 import com.samuilolegovich.utils.InactivityGuard;
 import com.samuilolegovich.utils.PrefsHelper;
 import com.samuilolegovich.view.SelectGame;
@@ -45,6 +47,33 @@ public abstract class BaseActivity extends AppCompatActivity {
         checkAutoLock();
         syncBottomNavSelection();
         animateLogo();
+        checkAntiDebug();
+    }
+
+    // Проверка дебаггера/Frida в фоне на каждом возврате экрана в foreground —
+    // инструменты динамического анализа могут быть подключены в любой момент,
+    // не только при запуске приложения.
+    private void checkAntiDebug() {
+        new Thread(() -> {
+            if (AntiDebugDetector.isDetected()) {
+                runOnUiThread(this::showAntiDebugWarning);
+            }
+        }).start();
+    }
+
+    private void showAntiDebugWarning() {
+        if (isFinishing() || isDestroyed()) return;
+        new AlertDialog.Builder(this)
+                .setTitle("Обнаружена попытка анализа приложения")
+                .setMessage(
+                        "На устройстве обнаружены признаки инструментов динамического анализа " +
+                        "(отладчик или Frida).\n\n" +
+                        "Такие инструменты позволяют перехватывать данные приложения в реальном " +
+                        "времени, включая seed-фразу и подписываемые транзакции.\n\n" +
+                        "Приложение будет закрыто.")
+                .setCancelable(false)
+                .setPositiveButton("Выйти", (d, w) -> finishAffinity())
+                .show();
     }
 
     private void animateLogo() {
