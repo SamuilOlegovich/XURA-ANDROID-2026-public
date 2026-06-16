@@ -1,8 +1,10 @@
 package com.samuilolegovich.view;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.WindowManager;
@@ -18,6 +20,7 @@ import com.samuilolegovich.R;
 import com.samuilolegovich.enums.StringEnum;
 import com.samuilolegovich.utils.BiometricHelper;
 import com.samuilolegovich.utils.Cipher;
+import com.samuilolegovich.utils.LegacyCipher;
 import com.samuilolegovich.utils.PrefsHelper;
 
 
@@ -79,10 +82,9 @@ public class EnterApplicationPassword extends BaseActivity {
     private void listeners() {
         next.setOnClickListener(v -> {
             pulse(v);
-            String one = getPassword(password.getText().toString());
-            String two = getEncryptedPassword();
+            String entered = password.getText().toString();
 
-            if (one.equals(two)) {
+            if (verifyPassword(entered)) {
                 MainActivity.START_FLAG = false;
                 if (!preferences.contains(StringEnum.APP_PREFERENCES_SEED.getValue())) {
                     goToAnotherPage(RESTORE_OR_NEW_WALLET_CLASS);
@@ -135,14 +137,35 @@ public class EnterApplicationPassword extends BaseActivity {
         }
     }
 
-    private String getPassword(String password) {
-        String salt = preferences.getString(StringEnum.APP_PREFERENCES_SALT.getValue(), "");
-        return Cipher.hashPassword(password, salt);
+    // true, если введённый пароль совпадает с сохранённым. Если сохранённый
+    // хэш сделан старой (до PBKDF2) схемой, при совпадении пароль сразу
+    // переписывается в новом формате — пользователю не нужно его сбрасывать.
+    private boolean verifyPassword(String entered) {
+        String storedSalt = preferences.getString(StringEnum.APP_PREFERENCES_SALT.getValue(), "");
+        String storedHash = preferences.getString(StringEnum.APP_PREFERENCES_PASSWORD.getValue(), "");
+
+        if (LegacyCipher.isLegacySalt(storedSalt)) {
+            if (!LegacyCipher.hash(entered, storedSalt, getAndroidId()).equals(storedHash)) {
+                return false;
+            }
+            migrateToPbkdf2(entered);
+            return true;
+        }
+
+        return Cipher.hashPassword(entered, storedSalt).equals(storedHash);
     }
 
+    private void migrateToPbkdf2(String password) {
+        String newSalt = Cipher.generateSalt();
+        preferences.edit()
+                .putString(StringEnum.APP_PREFERENCES_SALT.getValue(), newSalt)
+                .putString(StringEnum.APP_PREFERENCES_PASSWORD.getValue(), Cipher.hashPassword(password, newSalt))
+                .apply();
+    }
 
-    private String getEncryptedPassword() {
-        return preferences.getString(StringEnum.APP_PREFERENCES_PASSWORD.getValue(), "");
+    @SuppressLint("HardwareIds")
+    private String getAndroidId() {
+        return Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
     }
 
 
