@@ -80,17 +80,6 @@ public class ScanQrCode extends BaseActivity {
         runOnUiThread(() -> showSnackbar(root, qrCodeText, SnackbarType.INFO));
         SendPayment.ADDRESS = qrCodeText;
         onBackPressed();
-
-//        new Thread(() -> {
-//            try {
-//                Thread.sleep(SUSPENSION_TIME);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//            isProcess = false;
-//            SendPayment.ADDRESS = qrCodeText;
-//            onBackPressed();
-//        }).start();
     }
 
 
@@ -104,11 +93,6 @@ public class ScanQrCode extends BaseActivity {
         ImageAnalysis imageAnalysis = new ImageAnalysis.Builder().build();
         imageAnalysis.setAnalyzer(Executors.newFixedThreadPool(1), new QRCodeDecoder(this));
         ImageCapture.Builder builder = new ImageCapture.Builder();
-
-//        HdrImageCaptureExtender hdrImageCaptureExtender = HdrImageCaptureExtender.create(builder);
-//        if (hdrImageCaptureExtender.isExtensionAvaible(cameraSelector)) {
-//            hdrImageCaptureExtender.enableExtension(cameraSelector);
-//        }
 
         // создаем предпросмотр
         Preview preview = new Preview.Builder().build();

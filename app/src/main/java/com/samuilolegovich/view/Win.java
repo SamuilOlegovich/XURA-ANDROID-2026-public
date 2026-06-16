@@ -83,7 +83,6 @@ public class Win extends BaseActivity {
     private void setLanguage() {
         winPageTextViewTree.setText(R.string.congratulations);
         winPageTextView.setText(R.string.bet_won);
-//        MASSAGE = getString(R.string.);
     }
 
 

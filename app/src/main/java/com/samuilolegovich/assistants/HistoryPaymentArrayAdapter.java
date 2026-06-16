@@ -99,14 +99,6 @@ public class HistoryPaymentArrayAdapter extends ArrayAdapter<HistoryPaymentDto> 
                 : historyPaymentDto.getAmount()
                 + processTag(historyPaymentDto.getTag()));
 
-//        buttonView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-                // класс для перехода на другую страницу
-//                DataExchange.getMainActivity().showInfoThisTable(position);
-//            }
-//        });
-
         return view;
     }
 

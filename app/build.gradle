@@ -73,18 +73,6 @@ dependencies {
     implementation 'com.google.android.material:material:1.12.0'
     implementation platform('com.google.firebase:firebase-bom:30.1.0')
 
-    // для работы с классом - FirebaseAuth
-//    implementation 'com.google.firebase:firebase-core:18.0.0'
-    // позволит авторизоваться в базах данных
-//    implementation 'com.google.firebase:firebase-auth:20.0.1'
-    // позволит контактировать с базой данных
-//    implementation 'com.google.firebase:firebase-database:19.5.1'
-    // позволит импортировать класс - AuthUI - для работы с авторизацией
-//    implementation 'com.firebaseui:firebase-ui:0.6.2'
-    // позволяет работать с дизайном
-//    implementation 'com.android.support:design:28.0.0'
-    // нужна для окна всплывающего модуля
-//    implementation 'com.android.support:cardview-v7:28.0.0'
     // позволит стилизировать поля ввода
     implementation 'com.rengwuxian.materialedittext:library:2.1.4'
     // для работы со шрифтами стилями и т д
@@ -92,14 +80,6 @@ dependencies {
     implementation 'io.github.inflationx:viewpump:2.0.3'
     // тоже надо
     implementation 'com.google.android.gms:play-services-auth:20.2.0'
-//    implementation 'com.firebaseui:firebase-ui-auth:4.3.1'
-//    implementation platform('com.google.firebase:firebase-bom:26.1.0')
-//    implementation 'com.google.firebase:firebase-auth'
-
-
-//    implementation 'com.google.firebase:firebase-analytics:21.0.0'
-//    implementation 'com.google.firebase:firebase-auth:21.0.5'
-//    implementation 'com.firebaseui:firebase-ui-database:6.2.1'
 
     // библиотеки для кошелька XRP
     implementation 'org.xrpl:xrpl4j-core:3.3.0'
@@ -107,13 +87,7 @@ dependencies {
 
     implementation 'org.java-websocket:Java-WebSocket:1.5.7'
 
-//    implementation 'tech.gusavila92:java-android-websocket-client:1.2.2'
-//    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    // https://mvnrepository.com/artifact/org.json/json
     implementation 'org.json:json:20220320'
-    // https://mvnrepository.com/artifact/com.sun/tools
-//    implementation 'com.sun:tools:1.5.0'
-
 
     // для того чтобы не вылетало - xrplClient
     implementation 'io.github.openfeign:feign-jackson:11.8'
@@ -123,9 +97,6 @@ dependencies {
     annotationProcessor 'com.google.dagger:hilt-compiler:2.51.1'
 
     annotationProcessor 'org.immutables:value:2.10.0' // for annotation processor
-//    implementation 'org.immutables:value-annotations:2.10.0' // for annotations
-//    implementation 'org.immutables:builder:2.10.0' // for annotations
-//    implementation 'org.immutables:gson:2.10.0' // for annotations
 
     // QR - code
     implementation 'com.google.zxing:core:3.3.2'
@@ -134,7 +105,6 @@ dependencies {
 
     // retrofit
     implementation group: 'com.squareup.retrofit2', name: 'converter-gson', version: '2.11.0'
-//    implementation 'com.squareup.retrofit2:converter-gsone:2.11.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.11.0'
     implementation 'com.squareup.retrofit2:retrofit:2.11.0'
     implementation 'com.squareup.retrofit2:converter-jackson:2.11.0'

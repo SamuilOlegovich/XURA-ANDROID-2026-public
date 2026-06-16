@@ -84,7 +84,6 @@ public class SocketXRP extends WebSocketClient {
                     e.printStackTrace();
                 }
             });
-//            parameters.forEach(request::put);
         }
 
         send(request.toString());
@@ -225,7 +224,6 @@ public class SocketXRP extends WebSocketClient {
                     e.printStackTrace();
                 }
             });
-//                    parameters.forEach(request::put);
         }
         return request.toString().replaceAll("\"\\[", "[\"").replaceAll("]\"", "\"]");
         // тут я вставил кастыль - разобраться и исправить

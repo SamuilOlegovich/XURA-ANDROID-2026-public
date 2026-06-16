@@ -67,9 +67,6 @@ public enum StringEnum {
     NET_REAL_GET_URL("https://data.ripple.com"),
 
     WSS_REAL("wss://xrplcluster.com"),
-//    WSS_REAL_1("wss://s1.ripple.com"),
-//    WSS_REAL_2("wss://s2.ripple.com"),
-//    WSS_REAL_3("wss://xrpl.link"),
 
     FAUCET_CLIENT_HTTP_URL_TEST("https://faucet.altnet.rippletest.net"),
     NET_TEST("https://s.altnet.rippletest.net:51234/"),
