@@ -17,8 +17,8 @@ import androidx.core.content.ContextCompat;
 
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
-import com.samuilolegovich.asyncAndRun.runnable.FlasherRun;
-import com.samuilolegovich.asyncAndRun.runnable.NotifierRunForTrialGame;
+import com.samuilolegovich.async.runnable.FlasherRun;
+import com.samuilolegovich.async.runnable.NotifierRunForTrialGame;
 import com.samuilolegovich.enums.TestModeEnum;
 import com.samuilolegovich.utils.Lotto;
 import dagger.hilt.android.AndroidEntryPoint;

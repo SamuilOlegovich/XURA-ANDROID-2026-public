@@ -8,7 +8,7 @@ import com.samuilolegovich.BaseActivity;
 
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
-import com.samuilolegovich.asyncAndRun.runnable.GenNumberRun;
+import com.samuilolegovich.async.runnable.GenNumberRun;
 import dagger.hilt.android.AndroidEntryPoint;
 
 

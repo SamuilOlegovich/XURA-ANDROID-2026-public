@@ -1,4 +1,4 @@
-package com.samuilolegovich.wallet.model.PaymentManager.interfaces;
+package com.samuilolegovich.wallet.model.paymentmanager.interfaces;
 
 
 import com.samuilolegovich.wallet.model.sockets.enums.StreamSubscriptionEnum;

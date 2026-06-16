@@ -1,4 +1,4 @@
-package com.samuilolegovich.wallet.myClient;
+package com.samuilolegovich.wallet.client;
 
 import android.annotation.SuppressLint;
 

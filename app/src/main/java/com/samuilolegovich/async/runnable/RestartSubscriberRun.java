@@ -1,9 +1,9 @@
-package com.samuilolegovich.asyncAndRun.runnable;
+package com.samuilolegovich.async.runnable;
 
 import com.samuilolegovich.AppExecutors;
 import com.samuilolegovich.wallet.model.sockets.enums.StreamSubscriptionEnum;
 import com.samuilolegovich.wallet.repository.WalletRepository;
-import com.samuilolegovich.wallet.subscribers.MyStreamSubscriber;
+import com.samuilolegovich.wallet.subscribers.StreamSubscriberImpl;
 import com.samuilolegovich.wallet.subscribers.interfaces.StreamSubscriber;
 
 import java.util.EnumSet;
@@ -90,7 +90,7 @@ public class RestartSubscriberRun implements Runnable {
      */
     private void restartSubscribeTo() {
         try {
-            StreamSubscriber subscriber = new MyStreamSubscriber();
+            StreamSubscriber subscriber = new StreamSubscriberImpl();
             Map<String, Object> parameters = new HashMap<>();
             parameters.put("accounts", List.of(repository.getClassicAddress()));
 

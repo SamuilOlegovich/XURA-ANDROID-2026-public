@@ -1,4 +1,4 @@
-package com.samuilolegovich.asyncAndRun.runnable;
+package com.samuilolegovich.async.runnable;
 
 import com.samuilolegovich.R;
 import com.samuilolegovich.XuraApp;

@@ -1,8 +1,8 @@
-package com.samuilolegovich.wallet.model.PaymentManager;
+package com.samuilolegovich.wallet.model.paymentmanager;
 
 import com.samuilolegovich.enums.StringEnum;
-import com.samuilolegovich.wallet.model.PaymentManager.interfaces.PaymentManager;
-import com.samuilolegovich.wallet.model.PaymentManager.interfaces.SocketManager;
+import com.samuilolegovich.wallet.model.paymentmanager.interfaces.PaymentManager;
+import com.samuilolegovich.wallet.model.paymentmanager.interfaces.SocketManager;
 import com.samuilolegovich.wallet.model.sockets.SocketXRP;
 import com.samuilolegovich.wallet.model.sockets.enums.StreamSubscriptionEnum;
 import com.samuilolegovich.wallet.model.sockets.interfaces.CommandListener;
@@ -275,9 +275,9 @@ public class PaymentAndSocketManagerXRPL implements PaymentManager, SocketManage
             try {
                 javax.net.ssl.SSLSocketFactory sslSocketFactory =
                         com.samuilolegovich.config.NetworkConfig.IS_TESTNET
-                                ? com.samuilolegovich.wallet.myClient.SslUtil.trustAllSocketFactory()
-                                : com.samuilolegovich.wallet.myClient.SslUtil.pinnedSocketFactory(
-                                        com.samuilolegovich.wallet.myClient.SslUtil.WSS_MAINNET_PINS);
+                                ? com.samuilolegovich.wallet.client.SslUtil.trustAllSocketFactory()
+                                : com.samuilolegovich.wallet.client.SslUtil.pinnedSocketFactory(
+                                        com.samuilolegovich.wallet.client.SslUtil.WSS_MAINNET_PINS);
                 socket.setSocketFactory(sslSocketFactory);
                 return socket.connectBlocking(3000, TimeUnit.MILLISECONDS);
             } catch (InterruptedException | IllegalStateException e) {

@@ -9,7 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.XuraApp;
 import com.samuilolegovich.viewmodel.NavigationEvent;
-import com.samuilolegovich.wallet.model.PaymentManager.PaymentAndSocketManagerXRPL;
+import com.samuilolegovich.wallet.model.paymentmanager.PaymentAndSocketManagerXRPL;
 import com.samuilolegovich.wallet.model.sockets.enums.StreamSubscriptionEnum;
 import com.samuilolegovich.wallet.model.sockets.interfaces.CommandListener;
 import com.samuilolegovich.wallet.subscribers.interfaces.StreamSubscriber;

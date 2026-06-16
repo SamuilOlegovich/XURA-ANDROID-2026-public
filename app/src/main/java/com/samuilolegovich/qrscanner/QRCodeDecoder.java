@@ -1,4 +1,4 @@
-package com.samuilolegovich.qrScaner;
+package com.samuilolegovich.qrscanner;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

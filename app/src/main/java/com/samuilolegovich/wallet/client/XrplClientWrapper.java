@@ -1,4 +1,4 @@
-package com.samuilolegovich.wallet.myClient;
+package com.samuilolegovich.wallet.client;
 
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -66,8 +66,8 @@ import org.xrpl.xrpl4j.model.transactions.XrpCurrencyAmount;
  * XRPL (submit, fee, account_info, ledger, account_tx и др.) в типобезопасный
  * Java-метод, формируя запрос и делегируя его фактическую отправку {@link ApiClient}.
  */
-public class MyXrplClient {
-    private static final Logger LOGGER = LoggerFactory.getLogger(MyXrplClient.class);
+public class XrplClientWrapper {
+    private static final Logger LOGGER = LoggerFactory.getLogger(XrplClientWrapper.class);
 
     private final ObjectMapper objectMapper;
     private final ApiClient apiClient;
@@ -75,7 +75,7 @@ public class MyXrplClient {
 
 
     /** Создаёт клиент с собственным ApiClient, настроенным на указанный RPC-URL. */
-    public MyXrplClient(String stringURL) {
+    public XrplClientWrapper(String stringURL) {
         this.objectMapper = ObjectMapperFactory.create();
         this.apiClient = new ApiClient(stringURL);
     }

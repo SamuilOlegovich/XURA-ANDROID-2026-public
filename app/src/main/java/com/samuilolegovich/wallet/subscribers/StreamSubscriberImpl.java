@@ -3,8 +3,8 @@ package com.samuilolegovich.wallet.subscribers;
 import android.content.Context;
 
 import com.samuilolegovich.AppExecutors;
-import com.samuilolegovich.asyncAndRun.runnable.NotifierRun;
-import com.samuilolegovich.asyncAndRun.runnable.UpdateBalanceRun;
+import com.samuilolegovich.async.runnable.NotifierRun;
+import com.samuilolegovich.async.runnable.UpdateBalanceRun;
 import com.samuilolegovich.wallet.model.sockets.enums.StreamSubscriptionEnum;
 import com.samuilolegovich.wallet.subscribers.interfaces.StreamSubscriber;
 
@@ -20,8 +20,8 @@ import org.slf4j.LoggerFactory;
  * транзакции запускает на фоне обновление баланса кошелька и обработку
  * (оповещение игрока о выигрыше/проигрыше через {@link NotifierRun}).
  */
-public class MyStreamSubscriber implements StreamSubscriber {
-    private static final Logger LOG = LoggerFactory.getLogger(MyStreamSubscriber.class);
+public class StreamSubscriberImpl implements StreamSubscriber {
+    private static final Logger LOG = LoggerFactory.getLogger(StreamSubscriberImpl.class);
     Context context;
 
 

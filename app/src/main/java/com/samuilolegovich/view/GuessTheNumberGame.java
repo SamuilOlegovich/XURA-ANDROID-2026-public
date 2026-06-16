@@ -26,7 +26,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
-import com.samuilolegovich.asyncAndRun.runnable.GenNumberRun;
+import com.samuilolegovich.async.runnable.GenNumberRun;
 import com.samuilolegovich.enums.StringEnum;
 import com.samuilolegovich.enums.TestModeEnum;
 import com.samuilolegovich.utils.PrefsHelper;

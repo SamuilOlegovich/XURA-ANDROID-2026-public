@@ -1,8 +1,8 @@
 package com.samuilolegovich.wallet.model.sockets;
 
 import com.samuilolegovich.AppExecutors;
-import com.samuilolegovich.asyncAndRun.runnable.RestartSubscriberRun;
-import com.samuilolegovich.wallet.model.PaymentManager.PaymentAndSocketManagerXRPL;
+import com.samuilolegovich.async.runnable.RestartSubscriberRun;
+import com.samuilolegovich.wallet.model.paymentmanager.PaymentAndSocketManagerXRPL;
 import com.samuilolegovich.wallet.model.sockets.enums.StreamSubscriptionEnum;
 import com.samuilolegovich.wallet.model.sockets.exceptions.InvalidStateException;
 import com.samuilolegovich.wallet.model.sockets.interfaces.CommandListener;
