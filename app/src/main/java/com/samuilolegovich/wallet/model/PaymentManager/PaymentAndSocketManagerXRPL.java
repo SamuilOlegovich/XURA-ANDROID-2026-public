@@ -242,8 +242,12 @@ public class PaymentAndSocketManagerXRPL implements PaymentManager, SocketManage
     public boolean startSocket() {
         if (socket != null) {
             try {
-                socket.setSocketFactory(
-                        com.samuilolegovich.wallet.myClient.SslUtil.trustAllSocketFactory());
+                javax.net.ssl.SSLSocketFactory sslSocketFactory =
+                        com.samuilolegovich.config.NetworkConfig.IS_TESTNET
+                                ? com.samuilolegovich.wallet.myClient.SslUtil.trustAllSocketFactory()
+                                : com.samuilolegovich.wallet.myClient.SslUtil.pinnedSocketFactory(
+                                        com.samuilolegovich.wallet.myClient.SslUtil.WSS_MAINNET_PINS);
+                socket.setSocketFactory(sslSocketFactory);
                 return socket.connectBlocking(3000, TimeUnit.MILLISECONDS);
             } catch (InterruptedException | IllegalStateException e) {
                 e.printStackTrace();
