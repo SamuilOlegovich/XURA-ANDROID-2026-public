@@ -148,7 +148,7 @@ public class SocketXRP extends WebSocketClient {
         LOG.info("XRP ledger client opened");
     }
 
-    /** Разбирает входящее сообщение: маршрутизирует событие потоковой подписки нужному подписчику либо ответ команды — зарегистрированному слушателю; закрывает соединение, если оно было помечено для закрытия и больше нет активных подписок/ожидающих команд. */
+    /** Разбирает входящее сообщение: для каждой константы подписки, чей тип сообщения совпадает с пришедшим, проверяет, есть ли на неё активная подписка, и при наличии вызывает подписчика (так события с неоднозначным типом, например "transaction", доходят до того, кто на них реально подписан); ответ команды передаёт зарегистрированному слушателю; закрывает соединение, если оно было помечено для закрытия и больше нет активных подписок/ожидающих команд. */
     @Override
     public void onMessage(String message) {
         long start = System.currentTimeMillis();
@@ -156,16 +156,13 @@ public class SocketXRP extends WebSocketClient {
         try {
             JSONObject json = new JSONObject(message);
 
-            if (json.has(ATTRIBUTE_TYPE)
-                    && (StreamSubscriptionEnum.byMessageType(json.getString(ATTRIBUTE_TYPE))
-                    != null)) {
-
-                StreamSubscriptionEnum subscription = StreamSubscriptionEnum
-                        .byMessageType(json.getString(ATTRIBUTE_TYPE));
-                StreamSubscriber subscriber = activeSubscriptions.get(subscription);
-
-                if (subscriber != null) {
-                    subscriber.onSubscription(subscription, json);
+            if (json.has(ATTRIBUTE_TYPE)) {
+                for (StreamSubscriptionEnum subscription
+                        : StreamSubscriptionEnum.byMessageType(json.getString(ATTRIBUTE_TYPE))) {
+                    StreamSubscriber subscriber = activeSubscriptions.get(subscription);
+                    if (subscriber != null) {
+                        subscriber.onSubscription(subscription, json);
+                    }
                 }
             } else if (json.has(ATTRIBUTE_ID)
                     && commandListeners.get(json.getString(ATTRIBUTE_ID)) != null) {
