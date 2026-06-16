@@ -85,6 +85,8 @@ public class Settings extends BaseActivity {
     private View infoLinc;
     private View devTxHistoryLinc;
     private View root;
+    private TextView settingsFooterVersion;
+    private TextView settingsFooterDeveloper;
 
     // ── DEV section views ────────────────────────────────────────────────
     private MaterialCardView cardDevNetwork;
@@ -152,6 +154,8 @@ public class Settings extends BaseActivity {
         becomeReferralLinc        = findViewById(R.id.become_referral_linc);
         infoLinc                  = findViewById(R.id.info_settings_linc);
         devTxHistoryLinc          = findViewById(R.id.dev_tx_history_linc);
+        settingsFooterVersion     = findViewById(R.id.settings_footer_version);
+        settingsFooterDeveloper   = findViewById(R.id.settings_footer_developer);
 
         // DEV
         cardDevNetwork  = findViewById(R.id.card_dev_network);
@@ -183,6 +187,20 @@ public class Settings extends BaseActivity {
         updateTestBalanceCard();
         updatePasswordIcon();
         restoreDevSection();
+        updateFooter();
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void updateFooter() {
+        String versionName = "";
+        try {
+            versionName = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+        } catch (android.content.pm.PackageManager.NameNotFoundException ignored) {}
+        settingsFooterVersion.setText("XURA v" + versionName);
+
+        int currentYear = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
+        String years = currentYear > 2022 ? "2022–" + currentYear : "2022";
+        settingsFooterDeveloper.setText("© " + years + " Samuil Olegovich");
     }
 
     @SuppressLint("SetTextI18n")

@@ -944,6 +944,31 @@
 
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- App footer — version + developer credit -->
+            <TextView
+                android:id="@+id/settings_footer_version"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/montserrat"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:textColor="@color/xura_text_muted"
+                android:textSize="11sp"
+                tools:text="XURA v26.6.16" />
+
+            <TextView
+                android:id="@+id/settings_footer_developer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/montserrat"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:textColor="@color/xura_text_muted"
+                android:textSize="11sp"
+                tools:text="© 2022–2026 Samuil Olegovich" />
+
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

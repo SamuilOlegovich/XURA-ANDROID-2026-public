@@ -18,6 +18,10 @@ import dagger.hilt.android.HiltAndroidApp;
 
 
 
+/**
+ * @author Samuil Olegovich
+ * @since 2022
+ */
 @HiltAndroidApp
 public class XuraApp extends Application {
     private static Application instance;
