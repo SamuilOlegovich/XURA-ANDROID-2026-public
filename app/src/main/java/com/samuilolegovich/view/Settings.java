@@ -7,8 +7,6 @@ import static com.samuilolegovich.view.SettingsSetPasswordForApp.SETTINGS_SET_PA
 import static com.samuilolegovich.view.TransactionHistory.TRANSACTION_HISTORY_CLASS;
 
 import android.annotation.SuppressLint;
-import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -34,6 +32,7 @@ import com.samuilolegovich.R;
 import com.samuilolegovich.config.NetworkConfig;
 import com.samuilolegovich.enums.StringEnum;
 import com.samuilolegovich.utils.BiometricHelper;
+import com.samuilolegovich.utils.ClipboardUtil;
 import com.samuilolegovich.utils.PrefsHelper;
 import com.samuilolegovich.wallet.repository.WalletRepository;
 
@@ -539,8 +538,7 @@ public class Settings extends BaseActivity {
 
     private void copyToClipboard(String label, String text, String toast) {
         if (text == null || text.isEmpty()) return;
-        ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-        cm.setPrimaryClip(ClipData.newPlainText(label, text));
+        ClipboardUtil.copyWithAutoClear(this, label, text);
         showSnackbar(root, toast, SnackbarType.INFO);
     }
 

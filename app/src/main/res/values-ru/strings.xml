@@ -108,6 +108,10 @@
     <string name="bet_cannot_be_more_than">СТАВКА НЕ МОЖЕТ БЫТЬ БОЛЕЕ - </string>
     <string name="wrong_destination_address">НЕВЕРНЫЙ АДРЕС НАЗНАЧЕНИЯ</string>
     <string name="payment_sent">Платёж отправлен</string>
+    <string name="confirm_send_title">Подтвердите получателя</string>
+    <string name="confirm_send_message">Внимательно проверьте адрес — вредоносное ПО может подменять адреса в буфере обмена.\n\nПолучатель:\n%1$s\n\nСумма: %2$s XRP\n\nЭту транзакцию нельзя отменить.</string>
+    <string name="confirm_send_button">Отправить</string>
+    <string name="cancel">Отмена</string>
     <string name="biometrics_not_set_up">Биометрия не настроена на этом устройстве</string>
     <string name="flasher_back_to_game">ВЕРНУТЬСЯ В ИГРУ</string>
     <string name="flasher_return_in">Возврат через %d…</string>

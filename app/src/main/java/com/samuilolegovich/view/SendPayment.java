@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
+
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -124,12 +126,7 @@ public class SendPayment extends BaseActivity {
     private void listeners() {
         send.setOnClickListener(v -> {
             pulse(v);
-            setSendingState(true);
-            viewModel.sendPayment(
-                    address.getText().toString(),
-                    amount.getText().toString(),
-                    tag.getText().toString()
-            );
+            confirmAndSend();
         });
 
         tilAddress.setEndIconOnClickListener(v ->
@@ -138,6 +135,32 @@ public class SendPayment extends BaseActivity {
         address.addTextChangedListener(clearErrorWatcher(tilAddress));
         amount.addTextChangedListener(clearErrorWatcher(tilAmount));
         tag.addTextChangedListener(clearErrorWatcher(tilTag));
+    }
+
+    // Защита от clipboard-hijacking: показываем полный адрес перед отправкой,
+    // чтобы пользователь мог сверить его с оригиналом — вредоносное ПО подменяет
+    // криптоадреса в буфере обмена на похожие, принадлежащие атакующему.
+    private void confirmAndSend() {
+        String addressValue = address.getText().toString().trim();
+        String amountValue = amount.getText().toString().trim();
+        String tagValue = tag.getText().toString().trim();
+
+        if (addressValue.isEmpty() || amountValue.isEmpty()) {
+            setSendingState(true);
+            viewModel.sendPayment(addressValue, amountValue, tagValue);
+            return;
+        }
+
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.confirm_send_title)
+                .setMessage(getString(R.string.confirm_send_message, addressValue, amountValue))
+                .setCancelable(true)
+                .setPositiveButton(R.string.confirm_send_button, (d, w) -> {
+                    setSendingState(true);
+                    viewModel.sendPayment(addressValue, amountValue, tagValue);
+                })
+                .setNegativeButton(R.string.cancel, null)
+                .show();
     }
 
 

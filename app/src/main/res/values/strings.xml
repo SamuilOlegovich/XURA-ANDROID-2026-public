@@ -73,6 +73,10 @@
     <string name="and_get_36_times_more">AND GET A 36 TIMES MORE</string>
     <string name="wrong_destination_address">WRONG DESTINATION ADDRESS</string>
     <string name="payment_sent">Payment sent</string>
+    <string name="confirm_send_title">Confirm recipient</string>
+    <string name="confirm_send_message">Carefully check the address — malware can replace addresses in the clipboard.\n\nRecipient:\n%1$s\n\nAmount: %2$s XRP\n\nThis transaction cannot be reversed.</string>
+    <string name="confirm_send_button">Send</string>
+    <string name="cancel">Cancel</string>
     <string name="biometrics_not_set_up">Biometrics not set up on this device</string>
     <string name="flasher_back_to_game">BACK TO GAME</string>
     <string name="flasher_return_in">Return in %d…</string>
