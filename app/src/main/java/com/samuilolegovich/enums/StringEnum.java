@@ -2,6 +2,12 @@ package com.samuilolegovich.enums;
 
 
 
+/**
+ * Централизованный набор строковых констант приложения: ключи SharedPreferences,
+ * коды языков, адреса игровых серверов, служебные теги транзакций, лимиты ставок
+ * и URL-адреса XRPL-сетей (mainnet/testnet). Значение каждой константы можно
+ * переопределить в рантайме через {@link #setValue(StringEnum, String)}.
+ */
 public enum StringEnum {
     APP_PREFERENCES_BIOMETRIC_ENABLED("biometric_enabled"),
     APP_PREFERENCES_PASSWORD_NOT_INSTALLED("password not installed"),
@@ -85,18 +91,22 @@ public enum StringEnum {
 
 
 
+    /** Связывает константу enum с её строковым значением по умолчанию. */
     StringEnum(String value) {
         this.value = value;
     }
 
 
 
+    /** Изменяет значение конкретного экземпляра константы (используется только статическим setValue). */
     private void setValue(String value) {
         this.value = value;
     }
 
+    /** Возвращает текущее строковое значение константы. */
     public String getValue() { return value; }
 
+    /** Переопределяет значение указанной константы во время выполнения (например, адрес сервера из DEV-панели). */
     public static void setValue(StringEnum enums, String value) {
         for (StringEnum e : StringEnum.values()) {
             if (e.equals(enums)) {

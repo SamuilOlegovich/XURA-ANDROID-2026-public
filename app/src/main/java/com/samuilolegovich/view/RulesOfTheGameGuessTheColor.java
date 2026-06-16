@@ -13,7 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 
 
-// выводим правила игры
+/** Экран с текстовыми правилами игры "Угадай цвет" — статичный текст, локализованный и отформатированный из HTML. */
 @AndroidEntryPoint
 public class RulesOfTheGameGuessTheColor extends BaseActivity {
     public static final String RULES_OF_THE_GAME_GUESS_THE_COLOR_CLASS = ".RulesOfTheGameGuessTheColor";
@@ -25,6 +25,7 @@ public class RulesOfTheGameGuessTheColor extends BaseActivity {
 
 
 
+    /** Инициализирует экран: разметка, View, локализация и вывод HTML-текста правил. */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,24 +37,27 @@ public class RulesOfTheGameGuessTheColor extends BaseActivity {
 
 
 
+    /** Находит и сохраняет ссылки на View разметки экрана. */
     private void setButtons() {
         rulesOfTheGameGuessTheColorView = (TextView) findViewById(R.id.rules_of_the_game_guess_the_color_view);
         rules = (TextView) findViewById(R.id.guess_the_color_rules);
     }
 
 
+    /** Загружает локализованные строки заголовка и текста правил игры. */
     private void setLanguage() {
         rulesOfTheGameGuessTheColorView.setText(R.string.guess_the_color);
         RULES = getString(R.string.rules_guess_the_color_text);
     }
 
 
+    /** Отображает HTML-форматированный текст правил в TextView. */
     private void setText() {
         rules.setText(Html.fromHtml(RULES, Html.FROM_HTML_MODE_COMPACT));
     }
 
 
-    // при нажатии на кнопку назад будем возвращаться назад
+    /** Стандартная обработка нажатия "назад" без дополнительной логики. */
     @Override
     public void onBackPressed() {
         super.onBackPressed();

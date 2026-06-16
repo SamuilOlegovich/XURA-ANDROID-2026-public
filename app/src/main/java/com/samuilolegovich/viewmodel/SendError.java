@@ -1,5 +1,6 @@
 package com.samuilolegovich.viewmodel;
 
+/** Перечисление возможных ошибок валидации при отправке платежа со страницы SendPayment. */
 public enum SendError {
     WRONG_ADDRESS,
     INVALID_AMOUNT,

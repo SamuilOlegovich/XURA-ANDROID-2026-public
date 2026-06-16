@@ -28,7 +28,12 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 
 
-// тут мы сверим информаци о новом кошельке, правильно ли ее записал юзер
+/**
+ * Экран проверки нового кошелька: пользователь повторно вводит seed-фразу,
+ * которую видел на предыдущем экране создания кошелька, и она сверяется
+ * с сохранённым во временном хранилище pre-seed значением — так подтверждается,
+ * что seed записан верно, после чего он сохраняется как постоянный seed кошелька.
+ */
 @AndroidEntryPoint
 public class CheckingNewWallet extends BaseActivity {
 
@@ -42,6 +47,7 @@ public class CheckingNewWallet extends BaseActivity {
 
 
 
+    /** Инициализирует экран: включает FLAG_SECURE (запрет скриншотов/записи экрана с seed-фразой), разметку, View, локализацию, слушатели. */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +60,7 @@ public class CheckingNewWallet extends BaseActivity {
 
 
 
+    /** Находит и сохраняет ссылки на View разметки экрана. */
     private void setButtons() {
         checkingNewWalletText = (TextView) findViewById(R.id.checking_new_wallet_text);
         tilSeed = findViewById(R.id.til_password_field);
@@ -62,11 +69,13 @@ public class CheckingNewWallet extends BaseActivity {
     }
 
 
+    /** Устанавливает локализованный текст подсказки для поля ввода seed-фразы. */
     private void setLanguage() {
         checkingNewWalletText.setText(R.string.lead_the_seed);
     }
 
 
+    /** Назначает обработчик кнопки "далее" (сверка введённого seed с pre-seed и сохранение/переход) и сброс ошибки при правке поля. */
     private void listeners() {
         next.setOnClickListener(v -> {
             pulse(v);
@@ -92,23 +101,26 @@ public class CheckingNewWallet extends BaseActivity {
     }
 
 
+    /** Запускает Activity по имени её класса/действия. */
     private void goToAnotherPage(String namePage) {
         Intent intent = new Intent(namePage);
         startActivity(intent);
     }
 
 
+    /** Читает временно сохранённый при создании кошелька pre-seed из защищённого хранилища, для сверки с тем, что ввёл пользователь. */
     private String getPreSeed() {
         return SecureSeedStorage.load(PrefsHelper.get(this), StringEnum.APP_PREFERENCES_PRE_SEED.getValue());
     }
 
 
+    /** Сохраняет подтверждённую seed-фразу как постоянный seed кошелька в защищённом хранилище. */
     private void setSeed(String newSeed) {
         SecureSeedStorage.save(PrefsHelper.get(this), StringEnum.APP_PREFERENCES_SEED.getValue(), newSeed);
     }
 
 
-    // при нажатии на кнопку назад будем возвращаться назад
+    /** Стандартная обработка нажатия "назад" без дополнительной логики. */
     @Override
     public void onBackPressed() {
         super.onBackPressed();

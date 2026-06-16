@@ -5,15 +5,15 @@ import android.content.SharedPreferences;
 import com.samuilolegovich.enums.StringEnum;
 
 /**
- * Runtime network configuration — single source of truth for URLs and server addresses.
+ * Конфигурация сети в рантайме — единый источник истины для URL-адресов узла и адресов игровых серверов.
  *
- * Server addresses are stored separately for mainnet and testnet.
- * Use switchNetwork() when toggling the DEV panel network toggle — it saves the current
- * mode's addresses and loads the new mode's set so fields update correctly.
+ * Адреса серверов хранятся раздельно для mainnet и testnet.
+ * Используйте switchNetwork() при переключении сети в DEV-панели — метод сохраняет адреса
+ * текущего режима и загружает набор адресов нового режима, чтобы поля в UI обновились корректно.
  */
 public final class NetworkConfig {
 
-    // ── SharedPreferences keys ────────────────────────────────────────────
+    // ── Ключи SharedPreferences ────────────────────────────────────────────
     public static final String KEY_TESTNET = "dev_use_testnet";
 
     private static final String KEY_ROULETTE_REAL = "dev_server_roulette_real";
@@ -24,35 +24,39 @@ public final class NetworkConfig {
     private static final String KEY_COLOR_TEST    = "dev_server_color_test";
     private static final String KEY_NUMBER_TEST   = "dev_server_number_test";
 
-    // Legacy keys (before per-mode storage was added) — migration fallback
+    // Старые ключи (до появления раздельного хранения по режимам) — используются как fallback при миграции
     private static final String KEY_ROULETTE_LEGACY = "dev_server_roulette";
     private static final String KEY_COLOR_LEGACY    = "dev_server_color";
     private static final String KEY_NUMBER_LEGACY   = "dev_server_number";
 
-    // ── Runtime state (read on any thread) ───────────────────────────────
+    // ── Состояние в рантайме (можно читать из любого потока) ───────────────
     public static volatile boolean IS_TESTNET      = false;
     public static volatile String  SERVER_ROULETTE = StringEnum.SERVER_ADDRESS_ROULETTE.getValue();
     public static volatile String  SERVER_COLOR    = StringEnum.SERVER_ADDRESS_GUESS_THE_COLOR.getValue();
     public static volatile String  SERVER_NUMBER   = StringEnum.SERVER_ADDRESS_GUESS_THE_NUMBER.getValue();
 
+    /** Приватный конструктор запрещает создание экземпляров — класс статический. */
     private NetworkConfig() {}
 
-    // ── URL accessors ────────────────────────────────────────────────────
+    // ── Доступ к URL ────────────────────────────────────────────────────
 
+    /** Возвращает RPC-адрес XRPL-узла для текущего режима сети (testnet или mainnet). */
     public static String getRpcUrl() {
         return IS_TESTNET
                 ? StringEnum.NET_TEST.getValue()
                 : StringEnum.NET_REAL_POST_URL_ONE.getValue();
     }
 
+    /** Возвращает адрес WebSocket-узла для текущего режима сети (testnet или mainnet). */
     public static String getWssUrl() {
         return IS_TESTNET
                 ? StringEnum.WSS_TEST.getValue()
                 : StringEnum.WSS_REAL.getValue();
     }
 
-    // ── Persistence ──────────────────────────────────────────────────────
+    // ── Сохранение настроек ──────────────────────────────────────────────
 
+    /** Загружает из SharedPreferences режим сети и адреса игровых серверов для этого режима (с миграцией старых ключей). */
     public static void load(SharedPreferences prefs) {
         IS_TESTNET      = prefs.getBoolean(KEY_TESTNET, false);
         SERVER_ROULETTE = loadRoulette(prefs);
@@ -60,6 +64,7 @@ public final class NetworkConfig {
         SERVER_NUMBER   = loadNumber(prefs);
     }
 
+    /** Сохраняет в SharedPreferences текущий режим сети и адреса серверов под ключами, соответствующими этому режиму. */
     public static void save(SharedPreferences prefs) {
         prefs.edit()
                 .putBoolean(KEY_TESTNET, IS_TESTNET)
@@ -70,8 +75,8 @@ public final class NetworkConfig {
     }
 
     /**
-     * Call from the DEV network toggle. Saves current mode's addresses, switches the flag,
-     * then loads the new mode's addresses so the UI fields reflect the right set.
+     * Вызывается при переключении сети в DEV-панели. Сохраняет адреса текущего режима, переключает флаг,
+     * затем загружает адреса нового режима, чтобы поля в UI отражали правильный набор.
      */
     public static void switchNetwork(SharedPreferences prefs, boolean newIsTestnet) {
         save(prefs);
@@ -82,6 +87,7 @@ public final class NetworkConfig {
         prefs.edit().putBoolean(KEY_TESTNET, IS_TESTNET).apply();
     }
 
+    /** Сбрасывает адреса игровых серверов на значения по умолчанию и сохраняет их в SharedPreferences. */
     public static void resetAddresses(SharedPreferences prefs) {
         SERVER_ROULETTE = StringEnum.SERVER_ADDRESS_ROULETTE.getValue();
         SERVER_COLOR    = StringEnum.SERVER_ADDRESS_GUESS_THE_COLOR.getValue();
@@ -89,29 +95,38 @@ public final class NetworkConfig {
         save(prefs);
     }
 
-    // ── Internal helpers ─────────────────────────────────────────────────
+    // ── Внутренние помощники ─────────────────────────────────────────────
 
+    /** Возвращает ключ SharedPreferences для адреса сервера рулетки, соответствующий текущему режиму сети. */
     private static String rouletteKey() { return IS_TESTNET ? KEY_ROULETTE_TEST : KEY_ROULETTE_REAL; }
+    /** Возвращает ключ SharedPreferences для адреса сервера "Угадай цвет", соответствующий текущему режиму сети. */
     private static String colorKey()    { return IS_TESTNET ? KEY_COLOR_TEST    : KEY_COLOR_REAL; }
+    /** Возвращает ключ SharedPreferences для адреса сервера "Угадай число", соответствующий текущему режиму сети. */
     private static String numberKey()   { return IS_TESTNET ? KEY_NUMBER_TEST   : KEY_NUMBER_REAL; }
 
+    /** Адрес сервера рулетки по умолчанию (зашит в StringEnum). */
     private static String defaultRoulette() { return StringEnum.SERVER_ADDRESS_ROULETTE.getValue(); }
+    /** Адрес сервера "Угадай цвет" по умолчанию (зашит в StringEnum). */
     private static String defaultColor()    { return StringEnum.SERVER_ADDRESS_GUESS_THE_COLOR.getValue(); }
+    /** Адрес сервера "Угадай число" по умолчанию (зашит в StringEnum). */
     private static String defaultNumber()   { return StringEnum.SERVER_ADDRESS_GUESS_THE_NUMBER.getValue(); }
 
+    /** Читает адрес сервера рулетки для текущего режима, при отсутствии — мигрирует значение со старого общего ключа. */
     private static String loadRoulette(SharedPreferences p) {
         String key = rouletteKey();
         if (p.contains(key)) return p.getString(key, defaultRoulette());
-        // Migrate from legacy key (used before per-mode storage)
+        // Миграция со старого ключа (использовался до раздельного хранения по режимам)
         return p.getString(KEY_ROULETTE_LEGACY, defaultRoulette());
     }
 
+    /** Читает адрес сервера "Угадай цвет" для текущего режима, при отсутствии — мигрирует значение со старого общего ключа. */
     private static String loadColor(SharedPreferences p) {
         String key = colorKey();
         if (p.contains(key)) return p.getString(key, defaultColor());
         return p.getString(KEY_COLOR_LEGACY, defaultColor());
     }
 
+    /** Читает адрес сервера "Угадай число" для текущего режима, при отсутствии — мигрирует значение со старого общего ключа. */
     private static String loadNumber(SharedPreferences p) {
         String key = numberKey();
         if (p.contains(key)) return p.getString(key, defaultNumber());

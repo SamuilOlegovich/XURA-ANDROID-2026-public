@@ -26,11 +26,9 @@ import java.util.stream.Collectors;
 
 
 /**
- * A WebSocket client for the XRP ledger.
- * Subscribe to streams with subscribe() or send commands and wait for
- * a response with sendCommand().
- * Клиент WebSocket для реестра XRP.
- * Подпишитесь на потоки с помощью subscribe() или отправьте команды и дождитесь ответа с помощью sendCommand().
+ * Клиент WebSocket для реестра XRP (XRPL).
+ * Подпишитесь на потоки событий с помощью {@link #subscribe} или отправьте
+ * команду и дождитесь ответа с помощью {@link #sendCommand}.
  */
 public class SocketXRP extends WebSocketClient {
     private final Map<StreamSubscriptionEnum, StreamSubscriber> activeSubscriptions = new ConcurrentHashMap<>();
@@ -51,21 +49,25 @@ public class SocketXRP extends WebSocketClient {
 
 
 
+    /** Создаёт WebSocket-клиент для указанного URI сервера (соединение не открывается автоматически). */
     public SocketXRP(URI serverUri) {
         super(serverUri);
     }
 
+    /** Создаёт WebSocket-клиент, разбирая переданную строку как URI сервера. */
     public SocketXRP(String serverUri) throws URISyntaxException {
         this(new URI(serverUri));
     }
 
 
 
+    /** Отправляет команду без дополнительных параметров и регистрирует слушателя для ответа. */
     public String sendCommand(String command,
                               CommandListener listener) throws Exception {
         return sendCommand(command, null, listener);
     }
 
+    /** Формирует и отправляет JSON-команду с уникальным id и параметрами, регистрируя слушателя, который будет вызван при получении ответа с этим id. */
     public String sendCommand(String command,
                               Map<String, Object> parameters,
                               CommandListener listener) throws Exception {
@@ -91,6 +93,7 @@ public class SocketXRP extends WebSocketClient {
         return id;
     }
 
+    /** Подписывается на указанные потоки событий без дополнительных параметров, сохраняя подписчика для каждого потока. */
     public void subscribe(EnumSet<StreamSubscriptionEnum> streams,
                           StreamSubscriber subscriber) throws Exception {
         checkOpen();
@@ -99,6 +102,7 @@ public class SocketXRP extends WebSocketClient {
         streams.forEach(t -> activeSubscriptions.put(t, subscriber));
     }
 
+    /** Подписывается на указанные потоки событий с дополнительными параметрами запроса, сохраняя подписчика для каждого потока. */
     public void subscribe(EnumSet<StreamSubscriptionEnum> streams,
                           Map<String, Object> parameters,
                           StreamSubscriber subscriber) throws Exception {
@@ -110,6 +114,7 @@ public class SocketXRP extends WebSocketClient {
 
 
 
+    /** Отписывается от указанных потоков событий и удаляет их из активных подписок. */
     public void unsubscribe(EnumSet<StreamSubscriptionEnum> streams) throws Exception {
         checkOpen();
         LOG.info("Unsubscribing from: {}", streams);
@@ -117,28 +122,33 @@ public class SocketXRP extends WebSocketClient {
         streams.forEach(activeSubscriptions::remove);
     }
 
+    /** Возвращает набор всех потоков событий, на которые сейчас есть активная подписка. */
     public EnumSet<StreamSubscriptionEnum> getActiveSubscriptions() {
         return activeSubscriptions.isEmpty()
                 ? EnumSet.noneOf(StreamSubscriptionEnum.class)
                 : EnumSet.copyOf(activeSubscriptions.keySet());
     }
 
+    /** Помечает, что соединение нужно закрыть, как только не останется активных подписок и ожидающих ответа команд. */
     public void closeWhenComplete() {
         closeWhenComplete = true;
     }
 
+    /** Логирует отправляемое сообщение и делегирует его базовой реализации WebSocketClient. */
     @Override
     public void send(String message) {
         LOG.info("Sending message: {}", message);
         super.send(message);
     }
 
+    /** Логирует заголовки рукопожатия и факт успешного открытия соединения. */
     @Override
     public void onOpen(ServerHandshake handshake) {
         handshake.iterateHttpFields().forEachRemaining(LOG::debug);
         LOG.info("XRP ledger client opened");
     }
 
+    /** Разбирает входящее сообщение: маршрутизирует событие потоковой подписки нужному подписчику либо ответ команды — зарегистрированному слушателю; закрывает соединение, если оно было помечено для закрытия и больше нет активных подписок/ожидающих команд. */
     @Override
     public void onMessage(String message) {
         long start = System.currentTimeMillis();
@@ -173,6 +183,7 @@ public class SocketXRP extends WebSocketClient {
         }
     }
 
+    /** При закрытии соединения очищает все подписки и слушателей команд и пытается перезапустить сокет (если перезапуск разрешён флагом). */
     @Override
     public void onClose(int code, String reason, boolean remote) {
         LOG.info("********************** XRP onClose **********************");
@@ -185,6 +196,7 @@ public class SocketXRP extends WebSocketClient {
         restartSocket(code);
     }
 
+    /** При ошибке сокета логирует исключение и очищает все подписки и слушателей команд. */
     @Override
     public void onError(Exception exception) {
         LOG.info("********************** XRP onError **********************");
@@ -196,6 +208,7 @@ public class SocketXRP extends WebSocketClient {
     }
 
 
+    /** Формирует JSON-команду подписки/отписки со списком имён потоков, без дополнительных параметров. */
     private String composeSubscribe(String command, EnumSet<StreamSubscriptionEnum> streams) throws Exception {
         JSONObject request = new JSONObject();
         request.put(COMMAND, command);
@@ -206,6 +219,7 @@ public class SocketXRP extends WebSocketClient {
     }
 
 
+    /** Формирует JSON-команду подписки/отписки со списком имён потоков и дополнительными параметрами запроса. */
     // ************************** Перепроверить этот метод *****************************************
     private String composeSubscribe(String command,
                                     Map<String, Object> parameters,
@@ -231,6 +245,7 @@ public class SocketXRP extends WebSocketClient {
         //  {"streams":["ledger"],"accounts":["rnxYi2nuJiS1AnYmXN75JHJr8MWQZLRPSx"],"command":"subscribe"}
     }
 
+    /** Проверяет, что соединение открыто, иначе выбрасывает {@link InvalidStateException}. */
     private void checkOpen() throws InvalidStateException {
         if (!isOpen()) {
             // тут сделать востановления сокета и вывод информации на экран что он не работет если он отвалился
@@ -238,6 +253,7 @@ public class SocketXRP extends WebSocketClient {
         }
     }
 
+    /** Запускает фоновую задачу переподключения сокета с задержкой, зависящей от кода закрытия соединения (если перезапуск разрешён флагом {@code RestartSubscriberRun.FLAG}). */
     private void restartSocket(int code) {
         if (RestartSubscriberRun.FLAG) {
             RestartSubscriberRun restartSubscriberRun;

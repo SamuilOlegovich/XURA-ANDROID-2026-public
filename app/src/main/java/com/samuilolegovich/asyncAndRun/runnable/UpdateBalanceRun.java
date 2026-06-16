@@ -11,17 +11,23 @@ import java.math.MathContext;
 
 
 
+/**
+ * Обрабатывает входящее от XRPL-сокета сообщение о платёжной транзакции и обновляет
+ * баланс кошелька, вычитая из итогового остатка резерв активации сокета.
+ */
 public class UpdateBalanceRun implements Runnable {
     private String stringMassage;
 
 
 
+    /** Сохраняет полученное от сокета JSON-сообщение о транзакции для последующего разбора. */
     public UpdateBalanceRun(String massage) {
         this.stringMassage = massage;
     }
 
 
 
+    /** Извлекает из сообщения итоговый баланс счёта после транзакции (FinalFields.Balance) и передаёт его на обновление. */
     @Override
     public void run() {
         try {
@@ -39,6 +45,7 @@ public class UpdateBalanceRun implements Runnable {
     }
 
 
+    /** Переводит баланс из дропс в XRP, вычитая резерв активации сокета, и передаёт его в WalletRepository. */
     private void update(String s) {
         BigDecimal one = new BigDecimal(s);
         BigDecimal tow = new BigDecimal(StringEnum.ACTIVATION_PAYMENT_SOCKET.getValue());

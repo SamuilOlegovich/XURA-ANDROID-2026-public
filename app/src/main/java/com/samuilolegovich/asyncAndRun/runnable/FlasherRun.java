@@ -7,12 +7,18 @@ import java.util.Map;
 
 
 
+/**
+ * Фоновая задача для экрана "Flasher" (лотерея с быстрой сменой числа/цвета):
+ * пока экран открыт, раз в ~300мс дважды подряд генерирует новое число и цвет,
+ * создавая эффект мигающего табло, и обновляет отображаемое значение на экране.
+ */
 public class FlasherRun implements Runnable {
     public static volatile boolean FLAG = true;
     private boolean nextColor;
 
 
 
+    /** Цикл работы потока: пока FLAG включён, периодически дёргает генерацию числа/цвета, если экран Flasher открыт. */
     @Override
     public void run() {
         while (FLAG) {
@@ -36,6 +42,7 @@ public class FlasherRun implements Runnable {
     }
 
 
+    /** Генерирует следующее число/цвет (отличное от предыдущего) и передаёт его на отображение в Flasher. */
     private void genNumberAndColor() {
         Map<Boolean, String> map = Lotto.genNumberAndColor();
 

@@ -9,11 +9,13 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.Locale;
 
-// Обнаруживает подключённый JDWP-дебаггер и запущенный frida-server.
-// Каждый метод — независимый эвристический сигнал (порт, инжектированная
-// библиотека в памяти процесса, именованный поток GLib-event-loop, который
-// Frida создаёт при инжекции). Сетевая проверка портов требует фонового
-// потока — вызывать isDetected() только не с главного потока.
+/**
+ * Обнаруживает подключённый JDWP-дебаггер и запущенный frida-server.
+ * Каждый метод — независимый эвристический сигнал (открытый порт, инжектированная
+ * библиотека в памяти процесса, именованный поток GLib-event-loop, который
+ * Frida создаёт при инжекции). Сетевая проверка портов требует фонового
+ * потока — вызывать isDetected() только не с главного потока.
+ */
 public class AntiDebugDetector {
 
     private static final int[] FRIDA_PORTS = {27042, 27043};
@@ -22,6 +24,7 @@ public class AntiDebugDetector {
             "frida", "gum-js-loop", "gmain", "gdbus", "linjector"
     };
 
+    /** Возвращает true, если сработал хотя бы один из эвристических признаков отладчика/Frida. */
     public static boolean isDetected() {
         return checkDebugger()
                 || checkFridaPorts()
@@ -29,11 +32,12 @@ public class AntiDebugDetector {
                 || checkThreadNames();
     }
 
+    /** Проверяет через стандартный Android API, подключён ли JDWP-дебаггер или ожидается его подключение. */
     private static boolean checkDebugger() {
         return Debug.isDebuggerConnected() || Debug.waitingForDebugger();
     }
 
-    // Стандартные TCP-порты frida-server (USB/TCP-режим)
+    /** Пытается подключиться к стандартным TCP-портам frida-server (USB/TCP-режим) — открытый порт означает запущенный Frida. */
     private static boolean checkFridaPorts() {
         for (int port : FRIDA_PORTS) {
             try (Socket socket = new Socket()) {
@@ -44,7 +48,7 @@ public class AntiDebugDetector {
         return false;
     }
 
-    // Инжектированные Frida-библиотеки в карте памяти процесса
+    /** Ищет в карте памяти процесса (/proc/self/maps) следы инжектированных Frida-библиотек. */
     private static boolean checkProcMaps() {
         try (BufferedReader reader = new BufferedReader(new FileReader("/proc/self/maps"))) {
             String line;
@@ -55,7 +59,7 @@ public class AntiDebugDetector {
         return false;
     }
 
-    // Именованные потоки GLib event loop, которые создаёт Frida при инжекции
+    /** Ищет среди потоков процесса именованные потоки GLib event loop, которые создаёт Frida при инжекции. */
     private static boolean checkThreadNames() {
         File[] tasks = new File("/proc/self/task").listFiles();
         if (tasks == null) return false;
@@ -69,6 +73,7 @@ public class AntiDebugDetector {
         return false;
     }
 
+    /** Проверяет, содержит ли строка одну из известных текстовых меток Frida (без учёта регистра). */
     private static boolean containsMarker(String line) {
         String lower = line.toLowerCase(Locale.US);
         for (String marker : FRIDA_MARKERS) {

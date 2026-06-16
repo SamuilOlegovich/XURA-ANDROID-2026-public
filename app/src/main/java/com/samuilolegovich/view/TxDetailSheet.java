@@ -29,10 +29,17 @@ import java.math.MathContext;
 
 
 
+/**
+ * Нижний выезжающий лист (bottom sheet) с подробностями одной записи истории транзакций:
+ * иконка/название/сумма/время операции, дополнительная информация (тег назначения или
+ * мемо), а для составной ставки на рулетку — детальная разбивка по каждой отдельной ставке
+ * с её суммой и множителем.
+ */
 public class TxDetailSheet extends BottomSheetDialogFragment {
 
     private static final String ARG = "dto";
 
+    /** Создаёт и показывает лист с деталями переданной записи истории. */
     public static void show(FragmentManager fm, HistoryPaymentDto dto) {
         TxDetailSheet sheet = new TxDetailSheet();
         Bundle b = new Bundle();
@@ -41,6 +48,7 @@ public class TxDetailSheet extends BottomSheetDialogFragment {
         sheet.show(fm, "tx_detail");
     }
 
+    /** Создаёт View листа из разметки {@code sheet_tx_detail}. */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -49,11 +57,12 @@ public class TxDetailSheet extends BottomSheetDialogFragment {
         return inflater.inflate(R.layout.sheet_tx_detail, container, false);
     }
 
+    /** Заполняет лист данными переданной записи: заголовок, доп. информацию и (для составных ставок на рулетку) разбивку по ставкам. */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Dark background for the bottom sheet container itself
+        // Тёмный фон для самого контейнера bottom sheet
         View parent = (View) view.getParent();
         if (parent != null) {
             parent.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.xura_surface));
@@ -69,8 +78,9 @@ public class TxDetailSheet extends BottomSheetDialogFragment {
         }
     }
 
-    // ── Header ────────────────────────────────────────────────────────────
+    // ── Заголовок ────────────────────────────────────────────────────────
 
+    /** Заполняет верхнюю часть листа: иконку с цветом по типу операции, название, адрес, сумму (с цветом по направлению) и время. */
     private void bindHeader(View root, HistoryPaymentDto dto) {
         String tag      = dto.getTag() != null ? dto.getTag() : "";
         String amt      = dto.getAmount() != null ? dto.getAmount() : "";
@@ -82,7 +92,7 @@ public class TxDetailSheet extends BottomSheetDialogFragment {
         TextView amount  = root.findViewById(R.id.detail_amount);
         TextView time    = root.findViewById(R.id.detail_time);
 
-        // Icon resource + tint colour
+        // Иконка и цвет подсветки
         int iconRes  = resolveIconRes(tag, incoming);
         int iconTint = resolveTypeColor(tag, incoming);
         icon.setImageResource(iconRes);
@@ -108,14 +118,15 @@ public class TxDetailSheet extends BottomSheetDialogFragment {
         }
     }
 
-    // ── Info row (destination tag or memo label for single-bet types) ─────
+    // ── Доп. информация (тег назначения или мемо для нераспознанных типов) ─
 
+    /** Показывает дополнительную строку: числовой тег назначения, либо сырой текст мемо для типов, которые не удалось распознать, либо скрывает блок. */
     private void bindInfoRow(View root, HistoryPaymentDto dto) {
         String tag = dto.getTag() != null ? dto.getTag() : "";
 
-        // Show numeric destination tag
+        // Показываем числовой тег назначения
         boolean isNumericTag = !tag.isEmpty() && tag.matches("\\d+");
-        // Show memo content for types we can't fully decode
+        // Показываем содержимое мемо для типов, которые не можем полностью распознать
         boolean isRawMemo = !tag.isEmpty()
                 && !tag.startsWith("BET:")
                 && !tag.equals("WIN")   && !tag.startsWith("WIN:")
@@ -144,10 +155,11 @@ public class TxDetailSheet extends BottomSheetDialogFragment {
         }
     }
 
-    // ── Bets breakdown (BET:R: only) ─────────────────────────────────────
+    // ── Разбивка по ставкам (только для составной ставки BET:R:) ──────────
 
+    /** Разбирает строку составной ставки на рулетку и строит для каждой отдельной ставки строку с названием, суммой и множителем; внизу — общая сумма. */
     private void bindBetsBreakdown(View root, String tag) {
-        // Format: BET:R:n5@1.5,r@2.0,d1@0.5:referralCode
+        // Формат: BET:R:n5@1.5,r@2.0,d1@0.5:referralCode
         String[] parts = tag.split(":", -1);
         if (parts.length < 3) return;
 
@@ -185,6 +197,7 @@ public class TxDetailSheet extends BottomSheetDialogFragment {
         totalView.setText(total.stripTrailingZeros().toPlainString() + " XRP");
     }
 
+    /** Создаёт одну строку разбивки ставки: название слева, сумма по центру, множитель справа. */
     private View makeBetRow(String name, BigDecimal amount, int multiplier, Typeface font) {
         LinearLayout row = new LinearLayout(requireContext());
         row.setOrientation(LinearLayout.HORIZONTAL);
@@ -235,8 +248,9 @@ public class TxDetailSheet extends BottomSheetDialogFragment {
         return row;
     }
 
-    // ── Helpers ───────────────────────────────────────────────────────────
+    // ── Вспомогательные методы ──────────────────────────────────────────
 
+    /** Подбирает локализованный заголовок записи по её тегу (вид ставки, выигрыш, проигрыш, джекпот, возврат, донат, реферал и т.д.). */
     private String resolveTitle(String tag) {
         if (tag.startsWith("BET:R:"))  return getString(R.string.roulette_bet_history);
         if (tag.startsWith("BET:RED")) return getString(R.string.bet_on_red_history);
@@ -255,6 +269,7 @@ public class TxDetailSheet extends BottomSheetDialogFragment {
         return getString(R.string.tag_history) + " " + tag;
     }
 
+    /** Подбирает цвет подсветки записи по её тегу (успех/ошибка/золото/розовый/циан), либо по направлению платежа, если тег не распознан. */
     private int resolveTypeColor(String tag, boolean incoming) {
         if (tag.equals("WIN")   || tag.startsWith("WIN:"))  return ContextCompat.getColor(requireContext(), R.color.xura_success);
         if (tag.equals("LOSE")  || tag.startsWith("LOSE:")) return ContextCompat.getColor(requireContext(), R.color.xura_error);
@@ -271,6 +286,7 @@ public class TxDetailSheet extends BottomSheetDialogFragment {
                 : ContextCompat.getColor(requireContext(), R.color.xura_pink);
     }
 
+    /** Подбирает ресурс иконки записи по её тегу, либо по направлению платежа (получено/отправлено), если тег не распознан. */
     private int resolveIconRes(String tag, boolean incoming) {
         if (tag.equals("WIN")   || tag.startsWith("WIN:"))  return R.drawable.ic_check_circle;
         if (tag.equals("LOSE")  || tag.startsWith("LOSE:")) return R.drawable.ic_lost_x;
@@ -286,6 +302,7 @@ public class TxDetailSheet extends BottomSheetDialogFragment {
         return incoming ? R.drawable.ic_receive_arrow : R.drawable.ic_send_arrow;
     }
 
+    /** Преобразует внутренний код типа ставки рулетки (например "N:7", "RED", "D1") в локализованное отображаемое название. */
     private String tagToDisplayName(String fullTag) {
         if (fullTag.startsWith("N:")) return getString(R.string.detail_bet_number, fullTag.substring(2));
         switch (fullTag) {
@@ -305,11 +322,13 @@ public class TxDetailSheet extends BottomSheetDialogFragment {
         }
     }
 
+    /** Сокращает длинный XRPL-адрес до вида "начало…конец" для компактного отображения. */
     private String truncate(String addr) {
         if (addr == null || addr.length() <= 14) return addr;
         return addr.substring(0, 6) + "…" + addr.substring(addr.length() - 4);
     }
 
+    /** Переводит значение dp в пиксели для текущей плотности экрана. */
     private int dp(int value) {
         return (int) TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP, value, getResources().getDisplayMetrics());

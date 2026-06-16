@@ -15,12 +15,18 @@ import org.slf4j.LoggerFactory;
 
 
 
+/**
+ * Подписчик на поток транзакций XRPL WebSocket: при получении сообщения о новой
+ * транзакции запускает на фоне обновление баланса кошелька и обработку
+ * (оповещение игрока о выигрыше/проигрыше через {@link NotifierRun}).
+ */
 public class MyStreamSubscriber implements StreamSubscriber {
     private static final Logger LOG = LoggerFactory.getLogger(MyStreamSubscriber.class);
     Context context;
 
 
 
+    /** Если входящее сообщение — транзакция, запускает обновление баланса и обработчик уведомлений на фоновых потоках. */
     @Override
     public void onSubscription(StreamSubscriptionEnum subscription, JSONObject message) {
         LOG.info("subscription returned a {} message", subscription.getMessageType());

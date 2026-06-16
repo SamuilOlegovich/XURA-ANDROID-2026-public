@@ -12,6 +12,11 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 
 
+/**
+ * Статический информационный экран "О приложении": важные предупреждения, описание
+ * приложения, его преимущества, цели и советы пользователю. Весь текст локализован,
+ * экран не содержит интерактивной логики кроме стандартной кнопки "назад".
+ */
 @AndroidEntryPoint
 public class InfoMain extends BaseActivity {
     public static final String INFO_MAIN_CLASS = ".InfoMain";
@@ -55,6 +60,7 @@ public class InfoMain extends BaseActivity {
 
 
 
+    /** Инициализирует экран: разметка, привязка всех TextView, локализация текстов. */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +71,7 @@ public class InfoMain extends BaseActivity {
 
 
 
+    /** Находит и сохраняет ссылки на все текстовые блоки разметки экрана. */
     private void setButtons() {
         infoMainTextView = (TextView) findViewById(R.id.info_main_text_view);
 
@@ -105,6 +112,7 @@ public class InfoMain extends BaseActivity {
     }
 
 
+    /** Устанавливает локализованный текст во все текстовые блоки экрана. */
     private void setLanguage() {
         infoMainTextView.setText(R.string.info_main_text);
 
@@ -145,7 +153,7 @@ public class InfoMain extends BaseActivity {
     }
 
 
-    // при нажатии на кнопку назад будем возвращаться назад
+    /** Стандартная обработка нажатия "назад" без дополнительной логики. */
     @Override
     public void onBackPressed() {
         super.onBackPressed();

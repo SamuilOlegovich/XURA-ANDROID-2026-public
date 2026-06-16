@@ -12,9 +12,11 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
-// Сравнивает SHA-256 подписывающего сертификата текущего APK со списком
-// разрешённых отпечатков — обнаруживает пересобранный/клонированный APK,
-// подписанный чужим ключом.
+/**
+ * Сравнивает SHA-256 подписывающего сертификата текущего APK со списком
+ * разрешённых отпечатков — обнаруживает пересобранный/клонированный APK,
+ * подписанный чужим ключом (защита от подделки приложения).
+ */
 public class SignatureVerifier {
 
     // TODO: добавить отпечаток релизного сертификата перед публикацией
@@ -24,6 +26,7 @@ public class SignatureVerifier {
             "A2E753A3C2AC8BDAEAB08C72DB5912E5FDCF330DE0771F63CC17B9B153C847CF" // локальный debug-keystore
     ));
 
+    /** Проверяет, что текущий APK подписан одним из сертификатов из ALLOWED_SHA256; иначе (или при ошибке) считает подпись недействительной. */
     public static boolean isSignatureValid(Context context) {
         try {
             PackageManager pm = context.getPackageManager();
@@ -47,6 +50,7 @@ public class SignatureVerifier {
         }
     }
 
+    /** Считает SHA-256 от переданных байтов и возвращает результат в виде HEX-строки в верхнем регистре. */
     private static String sha256Hex(byte[] data) throws Exception {
         byte[] hash = MessageDigest.getInstance("SHA-256").digest(data);
         StringBuilder sb = new StringBuilder(hash.length * 2);

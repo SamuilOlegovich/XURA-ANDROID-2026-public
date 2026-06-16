@@ -1,31 +1,33 @@
 package com.samuilolegovich.enums;
 
 /**
- * Compact abbreviation table for all roulette bet types used in XRP memo.
+ * Таблица компактных кодов для всех типов ставок рулетки, используемых в XRP memo.
+ * Memo ограничено по длине, поэтому полные теги ставок ("RED", "D1" и т.д.) сворачиваются
+ * в однобуквенные/двубуквенные коды при отправке транзакции на сервер.
  *
- * Memo format example (multi-bet):
+ * Пример формата memo (несколько ставок сразу):
  *   BET:R:n5@1.5,r@2.0,d1@0.5:referralCode
  *
- * Straight number bets N:0–N:36 map to n0–n36 (handled programmatically below).
+ * Ставки на конкретное число N:0–N:36 преобразуются в n0–n36 (обрабатывается программно ниже).
  *
- * Full abbreviation table:
+ * Полная таблица соответствий:
  * ┌────────────┬──────┬──────────────────────┬──────────┐
- * │ Tag (full) │ Code │ Description          │ Payout   │
+ * │ Тег (полный)│ Код  │ Описание             │ Выплата  │
  * ├────────────┼──────┼──────────────────────┼──────────┤
- * │ N:0        │ n0   │ Straight: zero       │ 36x      │
- * │ N:1–N:36   │ n1–n36 │ Straight number    │ 36x      │
- * │ RED        │ r    │ Red colour           │ 2x       │
- * │ BLACK      │ b    │ Black colour         │ 2x       │
- * │ ODD        │ o    │ Odd numbers          │ 2x       │
- * │ EVEN       │ e    │ Even numbers         │ 2x       │
- * │ LOW        │ l    │ 1–18                 │ 2x       │
- * │ HIGH       │ h    │ 19–36                │ 2x       │
- * │ D1         │ d1   │ 1st dozen  (1–12)   │ 3x       │
- * │ D2         │ d2   │ 2nd dozen  (13–24)  │ 3x       │
- * │ D3         │ d3   │ 3rd dozen  (25–36)  │ 3x       │
- * │ C1         │ c1   │ 1st column          │ 3x       │
- * │ C2         │ c2   │ 2nd column          │ 3x       │
- * │ C3         │ c3   │ 3rd column          │ 3x       │
+ * │ N:0        │ n0   │ Ставка на ноль       │ x36      │
+ * │ N:1–N:36   │ n1–n36 │ Ставка на число    │ x36      │
+ * │ RED        │ r    │ Красный цвет         │ x2       │
+ * │ BLACK      │ b    │ Чёрный цвет          │ x2       │
+ * │ ODD        │ o    │ Нечётные числа       │ x2       │
+ * │ EVEN       │ e    │ Чётные числа         │ x2       │
+ * │ LOW        │ l    │ 1–18                 │ x2       │
+ * │ HIGH       │ h    │ 19–36                │ x2       │
+ * │ D1         │ d1   │ 1-я дюжина (1–12)    │ x3       │
+ * │ D2         │ d2   │ 2-я дюжина (13–24)   │ x3       │
+ * │ D3         │ d3   │ 3-я дюжина (25–36)   │ x3       │
+ * │ C1         │ c1   │ 1-я колонка          │ x3       │
+ * │ C2         │ c2   │ 2-я колонка          │ x3       │
+ * │ C3         │ c3   │ 3-я колонка          │ x3       │
  * └────────────┴──────┴──────────────────────┴──────────┘
  */
 public enum RouletteBetCode {
@@ -43,22 +45,23 @@ public enum RouletteBetCode {
     C2   ("C2",    "c2", 3),
     C3   ("C3",    "c3", 3);
 
-    /** Full internal tag used throughout the app (e.g. "RED", "D1", "N:5"). */
+    /** Полный внутренний тег, используемый по всему приложению (например "RED", "D1", "N:5"). */
     public final String fullTag;
-    /** Compact code sent in XRP memo (e.g. "r", "d1", "n5"). */
+    /** Компактный код, отправляемый в memo XRP-транзакции (например "r", "d1", "n5"). */
     public final String code;
-    /** Win multiplier applied to the bet amount. */
+    /** Множитель выигрыша, применяемый к сумме ставки. */
     public final int multiplier;
 
+    /** Связывает полный тег ставки с её компактным кодом для memo и множителем выплаты. */
     RouletteBetCode(String fullTag, String code, int multiplier) {
         this.fullTag = fullTag;
         this.code = code;
         this.multiplier = multiplier;
     }
 
-    // ── Conversion helpers ────────────────────────────────────────────────
+    // ── Преобразования ────────────────────────────────────────────────
 
-    /** Converts a full internal tag to its compact memo code. */
+    /** Преобразует полный внутренний тег ставки в его компактный код для memo. */
     public static String tagToCode(String tag) {
         if (tag != null && tag.startsWith("N:")) {
             return "n" + tag.substring(2);
@@ -69,7 +72,7 @@ public enum RouletteBetCode {
         return tag != null ? tag.toLowerCase() : "";
     }
 
-    /** Converts a compact memo code back to the full internal tag. */
+    /** Преобразует компактный код из memo обратно в полный внутренний тег ставки. */
     public static String codeToTag(String code) {
         if (code != null && code.length() >= 2 && code.charAt(0) == 'n') {
             String numPart = code.substring(1);
@@ -84,7 +87,7 @@ public enum RouletteBetCode {
         return code != null ? code.toUpperCase() : "";
     }
 
-    /** Returns the win multiplier for a given full internal tag. */
+    /** Возвращает множитель выигрыша для заданного полного внутреннего тега ставки. */
     public static int multiplierForTag(String tag) {
         if (tag != null && tag.startsWith("N:")) return 36;
         for (RouletteBetCode b : values()) {

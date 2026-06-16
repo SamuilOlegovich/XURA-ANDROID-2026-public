@@ -31,6 +31,11 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 
 
+/**
+ * Экран сканирования QR-кода через CameraX: запрашивает разрешение на камеру, показывает
+ * предпросмотр и анализирует кадры через {@link QRCodeDecoder}; при успешном распознавании
+ * передаёт адрес кошелька в {@link SendPayment} и закрывает экран.
+ */
 @AndroidEntryPoint
 public class ScanQrCode extends BaseActivity {
     public static final String SCAN_QR_CODE_CLASS = ".ScanQrCode";
@@ -47,6 +52,7 @@ public class ScanQrCode extends BaseActivity {
 
 
 
+    /** Инициализирует экран: разметка, View и проверка/запрос разрешения на использование камеры. */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +64,7 @@ public class ScanQrCode extends BaseActivity {
 
 
 
+    /** Если разрешение на камеру уже выдано — запускает камеру, иначе запрашивает разрешение у пользователя. */
     private void performCheck() {
         if (allPermissionGranted()) {
             startCamera();
@@ -67,15 +74,19 @@ public class ScanQrCode extends BaseActivity {
     }
 
 
+    /** Находит и сохраняет ссылку на View предпросмотра камеры. */
     private void setButtons() {
 
         mPreviewView = (PreviewView) findViewById(R.id.camera);
     }
 
 
-    // при сканировании кода запускаем тред и через время все обнуляется и он опять сканирует,
-    // в нашем случаи надо сделать чтобы через это время он установил адрес сосканированного
-    // поля в нужное нам поле и закрыл страницу
+    /**
+     * Вызывается декодером {@link QRCodeDecoder} при успешном распознавании QR-кода:
+     * при сканировании анализатор работает циклически и сам себя перезапускает через паузу,
+     * поэтому здесь нужно успеть подставить распознанный адрес в поле отправки платежа
+     * и сразу закрыть экран сканирования.
+     */
     public void qrCodeHandler(String qrCodeText) {
         runOnUiThread(() -> showSnackbar(root, qrCodeText, SnackbarType.INFO));
         SendPayment.ADDRESS = qrCodeText;
@@ -83,6 +94,7 @@ public class ScanQrCode extends BaseActivity {
     }
 
 
+    /** Настраивает и связывает с жизненным циклом активити: выбор задней камеры, анализатор изображения для распознавания QR и предпросмотр. */
     private void bindPreview(@NotNull ProcessCameraProvider cameraProvider) {
         // выбираем заднюю камеру устройства
         CameraSelector cameraSelector = new CameraSelector.Builder()
@@ -105,6 +117,7 @@ public class ScanQrCode extends BaseActivity {
     }
 
 
+    /** Асинхронно получает провайдер камеры и привязывает к нему предпросмотр и анализатор QR-кода. */
     private void startCamera() {
         final ListenableFuture<ProcessCameraProvider> cameraProviderFuture = ProcessCameraProvider.getInstance(this);
 
@@ -119,7 +132,7 @@ public class ScanQrCode extends BaseActivity {
     }
 
 
-    // все ли необходимые разрешения установлены пользователем
+    /** Проверяет, что все необходимые разрешения (доступ к камере) уже выданы пользователем. */
     private boolean allPermissionGranted() {
         for (String permission : REQUIRED_PERMISSIONS) {
             if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
@@ -131,6 +144,7 @@ public class ScanQrCode extends BaseActivity {
     }
 
 
+    /** Обрабатывает ответ пользователя на запрос разрешения камеры: запускает камеру при согласии, иначе закрывает экран. */
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String[] permissions,
@@ -147,26 +161,28 @@ public class ScanQrCode extends BaseActivity {
     }
 
 
+    /** Запускает Activity по имени её класса/действия. */
     private void goToAnotherPage(String namePage) {
-        // класс для перехода на другую страницу
         Intent intent = new Intent(namePage);
         startActivity(intent);
     }
 
 
+    /** Не содержит дополнительной логики помимо стандартной обработки паузы активити. */
     @Override
     protected void onPause() {
         super.onPause();
     }
 
 
+    /** Не содержит дополнительной логики помимо стандартной обработки возобновления активити. */
     @Override
     protected void onResume() {
         super.onResume();
     }
 
 
-    // при нажатии на кнопку назад будем возвращаться назад
+    /** Стандартная обработка нажатия "назад" без дополнительной логики. */
     @Override
     public void onBackPressed() {
         super.onBackPressed();

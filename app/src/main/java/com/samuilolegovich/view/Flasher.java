@@ -26,6 +26,12 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 
 
+/**
+ * Экран ожидания результата ставки в рулетке: показывает анимацию вращающегося колеса,
+ * слушает ответ сервера (через FlasherRun) либо локальную симуляцию для тестового режима
+ * (NotifierRunForTrialGame), затем останавливает колесо на выигравшем числе и отображает
+ * итог ставки (выигрыш/проигрыш) со звуком и обратным отсчётом до возврата на экран игры.
+ */
 @AndroidEntryPoint
 public class Flasher extends BaseActivity {
     public static final String FLASHER_CLASS = ".Flasher";
@@ -69,6 +75,7 @@ public class Flasher extends BaseActivity {
 
 
 
+    /** Инициализирует экран, запускает анимацию вращения и поток ожидания ответа от сервера (или его локальную симуляцию в тестовом режиме). */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,6 +94,7 @@ public class Flasher extends BaseActivity {
 
 
 
+    /** Готовит звуковые эффекты (вращение/выигрыш/проигрыш) и запускает циклическое вращение рулетки. */
     private void setSound() {
         rouletteSpinMediaPlayer = MediaPlayer.create(this, R.raw.roulette_spin);
         winMediaPlayer = MediaPlayer.create(this, R.raw.win);
@@ -99,6 +107,7 @@ public class Flasher extends BaseActivity {
     }
 
 
+    /** Находит View разметки экрана и назначает обработчики кнопок возврата к игре. */
     private void setButtons() {
         wheelView      = (RouletteWheelView) findViewById(R.id.roulette_wheel);
         infoThree      = (TextView) findViewById(R.id.last_text_view_tree);
@@ -118,6 +127,7 @@ public class Flasher extends BaseActivity {
     }
 
 
+    /** Загружает локализованные строки для итоговых сообщений (поздравление/утешение, выигрыш/проигрыш). */
     private void setLanguage() {
         CONGRATULATIONS = getString(R.string.congratulations);
         DONT_GIVE_UP    = getString(R.string.dont_give_up);
@@ -126,10 +136,11 @@ public class Flasher extends BaseActivity {
     }
 
 
-    // Called from FlasherRun every 300 ms — wheel handles the visual, nothing to do here.
+    /** Вызывается из FlasherRun каждые 300 мс во время ожидания ответа — визуал отвечает колесо, здесь делать ничего не нужно. */
     public void setColorAndText(String text, boolean b) { }
 
 
+    /** Завершает ожидание и переводит экран в режим показа итога ставки (вызывается из фонового потока, переключается на UI-поток). */
     public void stopGame(String text, boolean win) {
         runOnUiThread(() -> {
             FLAG = false;
@@ -139,6 +150,7 @@ public class Flasher extends BaseActivity {
     }
 
 
+    /** Останавливает звук вращения, доводит колесо до выигравшего числа и показывает все элементы итога ставки (число, цвет, текст, звук, отсчёт). */
     @SuppressLint("SetTextI18n")
     private void gameStop(String text, boolean win) {
         rouletteSpinMediaPlayer.stop();
@@ -175,6 +187,7 @@ public class Flasher extends BaseActivity {
     }
 
 
+    /** Запускает обратный отсчёт 10 секунд, по истечении которого автоматически выполняется переход назад к экрану игры. */
     private void startCountdown() {
         final int[] seconds = {10};
         tvCountdown.setText(getString(R.string.flasher_return_in, seconds[0]));
@@ -195,6 +208,7 @@ public class Flasher extends BaseActivity {
     }
 
 
+    /** Останавливает запущенный обратный отсчёт (например, при ручном выходе с экрана раньше его завершения). */
     private void cancelCountdown() {
         if (countdownHandler != null && countdownRunnable != null) {
             countdownHandler.removeCallbacks(countdownRunnable);
@@ -202,6 +216,7 @@ public class Flasher extends BaseActivity {
     }
 
 
+    /** Накладывает на текст итога градиент (золотой для выигрыша, красно-серый для проигрыша) для визуального эффекта. */
     private void applyTextGradient(TextView tv, boolean win) {
         float w = tv.getWidth();
         if (w == 0) return;
@@ -214,6 +229,7 @@ public class Flasher extends BaseActivity {
     }
 
 
+    /** Возвращает цвет сектора рулетки для числа n: зелёный для зеро, чёрный или красный для остальных. */
     private int sectorColor(int n) {
         if (n == 0)                                          return 0xFF007040; // green
         if (Lotto.learnTheColorOfNumber(String.valueOf(n))) return 0xFF111111; // black
@@ -221,6 +237,7 @@ public class Flasher extends BaseActivity {
     }
 
 
+    /** Определяет число, на котором нужно остановить колесо — это NUMBER_BET, заданный сервером/симуляцией при ставке. */
     private int resolveDisplayNumber(boolean win) {
         try {
             int n = Integer.parseInt(NUMBER_BET);
@@ -230,6 +247,7 @@ public class Flasher extends BaseActivity {
     }
 
 
+    /** Окрашивает системные навигационную и статус-бар панели в цвет, соответствующий состоянию экрана. */
     private void setColorNavigation(int color) {
         if (Build.VERSION.SDK_INT >= 21) {
             switch (color) {
@@ -246,16 +264,19 @@ public class Flasher extends BaseActivity {
     }
 
 
+    /** Запускает на IO-потоке FlasherRun — ожидание реального ответа сервера по ставке. */
     private void goThread() {
         AppExecutors.io().execute(new FlasherRun());
     }
 
 
+    /** Запускает на IO-потоке локальную симуляцию ответа для тестового (не реального) режима игры. */
     private void goThreadTest() {
         AppExecutors.io().execute(new NotifierRunForTrialGame(TEST_MODE_ENUM));
     }
 
 
+    /** При уходе с экрана останавливает фоновый поток ожидания и анимацию вращения колеса. */
     @Override
     protected void onPause() {
         super.onPause();
@@ -266,6 +287,7 @@ public class Flasher extends BaseActivity {
     }
 
 
+    /** При возвращении на экран (если ожидание ещё не завершено) перезапускает поток ожидания и вращение колеса. */
     @Override
     protected void onResume() {
         super.onResume();
@@ -278,6 +300,7 @@ public class Flasher extends BaseActivity {
     }
 
 
+    /** Останавливает все звуки и анимацию, возвращает цвет навигации к исходному и закрывает экран. */
     @Override
     public void onBackPressed() {
         cancelCountdown();
@@ -290,6 +313,7 @@ public class Flasher extends BaseActivity {
         super.onBackPressed();
     }
 
+    /** Очищает статическую ссылку на Activity, чтобы избежать утечки памяти после уничтожения экрана. */
     @Override
     protected void onDestroy() {
         super.onDestroy();

@@ -30,7 +30,11 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 
 
-// тут будет вводится и проверяться пароль от приложения для дальнейшего доступа к игре
+/**
+ * Экран ввода пароля приложения (используется как при запуске, так и для автоблокировки).
+ * Проверяет пароль (с прозрачной миграцией со старой SHA-256 схемы на PBKDF2 при совпадении),
+ * а также предлагает быстрый вход через биометрию, если она включена пользователем в настройках.
+ */
 @AndroidEntryPoint
 public class EnterApplicationPassword extends BaseActivity {
     public static final String ENTER_APPLICATION_PASSWORD_CLASS = ".EnterApplicationPassword";
@@ -46,11 +50,13 @@ public class EnterApplicationPassword extends BaseActivity {
 
 
 
+    /** Сам этот экран исключён из проверки автоблокировки — иначе блокировка зациклилась бы сама на себе. */
     @Override
     protected boolean isLockExempt() {
         return true;
     }
 
+    /** Инициализирует экран: FLAG_SECURE, разметка, зашифрованные preferences, View, локализация, слушатели. */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +72,7 @@ public class EnterApplicationPassword extends BaseActivity {
 
 
 
+    /** Находит и сохраняет ссылки на View разметки экрана. */
     private void setButtons() {
         settingsSetPasswordAppTextView = (TextView) findViewById(R.id.settings_set_password_app_text_view);
         tilPassword = findViewById(R.id.til_enter_application_password_field);
@@ -74,11 +81,13 @@ public class EnterApplicationPassword extends BaseActivity {
     }
 
 
+    /** Устанавливает локализованный текст заголовка экрана. */
     private void setLanguage() {
         settingsSetPasswordAppTextView.setText(R.string.enter_password);
     }
 
 
+    /** Назначает обработчик кнопки "далее" (проверка пароля и переход дальше/ошибка) и сброс ошибки при правке поля пароля. */
     private void listeners() {
         next.setOnClickListener(v -> {
             pulse(v);
@@ -104,6 +113,7 @@ public class EnterApplicationPassword extends BaseActivity {
     }
 
 
+    /** При первом возобновлении экрана (не при каждом onResume) пытается показать биометрический промпт. */
     @Override
     protected void onResume() {
         super.onResume();
@@ -113,6 +123,7 @@ public class EnterApplicationPassword extends BaseActivity {
         }
     }
 
+    /** Показывает системный диалог биометрии, если она доступна на устройстве и включена пользователем в настройках приложения; иначе ничего не делает (остаётся ввод пароля). */
     private void tryBiometric() {
         boolean enabled = "true".equalsIgnoreCase(
                 preferences.getString(StringEnum.APP_PREFERENCES_BIOMETRIC_ENABLED.getValue(), "false"));
@@ -128,6 +139,7 @@ public class EnterApplicationPassword extends BaseActivity {
                 });
     }
 
+    /** Выполняется после успешной биометрической аутентификации: переходит к восстановлению/созданию кошелька или прямо в приложение, если кошелёк уже есть. */
     private void proceedAfterAuth() {
         MainActivity.START_FLAG = false;
         if (!preferences.contains(StringEnum.APP_PREFERENCES_SEED.getValue())) {
@@ -137,9 +149,11 @@ public class EnterApplicationPassword extends BaseActivity {
         }
     }
 
-    // true, если введённый пароль совпадает с сохранённым. Если сохранённый
-    // хэш сделан старой (до PBKDF2) схемой, при совпадении пароль сразу
-    // переписывается в новом формате — пользователю не нужно его сбрасывать.
+    /**
+     * Возвращает true, если введённый пароль совпадает с сохранённым. Если сохранённый
+     * хэш сделан старой (до PBKDF2) схемой, при совпадении пароль сразу
+     * переписывается в новом формате — пользователю не нужно его сбрасывать.
+     */
     private boolean verifyPassword(String entered) {
         String storedSalt = preferences.getString(StringEnum.APP_PREFERENCES_SALT.getValue(), "");
         String storedHash = preferences.getString(StringEnum.APP_PREFERENCES_PASSWORD.getValue(), "");
@@ -155,6 +169,7 @@ public class EnterApplicationPassword extends BaseActivity {
         return Cipher.hashPassword(entered, storedSalt).equals(storedHash);
     }
 
+    /** Перезаписывает пароль в новом формате PBKDF2 (новая соль + новый хэш) после успешной проверки по старой схеме. */
     private void migrateToPbkdf2(String password) {
         String newSalt = Cipher.generateSalt();
         preferences.edit()
@@ -163,19 +178,21 @@ public class EnterApplicationPassword extends BaseActivity {
                 .apply();
     }
 
+    /** Возвращает Android ID устройства — используется как часть формулы старого (legacy) хеширования пароля. */
     @SuppressLint("HardwareIds")
     private String getAndroidId() {
         return Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
     }
 
 
+    /** Запускает Activity по имени её класса/действия. */
     private void goToAnotherPage(String namePage) {
         Intent intent = new Intent(namePage);
         startActivity(intent);
     }
 
 
-    // при нажатии на кнопку назад будем возвращаться назад
+    /** Намеренно пустая реализация — блокирует системный жест/кнопку "назад", чтобы нельзя было обойти экран ввода пароля и попасть на главную без авторизации. */
     @Override
     public void onBackPressed() {
         // оставляем пустым чтобы не работал возврат обратно
@@ -183,7 +200,7 @@ public class EnterApplicationPassword extends BaseActivity {
     }
 
 
-    // для закрытие этой активити и попадания на главную активити
+    /** Закрывает экран ввода пароля и переходит на главный экран приложения. */
     public void closeThisPage() {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

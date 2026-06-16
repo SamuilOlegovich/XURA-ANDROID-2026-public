@@ -45,6 +45,12 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 
 
+/**
+ * Главный экран приложения — отображает баланс кошелька и точки входа в отправку/приём платежей и историю.
+ * Также отвечает за стартовую логику запуска: проверку подписи APK, root-детект,
+ * определение, нужно ли показать создание пароля, восстановление кошелька или ввод пароля,
+ * и запуск фонового сервиса подписки на XRPL-сокет.
+ */
 @AndroidEntryPoint
 public class MainActivity extends BaseActivity {
     public static final String MAIN_ACTIVITY_CLASS = ".MainActivity";
@@ -74,6 +80,11 @@ public class MainActivity extends BaseActivity {
 
 
 
+    /**
+     * Инициализирует экран: поднимает режим игры и сеть из настроек, настраивает ViewModel,
+     * подписывается на баланс/навигационные события/готовность кошелька, после чего
+     * проверяет подпись APK и root перед тем как продолжить обычный запуск приложения.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -136,6 +147,7 @@ public class MainActivity extends BaseActivity {
 
 
 
+    /** Показывает блокирующий диалог о несовпадении подписи APK — признак подделанной/клонированной сборки. */
     private void showTamperedWarning() {
         new AlertDialog.Builder(this)
                 .setTitle("Целостность приложения нарушена")
@@ -151,6 +163,7 @@ public class MainActivity extends BaseActivity {
 
 
 
+    /** Показывает предупреждение о root-доступе с возможностью продолжить на свой риск или выйти из приложения. */
     private void showRootWarning() {
         rootWarningShown = true;
         new AlertDialog.Builder(this)
@@ -171,6 +184,7 @@ public class MainActivity extends BaseActivity {
 
 
 
+    /** Применяет сохранённую локаль (newLocale) к ресурсам Activity или сбрасывает на английский по умолчанию. */
     public void setLocale() {
         if (newLocale != null) {
             Resources resources = getResources();
@@ -184,6 +198,12 @@ public class MainActivity extends BaseActivity {
 
 
 
+    /**
+     * Определяет, на какой экран направить пользователя при запуске:
+     * установка пароля приложения (если его нет), восстановление/создание кошелька
+     * (если нет сохранённого seed) либо ввод пароля (если сессия не разблокирована).
+     * Если seed сохранён в старом формате или повреждён — он удаляется и запрашивается восстановление заново.
+     */
     private void handleStartup() {
         boolean isSetPassword = preferences.getString(StringEnum.APP_PREFERENCES_PASSWORD.getValue(), "")
                 .equalsIgnoreCase(StringEnum.APP_PREFERENCES_PASSWORD_NOT_INSTALLED.getValue());
@@ -220,6 +240,7 @@ public class MainActivity extends BaseActivity {
     private TextView           tvTestnetBadge;
     private SwipeRefreshLayout swipeRefresh;
 
+    /** Находит View экрана по id и настраивает swipe-to-refresh для ручного обновления баланса. */
     private void setButtons() {
         transactionHistory = findViewById(R.id.transaction_history_link);
         yourBalanceText    = findViewById(R.id.your_balance_text);
@@ -242,12 +263,14 @@ public class MainActivity extends BaseActivity {
     }
 
 
+    /** Выставляет текст подписи баланса согласно текущей локали и обновляет видимость бейджа тестовой сети. */
     @SuppressLint("SetTextI18n")
     private void setLanguage() {
         yourBalanceText.setText(R.string.your_balance);
         updateTestnetBadge();
     }
 
+    /** Показывает или скрывает бейдж "тестовая сеть" в зависимости от текущего режима сети (testnet/mainnet). */
     private void updateTestnetBadge() {
         if (tvTestnetBadge == null) return;
         tvTestnetBadge.setVisibility(NetworkConfig.IS_TESTNET ? View.VISIBLE : View.GONE);
@@ -255,6 +278,7 @@ public class MainActivity extends BaseActivity {
 
 
 
+    /** Подключает обработчики нажатий на кнопки "получить", "отправить" и "история транзакций". */
     private void listeners() {
         request.setOnClickListener(v -> {
             pulse(v);
@@ -276,25 +300,24 @@ public class MainActivity extends BaseActivity {
 
 
 
-    // Вызывается из других Activity после wallet-операций
+    /** Принудительно перезапрашивает баланс кошелька. Вызывается из других Activity после операций с кошельком. */
     public void updateWallet() {
         viewModel.loadBalance();
     }
 
-
-
+    /** Пересоздаёт Activity в основном потоке, чтобы применить смену языка интерфейса. */
     public void setLanguageThread() {
         runOnUiThread(this::recreate);
     }
 
-
-
+    /** Сбрасывает флаг видимости экрана при уходе в фон — используется для подавления лишних обновлений UI. */
     @Override
     protected void onPause() {
         super.onPause();
         VISIBLE_ON_SCREEN = false;
     }
 
+    /** При возврате на экран отмечает его видимым, обновляет бейдж сети и подгружает баланс, если кошелёк готов. */
     @Override
     protected void onResume() {
         super.onResume();
@@ -305,6 +328,7 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+    /** Останавливает фоновый сервис подписки на XRPL-сокет и очищает статическую ссылку на Activity. */
     @Override
     protected void onDestroy() {
         stopService(new Intent(this, XrplSocketService.class));
@@ -312,6 +336,7 @@ public class MainActivity extends BaseActivity {
         MAIN_ACTIVITY = null;
     }
 
+    /** Запускает XrplSocketService как foreground-сервис (Android 8+) или обычный сервис на старых версиях. */
     private void startXrplSocketService() {
         Intent intent = new Intent(this, XrplSocketService.class);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -323,6 +348,7 @@ public class MainActivity extends BaseActivity {
 
 
 
+    /** Запускает другую Activity по её action-имени. */
     private void goToAnotherPage(String namePage) {
         Intent intent = new Intent(namePage);
         startActivity(intent);

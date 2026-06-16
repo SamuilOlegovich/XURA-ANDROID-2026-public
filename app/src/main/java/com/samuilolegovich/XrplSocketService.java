@@ -26,6 +26,11 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 
 
+/**
+ * Foreground-сервис, держащий открытым WebSocket-соединение с XRPL-узлом,
+ * чтобы приложение получало обновления по счёту кошелька (баланс, транзакции)
+ * даже когда экран кошелька не виден поверх других экранов.
+ */
 @AndroidEntryPoint
 public class XrplSocketService extends Service {
 
@@ -35,6 +40,7 @@ public class XrplSocketService extends Service {
 
 
 
+    /** Создаёт канал уведомлений, переводит сервис в foreground (обязательно на Android 8+) и открывает сокет. */
     @Override
     public void onCreate() {
         super.onCreate();
@@ -49,16 +55,19 @@ public class XrplSocketService extends Service {
         connectSocket();
     }
 
+    /** Не перезапускать сервис системой самостоятельно после убийства процесса — соединение восстановит сам кошелёк при следующем открытии. */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         return START_NOT_STICKY;
     }
 
+    /** Сервис не поддерживает привязку (bind) — используется только как самостоятельный foreground-процесс. */
     @Override
     public IBinder onBind(Intent intent) {
         return null;
     }
 
+    /** Закрывает WebSocket-соединение при остановке сервиса, чтобы не оставлять висящих сетевых ресурсов. */
     @Override
     public void onDestroy() {
         repository.closeSocket();
@@ -67,6 +76,7 @@ public class XrplSocketService extends Service {
 
 
 
+    /** В фоновом потоке открывает сокет к XRPL-узлу и подписывается на обновления по адресу текущего кошелька. */
     private void connectSocket() {
         AppExecutors.io().execute(() -> {
             try {
@@ -84,6 +94,7 @@ public class XrplSocketService extends Service {
         });
     }
 
+    /** Регистрирует канал уведомлений с низким приоритетом для foreground-сервиса (требуется на Android 8+). */
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(
@@ -97,6 +108,7 @@ public class XrplSocketService extends Service {
         }
     }
 
+    /** Собирает постоянное уведомление foreground-сервиса с именем приложения и статусом подключения. */
     private Notification buildNotification() {
         return new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle(getString(R.string.app_name))

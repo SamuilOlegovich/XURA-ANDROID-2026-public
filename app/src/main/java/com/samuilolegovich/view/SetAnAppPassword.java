@@ -28,7 +28,11 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 
 
-// тут устанавливаем пароль на приложение
+/**
+ * Экран первичной установки пароля на приложение (онбординг): требует двойного ввода
+ * совпадающего пароля либо позволяет пропустить шаг, сохраняет соль и хеш пароля,
+ * затем предлагает включить биометрическую разблокировку перед переходом к выбору кошелька.
+ */
 @AndroidEntryPoint
 public class SetAnAppPassword extends BaseActivity {
     public static final String SET_AN_APP_PASSWORD_CLASS = ".SetAnAppPassword";
@@ -43,11 +47,13 @@ public class SetAnAppPassword extends BaseActivity {
 
 
 
+    /** Экран онбординга — экран блокировки приложения по паролю на него ещё не распространяется. */
     @Override
     protected boolean isLockExempt() {
         return true;
     }
 
+    /** Инициализирует экран: включает FLAG_SECURE, разметку, View, локализацию, слушатели. */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +65,7 @@ public class SetAnAppPassword extends BaseActivity {
     }
 
 
+    /** Находит и сохраняет ссылки на View разметки экрана. */
     private void setButtons() {
         settingsSetPasswordAppTextView = (TextView) findViewById(R.id.settings_set_password_app_text_view);
         tilPasswordTwo = findViewById(R.id.til_settings_set_password_app_field_tow);
@@ -69,11 +76,13 @@ public class SetAnAppPassword extends BaseActivity {
     }
 
 
+    /** Устанавливает локализованный текст заголовка экрана. */
     private void setLanguage() {
         settingsSetPasswordAppTextView.setText(R.string.set_password_to_enter_application);
     }
 
 
+    /** Назначает обработчики: подтверждение пароля (проверка длины и совпадения двух полей) с дальнейшим предложением биометрии, пропуск установки пароля, и сброс ошибки при правке поля. */
     private void listeners() {
         confirm.setOnClickListener(v -> {
             pulse(v);
@@ -104,6 +113,7 @@ public class SetAnAppPassword extends BaseActivity {
     }
 
 
+    /** Если биометрия доступна на устройстве — предлагает пользователю включить её через диалог; иначе сразу пропускает шаг и переходит дальше. */
     private void offerBiometric() {
         if (!BiometricHelper.isAvailable(this)) {
             saveBiometricEnabled(false);
@@ -125,6 +135,7 @@ public class SetAnAppPassword extends BaseActivity {
                 .show();
     }
 
+    /** Сохраняет в preferences признак того, включена ли биометрическая разблокировка приложения. */
     private void saveBiometricEnabled(boolean enabled) {
         PrefsHelper.get(this).edit()
                 .putString(StringEnum.APP_PREFERENCES_BIOMETRIC_ENABLED.getValue(),
@@ -132,12 +143,14 @@ public class SetAnAppPassword extends BaseActivity {
                 .apply();
     }
 
+    /** Запускает Activity по имени её класса/действия. */
     private void goToAnotherPage(String namePage) {
         Intent intent = new Intent(namePage);
         startActivity(intent);
     }
 
 
+    /** Сохраняет пароль приложения: при b=true генерирует соль и хеширует пароль, при b=false помечает, что пароль не установлен. */
     private void setPasswordForApp(String password, boolean b) {
         SharedPreferences.Editor edit = PrefsHelper.get(this).edit();
         if (b) {
@@ -153,10 +166,8 @@ public class SetAnAppPassword extends BaseActivity {
     }
 
 
-    // при нажатии на кнопку назад будем возвращаться назад
+    /** Намеренно пустая реализация — блокирует жест/кнопку "назад", чтобы пользователь не пропустил обязательный шаг и не попал на главный экран кошелька, минуя установку пароля. */
     @Override
     public void onBackPressed() {
-        // оставляем пустым чтобы не работал возврат обратно
-        // и не попадали на главную страницу кошелька
     }
 }

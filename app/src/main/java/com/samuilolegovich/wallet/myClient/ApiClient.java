@@ -23,6 +23,12 @@ import okhttp3.RequestBody;
 
 
 
+/**
+ * HTTP-клиент для JSON-RPC вызовов к XRPL-ноде: сериализует запрос, отправляет
+ * его через OkHttp (с доверием всем сертификатам в testnet или с пиннингом
+ * сертификата в mainnet — выбор делает {@link SslUtil}), разбирает ответ и
+ * преобразует JSON-ошибку сервера в исключение.
+ */
 public class ApiClient {
     private static final Logger LOG = LoggerFactory.getLogger(ApiClient.class);
 
@@ -40,6 +46,7 @@ public class ApiClient {
 
 
 
+    /** Создаёт клиент для указанного RPC-URL, выбирая стратегию проверки SSL-сертификата в зависимости от текущей сети (testnet/mainnet). */
     public ApiClient(String url) {
         this.objectMapper = ObjectMapperFactory.create();
         this.okHttpClient = com.samuilolegovich.config.NetworkConfig.IS_TESTNET
@@ -51,11 +58,13 @@ public class ApiClient {
 
 
 
+    /** Отправляет JSON-RPC запрос и десериализует результат в указанный класс. */
     public  <T extends XrplResult> T send(JsonRpcRequest request, Class<T> resultType) throws JsonRpcClientErrorException {
         JavaType javaType = objectMapper.constructType(resultType);
         return send(request, javaType);
     }
 
+    /** Отправляет JSON-RPC запрос и десериализует результат по обобщённому JavaType (для параметризованных типов результата). */
     public  <T extends XrplResult> T send(JsonRpcRequest request, JavaType resultType) throws JsonRpcClientErrorException {
         JsonNode response = postRpcRequest(request);
         JsonNode result = response.get("result");
@@ -70,6 +79,7 @@ public class ApiClient {
 
 
 
+    /** Сериализует запрос в JSON, выполняет POST-запрос к ноде через OkHttp и разбирает тело ответа в JsonNode. */
     private JsonNode postRpcRequest(JsonRpcRequest rpcRequest) throws JsonRpcClientErrorException {
         String rpcRequestString = null;
 
@@ -98,6 +108,7 @@ public class ApiClient {
         }
     }
 
+    /** Проверяет JSON-ответ на наличие поля ошибки и выбрасывает исключение с текстом ошибки сервера, если оно найдено. */
     private void checkForError(JsonNode response) throws JsonRpcClientErrorException {
         if (response.has("result")) {
             JsonNode result = response.get("result");

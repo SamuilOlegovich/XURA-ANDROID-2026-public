@@ -21,6 +21,11 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 
 
+/**
+ * Экран истории транзакций кошелька: в реальном режиме загружает реальную историю
+ * XRPL-платежей через {@link HistoryCreator}, в тестовом режиме показывает заранее
+ * заготовленные демонстрационные записи всех типов для визуальной проверки экрана.
+ */
 @AndroidEntryPoint
 public class TransactionHistory extends BaseActivity {
     public static final String TRANSACTION_HISTORY_CLASS = ".TransactionHistory";
@@ -37,6 +42,7 @@ public class TransactionHistory extends BaseActivity {
 
 
 
+    /** Инициализирует экран: разметка, View, локализация, сохраняет ссылку на активити и запускает загрузку истории. */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +56,7 @@ public class TransactionHistory extends BaseActivity {
 
 
 
+    /** Находит View разметки экрана и настраивает RecyclerView с адаптером истории, открывающим детали записи при нажатии. */
     private void setViews() {
         transactionHistoryTextView = findViewById(R.id.transaction_history_text_view);
         recyclerView = findViewById(R.id.list_of_history);
@@ -62,11 +69,13 @@ public class TransactionHistory extends BaseActivity {
     }
 
 
+    /** Устанавливает локализованный текст заголовка экрана. */
     private void setLanguage() {
         transactionHistoryTextView.setText(R.string.transaction_history_text);
     }
 
 
+    /** В реальном режиме игры запускает загрузку реальной истории платежей на фоновом потоке, в тестовом — подставляет демонстрационные данные. */
     private void createHistoryThread() {
         if (Boolean.TRUE.equals(MainActivity.IS_REAL_GAME_MODE)) {
             AppExecutors.io().execute(() -> historyCreator.createHistory());
@@ -75,7 +84,7 @@ public class TransactionHistory extends BaseActivity {
         }
     }
 
-    // Тестовые данные — все возможные типы записей для визуального ревью
+    /** Заполняет историю тестовыми данными — все возможные типы записей (выигрыши, ставки, рефералы, прочее) для визуальной проверки экрана. */
     private void injectTestData() {
         ArrayList<HistoryPaymentDto> list = new ArrayList<>();
 
@@ -112,6 +121,7 @@ public class TransactionHistory extends BaseActivity {
     }
 
 
+    /** Отображает загруженный список истории на UI-потоке: скрывает индикатор загрузки и показывает либо список, либо состояние "пусто". */
     public void selectTabButtonThread(ArrayList<HistoryPaymentDto> list) {
         runOnUiThread(() -> {
             historyLoading.setVisibility(View.GONE);
@@ -128,11 +138,13 @@ public class TransactionHistory extends BaseActivity {
     }
 
 
+    /** Стандартная обработка нажатия "назад" без дополнительной логики. */
     @Override
     public void onBackPressed() {
         super.onBackPressed();
     }
 
+    /** Сбрасывает статическую ссылку на активити при её уничтожении, чтобы избежать утечки памяти. */
     @Override
     protected void onDestroy() {
         super.onDestroy();

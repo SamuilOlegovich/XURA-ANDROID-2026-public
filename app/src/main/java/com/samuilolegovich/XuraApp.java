@@ -19,6 +19,10 @@ import dagger.hilt.android.HiltAndroidApp;
 
 
 /**
+ * Класс Application — точка входа Hilt DI-графа и держатель глобального состояния приложения:
+ * статической ссылки на контекст приложения и трекера перехода между foreground/background,
+ * который управляет автоблокировкой по неактивности (InactivityGuard).
+ *
  * @author Samuil Olegovich
  * @since 2022
  */
@@ -26,6 +30,7 @@ import dagger.hilt.android.HiltAndroidApp;
 public class XuraApp extends Application {
     private static Application instance;
 
+    /** Сохраняет глобальную ссылку на приложение и регистрирует трекер видимости Activity для автоблокировки. */
     @Override
     public void onCreate() {
         super.onCreate();
@@ -33,17 +38,20 @@ public class XuraApp extends Application {
         registerActivityLifecycleCallbacks(new ForegroundTracker());
     }
 
+    /** Возвращает контекст приложения для кода, у которого нет доступа к Activity/Context напрямую. */
     public static Context get() {
         return instance;
     }
 
-    // Считает запущенные Activity: 0 → приложение в фоне, 1+ → на экране
+    /** Считает запущенные Activity: переход 0→1 — приложение вышло на передний план, 1→0 — ушло в фон. */
     private static class ForegroundTracker implements ActivityLifecycleCallbacks {
         private int started = 0;
 
+        /** При старте первой Activity сообщает InactivityGuard, что приложение видно пользователю. */
         @Override public void onActivityStarted(Activity a) {
             if (++started == 1) InactivityGuard.onForeground();
         }
+        /** При остановке последней Activity сообщает InactivityGuard, что приложение ушло в фон (запускается отсчёт неактивности). */
         @Override public void onActivityStopped(Activity a) {
             if (--started == 0) InactivityGuard.onBackground();
         }
@@ -54,7 +62,7 @@ public class XuraApp extends Application {
         @Override public void onActivityDestroyed(Activity a) {}
     }
 
-    // Ресурсы с локалью из SharedPreferences — безопасно вызывать из фоновых потоков
+    /** Возвращает Resources с языком из SharedPreferences; безопасно вызывать из фоновых потоков без Activity-контекста. */
     public static Resources getLocalizedResources() {
         SharedPreferences prefs = PrefsHelper.get(instance);
         String lang = prefs.getString(StringEnum.APP_PREFERENCES_LOCALE.getValue(), "en");

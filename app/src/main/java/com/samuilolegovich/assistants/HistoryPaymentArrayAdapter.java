@@ -20,6 +20,11 @@ import java.util.List;
 
 
 
+/**
+ * Старый ArrayAdapter для списка истории платежей (без DiffUtil и переработанной раскраски по тегам).
+ * Класс не используется в текущих экранах — заменён на {@link HistoryPaymentAdapter} (RecyclerView + DiffUtil),
+ * но оставлен в коде на случай обратной совместимости со старыми вызывающими местами.
+ */
 public class HistoryPaymentArrayAdapter extends ArrayAdapter<HistoryPaymentDto> {
     private List<HistoryPaymentDto> historyPaymentDtoList;
 
@@ -40,6 +45,7 @@ public class HistoryPaymentArrayAdapter extends ArrayAdapter<HistoryPaymentDto> 
 
 
 
+    /** Сохраняет список истории и контекст, затем сразу подгружает локализованные подписи типов операций. */
     public HistoryPaymentArrayAdapter(Context context,
                                       int resource,
                                       ArrayList<HistoryPaymentDto> historyPaymentDtoList) {
@@ -51,11 +57,10 @@ public class HistoryPaymentArrayAdapter extends ArrayAdapter<HistoryPaymentDto> 
 
 
 
+    /** Загружает в поля адаптера локализованные строки-подписи типов операций для текущего языка приложения. */
     private void setLanguage() {
-        // Получаем ресурсы для текущего языка
         Resources resources = getResourcesForLocale();
 
-        // Далее вы можете использовать ресурсы для доступа к строкам на текущем языке
         referralRecoveryHistory = resources.getString(R.string.referral_recovery_history);
         referralOrderHistory = resources.getString(R.string.referral_order_history);
         wonTheLottoHistory = resources.getString(R.string.won_the_lotto_history);
@@ -72,6 +77,7 @@ public class HistoryPaymentArrayAdapter extends ArrayAdapter<HistoryPaymentDto> 
     }
 
 
+    /** Создаёт Resources с принудительно применённой локалью приложения (MainActivity.newLocale), а не системной. */
     private Resources getResourcesForLocale() {
         Configuration config = context.getResources().getConfiguration();
         config.setLocale(MainActivity.newLocale);
@@ -79,20 +85,18 @@ public class HistoryPaymentArrayAdapter extends ArrayAdapter<HistoryPaymentDto> 
     }
 
 
+    /** Раздувает разметку строки и заполняет её адресом и суммой (с меткой типа для исходящих операций). */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        // получаем свойство, которое мы отображаем
         HistoryPaymentDto historyPaymentDto = historyPaymentDtoList.get(position);
 
-        // получить инфлятор и раздуть XML-макет для каждого элемента
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         @SuppressLint("ViewHolder") View view = inflater.inflate(R.layout.table, null);
 
         TextView amount = (TextView) view.findViewById(R.id.amount_field);
         TextView address = (TextView) view.findViewById(R.id.address);
 
-        // установить адрес и описание
         address.setText(historyPaymentDto.getAddress());
         amount.setText(historyPaymentDto.getTag().startsWith("-")
                 ? historyPaymentDto.getAmount()
@@ -103,6 +107,7 @@ public class HistoryPaymentArrayAdapter extends ArrayAdapter<HistoryPaymentDto> 
     }
 
 
+    /** Сопоставляет служебный тег транзакции с человекочитаемым локализованным текстом (упрощённая версия без BET:R: и BLK-цвета). */
     private String processTag(String tag) {
         if (tag.startsWith("BET:RED")) return " " + betOnRedHistory;
         if (tag.startsWith("BET:BLK")) return " " + betOnBlackHistory;

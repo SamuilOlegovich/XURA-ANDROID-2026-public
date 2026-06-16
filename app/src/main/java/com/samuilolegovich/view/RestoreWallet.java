@@ -30,6 +30,11 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 
 
+/**
+ * Экран восстановления кошелька по резервной seed-фразе: проверяет введённую фразу
+ * через репозиторий (восстанавливает XRPL-аккаунт), при успехе шифрует и сохраняет seed
+ * в защищённом хранилище и переходит к шагу ввода реферального кода.
+ */
 @AndroidEntryPoint
 public class RestoreWallet extends BaseActivity {
 
@@ -45,6 +50,7 @@ public class RestoreWallet extends BaseActivity {
 
 
 
+    /** Инициализирует экран: включает FLAG_SECURE, разметку, View, локализацию, слушатели. */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +63,7 @@ public class RestoreWallet extends BaseActivity {
 
 
 
+    /** Находит и сохраняет ссылки на View разметки экрана. */
     private void setButtons() {
         restoreWalletTextView = (TextView) findViewById(R.id.restore_wallet_text_view);
         tilSeed = findViewById(R.id.til_restore_wallet_seed_field);
@@ -65,12 +72,14 @@ public class RestoreWallet extends BaseActivity {
     }
 
 
+    /** Загружает локализованные строки для заголовка экрана и сообщения об ошибке восстановления. */
     private void setLanguage() {
         ERROR_CHECK_THE_SEED_AND_TRY_AGAIN = getString(R.string.error_check_the_seed_and_try_again);
         restoreWalletTextView.setText(R.string.restore_from_backup_seed);
     }
 
 
+    /** Назначает обработчик кнопки "далее" (проверка длины seed и запуск восстановления) и сброс ошибки при правке поля. */
     private void listeners() {
         next.setOnClickListener(v -> {
             pulse(v);
@@ -90,6 +99,7 @@ public class RestoreWallet extends BaseActivity {
     }
 
 
+    /** Асинхронно (на IO-потоке) пытается восстановить XRPL-кошелёк по seed-фразе; при успехе сохраняет seed и переходит дальше, иначе показывает ошибку. */
     private void recoverWalletAsync(String seedRestore) {
         AppExecutors.io().execute(() -> {
             Map<String, String> map = repository.restoreWallet(seedRestore);
@@ -108,16 +118,19 @@ public class RestoreWallet extends BaseActivity {
     }
 
 
+    /** Сохраняет восстановленную seed-фразу в защищённом хранилище (Android Keystore через SecureSeedStorage). */
     private void encryptAndWriteSeed(String seedRestore) {
         SecureSeedStorage.save(PrefsHelper.get(this), StringEnum.APP_PREFERENCES_SEED.getValue(), seedRestore);
     }
 
 
+    /** Запускает Activity по имени её класса/действия. */
     private void goToAnotherPage(String namePage) {
         startActivity(new Intent(namePage));
     }
 
 
+    /** Стандартная обработка нажатия "назад" без дополнительной логики. */
     @Override
     public void onBackPressed() {
         super.onBackPressed();

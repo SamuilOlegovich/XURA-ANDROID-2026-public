@@ -35,7 +35,11 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 
 
-// тут страница с данными для получения платежа плюс куар код
+/**
+ * Экран получения платежа: показывает классический XRPL-адрес кошелька в виде текста
+ * и QR-кода с градиентной раскраской, позволяет скопировать адрес в буфер обмена
+ * или поделиться адресом вместе с изображением QR-кода через системный диалог "Поделиться".
+ */
 @AndroidEntryPoint
 public class ReceivePayment extends BaseActivity {
 
@@ -59,6 +63,7 @@ public class ReceivePayment extends BaseActivity {
 
 
 
+    /** Инициализирует экран: разметка, View, локализация, слушатели, адрес кошелька и QR-код. */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +77,7 @@ public class ReceivePayment extends BaseActivity {
 
 
 
+    /** Находит и сохраняет ссылки на View разметки экрана. */
     private void setButtons() {
         receivePaymentTextViewTow = (TextView) findViewById(R.id.receive_payment_text_view_tow);
         receivePaymentTextView = (TextView) findViewById(R.id.receive_payment_text_view);
@@ -82,6 +88,7 @@ public class ReceivePayment extends BaseActivity {
     }
 
 
+    /** Загружает локализованные строки для заголовков экрана и сообщения о копировании адреса. */
     private void setLanguage() {
         ADDRESS_COPIED_TO_PHONE_BUFFER = getString(R.string.address_copied_to_phone_buffer);
         receivePaymentTextViewTow.setText(R.string.your_address);
@@ -89,12 +96,14 @@ public class ReceivePayment extends BaseActivity {
     }
 
 
+    /** Получает классический XRPL-адрес текущего кошелька из репозитория и отображает его на экране. */
     private void setAddress() {
         classicAddress = repository.getClassicAddress();
         address.setText(classicAddress);
     }
 
 
+    /** Назначает обработчики кнопок копирования адреса в буфер обмена и отправки адреса с QR-кодом через "Поделиться". */
     private void listeners() {
         View root = findViewById(android.R.id.content);
         clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
@@ -112,6 +121,7 @@ public class ReceivePayment extends BaseActivity {
         });
     }
 
+    /** Сохраняет сгенерированный QR-код во временный файл и открывает системный диалог "Поделиться" с адресом и изображением QR. */
     private void shareAddressWithQr() {
         try {
             File imagesDir = new File(getCacheDir(), "images");
@@ -135,6 +145,7 @@ public class ReceivePayment extends BaseActivity {
     }
 
 
+    /** Кодирует адрес кошелька в QR-код через ZXing и раскрашивает закодированные пиксели градиентом вместо однотонного чёрного. */
     private void setQrCode() {
         try {
             Map<EncodeHintType, Object> hints = new HashMap<>();
@@ -166,6 +177,7 @@ public class ReceivePayment extends BaseActivity {
         }
     }
 
+    /** Находит для параметра t (0..1) две соседние опорные точки градиента и возвращает смешанный между ними цвет. */
     private int interpolateGradient(int[] colors, float[] positions, float t) {
         if (t <= positions[0]) return colors[0];
         if (t >= positions[positions.length - 1]) return colors[colors.length - 1];
@@ -178,6 +190,7 @@ public class ReceivePayment extends BaseActivity {
         return colors[colors.length - 1];
     }
 
+    /** Линейно смешивает два ARGB-цвета с коэффициентом r (0 — чистый c1, 1 — чистый c2). */
     private int blendColors(int c1, int c2, float r) {
         float inv = 1f - r;
         int a = (int)(((c1 >> 24) & 0xFF) * inv + ((c2 >> 24) & 0xFF) * r);
@@ -188,7 +201,7 @@ public class ReceivePayment extends BaseActivity {
     }
 
 
-    // при нажатии на кнопку назад будем возвращаться назад
+    /** Стандартная обработка нажатия "назад" без дополнительной логики. */
     @Override
     public void onBackPressed() {
         super.onBackPressed();

@@ -1,5 +1,6 @@
 package com.samuilolegovich.viewmodel;
 
+/** Перечисление возможных ошибок валидации ставки в играх (рулетка, угадай число/цвет). */
 public enum GameBetError {
     INVALID_AMOUNT,
     AMOUNT_IS_ZERO,

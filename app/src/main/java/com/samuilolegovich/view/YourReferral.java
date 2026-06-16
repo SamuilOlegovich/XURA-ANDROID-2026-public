@@ -20,6 +20,10 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 
 
+/**
+ * Экран отображения собственного реферального кода пользователя: позволяет
+ * скопировать код в буфер обмена для дальнейшей передачи приглашаемому.
+ */
 @AndroidEntryPoint
 public class YourReferral extends BaseActivity {
     public static final String YOUR_REFERRAL_CLASS = ".YourReferral";
@@ -42,6 +46,7 @@ public class YourReferral extends BaseActivity {
 
 
 
+    /** Инициализирует экран: разметка, View, локализация, слушатели, текст кода и сохранение реферального кода в настройках. */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +60,7 @@ public class YourReferral extends BaseActivity {
 
 
 
+    /** Находит View разметки экрана и запускает звуковой эффект. */
     private void setButtons() {
         yourReferralPageTextView = (TextView) findViewById(R.id.your_referral_page_text_view);
         copy = findViewById(R.id.your_referral_page_copy_linc);
@@ -65,12 +71,14 @@ public class YourReferral extends BaseActivity {
     }
 
 
+    /** Загружает локализованные строки: сообщение о копировании и заголовок экрана. */
     private void setLanguage() {
         CODE_COPIED_TO_PHONE_BUFFER = getString(R.string.code_copied_to_phone_buffer);
         yourReferralPageTextView.setText(R.string.your_referral_code);
     }
 
 
+    /** Назначает обработчик копирования реферального кода в буфер обмена с показом снэкбара об успехе. */
     private void listeners() {
         View root = findViewById(android.R.id.content);
         clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
@@ -84,6 +92,7 @@ public class YourReferral extends BaseActivity {
     }
 
 
+    /** Сохраняет реферальный код пользователя в SharedPreferences приложения. */
     private void setReferralForApp(String referral) {
         preferences = PrefsHelper.get(this);
         editor = preferences.edit();
@@ -92,14 +101,14 @@ public class YourReferral extends BaseActivity {
     }
 
 
-    // настройка для бегущей строки
+    /** Настройка для бегущей строки: подставляет реферальный код из статического поля CODE в текстовое поле. */
     @SuppressLint("SetTextI18n")
     private void goText() {
         code.setText(CODE);
     }
 
 
-    // при нажатии на кнопку назад будем возвращаться назад
+    /** При нажатии на кнопку "назад" возвращается на предыдущий экран. */
     @Override
     public void onBackPressed() {
         super.onBackPressed();

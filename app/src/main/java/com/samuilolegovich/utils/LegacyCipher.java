@@ -13,6 +13,7 @@ import java.util.Base64;
  */
 public final class LegacyCipher {
 
+    /** Приватный конструктор запрещает создание экземпляров — класс статический. */
     private LegacyCipher() {}
 
     private static final byte[] BYTES = new byte[128];
@@ -27,6 +28,7 @@ public final class LegacyCipher {
         return salt != null && !salt.matches("^[0-9a-f]{32}$");
     }
 
+    /** Воспроизводит старую формулу хеширования пароля (реверс пароля + androidId + расшифрованная соль → SHA-256), чтобы сверить с сохранённым значением при миграции. */
     public static String hash(String password, String saltEncrypted, String androidId) {
         StringBuilder sb = new StringBuilder(password);
         sb.reverse();
@@ -36,6 +38,7 @@ public final class LegacyCipher {
         return sha256(sb.toString());
     }
 
+    /** Расшифровывает соль из старого самодельного формата (base64 + обрезание добавленного androidId с конца). */
     private static String decryptStringForSalt(String string, String vedroId) {
         if (string == null || string.isEmpty()) return "";
         StringBuilder sb = new StringBuilder(getFromBase64(string));
@@ -45,6 +48,7 @@ public final class LegacyCipher {
         return sb.toString();
     }
 
+    /** Декодирует строку из старого формата (числа через пробел → байты → Base64 → UTF-8 текст), использовавшегося для хранения соли. */
     private static String getFromBase64(String string) {
         if (string == null) return null;
         try {
@@ -60,6 +64,7 @@ public final class LegacyCipher {
         }
     }
 
+    /** Считает SHA-256 от строки и возвращает результат в виде HEX-строки. */
     private static String sha256(String text) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");

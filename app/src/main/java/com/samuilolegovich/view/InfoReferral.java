@@ -12,6 +12,11 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 
 
+/**
+ * Статический информационный экран о реферальной программе: условия становления
+ * рефералом, восстановление статуса, выгоды для рефералов и их партнёров,
+ * ограничения для не-рефералов и планы на будущее. Без интерактивной логики.
+ */
 @AndroidEntryPoint
 public class InfoReferral extends BaseActivity {
     public static final String INFO_REFERRAL_CLASS = ".InfoReferral";
@@ -40,6 +45,7 @@ public class InfoReferral extends BaseActivity {
 
 
 
+    /** Инициализирует экран: разметка, привязка всех TextView, локализация текстов. */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +56,7 @@ public class InfoReferral extends BaseActivity {
 
 
 
+    /** Находит и сохраняет ссылки на все текстовые блоки разметки экрана. */
     private void setButtons() {
         becomeReferralMainTextView = (TextView) findViewById(R.id.become_referral_main_text_view);
 
@@ -74,6 +81,7 @@ public class InfoReferral extends BaseActivity {
     }
 
 
+    /** Устанавливает локализованный текст во все текстовые блоки экрана. */
     private void setLanguage() {
         becomeReferralMainTextView.setText(R.string.become_referral_main_text);
 
@@ -100,7 +108,7 @@ public class InfoReferral extends BaseActivity {
 
 
 
-    // при нажатии на кнопку назад будем возвращаться назад
+    /** Стандартная обработка нажатия "назад" без дополнительной логики. */
     @Override
     public void onBackPressed() {
         super.onBackPressed();

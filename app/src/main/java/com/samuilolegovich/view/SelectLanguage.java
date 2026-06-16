@@ -21,6 +21,11 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 
 
+/**
+ * Экран выбора языка интерфейса приложения: показывает список поддерживаемых языков,
+ * подсвечивает текущий выбранный, сохраняет выбор в preferences и пересоздаёт открытые
+ * экраны (главный, настройки, выбор игры), чтобы применить новую локаль сразу.
+ */
 @AndroidEntryPoint
 public class SelectLanguage extends BaseActivity {
     public static final String SELECT_LANGUAGE_CLASS = ".SelectLanguage";
@@ -54,6 +59,7 @@ public class SelectLanguage extends BaseActivity {
 
 
 
+    /** Инициализирует экран: разметка, View, локализация заголовка, подсветка текущего языка и слушатели карточек. */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +72,7 @@ public class SelectLanguage extends BaseActivity {
 
 
 
+    /** Находит и сохраняет ссылки на все карточки языков и их подписи в разметке. */
     private void setButtons() {
         settingsEnglishLinc    = findViewById(R.id.settings_english_linc);
         settingsRussianLinc    = findViewById(R.id.settings_russian_linc);
@@ -92,11 +99,13 @@ public class SelectLanguage extends BaseActivity {
     }
 
 
+    /** Устанавливает локализованный текст заголовка экрана. */
     private void setLanguage() {
         settingsTextView.setText(R.string.select_language_text);
     }
 
 
+    /** Считывает текущий выбранный язык приложения из preferences (английский по умолчанию) и подсвечивает соответствующую карточку. */
     private void getSettingsLanguage() {
         preferences = PrefsHelper.get(this);
         languageNow = preferences.getString(StringEnum.APP_PREFERENCES_LOCALE.getValue(), "en");
@@ -104,6 +113,7 @@ public class SelectLanguage extends BaseActivity {
     }
 
 
+    /** Проходит по всем карточкам языков и подсвечивает ту, что соответствует текущему выбранному языку. */
     private void highlightSelectedLanguage() {
         String lang = languageNow.toLowerCase();
 
@@ -130,6 +140,7 @@ public class SelectLanguage extends BaseActivity {
     }
 
 
+    /** Меняет фон и цвет текста карточки языка в зависимости от того, выбран ли этот язык сейчас. */
     private void setCardHighlight(View card, TextView title, boolean selected) {
         card.setBackground(ContextCompat.getDrawable(this,
                 selected ? R.drawable.bg_card_action_primary : R.drawable.bg_card_glass_clickable));
@@ -138,6 +149,7 @@ public class SelectLanguage extends BaseActivity {
     }
 
 
+    /** Назначает обработчики клика на каждую карточку языка: если язык отличается от текущего — запускает смену локали. */
     private void listeners() {
         settingsEnglishLinc.setOnClickListener(v -> {
             pulse(v);
@@ -192,11 +204,13 @@ public class SelectLanguage extends BaseActivity {
     }
 
 
+    /** Запускает сохранение выбранного языка на фоновом потоке. */
     private void makeStackThread(StringEnum stringEnum) {
         AppExecutors.io().execute(() -> makeStack(stringEnum));
     }
 
 
+    /** Сохраняет выбранный язык в preferences и пересоздаёт текущий и все открытые экраны приложения (главный, настройки, выбор игры), чтобы изменение локали отразилось сразу. */
     private void makeStack(StringEnum stringEnum) {
         preferences = PrefsHelper.get(this);
         preferences.edit()
@@ -213,17 +227,20 @@ public class SelectLanguage extends BaseActivity {
     }
 
 
+    /** Пересоздаёт текущую активити на UI-потоке (вызывается извне для применения смены языка). */
     public void setLanguageThread() {
         runOnUiThread(this::recreate);
     }
 
 
+    /** Стандартная обработка нажатия "назад" без дополнительной логики. */
     @Override
     public void onBackPressed() {
         super.onBackPressed();
     }
 
 
+    /** Закрывает текущий стек экранов и возвращает пользователя на главный экран приложения. */
     public void closeThisPage() {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

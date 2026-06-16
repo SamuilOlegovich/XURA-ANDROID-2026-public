@@ -41,6 +41,11 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 
 
+/**
+ * Экран игры "Угадай число": пользователь выбирает число от 1 до 36 на сетке,
+ * делает ставку через {@link GuessNumberViewModel}, и при удачном угадывании получает
+ * выигрыш с множителем x36. Результат розыгрыша показывается на экране {@link Flasher}.
+ */
 @AndroidEntryPoint
 public class GuessTheNumberGame extends BaseActivity {
     public static final String GUESS_THE_NUMBER_GAME_CLASS = ".GuessTheNumberGame";
@@ -82,6 +87,10 @@ public class GuessTheNumberGame extends BaseActivity {
 
 
 
+    /**
+     * Инициализирует экран: View и сетку чисел, ViewModel, локализацию, реферала, слушателей,
+     * подписки на баланс/ошибки/успешную ставку из ViewModel, и запускает фоновую генерацию числа.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,6 +142,7 @@ public class GuessTheNumberGame extends BaseActivity {
 
 
 
+    /** Находит View разметки экрана, готовит звуковые эффекты и строит сетку чисел 1–36. */
     private void setButtons() {
         casinoMediaPlayer = MediaPlayer.create(this, R.raw.in_casino);
         errorMediaPlayer = MediaPlayer.create(this, R.raw.error);
@@ -158,6 +168,7 @@ public class GuessTheNumberGame extends BaseActivity {
     }
 
 
+    /** Программно создаёт 36 ячеек GridLayout с числами 1–36; по нажатию выделяет выбранную ячейку и запоминает число для ставки. */
     private void setupNumberGrid() {
         GridLayout grid = findViewById(R.id.numbers_grid);
         int cellH = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 40, getResources().getDisplayMetrics());
@@ -195,6 +206,7 @@ public class GuessTheNumberGame extends BaseActivity {
     }
 
 
+    /** Загружает локализованные строки для всех текстов и сообщений об ошибках на экране. */
     private void setLanguage() {
         GUESSED_NUMBER_SHOULD_NOT_BE_LESS_THAN = getString(R.string.guessed_number_should_not_be_less_than);
         YOUR_ACCOUNT_IS_NOT_ENOUGH_TO_SEND = getString(R.string.your_account_is_not_enough_to_send);
@@ -211,6 +223,7 @@ public class GuessTheNumberGame extends BaseActivity {
     }
 
 
+    /** Назначает обработчики: быстрый выбор суммы по чипам, сброс ошибки при правке поля, переход к правилам игры, отправку ставки на выбранное число. */
     private void listeners() {
         chipGroupAmounts.setOnCheckedStateChangeListener((group, checkedIds) -> {
             if      (checkedIds.contains(R.id.chip_01_xrp)) bet.setText("0.1");
@@ -243,6 +256,7 @@ public class GuessTheNumberGame extends BaseActivity {
     }
 
 
+    /** Читает сохранённый реферальный код пользователя из preferences (по умолчанию "0", если не задан). */
     private void getReferral() {
         preferences = PrefsHelper.get(this);
         myReferral = preferences.contains(StringEnum.APP_PREFERENCES_REFERRAL.getValue())
@@ -251,6 +265,7 @@ public class GuessTheNumberGame extends BaseActivity {
     }
 
 
+    /** Сбрасывает визуальное выделение выбранного числа и саму выбранную ставку после успешной отправки. */
     private void resetNumberSelection() {
         if (selectedNumView != null) {
             selectedNumView.setBackground(getDrawable(R.drawable.bg_num_button));
@@ -260,6 +275,7 @@ public class GuessTheNumberGame extends BaseActivity {
     }
 
 
+    /** Заполняет статические поля Flasher данными для отображения результата: режим игры, число ставки, его цвет, сумму. */
     @SuppressLint("SetTextI18n")
     private void setBetParam(String amount, String tag) {
         Flasher.TEST_MODE_ENUM = TestModeEnum.GUESS_THE_NUMBER_GAME;
@@ -269,6 +285,7 @@ public class GuessTheNumberGame extends BaseActivity {
     }
 
 
+    /** Переключает UI между обычным состоянием и состоянием "идёт ставка": блокирует кнопку ставки и показывает индикатор загрузки. */
     private void setBettingState(boolean betting) {
         runOnUiThread(() -> {
             placeBetLinc.setEnabled(!betting);
@@ -278,16 +295,19 @@ public class GuessTheNumberGame extends BaseActivity {
         });
     }
 
+    /** Запускает на IO-потоке GenNumberRun — фоновую непрерывную генерацию случайного числа для следующей игры. */
     private void goThread() {
         AppExecutors.io().execute(new GenNumberRun());
     }
 
 
+    /** Запускает Activity по имени её класса/действия. */
     private void goToAnotherPage(String namePage) {
         startActivity(new Intent(namePage));
     }
 
 
+    /** При уходе с экрана останавливает фоновую генерацию числа. */
     @Override
     protected void onPause() {
         super.onPause();
@@ -295,6 +315,7 @@ public class GuessTheNumberGame extends BaseActivity {
         GenNumberRun.FLAG = false;
     }
 
+    /** При возвращении на экран обновляет баланс и перезапускает фоновую генерацию числа. */
     @Override
     protected void onResume() {
         super.onResume();
@@ -304,6 +325,7 @@ public class GuessTheNumberGame extends BaseActivity {
         goThread();
     }
 
+    /** Останавливает фоновую музыку и генерацию числа перед закрытием экрана. */
     @Override
     public void onBackPressed() {
         casinoMediaPlayer.stop();

@@ -21,9 +21,16 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 
 
+/**
+ * Экран ввода реферального кода: пользователь может ввести код (проверяется на корректность
+ * и допустимый диапазон) или пропустить этот шаг. Статический флаг {@link #FLAG} определяет,
+ * куда вернуться после установки кода — на главный экран (онбординг) или просто назад
+ * (повторная установка реферала из настроек/программы рефералов).
+ */
 @AndroidEntryPoint
 public class Referral extends BaseActivity {
     public static final String REFERRAL_CLASS = ".Referral";
+    /** true — экран открыт в потоке онбординга (после установки кода переходим на главный экран); false — открыт повторно, возвращаемся просто назад. */
     public static Boolean FLAG = true;
 
     private SharedPreferences.Editor editor;
@@ -37,6 +44,7 @@ public class Referral extends BaseActivity {
 
 
 
+    /** Инициализирует экран: разметка, View, локализация, слушатели кнопок. */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +56,7 @@ public class Referral extends BaseActivity {
 
 
 
+    /** Находит и сохраняет ссылки на View разметки экрана. */
     private void setButtons() {
         referralTextView = (TextView) findViewById(R.id.referral_text_view);
         tilReferralCode = findViewById(R.id.til_referral_code_field);
@@ -57,11 +66,13 @@ public class Referral extends BaseActivity {
     }
 
 
+    /** Устанавливает локализованный текст заголовка экрана. */
     private void setLanguage() {
         referralTextView.setText(R.string.referral_text);
     }
 
 
+    /** Назначает обработчики: применить введённый код (с валидацией) или пропустить шаг — оба ведут дальше согласно флагу FLAG. */
     private void listeners() {
         set.setOnClickListener(v -> {
             pulse(v);
@@ -99,6 +110,7 @@ public class Referral extends BaseActivity {
     }
 
 
+    /** Сохраняет реферальный код (или признак его отсутствия) в зашифрованные preferences приложения. */
     private void setReferralForApp(String referral) {
         preferences = PrefsHelper.get(this);
         editor = preferences.edit();
@@ -107,14 +119,14 @@ public class Referral extends BaseActivity {
     }
 
 
-    // при нажатии на кнопку назад будем возвращаться назад
+    /** Стандартная обработка нажатия "назад" без дополнительной логики. */
     @Override
     public void onBackPressed() {
         super.onBackPressed();
     }
 
 
-    // для закрытие этой активити и попадания на главную активити
+    /** Закрывает текущий стек экранов и возвращает пользователя на главный экран приложения. */
     public void closeThisPage() {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

@@ -32,15 +32,23 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 
 
+/**
+ * Базовый класс для всех Activity приложения.
+ * Централизует общую для всех экранов логику: применение языка интерфейса,
+ * автоблокировку по неактивности, анти-debug проверку, анимацию логотипа
+ * и синхронизацию нижней навигации — чтобы не дублировать этот код в каждом экране.
+ */
 @AndroidEntryPoint
 public abstract class BaseActivity extends AppCompatActivity {
 
+    /** Применяет сохранённый язык интерфейса до вызова super.onCreate, чтобы Activity сразу создавалась с нужной локалью. */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         applyLocale();
         super.onCreate(savedInstanceState);
     }
 
+    /** При каждом возвращении экрана на передний план повторно выполняет проверки безопасности и синхронизацию UI. */
     @Override
     protected void onResume() {
         super.onResume();
@@ -50,9 +58,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         checkAntiDebug();
     }
 
-    // Проверка дебаггера/Frida в фоне на каждом возврате экрана в foreground —
-    // инструменты динамического анализа могут быть подключены в любой момент,
-    // не только при запуске приложения.
+    /**
+     * Запускает в фоновом потоке проверку на отладчик/Frida.
+     * Делается при каждом возврате экрана в foreground, а не только при запуске приложения,
+     * так как инструменты динамического анализа могут быть подключены в любой момент.
+     */
     private void checkAntiDebug() {
         new Thread(() -> {
             if (AntiDebugDetector.isDetected()) {
@@ -61,6 +71,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         }).start();
     }
 
+    /** Показывает блокирующий диалог об обнаружении отладчика/Frida и закрывает приложение по нажатию кнопки. */
     private void showAntiDebugWarning() {
         if (isFinishing() || isDestroyed()) return;
         new AlertDialog.Builder(this)
@@ -76,6 +87,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 .show();
     }
 
+    /** Анимирует появление логотипа XURA (масштаб + прозрачность) при возврате экрана на передний план. */
     private void animateLogo() {
         View logo = findViewById(R.id.logo_xura);
         if (logo == null) return;
@@ -100,11 +112,16 @@ public abstract class BaseActivity extends AppCompatActivity {
         set.start();
     }
 
-    // Экраны ввода/смены пароля переопределяют это чтобы не попасть в петлю блокировки
+    /**
+     * Признак того, что экран не должен запускать автоблокировку.
+     * Экраны ввода/смены пароля переопределяют это, чтобы не попасть в петлю
+     * (иначе экран ввода пароля сам бы запрашивал ввод пароля).
+     */
     protected boolean isLockExempt() {
         return false;
     }
 
+    /** Проверяет, истёк ли таймаут неактивности, и при наличии установленного пароля перенаправляет на экран его ввода. */
     private void checkAutoLock() {
         if (isLockExempt() || !InactivityGuard.isLockRequired()) return;
 
@@ -119,7 +136,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         startActivity(new Intent(".EnterApplicationPassword"));
     }
 
-    // Вызывать из onCreate после setContentView в MainActivity, SelectGame, Settings
+    /**
+     * Подключает обработчик нажатий нижней навигации, переключающий между основными вкладками.
+     * Нужно вызывать из onCreate после setContentView в MainActivity, SelectGame и Settings.
+     */
     protected void setupBottomNav() {
         BottomNavigationView nav = findViewById(R.id.bottom_nav);
         if (nav == null) return;
@@ -137,7 +157,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         });
     }
 
-    // Вызывается в onResume — после onRestoreInstanceState, поэтому не перебивается
+    /**
+     * Выставляет в нижней навигации пункт, соответствующий текущей Activity.
+     * Вызывается в onResume — то есть после onRestoreInstanceState, поэтому
+     * выставленное значение не будет перебито восстановлением состояния.
+     */
     private void syncBottomNavSelection() {
         BottomNavigationView nav = findViewById(R.id.bottom_nav);
         if (nav == null) return;
@@ -158,6 +182,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
+    /** Переключается на Activity-вкладку по её action, не пересоздавая её, если она уже есть в стеке. */
     private void navigateToTab(String action) {
         Intent intent = new Intent(action);
         // Переиспользуем существующую Activity из стека без пересоздания
@@ -167,8 +192,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         overridePendingTransition(0, 0);
     }
 
+    /** Виды Snackbar-уведомлений, влияющие на префикс-иконку и цвет текста. */
     public enum SnackbarType { SUCCESS, ERROR, INFO }
 
+    /** Показывает Snackbar с цветом и префиксом, зависящими от типа уведомления (успех/ошибка/инфо). */
     protected void showSnackbar(View root, String message, SnackbarType type) {
         String prefix;
         int colorRes;
@@ -192,10 +219,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         snackbar.show();
     }
 
+    /** Запускает короткую пульсирующую анимацию на View — используется для визуального отклика на действие пользователя. */
     protected void pulse(View v) {
         v.startAnimation(AnimationUtils.loadAnimation(this, R.anim.anim_scale_pulse));
     }
 
+    /** Читает сохранённую в настройках локаль и применяет её к ресурсам Activity до отрисовки UI. */
     private void applyLocale() {
         SharedPreferences prefs = PrefsHelper.get(this);
         String lang = prefs.getString(StringEnum.APP_PREFERENCES_LOCALE.getValue(), "en");

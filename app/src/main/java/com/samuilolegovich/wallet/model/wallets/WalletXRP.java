@@ -43,6 +43,11 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 
 
+/**
+ * Низкоуровневая реализация кошелька XRPL: генерация/восстановление ключевой пары
+ * из сид-фразы, запрос баланса и сиквенса счёта через RPC, формирование, подпись
+ * и отправка платёжных транзакций (обычных, с мемо или с destination tag).
+ */
 public class WalletXRP implements MyWallets {
     private AccountInfoRequestParams requestParams;
     private AccountInfoResult accountInfoResult;
@@ -59,28 +64,34 @@ public class WalletXRP implements MyWallets {
 
 
 
+    /** Создаёт пустую обёртку кошелька; реальная инициализация происходит в {@link #createNewWallet()} или {@link #restoreWallet(String)}. */
     public WalletXRP() {}
 
 
 
     // ---- методы совместимости (используются из PaymentAndSocketManagerXRPL) ----
 
+    /** Возвращает классический XRPL-адрес текущего кошелька. */
     public Address classicAddress() {
         return classicAddress;
     }
 
+    /** Возвращает приватный ключ кошелька в шестнадцатеричном виде. */
     public Optional<String> privateKey() {
         return Optional.of(keyPair.privateKey().prefixedBytes().hexValue());
     }
 
+    /** Возвращает публичный ключ кошелька в шестнадцатеричном виде. */
     public String publicKey() {
         return keyPair.publicKey().base16Value();
     }
 
+    /** Преобразует классический адрес в X-адрес. */
     public XAddress xAddress() {
         return AddressCodec.getInstance().classicAddressToXAddress(classicAddress, false);
     }
 
+    /** Сообщает, является ли этот кошелёк тестовым (для данной реализации — всегда false). */
     public boolean isTest() {
         return false;
     }
@@ -89,6 +100,7 @@ public class WalletXRP implements MyWallets {
 
 
 
+    /** Запрашивает свежую информацию о счёте и возвращает текущий баланс в XRP (0, если счёт ещё не активирован). */
     @Override
     public BigDecimal getBalance() {
         getInformationAboutYourAccount();
@@ -97,6 +109,7 @@ public class WalletXRP implements MyWallets {
                 : BigDecimal.ZERO;
     }
 
+    /** Возвращает сид-фразу только что созданного кошелька; для восстановленного кошелька сид недоступен из соображений безопасности. */
     @Override
     public String getSeed() {
         if (createNewWalletData != null) {
@@ -106,6 +119,7 @@ public class WalletXRP implements MyWallets {
     }
 
 
+    /** Генерирует новый ed25519-кошелёк: сид, ключевую пару и адрес, сохраняет сид в настройках и возвращает все ключевые данные кошелька. */
     @Override
     public Map<String, String> createNewWallet() {
         seed = Seed.ed25519Seed();
@@ -134,6 +148,7 @@ public class WalletXRP implements MyWallets {
     }
 
 
+    /** Восстанавливает кошелёк из переданной сид-фразы: выводит ключевую пару и адрес, запрашивает баланс. Возвращает пустую карту при ошибке (например, неверный формат сида). */
     public Map<String, String> restoreWallet(String seedStr) {
         try {
             seedBase58 = seedStr;
@@ -157,6 +172,7 @@ public class WalletXRP implements MyWallets {
     }
 
 
+    /** Формирует, подписывает и отправляет платёж с числовым destination tag (например, для платежей на биржу). */
     public boolean sendPaymentToAddressXRP(String address, Integer tag, BigDecimal numberOfXRP) {
         try {
             createConnect();
@@ -195,6 +211,7 @@ public class WalletXRP implements MyWallets {
         return true;
     }
 
+    /** Формирует, подписывает и отправляет платёж с мемо в шестнадцатеричной кодировке (используется для ставок в играх, кодирующих параметры ставки в тексте мемо). */
     public boolean sendPaymentToAddressXRP(String address, String memo, BigDecimal numberOfXRP) {
         try {
             createConnect();
@@ -239,6 +256,7 @@ public class WalletXRP implements MyWallets {
         return true;
     }
 
+    /** Формирует, подписывает и отправляет обычный платёж без мемо и тега (стандартный перевод XRP на другой адрес). */
     public boolean sendPaymentToAddressXRP(String address, BigDecimal numberOfXRP) {
         try {
             createConnect();
@@ -277,6 +295,7 @@ public class WalletXRP implements MyWallets {
     }
 
 
+    /** Опрашивает леджер до тех пор, пока отправленная транзакция не будет подтверждена либо не истечёт её lastLedgerSequence. */
     private void waitForValidationTransaction() {
         try {
             boolean transactionValidated = false;
@@ -321,6 +340,7 @@ public class WalletXRP implements MyWallets {
     }
 
 
+    /** Выводит в лог итоговый результат истёкшей транзакции (код результата и доставленную сумму) и ссылку на explorer. */
     private void checkTransactionResults(TransactionResult<Payment> transactionResult,
                                          SingleSignedTransaction<Payment> signedPayment) {
         AtomicBoolean flag = new AtomicBoolean(true);
@@ -343,6 +363,7 @@ public class WalletXRP implements MyWallets {
         }
     }
 
+    /** Преобразует текст в шестнадцатеричную строку для размещения в поле мемо XRPL-транзакции. */
     private static String toHex(String text) {
         StringBuilder sb = new StringBuilder();
         for (byte b : text.getBytes(StandardCharsets.UTF_8)) {
@@ -351,6 +372,7 @@ public class WalletXRP implements MyWallets {
         return sb.toString();
     }
 
+    /** Создаёт новый RPC-клиент к текущей сети (testnet/mainnet), так как сеть может быть переключена пользователем в любой момент. */
     private void createConnect() {
         try {
             xrplClient = new MyXrplClient(com.samuilolegovich.config.NetworkConfig.getRpcUrl());
@@ -359,9 +381,10 @@ public class WalletXRP implements MyWallets {
         }
     }
 
+    /** Запрашивает у RPC текущую информацию о счёте (баланс, сиквенс); если счёт не активирован, тихо логирует подсказку об этом. */
     private void getInformationAboutYourAccount() {
         try {
-            createConnect(); // always use current network (testnet/mainnet may have changed)
+            createConnect(); // всегда используем текущую сеть (testnet/mainnet могла быть переключена)
             requestParams = AccountInfoRequestParams.builder()
                     .ledgerSpecifier(LedgerSpecifier.VALIDATED)
                     .account(classicAddress)

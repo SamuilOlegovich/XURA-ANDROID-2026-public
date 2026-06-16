@@ -15,6 +15,10 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 
 
+/**
+ * Экран проигрыша ставки: показывает сообщение о проигрыше с градиентной анимацией текста
+ * и звуковым эффектом, предлагает сыграть снова или вернуться к выбору игры.
+ */
 @AndroidEntryPoint
 public class Lost extends BaseActivity {
     public static final String LOST_CLASS = ".Lost";
@@ -29,6 +33,7 @@ public class Lost extends BaseActivity {
 
 
 
+    /** Инициализирует экран: разметка, View, локализация, отображение переданного сообщения о проигрыше. */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +45,7 @@ public class Lost extends BaseActivity {
 
 
 
+    /** Находит View разметки, запускает звук проигрыша, применяет градиент к заголовку и назначает обработчики кнопок. */
     private void setButtons() {
         lastTextViewTwo = (TextView) findViewById(R.id.last_text_view_two);
         lastTextView    = (TextView) findViewById(R.id.last_text_view);
@@ -77,17 +83,20 @@ public class Lost extends BaseActivity {
     }
 
 
+    /** Устанавливает локализованный заголовок "ставка проиграна". */
     private void setLanguage() {
         lastTextView.setText(R.string.bet_lost);
     }
 
 
+    /** Выводит переданное через статическое поле MASSAGE детальное сообщение о результате игры. */
     @SuppressLint("SetTextI18n")
     private void goText() {
         lastTextViewTwo.setText(MASSAGE);
     }
 
 
+    /** Останавливает звук проигрыша перед стандартной обработкой нажатия "назад". */
     @Override
     public void onBackPressed() {
         lostMediaPlayer.stop();

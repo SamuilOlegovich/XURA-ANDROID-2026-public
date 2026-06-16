@@ -7,12 +7,17 @@ import java.util.Map;
 
 
 
+/**
+ * Фоновая задача для игры "Угадай число": пока экран открыт, раз в секунду
+ * подготавливает следующее случайное значение, отличное от предыдущего.
+ */
 public class GenNumberRun implements Runnable {
     public static volatile boolean FLAG = true;
     private boolean nextColor;
 
 
 
+    /** Цикл работы потока: пока FLAG включён, раз в секунду обновляет следующее значение, если игра видна на экране. */
     @Override
     public void run() {
         while (FLAG) {
@@ -28,6 +33,7 @@ public class GenNumberRun implements Runnable {
     }
 
 
+    /** Генерирует случайное значение, отличное от текущего nextColor, и запоминает его как следующее. */
     private void genNextColor() {
         Map<Boolean, String> map = Lotto.genNumberAndColor();
         while (map.containsKey(nextColor)) {

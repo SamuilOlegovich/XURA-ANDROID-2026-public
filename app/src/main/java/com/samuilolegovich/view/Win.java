@@ -17,6 +17,11 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 
 
+/**
+ * Экран поздравления после удачной ставки: проигрывает звук победы, показывает
+ * текст с градиентной заливкой и бегущей строкой, предлагает сыграть снова
+ * или вернуться к выбору игры.
+ */
 @AndroidEntryPoint
 public class Win extends BaseActivity {
     public static final String WIN_CLASS = ".Win";
@@ -32,6 +37,7 @@ public class Win extends BaseActivity {
 
 
 
+    /** Инициализирует экран: разметка, View и звук, локализация, текст бегущей строки. */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +49,7 @@ public class Win extends BaseActivity {
 
 
 
+    /** Находит View разметки, запускает звук победы, накладывает градиентную заливку на основной текст и назначает слушатели кнопок "сыграть снова"/"вернуться к играм". */
     private void setButtons() {
         winPageTextViewTree = (TextView) findViewById(R.id.win_page_text_view_tree);
         winPageTextViewTwo = (TextView) findViewById(R.id.win_page_text_view_tow);
@@ -80,6 +87,7 @@ public class Win extends BaseActivity {
     }
 
 
+    /** Устанавливает локализованный текст поздравления. */
     private void setLanguage() {
         winPageTextViewTree.setText(R.string.congratulations);
         winPageTextView.setText(R.string.bet_won);
@@ -87,7 +95,7 @@ public class Win extends BaseActivity {
 
 
 
-    // настройка для бегущей строки
+    /** Настройка для бегущей строки: подставляет сообщение о выигрыше из статического поля MASSAGE и включает marquee-прокрутку. */
     @SuppressLint("SetTextI18n")
     private void goText() {
         winPageTextViewTwo.setText(MASSAGE);
@@ -96,7 +104,7 @@ public class Win extends BaseActivity {
 
 
 
-    // при нажатии на кнопку назад будем возвращаться назад
+    /** При нажатии на кнопку "назад" останавливает звук победы и возвращается на предыдущий экран. */
     @Override
     public void onBackPressed() {
         winMediaPlayer.stop();

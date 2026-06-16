@@ -24,6 +24,11 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 
 
+/**
+ * Экран реферальной программы: позволяет стать рефералом (платный взнос REF)
+ * либо восстановить реферальный статус (REF:REC), отправляя платёж на сервисный адрес
+ * с соответствующим memo-тегом, а также перейти к информации о программе или к экрану ввода реферала.
+ */
 @AndroidEntryPoint
 public class BecomeReferral extends BaseActivity {
 
@@ -46,6 +51,7 @@ public class BecomeReferral extends BaseActivity {
 
 
 
+    /** Инициализирует экран: разметка, привязка View, локализация текстов, слушатели кнопок. */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +64,7 @@ public class BecomeReferral extends BaseActivity {
 
 
 
+    /** Находит и сохраняет ссылки на View разметки экрана. */
     private void setButtons() {
         restoreReferral = findViewById(R.id.restore_referral);
         infoReferral    = findViewById(R.id.referral_info_linc);
@@ -67,6 +74,7 @@ public class BecomeReferral extends BaseActivity {
     }
 
 
+    /** Загружает локализованные строки для текущего языка приложения и применяет их к заголовку экрана. */
     private void setLanguage() {
         YOUR_ACCOUNT_IS_NOT_ENOUGH_TO_SEND = getString(R.string.your_account_is_not_enough_to_send);
         GET_RECOVERY_BECOME_REFERRAL       = getString(R.string.get_recovery_become_referral);
@@ -77,6 +85,7 @@ public class BecomeReferral extends BaseActivity {
     }
 
 
+    /** Назначает обработчики нажатий: переход к инфо/экрану ввода реферала, запуск платежа "стать рефералом"/"восстановить". */
     private void listeners() {
         infoReferral.setOnClickListener(v -> {
             Referral.FLAG = false;
@@ -100,7 +109,7 @@ public class BecomeReferral extends BaseActivity {
     }
 
 
-    // Выполняется на IO-потоке
+    /** Выполняется на IO-потоке: формирует сумму и memo для выбранной операции (стать рефералом / восстановить) и инициирует проверку и платёж. */
     private void makeStack(boolean b) {
         String sendAmount = b
                 ? StringEnum.REFERRAL_COST.getValue()
@@ -115,6 +124,7 @@ public class BecomeReferral extends BaseActivity {
     }
 
 
+    /** Проверяет корректность суммы и достаточность баланса перед отправкой платежа; при ошибке показывает соответствующий snackbar. */
     private boolean checkData(String sendAmount, String memo) {
         if (sendAmount == null) {
             runOnUiThread(() -> showSnackbar(root, PAYMENT_AMOUNT_IS_INCORRECT, SnackbarType.ERROR));
@@ -129,6 +139,7 @@ public class BecomeReferral extends BaseActivity {
     }
 
 
+    /** Отправляет платёж на сервисный адрес "стать рефералом" через репозиторий кошелька; при исключении или неудаче показывает ошибку. */
     private boolean makePayment(String sendAmount, String memo) {
         boolean success;
         try {
@@ -145,17 +156,20 @@ public class BecomeReferral extends BaseActivity {
     }
 
 
+    /** Запускает Activity по имени её класса/действия. */
     private void goToAnotherPage(String namePage) {
         startActivity(new Intent(namePage));
     }
 
 
+    /** Стандартная обработка нажатия "назад" без дополнительной логики. */
     @Override
     public void onBackPressed() {
         super.onBackPressed();
     }
 
 
+    /** Закрывает текущий стек экранов и возвращает пользователя на главный экран приложения. */
     public void closeThisPage() {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

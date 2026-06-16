@@ -12,8 +12,13 @@ import java.util.Map;
 
 
 
+/**
+ * Первичная подписка на обновления XRPL-счёта при старте приложения:
+ * открывает сокет и подписывается на поток ACCOUNT_CHANNELS для адреса текущего кошелька.
+ */
 public class SubscriberRun implements Runnable {
 
+    /** Открывает соединение с XRPL-узлом и подписывается на обновления по счёту текущего кошелька. */
     @Override
     public void run() {
         WalletRepository repository = WalletRepository.getInstance();

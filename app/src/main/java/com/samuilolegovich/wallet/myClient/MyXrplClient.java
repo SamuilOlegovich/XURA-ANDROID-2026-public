@@ -61,6 +61,11 @@ import org.xrpl.xrpl4j.model.transactions.XrpCurrencyAmount;
 
 
 
+/**
+ * Высокоуровневый JSON-RPC клиент XRPL: оборачивает каждый поддерживаемый метод
+ * XRPL (submit, fee, account_info, ledger, account_tx и др.) в типобезопасный
+ * Java-метод, формируя запрос и делегируя его фактическую отправку {@link ApiClient}.
+ */
 public class MyXrplClient {
     private static final Logger LOGGER = LoggerFactory.getLogger(MyXrplClient.class);
 
@@ -69,6 +74,7 @@ public class MyXrplClient {
 
 
 
+    /** Создаёт клиент с собственным ApiClient, настроенным на указанный RPC-URL. */
     public MyXrplClient(String stringURL) {
         this.objectMapper = ObjectMapperFactory.create();
         this.apiClient = new ApiClient(stringURL);
@@ -76,6 +82,7 @@ public class MyXrplClient {
 
 
 
+    /** Отправляет подписанную транзакцию в леджер методом submit. */
     public <T extends Transaction> SubmitResult<T> submit(
             SingleSignedTransaction<T> signedTransaction
     ) throws JsonRpcClientErrorException {
@@ -93,6 +100,7 @@ public class MyXrplClient {
 
 
 
+    /** Отправляет мультиподписанную транзакцию в леджер методом submit_multisigned. */
     public <T extends Transaction> SubmitMultiSignedResult<T> submitMultisigned(
             T transaction
     ) throws JsonRpcClientErrorException {
@@ -108,6 +116,7 @@ public class MyXrplClient {
 
 
 
+    /** Запрашивает текущие рекомендуемые сетевые комиссии методом fee. */
     public FeeResult fee() throws JsonRpcClientErrorException {
         JsonRpcRequest request = JsonRpcRequest.builder()
                 .method(XrplMethods.FEE)
@@ -117,6 +126,7 @@ public class MyXrplClient {
 
 
 
+    /** Запрашивает информацию о сервере (версия, состояние, индекс последнего леджера) методом server_info. */
     public ServerInfo serverInfo() throws JsonRpcClientErrorException {
         JsonRpcRequest request = JsonRpcRequest.builder()
                 .method(XrplMethods.SERVER_INFO)
@@ -126,6 +136,7 @@ public class MyXrplClient {
 
 
 
+    /** Запрашивает список платёжных каналов счёта методом account_channels. */
     public AccountChannelsResult accountChannels(AccountChannelsRequestParams params) throws JsonRpcClientErrorException {
         JsonRpcRequest request = JsonRpcRequest.builder()
                 .method(XrplMethods.ACCOUNT_CHANNELS)
@@ -136,6 +147,7 @@ public class MyXrplClient {
 
 
 
+    /** Запрашивает информацию о счёте (баланс, сиквенс, флаги) методом account_info. */
     public AccountInfoResult accountInfo(AccountInfoRequestParams params) throws JsonRpcClientErrorException {
         JsonRpcRequest request = JsonRpcRequest.builder()
                 .method(XrplMethods.ACCOUNT_INFO)
@@ -146,6 +158,7 @@ public class MyXrplClient {
 
 
 
+    /** Запрашивает объекты леджера, принадлежащие счёту (трастлайны, офферы и др.), методом account_objects. */
     public AccountObjectsResult accountObjects(AccountObjectsRequestParams params) throws JsonRpcClientErrorException {
         JsonRpcRequest request = JsonRpcRequest.builder()
                 .method(XrplMethods.ACCOUNT_OBJECTS)
@@ -156,6 +169,7 @@ public class MyXrplClient {
 
 
 
+    /** Запрашивает всю историю транзакций счёта без ограничений по диапазону леджеров. */
     public AccountTransactionsResult accountTransactions(Address address) throws JsonRpcClientErrorException {
         return accountTransactions(AccountTransactionsRequestParams.unboundedBuilder()
                 .account(address)
@@ -164,6 +178,7 @@ public class MyXrplClient {
 
 
 
+    /** Запрашивает историю транзакций счёта с заданными параметрами (диапазон леджеров, пагинация) методом account_tx. */
     public AccountTransactionsResult accountTransactions(AccountTransactionsRequestParams params)
             throws JsonRpcClientErrorException {
         JsonRpcRequest request = JsonRpcRequest.builder()
@@ -175,6 +190,7 @@ public class MyXrplClient {
 
 
 
+    /** Запрашивает результат конкретной транзакции по её хешу методом tx. */
     public <T extends Transaction> TransactionResult<T> transaction(
             TransactionRequestParams params,
             Class<T> transactionType
@@ -189,6 +205,7 @@ public class MyXrplClient {
 
 
 
+    /** Запрашивает информацию об указанном леджере (например, последнем подтверждённом) методом ledger. */
     public LedgerResult ledger(LedgerRequestParams params) throws JsonRpcClientErrorException {
         JsonRpcRequest request = JsonRpcRequest.builder()
                 .method(XrplMethods.LEDGER)
@@ -199,6 +216,7 @@ public class MyXrplClient {
 
 
 
+    /** Ищет возможные пути обмена валют между счетами методом ripple_path_find. */
     public RipplePathFindResult ripplePathFind(RipplePathFindRequestParams params) throws JsonRpcClientErrorException {
         JsonRpcRequest request = JsonRpcRequest.builder()
                 .method(XrplMethods.RIPPLE_PATH_FIND)
@@ -209,6 +227,7 @@ public class MyXrplClient {
 
 
 
+    /** Запрашивает трастлайны счёта (доверительные линии к токенам других эмитентов) методом account_lines. */
     public AccountLinesResult accountLines(AccountLinesRequestParams params) throws JsonRpcClientErrorException {
         JsonRpcRequest request = JsonRpcRequest.builder()
                 .method(XrplMethods.ACCOUNT_LINES)
@@ -219,6 +238,7 @@ public class MyXrplClient {
 
 
 
+    /** Проверяет подлинность подписи требования по платёжному каналу методом channel_verify. */
     public ChannelVerifyResult channelVerify(Hash256 channelId, XrpCurrencyAmount amount,
             String signature, String publicKey) throws JsonRpcClientErrorException {
 

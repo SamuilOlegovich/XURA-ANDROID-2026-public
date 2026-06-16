@@ -13,6 +13,11 @@ import java.util.Map;
 
 
 
+/**
+ * Восстанавливает соединение с XRPL-сокетом после разрыва: закрывает старый сокет,
+ * переподключается (с повторными попытками через паузу) и заново подписывается
+ * на обновления по счёту кошелька.
+ */
 public class RestartSubscriberRun implements Runnable {
     public static volatile boolean FLAG = true;
 
@@ -21,11 +26,13 @@ public class RestartSubscriberRun implements Runnable {
 
 
 
+    /** Создаёт задачу восстановления соединения с паузой между попытками переподключения 1000мс по умолчанию. */
     public RestartSubscriberRun() {
         this.repository = WalletRepository.getInstance();
         this.time = 1000;
     }
 
+    /** Создаёт задачу восстановления соединения с заданной паузой между попытками переподключения. */
     public RestartSubscriberRun(Integer time) {
         this.repository = WalletRepository.getInstance();
         this.time = time;
@@ -33,6 +40,7 @@ public class RestartSubscriberRun implements Runnable {
 
 
 
+    /** Выполняет полный цикл восстановления: закрывает сокет, переподключается и переподписывается, пока флаг FLAG сброшен. */
     @Override
     public void run() {
         FLAG = false;
@@ -44,6 +52,7 @@ public class RestartSubscriberRun implements Runnable {
 
 
 
+    /** Закрывает и переинициализирует текущее соединение с XRPL-узлом. */
     private void restartSocket() {
         try {
             repository.restartSocket();
@@ -53,6 +62,7 @@ public class RestartSubscriberRun implements Runnable {
     }
 
 
+    /** Повторяет попытки открыть сокет с паузой между ними, пока соединение не будет установлено. */
     private void startSocket() {
         boolean connected = false;
 
@@ -73,6 +83,11 @@ public class RestartSubscriberRun implements Runnable {
     }
 
 
+    /**
+     * Заново подписывается на поток обновлений по счёту текущего кошелька (ACCOUNT_CHANNELS).
+     * Если подписка не удалась — планирует повторную полную попытку восстановления через 10 секунд,
+     * чтобы не оставить кошелёк без обновлений баланса/транзакций.
+     */
     private void restartSubscribeTo() {
         try {
             StreamSubscriber subscriber = new MyStreamSubscriber();

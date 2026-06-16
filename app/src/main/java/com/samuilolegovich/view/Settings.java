@@ -58,6 +58,13 @@ import okhttp3.Response;
 
 
 
+/**
+ * Экран настроек приложения: пароль, биометрия, язык, переключение реального/тестового
+ * режима игры, реферальная программа, информация о приложении, история транзакций,
+ * а также скрытая DEV-секция (открывается 7 нажатиями на заголовок) для переключения
+ * сети testnet/mainnet, ручной настройки адресов игровых серверов, фасета тестовой сети
+ * и генерации/пополнения тестовых кошельков.
+ */
 @AndroidEntryPoint
 public class Settings extends BaseActivity {
     public static final String SETTINGS_CLASS = ".Settings";
@@ -67,7 +74,7 @@ public class Settings extends BaseActivity {
 
     @Inject WalletRepository repository;
 
-    // ── Existing views ───────────────────────────────────────────────────
+    // ── Существующие View ───────────────────────────────────────────────
     private View settingsSelectEnglishLinc;
     private View settingsSetPasswordLinc;
     private View settingsBiometricLinc;
@@ -87,7 +94,7 @@ public class Settings extends BaseActivity {
     private TextView settingsFooterVersion;
     private TextView settingsFooterDeveloper;
 
-    // ── DEV section views ────────────────────────────────────────────────
+    // ── View скрытой DEV-секции ──────────────────────────────────────────
     private MaterialCardView cardDevNetwork;
     private SwitchMaterial   devNetworkSwitch;
     private TextView         devNetworkLabel;
@@ -107,7 +114,7 @@ public class Settings extends BaseActivity {
     private EditText         etDevWalletAddress;
     private EditText         etDevWalletSeed;
 
-    // ── DEV unlock: 7 taps on title ──────────────────────────────────────
+    // ── Разблокировка DEV-секции: 7 нажатий на заголовок ─────────────────
     private static final int  UNLOCK_TAPS    = 7;
     private static final long UNLOCK_WINDOW  = 3000L; // ms
     private int  tapCount;
@@ -117,6 +124,10 @@ public class Settings extends BaseActivity {
 
 
 
+    /**
+     * Инициализирует экран: сохраняет ссылку на активити, разметку, View, локализацию/состояние
+     * переключателей, слушателей, нижнюю навигацию, и подписывается на баланс для тестовой карточки.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -137,6 +148,7 @@ public class Settings extends BaseActivity {
 
 
 
+    /** Находит и сохраняет ссылки на все View разметки экрана, включая скрытую DEV-секцию. */
     private void setButtons() {
         settingsSelectEnglishLinc = findViewById(R.id.settings_select_english_linc);
         settingsSetPasswordLinc   = findViewById(R.id.settings_set_password_linc);
@@ -178,6 +190,7 @@ public class Settings extends BaseActivity {
     }
 
 
+    /** Устанавливает локализованный заголовок и обновляет состояние всех динамических элементов экрана (биометрия, режим игры, тестовый баланс, иконка пароля, DEV-секция, футер). */
     @SuppressLint("SetTextI18n")
     private void setLanguage() {
         settingsTextView.setText(R.string.settings_text);
@@ -189,6 +202,7 @@ public class Settings extends BaseActivity {
         updateFooter();
     }
 
+    /** Заполняет футер экрана номером версии приложения и годами разработки в копирайте. */
     @SuppressLint("SetTextI18n")
     private void updateFooter() {
         String versionName = "";
@@ -202,6 +216,7 @@ public class Settings extends BaseActivity {
         settingsFooterDeveloper.setText("© " + years + " Samuil Olegovich");
     }
 
+    /** Обновляет вид кнопки режима игры: текст LIVE/TRIAL, цвет и фон в зависимости от текущего режима. */
     @SuppressLint("SetTextI18n")
     private void updateGameModeButton() {
         boolean isReal = Boolean.TRUE.equals(MainActivity.IS_REAL_GAME_MODE);
@@ -215,6 +230,7 @@ public class Settings extends BaseActivity {
         gameModeIcon.setImageTintList(android.content.res.ColorStateList.valueOf(color));
     }
 
+    /** Показывает карточку тестового баланса только в тестовом режиме игры (в реальном режиме скрывает её). */
     private void updateTestBalanceCard() {
         boolean isReal = Boolean.TRUE.equals(MainActivity.IS_REAL_GAME_MODE);
         if (!isReal) {
@@ -225,17 +241,20 @@ public class Settings extends BaseActivity {
         }
     }
 
+    /** Отображает текущий тестовый баланс кошелька на карточке. */
     @SuppressLint("SetTextI18n")
     private void updateTestBalanceDisplay() {
         java.math.BigDecimal balance = repository.getBalance();
         tvTestBalance.setText(balance.setScale(2, java.math.RoundingMode.DOWN).toPlainString() + " XRP");
     }
 
+    /** Обновляет текст пункта биометрии, показывая её текущее состояние (ON/OFF). */
     private void updateBiometricButton() {
         String state = isBiometricEnabled() ? "  ●  ON" : "  ○  OFF";
         biometricTitleText.setText(getString(R.string.settings_biometric) + state);
     }
 
+    /** Меняет иконку пункта пароля (закрытый/открытый замок) в зависимости от того, установлен ли пароль приложения. */
     private void updatePasswordIcon() {
         boolean hasPassword = isPasswordSet();
         setPasswordIcon.setImageResource(hasPassword ? R.drawable.ic_lock : R.drawable.ic_lock_open);
@@ -247,7 +266,7 @@ public class Settings extends BaseActivity {
     //  DEV section
     // ════════════════════════════════════════════════════════════════════
 
-    /** Fills DEV card fields from current NetworkConfig state. */
+    /** Заполняет поля DEV-карточки текущим состоянием {@link NetworkConfig} (сеть, адреса игровых серверов, видимость фасета). */
     private void restoreDevSection() {
         devNetworkSwitch.setChecked(NetworkConfig.IS_TESTNET);
         updateNetworkLabel(NetworkConfig.IS_TESTNET);
@@ -256,12 +275,13 @@ public class Settings extends BaseActivity {
         etDevNumber.setText(NetworkConfig.SERVER_NUMBER);
         btnDevFaucet.setVisibility(NetworkConfig.IS_TESTNET ? View.VISIBLE : View.GONE);
 
-        // Show card if testnet is already active (persisted from previous session)
+        // Показываем карточку, если testnet уже активен (сохранён с предыдущей сессии)
         if (NetworkConfig.IS_TESTNET) {
             cardDevNetwork.setVisibility(View.VISIBLE);
         }
     }
 
+    /** Обновляет текст и цвет метки текущей сети (testnet/mainnet). */
     private void updateNetworkLabel(boolean isTestnet) {
         devNetworkLabel.setText(
                 isTestnet ? getString(R.string.dev_network_testnet)
@@ -270,6 +290,7 @@ public class Settings extends BaseActivity {
                 isTestnet ? R.color.xura_purple : R.color.xura_text_primary));
     }
 
+    /** Сохраняет введённые в DEV-секции адреса игровых серверов в {@link NetworkConfig} и в preferences. */
     private void saveDevSettings() {
         SharedPreferences prefs = PrefsHelper.get(this);
 
@@ -285,6 +306,7 @@ public class Settings extends BaseActivity {
         showSnackbar(root, getString(R.string.dev_saved_toast), SnackbarType.INFO);
     }
 
+    /** Запрашивает у testnet-фасета тестовые XRP на текущий адрес кошелька и после паузы обновляет баланс. */
     private void requestFaucet() {
         String address = repository.getClassicAddress();
         if (address == null || address.isEmpty()) {
@@ -311,6 +333,7 @@ public class Settings extends BaseActivity {
         });
     }
 
+    /** Выполняет синхронный HTTP-запрос к testnet-фасету для пополнения указанного адреса. */
     private boolean callFaucet(String address) {
         try {
             OkHttpClient client = buildDevHttpClient();
@@ -330,10 +353,12 @@ public class Settings extends BaseActivity {
         }
     }
 
+    /** Создаёт HTTP-клиент с доверием ко всем сертификатам — допустимо только для DEV-запросов к тестовому фасету. */
     private OkHttpClient buildDevHttpClient() {
         return com.samuilolegovich.wallet.myClient.SslUtil.trustAllOkHttpClient();
     }
 
+    /** Возвращает текст поля ввода (обрезанный), либо запасное значение, если поле пустое. */
     private String textOf(EditText et, String fallback) {
         String s = et.getText() != null ? et.getText().toString().trim() : "";
         return s.isEmpty() ? fallback : s;
@@ -342,9 +367,14 @@ public class Settings extends BaseActivity {
 
 
     // ════════════════════════════════════════════════════════════════════
-    //  Listeners
+    //  Слушатели
     // ════════════════════════════════════════════════════════════════════
 
+    /**
+     * Назначает обработчики всех пунктов настроек (пароль, язык, биометрия, режим игры,
+     * рефералы, инфо, история транзакций, сброс тестового баланса), скрытую разблокировку
+     * DEV-секции по 7 нажатиям на заголовок, и все элементы управления DEV-секцией.
+     */
     private void listeners() {
         settingsSetPasswordLinc.setOnClickListener(v -> {
             pulse(v);
@@ -410,7 +440,7 @@ public class Settings extends BaseActivity {
                     .show();
         });
 
-        // 7 taps on title → toggle DEV card (show if hidden, hide if visible)
+        // 7 нажатий на заголовок → переключить видимость DEV-карточки
         settingsTextView.setOnClickListener(v -> {
             long now = System.currentTimeMillis();
             if (tapCount == 0 || now - firstTapTime > UNLOCK_WINDOW) {
@@ -430,12 +460,12 @@ public class Settings extends BaseActivity {
             }
         });
 
-        // Network switch
+        // Переключатель сети
         devNetworkSwitch.setOnCheckedChangeListener((btn, isTestnet) -> {
             NetworkConfig.switchNetwork(PrefsHelper.get(this), isTestnet);
             updateNetworkLabel(isTestnet);
             btnDevFaucet.setVisibility(isTestnet ? View.VISIBLE : View.GONE);
-            // Reload address fields for the newly selected network
+            // Перезагружаем поля адресов для только что выбранной сети
             etDevRoulette.setText(NetworkConfig.SERVER_ROULETTE);
             etDevColor.setText(NetworkConfig.SERVER_COLOR);
             etDevNumber.setText(NetworkConfig.SERVER_NUMBER);
@@ -486,6 +516,7 @@ public class Settings extends BaseActivity {
                         getString(R.string.dev_wallet_copied_seed)));
     }
 
+    /** Генерирует новый тестовый XRPL-кошелёк (ed25519): выводит адрес и seed-фразу в поля DEV-секции. */
     private void generateTestWallet() {
         Seed seed = Seed.ed25519Seed();
         KeyPair keyPair = seed.deriveKeyPair();
@@ -502,6 +533,7 @@ public class Settings extends BaseActivity {
         layoutDevWalletResult.setVisibility(View.VISIBLE);
     }
 
+    /** Запрашивает у testnet-фасета тестовые XRP на адрес сгенерированного DEV-кошелька. */
     private void fundGeneratedWallet() {
         String address = etDevWalletAddress.getText() != null
                 ? etDevWalletAddress.getText().toString().trim() : "";
@@ -527,6 +559,7 @@ public class Settings extends BaseActivity {
         });
     }
 
+    /** Подставляет адрес сгенерированного DEV-кошелька в поле адреса указанной игры. */
     private void pasteAddressToGame(EditText target, String gameName) {
         String address = etDevWalletAddress.getText() != null
                 ? etDevWalletAddress.getText().toString().trim() : "";
@@ -536,6 +569,7 @@ public class Settings extends BaseActivity {
                 SnackbarType.INFO);
     }
 
+    /** Копирует текст в буфер обмена с автоочисткой (через {@link ClipboardUtil}) и показывает уведомление. */
     private void copyToClipboard(String label, String text, String toast) {
         if (text == null || text.isEmpty()) return;
         ClipboardUtil.copyWithAutoClear(this, label, text);
@@ -545,9 +579,10 @@ public class Settings extends BaseActivity {
 
 
     // ════════════════════════════════════════════════════════════════════
-    //  Shared helpers
+    //  Общие вспомогательные методы
     // ════════════════════════════════════════════════════════════════════
 
+    /** Проверяет, установлен ли пароль приложения (не пустой и не равен значению "пароль не установлен"). */
     private boolean isPasswordSet() {
         String stored = PrefsHelper.get(this).getString(
                 StringEnum.APP_PREFERENCES_PASSWORD.getValue(), "");
@@ -556,12 +591,14 @@ public class Settings extends BaseActivity {
                 && !stored.equals(StringEnum.APP_PREFERENCES_PASSWORD_NOT_INSTALLED.getValue());
     }
 
+    /** Проверяет, включена ли биометрическая разблокировка приложения. */
     private boolean isBiometricEnabled() {
         return "true".equalsIgnoreCase(
                 PrefsHelper.get(this).getString(
                         StringEnum.APP_PREFERENCES_BIOMETRIC_ENABLED.getValue(), "false"));
     }
 
+    /** Сохраняет в preferences признак того, включена ли биометрическая разблокировка приложения. */
     private void saveBiometricEnabled(boolean enabled) {
         PrefsHelper.get(this).edit()
                 .putString(StringEnum.APP_PREFERENCES_BIOMETRIC_ENABLED.getValue(),
@@ -569,6 +606,7 @@ public class Settings extends BaseActivity {
                 .apply();
     }
 
+    /** Переключает и сохраняет режим игры (реальный/тестовый) в preferences и в статическом флаге {@link MainActivity#IS_REAL_GAME_MODE}. */
     private void saveGameMode(boolean isReal) {
         String value = isReal
                 ? StringEnum.APP_GAME_MODE_REAL.getValue()
@@ -579,6 +617,7 @@ public class Settings extends BaseActivity {
         MainActivity.IS_REAL_GAME_MODE = isReal;
     }
 
+    /** Обрабатывает переключение биометрии: при выключении спрашивает подтверждение, при включении запрашивает биометрическую проверку через {@link BiometricHelper}. */
     private void handleBiometricToggle() {
         if (!BiometricHelper.isAvailable(this)) {
             showSnackbar(root, getString(R.string.biometrics_not_set_up), SnackbarType.ERROR);
@@ -609,21 +648,25 @@ public class Settings extends BaseActivity {
         }
     }
 
+    /** Запускает Activity по имени её класса/действия. */
     private void goToAnotherPage(String namePage) {
         startActivity(new Intent(namePage));
     }
 
+    /** Пересоздаёт текущую активити на UI-потоке (вызывается извне для применения смены языка). */
     public void setLanguageThread() {
         runOnUiThread(this::recreate);
     }
 
 
 
+    /** Стандартная обработка нажатия "назад" без дополнительной логики. */
     @Override
     public void onBackPressed() {
         super.onBackPressed();
     }
 
+    /** Останавливает фоновый executor DEV-секции и сбрасывает статическую ссылку на активити при её уничтожении. */
     @Override
     protected void onDestroy() {
         super.onDestroy();

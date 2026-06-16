@@ -24,11 +24,16 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 
 
+/**
+ * Экран отправки XRP-платежа: ввод адреса (вручную или сканированием QR), суммы и тега,
+ * подтверждение через диалог (защита от подмены адреса в буфере обмена) и отправка
+ * через {@link SendPaymentViewModel} с обработкой всех видов ошибок валидации/отправки.
+ */
 @AndroidEntryPoint
 public class SendPayment extends BaseActivity {
     public static final String SEND_PAYMENT_CLASS = ".SendPayment";
 
-    // Заполняется ScanQrCode и читается в onResume
+    /** Заполняется {@link ScanQrCode} после сканирования QR-кода и читается в {@link #onResume()}. */
     public static String ADDRESS = "";
 
     private String YOUR_ACCOUNT_IS_NOT_ENOUGH_TO_SEND;
@@ -53,6 +58,10 @@ public class SendPayment extends BaseActivity {
 
 
 
+    /**
+     * Инициализирует экран: разметка, View, локализация, слушатели, и подписывается на баланс,
+     * ошибки валидации/отправки и успешное завершение платежа из {@link SendPaymentViewModel}.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,6 +106,7 @@ public class SendPayment extends BaseActivity {
 
 
 
+    /** Находит и сохраняет ссылки на View разметки экрана. */
     private void setButtons() {
         sendPaymentPageTextViewTwo = findViewById(R.id.send_payment_page_text_view_tow);
         sendPaymentPageTextView = findViewById(R.id.send_payment_page_text_view);
@@ -112,6 +122,7 @@ public class SendPayment extends BaseActivity {
     }
 
 
+    /** Загружает локализованные строки для всех сообщений об ошибках и заголовков экрана. */
     private void setLanguage() {
         YOUR_ACCOUNT_IS_NOT_ENOUGH_TO_SEND = getString(R.string.your_account_is_not_enough_to_send);
         IT_IS_NOT_POSSIBLE_TO_SEND_NULL = getString(R.string.it_is_not_possible_to_send_null);
@@ -123,6 +134,7 @@ public class SendPayment extends BaseActivity {
     }
 
 
+    /** Назначает обработчики: отправка по кнопке, переход к сканеру QR для поля адреса, сброс ошибок при правке полей. */
     private void listeners() {
         send.setOnClickListener(v -> {
             pulse(v);
@@ -137,9 +149,12 @@ public class SendPayment extends BaseActivity {
         tag.addTextChangedListener(clearErrorWatcher(tilTag));
     }
 
-    // Защита от clipboard-hijacking: показываем полный адрес перед отправкой,
-    // чтобы пользователь мог сверить его с оригиналом — вредоносное ПО подменяет
-    // криптоадреса в буфере обмена на похожие, принадлежащие атакующему.
+    /**
+     * Показывает диалог подтверждения с адресом и суммой перед отправкой платежа — защита
+     * от clipboard-hijacking: пользователь может сверить полный адрес с оригиналом, так как
+     * вредоносное ПО подменяет криптоадреса в буфере обмена на похожие, принадлежащие атакующему.
+     * Если поля адреса или суммы пусты, сразу передаёт их в ViewModel — он сам покажет нужную ошибку валидации.
+     */
     private void confirmAndSend() {
         String addressValue = address.getText().toString().trim();
         String amountValue = amount.getText().toString().trim();
@@ -164,6 +179,7 @@ public class SendPayment extends BaseActivity {
     }
 
 
+    /** Переключает UI между обычным состоянием и состоянием "идёт отправка": блокирует кнопку отправки и показывает индикатор загрузки. */
     private void setSendingState(boolean sending) {
         runOnUiThread(() -> {
             send.setEnabled(!sending);
@@ -172,6 +188,7 @@ public class SendPayment extends BaseActivity {
         });
     }
 
+    /** Создаёт TextWatcher, который сбрасывает текст ошибки указанного поля при любом изменении его содержимого. */
     private TextWatcher clearErrorWatcher(TextInputLayout til) {
         return new TextWatcher() {
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -181,6 +198,7 @@ public class SendPayment extends BaseActivity {
     }
 
 
+    /** При возвращении на экран подставляет в поле адреса значение, отсканированное на экране {@link ScanQrCode}, если оно есть. */
     @Override
     protected void onResume() {
         super.onResume();
@@ -191,6 +209,7 @@ public class SendPayment extends BaseActivity {
     }
 
 
+    /** Стандартная обработка нажатия "назад" без дополнительной логики. */
     @Override
     public void onBackPressed() {
         super.onBackPressed();

@@ -21,6 +21,10 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 
 
+/**
+ * Экран установки/смены пароля приложения из настроек: требует двойного ввода
+ * совпадающего пароля, при успехе сохраняет новую соль и хеш пароля.
+ */
 @AndroidEntryPoint
 public class SettingsSetPasswordForApp extends BaseActivity {
     public static final String SETTINGS_SET_PASSWORD_FOR_APP_CLASS = ".SettingsSetPasswordForApp";
@@ -34,11 +38,13 @@ public class SettingsSetPasswordForApp extends BaseActivity {
 
 
 
+    /** Этот экран открывается уже после прохождения блокировки приложения — повторная проверка не нужна. */
     @Override
     protected boolean isLockExempt() {
         return true;
     }
 
+    /** Инициализирует экран: включает FLAG_SECURE, разметку, View, локализация, слушатели. */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +57,7 @@ public class SettingsSetPasswordForApp extends BaseActivity {
 
 
 
+    /** Находит и сохраняет ссылки на View разметки экрана. */
     private void setButtons() {
         textView = (TextView) findViewById(R.id.settings_set_password_app_text_view);
         tilPasswordTwo = findViewById(R.id.til_edit_text_passport_tow);
@@ -60,11 +67,13 @@ public class SettingsSetPasswordForApp extends BaseActivity {
     }
 
 
+    /** Устанавливает локализованный текст заголовка экрана. */
     private void setLanguage() {
         textView.setText(R.string.set_password_to_enter_application);
     }
 
 
+    /** Назначает обработчик подтверждения нового пароля (проверка длины и совпадения двух полей) и сброс ошибки при правке поля. */
     private void listeners() {
         confirm.setOnClickListener(v -> {
             pulse(v);
@@ -88,6 +97,7 @@ public class SettingsSetPasswordForApp extends BaseActivity {
     }
 
 
+    /** Сохраняет пароль приложения: при b=true генерирует соль и хеширует пароль, при b=false помечает, что пароль не установлен. */
     private void setPasswordForApp(String password, boolean b) {
         SharedPreferences.Editor edit = PrefsHelper.get(this).edit();
         if (b) {
@@ -103,7 +113,7 @@ public class SettingsSetPasswordForApp extends BaseActivity {
     }
 
 
-    // при нажатии на кнопку назад будем возвращаться назад
+    /** Стандартная обработка нажатия "назад" без дополнительной логики. */
     @Override
     public void onBackPressed() {
         super.onBackPressed();

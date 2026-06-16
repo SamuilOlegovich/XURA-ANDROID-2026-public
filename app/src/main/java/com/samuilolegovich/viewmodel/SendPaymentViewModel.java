@@ -16,6 +16,11 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 
 
 
+/**
+ * ViewModel экрана отправки платежа: валидирует адрес получателя, сумму и
+ * необязательный destination tag, затем отправляет XRP-платёж через
+ * {@link WalletRepository} и оповещает Activity о результате.
+ */
 @HiltViewModel
 public class SendPaymentViewModel extends ViewModel {
     private final WalletRepository repository;
@@ -26,6 +31,7 @@ public class SendPaymentViewModel extends ViewModel {
 
 
 
+    /** Создаёт ViewModel с внедрённым репозиторием кошелька и собственным фоновым executor'ом. */
     @Inject
     public SendPaymentViewModel(WalletRepository repository) {
         this.repository = repository;
@@ -34,20 +40,24 @@ public class SendPaymentViewModel extends ViewModel {
 
 
 
+    /** Возвращает LiveData текущего баланса кошелька. */
     public LiveData<BigDecimal> getBalance() {
         return repository.getBalanceLiveData();
     }
 
+    /** Возвращает LiveData ошибки валидации/отправки последнего платежа. */
     public LiveData<SendError> getError() {
         return errorLiveData;
     }
 
+    /** Возвращает LiveData успешности последней отправки платежа. */
     public LiveData<Boolean> getPaymentSuccess() {
         return paymentSuccessLiveData;
     }
 
 
 
+    /** Запускает обновление баланса кошелька на фоновом потоке. */
     public void loadBalance() {
         executor.execute(() -> {
             BigDecimal balance = repository.getBalance();
@@ -55,6 +65,7 @@ public class SendPaymentViewModel extends ViewModel {
         });
     }
 
+    /** Проверяет адрес/сумму/тег, отправляет платёж (с тегом назначения или без) и публикует результат успеха либо ошибки. */
     public void sendPayment(String address, String amount, String tag) {
         executor.execute(() -> {
             SendError error = validate(address, amount, tag);
@@ -83,6 +94,7 @@ public class SendPaymentViewModel extends ViewModel {
 
 
 
+    /** Проверяет адрес получателя (длина), сумму (формат, ненулевое значение, достаточность баланса) и destination tag (длина и числовой диапазон). */
     private SendError validate(String address, String amount, String tag) {
         if (address == null || address.length() < 33) return SendError.WRONG_ADDRESS;
         if (amount == null || amount.isEmpty()) return SendError.INVALID_AMOUNT;
@@ -114,6 +126,7 @@ public class SendPaymentViewModel extends ViewModel {
         return null;
     }
 
+    /** Обрезает сумму до 6 знаков после запятой (точность дропов XRP). */
     private String prepareAmount(String amount) {
         if (amount.contains(".")) {
             int i = amount.indexOf(".");
@@ -127,6 +140,7 @@ public class SendPaymentViewModel extends ViewModel {
 
 
 
+    /** Останавливает фоновый executor при уничтожении ViewModel. */
     @Override
     protected void onCleared() {
         executor.shutdown();

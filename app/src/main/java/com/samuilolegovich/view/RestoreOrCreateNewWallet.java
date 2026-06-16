@@ -16,7 +16,11 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 
 
-// тут определяем что нам надо востановить или сгенирировать новый кошелек
+/**
+ * Экран первого выбора для пользователя без кошелька: создать новый XRPL-кошелёк
+ * или восстановить существующий по seed-фразе. Кнопка "назад" заблокирована —
+ * пользователь обязан сделать выбор, чтобы продолжить онбординг.
+ */
 @AndroidEntryPoint
 public class RestoreOrCreateNewWallet extends BaseActivity {
     public static final String RESTORE_OR_NEW_WALLET_CLASS = ".RestoreOrCreateNewWallet";
@@ -26,6 +30,7 @@ public class RestoreOrCreateNewWallet extends BaseActivity {
 
 
 
+    /** Инициализирует экран: разметка, View, слушатели кнопок выбора. */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,12 +41,14 @@ public class RestoreOrCreateNewWallet extends BaseActivity {
 
 
 
+    /** Находит и сохраняет ссылки на View разметки экрана. */
     private void setButtons() {
         createNewWallet = findViewById(R.id.create_new_wallet_linc);
         restoreWallet = findViewById(R.id.restore_wallet_linc);
     }
 
 
+    /** Назначает обработчики кнопок перехода к созданию нового кошелька или к восстановлению существующего. */
     private void listeners() {
         createNewWallet.setOnClickListener(v -> {
             pulse(v);
@@ -55,14 +62,14 @@ public class RestoreOrCreateNewWallet extends BaseActivity {
     }
 
 
+    /** Запускает Activity по имени её класса/действия. */
     private void goToAnotherPage(String namePage) {
-        // класс для перехода на другую страницу
         Intent intent = new Intent(namePage);
         startActivity(intent);
     }
 
 
-    // при нажатии на кнопку назад будем возвращаться назад
+    /** Намеренно пустая реализация — блокирует жест/кнопку "назад", чтобы пользователь не пропустил обязательный выбор кошелька. */
     @Override
     public void onBackPressed() {
     }

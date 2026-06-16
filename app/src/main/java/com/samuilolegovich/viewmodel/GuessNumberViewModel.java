@@ -19,6 +19,12 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 
 
 
+/**
+ * ViewModel игры "угадай число": проверяет выбранное число и размер ставки,
+ * отправляет платёж с мемо-тегом ("BET:N:номер") на сервер чисел в реальном
+ * режиме или списывает тестовый баланс в тестовом, оповещая Activity об
+ * ошибке либо успехе.
+ */
 @HiltViewModel
 public class GuessNumberViewModel extends ViewModel {
     private final WalletRepository repository;
@@ -29,6 +35,7 @@ public class GuessNumberViewModel extends ViewModel {
 
 
 
+    /** Создаёт ViewModel с внедрённым репозиторием кошелька и собственным фоновым executor'ом. */
     @Inject
     public GuessNumberViewModel(WalletRepository repository) {
         this.repository = repository;
@@ -37,16 +44,21 @@ public class GuessNumberViewModel extends ViewModel {
 
 
 
+    /** Возвращает LiveData текущего баланса кошелька. */
     public LiveData<BigDecimal> getBalance() { return repository.getBalanceLiveData(); }
+    /** Возвращает LiveData ошибки валидации/отправки последней ставки. */
     public LiveData<GameBetError> getError() { return errorLiveData; }
+    /** Возвращает LiveData с суммой последней успешно принятой ставки. */
     public LiveData<String> getBetSuccess() { return betSuccessLiveData; }
 
 
 
+    /** Запускает обновление баланса кошелька на фоновом потоке. */
     public void loadBalance() {
         executor.execute(() -> repository.updateBalance(repository.getBalance()));
     }
 
+    /** Проверяет выбранное число и сумму ставки, формирует мемо-тег с номером и реферальным кодом, отправляет платёж (или списывает тестовый баланс) и публикует результат. */
     public void placeBet(String rawAmount, int selectedNumber, String myReferral) {
         executor.execute(() -> {
             int min = Integer.parseInt(StringEnum.MIN_BET_GUESS_THE_NUMBER.getValue());
@@ -88,6 +100,7 @@ public class GuessNumberViewModel extends ViewModel {
         });
     }
 
+    /** Проверяет сумму ставки: корректность формата, ненулевое значение, достаточность баланса и попадание в допустимый диапазон ставок. */
     private GameBetError validateAmount(String amount) {
         if (amount == null || amount.isEmpty()) return GameBetError.INVALID_AMOUNT;
 
@@ -108,6 +121,7 @@ public class GuessNumberViewModel extends ViewModel {
         return null;
     }
 
+    /** Обрезает сумму до 6 знаков после запятой, чтобы избежать слишком длинного числа в мемо-теге платежа. */
     private String prepareAmount(String amount) {
         if (amount.contains(".")) {
             int i = amount.indexOf(".");
@@ -119,6 +133,7 @@ public class GuessNumberViewModel extends ViewModel {
 
 
 
+    /** Останавливает фоновый executor при уничтожении ViewModel. */
     @Override
     protected void onCleared() {
         executor.shutdown();

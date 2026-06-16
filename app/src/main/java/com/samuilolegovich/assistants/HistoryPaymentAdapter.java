@@ -23,6 +23,11 @@ import com.samuilolegovich.dto.HistoryPaymentDto;
 
 
 
+/**
+ * Адаптер RecyclerView для списка истории платежей.
+ * Раскрашивает и подписывает каждую строку по типу операции (ставка, выигрыш, реферал и т.д.),
+ * различая входящие и исходящие переводы, и определяет иконку/цвет по тегу транзакции.
+ */
 public class HistoryPaymentAdapter extends ListAdapter<HistoryPaymentDto, HistoryPaymentAdapter.ViewHolder> {
 
     public interface OnItemClickListener {
@@ -31,10 +36,12 @@ public class HistoryPaymentAdapter extends ListAdapter<HistoryPaymentDto, Histor
 
     private OnItemClickListener clickListener;
 
+    /** Задаёт обработчик нажатия на строку истории (используется для открытия деталей транзакции). */
     public void setOnItemClickListener(OnItemClickListener l) {
         this.clickListener = l;
     }
 
+    /** Правила сравнения элементов для DiffUtil — определяют, какие строки списка нужно перерисовать при обновлении. */
     private static final DiffUtil.ItemCallback<HistoryPaymentDto> DIFF_CALLBACK =
             new DiffUtil.ItemCallback<HistoryPaymentDto>() {
                 @Override
@@ -67,6 +74,7 @@ public class HistoryPaymentAdapter extends ListAdapter<HistoryPaymentDto, Histor
 
 
 
+    /** Загружает локализованные подписи типов операций один раз при создании адаптера, чтобы не делать это на каждый bind. */
     public HistoryPaymentAdapter(Context context) {
         super(DIFF_CALLBACK);
         Resources res = getResourcesForLocale(context);
@@ -87,6 +95,7 @@ public class HistoryPaymentAdapter extends ListAdapter<HistoryPaymentDto, Histor
 
 
 
+    /** Создаёт Resources с принудительно применённой локалью приложения (MainActivity.newLocale), а не системной. */
     private static Resources getResourcesForLocale(Context context) {
         Configuration config = context.getResources().getConfiguration();
         config.setLocale(MainActivity.newLocale);
@@ -95,6 +104,7 @@ public class HistoryPaymentAdapter extends ListAdapter<HistoryPaymentDto, Histor
 
 
 
+    /** Создаёт новый ViewHolder, раздувая разметку одной строки истории (R.layout.table). */
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -105,6 +115,7 @@ public class HistoryPaymentAdapter extends ListAdapter<HistoryPaymentDto, Histor
 
 
 
+    /** Заполняет строку истории данными транзакции: сумму, цвет, метку типа, адрес контрагента, время и иконку. */
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         HistoryPaymentDto item = getItem(position);
@@ -150,10 +161,12 @@ public class HistoryPaymentAdapter extends ListAdapter<HistoryPaymentDto, Histor
 
     // ─── Метка типа ──────────────────────────────────────────────────────────
 
+    /** Возвращает локализованную метку типа операции по тегу транзакции, без пробела в начале. */
     private String getDisplayLabel(String tag) {
         return processTag(tag).trim();
     }
 
+    /** Сопоставляет служебный тег транзакции (BET:, WIN, JKPT, REF: и т.д.) с человекочитаемым локализованным текстом. */
     private String processTag(String tag) {
         if (tag.startsWith("BET:R:"))  return " " + rouletteBetHistory;
         if (tag.startsWith("BET:RED")) return " " + betOnRedHistory;
@@ -179,6 +192,7 @@ public class HistoryPaymentAdapter extends ListAdapter<HistoryPaymentDto, Histor
 
     // ─── Единый цвет: иконка и метка всегда одного цвета ────────────────────
 
+    /** Определяет единый цвет для иконки и метки строки по тегу транзакции (или по направлению перевода как fallback). */
     private int getTypeColor(Context ctx, String tag, boolean incoming) {
         if (tag.equals("WIN")    || tag.startsWith("WIN:"))  return ContextCompat.getColor(ctx, R.color.xura_success);
         if (tag.equals("LOSE")   || tag.startsWith("LOSE:")) return ContextCompat.getColor(ctx, R.color.xura_error);
@@ -198,6 +212,7 @@ public class HistoryPaymentAdapter extends ListAdapter<HistoryPaymentDto, Histor
 
     // ─── Иконка ──────────────────────────────────────────────────────────────
 
+    /** Подбирает drawable-иконку для строки истории по тегу транзакции (или по направлению перевода как fallback). */
     private int getIconRes(String tag, boolean incoming) {
         if (tag.equals("WIN")    || tag.startsWith("WIN:"))  return R.drawable.ic_check_circle;
         if (tag.equals("LOSE")   || tag.startsWith("LOSE:")) return R.drawable.ic_lost_x;
@@ -216,6 +231,7 @@ public class HistoryPaymentAdapter extends ListAdapter<HistoryPaymentDto, Histor
 
     // ─── Утилиты ─────────────────────────────────────────────────────────────
 
+    /** Сокращает длинный XRPL-адрес до вида "rXXXXXX…XXXX" для компактного отображения в строке списка. */
     private String truncateAddress(String addr) {
         if (addr == null || addr.length() <= 14) return addr;
         return addr.substring(0, 6) + "…" + addr.substring(addr.length() - 4);
@@ -223,6 +239,7 @@ public class HistoryPaymentAdapter extends ListAdapter<HistoryPaymentDto, Histor
 
 
 
+    /** Держатель View одной строки истории платежей: иконка, метка типа, адрес, сумма и время. */
     static class ViewHolder extends RecyclerView.ViewHolder {
         final ImageView icon;
         final TextView  label;
@@ -230,6 +247,7 @@ public class HistoryPaymentAdapter extends ListAdapter<HistoryPaymentDto, Histor
         final TextView  amount;
         final TextView  time;
 
+        /** Находит и кэширует View-компоненты строки по их id из разметки R.layout.table. */
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             icon    = itemView.findViewById(R.id.ic_tx_type);

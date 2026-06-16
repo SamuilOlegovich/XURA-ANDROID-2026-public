@@ -16,6 +16,11 @@ import java.nio.charset.StandardCharsets;
 
 
 
+/**
+ * Обрабатывает входящее сообщение XRPL-сокета о транзакции с Memo от игрового сервера
+ * (ставка реальными XRP в режиме "боевой игры") и показывает игроку результат:
+ * выигрыш/проигрыш в лотерее или выдачу реферального кода.
+ */
 public class NotifierRun implements Runnable {
     private String stringMassage;
 
@@ -26,6 +31,7 @@ public class NotifierRun implements Runnable {
 
 
 
+    /** Сохраняет полученное от сокета JSON-сообщение и сразу подгружает локализованные тексты уведомлений. */
     public NotifierRun(String massage) {
         this.stringMassage = massage;
         setLanguage();
@@ -33,6 +39,7 @@ public class NotifierRun implements Runnable {
 
 
 
+    /** Если сообщение содержит входящую транзакцию с Memo от игрового сервера — разбирает её и формирует уведомление игроку. */
     @Override
     public void run() {
         try {
@@ -49,6 +56,7 @@ public class NotifierRun implements Runnable {
     }
 
 
+    /** Загружает локализованные строки уведомлений (проигрыш/выигрыш/реферальный код) для текущего языка приложения. */
     private void setLanguage() {
         android.content.res.Resources resources = XuraApp.getLocalizedResources();
         YOUR_BET_IS_LOST_TRY_AGAIN_AND_YOU_WILL_BE_LUCKY = resources.getString(R.string.your_bet_is_lost_try_again);
@@ -58,6 +66,11 @@ public class NotifierRun implements Runnable {
     }
 
 
+    /**
+     * Извлекает из Memo транзакции команду и число сервера (формат "CMD:serverNumber"),
+     * сохраняет это число как контрольное значение лотереи и в зависимости от команды
+     * (LOSE/WIN/JKPT/LOTO/REF) формирует соответствующее сообщение для игрока.
+     */
     private void responseToBet(JSONObject message) {
         try {
             String hexMemo = message.getJSONObject("transaction")
@@ -103,6 +116,7 @@ public class NotifierRun implements Runnable {
     }
 
 
+    /** Преобразует hex-строку MemoData в массив байт для последующего декодирования в текст. */
     private static byte[] hexToBytes(String hex) {
         byte[] bytes = new byte[hex.length() / 2];
         for (int i = 0; i < hex.length(); i += 2) {
@@ -112,6 +126,11 @@ public class NotifierRun implements Runnable {
     }
 
 
+    /**
+     * Доставляет готовый текст результата игроку: если экран игры открыт — показывает его прямо там
+     * (stopGame), иначе (или для реферального кода) кладёт уведомление в WalletRepository,
+     * чтобы оно было показано позже, когда подходящий экран станет видимым.
+     */
     private void responseToBet(String text, String serverNumber, int i) {
         if (Flasher.VISIBLE_ON_SCREEN && Flasher.FLASHER != null) {
             switch (i) {

@@ -14,6 +14,11 @@ import java.util.Random;
 
 
 
+/**
+ * Имитирует ответ игрового сервера для "тренировочного" (тестового, не на реальные XRP) режима игр.
+ * Сам считает результат ставки локально (без сети), генерирует случайную задержку как у настоящего
+ * сервера и при выигрыше начисляет тестовый баланс, чтобы пользователь мог опробовать игру без риска.
+ */
 public class NotifierRunForTrialGame implements Runnable {
     private TestModeEnum testModeEnum;
 
@@ -26,6 +31,7 @@ public class NotifierRunForTrialGame implements Runnable {
 
 
 
+    /** Запоминает, для какой игры имитируется ответ сервера, и подгружает локализованные тексты уведомлений. */
     public NotifierRunForTrialGame(TestModeEnum testModeEnum) {
         this.testModeEnum = testModeEnum;
         this.random = new Random();
@@ -34,6 +40,7 @@ public class NotifierRunForTrialGame implements Runnable {
 
 
 
+    /** Загружает локализованные строки уведомлений (проигрыш/выигрыш/реферальный код) для текущего языка приложения. */
     private void setLanguage() {
         android.content.res.Resources resources = XuraApp.getLocalizedResources();
         YOUR_BET_IS_LOST_TRY_AGAIN_AND_YOU_WILL_BE_LUCKY = resources.getString(R.string.your_bet_is_lost_try_again);
@@ -43,6 +50,7 @@ public class NotifierRunForTrialGame implements Runnable {
     }
 
 
+    /** Выдерживает случайную задержку (как у настоящего сервера), затем считает результат ставки для текущей игры. */
     @Override
     public void run() {
         // Генерация случайного числа в диапазоне от 4000 до 10000
@@ -64,6 +72,7 @@ public class NotifierRunForTrialGame implements Runnable {
     }
 
 
+    /** Считает результат тестовой ставки в рулетке: проверяет выпавшее число против ставки игрока и при победе зачисляет тестовый выигрыш. */
     private void calculateForRoulette(int winNumber) {
         Flasher.NUMBER_BET = String.valueOf(winNumber);
 
@@ -89,6 +98,7 @@ public class NotifierRunForTrialGame implements Runnable {
         responseToBet(msg, lotto, win ? 2 : 1);
     }
 
+    /** Проверяет, выигрывает ли ставка типа betTag (число, цвет, чёт/нечёт, дюжина, колонка и т.д.) при выпавшем числе n. */
     private boolean evaluateRouletteBet(String betTag, int n) {
         if (betTag.startsWith("N:")) {
             return Integer.parseInt(betTag.substring(2)) == n;
@@ -111,6 +121,7 @@ public class NotifierRunForTrialGame implements Runnable {
         }
     }
 
+    /** Считает результат тестовой ставки в игре "Угадай число": совпадает ли сгенерированное число со ставкой игрока. */
     private void calculateForGuessTheNumber(int i) {
         if (Flasher.NUMBER_BET.equalsIgnoreCase(i + "")) {
             responseToBet(StringEnum.BET_WIN_GUESS_THE_COLOR.getValue());
@@ -120,6 +131,7 @@ public class NotifierRunForTrialGame implements Runnable {
     }
 
 
+    /** Считает результат тестовой ставки в игре "Угадай цвет": сравнивает случайное число (0-999) со стороной, на которую ставил игрок. */
     private void calculateForGuessTheColor(int randomNumber) {
         if (randomNumber < 500 && Flasher.COLOR_BET) {
             // победа
@@ -137,6 +149,11 @@ public class NotifierRunForTrialGame implements Runnable {
     }
 
 
+    /**
+     * Формирует текст результата по тегу исхода ставки (проигрыш/выигрыш/джекпот/реферал),
+     * рассчитывает сумму тестового выигрыша по множителю текущей игры и при победе
+     * зачисляет её на тестовый баланс (только если включён не "боевой" режим игры).
+     */
     private void responseToBet(String tag) {
         String amountWin = testModeEnum.equals(TestModeEnum.GUESS_THE_NUMBER_GAME)
                 ? ((Double.parseDouble(Flasher.TEST_SAND_AMOUNT)) * 36.0) + ""
@@ -171,6 +188,11 @@ public class NotifierRunForTrialGame implements Runnable {
     }
 
 
+    /**
+     * Доставляет готовый текст результата игроку: если экран соответствующей игры открыт — показывает его
+     * прямо там (stopGame), иначе (или для реферального кода) кладёт уведомление в WalletRepository
+     * для показа позже.
+     */
     private void responseToBet(String text, String lotto, int i) {
         if (Flasher.VISIBLE_ON_SCREEN && Flasher.FLASHER != null) {
             switch (i) {

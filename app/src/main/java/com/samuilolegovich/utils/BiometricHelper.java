@@ -8,6 +8,10 @@ import androidx.biometric.BiometricPrompt;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
+/**
+ * Обёртка над androidx.biometric для входа в приложение/подтверждения действий
+ * отпечатком пальца или лицом, с понятным callback-интерфейсом (успех/откат на пароль/ошибка).
+ */
 public class BiometricHelper {
 
     public interface Callback {
@@ -16,14 +20,18 @@ public class BiometricHelper {
         void onError(String message);
     }
 
-    /** true — устройство поддерживает биометрию и она настроена */
+    /** true — устройство поддерживает биометрию (BIOMETRIC_STRONG) и она настроена пользователем. */
     public static boolean isAvailable(Context context) {
         BiometricManager manager = BiometricManager.from(context);
         int result = manager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG);
         return result == BiometricManager.BIOMETRIC_SUCCESS;
     }
 
-    /** Показывает системный диалог биометрии. Activity должна быть FragmentActivity. */
+    /**
+     * Показывает системный диалог биометрии. Activity должна быть FragmentActivity.
+     * При отмене пользователем или нажатии "USE PASSWORD" вызывает onFallback (переход к паролю),
+     * при иной ошибке — onError, при успехе — onSuccess.
+     */
     public static void prompt(FragmentActivity activity, String title, String subtitle, Callback callback) {
         BiometricPrompt.AuthenticationCallback authCallback = new BiometricPrompt.AuthenticationCallback() {
             @Override

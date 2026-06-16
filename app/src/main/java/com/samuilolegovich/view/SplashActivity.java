@@ -14,10 +14,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 
+/**
+ * Стартовый экран-заставка: показывает анимированный логотип приложения и через
+ * фиксированную паузу переходит на {@link MainActivity}.
+ */
 public class SplashActivity extends AppCompatActivity {
 
     private static final long SPLASH_DELAY_MS = 1800L;
 
+    /** Инициализирует экран, запускает анимацию логотипа и планирует переход на главный экран после паузы. */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +37,7 @@ public class SplashActivity extends AppCompatActivity {
         }, SPLASH_DELAY_MS);
     }
 
+    /** Анимирует появление логотипа: масштабирование с эффектом overshoot и одновременное проявление прозрачности. */
     private void animateLogo(ImageView logo) {
         logo.setScaleX(0f);
         logo.setScaleY(0f);

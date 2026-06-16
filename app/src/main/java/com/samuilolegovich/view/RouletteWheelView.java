@@ -18,9 +18,14 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Кастомная View, рисующая и анимирующая колесо европейской рулетки на Canvas:
+ * 37 секторов (0–36) в стандартном порядке, золотой ободок, неподвижный указатель-стрелка
+ * сверху и плавная остановка вращения на заданном выпавшем числе.
+ */
 public class RouletteWheelView extends View {
 
-    // Standard European roulette wheel order (clockwise)
+    /** Порядок чисел на стандартном европейском колесе рулетки (по часовой стрелке). */
     private static final int[] WHEEL_NUMBERS = {
             0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30, 8, 23, 10,
             5, 24, 16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 26
@@ -37,7 +42,7 @@ public class RouletteWheelView extends View {
     private static final int C_GREEN   = Color.parseColor("#007040");
     private static final int C_GOLD    = Color.parseColor("#FFB000");
     private static final int C_DIVIDER = Color.parseColor("#2E2E2E");
-    private static final int C_NUMBER  = Color.parseColor("#FFB000"); // gold numbers
+    private static final int C_NUMBER  = Color.parseColor("#FFB000"); // золотой цвет цифр
 
     private final Paint fillPaint   = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint dividePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -52,10 +57,14 @@ public class RouletteWheelView extends View {
     private float          mRotation     = 0f;
     private ValueAnimator  activeAnimator;
 
+    /** Конструктор для создания View из кода. */
     public RouletteWheelView(Context c)                              { super(c);       init(); }
+    /** Конструктор для создания View из XML-разметки. */
     public RouletteWheelView(Context c, AttributeSet a)              { super(c, a);    init(); }
+    /** Конструктор для создания View из XML-разметки с явным указанием стиля. */
     public RouletteWheelView(Context c, AttributeSet a, int defStyle){ super(c, a, defStyle); init(); }
 
+    /** Настраивает все объекты Paint (заливка, разделители, текст, ободок, центр, маркер) перед первой отрисовкой. */
     private void init() {
         dividePaint.setStyle(Paint.Style.STROKE);
         dividePaint.setColor(C_DIVIDER);
@@ -67,7 +76,7 @@ public class RouletteWheelView extends View {
         rimPaint.setStyle(Paint.Style.STROKE);
         rimPaint.setColor(C_GOLD);
 
-        centerPaint.setColor(Color.BLACK); // updated via setCenterColor()
+        centerPaint.setColor(Color.BLACK); // цвет обновляется через setCenterColor()
 
         markerPaint.setColor(C_GOLD);
 
@@ -76,6 +85,10 @@ public class RouletteWheelView extends View {
         markerStrokePaint.setStrokeJoin(Paint.Join.ROUND);
     }
 
+    /**
+     * Рисует колесо рулетки: вращающуюся часть (секторы чисел, кольцо номеров, центральный диск)
+     * с текущим углом поворота {@link #mRotation}, и неподвижную часть (внешний ободок и стрелку-маркер).
+     */
     @Override
     protected void onDraw(Canvas canvas) {
         float cx   = getWidth()  / 2f;
@@ -84,15 +97,15 @@ public class RouletteWheelView extends View {
         if (maxR <= 0) return;
 
         float outerR        = maxR * 0.93f;
-        float numBandInnerR = maxR * 0.70f; // inner boundary of the number band
-        float innerR        = maxR * 0.47f; // 0.93−0.70=0.23 → 0.70−0.23=0.47 (equal gaps)
-        float textR        = maxR * 0.82f;  // centred in the number band (70%–93%)
+        float numBandInnerR = maxR * 0.70f; // внутренняя граница кольца с числами
+        float innerR        = maxR * 0.47f; // 0.93−0.70=0.23 → 0.70−0.23=0.47 (равные промежутки)
+        float textR        = maxR * 0.82f;  // центрировано в кольце с числами (70%–93%)
 
         textPaint.setTextSize(maxR * 0.070f);
         rimPaint.setStrokeWidth(maxR * 0.014f);
         dividePaint.setStrokeWidth(maxR * 0.004f);
 
-        // ── Rotating part ─────────────────────────────────────────────
+        // ── Вращающаяся часть ─────────────────────────────────────────
         canvas.save();
         canvas.rotate(mRotation, cx, cy);
 
@@ -106,15 +119,15 @@ public class RouletteWheelView extends View {
             canvas.drawArc(oval, startAngle, SECTOR_ANGLE, true, dividePaint);
         }
 
-        // Inner number-band ring — separates numbers from the centre disc
+        // Внутреннее кольцо номеров — отделяет числа от центрального диска
         rimPaint.setStrokeWidth(maxR * 0.020f);
         canvas.drawCircle(cx, cy, numBandInnerR, rimPaint);
 
-        // Numbers drawn on top of sectors and band ring
+        // Числа рисуются поверх секторов и кольца
         for (int i = 0; i < WHEEL_NUMBERS.length; i++) {
             float startAngle = -90f + i * SECTOR_ANGLE;
             int   n          = WHEEL_NUMBERS[i];
-            // +90° corrects canvas-coordinate offset so text lands on its own sector
+            // +90° корректирует смещение системы координат canvas, чтобы текст попал в свой сектор
             float midAngle = startAngle + SECTOR_ANGLE / 2f;
             canvas.save();
             canvas.rotate(midAngle + 90f, cx, cy);
@@ -123,39 +136,40 @@ public class RouletteWheelView extends View {
             canvas.restore();
         }
 
-        // Inner dark circle (covers wedge points)
+        // Внутренний тёмный круг (закрывает острые концы секторов)
         canvas.drawCircle(cx, cy, innerR, centerPaint);
 
-        // Inner gold ring (border of centre disc)
+        // Внутреннее золотое кольцо (граница центрального диска)
         rimPaint.setStrokeWidth(maxR * 0.018f);
         canvas.drawCircle(cx, cy, innerR, rimPaint);
 
         canvas.restore();
 
-        // ── Fixed part (not rotated) ───────────────────────────────────
-        // Outer gold rim
+        // ── Неподвижная часть (не вращается) ───────────────────────────
+        // Внешний золотой ободок
         rimPaint.setStrokeWidth(maxR * 0.028f);
         canvas.drawCircle(cx, cy, outerR + maxR * 0.006f, rimPaint);
 
-        // Ball marker: gold arrow at 12 o'clock, base outside rim, tip in number band
-        float mBase = cy - outerR - maxR * 0.010f; // flat base sits just outside outer rim
-        float mHW   = maxR * 0.050f;               // half-width of base
-        float mH    = maxR * 0.100f;               // length (tip reaches into number band)
+        // Маркер-стрелка: золотая стрелка на 12 часах, основание снаружи ободка, острие в кольце чисел
+        float mBase = cy - outerR - maxR * 0.010f; // плоское основание чуть снаружи внешнего ободка
+        float mHW   = maxR * 0.050f;               // половина ширины основания
+        float mH    = maxR * 0.100f;               // длина (острие достигает кольца чисел)
         markerPath.reset();
-        markerPath.moveTo(cx,        mBase + mH);  // sharp tip (inward)
-        markerPath.lineTo(cx - mHW,  mBase);       // base left
-        markerPath.lineTo(cx + mHW,  mBase);       // base right
+        markerPath.moveTo(cx,        mBase + mH);  // острый кончик (внутрь)
+        markerPath.lineTo(cx - mHW,  mBase);       // основание слева
+        markerPath.lineTo(cx + mHW,  mBase);       // основание справа
         markerPath.close();
-        canvas.drawPath(markerPath, markerPaint);  // gold fill
+        canvas.drawPath(markerPath, markerPaint);  // золотая заливка
         markerStrokePaint.setStrokeWidth(maxR * 0.018f);
-        canvas.drawPath(markerPath, markerStrokePaint); // white outline
+        canvas.drawPath(markerPath, markerStrokePaint); // белый контур
     }
 
-    // ── Public API ────────────────────────────────────────────────────
+    // ── Публичный API ────────────────────────────────────────────────
 
+    /** Запускает бесконечное (по факту — очень долгое) равномерное вращение колеса до тех пор, пока не будет вызван {@link #stopAtNumber} или {@link #stopSpinning}. */
     public void startSpinning() {
         cancelActive();
-        // 2000 rotations ≈ 20 minutes — cancelled long before end
+        // 2000 оборотов ≈ 20 минут — анимация всё равно отменяется задолго до конца
         activeAnimator = ValueAnimator.ofFloat(mRotation, mRotation + 720_000f);
         activeAnimator.setDuration(1_200_000L);
         activeAnimator.setInterpolator(new LinearInterpolator());
@@ -166,16 +180,21 @@ public class RouletteWheelView extends View {
         activeAnimator.start();
     }
 
+    /**
+     * Плавно останавливает вращение так, чтобы под неподвижным маркером оказался сектор
+     * заданного выпавшего числа; добавляет два дополнительных оборота для зрелищности
+     * и вызывает onStopped после завершения анимации.
+     */
     public void stopAtNumber(int number, Runnable onStopped) {
         cancelActive();
 
         float curAngle   = mRotation % 360f;
         float sectorMid  = -90f + findIndex(number) * SECTOR_ANGLE + SECTOR_ANGLE / 2f;
-        // marker is at -90° → target mRotation = -90° - sectorMid
+        // маркер находится на -90° → целевой mRotation = -90° - sectorMid
         float targetNorm = ((-sectorMid - 90f) % 360f + 360f) % 360f;
         float delta = (targetNorm - curAngle + 360f) % 360f;
         if (delta < 90f) delta += 360f;
-        delta += 720f; // two extra full rotations for drama
+        delta += 720f; // два дополнительных полных оборота для зрелищности
 
         float target = mRotation + delta;
         activeAnimator = ValueAnimator.ofFloat(mRotation, target);
@@ -193,27 +212,32 @@ public class RouletteWheelView extends View {
         activeAnimator.start();
     }
 
+    /** Немедленно прерывает текущую анимацию вращения, оставляя колесо в текущем положении. */
     public void stopSpinning() {
         cancelActive();
     }
 
+    /** Меняет цвет центрального диска колеса (например, для подсветки цвета выигравшего числа). */
     public void setCenterColor(int color) {
         centerPaint.setColor(color);
         invalidate();
     }
 
+    /** Отменяет активную анимацию при удалении View из иерархии, чтобы не утекали ресурсы. */
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         cancelActive();
     }
 
+    /** Останавливает текущий ValueAnimator, если он запущен. */
     private void cancelActive() {
         if (activeAnimator != null && activeAnimator.isRunning()) {
             activeAnimator.cancel();
         }
     }
 
+    /** Находит позицию заданного числа в массиве {@link #WHEEL_NUMBERS} (0, если не найдено). */
     private int findIndex(int number) {
         for (int i = 0; i < WHEEL_NUMBERS.length; i++) {
             if (WHEEL_NUMBERS[i] == number) return i;

@@ -36,6 +36,12 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 
 
+/**
+ * Экран игры "Угадай цвет": пользователь делает ставку на чёрный или красный, сумма
+ * проверяется и отправляется через {@link GuessColorViewModel}, а результат розыгрыша
+ * показывается на экране {@link Flasher}. Поддерживает быстрый выбор суммы через чипы,
+ * отображение баланса в реальном времени и индикаторы загрузки во время ожидания ставки.
+ */
 @AndroidEntryPoint
 public class GuessTheColorGame extends BaseActivity {
     public static final String GUESS_THE_COLOR_GAME_CLASS = ".GuessTheColorGame";
@@ -79,6 +85,10 @@ public class GuessTheColorGame extends BaseActivity {
 
 
 
+    /**
+     * Инициализирует экран: View, ViewModel, локализацию, реферала, слушателей кнопок,
+     * подписки на баланс/ошибки/успешную ставку из ViewModel, и запускает фоновую генерацию цвета.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,6 +138,7 @@ public class GuessTheColorGame extends BaseActivity {
 
 
 
+    /** Находит View разметки экрана и готовит звуковые эффекты (фон казино, ошибка, ставка). */
     private void setButtons() {
         nameGameTextViewTwo = findViewById(R.id.name_game_text_view_tow);
         yourBalanceTextView = findViewById(R.id.your_balance_text_view);
@@ -154,6 +165,7 @@ public class GuessTheColorGame extends BaseActivity {
     }
 
 
+    /** Загружает локализованные строки для всех текстов и сообщений об ошибках на экране. */
     private void setLanguage() {
         YOUR_ACCOUNT_IS_NOT_ENOUGH_TO_SEND = getString(R.string.your_account_is_not_enough_to_send);
         IT_IS_NOT_POSSIBLE_TO_SEND_NULL = getString(R.string.it_is_not_possible_to_send_null);
@@ -170,6 +182,7 @@ public class GuessTheColorGame extends BaseActivity {
     }
 
 
+    /** Назначает обработчики: быстрый выбор суммы по чипам, сброс ошибки при правке поля, переход к правилам игры, отправку ставки на чёрный/красный. */
     private void listeners() {
         chipGroupAmounts.setOnCheckedStateChangeListener((group, checkedIds) -> {
             if      (checkedIds.contains(R.id.chip_01_xrp)) bet.setText("0.1");
@@ -222,6 +235,7 @@ public class GuessTheColorGame extends BaseActivity {
     }
 
 
+    /** Читает сохранённый реферальный код пользователя из preferences (по умолчанию "0", если не задан). */
     private void getReferral() {
         preferences = PrefsHelper.get(this);
         myReferral = preferences.contains(StringEnum.APP_PREFERENCES_REFERRAL.getValue())
@@ -230,6 +244,7 @@ public class GuessTheColorGame extends BaseActivity {
     }
 
 
+    /** Заполняет статические поля Flasher данными для отображения результата: случайное число нужного цвета, режим игры, сумму ставки. */
     @SuppressLint("SetTextI18n")
     private void setBetParam(String amount, boolean color) {
         Flasher.NUMBER_BET = Lotto.getRandomNumberForColor(color) + "";
@@ -239,6 +254,7 @@ public class GuessTheColorGame extends BaseActivity {
     }
 
 
+    /** Переключает UI между обычным состоянием и состоянием "идёт ставка": блокирует кнопки цвета и показывает индикатор загрузки на выбранном цвете. */
     private void setBettingState(boolean betting) {
         runOnUiThread(() -> {
             red.setEnabled(!betting);
@@ -255,16 +271,19 @@ public class GuessTheColorGame extends BaseActivity {
         });
     }
 
+    /** Запускает на IO-потоке GenColorRun — фоновую непрерывную генерацию случайного цвета для следующей игры. */
     private void goThread() {
         AppExecutors.io().execute(new GenColorRun());
     }
 
 
+    /** Запускает Activity по имени её класса/действия. */
     private void goToAnotherPage(String namePage) {
         startActivity(new Intent(namePage));
     }
 
 
+    /** При уходе с экрана останавливает фоновую генерацию цвета. */
     @Override
     protected void onPause() {
         super.onPause();
@@ -272,6 +291,7 @@ public class GuessTheColorGame extends BaseActivity {
         GenColorRun.FLAG = false;
     }
 
+    /** При возвращении на экран обновляет баланс и перезапускает фоновую генерацию цвета. */
     @Override
     protected void onResume() {
         super.onResume();
@@ -281,6 +301,7 @@ public class GuessTheColorGame extends BaseActivity {
         goThread();
     }
 
+    /** Останавливает фоновую музыку и генерацию цвета перед закрытием экрана. */
     @Override
     public void onBackPressed() {
         casinoMediaPlayer.stop();

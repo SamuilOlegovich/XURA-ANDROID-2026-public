@@ -26,6 +26,11 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 
 
+/**
+ * Экран создания нового кошелька: генерирует новый XRPL-аккаунт (адрес+seed) через репозиторий,
+ * показывает сгенерированную seed-фразу пользователю и временно сохраняет её как pre-seed,
+ * чтобы на следующем экране ({@link CheckingNewWallet}) проверить, что пользователь её правильно запомнил/записал.
+ */
 @AndroidEntryPoint
 public class CreateNewWallet extends BaseActivity {
 
@@ -41,6 +46,7 @@ public class CreateNewWallet extends BaseActivity {
 
 
 
+    /** Инициализирует экран: включает FLAG_SECURE, разметку, View, локализацию, слушатели и сразу запускает генерацию кошелька. */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +60,7 @@ public class CreateNewWallet extends BaseActivity {
 
 
 
+    /** Находит и сохраняет ссылки на View разметки экрана. */
     private void setButtons() {
         createNewWalletText = (TextView) findViewById(R.id.create_new_wallet_text_view);
         seed = (TextView) findViewById(R.id.seed_field);
@@ -61,6 +68,7 @@ public class CreateNewWallet extends BaseActivity {
     }
 
 
+    /** Показывает текст-заглушку "генерация seed..." и блокирует кнопку "далее" до завершения генерации кошелька. */
     private void setLanguage() {
         seed.setText(R.string.seed_generating);
         next.setAlpha(0.4f);
@@ -69,6 +77,7 @@ public class CreateNewWallet extends BaseActivity {
     }
 
 
+    /** Назначает обработчик кнопки "далее": переход к проверке seed при успешной генерации, либо повторная попытка генерации при неудаче. */
     private void listeners() {
         next.setOnClickListener(v -> {
             pulse(v);
@@ -83,6 +92,7 @@ public class CreateNewWallet extends BaseActivity {
     }
 
 
+    /** Асинхронно (на IO-потоке) генерирует новый XRPL-кошелёк, показывает seed на экране и временно сохраняет его как pre-seed; при ошибке предлагает перезапустить. */
     private void createNewWalletAsync() {
         isNewWallet = false;
         AppExecutors.io().execute(() -> {
@@ -107,16 +117,19 @@ public class CreateNewWallet extends BaseActivity {
     }
 
 
+    /** Временно сохраняет сгенерированную seed-фразу в защищённом хранилище, чтобы её можно было сверить на следующем экране. */
     private void setPreSeed(String newSeed) {
         SecureSeedStorage.save(PrefsHelper.get(this), StringEnum.APP_PREFERENCES_PRE_SEED.getValue(), newSeed);
     }
 
 
+    /** Запускает Activity по имени её класса/действия. */
     private void goToAnotherPage(String namePage) {
         startActivity(new Intent(namePage));
     }
 
 
+    /** Стандартная обработка нажатия "назад" без дополнительной логики. */
     @Override
     public void onBackPressed() {
         super.onBackPressed();

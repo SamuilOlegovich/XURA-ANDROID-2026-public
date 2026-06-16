@@ -23,18 +23,18 @@ import okhttp3.CertificatePinner;
 import okhttp3.OkHttpClient;
 
 /**
- * SSL helpers for XRPL nodes.
+ * Вспомогательные SSL-инструменты для работы с нодами XRPL.
  *
- * Trust-all sockets must only be used for TESTNET endpoints, whose
- * certificates may not be present in the system trust store. Mainnet
- * (real-money) connections always go through standard system certificate
- * validation plus public-key pinning — see {@link #RPC_MAINNET_PINS} and
- * {@link #WSS_MAINNET_PINS}.
+ * Доверяющие всем сертификатам соединения должны использоваться только для
+ * TESTNET-эндпоинтов, чьи сертификаты могут отсутствовать в системном хранилище
+ * доверия. Mainnet-соединения (с настоящими деньгами) всегда проходят через
+ * стандартную системную проверку сертификата плюс пиннинг публичного ключа —
+ * см. {@link #RPC_MAINNET_PINS} и {@link #WSS_MAINNET_PINS}.
  */
 public final class SslUtil {
     private SslUtil() {}
 
-    // ─── Trust-all (TESTNET ONLY — never use for mainnet/payment flows) ───
+    // ─── Доверие всем сертификатам (ТОЛЬКО TESTNET — никогда для mainnet/платежей) ───
 
     @SuppressLint("TrustAllX509TrustManager")
     private static final X509TrustManager TRUST_ALL_MANAGER = new X509TrustManager() {
@@ -43,6 +43,7 @@ public final class SslUtil {
         public X509Certificate[] getAcceptedIssuers() { return new X509Certificate[0]; }
     };
 
+    /** Создаёт SSLContext, доверяющий любым сертификатам (только для тестовой сети). */
     public static SSLContext trustAllSslContext() {
         try {
             SSLContext ctx = SSLContext.getInstance("TLS");
@@ -53,10 +54,12 @@ public final class SslUtil {
         }
     }
 
+    /** Возвращает SSLSocketFactory, доверяющую любым сертификатам (только для тестовой сети). */
     public static SSLSocketFactory trustAllSocketFactory() {
         return trustAllSslContext().getSocketFactory();
     }
 
+    /** Создаёт OkHttpClient, не проверяющий сертификат и hostname сервера (только для тестовой сети). */
     public static OkHttpClient trustAllOkHttpClient() {
         SSLSocketFactory sf = trustAllSocketFactory();
         return new OkHttpClient.Builder()
@@ -67,25 +70,26 @@ public final class SslUtil {
                 .build();
     }
 
-    // ─── Certificate pinning (MAINNET) ─────────────────────────────────────
-    // Pins cover the leaf certificate plus its issuing CA, so a routine leaf
-    // renewal does not break the app — only a switch to a different CA does.
-    // Must be refreshed if the node providers below ever change.
+    // ─── Пиннинг сертификата (MAINNET) ──────────────────────────────────────
+    // Пины покрывают листовой сертификат и его выпускающий CA, поэтому обычное
+    // продление листового сертификата не ломает приложение — ломает только
+    // смена другого CA. Должны быть обновлены, если провайдеры нод ниже изменятся.
 
-    /** RPC mainnet endpoint — must match StringEnum.NET_REAL_POST_URL_ONE host. */
+    /** RPC mainnet-эндпоинт — должен совпадать с хостом StringEnum.NET_REAL_POST_URL_ONE. */
     public static final String RPC_MAINNET_HOST = "s1.ripple.com";
     public static final String[] RPC_MAINNET_PINS = {
-            "sha256/rI2qvMp2NJkdt/hTFi4hEUWIZBnXkMDY4qx6t8rShcM=", // *.ripple.com leaf
-            "sha256/0dflgFofXiuLoZvgRpP8N9xrpDTgZ7c1xbmTjIxym7o=", // GandiCert issuing CA
+            "sha256/rI2qvMp2NJkdt/hTFi4hEUWIZBnXkMDY4qx6t8rShcM=", // листовой *.ripple.com
+            "sha256/0dflgFofXiuLoZvgRpP8N9xrpDTgZ7c1xbmTjIxym7o=", // выпускающий CA GandiCert
     };
 
-    /** WSS mainnet endpoint — must match StringEnum.WSS_REAL host. */
+    /** WSS mainnet-эндпоинт — должен совпадать с хостом StringEnum.WSS_REAL. */
     public static final String WSS_MAINNET_HOST = "xrplcluster.com";
     public static final String[] WSS_MAINNET_PINS = {
-            "sha256/5519bXodYphe/ErrqMqkQ6OVXJW4Frv1ZNDG7MbPWnE=", // xrplcluster.com leaf
-            "sha256/kIdp6NNEd8wsugYyyIYFsi1ylMCED3hZbSR8ZFsa/A4=", // Google Trust Services WE1 issuing CA
+            "sha256/5519bXodYphe/ErrqMqkQ6OVXJW4Frv1ZNDG7MbPWnE=", // листовой xrplcluster.com
+            "sha256/kIdp6NNEd8wsugYyyIYFsi1ylMCED3hZbSR8ZFsa/A4=", // выпускающий CA Google Trust Services WE1
     };
 
+    /** Создаёт OkHttpClient со стандартной системной проверкой сертификата плюс дополнительный пиннинг публичного ключа для указанного хоста. */
     public static OkHttpClient pinnedOkHttpClient(String host, String[] pins) {
         CertificatePinner pinner = new CertificatePinner.Builder()
                 .add(host, pins)
@@ -97,7 +101,7 @@ public final class SslUtil {
                 .build();
     }
 
-    /** Raw SSLSocketFactory with the same pin check, for the WebSocket client. */
+    /** Базовая SSLSocketFactory с такой же проверкой пиннинга, для WebSocket-клиента. */
     public static SSLSocketFactory pinnedSocketFactory(String[] pins) {
         try {
             TrustManagerFactory tmf = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
@@ -121,21 +125,24 @@ public final class SslUtil {
         }
     }
 
-    /** Standard system trust validation, then requires a pinned key in the chain. */
+    /** Сначала выполняет стандартную системную проверку доверия, затем дополнительно требует наличие хотя бы одного из закреплённых ключей в цепочке сертификатов. */
     private static final class PinningTrustManager implements X509TrustManager {
         private final X509TrustManager delegate;
         private final Set<String> pins;
 
+        /** Создаёт менеджер пиннинга, оборачивающий системный TrustManager и набор разрешённых SHA-256 отпечатков публичного ключа. */
         PinningTrustManager(X509TrustManager delegate, String[] pins) {
             this.delegate = delegate;
             this.pins = new HashSet<>(Arrays.asList(pins));
         }
 
+        /** Делегирует проверку клиентского сертификата системному TrustManager. */
         @Override
         public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
             delegate.checkClientTrusted(chain, authType);
         }
 
+        /** Выполняет стандартную системную проверку сертификата сервера и дополнительно проверяет, что хотя бы один сертификат цепочки закреплён (pinned). */
         @Override
         public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
             delegate.checkServerTrusted(chain, authType);
@@ -147,11 +154,13 @@ public final class SslUtil {
             throw new CertificateException("Certificate pinning failure: no pinned public key found in chain");
         }
 
+        /** Делегирует получение списка доверенных издателей системному TrustManager. */
         @Override
         public X509Certificate[] getAcceptedIssuers() {
             return delegate.getAcceptedIssuers();
         }
 
+        /** Вычисляет SHA-256 хеш публичного ключа сертификата (SPKI), закодированный в base64. */
         private static String sha256Spki(X509Certificate cert) throws CertificateException {
             try {
                 MessageDigest md = MessageDigest.getInstance("SHA-256");

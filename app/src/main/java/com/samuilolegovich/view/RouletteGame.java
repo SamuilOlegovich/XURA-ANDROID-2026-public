@@ -44,6 +44,12 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 
 
+/**
+ * Экран игры в европейскую рулетку с полноценным казино-столом: программно строит сетку
+ * чисел 0–36, ставки на дюжины/столбцы/чёт-нечёт/цвет/диапазон, поддерживает несколько
+ * одновременных ставок (мульти-бет) с визуальными фишками на ячейках. При запуске спина
+ * ставки отправляются через {@link RouletteViewModel}, а результат показывается на {@link Flasher}.
+ */
 @AndroidEntryPoint
 public class RouletteGame extends BaseActivity {
     public static final String ROULETTE_GAME_CLASS = ".RouletteGame";
@@ -102,6 +108,10 @@ public class RouletteGame extends BaseActivity {
 
 
 
+    /**
+     * Инициализирует экран: View, ViewModel, локализацию, реферала, игровой стол ставок,
+     * слушателей, и подписывается на баланс/ошибки/успешную ставку из ViewModel.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -153,6 +163,7 @@ public class RouletteGame extends BaseActivity {
     //  View setup
     // ════════════════════════════════════════════════════════════════════
 
+    /** Находит View разметки экрана и готовит звуковые эффекты (фон казино, ошибка, ставка). */
     private void setViews() {
         rulesInfo        = findViewById(R.id.rules_of_the_game_link);
         balance          = findViewById(R.id.your_balance_xrp_text);
@@ -174,6 +185,7 @@ public class RouletteGame extends BaseActivity {
         casinoMediaPlayer.start();
     }
 
+    /** Загружает локализованные строки для всех сообщений об ошибках на экране. */
     private void setLanguage() {
         YOUR_ACCOUNT_IS_NOT_ENOUGH_TO_SEND = getString(R.string.your_account_is_not_enough_to_send);
         IT_IS_NOT_POSSIBLE_TO_SEND_NULL    = getString(R.string.it_is_not_possible_to_send_null);
@@ -190,6 +202,7 @@ public class RouletteGame extends BaseActivity {
     //  Flasher params — snapshot at SPIN time
     // ════════════════════════════════════════════════════════════════════
 
+    /** Снимает "снимок" параметров для экрана Flasher на момент запуска спина: режим игры, сумму, главную ставку и её число/цвет для подсветки результата. */
     private void setBetParamsForFlasher(String totalAmount) {
         Flasher.TEST_MODE_ENUM          = TestModeEnum.ROULETTE_GAME;
         Flasher.TEST_SAND_AMOUNT        = totalAmount;
@@ -213,6 +226,7 @@ public class RouletteGame extends BaseActivity {
     //  Casino table — each cell is FrameLayout (label + chip overlay)
     // ════════════════════════════════════════════════════════════════════
 
+    /** Программно строит игровой стол рулетки: сетку 13×5 (зеро + числа 1–36 + дюжины + столбцы 2:1) и нижний ряд внешних ставок. */
     private void buildTable() {
         LinearLayout container = findViewById(R.id.roulette_table_container);
         int      cellH = dp(CELL_H);
@@ -260,6 +274,7 @@ public class RouletteGame extends BaseActivity {
         buildOutsideRow(container, cellH, font);
     }
 
+    /** Создаёт одну ячейку стола (число, дюжина или столбец) с подложкой-фишкой для отображения суммы ставки, и регистрирует обработчик клика. */
     private void addCell(GridLayout grid, String text, int bg,
                          int gridRow, int gridCol, int rowSpan, int colSpan,
                          int height, float colWeight, int textSizeSp,
@@ -296,6 +311,7 @@ public class RouletteGame extends BaseActivity {
         grid.addView(frame);
     }
 
+    /** Строит нижний ряд внешних ставок: 1–18/19–36, чёт/нечёт, красное/чёрное. */
     private void buildOutsideRow(LinearLayout container, int cellH, Typeface font) {
         LinearLayout row = new LinearLayout(this);
         row.setOrientation(LinearLayout.HORIZONTAL);
@@ -312,6 +328,7 @@ public class RouletteGame extends BaseActivity {
         addOutsideBtn(row, "19–36", "HIGH",  COLOR_CARD,  cellH, font);
     }
 
+    /** Создаёт одну кнопку внешней ставки нижнего ряда с фишкой-оверлеем для отображения суммы. */
     private void addOutsideBtn(LinearLayout row, String label, String tag,
                                 int color, int cellH, Typeface font) {
         FrameLayout frame = new FrameLayout(this);
@@ -344,6 +361,7 @@ public class RouletteGame extends BaseActivity {
     //  Multi-bet logic
     // ════════════════════════════════════════════════════════════════════
 
+    /** Переключает ставку на ячейке: если ставка уже стоит — снимает её, иначе считывает сумму из поля ввода и добавляет новую ставку с подсветкой и фишкой. */
     private void toggleBet(View v, String betTag, int bgColor) {
         if (tableBets.containsKey(betTag)) {
             // Remove bet: restore cell bg, hide chip
@@ -386,6 +404,7 @@ public class RouletteGame extends BaseActivity {
         updateBetsLabel();
     }
 
+    /** Обновляет текстовую метку над столом: количество ставок и их суммарную сумму, либо подсказку выбрать ставку, если их нет. */
     private void updateBetsLabel() {
         if (tableBets.isEmpty()) {
             selectedBetLabel.setText(getString(R.string.roulette_select_a_bet));
@@ -402,6 +421,7 @@ public class RouletteGame extends BaseActivity {
         if (btnClearBets != null) btnClearBets.setVisibility(View.VISIBLE);
     }
 
+    /** Снимает все ставки со стола: возвращает обычный фон ячейкам, прячет фишки и сбрасывает накопленное состояние ставок. */
     private void clearAllBets() {
         for (Map.Entry<String, View> entry : betViews.entrySet()) {
             Integer bgColor = betBgColors.get(entry.getKey());
@@ -423,6 +443,7 @@ public class RouletteGame extends BaseActivity {
     //  Listeners
     // ════════════════════════════════════════════════════════════════════
 
+    /** Назначает обработчики: быстрый выбор суммы по чипам, сброс ошибки при правке поля, переход к правилам, очистку ставок и запуск спина со всеми текущими ставками. */
     private void listeners() {
         chipGroupAmounts.setOnCheckedStateChangeListener((group, checkedIds) -> {
             if      (checkedIds.contains(R.id.chip_01_xrp)) bet.setText("0.1");
@@ -477,6 +498,7 @@ public class RouletteGame extends BaseActivity {
     //  View / drawable helpers
     // ════════════════════════════════════════════════════════════════════
 
+    /** Создаёт TextView ячейки стола со скруглённым фоном нужного цвета и стилем текста (золотой для зеро, белый для остальных). */
     private TextView makeCell(String text, int bg, int w, int h, Typeface font, boolean goldText) {
         TextView tv = new TextView(this);
         tv.setText(text);
@@ -490,6 +512,7 @@ public class RouletteGame extends BaseActivity {
         return tv;
     }
 
+    /** Создаёт скрытую по умолчанию TextView-фишку (золотой кружок) для отображения суммы ставки на ячейке. */
     private TextView makeChip(Typeface font) {
         TextView chip = new TextView(this);
         chip.setVisibility(View.GONE);
@@ -506,6 +529,7 @@ public class RouletteGame extends BaseActivity {
         return chip;
     }
 
+    /** Создаёт скруглённый прямоугольный фон ячейки; при selected=true добавляет золотую обводку, обозначающую активную ставку. */
     private GradientDrawable roundedBg(int color, boolean selected) {
         GradientDrawable d = new GradientDrawable();
         d.setShape(GradientDrawable.RECTANGLE);
@@ -521,6 +545,7 @@ public class RouletteGame extends BaseActivity {
     //  Misc helpers
     // ════════════════════════════════════════════════════════════════════
 
+    /** Читает сохранённый реферальный код пользователя из preferences (по умолчанию "0", если не задан). */
     private void getReferral() {
         preferences = PrefsHelper.get(this);
         myReferral  = preferences.contains(StringEnum.APP_PREFERENCES_REFERRAL.getValue())
@@ -528,6 +553,7 @@ public class RouletteGame extends BaseActivity {
                 : "0";
     }
 
+    /** Переводит значение dp в пиксели для текущей плотности экрана. */
     private int dp(int value) {
         return (int) TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP, value, getResources().getDisplayMetrics());
@@ -535,6 +561,7 @@ public class RouletteGame extends BaseActivity {
 
 
 
+    /** Переключает UI между обычным состоянием и состоянием "идёт спин": блокирует кнопку спина и показывает индикатор загрузки. */
     private void setSpinningState(boolean spinning) {
         runOnUiThread(() -> {
             btnSpin.setEnabled(!spinning);
@@ -550,12 +577,14 @@ public class RouletteGame extends BaseActivity {
     //  Lifecycle
     // ════════════════════════════════════════════════════════════════════
 
+    /** При возвращении на экран обновляет баланс кошелька. */
     @Override
     protected void onResume() {
         super.onResume();
         viewModel.loadBalance();
     }
 
+    /** Останавливает фоновую музыку казино перед закрытием экрана. */
     @Override
     public void onBackPressed() {
         if (casinoMediaPlayer != null) casinoMediaPlayer.stop();

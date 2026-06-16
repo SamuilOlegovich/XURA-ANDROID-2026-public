@@ -12,8 +12,12 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.GCMParameterSpec;
 
-// Аппаратное шифрование seed через Android Keystore (AES-256-GCM).
-// Ключ генерируется в TEE и никогда не покидает устройство.
+/**
+ * Аппаратное шифрование seed-фразы через Android Keystore (AES-256-GCM).
+ * Ключ генерируется в TEE (Trusted Execution Environment) и никогда не покидает устройство,
+ * поэтому даже при компрометации зашифрованных данных в SharedPreferences расшифровать
+ * seed без физического доступа к устройству (и его TEE) невозможно.
+ */
 public class SecureSeedStorage {
 
     private static final String KEYSTORE_PROVIDER = "AndroidKeyStore";
@@ -22,6 +26,7 @@ public class SecureSeedStorage {
     private static final int GCM_IV_LENGTH = 12;
     private static final int GCM_TAG_BITS = 128;
 
+    /** Шифрует переданный текст ключом из Keystore и сохраняет IV+шифротекст (в Base64) в SharedPreferences. */
     public static void save(SharedPreferences prefs, String prefKey, String plaintext) {
         try {
             SecretKey key = getOrCreateKey();
@@ -40,7 +45,7 @@ public class SecureSeedStorage {
         }
     }
 
-    // Возвращает null если ключ не существует, данные повреждены или старый формат.
+    /** Расшифровывает сохранённое значение; возвращает null, если ключа нет, данные повреждены или это старый (не-Keystore) формат. */
     public static String load(SharedPreferences prefs, String prefKey) {
         String stored = prefs.getString(prefKey, null);
         if (stored == null || stored.contains(" ")) return null; // старый формат — пробелы
@@ -60,10 +65,12 @@ public class SecureSeedStorage {
         }
     }
 
+    /** Удаляет сохранённое зашифрованное значение из SharedPreferences (сам ключ Keystore не трогает). */
     public static void delete(SharedPreferences prefs, String prefKey) {
         prefs.edit().remove(prefKey).apply();
     }
 
+    /** Возвращает существующий AES-256-ключ из Android Keystore либо генерирует новый, если его ещё нет. */
     private static SecretKey getOrCreateKey() throws Exception {
         KeyStore keyStore = KeyStore.getInstance(KEYSTORE_PROVIDER);
         keyStore.load(null);

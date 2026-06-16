@@ -22,6 +22,13 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 
 
 
+/**
+ * ViewModel игры в рулетку: принимает сразу несколько одновременных ставок,
+ * валидирует каждую и их сумму, отправляет один платёж с мемо, кодирующим все
+ * ставки компактными кодами {@link RouletteBetCode}, в реальном режиме, либо
+ * пропускает сетевой вызов в демо-режиме (результат считается локально через
+ * NotifierRunForTrialGame).
+ */
 @HiltViewModel
 public class RouletteViewModel extends ViewModel {
     private final WalletRepository repository;
@@ -32,6 +39,7 @@ public class RouletteViewModel extends ViewModel {
 
 
 
+    /** Создаёт ViewModel с внедрённым репозиторием кошелька и собственным фоновым executor'ом. */
     @Inject
     public RouletteViewModel(WalletRepository repository) {
         this.repository = repository;
@@ -40,30 +48,33 @@ public class RouletteViewModel extends ViewModel {
 
 
 
+    /** Возвращает LiveData текущего баланса кошелька. */
     public LiveData<BigDecimal> getBalance() { return repository.getBalanceLiveData(); }
+    /** Возвращает LiveData ошибки валидации/отправки последней ставки. */
     public LiveData<GameBetError> getError() { return errorLiveData; }
-    /** Posts total bet amount (XRP, plain string) on successful bet submission. */
+    /** Публикует суммарную сумму ставки (XRP, строкой) при успешной отправке ставки. */
     public LiveData<String> getBetSuccess() { return betSuccessLiveData; }
 
 
 
+    /** Запускает обновление баланса кошелька на фоновом потоке. */
     public void loadBalance() {
         executor.execute(() -> repository.updateBalance(repository.getBalance()));
     }
 
     /**
-     * Places one or more bets on the roulette table.
+     * Размещает одну или несколько ставок на столе рулетки.
      *
-     * In REAL mode: sends a single XRP payment to the server. The memo encodes every
-     * bet using compact codes from {@link RouletteBetCode}:
+     * В РЕАЛЬНОМ режиме: отправляет единый XRP-платёж на сервер. Мемо кодирует
+     * каждую ставку компактными кодами из {@link RouletteBetCode}:
      *   BET:R:n5@1.5,r@2.0,d1@0.5:referralCode
-     * Total XRP sent = sum of all individual bet amounts.
+     * Итоговая отправляемая сумма = сумма всех отдельных ставок.
      *
-     * In DEMO mode: does no network call — the existing NotifierRunForTrialGame
-     * evaluates the result locally (unchanged).
+     * В ДЕМО-режиме: сетевой вызов не выполняется — результат вычисляется
+     * локально через существующий NotifierRunForTrialGame (без изменений).
      *
-     * @param bets      ordered map of bet tag → amount (e.g. "N:5" → 1.5)
-     * @param referral  player's referral code appended to memo
+     * @param bets      упорядоченная карта тег ставки → сумма (например "N:5" → 1.5)
+     * @param referral  реферальный код игрока, добавляемый в мемо
      */
     public void placeBets(LinkedHashMap<String, BigDecimal> bets, String referral) {
         executor.execute(() -> {
@@ -72,7 +83,7 @@ public class RouletteViewModel extends ViewModel {
                 return;
             }
 
-            // Validate each position (min only) and accumulate total
+            // Проверяем каждую позицию (только минимум) и накапливаем общую сумму
             BigDecimal total = BigDecimal.ZERO;
             for (Map.Entry<String, BigDecimal> entry : bets.entrySet()) {
                 BigDecimal amount = roundToDrops(entry.getValue());
@@ -84,13 +95,13 @@ public class RouletteViewModel extends ViewModel {
                 total = total.add(amount);
             }
 
-            // Total across all positions must not exceed MAX_BET_ROULETTE
+            // Общая сумма по всем позициям не должна превышать MAX_BET_ROULETTE
             if (total.compareTo(new BigDecimal(StringEnum.MAX_BET_ROULETTE.getValue())) > 0) {
                 errorLiveData.postValue(GameBetError.BET_TOO_HIGH);
                 return;
             }
 
-            // Check total against balance
+            // Проверяем общую сумму относительно баланса
             BigDecimal balance = repository.getBalanceLiveData().getValue();
             if (balance != null && total.compareTo(balance) > 0) {
                 errorLiveData.postValue(GameBetError.INSUFFICIENT_BALANCE);
@@ -118,10 +129,10 @@ public class RouletteViewModel extends ViewModel {
     }
 
     /**
-     * Builds the XRP memo string encoding all placed bets.
+     * Строит строку мемо XRP-платежа, кодирующую все размещённые ставки.
      *
-     * Format:  BET:R:{code1}@{amt1},{code2}@{amt2},...:{referral}
-     * Example: BET:R:n5@1.5,r@2.0,d1@0.5:ref123
+     * Формат:  BET:R:{код1}@{сумма1},{код2}@{сумма2},...:{referral}
+     * Пример:  BET:R:n5@1.5,r@2.0,d1@0.5:ref123
      */
     private String buildMemo(LinkedHashMap<String, BigDecimal> bets, String referral) {
         StringBuilder sb = new StringBuilder("BET:R:");
@@ -137,6 +148,7 @@ public class RouletteViewModel extends ViewModel {
         return sb.toString();
     }
 
+    /** Проверяет сумму одной отдельной ставки: ненулевое значение и не ниже минимальной ставки на рулетку. */
     private GameBetError validateSingleBetAmount(BigDecimal a) {
         if (a == null) return GameBetError.INVALID_AMOUNT;
         if (a.compareTo(BigDecimal.ZERO) == 0) return GameBetError.AMOUNT_IS_ZERO;
@@ -145,7 +157,7 @@ public class RouletteViewModel extends ViewModel {
         return null;
     }
 
-    /** Truncates to 6 decimal places (XRP drop precision). */
+    /** Обрезает значение до 6 знаков после запятой (точность дропов XRP). */
     private BigDecimal roundToDrops(BigDecimal value) {
         if (value == null) return BigDecimal.ZERO;
         String s = value.toPlainString();
@@ -157,6 +169,7 @@ public class RouletteViewModel extends ViewModel {
 
 
 
+    /** Останавливает фоновый executor при уничтожении ViewModel. */
     @Override
     protected void onCleared() {
         executor.shutdown();

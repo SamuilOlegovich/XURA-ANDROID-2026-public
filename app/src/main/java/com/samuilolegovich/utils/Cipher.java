@@ -4,6 +4,10 @@ import java.security.SecureRandom;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
+/**
+ * Хеширование пароля приложения по PBKDF2WithHmacSHA256 — текущая (актуальная) схема защиты пароля,
+ * пришедшая на замену устаревшему одинарному SHA-256 (см. {@link LegacyCipher}).
+ */
 public class Cipher {
 
     private static final int ITERATIONS = 310_000;
@@ -36,6 +40,7 @@ public class Cipher {
         }
     }
 
+    /** Преобразует массив байт в строку HEX (нижний регистр, 2 символа на байт). */
     private static String bytesToHex(byte[] bytes) {
         StringBuilder sb = new StringBuilder(bytes.length * 2);
         for (byte b : bytes) {
@@ -44,6 +49,7 @@ public class Cipher {
         return sb.toString();
     }
 
+    /** Преобразует HEX-строку обратно в массив байт (обратная операция к bytesToHex). */
     private static byte[] hexToBytes(String hex) {
         int len = hex.length();
         byte[] data = new byte[len / 2];

@@ -26,6 +26,11 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 
 
+/**
+ * Экран выбора игры (рулетка, угадай число, угадай цвет): фоновая музыка, навигация
+ * на экран выбранной игры и декоративная волнообразная анимация "подпрыгивания" карточек
+ * с толчком логотипа, повторяющаяся по таймеру.
+ */
 @AndroidEntryPoint
 public class SelectGame extends BaseActivity {
     public static final String SELECT_GAME_CLASS = ".SelectGame";
@@ -49,6 +54,7 @@ public class SelectGame extends BaseActivity {
 
 
 
+    /** Инициализирует экран: сохраняет ссылку на активити, разметку, View, локализацию, фоновую музыку, слушателей и нижнюю навигацию. */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +70,7 @@ public class SelectGame extends BaseActivity {
 
 
 
+    /** Запускает фоновую зацикленную музыку выбора игры. */
     private void setSound() {
         flourOfChoiceMediaPlayer = MediaPlayer.create(this, R.raw.flour_of_choice);
         flourOfChoiceMediaPlayer.setVolume(0.5f, 0.5f);
@@ -72,6 +79,7 @@ public class SelectGame extends BaseActivity {
     }
 
 
+    /** Находит и сохраняет ссылки на View разметки экрана. */
     private void setButtons() {
         guessTheNumber = findViewById(R.id.double_your_bet_linc);
         guessTheColor = findViewById(R.id.guess_the_color_linc);
@@ -80,11 +88,13 @@ public class SelectGame extends BaseActivity {
     }
 
 
+    /** Устанавливает локализованный текст заголовка экрана. */
     private void setLanguage() {
         selectTextView.setText(R.string.select_game);
     }
 
 
+    /** Назначает обработчики кнопок выбора игры: останавливает музыку и переходит на экран выбранной игры. */
     private void listeners() {
         guessTheColor.setOnClickListener(v -> {
             pulse(v);
@@ -109,13 +119,14 @@ public class SelectGame extends BaseActivity {
     }
 
 
+    /** Запускает Activity по имени её класса/действия. */
     private void goToAnotherPage(String namePage) {
-        // класс для перехода на другую страницу
         Intent intent = new Intent(namePage);
         startActivity(intent);
     }
 
 
+    /** Останавливает волновую анимацию при уходе с экрана. */
     @Override
     protected void onPause() {
         super.onPause();
@@ -123,6 +134,7 @@ public class SelectGame extends BaseActivity {
     }
 
 
+    /** При возвращении на экран перезапускает фоновую музыку и волновую анимацию. */
     @Override
     protected void onResume() {
         flourOfChoiceMediaPlayer.setLooping(true);
@@ -132,8 +144,9 @@ public class SelectGame extends BaseActivity {
     }
 
 
-    // ─── Wave bounce animation ────────────────────────────────────────────────
+    // ─── Волновая анимация подпрыгивания ────────────────────────────────────
 
+    /** Запускает периодически повторяющуюся волну анимации: первый запуск после показа лого, затем с фиксированным интервалом. */
     private void startWave() {
         stopWave();
         waveRunnable = new Runnable() {
@@ -147,6 +160,7 @@ public class SelectGame extends BaseActivity {
         waveHandler.postDelayed(waveRunnable, WAVE_INITIAL_DELAY);
     }
 
+    /** Отменяет запланированный повтор волновой анимации. */
     private void stopWave() {
         if (waveRunnable != null) {
             waveHandler.removeCallbacks(waveRunnable);
@@ -154,6 +168,7 @@ public class SelectGame extends BaseActivity {
         }
     }
 
+    /** Запускает одну волну подпрыгивания карточек игр снизу вверх с нарастающей задержкой, а затем — толчок логотипа. */
     private void playWave() {
         // Порядок: снизу вверх → roulette первая, guessTheNumber вторая, guessTheColor третья
         View[] cards = { roulette, guessTheNumber, guessTheColor };
@@ -168,6 +183,7 @@ public class SelectGame extends BaseActivity {
         animateLogoJolt(logoDelay);
     }
 
+    /** Анимирует одну карточку: быстрый подъём с замедлением в пике, затем приземление с эффектом пружины. */
     private void animateBounce(View card, long startDelay, float bounceY) {
         // Вверх: быстро, с замедлением в пике
         ObjectAnimator up = ObjectAnimator.ofFloat(card, "translationY", 0f, -bounceY);
@@ -185,6 +201,7 @@ public class SelectGame extends BaseActivity {
         bounce.start();
     }
 
+    /** Анимирует лёгкий толчок логотипа вниз-вверх, имитируя удар волны подпрыгивающих карточек снизу. */
     private void animateLogoJolt(long startDelay) {
         View logo = findViewById(R.id.logo_xura);
         if (logo == null) return;
@@ -208,13 +225,14 @@ public class SelectGame extends BaseActivity {
     }
 
 
-    // при нажатии на кнопку назад будем возвращаться назад
+    /** Останавливает фоновую музыку перед закрытием экрана. */
     @Override
     public void onBackPressed() {
         flourOfChoiceMediaPlayer.stop();
         super.onBackPressed();
     }
 
+    /** Сбрасывает статическую ссылку на активити при её уничтожении, чтобы избежать утечки памяти. */
     @Override
     protected void onDestroy() {
         super.onDestroy();

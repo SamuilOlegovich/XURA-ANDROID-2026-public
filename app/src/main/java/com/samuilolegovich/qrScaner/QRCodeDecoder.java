@@ -18,12 +18,17 @@ import com.samuilolegovich.view.ScanQrCode;
 
 import java.util.List;
 
+/**
+ * Анализатор кадров камеры (CameraX ImageAnalysis), который на каждом кадре
+ * пытается распознать QR-код через ML Kit и передаёт найденный URL/текст в ScanQrCode.
+ */
 public class QRCodeDecoder implements ImageAnalysis.Analyzer {
     private BarcodeScannerOptions options;
     private BarcodeScanner scanner;
     private Context context;
 
 
+    /** Настраивает ML Kit сканер на распознавание только QR-кодов (без других форматов штрихкодов). */
     public QRCodeDecoder(Context context) {
         this.options = new BarcodeScannerOptions.Builder()
                 .setBarcodeFormats(Barcode.FORMAT_QR_CODE)
@@ -33,12 +38,17 @@ public class QRCodeDecoder implements ImageAnalysis.Analyzer {
 
     }
 
+    /**
+     * Вызывается CameraX на каждом новом кадре с камеры. Передаёт кадр в ML Kit на распознавание
+     * QR-кода; если код найден и экран сканера не занят обработкой предыдущего результата —
+     * передаёт найденный URL (или текст) в обработчик ScanQrCode.qrCodeHandler.
+     */
     @Override
     public void analyze(@NonNull ImageProxy image) {
-        // получаем изобраение
+        // получаем изображение
         @SuppressLint("UnsafeOptInUsageError")
         Image mediaImage = image.getImage();
-        // если оно не равно нулл - получаем угол наклона изображения.
+        // если оно не равно null — получаем угол наклона изображения
         if (mediaImage != null) {
             int rotationDeg = image.getImageInfo().getRotationDegrees();
             InputImage iImage = InputImage.fromMediaImage(mediaImage, rotationDeg);
@@ -54,11 +64,11 @@ public class QRCodeDecoder implements ImageAnalysis.Analyzer {
                      } catch (Exception e) {
                          url = barcode.get(0).getDisplayValue();
                      }
-                     // проверяем состояние системы через контекст -
-                     // не обрабатывает ли она предыдцщий найденый код
-                     // и провери декодирован ли текущай
+                     // проверяем состояние системы через контекст —
+                     // не обрабатывает ли она предыдущий найденный код
+                     // и проверен ли текущий
                      if (!((ScanQrCode) context).isProcess &&  url != null) {
-                         // устанавливаем систему в состояние обработки найденого текста и вызываем обработчик куар кодов
+                         // устанавливаем систему в состояние обработки найденного текста и вызываем обработчик QR-кодов
                          ((ScanQrCode) context).isProcess = true;
                          ((ScanQrCode) context).qrCodeHandler(url);
                      }

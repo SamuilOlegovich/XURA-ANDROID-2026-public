@@ -21,16 +21,22 @@ import java.util.Map;
 
 
 
+/**
+ * Загружает историю платежей текущего кошелька с XRPL-узла и преобразует её
+ * в список {@link HistoryPaymentDto} для отображения на экране истории транзакций.
+ */
 public class HistoryCreator {
     private final WalletRepository repository;
     private String myAccount;
 
+    /** Привязывается к единственному экземпляру WalletRepository (Singleton) для отправки команд на узел. */
     public HistoryCreator() {
         this.repository = WalletRepository.getInstance();
     }
 
 
 
+    /** Запускает построение истории: запоминает адрес текущего кошелька и запрашивает по нему транзакции. */
     public synchronized void createHistory() {
         myAccount = repository.getClassicAddress();
         getAllHistory();
@@ -38,6 +44,7 @@ public class HistoryCreator {
 
 
 
+    /** Отправляет на XRPL-узел запрос account_tx (последние 100 валидированных транзакций по счёту). */
     private void getAllHistory() {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("account", myAccount);
@@ -54,6 +61,12 @@ public class HistoryCreator {
     }
 
 
+    /**
+     * Разбирает JSON-ответ узла на список транзакций: определяет направление (входящая/исходящая)
+     * по адресу назначения, переводит сумму из дропс в XRP, извлекает метку из Memo/DestinationTag
+     * и конвертирует время из XRP-эпохи (с 2000-01-01) в обычную дату. При ошибке парсинга
+     * выводит список из одной заглушки, чтобы экран не остался пустым без объяснения.
+     */
     private void parseResponse(String s) {
         ArrayList<HistoryPaymentDto> list = new ArrayList<>();
 
@@ -106,6 +119,7 @@ public class HistoryCreator {
     }
 
 
+    /** Преобразует hex-строку (как хранится MemoData в XRPL) в массив байт для декодирования в текст. */
     private static byte[] hexToBytes(String hex) {
         byte[] bytes = new byte[hex.length() / 2];
         for (int i = 0; i < hex.length(); i += 2) {
