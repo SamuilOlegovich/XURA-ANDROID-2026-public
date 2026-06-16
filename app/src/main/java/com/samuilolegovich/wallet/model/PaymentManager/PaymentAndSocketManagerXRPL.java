@@ -1,9 +1,7 @@
 package com.samuilolegovich.wallet.model.PaymentManager;
 
 import com.samuilolegovich.enums.StringEnum;
-import com.samuilolegovich.wallet.enums.BooleanEnum;
 import com.samuilolegovich.wallet.model.PaymentManager.interfaces.PaymentManager;
-import com.samuilolegovich.wallet.model.PaymentManager.interfaces.Presets;
 import com.samuilolegovich.wallet.model.PaymentManager.interfaces.SocketManager;
 import com.samuilolegovich.wallet.model.sockets.SocketXRP;
 import com.samuilolegovich.wallet.model.sockets.enums.StreamSubscriptionEnum;
@@ -24,12 +22,12 @@ import java.util.concurrent.TimeUnit;
 
 
 /**
- * Синглтон, объединяющий менеджер платежей, менеджер WebSocket-соединения и
- * настройки-предустановки для кошелька XRPL: делегирует операции с платежами
- * и ключами в {@link WalletXRP}, а операции с потоковыми подписками и
- * командами — в {@link SocketXRP}.
+ * Синглтон, объединяющий менеджер платежей и менеджер WebSocket-соединения
+ * для кошелька XRPL: делегирует операции с платежами и ключами в
+ * {@link WalletXRP}, а операции с потоковыми подписками и командами —
+ * в {@link SocketXRP}.
  */
-public class PaymentAndSocketManagerXRPL implements PaymentManager, SocketManager, Presets {
+public class PaymentAndSocketManagerXRPL implements PaymentManager, SocketManager {
     private static PaymentAndSocketManagerXRPL instance = null;
     private SocketXRP socket;
     private WalletXRP wallet;
@@ -298,21 +296,6 @@ public class PaymentAndSocketManagerXRPL implements PaymentManager, SocketManage
                 e.printStackTrace();
             }
         }
-    }
-
-
-
-    // Presets *********************************************************************************************************
-
-
-    /** Устанавливает значение булевой настройки-предустановки. */
-    public void setPresets(BooleanEnum enums, boolean b) {
-        BooleanEnum.setValue(enums, b);
-    }
-
-    /** Устанавливает значение строковой настройки-предустановки. */
-    public void setPresets(StringEnum enums, String s) {
-        StringEnum.setValue(enums, s);
     }
 
 }
