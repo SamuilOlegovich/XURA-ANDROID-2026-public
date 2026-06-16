@@ -44,6 +44,9 @@ public class FlasherRun implements Runnable {
 
     /** Генерирует следующее число/цвет (отличное от предыдущего) и передаёт его на отображение в Flasher. */
     private void genNumberAndColor() {
+        Flasher flasher = Flasher.FLASHER;
+        if (flasher == null) return;
+
         Map<Boolean, String> map = Lotto.genNumberAndColor();
 
         while (map.containsKey(nextColor)) {
@@ -51,10 +54,10 @@ public class FlasherRun implements Runnable {
         }
 
         if (map.containsKey(true)) {
-            Flasher.FLASHER.setColorAndText(map.get(true), true);
+            flasher.setColorAndText(map.get(true), true);
             nextColor = true;
         } else {
-            Flasher.FLASHER.setColorAndText(map.get(false), false);
+            flasher.setColorAndText(map.get(false), false);
             nextColor = false;
         }
     }

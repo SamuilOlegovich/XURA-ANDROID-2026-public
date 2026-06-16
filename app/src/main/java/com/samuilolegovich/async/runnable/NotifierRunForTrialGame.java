@@ -194,13 +194,14 @@ public class NotifierRunForTrialGame implements Runnable {
      * для показа позже.
      */
     private void responseToBet(String text, String lotto, int i) {
-        if (Flasher.VISIBLE_ON_SCREEN && Flasher.FLASHER != null) {
+        Flasher flasher = Flasher.FLASHER;
+        if (Flasher.VISIBLE_ON_SCREEN && flasher != null) {
             switch (i) {
                 case 1:
-                    Flasher.FLASHER.stopGame(text, false);
+                    flasher.stopGame(text, false);
                     break;
                 case 2:
-                    Flasher.FLASHER.stopGame(text, true);
+                    flasher.stopGame(text, true);
                     break;
                 case 3:
                     WalletRepository.getInstance().notifyEvent(text, lotto, i);

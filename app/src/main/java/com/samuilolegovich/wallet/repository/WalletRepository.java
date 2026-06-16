@@ -89,6 +89,13 @@ public class WalletRepository {
         navigationEventLiveData.postValue(new NavigationEvent(type, message, lotto));
     }
 
+    /** Сбрасывает событие навигации после того, как Activity его обработала — иначе оно повторно
+     *  доставится следующему наблюдателю (например, при пересоздании MainActivity) и вызовет
+     *  повторный переход на экран выигрыша/проигрыша. */
+    public void clearNavigationEvent() {
+        navigationEventLiveData.setValue(null);
+    }
+
 
 
     // Баланс

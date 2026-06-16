@@ -1,0 +1,67 @@
+package com.samuilolegovich.view;
+
+import android.content.Context;
+import android.content.SharedPreferences;
+
+import androidx.test.core.app.ActivityScenario;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
+
+import com.samuilolegovich.MainActivity;
+import com.samuilolegovich.R;
+import com.samuilolegovich.enums.StringEnum;
+import com.samuilolegovich.utils.PrefsHelper;
+import com.samuilolegovich.utils.SecureSeedStorage;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static org.junit.Assert.assertNotNull;
+
+/**
+ * Smoke-тест для GuessTheNumberGame. IS_REAL_GAME_MODE = false переводит
+ * viewModel.getBalance() на локальный тестовый баланс без сети.
+ */
+@RunWith(AndroidJUnit4.class)
+public class GuessTheNumberGameTest {
+
+    private static final String TEST_SEED = "sEdVXzobfHcDjDFxpXPMKzGYGVVULVU";
+
+    @Before
+    public void setUp() {
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        SharedPreferences prefs = PrefsHelper.get(context);
+        prefs.edit()
+                .putString(StringEnum.APP_PREFERENCES_PASSWORD.getValue(),
+                        StringEnum.APP_PREFERENCES_PASSWORD_NOT_INSTALLED.getValue())
+                .commit();
+        SecureSeedStorage.save(prefs, StringEnum.APP_PREFERENCES_SEED.getValue(), TEST_SEED);
+        MainActivity.IS_REAL_GAME_MODE = false;
+    }
+
+    @After
+    public void resetGameMode() {
+        MainActivity.IS_REAL_GAME_MODE = false;
+    }
+
+    @Test
+    public void app_launchesWithoutCrash() {
+        try (ActivityScenario<GuessTheNumberGame> scenario = ActivityScenario.launch(GuessTheNumberGame.class)) {
+            scenario.onActivity(activity -> assertNotNull(activity));
+        }
+    }
+
+    @Test
+    public void screen_showsBetFieldAndNumbersGrid() {
+        try (ActivityScenario<GuessTheNumberGame> scenario = ActivityScenario.launch(GuessTheNumberGame.class)) {
+            onView(withId(R.id.bet_field)).check(matches(isDisplayed()));
+            onView(withId(R.id.numbers_grid)).check(matches(isDisplayed()));
+        }
+    }
+}
