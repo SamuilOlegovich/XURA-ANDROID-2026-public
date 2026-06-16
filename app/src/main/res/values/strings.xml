@@ -237,8 +237,8 @@
 
 
 
-    <!--    <string name="info_main">INFORMATION</string>-->
-<!--    <string name="it_s_important_to_know">IT S IMPORTANT TO KNOW</string>-->
+    <string name="info_main">INFORMATION</string>
+    <string name="it_s_important_to_know">IT\'S IMPORTANT TO KNOW</string>
     <string name="about_benefits_1"> • We are not an official XRP or Ripple wallet.</string>
     <string name="about_benefits_2"> • Your keys are stored only on your device and never shared.</string>
     <string name="about_benefits_3"> • By using this app, you confirm you are 18 years of age or older.</string>

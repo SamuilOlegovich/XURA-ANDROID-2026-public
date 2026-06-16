@@ -126,9 +126,47 @@
 -dontwarn com.google.android.gms.**
 
 
+# --- Компиляторные/annotation-processor классы, попавшие в classpath ----------
+# Immutables (xrpl4j) и logback тянут javax.lang.model/javax.tools/javax.naming/
+# org.eclipse.jdt/org.codehaus.janino как compile-time-only зависимости — они не
+# вызываются в runtime на Android, R8 должен просто не предупреждать о них.
+
+-dontwarn javax.lang.model.**
+-dontwarn javax.tools.**
+-dontwarn javax.naming.**
+-dontwarn javax.servlet.**
+-dontwarn javax.annotation.processing.**
+-dontwarn org.eclipse.jdt.**
+-dontwarn org.codehaus.janino.**
+-dontwarn sun.security.x509.**
+-dontwarn com.sun.tools.javac.**
+
+
 # --- Атрибуты для читаемых crash-стектрейсов ----------------------------------
 # Оставляем номера строк — имена файлов скрыты, но стек можно расшифровать
 # через mapping.txt из артефактов сборки.
 
 -keepattributes LineNumberTable
 -renamesourcefileattribute SourceFile
+
+
+# --- Удаление debug-вывода из release-сборки -----------------------------------
+# В коде вместо android.util.Log используются System.out.println(...) и
+# e.printStackTrace() (хеши транзакций, суммы, внутренние ошибки сети) — оба
+# пишут в logcat, который доступен через adb или приложениям с READ_LOGS на
+# старых Android. R8 вырезает эти вызовы только в release (debug их сохраняет).
+
+-assumenosideeffects class java.io.PrintStream {
+    public void println(...);
+    public void print(...);
+}
+-assumenosideeffects class java.lang.Throwable {
+    public void printStackTrace();
+}
+-assumenosideeffects class android.util.Log {
+    public static int v(...);
+    public static int d(...);
+    public static int i(...);
+    public static int w(...);
+    public static int e(...);
+}
