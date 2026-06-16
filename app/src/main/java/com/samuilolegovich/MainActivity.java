@@ -20,6 +20,7 @@ import com.samuilolegovich.utils.Lotto;
 import com.samuilolegovich.utils.PrefsHelper;
 import com.samuilolegovich.utils.RootDetector;
 import com.samuilolegovich.utils.SecureSeedStorage;
+import com.samuilolegovich.utils.SignatureVerifier;
 import com.samuilolegovich.view.Lost;
 import com.samuilolegovich.view.Win;
 import com.samuilolegovich.view.YourReferral;
@@ -124,11 +125,28 @@ public class MainActivity extends BaseActivity {
             if (Boolean.TRUE.equals(ready)) startXrplSocketService();
         });
 
-        if (RootDetector.isRooted(this) && !rootWarningShown) {
+        if (!SignatureVerifier.isSignatureValid(this)) {
+            showTamperedWarning();
+        } else if (RootDetector.isRooted(this) && !rootWarningShown) {
             showRootWarning();
         } else {
             handleStartup();
         }
+    }
+
+
+
+    private void showTamperedWarning() {
+        new AlertDialog.Builder(this)
+                .setTitle("Целостность приложения нарушена")
+                .setMessage(
+                        "Это приложение подписано не тем сертификатом, с которым оно собиралось.\n\n" +
+                        "Скорее всего, это изменённая или клонированная копия XURA — она может " +
+                        "содержать вредоносный код, ворующий seed-фразу и средства.\n\n" +
+                        "Установите XURA из официального источника.")
+                .setCancelable(false)
+                .setPositiveButton("Выйти", (d, w) -> finishAffinity())
+                .show();
     }
 
 
