@@ -55,6 +55,16 @@ The gaming logic (Roulette, Guess the Color, Guess the Number) requires a dedica
 </p>
 
 <p align="center">
+  <img src="screenshots/33_roulette_wheel.png" width="18%" alt="Roulette Wheel"/>
+  <img src="screenshots/34_bet_won.png"        width="18%" alt="Bet Won"/>
+  <img src="screenshots/35_bet_lost.png"       width="18%" alt="Bet Lost"/>
+</p>
+
+<p align="center">
+  <em>Roulette wheel (waiting for result) · BET WON · BET LOST</em>
+</p>
+
+<p align="center">
   <img src="screenshots/18_settings.png"              width="18%" alt="Settings"/>
   <img src="screenshots/19_select_language.png"       width="18%" alt="Language"/>
   <img src="screenshots/28_referral_enter.png"        width="18%" alt="Enter Referral"/>
