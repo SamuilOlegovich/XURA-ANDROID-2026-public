@@ -86,6 +86,24 @@ The wallet side works fully **right now** on XRPL Mainnet. The game side require
 
 ---
 
+## Vision: The Future of On-Chain Gaming
+
+**XURA is a proof-of-concept, not just a product.**
+
+This implementation demonstrates how on-chain gaming *should* work — transparent, non-custodial, and verifiable by anyone. The XRP Ledger is the first chain we built on, but **the architecture is blockchain-agnostic**:
+
+> The same pattern — *non-custodial wallet + on-chain bets as real transactions + server-signed payouts verifiable on-chain* — applies equally to **Ethereum, Solana, Stellar, TON, Tron**, or any account-based or UTXO chain that supports memos/data fields on transactions.
+
+We believe this is how gambling should look in the future:
+- No casino account, no deposit, no withdrawal request
+- Every bet is a native blockchain transaction
+- The server cannot cheat — every outcome is signed and verifiable
+- Users keep custody of funds at all times
+
+**XURA on XRPL is the reference implementation. The model scales to any chain.**
+
+---
+
 ## Why XURA?
 
 Unlike traditional crypto casinos, XURA never holds your funds:
