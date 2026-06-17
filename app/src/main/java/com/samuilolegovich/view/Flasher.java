@@ -1,8 +1,11 @@
 package com.samuilolegovich.view;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
 import android.graphics.LinearGradient;
 import android.graphics.Shader;
+import android.media.AudioFocusRequest;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,6 +23,7 @@ import com.samuilolegovich.R;
 import com.samuilolegovich.async.runnable.FlasherRun;
 import com.samuilolegovich.async.runnable.NotifierRunForTrialGame;
 import com.samuilolegovich.enums.TestModeEnum;
+import com.samuilolegovich.utils.AudioHelper;
 import com.samuilolegovich.utils.Lotto;
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -59,6 +63,29 @@ public class Flasher extends BaseActivity {
     private MediaPlayer rouletteSpinMediaPlayer;
     private MediaPlayer winMediaPlayer;
     private MediaPlayer lostMediaPlayer;
+
+    private AudioFocusRequest audioFocusRequest;
+    private BroadcastReceiver noisyReceiver;
+    private boolean gameResultShown = false;
+    private boolean lastResultWin   = false;
+
+    private final AudioManager.OnAudioFocusChangeListener focusListener = focusChange -> {
+        switch (focusChange) {
+            case AudioManager.AUDIOFOCUS_LOSS:
+            case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
+                if (rouletteSpinMediaPlayer != null && rouletteSpinMediaPlayer.isPlaying())
+                    rouletteSpinMediaPlayer.pause();
+                if (winMediaPlayer  != null && winMediaPlayer.isPlaying())  winMediaPlayer.pause();
+                if (lostMediaPlayer != null && lostMediaPlayer.isPlaying()) lostMediaPlayer.pause();
+                break;
+            case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
+                if (rouletteSpinMediaPlayer != null) rouletteSpinMediaPlayer.setVolume(0.1f, 0.1f);
+                break;
+            case AudioManager.AUDIOFOCUS_GAIN:
+                if (rouletteSpinMediaPlayer != null) rouletteSpinMediaPlayer.setVolume(1f, 1f);
+                break;
+        }
+    };
 
     private RouletteWheelView wheelView;
     private TextView numberInfo;
@@ -101,11 +128,10 @@ public class Flasher extends BaseActivity {
     /** Готовит звуковые эффекты (вращение/выигрыш/проигрыш) и запускает циклическое вращение рулетки. */
     private void setSound() {
         rouletteSpinMediaPlayer = MediaPlayer.create(this, R.raw.roulette_spin);
-        winMediaPlayer = MediaPlayer.create(this, R.raw.win);
+        winMediaPlayer  = MediaPlayer.create(this, R.raw.win);
         lostMediaPlayer = MediaPlayer.create(this, R.raw.lost);
 
         rouletteSpinMediaPlayer.setLooping(true);
-        rouletteSpinMediaPlayer.start();
         wheelView.setCenterColor(0xFF000000);
         wheelView.startSpinning();
     }
@@ -149,6 +175,8 @@ public class Flasher extends BaseActivity {
         runOnUiThread(() -> {
             FLAG = false;
             FlasherRun.FLAG = false;
+            gameResultShown = true;
+            lastResultWin   = win;
             gameStop(text, win);
         });
     }
@@ -182,10 +210,9 @@ public class Flasher extends BaseActivity {
             tvCountdown.setVisibility(View.VISIBLE);
             startCountdown();
 
-            if (win) {
-                winMediaPlayer.start();
-            } else {
-                lostMediaPlayer.start();
+            if (AudioHelper.isSoundEnabled(this)) {
+                if (win) winMediaPlayer.start();
+                else     lostMediaPlayer.start();
             }
         });
     }
@@ -280,7 +307,7 @@ public class Flasher extends BaseActivity {
     }
 
 
-    /** При уходе с экрана приостанавливает все звуки, останавливает поток ожидания и анимацию колеса. */
+    /** При уходе с экрана приостанавливает все звуки, освобождает аудиофокус, останавливает поток и анимацию колеса. */
     @Override
     protected void onPause() {
         super.onPause();
@@ -291,19 +318,32 @@ public class Flasher extends BaseActivity {
         if (rouletteSpinMediaPlayer != null && rouletteSpinMediaPlayer.isPlaying()) rouletteSpinMediaPlayer.pause();
         if (winMediaPlayer  != null && winMediaPlayer.isPlaying())  winMediaPlayer.pause();
         if (lostMediaPlayer != null && lostMediaPlayer.isPlaying()) lostMediaPlayer.pause();
+        AudioHelper.abandonFocus(this, audioFocusRequest);
+        AudioHelper.unregisterNoisyReceiver(this, noisyReceiver);
+        audioFocusRequest = null;
+        noisyReceiver = null;
     }
 
 
-    /** При возвращении на экран (если ожидание ещё не завершено) перезапускает поток, анимацию и звук вращения. */
+    /** При возвращении запрашивает аудиофокус и: если спин ещё идёт — возобновляет вращение и звук; если результат уже показан — возобновляет win/lost звук. */
     @Override
     protected void onResume() {
         super.onResume();
         VISIBLE_ON_SCREEN = true;
+        noisyReceiver = AudioHelper.registerNoisyReceiver(this, () -> {
+            if (rouletteSpinMediaPlayer != null && rouletteSpinMediaPlayer.isPlaying())
+                rouletteSpinMediaPlayer.pause();
+        });
+        audioFocusRequest = AudioHelper.requestFocus(this, focusListener);
         if (FLAG) {
             FlasherRun.FLAG = true;
             goThread();
             if (wheelView != null) wheelView.startSpinning();
-            if (rouletteSpinMediaPlayer != null) rouletteSpinMediaPlayer.start();
+            if (rouletteSpinMediaPlayer != null && AudioHelper.isSoundEnabled(this))
+                rouletteSpinMediaPlayer.start();
+        } else if (gameResultShown && AudioHelper.isSoundEnabled(this)) {
+            MediaPlayer resultPlayer = lastResultWin ? winMediaPlayer : lostMediaPlayer;
+            if (resultPlayer != null) resultPlayer.start();
         }
     }
 
@@ -321,10 +361,12 @@ public class Flasher extends BaseActivity {
         super.onBackPressed();
     }
 
-    /** Освобождает ресурсы MediaPlayer и сбрасывает статическую ссылку на Activity. */
+    /** Освобождает ресурсы MediaPlayer, аудиофокус и сбрасывает статическую ссылку на Activity. */
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        AudioHelper.abandonFocus(this, audioFocusRequest);
+        AudioHelper.unregisterNoisyReceiver(this, noisyReceiver);
         if (rouletteSpinMediaPlayer != null) { rouletteSpinMediaPlayer.release(); rouletteSpinMediaPlayer = null; }
         if (winMediaPlayer  != null) { winMediaPlayer.release();  winMediaPlayer  = null; }
         if (lostMediaPlayer != null) { lostMediaPlayer.release(); lostMediaPlayer = null; }

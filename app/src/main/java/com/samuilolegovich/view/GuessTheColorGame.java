@@ -1,8 +1,11 @@
 package com.samuilolegovich.view;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.AudioFocusRequest;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
@@ -24,6 +27,8 @@ import com.samuilolegovich.R;
 import com.samuilolegovich.async.runnable.GenColorRun;
 import com.samuilolegovich.enums.StringEnum;
 import com.samuilolegovich.enums.TestModeEnum;
+import com.samuilolegovich.utils.AudioHelper;
+import com.samuilolegovich.utils.GameSoundPool;
 import com.samuilolegovich.utils.PrefsHelper;
 import com.samuilolegovich.utils.Lotto;
 import com.samuilolegovich.viewmodel.GameBetError;
@@ -60,8 +65,27 @@ public class GuessTheColorGame extends BaseActivity {
     private GuessColorViewModel viewModel;
     private SharedPreferences preferences;
     private MediaPlayer casinoMediaPlayer;
-    private MediaPlayer errorMediaPlayer;
-    private MediaPlayer betMediaPlayer;
+    private GameSoundPool soundPool;
+    private AudioFocusRequest audioFocusRequest;
+    private BroadcastReceiver noisyReceiver;
+
+    private final AudioManager.OnAudioFocusChangeListener focusListener = focusChange -> {
+        if (casinoMediaPlayer == null) return;
+        switch (focusChange) {
+            case AudioManager.AUDIOFOCUS_LOSS:
+            case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
+                if (casinoMediaPlayer.isPlaying()) casinoMediaPlayer.pause();
+                break;
+            case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
+                casinoMediaPlayer.setVolume(0.1f, 0.1f);
+                break;
+            case AudioManager.AUDIOFOCUS_GAIN:
+                casinoMediaPlayer.setVolume(0.5f, 0.5f);
+                if (!casinoMediaPlayer.isPlaying() && AudioHelper.isSoundEnabled(this))
+                    casinoMediaPlayer.start();
+                break;
+        }
+    };
 
     // Сохраняем цвет ставки до получения ответа от ViewModel
     private boolean pendingColor;
@@ -108,7 +132,7 @@ public class GuessTheColorGame extends BaseActivity {
         viewModel.getError().observe(this, error -> {
             if (error == null) return;
             setBettingState(false);
-            errorMediaPlayer.start();
+            soundPool.playError(this);
             String msg;
             switch (error) {
                 case INVALID_AMOUNT:       msg = PAYMENT_AMOUNT_IS_INCORRECT; break;
@@ -156,12 +180,10 @@ public class GuessTheColorGame extends BaseActivity {
         blackProgress = findViewById(R.id.black_progress);
 
         casinoMediaPlayer = MediaPlayer.create(this, R.raw.in_casino);
-        errorMediaPlayer = MediaPlayer.create(this, R.raw.error);
-        betMediaPlayer = MediaPlayer.create(this, R.raw.bet);
-
         casinoMediaPlayer.setVolume(0.5f, 0.5f);
         casinoMediaPlayer.setLooping(true);
-        casinoMediaPlayer.start();
+
+        soundPool = new GameSoundPool(this);
     }
 
 
@@ -211,7 +233,7 @@ public class GuessTheColorGame extends BaseActivity {
             pulse(v);
             lastBetWasRed = false;
             setBettingState(true);
-            betMediaPlayer.start();
+            soundPool.playBet(this);
             pendingColor = true;
             Flasher.COLOR_BET = true;
             viewModel.placeBet(
@@ -224,7 +246,7 @@ public class GuessTheColorGame extends BaseActivity {
             pulse(v);
             lastBetWasRed = true;
             setBettingState(true);
-            betMediaPlayer.start();
+            soundPool.playBet(this);
             pendingColor = false;
             Flasher.COLOR_BET = false;
             viewModel.placeBet(
@@ -283,16 +305,20 @@ public class GuessTheColorGame extends BaseActivity {
     }
 
 
-    /** При уходе с экрана приостанавливает музыку и останавливает фоновую генерацию цвета. */
+    /** При уходе с экрана приостанавливает музыку, освобождает аудиофокус и отписывается от наушников. */
     @Override
     protected void onPause() {
         super.onPause();
         VISIBLE_ON_SCREEN = false;
         GenColorRun.FLAG = false;
         if (casinoMediaPlayer != null && casinoMediaPlayer.isPlaying()) casinoMediaPlayer.pause();
+        AudioHelper.abandonFocus(this, audioFocusRequest);
+        AudioHelper.unregisterNoisyReceiver(this, noisyReceiver);
+        audioFocusRequest = null;
+        noisyReceiver = null;
     }
 
-    /** При возвращении на экран возобновляет музыку, баланс и фоновую генерацию цвета. */
+    /** При возвращении запрашивает аудиофокус, регистрирует приёмник наушников и запускает музыку (если не замьючено). */
     @Override
     protected void onResume() {
         super.onResume();
@@ -300,7 +326,10 @@ public class GuessTheColorGame extends BaseActivity {
         GenColorRun.FLAG = true;
         viewModel.loadBalance();
         goThread();
-        if (casinoMediaPlayer != null) casinoMediaPlayer.start();
+        noisyReceiver = AudioHelper.registerNoisyReceiver(this,
+                () -> { if (casinoMediaPlayer != null && casinoMediaPlayer.isPlaying()) casinoMediaPlayer.pause(); });
+        audioFocusRequest = AudioHelper.requestFocus(this, focusListener);
+        if (casinoMediaPlayer != null && AudioHelper.isSoundEnabled(this)) casinoMediaPlayer.start();
     }
 
     /** Останавливает фоновую музыку и генерацию цвета перед закрытием экрана. */
@@ -311,12 +340,11 @@ public class GuessTheColorGame extends BaseActivity {
         super.onBackPressed();
     }
 
-    /** Освобождает ресурсы MediaPlayer при уничтожении Activity. */
+    /** Освобождает ресурсы MediaPlayer и SoundPool при уничтожении Activity. */
     @Override
     protected void onDestroy() {
         super.onDestroy();
         if (casinoMediaPlayer != null) { casinoMediaPlayer.release(); casinoMediaPlayer = null; }
-        if (errorMediaPlayer  != null) { errorMediaPlayer.release();  errorMediaPlayer  = null; }
-        if (betMediaPlayer    != null) { betMediaPlayer.release();    betMediaPlayer    = null; }
+        if (soundPool != null) { soundPool.release(); soundPool = null; }
     }
 }

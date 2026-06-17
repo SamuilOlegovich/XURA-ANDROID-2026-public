@@ -1,8 +1,11 @@
 package com.samuilolegovich.view;
 
+import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.GradientDrawable;
+import android.media.AudioFocusRequest;
+import android.media.AudioManager;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -27,6 +30,8 @@ import com.samuilolegovich.R;
 import com.samuilolegovich.enums.RouletteBetCode;
 import com.samuilolegovich.enums.StringEnum;
 import com.samuilolegovich.enums.TestModeEnum;
+import com.samuilolegovich.utils.AudioHelper;
+import com.samuilolegovich.utils.GameSoundPool;
 import com.samuilolegovich.utils.PrefsHelper;
 import com.samuilolegovich.viewmodel.RouletteViewModel;
 
@@ -72,8 +77,27 @@ public class RouletteGame extends BaseActivity {
 
     // ── Sound ────────────────────────────────────────────────────────────
     private MediaPlayer casinoMediaPlayer;
-    private MediaPlayer errorMediaPlayer;
-    private MediaPlayer betMediaPlayer;
+    private GameSoundPool soundPool;
+    private AudioFocusRequest audioFocusRequest;
+    private BroadcastReceiver noisyReceiver;
+
+    private final AudioManager.OnAudioFocusChangeListener focusListener = focusChange -> {
+        if (casinoMediaPlayer == null) return;
+        switch (focusChange) {
+            case AudioManager.AUDIOFOCUS_LOSS:
+            case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
+                if (casinoMediaPlayer.isPlaying()) casinoMediaPlayer.pause();
+                break;
+            case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
+                casinoMediaPlayer.setVolume(0.1f, 0.1f);
+                break;
+            case AudioManager.AUDIOFOCUS_GAIN:
+                casinoMediaPlayer.setVolume(0.4f, 0.4f);
+                if (!casinoMediaPlayer.isPlaying() && AudioHelper.isSoundEnabled(this))
+                    casinoMediaPlayer.start();
+                break;
+        }
+    };
 
     // ── Multi-bet table state ─────────────────────────────────────────────
     private final LinkedHashMap<String, BigDecimal> tableBets   = new LinkedHashMap<>();
@@ -131,7 +155,7 @@ public class RouletteGame extends BaseActivity {
         viewModel.getError().observe(this, error -> {
             if (error == null) return;
             setSpinningState(false);
-            errorMediaPlayer.start();
+            soundPool.playError(this);
             String msg;
             switch (error) {
                 case INVALID_AMOUNT:       msg = PAYMENT_AMOUNT_IS_INCORRECT; break;
@@ -177,12 +201,10 @@ public class RouletteGame extends BaseActivity {
         spinProgress     = findViewById(R.id.spin_progress);
 
         casinoMediaPlayer = MediaPlayer.create(this, R.raw.in_casino);
-        errorMediaPlayer  = MediaPlayer.create(this, R.raw.error);
-        betMediaPlayer    = MediaPlayer.create(this, R.raw.bet);
-
         casinoMediaPlayer.setVolume(0.4f, 0.4f);
         casinoMediaPlayer.setLooping(true);
-        casinoMediaPlayer.start();
+
+        soundPool = new GameSoundPool(this);
     }
 
     /** Загружает локализованные строки для всех сообщений об ошибках на экране. */
@@ -486,7 +508,7 @@ public class RouletteGame extends BaseActivity {
 
             pulse(v);
             setSpinningState(true);
-            betMediaPlayer.start();
+            soundPool.playBet(this);
             viewModel.placeBets(new LinkedHashMap<>(tableBets), myReferral);
         });
 
@@ -578,19 +600,26 @@ public class RouletteGame extends BaseActivity {
     //  Lifecycle
     // ════════════════════════════════════════════════════════════════════
 
-    /** При уходе с экрана приостанавливает музыку казино. */
+    /** При уходе с экрана приостанавливает музыку, освобождает аудиофокус и отписывается от наушников. */
     @Override
     protected void onPause() {
         super.onPause();
         if (casinoMediaPlayer != null && casinoMediaPlayer.isPlaying()) casinoMediaPlayer.pause();
+        AudioHelper.abandonFocus(this, audioFocusRequest);
+        AudioHelper.unregisterNoisyReceiver(this, noisyReceiver);
+        audioFocusRequest = null;
+        noisyReceiver = null;
     }
 
-    /** При возвращении на экран возобновляет музыку и обновляет баланс. */
+    /** При возвращении запрашивает аудиофокус, регистрирует приёмник наушников и запускает музыку (если не замьючено). */
     @Override
     protected void onResume() {
         super.onResume();
         viewModel.loadBalance();
-        if (casinoMediaPlayer != null) casinoMediaPlayer.start();
+        noisyReceiver = AudioHelper.registerNoisyReceiver(this,
+                () -> { if (casinoMediaPlayer != null && casinoMediaPlayer.isPlaying()) casinoMediaPlayer.pause(); });
+        audioFocusRequest = AudioHelper.requestFocus(this, focusListener);
+        if (casinoMediaPlayer != null && AudioHelper.isSoundEnabled(this)) casinoMediaPlayer.start();
     }
 
     /** Останавливает фоновую музыку казино перед закрытием экрана. */
@@ -600,12 +629,11 @@ public class RouletteGame extends BaseActivity {
         super.onBackPressed();
     }
 
-    /** Освобождает ресурсы MediaPlayer при уничтожении Activity. */
+    /** Освобождает ресурсы MediaPlayer и SoundPool при уничтожении Activity. */
     @Override
     protected void onDestroy() {
         super.onDestroy();
         if (casinoMediaPlayer != null) { casinoMediaPlayer.release(); casinoMediaPlayer = null; }
-        if (errorMediaPlayer  != null) { errorMediaPlayer.release();  errorMediaPlayer  = null; }
-        if (betMediaPlayer    != null) { betMediaPlayer.release();    betMediaPlayer    = null; }
+        if (soundPool != null) { soundPool.release(); soundPool = null; }
     }
 }

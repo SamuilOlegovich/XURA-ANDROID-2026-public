@@ -31,6 +31,7 @@ import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 import com.samuilolegovich.config.NetworkConfig;
 import com.samuilolegovich.enums.StringEnum;
+import com.samuilolegovich.utils.AudioHelper;
 import com.samuilolegovich.utils.BiometricHelper;
 import com.samuilolegovich.utils.ClipboardUtil;
 import com.samuilolegovich.utils.InactivityGuard;
@@ -87,8 +88,10 @@ public class Settings extends BaseActivity {
     private View settingsSetPasswordLinc;
     private View settingsBiometricLinc;
     private View settingsLockTimeoutLinc;
+    private View settingsSoundLinc;
     private TextView biometricTitleText;
     private TextView lockTimeoutTitle;
+    private TextView soundTitle;
     private android.widget.ImageView setPasswordIcon;
     private TextView settingsTextView;
     private MaterialCardView cardTestBalance;
@@ -164,8 +167,10 @@ public class Settings extends BaseActivity {
         settingsSetPasswordLinc   = findViewById(R.id.settings_set_password_linc);
         settingsBiometricLinc     = findViewById(R.id.settings_biometric_linc);
         settingsLockTimeoutLinc   = findViewById(R.id.settings_lock_timeout_linc);
+        settingsSoundLinc         = findViewById(R.id.settings_sound_linc);
         biometricTitleText        = findViewById(R.id.biometric_title);
         lockTimeoutTitle          = findViewById(R.id.lock_timeout_title);
+        soundTitle                = findViewById(R.id.sound_title);
         setPasswordIcon           = findViewById(R.id.set_password_icon);
         settingsTextView          = findViewById(R.id.settings_text_view);
         cardTestBalance           = findViewById(R.id.card_test_balance);
@@ -208,6 +213,7 @@ public class Settings extends BaseActivity {
         settingsTextView.setText(R.string.settings_text);
         updateBiometricButton();
         updateLockTimeoutButton();
+        updateSoundButton();
         updateGameModeButton();
         updateTestBalanceCard();
         updatePasswordIcon();
@@ -265,6 +271,12 @@ public class Settings extends BaseActivity {
     private void updateBiometricButton() {
         String state = isBiometricEnabled() ? "  ●  ON" : "  ○  OFF";
         biometricTitleText.setText(getString(R.string.settings_biometric) + state);
+    }
+
+    /** Обновляет текст пункта звука, показывая его текущее состояние (ON/OFF). */
+    private void updateSoundButton() {
+        boolean enabled = AudioHelper.isSoundEnabled(this);
+        soundTitle.setText("Sound" + (enabled ? "  ●  ON" : "  ○  OFF"));
     }
 
     /** Обновляет текст пункта таймаута, показывая текущее значение. */
@@ -422,6 +434,13 @@ public class Settings extends BaseActivity {
         settingsBiometricLinc.setOnClickListener(v -> {
             pulse(v);
             handleBiometricToggle();
+        });
+
+        settingsSoundLinc.setOnClickListener(v -> {
+            pulse(v);
+            boolean current = AudioHelper.isSoundEnabled(this);
+            AudioHelper.setSoundEnabled(this, !current);
+            updateSoundButton();
         });
 
         settingsLockTimeoutLinc.setOnClickListener(v -> {

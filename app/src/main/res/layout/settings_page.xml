@@ -384,6 +384,68 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <!-- SOUND TOGGLE — cyan card -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/settings_sound_linc"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/bg_card_action_primary"
+                android:clickable="true"
+                android:focusable="true"
+                android:contentDescription="Sound toggle">
+
+                <TextView
+                    android:id="@+id/sound_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="Sound"
+                    android:textColor="@color/xura_cyan"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.03"
+                    app:layout_constraintBottom_toTopOf="@+id/sound_subtitle"
+                    app:layout_constraintEnd_toStartOf="@+id/sound_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="packed" />
+
+                <TextView
+                    android:id="@+id/sound_subtitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="8dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="Music and sound effects in casino games"
+                    android:textColor="@color/xura_text_tertiary"
+                    android:textSize="11sp"
+                    android:letterSpacing="0.02"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/sound_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/sound_title" />
+
+                <ImageView
+                    android:id="@+id/sound_icon"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/ic_volume_up"
+                    android:importantForAccessibility="no"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/xura_cyan" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
             <!-- GAME MODE — gold (TRIAL) / pink (LIVE) card -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/settings_game_mode_linc"

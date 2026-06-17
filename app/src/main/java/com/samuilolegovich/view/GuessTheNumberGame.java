@@ -1,9 +1,12 @@
 package com.samuilolegovich.view;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.media.AudioFocusRequest;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.TypedValue;
@@ -29,6 +32,8 @@ import com.samuilolegovich.R;
 import com.samuilolegovich.async.runnable.GenNumberRun;
 import com.samuilolegovich.enums.StringEnum;
 import com.samuilolegovich.enums.TestModeEnum;
+import com.samuilolegovich.utils.AudioHelper;
+import com.samuilolegovich.utils.GameSoundPool;
 import com.samuilolegovich.utils.PrefsHelper;
 import com.samuilolegovich.utils.Lotto;
 import com.samuilolegovich.viewmodel.GameBetError;
@@ -65,9 +70,28 @@ public class GuessTheNumberGame extends BaseActivity {
     private GuessNumberViewModel viewModel;
     private SharedPreferences preferences;
     private MediaPlayer casinoMediaPlayer;
-    private MediaPlayer errorMediaPlayer;
-    private MediaPlayer betMediaPlayer;
+    private GameSoundPool soundPool;
+    private AudioFocusRequest audioFocusRequest;
+    private BroadcastReceiver noisyReceiver;
     private String myReferral;
+
+    private final AudioManager.OnAudioFocusChangeListener focusListener = focusChange -> {
+        if (casinoMediaPlayer == null) return;
+        switch (focusChange) {
+            case AudioManager.AUDIOFOCUS_LOSS:
+            case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
+                if (casinoMediaPlayer.isPlaying()) casinoMediaPlayer.pause();
+                break;
+            case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
+                casinoMediaPlayer.setVolume(0.1f, 0.1f);
+                break;
+            case AudioManager.AUDIOFOCUS_GAIN:
+                casinoMediaPlayer.setVolume(0.5f, 0.5f);
+                if (!casinoMediaPlayer.isPlaying() && AudioHelper.isSoundEnabled(this))
+                    casinoMediaPlayer.start();
+                break;
+        }
+    };
 
     // Выбранная цифра — сохраняем до получения ответа от ViewModel
     private TextView selectedNumView = null;
@@ -110,7 +134,7 @@ public class GuessTheNumberGame extends BaseActivity {
         viewModel.getError().observe(this, error -> {
             if (error == null) return;
             setBettingState(false);
-            errorMediaPlayer.start();
+            soundPool.playError(this);
             String msg;
             switch (error) {
                 case NO_NUMBER_SELECTED:   msg = GUESSED_NUMBER_SHOULD_NOT_BE_LESS_THAN; break;
@@ -145,8 +169,10 @@ public class GuessTheNumberGame extends BaseActivity {
     /** Находит View разметки экрана, готовит звуковые эффекты и строит сетку чисел 1–36. */
     private void setButtons() {
         casinoMediaPlayer = MediaPlayer.create(this, R.raw.in_casino);
-        errorMediaPlayer = MediaPlayer.create(this, R.raw.error);
-        betMediaPlayer = MediaPlayer.create(this, R.raw.bet);
+        casinoMediaPlayer.setVolume(0.5f, 0.5f);
+        casinoMediaPlayer.setLooping(true);
+
+        soundPool = new GameSoundPool(this);
 
         nameGameTextViewTree = findViewById(R.id.guess_the_number_game_text_view_tree);
         nameGameTextViewTwo = findViewById(R.id.guess_the_number_game_text_view_tow);
@@ -159,10 +185,6 @@ public class GuessTheNumberGame extends BaseActivity {
         chipGroupAmounts = findViewById(R.id.chip_group_amounts);
         placeBetIcon = findViewById(R.id.place_bet_icon);
         placeBetProgress = findViewById(R.id.place_bet_progress);
-
-        casinoMediaPlayer.setVolume(0.5f, 0.5f);
-        casinoMediaPlayer.setLooping(true);
-        casinoMediaPlayer.start();
 
         setupNumberGrid();
     }
@@ -250,7 +272,7 @@ public class GuessTheNumberGame extends BaseActivity {
         placeBetLinc.setOnClickListener(v -> {
             pulse(v);
             setBettingState(true);
-            betMediaPlayer.start();
+            soundPool.playBet(this);
             viewModel.placeBet(bet.getText().toString(), selectedNumber, myReferral);
         });
     }
@@ -307,16 +329,20 @@ public class GuessTheNumberGame extends BaseActivity {
     }
 
 
-    /** При уходе с экрана приостанавливает музыку и останавливает фоновую генерацию числа. */
+    /** При уходе с экрана приостанавливает музыку, освобождает аудиофокус и отписывается от наушников. */
     @Override
     protected void onPause() {
         super.onPause();
         VISIBLE_ON_SCREEN = false;
         GenNumberRun.FLAG = false;
         if (casinoMediaPlayer != null && casinoMediaPlayer.isPlaying()) casinoMediaPlayer.pause();
+        AudioHelper.abandonFocus(this, audioFocusRequest);
+        AudioHelper.unregisterNoisyReceiver(this, noisyReceiver);
+        audioFocusRequest = null;
+        noisyReceiver = null;
     }
 
-    /** При возвращении на экран возобновляет музыку, баланс и фоновую генерацию числа. */
+    /** При возвращении запрашивает аудиофокус, регистрирует приёмник наушников и запускает музыку (если не замьючено). */
     @Override
     protected void onResume() {
         super.onResume();
@@ -324,7 +350,10 @@ public class GuessTheNumberGame extends BaseActivity {
         GenNumberRun.FLAG = true;
         viewModel.loadBalance();
         goThread();
-        if (casinoMediaPlayer != null) casinoMediaPlayer.start();
+        noisyReceiver = AudioHelper.registerNoisyReceiver(this,
+                () -> { if (casinoMediaPlayer != null && casinoMediaPlayer.isPlaying()) casinoMediaPlayer.pause(); });
+        audioFocusRequest = AudioHelper.requestFocus(this, focusListener);
+        if (casinoMediaPlayer != null && AudioHelper.isSoundEnabled(this)) casinoMediaPlayer.start();
     }
 
     /** Останавливает фоновую музыку и генерацию числа перед закрытием экрана. */
@@ -335,12 +364,11 @@ public class GuessTheNumberGame extends BaseActivity {
         super.onBackPressed();
     }
 
-    /** Освобождает ресурсы MediaPlayer при уничтожении Activity. */
+    /** Освобождает ресурсы MediaPlayer и SoundPool при уничтожении Activity. */
     @Override
     protected void onDestroy() {
         super.onDestroy();
         if (casinoMediaPlayer != null) { casinoMediaPlayer.release(); casinoMediaPlayer = null; }
-        if (errorMediaPlayer  != null) { errorMediaPlayer.release();  errorMediaPlayer  = null; }
-        if (betMediaPlayer    != null) { betMediaPlayer.release();    betMediaPlayer    = null; }
+        if (soundPool != null) { soundPool.release(); soundPool = null; }
     }
 }
