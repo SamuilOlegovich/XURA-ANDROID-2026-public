@@ -13,10 +13,15 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.OvershootInterpolator;
 import android.widget.TextView;
 
+import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -51,7 +56,28 @@ public abstract class BaseActivity extends AppCompatActivity {
                     WindowManager.LayoutParams.FLAG_SECURE,
                     WindowManager.LayoutParams.FLAG_SECURE);
         }
+        // Разрешаем приложению рисовать за статус-баром и навигацией —
+        // отступы управляются вручную через WindowInsets (см. setContentView ниже)
+        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
         super.onCreate(savedInstanceState);
+    }
+
+    /**
+     * Перехватывает установку разметки и подписывается на WindowInsets, чтобы
+     * автоматически добавить отступы для вырезов камеры (punch-hole / notch),
+     * статус-бара и навигационной панели — для всех экранов сразу.
+     */
+    @Override
+    public void setContentView(@LayoutRes int layoutResID) {
+        super.setContentView(layoutResID);
+        View content = findViewById(android.R.id.content);
+        ViewCompat.setOnApplyWindowInsetsListener(content, (v, insets) -> {
+            Insets safe = insets.getInsets(
+                    WindowInsetsCompat.Type.systemBars() |
+                    WindowInsetsCompat.Type.displayCutout());
+            v.setPadding(safe.left, safe.top, safe.right, safe.bottom);
+            return insets;
+        });
     }
 
     /** При каждом возвращении экрана на передний план повторно выполняет проверки безопасности и синхронизацию UI. */

@@ -39,9 +39,13 @@
         <item name="android:colorBackground">@color/xura_black</item>
 
         <!-- System bars -->
-        <item name="android:statusBarColor">@color/xura_black</item>
-        <item name="android:navigationBarColor">@color/xura_black</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
+
+        <!-- Разрешаем контент рисоваться под вырезом камеры (punch-hole / notch);
+             отступы применяются программно через WindowInsets в BaseActivity -->
+        <item name="android:windowLayoutInDisplayCutoutMode" tools:targetApi="o_mr1">shortEdges</item>
 
     </style>
 </resources>
