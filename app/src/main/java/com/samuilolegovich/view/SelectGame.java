@@ -2,7 +2,10 @@ package com.samuilolegovich.view;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.media.AudioFocusRequest;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,6 +20,7 @@ import com.samuilolegovich.BaseActivity;
 
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
+import com.samuilolegovich.utils.AudioHelper;
 
 import static com.samuilolegovich.view.GuessTheNumberGame.GUESS_THE_NUMBER_GAME_CLASS;
 import static com.samuilolegovich.view.GuessTheColorGame.GUESS_THE_COLOR_GAME_CLASS;
@@ -43,6 +47,26 @@ public class SelectGame extends BaseActivity {
     private static final int  WAVE_BOUNCE_DP      = 20;     // высота подпрыгивания
 
     private MediaPlayer flourOfChoiceMediaPlayer;
+    private AudioFocusRequest audioFocusRequest;
+    private BroadcastReceiver noisyReceiver;
+
+    private final AudioManager.OnAudioFocusChangeListener focusListener = focusChange -> {
+        if (flourOfChoiceMediaPlayer == null) return;
+        switch (focusChange) {
+            case AudioManager.AUDIOFOCUS_LOSS:
+            case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
+                if (flourOfChoiceMediaPlayer.isPlaying()) flourOfChoiceMediaPlayer.pause();
+                break;
+            case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
+                flourOfChoiceMediaPlayer.setVolume(0.1f, 0.1f);
+                break;
+            case AudioManager.AUDIOFOCUS_GAIN:
+                flourOfChoiceMediaPlayer.setVolume(0.5f, 0.5f);
+                if (!flourOfChoiceMediaPlayer.isPlaying() && AudioHelper.isSoundEnabled(this))
+                    flourOfChoiceMediaPlayer.start();
+                break;
+        }
+    };
 
     private TextView selectTextView;
     private View guessTheNumber;
@@ -70,12 +94,11 @@ public class SelectGame extends BaseActivity {
 
 
 
-    /** Запускает фоновую зацикленную музыку выбора игры. */
+    /** Создаёт плеер фоновой музыки (старт откладывается до onResume). */
     private void setSound() {
         flourOfChoiceMediaPlayer = MediaPlayer.create(this, R.raw.flour_of_choice);
         flourOfChoiceMediaPlayer.setVolume(0.5f, 0.5f);
         flourOfChoiceMediaPlayer.setLooping(true);
-        flourOfChoiceMediaPlayer.start();
     }
 
 
@@ -94,26 +117,20 @@ public class SelectGame extends BaseActivity {
     }
 
 
-    /** Назначает обработчики кнопок выбора игры: останавливает музыку и переходит на экран выбранной игры. */
+    /** Назначает обработчики кнопок выбора игры: onPause() сам остановит музыку при переходе. */
     private void listeners() {
         guessTheColor.setOnClickListener(v -> {
             pulse(v);
-            flourOfChoiceMediaPlayer.stop();
-            flourOfChoiceMediaPlayer.prepareAsync();
             goToAnotherPage(GUESS_THE_COLOR_GAME_CLASS);
         });
 
         guessTheNumber.setOnClickListener(v -> {
             pulse(v);
-            flourOfChoiceMediaPlayer.stop();
-            flourOfChoiceMediaPlayer.prepareAsync();
             goToAnotherPage(GUESS_THE_NUMBER_GAME_CLASS);
         });
 
         roulette.setOnClickListener(v -> {
             pulse(v);
-            flourOfChoiceMediaPlayer.stop();
-            flourOfChoiceMediaPlayer.prepareAsync();
             goToAnotherPage(ROULETTE_GAME_CLASS);
         });
     }
@@ -126,20 +143,30 @@ public class SelectGame extends BaseActivity {
     }
 
 
-    /** Останавливает волновую анимацию при уходе с экрана. */
+    /** Паузит музыку, освобождает аудиофокус, отписывается от наушников, останавливает анимацию. */
     @Override
     protected void onPause() {
         super.onPause();
+        if (flourOfChoiceMediaPlayer != null && flourOfChoiceMediaPlayer.isPlaying())
+            flourOfChoiceMediaPlayer.pause();
+        AudioHelper.abandonFocus(this, audioFocusRequest);
+        AudioHelper.unregisterNoisyReceiver(this, noisyReceiver);
+        audioFocusRequest = null;
+        noisyReceiver = null;
         stopWave();
     }
 
 
-    /** При возвращении на экран перезапускает фоновую музыку и волновую анимацию. */
+    /** Запрашивает аудиофокус, регистрирует приёмник наушников, запускает музыку (если не замьючено) и анимацию. */
     @Override
     protected void onResume() {
-        flourOfChoiceMediaPlayer.setLooping(true);
-        flourOfChoiceMediaPlayer.start();
         super.onResume();
+        noisyReceiver = AudioHelper.registerNoisyReceiver(this,
+                () -> { if (flourOfChoiceMediaPlayer != null && flourOfChoiceMediaPlayer.isPlaying())
+                            flourOfChoiceMediaPlayer.pause(); });
+        audioFocusRequest = AudioHelper.requestFocus(this, focusListener);
+        if (flourOfChoiceMediaPlayer != null && AudioHelper.isSoundEnabled(this))
+            flourOfChoiceMediaPlayer.start();
         startWave();
     }
 
@@ -225,17 +252,20 @@ public class SelectGame extends BaseActivity {
     }
 
 
-    /** Останавливает фоновую музыку перед закрытием экрана. */
+    /** onPause() уже остановил музыку — здесь просто закрываем экран. */
     @Override
     public void onBackPressed() {
-        flourOfChoiceMediaPlayer.stop();
         super.onBackPressed();
     }
 
-    /** Сбрасывает статическую ссылку на активити при её уничтожении, чтобы избежать утечки памяти. */
+    /** Освобождает MediaPlayer и сбрасывает статическую ссылку на активити. */
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (flourOfChoiceMediaPlayer != null) {
+            flourOfChoiceMediaPlayer.release();
+            flourOfChoiceMediaPlayer = null;
+        }
         SELECT_GAME_ACTIVITY = null;
     }
 }
