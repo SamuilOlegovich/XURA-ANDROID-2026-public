@@ -18,27 +18,27 @@ The gaming logic (Roulette, Guess the Color, Guess the Number) requires a dedica
 ## Screenshots
 
 <p align="center">
-  <img src="screenshots/01_splash.png"               width="18%" alt="Splash"/>
-  <img src="screenshots/02_onb_1_welcome.png"        width="18%" alt="Welcome"/>
-  <img src="screenshots/03_onb_2_send_receive.png"   width="18%" alt="Send & Receive"/>
-  <img src="screenshots/04_onb_3_secure.png"         width="18%" alt="Secure by Design"/>
-  <img src="screenshots/06_create_or_restore.png"    width="18%" alt="Create or Restore"/>
+  <img src="screenshots/01_splash.png"             width="18%" alt="Splash"/>
+  <img src="screenshots/02_onb_1_welcome.png"      width="18%" alt="Welcome"/>
+  <img src="screenshots/03_onb_2_send_receive.png" width="18%" alt="Send & Receive"/>
+  <img src="screenshots/04_onb_3_secure.png"       width="18%" alt="Play & Win XRP"/>
+  <img src="screenshots/05_onb_4_get_started.png"  width="18%" alt="Secure by Design"/>
 </p>
 
 <p align="center">
-  <em>Splash · Onboarding (3 slides) · Wallet setup choice</em>
+  <em>Splash · Onboarding: Welcome · Send &amp; Receive · Play &amp; Win · Secure by Design</em>
 </p>
 
 <p align="center">
+  <img src="screenshots/06_create_or_restore.png"     width="18%" alt="Create or Restore"/>
   <img src="screenshots/07_create_new_wallet_seed.png" width="18%" alt="New Wallet Seed"/>
   <img src="screenshots/08_checking_seed.png"          width="18%" alt="Verify Seed"/>
   <img src="screenshots/13_main_wallet.png"            width="18%" alt="Main Wallet"/>
   <img src="screenshots/14_send_payment.png"           width="18%" alt="Send XRP"/>
-  <img src="screenshots/15_receive_qr.png"             width="18%" alt="Receive QR"/>
 </p>
 
 <p align="center">
-  <em>Wallet creation · Seed verification · Main wallet (1000 XRP testnet) · Send · Receive</em>
+  <em>Create or restore · New wallet seed · Seed verification · Main wallet (1000 XRP) · Send XRP</em>
 </p>
 
 <p align="center">
