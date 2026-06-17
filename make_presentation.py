@@ -131,22 +131,17 @@ def slide_01_title(c, n, T):
         cropped = pil.crop((int(iw * 0.08), int(ih * 0.27), int(iw * 0.92), int(ih * 0.66)))
         tmp = "/tmp/_xura_logo.png"
         cropped.save(tmp)
-        lw = 190
+        lw = 220
         lh = int(lw * cropped.height / cropped.width)
-        c.drawImage(tmp, W // 2 - lw // 2, H // 2 + 20, lw, lh, mask='auto')
-
-    # Title
-    c.setFont("Helvetica-Bold", 42)
-    c.setFillColor(WHITE)
-    c.drawCentredString(W // 2, H // 2 - 18, "XURA")
+        c.drawImage(tmp, W // 2 - lw // 2, H // 2 + 10, lw, lh, mask='auto')
 
     c.setFont("Helvetica", 18)
     c.setFillColor(CYAN)
-    c.drawCentredString(W // 2, H // 2 - 44, "XRP Wallet  ·  Blockchain Gaming Platform")
+    c.drawCentredString(W // 2, H // 2 - 22, "XRP Wallet  ·  Blockchain Gaming Platform")
 
     c.setFont("Helvetica", 12)
     c.setFillColor(GRAY)
-    c.drawCentredString(W // 2, H // 2 - 68,
+    c.drawCentredString(W // 2, H // 2 - 46,
         "Non-custodial  ·  On-chain games  ·  10 languages  ·  Android  ·  Since 2022")
 
     # Badge
@@ -769,16 +764,13 @@ def slide_11_final(c, n, T):
         cropped = pil.crop((int(iw * 0.08), int(ih * 0.27), int(iw * 0.92), int(ih * 0.66)))
         tmp = "/tmp/_xura_logo2.png"
         cropped.save(tmp)
-        lw = 120
+        lw = 150
         lh = int(lw * cropped.height / cropped.width)
-        c.drawImage(tmp, W // 2 - lw // 2, H // 2 + 55, lw, lh, mask='auto')
+        c.drawImage(tmp, W // 2 - lw // 2, H // 2 + 35, lw, lh, mask='auto')
 
-    c.setFont("Helvetica-Bold", 30)
-    c.setFillColor(WHITE)
-    c.drawCentredString(W // 2, H // 2 + 30, "XURA")
     c.setFont("Helvetica", 13)
     c.setFillColor(CYAN)
-    c.drawCentredString(W // 2, H // 2 + 10, "Built with ♥ on the XRP Ledger  ·  Since 2022")
+    c.drawCentredString(W // 2, H // 2 + 18, "Built with ♥ on the XRP Ledger  ·  Since 2022")
 
     # Contact cards
     contacts = [
