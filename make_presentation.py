@@ -583,7 +583,7 @@ def slide_08_referral(c, n, T):
 
     steps = [
         (GREEN,   "1",  "Register on-chain",
-                        "Pay 66 XRP registration fee → recorded on the XRP Ledger.\n13 XRP refunded on exit."),
+                        "Pay 66 XRP → permanently recorded on the XRP Ledger.\nReferral status cannot be cancelled."),
         (CYAN,    "2",  "Share your code",
                         "Invite users — unlimited slots for invited users.\nNumber of referral positions is limited."),
         (YELLOW,  "3",  "Earn together",
@@ -623,11 +623,11 @@ def slide_08_referral(c, n, T):
     c.setFillColor(GREEN)
     c.drawCentredString(715, 200, "Fee breakdown")
     table = [
-        ("Registration fee",  "66 XRP",  GREEN),
-        ("Exit refund",       "13 XRP",  YELLOW),
-        ("Net cost",          "53 XRP",  ORANGE),
-        ("Referral slots",    "Limited", CYAN),
-        ("Invited users",     "∞",       CYAN),
+        ("Registration fee",  "66 XRP",       GREEN),
+        ("Code recovery",     "13 XRP",       YELLOW),
+        ("Cancellation",      "Not possible", ORANGE),
+        ("Referral slots",    "Limited",      CYAN),
+        ("Invited users",     "∞",            CYAN),
     ]
     ty = 178
     for label, val, col in table:

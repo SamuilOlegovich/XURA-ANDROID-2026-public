@@ -579,7 +579,7 @@ def slide_08_referral(c, n, T):
 
     steps = [
         (GREEN,  "1", "Регистрация on-chain",
-                       "Оплатите 66 XRP → записано в XRP Ledger.\n13 XRP возвращаются при выходе."),
+                       "Оплатите 66 XRP → навсегда записано в XRP Ledger.\nОтказаться от реферала невозможно."),
         (CYAN,   "2", "Поделитесь кодом",
                        "Приглашайте пользователей — мест для приглашённых неограниченно.\nЧисло реферальных позиций ограничено."),
         (YELLOW, "3", "Зарабатывайте вместе",
@@ -617,11 +617,11 @@ def slide_08_referral(c, n, T):
     c.setFillColor(GREEN)
     c.drawCentredString(715, 200, "Разбивка комиссий")
     table = [
-        ("Регистрационный взнос",   "66 XRP",    GREEN),
-        ("Возврат при выходе",      "13 XRP",    YELLOW),
-        ("Итого расходов",          "53 XRP",    ORANGE),
+        ("Регистрационный взнос",   "66 XRP",     GREEN),
+        ("Восстановление кода",     "13 XRP",     YELLOW),
+        ("Отмена статуса",          "Невозможна", ORANGE),
         ("Реферальных слотов",      "Ограничено", CYAN),
-        ("Приглашённых пользователей", "∞",       CYAN),
+        ("Приглашённых пользователей", "∞",        CYAN),
     ]
     ty = 178
     for label, val, col in table:
@@ -694,7 +694,7 @@ def slide_09_arch(c, n, T):
 
     # Test count badge — 490+430=920
     rounded_card(c, 490, 55, 430, 38, CARD3, 8, GREEN)
-    c.setFont("Arial-Bold", 13)
+    c.setFont("Arial-Bold", 11)
     c.setFillColor(GREEN)
     c.drawString(510, 70, "✓  79 автоматических тестов  ·  Java · MVVM · Dagger Hilt · minSdk 28")
 
