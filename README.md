@@ -295,10 +295,10 @@ The gaming logic in this app is intentionally inoperative without the server —
 
 **For any commercial use, integration, licensing, or partnership proposals — please contact the author directly to negotiate terms.**
 
-> **Лицензия (кратко):**  
-> Использование в качестве некоммерческого крипто-кошелька — разрешено.  
-> Игровая логика без сервера не работает — не играйте на реальные деньги.  
-> По любым коммерческим предложениям или использованию — обращайтесь, будем договариваться.
+> **License (short):**  
+> Use as a non-commercial crypto wallet — permitted.  
+> Game logic does not work without the server — do not play with real XRP.  
+> For any commercial proposals or use — contact the author, we will negotiate.
 
 ---
 
