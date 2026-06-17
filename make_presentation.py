@@ -128,7 +128,7 @@ def slide_01_title(c, n, T):
     if os.path.exists(logo_path):
         pil = PILImage.open(logo_path)
         iw, ih = pil.size
-        cropped = pil.crop((int(iw * 0.1), int(ih * 0.07), int(iw * 0.9), int(ih * 0.50)))
+        cropped = pil.crop((int(iw * 0.08), int(ih * 0.27), int(iw * 0.92), int(ih * 0.66)))
         tmp = "/tmp/_xura_logo.png"
         cropped.save(tmp)
         lw = 190
@@ -766,7 +766,7 @@ def slide_11_final(c, n, T):
     if os.path.exists(logo_path):
         pil = PILImage.open(logo_path)
         iw, ih = pil.size
-        cropped = pil.crop((int(iw * 0.1), int(ih * 0.07), int(iw * 0.9), int(ih * 0.50)))
+        cropped = pil.crop((int(iw * 0.08), int(ih * 0.27), int(iw * 0.92), int(ih * 0.66)))
         tmp = "/tmp/_xura_logo2.png"
         cropped.save(tmp)
         lw = 120
