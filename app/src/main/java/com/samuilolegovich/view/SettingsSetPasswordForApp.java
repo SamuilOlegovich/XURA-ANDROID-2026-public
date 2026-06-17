@@ -7,6 +7,7 @@ import android.text.TextWatcher;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.textfield.TextInputLayout;
@@ -32,9 +33,14 @@ public class SettingsSetPasswordForApp extends BaseActivity {
 
     private EditText passwordOne;
     private EditText passwordTwo;
+    private EditText currentPasswordField;
     private TextInputLayout tilPasswordTwo;
+    private TextInputLayout tilCurrentPassword;
     private TextView textView;
+    private ImageView confirmIcon;
     private View confirm;
+
+    private boolean hasPassword;
 
 
 
@@ -59,29 +65,74 @@ public class SettingsSetPasswordForApp extends BaseActivity {
 
     /** Находит и сохраняет ссылки на View разметки экрана. */
     private void setButtons() {
-        textView = (TextView) findViewById(R.id.settings_set_password_app_text_view);
-        tilPasswordTwo = findViewById(R.id.til_edit_text_passport_tow);
-        passwordTwo = (EditText) findViewById(R.id.edit_text_passport_tow);
-        passwordOne = (EditText) findViewById(R.id.password_field);
-        confirm = findViewById(R.id.confirm_link);
+        textView              = findViewById(R.id.settings_set_password_app_text_view);
+        tilPasswordTwo        = findViewById(R.id.til_edit_text_passport_tow);
+        tilCurrentPassword    = findViewById(R.id.til_current_password);
+        passwordTwo           = findViewById(R.id.edit_text_passport_tow);
+        passwordOne           = findViewById(R.id.password_field);
+        currentPasswordField  = findViewById(R.id.current_password_field);
+        confirmIcon           = findViewById(R.id.confirm_link_icon);
+        confirm               = findViewById(R.id.confirm_link);
     }
 
 
-    /** Устанавливает локализованный текст заголовка экрана. */
+    /** Устанавливает заголовок и показывает/скрывает поле текущего пароля в зависимости от того, установлен ли пароль. */
     private void setLanguage() {
-        textView.setText(R.string.set_password_to_enter_application);
+        hasPassword = isPasswordSet();
+        if (hasPassword) {
+            textView.setText(R.string.change_password_title);
+            tilCurrentPassword.setVisibility(View.VISIBLE);
+            confirmIcon.setImageResource(R.drawable.ic_lock);
+        } else {
+            textView.setText(R.string.set_password_to_enter_application);
+            tilCurrentPassword.setVisibility(View.GONE);
+            confirmIcon.setImageResource(R.drawable.ic_lock_open);
+        }
+    }
+
+    /** Возвращает true, если пароль приложения уже установлен. */
+    private boolean isPasswordSet() {
+        String stored = PrefsHelper.get(this).getString(
+                StringEnum.APP_PREFERENCES_PASSWORD.getValue(), "");
+        return stored != null
+                && !stored.isEmpty()
+                && !stored.equals(StringEnum.APP_PREFERENCES_PASSWORD_NOT_INSTALLED.getValue());
+    }
+
+    /** Проверяет, совпадает ли введённый пароль с сохранённым. */
+    private boolean verifyCurrentPassword(String input) {
+        if (input == null || input.isEmpty()) return false;
+        SharedPreferences prefs = PrefsHelper.get(this);
+        String stored = prefs.getString(StringEnum.APP_PREFERENCES_PASSWORD.getValue(), "");
+        String salt   = prefs.getString(StringEnum.APP_PREFERENCES_SALT.getValue(), "");
+        if (stored == null || stored.isEmpty() || salt == null || salt.isEmpty()) return false;
+        return stored.equals(Cipher.hashPassword(input, salt));
     }
 
 
-    /** Назначает обработчик подтверждения нового пароля (проверка длины и совпадения двух полей) и сброс ошибки при правке поля. */
+    /** Назначает обработчик подтверждения пароля: при смене — сначала верифицирует старый, затем проверяет совпадение нового. После успеха замок закрывается и экран закрывается. */
     private void listeners() {
         confirm.setOnClickListener(v -> {
             pulse(v);
+
+            // Если пароль уже установлен — проверяем старый
+            if (hasPassword) {
+                String current = currentPasswordField.getText().toString();
+                if (!verifyCurrentPassword(current)) {
+                    currentPasswordField.setText("");
+                    tilCurrentPassword.setError(getString(R.string.wrong_current_password));
+                    return;
+                }
+            }
+
             String one = passwordOne.getText().toString();
             String two = passwordTwo.getText().toString();
 
             if (one.length() > 3 && one.equals(two)) {
                 setPasswordForApp(one, true);
+                // Показываем закрытый замок как обратную связь, затем закрываем экран
+                confirmIcon.setImageResource(R.drawable.ic_lock);
+                confirm.postDelayed(this::onBackPressed, 350);
             } else {
                 passwordOne.setText("");
                 passwordTwo.setText("");
@@ -92,6 +143,12 @@ public class SettingsSetPasswordForApp extends BaseActivity {
         passwordTwo.addTextChangedListener(new TextWatcher() {
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override public void onTextChanged(CharSequence s, int start, int before, int count) { tilPasswordTwo.setError(null); }
+            @Override public void afterTextChanged(Editable s) {}
+        });
+
+        currentPasswordField.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) { tilCurrentPassword.setError(null); }
             @Override public void afterTextChanged(Editable s) {}
         });
     }

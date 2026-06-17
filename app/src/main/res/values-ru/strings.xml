@@ -95,6 +95,9 @@
     <string name="tag_knowledge_cannot_be_more">Значение тега слишком большое</string>
     <string name="last_text_two">НЕ РАССТРАИВАЙТЕСЬ - ИГРАЙТЕ ДАЛЬШЕ И ВАМ ОБЯЗАТЕЛЬНО ПОВЕЗЕТ</string>
     <string name="set_password_to_enter_application">УСТАНОВИТЕ ПАРОЛЬ ДЛЯ ВХОДА В ПРИЛОЖЕНИЕ</string>
+    <string name="change_password_title">СМЕНИТЕ ПАРОЛЬ</string>
+    <string name="current_password_hint">Текущий пароль</string>
+    <string name="wrong_current_password">НЕВЕРНЫЙ ТЕКУЩИЙ ПАРОЛЬ</string>
     <string name="become_referral_and_start_earning">СТАНЬТЕ РЕФЕРАЛОМ И НАЧНИТЕ ЗАРАБАТЫВАТЬ</string>
     <string name="check_the_seed_and_try_again">Ошибка: проверьте seed-фразу и попробуйте ещё раз.</string>
     <string name="bet_is_made_expect_the_result">СТАВКА ПРИНЯТА — ОЖИДАЙТЕ РЕЗУЛЬТАТ</string>

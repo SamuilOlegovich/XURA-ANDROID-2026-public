@@ -70,6 +70,9 @@
     <string name="onb_sub_4">Biometric lock · Encrypted seed storage · APK tamper detection.</string>
     <string name="get_started">GET STARTED</string>
     <string name="set_password_to_enter_application">SET A PASSWORD TO ENTER THE APPLICATION</string>
+    <string name="change_password_title">CHANGE YOUR PASSWORD</string>
+    <string name="current_password_hint">Current password</string>
+    <string name="wrong_current_password">WRONG CURRENT PASSWORD</string>
     <string name="error_check_the_seed_and_try_again">Error: check your seed phrase and try again</string>
     <string name="tag_knowledge_cannot_be_more">Destination tag value is too large</string>
     <string name="your_account_is_not_enough_to_send">YOUR ACCOUNT IS NOT ENOUGH TO SEND</string>

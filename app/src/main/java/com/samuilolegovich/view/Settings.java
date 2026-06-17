@@ -730,6 +730,14 @@ public class Settings extends BaseActivity {
 
 
 
+    /** При возврате из дочерних экранов обновляет динамические элементы (иконка пароля, кнопка звука). */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updatePasswordIcon();
+        updateSoundButton();
+    }
+
     /** Стандартная обработка нажатия "назад" без дополнительной логики. */
     @Override
     public void onBackPressed() {
