@@ -18,15 +18,51 @@ The gaming logic (Roulette, Guess the Color, Guess the Number) requires a dedica
 ## Screenshots
 
 <p align="center">
-  <img src="screenshots/01_onboarding_welcome.png"  width="19%" alt="Welcome"/>
-  <img src="screenshots/02_onboarding_games.png"    width="19%" alt="Play & Win XRP"/>
-  <img src="screenshots/03_onboarding_security.png" width="19%" alt="Secure by Design"/>
-  <img src="screenshots/04_wallet.png"              width="19%" alt="Wallet"/>
-  <img src="screenshots/05_select_game.png"         width="19%" alt="Select Game"/>
+  <img src="screenshots/01_splash.png"               width="18%" alt="Splash"/>
+  <img src="screenshots/02_onb_1_welcome.png"        width="18%" alt="Welcome"/>
+  <img src="screenshots/03_onb_2_send_receive.png"   width="18%" alt="Send & Receive"/>
+  <img src="screenshots/04_onb_3_secure.png"         width="18%" alt="Secure by Design"/>
+  <img src="screenshots/06_create_or_restore.png"    width="18%" alt="Create or Restore"/>
 </p>
 
 <p align="center">
-  <em>Onboarding · Wallet · Games</em>
+  <em>Splash · Onboarding (3 slides) · Wallet setup choice</em>
+</p>
+
+<p align="center">
+  <img src="screenshots/07_create_new_wallet_seed.png" width="18%" alt="New Wallet Seed"/>
+  <img src="screenshots/08_checking_seed.png"          width="18%" alt="Verify Seed"/>
+  <img src="screenshots/13_main_wallet.png"            width="18%" alt="Main Wallet"/>
+  <img src="screenshots/14_send_payment.png"           width="18%" alt="Send XRP"/>
+  <img src="screenshots/15_receive_qr.png"             width="18%" alt="Receive QR"/>
+</p>
+
+<p align="center">
+  <em>Wallet creation · Seed verification · Main wallet (1000 XRP testnet) · Send · Receive</em>
+</p>
+
+<p align="center">
+  <img src="screenshots/21_select_game.png"   width="18%" alt="Select Game"/>
+  <img src="screenshots/22_guess_color.png"   width="18%" alt="Guess the Color"/>
+  <img src="screenshots/23_guess_number.png"  width="18%" alt="Guess the Number"/>
+  <img src="screenshots/24_roulette.png"      width="18%" alt="Roulette"/>
+  <img src="screenshots/16_tx_history.png"    width="18%" alt="Transaction History"/>
+</p>
+
+<p align="center">
+  <em>Game selection · Guess the Color · Guess the Number · Roulette · Transaction history</em>
+</p>
+
+<p align="center">
+  <img src="screenshots/18_settings.png"              width="18%" alt="Settings"/>
+  <img src="screenshots/19_select_language.png"       width="18%" alt="Language"/>
+  <img src="screenshots/28_referral_enter.png"        width="18%" alt="Enter Referral"/>
+  <img src="screenshots/30_your_referral.png"         width="18%" alt="Your Referral"/>
+  <img src="screenshots/32_security_root_warning.png" width="18%" alt="Security"/>
+</p>
+
+<p align="center">
+  <em>Settings · 10 languages · Referral system · Root/tamper detection</em>
 </p>
 
 ---

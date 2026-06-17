@@ -26,8 +26,9 @@ public class SignatureVerifier {
             "A2E753A3C2AC8BDAEAB08C72DB5912E5FDCF330DE0771F63CC17B9B153C847CF" // локальный debug-keystore
     ));
 
-    /** Проверяет, что текущий APK подписан одним из сертификатов из ALLOWED_SHA256; иначе (или при ошибке) считает подпись недействительной. */
+    /** Проверяет, что текущий APK подписан одним из сертификатов из ALLOWED_SHA256; иначе (или при ошибке) считает подпись недействительной. В debug-сборках всегда возвращает true. */
     public static boolean isSignatureValid(Context context) {
+        if (com.samuilolegovich.BuildConfig.DEBUG) return true;
         try {
             PackageManager pm = context.getPackageManager();
             PackageInfo info = pm.getPackageInfo(context.getPackageName(), PackageManager.GET_SIGNING_CERTIFICATES);

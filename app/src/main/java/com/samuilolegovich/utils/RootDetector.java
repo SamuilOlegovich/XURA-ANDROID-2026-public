@@ -39,8 +39,9 @@ public class RootDetector {
             "com.formyhm.hideroot"          // HideRoot
     };
 
-    /** Главная точка входа: устройство считается рутованным, если сработала хотя бы одна из трёх проверок. */
+    /** Главная точка входа: устройство считается рутованным, если сработала хотя бы одна из трёх проверок. В debug-сборках всегда возвращает false (эмулятор имеет test-keys). */
     public static boolean isRooted(Context context) {
+        if (com.samuilolegovich.BuildConfig.DEBUG) return false;
         return checkBuildTags()
                 || checkSuBinaries()
                 || checkRootPackages(context);
