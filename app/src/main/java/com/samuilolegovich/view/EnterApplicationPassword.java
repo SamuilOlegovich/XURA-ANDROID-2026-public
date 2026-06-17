@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.activity.OnBackPressedCallback;
 import com.google.android.material.textfield.TextInputLayout;
 import com.samuilolegovich.BaseActivity;
 
@@ -61,6 +62,11 @@ public class EnterApplicationPassword extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Блокируем системный жест "назад" (включая predictive back на Android 13+)
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override public void handleOnBackPressed() { /* нельзя покинуть экран без пароля */ }
+        });
+
         if (!com.samuilolegovich.BuildConfig.DEBUG) getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         setContentView(R.layout.enter_application_password);
         preferences = PrefsHelper.get(this);
@@ -92,6 +98,11 @@ public class EnterApplicationPassword extends BaseActivity {
         next.setOnClickListener(v -> {
             pulse(v);
             String entered = password.getText().toString();
+
+            if (entered.isEmpty()) {
+                tilPassword.setError(StringEnum.PASSWORD_DOES_NOT_MATCH.getValue());
+                return;
+            }
 
             if (verifyPassword(entered)) {
                 MainActivity.START_FLAG = false;
@@ -189,14 +200,6 @@ public class EnterApplicationPassword extends BaseActivity {
     private void goToAnotherPage(String namePage) {
         Intent intent = new Intent(namePage);
         startActivity(intent);
-    }
-
-
-    /** Намеренно пустая реализация — блокирует системный жест/кнопку "назад", чтобы нельзя было обойти экран ввода пароля и попасть на главную без авторизации. */
-    @Override
-    public void onBackPressed() {
-        // оставляем пустым чтобы не работал возврат обратно
-        // и не попадали на главную страницу кошелька
     }
 
 
