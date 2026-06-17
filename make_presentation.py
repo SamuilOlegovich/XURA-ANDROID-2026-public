@@ -114,13 +114,11 @@ def img(c, filename, x, y, w, frame_color=None):
 # ── SLIDE 1 — Title ───────────────────────────────────────────────────────────
 
 def slide_01_title(c, n, T):
-    bg(c)
+    c.setFillColor(HexColor('#000000'))
+    c.rect(0, 0, W, H, fill=1, stroke=0)
     top_bar(c, PURPLE, CYAN, 8)
     bottom_bar(c, ORANGE, MAGENTA, 5)
 
-    # Glow circle behind logo
-    c.setFillColor(HexColor('#0D0D2E'))
-    c.circle(W // 2, H // 2 + 60, 130, fill=1, stroke=0)
     hgrad(c, W // 2 - 130, H // 2 - 10, 260, 4, PURPLE, CYAN)
 
     # Logo (cropped splash)
@@ -137,11 +135,11 @@ def slide_01_title(c, n, T):
 
     c.setFont("Helvetica", 18)
     c.setFillColor(CYAN)
-    c.drawCentredString(W // 2, H // 2 - 22, "XRP Wallet  ·  Blockchain Gaming Platform")
+    c.drawCentredString(W // 2, H // 2 - 40, "XRP Wallet  ·  Blockchain Gaming Platform")
 
     c.setFont("Helvetica", 12)
     c.setFillColor(GRAY)
-    c.drawCentredString(W // 2, H // 2 - 46,
+    c.drawCentredString(W // 2, H // 2 - 62,
         "Non-custodial  ·  On-chain games  ·  10 languages  ·  Android  ·  Since 2022")
 
     # Badge
@@ -194,7 +192,7 @@ def slide_02_what(c, n, T):
     ]
     py = H - 125
     for col, title, sub in pillars:
-        rounded_card(c, 445, py - 55, 490, 64, CARD2, 10)
+        rounded_card(c, 445, py - 55, 475, 64, CARD2, 10)
         c.setFillColor(col)
         c.rect(445, py - 55, 5, 64, fill=1, stroke=0)
         c.setFont("Helvetica-Bold", 14)
@@ -206,7 +204,7 @@ def slide_02_what(c, n, T):
         py -= 80
 
     # Screenshot preview
-    img(c, "13_main_wallet.png", 855, 62, 80)
+    img(c, "13_main_wallet.png", 835, 62, 80)
 
     slide_footer(c, n, T)
 
@@ -259,16 +257,16 @@ def slide_03_why(c, n, T):
         c.setFillColor(GREEN)
         c.drawString(cx[2], ry + 14, good)
 
-    # Side badge
-    rounded_card(c, 775, 55, 165, 95, CARD3, 10, GREEN)
-    accent_line(c, 775, 55, 165, 4, GREEN)
+    # Side badge — right edge 755+165=920
+    rounded_card(c, 755, 55, 165, 95, CARD3, 10, GREEN)
+    accent_line(c, 755, 55, 165, 4, GREEN)
     c.setFont("Helvetica-Bold", 11)
     c.setFillColor(GREEN)
-    c.drawCentredString(857, 128, "Mini-Ecosystem")
+    c.drawCentredString(838, 128, "Mini-Ecosystem")
     c.setFont("Helvetica", 11)
     c.setFillColor(GRAY)
     for i, t in enumerate(["• XRPL Wallet", "• On-chain Casino", "• Referral Platform"]):
-        c.drawString(790, 108 - i * 17, t)
+        c.drawString(770, 108 - i * 17, t)
 
     slide_footer(c, n, T)
 
@@ -304,23 +302,25 @@ def slide_04_vision(c, n, T):
         (HexColor('#7B4FFF'), "TON",       "Telegram ecosystem"),
         (HexColor('#E84142'), "Stellar",   "XLM · similar architecture"),
     ]
+    # n cards × cw_card + (n-1) gaps × 10 = 880 → fills x=40..920 symmetrically
     cx = 40
-    cw = (W - 80) // len(chains)
+    n = len(chains)
+    cw_card = (W - 80 - (n - 1) * 10) // n   # = 168
     for col, name, sub in chains:
         is_xrpl = "★" in name
-        rounded_card(c, cx, H - 265, cw - 10, 85, CARD2, 10,
+        rounded_card(c, cx, H - 265, cw_card, 85, CARD2, 10,
                      col if is_xrpl else None)
         if is_xrpl:
-            rounded_card(c, cx, H - 265, cw - 10, 85, HexColor('#0A1830'), 10)
+            rounded_card(c, cx, H - 265, cw_card, 85, HexColor('#0A1830'), 10)
         c.setFillColor(col)
-        c.rect(cx, H - 265, cw - 10, 5, fill=1, stroke=0)
+        c.rect(cx, H - 265, cw_card, 5, fill=1, stroke=0)
         c.setFont("Helvetica-Bold", 13)
         c.setFillColor(col)
-        c.drawCentredString(cx + (cw - 10) // 2, H - 225, name)
+        c.drawCentredString(cx + cw_card // 2, H - 225, name)
         c.setFont("Helvetica", 10)
         c.setFillColor(WHITE if is_xrpl else GRAY)
-        c.drawCentredString(cx + (cw - 10) // 2, H - 243, sub)
-        cx += cw
+        c.drawCentredString(cx + cw_card // 2, H - 243, sub)
+        cx += cw_card + 10
 
     # Three principles
     principles = [
@@ -331,19 +331,20 @@ def slide_04_vision(c, n, T):
         (GREEN,   "Server cannot cheat",
                   "Every outcome is signed. Results are\nverifiable on-chain by anyone."),
     ]
+    # 3 blocks × 280 + 2 gaps × 20 = 880 → matches central card (x=40..920)
     px = 40
     for col, title, desc in principles:
-        rounded_card(c, px, 52, 290, 115, CARD2, 12)
+        rounded_card(c, px, 52, 280, 115, CARD2, 12)
         c.setFillColor(col)
-        c.rect(px, 52, 290, 4, fill=1, stroke=0)
+        c.rect(px, 52, 280, 4, fill=1, stroke=0)
         c.setFont("Helvetica-Bold", 13)
         c.setFillColor(col)
-        c.drawCentredString(px + 145, 140, title)
+        c.drawCentredString(px + 140, 140, title)
         c.setFont("Helvetica", 11)
         c.setFillColor(GRAY)
         for i, line in enumerate(desc.split('\n')):
-            c.drawCentredString(px + 145, 116 - i * 18, line)
-        px += 310
+            c.drawCentredString(px + 140, 116 - i * 18, line)
+        px += 300
 
     slide_footer(c, n, T)
 
@@ -381,11 +382,11 @@ def slide_04_wallet(c, n, T):
         c.drawString(x + 6, y - 18, desc)
         y -= 48
 
-    # Screenshots column
-    img(c, "14_send_payment.png",  650, 295, 85)
-    img(c, "15_receive_qr.png",    745, 295, 85)
-    img(c, "16_tx_history.png",    840, 295, 85)
-    img(c, "13_main_wallet.png",   690, 55,  120)
+    # Screenshots column — last frame right edge: 830+85+5=920
+    img(c, "14_send_payment.png",  640, 295, 85)
+    img(c, "15_receive_qr.png",    735, 295, 85)
+    img(c, "16_tx_history.png",    830, 295, 85)
+    img(c, "13_main_wallet.png",   680, 55,  120)
 
     slide_footer(c, n, T)
 
@@ -430,22 +431,22 @@ def slide_05_security(c, n, T):
         c.drawString(x + 6, y - 18, desc)
         y -= 48
 
-    # Security icon screenshots
-    img(c, "32_security_root_warning.png", 670, 80, 90)
-    img(c, "10_set_password.png",          770, 80, 90)
-    img(c, "11_enter_password.png",        870, 80, 85)
+    # Security screenshots — x=655,745,835 w=80; last frame right: 835+80+5=920
+    img(c, "32_security_root_warning.png", 655, 80, 80)
+    img(c, "10_set_password.png",          745, 80, 80)
+    img(c, "11_enter_password.png",        835, 80, 80)
 
-    # Shield decoration
-    rounded_card(c, 655, 360, 310, 120, HexColor('#12082A'), 12, PURPLE)
+    # Shield decoration — x=650, w=270, right=920; center=785
+    rounded_card(c, 650, 360, 270, 120, HexColor('#12082A'), 12, PURPLE)
     c.setFont("Helvetica-Bold", 36)
     c.setFillColor(PURPLE)
-    c.drawCentredString(810, 440, "🔐")
+    c.drawCentredString(785, 440, "🔐")
     c.setFont("Helvetica-Bold", 13)
     c.setFillColor(WHITE)
-    c.drawCentredString(810, 408, "Your keys. Your coins.")
+    c.drawCentredString(785, 408, "Your keys. Your coins.")
     c.setFont("Helvetica", 11)
     c.setFillColor(GRAY)
-    c.drawCentredString(810, 388, "Seed never touches any server")
+    c.drawCentredString(785, 388, "Seed never touches any server")
 
     slide_footer(c, n, T)
 
@@ -471,27 +472,28 @@ def slide_06_games(c, n, T):
         (YELLOW,  "European Roulette","Full table: straight,\nred/black, dozens…", "×2–×36", "24_roulette.png"),
     ]
 
-    gx = 50
+    # 3 cards × 280 + 2 gaps × 20 = 880 → x=40..920, margins=40 each side
+    gx = 40
     for col, title, desc, payout, scr in games:
-        rounded_card(c, gx, 55, 265, H - 165, CARD2, 12, col)
-        accent_line(c, gx, H - 112, 265, 4, col)
+        rounded_card(c, gx, 55, 280, H - 165, CARD2, 12, col)
+        accent_line(c, gx, H - 112, 280, 4, col)
 
         c.setFont("Helvetica-Bold", 14)
         c.setFillColor(col)
-        c.drawCentredString(gx + 132, H - 130, title)
+        c.drawCentredString(gx + 140, H - 130, title)
 
         c.setFont("Helvetica", 11)
         c.setFillColor(GRAY)
         for i, line in enumerate(desc.split('\n')):
-            c.drawCentredString(gx + 132, H - 152 - i * 16, line)
+            c.drawCentredString(gx + 140, H - 152 - i * 16, line)
 
-        rounded_card(c, gx + 60, H - 195, 105, 26, col, 8)
+        rounded_card(c, gx + 88, H - 195, 105, 26, col, 8)
         c.setFont("Helvetica-Bold", 14)
         c.setFillColor(BG)
-        c.drawCentredString(gx + 112, H - 183, payout)
+        c.drawCentredString(gx + 140, H - 183, payout)
 
-        img(c, scr, gx + 20, 68, 225)
-        gx += 295
+        img(c, scr, gx + 80, 68, 120)
+        gx += 300
 
     slide_footer(c, n, T)
 
@@ -505,48 +507,67 @@ def slide_07_gallery(c, n, T):
 
     title_text(c, "App Screenshots", 50, H - 72, CYAN, 26)
 
-    shots = [
-        ("01_splash.png",           "Splash"),
-        ("02_onb_1_welcome.png",    "Welcome"),
-        ("05_onb_4_get_started.png","Secure by Design"),
-        ("06_create_or_restore.png","Setup"),
-        ("07_create_new_wallet_seed.png", "New Wallet"),
-        ("08_checking_seed.png",    "Verify Seed"),
-        ("13_main_wallet.png",      "Main Wallet"),
-        ("14_send_payment.png",     "Send XRP"),
-        ("15_receive_qr.png",       "Receive"),
+    # ── Top row: 5 visually distinct app screenshots ──────────────────────────
+    # All files are 249×540 (ratio 2.17). thumb_w=96 → h=210px.
+    # 5 shots: 5*96 + 4*18 = 552px. Centered in 880px → x_start=204.
+    # Image y=190..400. Gap to title (y≈438): 38px ✓
+    TOP_W   = 96
+    TOP_H   = int(TOP_W * 540 / 249)   # 208
+    TOP_GAP = 18
+    TOP_X0  = (W - (5 * TOP_W + 4 * TOP_GAP)) // 2   # centres the row
+    TOP_Y   = 188   # bottom of images
+
+    top_shots = [
+        ("01_splash.png",      "Splash"),
+        ("13_main_wallet.png", "Wallet"),
+        ("14_send_payment.png","Send XRP"),
+        ("24_roulette.png",    "Roulette"),
+        ("18_settings.png",    "Settings"),
     ]
-
-    thumb_w = 85
-    gap = 16
-    row1_x = 40
-    row2_x = 40 + (thumb_w + gap)
-
-    for i, (fn, label) in enumerate(shots):
-        col_i = i % 5
-        row_i = i // 5
-        sx = 40 + col_i * (thumb_w + gap)
-        h_pts = img(c, fn, sx, 85 + (1 - row_i) * 200, thumb_w)
-
-        c.setFont("Helvetica", 8.5)
+    for i, (fn, lbl) in enumerate(top_shots):
+        sx = TOP_X0 + i * (TOP_W + TOP_GAP)
+        rounded_card(c, sx - 5, TOP_Y - 5, TOP_W + 10, TOP_H + 10, CARD2, 10, DIM)
+        c.drawImage(f"{SCREENS}/{fn}", sx, TOP_Y, width=TOP_W, height=TOP_H, mask='auto')
+        c.setFont("Helvetica", 9)
         c.setFillColor(GRAY)
-        c.drawCentredString(sx + thumb_w // 2, 73 + (1 - row_i) * 200, label)
+        c.drawCentredString(sx + TOP_W // 2, TOP_Y - 13, lbl)
 
-    # Win/Lose showcase (right side)
-    rounded_card(c, 510, 55, 430, H - 135, CARD2, 14, DIM)
-    c.setFont("Helvetica-Bold", 13)
-    c.setFillColor(GRAY)
-    c.drawCentredString(725, H - 100, "Game Results")
+    # ── Bottom row: 3 game-result cards (small screenshot + label) ────────────
+    # Card height fits in y=38..162 (124px). Small scr: w=52, h=113.
+    # 3 cards × 230px + 2 × 30px gap = 750px. Centred → x_start=105.
+    SCR_W  = 52
+    SCR_H  = int(SCR_W * 540 / 249)    # 113
+    C_W    = 230
+    C_H    = SCR_H + 16                 # 129
+    C_GAP  = 28
+    C_X0   = (W - (3 * C_W + 2 * C_GAP)) // 2   # 107
+    C_Y    = 38
 
-    img(c, "33_roulette_wheel.png", 530, 65, 120)
-    img(c, "34_bet_won.png",        665, 65, 120)
-    img(c, "35_bet_lost.png",       800, 65, 120)
+    game_cards = [
+        (ORANGE,  "33_roulette_wheel.png", "Roulette Wheel",  "Waiting for result"),
+        (GREEN,   "34_bet_won.png",        "BET WON",          "Congratulations!"),
+        (MAGENTA, "35_bet_lost.png",       "BET LOST",         "Better luck next time"),
+    ]
+    for j, (col, fn, title, sub) in enumerate(game_cards):
+        cx = C_X0 + j * (C_W + C_GAP)
+        rounded_card(c, cx, C_Y, C_W, C_H, CARD2, 10)
+        c.setFillColor(col)
+        c.rect(cx, C_Y, 4, C_H, fill=1, stroke=0)          # left accent bar
 
-    c.setFont("Helvetica", 9)
-    c.setFillColor(GRAY)
-    c.drawCentredString(590, 58, "Wheel")
-    c.drawCentredString(725, 58, "BET WON")
-    c.drawCentredString(860, 58, "BET LOST")
+        # Small screenshot
+        sx = cx + 14
+        rounded_card(c, sx - 3, C_Y + 7 - 3, SCR_W + 6, SCR_H + 6, CARD, 8, DIM)
+        c.drawImage(f"{SCREENS}/{fn}", sx, C_Y + 7,
+                    width=SCR_W, height=SCR_H, mask='auto')
+
+        # Text next to screenshot
+        tx = sx + SCR_W + 12
+        c.setFont("Helvetica-Bold", 12)
+        c.setFillColor(col)
+        c.drawString(tx, C_Y + C_H - 34, title)
+        c.setFont("Helvetica", 10)
+        c.setFillColor(GRAY)
+        c.drawString(tx, C_Y + C_H - 52, sub)
 
     slide_footer(c, n, T)
 
@@ -596,10 +617,11 @@ def slide_08_referral(c, n, T):
     img(c, "30_your_referral.png",   720, 230, 90)
     img(c, "36_info_referral.png",   820, 230, 90)
 
-    rounded_card(c, 510, 55, 430, 165, CARD3, 12, GREEN)
+    # Fee card — 510+410=920
+    rounded_card(c, 510, 55, 410, 165, CARD3, 12, GREEN)
     c.setFont("Helvetica-Bold", 13)
     c.setFillColor(GREEN)
-    c.drawCentredString(725, 200, "Fee breakdown")
+    c.drawCentredString(715, 200, "Fee breakdown")
     table = [
         ("Registration fee",  "66 XRP",  GREEN),
         ("Exit refund",       "13 XRP",  YELLOW),
@@ -614,7 +636,7 @@ def slide_08_referral(c, n, T):
         c.drawString(530, ty, label)
         c.setFont("Helvetica-Bold", 11)
         c.setFillColor(col)
-        c.drawRightString(920, ty, val)
+        c.drawRightString(905, ty, val)
         ty -= 20
 
     slide_footer(c, n, T)
@@ -662,12 +684,13 @@ def slide_09_arch(c, n, T):
         (CYAN,    "ZXing 3.3.2",          "QR generation"),
         (MAGENTA, "security-crypto",      "EncryptedSharedPrefs"),
     ]
+    # Lib grid — step=220, w=210: x=490..700 and 710..920
     lx, ly = 490, H - 118
     for i, (col, lib, desc) in enumerate(libs):
         row, col_idx = i // 2, i % 2
-        cx_ = lx + col_idx * 230
+        cx_ = lx + col_idx * 220
         cy_ = ly - row * 60
-        rounded_card(c, cx_, cy_ - 30, 220, 44, CARD2, 8)
+        rounded_card(c, cx_, cy_ - 30, 210, 44, CARD2, 8)
         c.setFillColor(col)
         c.setFont("Helvetica-Bold", 11)
         c.drawString(cx_ + 10, cy_ - 8, lib)
@@ -675,8 +698,8 @@ def slide_09_arch(c, n, T):
         c.setFillColor(GRAY)
         c.drawString(cx_ + 10, cy_ - 22, desc)
 
-    # Test count badge
-    rounded_card(c, 490, 55, 460, 38, CARD3, 8, GREEN)
+    # Test count badge — 490+430=920
+    rounded_card(c, 490, 55, 430, 38, CARD3, 8, GREEN)
     c.setFont("Helvetica-Bold", 13)
     c.setFillColor(GREEN)
     c.drawString(510, 70, "✓  79 automated tests  ·  Java · MVVM · Dagger Hilt · minSdk 28")
@@ -725,15 +748,15 @@ def slide_10_roadmap(c, n, T):
         c.drawString(78, y, item)
         y -= 28
 
-    # Upcoming column
-    rounded_card(c, 510, 52, 430, H - 140, CARD2, 12)
+    # Upcoming column — 510+410=920
+    rounded_card(c, 510, 52, 410, H - 140, CARD2, 12)
     c.setFont("Helvetica-Bold", 12)
     c.setFillColor(CYAN)
     c.drawString(528, H - 108, "⟳  Coming Soon")
     accent_line(c, 528, H - 116, 140, 2, CYAN)
     y = H - 145
     for item in upcoming:
-        rounded_card(c, 520, y - 16, 410, 32, HexColor('#0A1A2A'), 6)
+        rounded_card(c, 520, y - 16, 390, 32, HexColor('#0A1A2A'), 6)
         c.setFont("Helvetica-Bold", 11)
         c.setFillColor(CYAN if "server" in item.lower() else YELLOW)
         c.drawString(534, y - 3, "→")
@@ -748,13 +771,10 @@ def slide_10_roadmap(c, n, T):
 # ── SLIDE 11 — Disclaimer + Contact ──────────────────────────────────────────
 
 def slide_11_final(c, n, T):
-    bg(c)
+    c.setFillColor(HexColor('#000000'))
+    c.rect(0, 0, W, H, fill=1, stroke=0)
     top_bar(c, ORANGE, MAGENTA)
     bottom_bar(c, PURPLE, CYAN)
-
-    # Glow
-    c.setFillColor(HexColor('#0D0D22'))
-    c.circle(W // 2, H // 2, 200, fill=1, stroke=0)
 
     # Logo small
     logo_path = f"{SCREENS}/01_splash.png"
@@ -788,11 +808,11 @@ def slide_11_final(c, n, T):
         c.drawString(cx + 12, H // 2 - 30, val)
         cx += 250
 
-    # Disclaimer box
-    rounded_card(c, 60, 55, W - 120, 80, HexColor('#14080A'), 10, ORANGE)
+    # Disclaimer box — x=40, w=880, right=920
+    rounded_card(c, 40, 55, W - 80, 80, HexColor('#14080A'), 10, ORANGE)
     c.setFont("Helvetica-Bold", 10)
     c.setFillColor(ORANGE)
-    c.drawString(80, 115, "Disclaimer:")
+    c.drawString(58, 115, "Disclaimer:")
     disc = ("XURA does not provide financial or investment advice. Cryptocurrency values are volatile and "
             "all transactions on the XRP Ledger are irreversible. Users are solely responsible for complying "
             "with local laws and regulations regarding cryptocurrency ownership and online gaming.")
@@ -803,7 +823,7 @@ def slide_11_final(c, n, T):
     line, lines = [], []
     for w in words:
         test = ' '.join(line + [w])
-        if c.stringWidth(test, "Helvetica", 9.5) < W - 200:
+        if c.stringWidth(test, "Helvetica", 9.5) < W - 120:
             line.append(w)
         else:
             lines.append(' '.join(line))
@@ -811,7 +831,7 @@ def slide_11_final(c, n, T):
     if line:
         lines.append(' '.join(line))
     for i, l in enumerate(lines[:3]):
-        c.drawString(80, 100 - i * 14, l)
+        c.drawString(58, 100 - i * 14, l)
 
     # License line
     c.setFont("Helvetica", 10)
