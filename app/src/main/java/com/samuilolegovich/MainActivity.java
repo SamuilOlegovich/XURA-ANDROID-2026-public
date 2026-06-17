@@ -29,6 +29,7 @@ import com.samuilolegovich.viewmodel.NavigationEvent;
 
 import java.util.Locale;
 
+import static com.samuilolegovich.view.OnboardingActivity.ONBOARDING_CLASS;
 import static com.samuilolegovich.view.EnterApplicationPassword.ENTER_APPLICATION_PASSWORD_CLASS;
 import static com.samuilolegovich.view.RestoreOrCreateNewWallet.RESTORE_OR_NEW_WALLET_CLASS;
 import static com.samuilolegovich.view.TransactionHistory.TRANSACTION_HISTORY_CLASS;
@@ -206,6 +207,12 @@ public class MainActivity extends BaseActivity {
      * Если seed сохранён в старом формате или повреждён — он удаляется и запрашивается восстановление заново.
      */
     private void handleStartup() {
+        boolean onboardingSeen = preferences.getBoolean(StringEnum.ONBOARDING_SEEN.getValue(), false);
+        if (!onboardingSeen) {
+            goToAnotherPage(ONBOARDING_CLASS);
+            return;
+        }
+
         boolean isSetPassword = preferences.getString(StringEnum.APP_PREFERENCES_PASSWORD.getValue(), "")
                 .equalsIgnoreCase(StringEnum.APP_PREFERENCES_PASSWORD_NOT_INSTALLED.getValue());
         boolean isPassword = preferences.contains(StringEnum.APP_PREFERENCES_PASSWORD.getValue());

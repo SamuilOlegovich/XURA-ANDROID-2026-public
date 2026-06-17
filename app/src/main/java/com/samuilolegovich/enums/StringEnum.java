@@ -8,6 +8,7 @@ package com.samuilolegovich.enums;
  * транзакций, лимиты ставок и URL-адреса XRPL-сетей (mainnet/testnet).
  */
 public enum StringEnum {
+    ONBOARDING_SEEN("onboarding_seen"),
     APP_PREFERENCES_BIOMETRIC_ENABLED("biometric_enabled"),
     APP_PREFERENCES_PASSWORD_NOT_INSTALLED("password not installed"),
     APP_PREFERENCES_REFERRAL_NOT_INSTALLED("0"),

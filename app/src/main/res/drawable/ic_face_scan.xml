@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="96dp"
+    android:height="96dp"
+    android:viewportWidth="96"
+    android:viewportHeight="96">
+
+    <!-- Corner brackets (Face ID style) -->
+    <path android:strokeColor="#FFFFFF" android:strokeWidth="5"
+          android:fillColor="#00000000" android:strokeLineCap="round" android:strokeLineJoin="round"
+          android:pathData="M 4,26 L 4,4 L 26,4"/>
+    <path android:strokeColor="#FFFFFF" android:strokeWidth="5"
+          android:fillColor="#00000000" android:strokeLineCap="round" android:strokeLineJoin="round"
+          android:pathData="M 70,4 L 92,4 L 92,26"/>
+    <path android:strokeColor="#FFFFFF" android:strokeWidth="5"
+          android:fillColor="#00000000" android:strokeLineCap="round" android:strokeLineJoin="round"
+          android:pathData="M 4,70 L 4,92 L 26,92"/>
+    <path android:strokeColor="#FFFFFF" android:strokeWidth="5"
+          android:fillColor="#00000000" android:strokeLineCap="round" android:strokeLineJoin="round"
+          android:pathData="M 70,92 L 92,92 L 92,70"/>
+
+    <!-- Head oval -->
+    <path android:strokeColor="#FFFFFF" android:strokeWidth="3"
+          android:fillColor="#00000000"
+          android:pathData="M 48,14 C 70,14 80,28 80,48 C 80,70 66,82 48,82 C 30,82 16,70 16,48 C 16,28 26,14 48,14 Z"/>
+
+    <!-- Left eye (almond) -->
+    <path android:strokeColor="#FFFFFF" android:strokeWidth="2.5"
+          android:fillColor="#00000000" android:strokeLineCap="round"
+          android:pathData="M 28,42 Q 35,36 42,42 Q 35,48 28,42 Z"/>
+
+    <!-- Right eye (almond) -->
+    <path android:strokeColor="#FFFFFF" android:strokeWidth="2.5"
+          android:fillColor="#00000000" android:strokeLineCap="round"
+          android:pathData="M 54,42 Q 61,36 68,42 Q 61,48 54,42 Z"/>
+
+    <!-- Nose bridge -->
+    <path android:strokeColor="#FFFFFF" android:strokeWidth="2"
+          android:fillColor="#00000000" android:strokeLineCap="round"
+          android:pathData="M 44,50 L 42,58 Q 48,61 54,58 L 52,50"/>
+
+    <!-- Smile -->
+    <path android:strokeColor="#FFFFFF" android:strokeWidth="2.5"
+          android:fillColor="#00000000" android:strokeLineCap="round"
+          android:pathData="M 34,66 Q 48,78 62,66"/>
+
+</vector>

@@ -58,6 +58,17 @@
     <string name="go_to_the_dark_side_find_the_secret_button">GO TO THE DARK SIDE - FIND THE SECRET BUTTON!</string>
     <string name="your_bet_is_lost_try_again">YOUR BET IS LOST — TRY AGAIN AND LUCK WILL COME!</string>
     <string name="create_new_wallet_text">BE SURE TO SAVE THE SEED AND DO NOT GIVE IT TO ANYONE</string>
+
+    <!-- Onboarding -->
+    <string name="onb_title_1">WELCOME TO XURA</string>
+    <string name="onb_sub_1">Your XRP wallet and gaming platform — all in one app.</string>
+    <string name="onb_title_2">SEND &amp; RECEIVE XRP</string>
+    <string name="onb_sub_2">Full wallet functionality. Your balance lives on the XRP Ledger blockchain in real time.</string>
+    <string name="onb_title_3">PLAY &amp; WIN XRP</string>
+    <string name="onb_sub_3">Roulette, Guess Color, Guess Number — every bet is a real XRP transaction on-chain.</string>
+    <string name="onb_title_4">SECURE BY DESIGN</string>
+    <string name="onb_sub_4">Biometric lock · Encrypted seed storage · APK tamper detection.</string>
+    <string name="get_started">GET STARTED</string>
     <string name="set_password_to_enter_application">SET A PASSWORD TO ENTER THE APPLICATION</string>
     <string name="error_check_the_seed_and_try_again">Error: check your seed phrase and try again</string>
     <string name="tag_knowledge_cannot_be_more">Destination tag value is too large</string>
@@ -323,6 +334,7 @@
     <string name="btn_sub_create_wallet">Create a new XRP wallet</string>
     <string name="btn_sub_restore_wallet">Restore from seed phrase</string>
     <string name="btn_sub_next">Continue</string>
+    <string name="btn_sub_get_started">Let\'s set up your wallet</string>
     <string name="btn_sub_verify">Verify your seed phrase</string>
     <string name="unlock">UNLOCK</string>
     <string name="btn_sub_unlock">Unlock access to the app</string>

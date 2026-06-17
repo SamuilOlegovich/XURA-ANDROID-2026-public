@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@color/xura_black"
+    android:paddingStart="40dp"
+    android:paddingEnd="40dp"
+    android:paddingBottom="64dp"
+    android:clipChildren="false"
+    android:clipToPadding="false">
+
+    <!-- Icon area: image drawable OR emoji, plus scan beam for slide 4 -->
+    <FrameLayout
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:layout_marginBottom="32dp"
+        android:clipChildren="false">
+
+        <ImageView
+            android:id="@+id/onb_icon_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:layout_gravity="center"
+            android:importantForAccessibility="no"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/onb_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="80sp"
+            android:gravity="center"
+            android:layout_gravity="center" />
+
+        <!-- Laser scan beam (visible only for face scan slide) -->
+        <View
+            android:id="@+id/onb_scan_beam"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_gravity="center"
+            android:background="@color/xura_cyan"
+            android:alpha="0" />
+
+    </FrameLayout>
+
+    <!-- Slide title -->
+    <TextView
+        android:id="@+id/onb_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/xura_text_primary"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:letterSpacing="0.08"
+        android:fontFamily="@font/montserrat"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Slide subtitle -->
+    <TextView
+        android:id="@+id/onb_subtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/xura_text_secondary"
+        android:textSize="15sp"
+        android:lineSpacingMultiplier="1.5"
+        android:fontFamily="@font/montserrat" />
+
+</LinearLayout>
