@@ -8,6 +8,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.view.animation.OvershootInterpolator;
 import android.widget.TextView;
@@ -41,10 +42,15 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public abstract class BaseActivity extends AppCompatActivity {
 
-    /** Применяет сохранённый язык интерфейса до вызова super.onCreate, чтобы Activity сразу создавалась с нужной локалью. */
+    /** Применяет сохранённый язык интерфейса до вызова super.onCreate, чтобы Activity сразу создавалась с нужной локалью. Запрещает скриншоты и отображение содержимого в switcher задач в production-сборке. */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         applyLocale();
+        if (!BuildConfig.DEBUG) {
+            getWindow().setFlags(
+                    WindowManager.LayoutParams.FLAG_SECURE,
+                    WindowManager.LayoutParams.FLAG_SECURE);
+        }
         super.onCreate(savedInstanceState);
     }
 

@@ -54,7 +54,7 @@ public class SettingsSetPasswordForApp extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (!com.samuilolegovich.BuildConfig.DEBUG) getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+        // FLAG_SECURE наследуется от BaseActivity
         setContentView(R.layout.settings_set_password_for_app);
         setButtons();
         setLanguage();
