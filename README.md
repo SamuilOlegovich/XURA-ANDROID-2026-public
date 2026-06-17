@@ -15,6 +15,22 @@ The gaming logic (Roulette, Guess the Color, Guess the Number) requires a dedica
 
 ---
 
+## Screenshots
+
+<p align="center">
+  <img src="screenshots/01_onboarding_welcome.png"  width="19%" alt="Welcome"/>
+  <img src="screenshots/02_onboarding_games.png"    width="19%" alt="Play & Win XRP"/>
+  <img src="screenshots/03_onboarding_security.png" width="19%" alt="Secure by Design"/>
+  <img src="screenshots/04_wallet.png"              width="19%" alt="Wallet"/>
+  <img src="screenshots/05_select_game.png"         width="19%" alt="Select Game"/>
+</p>
+
+<p align="center">
+  <em>Onboarding · Wallet · Games</em>
+</p>
+
+---
+
 ## What is XURA?
 
 XURA is a **non-custodial mobile wallet** for the XRP Ledger blockchain combined with a **provably fair gaming platform** where every bet is a real on-chain XRP transaction. The game outcome is determined transparently by the server and returned as a signed XRPL payment — no hidden randomness, no trusted third party for the money flow.
