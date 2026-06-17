@@ -12,7 +12,7 @@
 The gaming logic (Roulette, Guess the Color, Guess the Number) requires a dedicated backend server that is currently under development. **Do NOT play with real XRP until the server goes live.** The author will announce availability separately.
 
 > **Игровой сервер ещё не запущен.**  
-> Игровая логика (рулетка, «Угадай цвет», «Угадай число») требует бэкенд-сервера, который сейчас в разработке. **Не играйте на реальные деньги до официального объявления запуска.**
+> Игровая логика (рулетка, «Угадай цвет», «Угадай число») требует бэкенд-сервера, который сейчас в разработке. **Не играйте на реальный XRP до официального объявления запуска.**
 
 ---
 
@@ -80,9 +80,25 @@ The gaming logic (Roulette, Guess the Color, Guess the Number) requires a dedica
 
 ## What is XURA?
 
-XURA is a **non-custodial mobile wallet** for the XRP Ledger blockchain combined with a **provably fair gaming platform** where every bet is a real on-chain XRP transaction. The game outcome is determined transparently by the server and returned as a signed XRPL payment — no hidden randomness, no trusted third party for the money flow.
+XURA is a **non-custodial mobile wallet** for the XRP Ledger blockchain combined with a **Blockchain-verifiable gaming platform** where every bet is a real on-chain XRP transaction. The game outcome is determined by the server and returned as a signed XRPL payment — verifiable on-chain, no trusted third party for the money flow.
 
 The wallet side works fully **right now** on XRPL Mainnet. The game side requires the backend server (ETA: a few weeks).
+
+---
+
+## Why XURA?
+
+Unlike traditional crypto casinos, XURA never holds your funds:
+
+| Feature | Traditional Casino | XURA |
+|---------|-------------------|------|
+| Fund custody | Platform | User (non-custodial) |
+| Deposits | Internal balance | Direct XRPL transaction |
+| Withdrawals | Request required | Not required — funds stay on-chain |
+| Result transparency | Limited | Every bet verifiable on-chain |
+| Private key | Not applicable | Never leaves your device |
+
+Every winning payout is sent directly back to your wallet address — no withdrawal requests, no hidden balances, no trust required.
 
 ---
 
@@ -121,7 +137,7 @@ The wallet side works fully **right now** on XRPL Mainnet. The game side require
 All bets are sent as real XRPL transactions with a structured memo (`BET:R:…`). The server responds with a signed payment and a memo (`WIN:N` or `LOSE:N`) that the client verifies on-chain.
 
 ### Referral System
-- Register as a referral partner on-chain (costs 66 XRP, recoverable for 13 XRP)
+- Become a referral partner by recording a **66 XRP on-chain registration fee** — partially recoverable (13 XRP refunded on exit). The fee is a blockchain record, not a payment to the app.
 - Enter a referral code to earn bonus lives and participate in daily prize draws
 - Full referral management UI (become / restore / view your referrals)
 
@@ -200,7 +216,7 @@ Create `keystore.jks` and configure `app/build.gradle` signing block, or use the
 ./gradlew connectedAndroidTest
 ```
 
-79 tests — all green on the last CI run.
+79 automated tests included.
 
 ---
 
@@ -240,6 +256,16 @@ Server → Client  (result):
 
 ---
 
+## Disclaimer
+
+XURA does not provide financial or investment advice. Cryptocurrency values are volatile and all transactions on the XRP Ledger are irreversible.
+
+Users are solely responsible for complying with local laws and regulations regarding cryptocurrency ownership and online gaming. Availability of gaming features may be restricted or prohibited in certain jurisdictions.
+
+**Use at your own risk.**
+
+---
+
 ## License & Usage
 
 **The wallet functionality is free to use for non-commercial purposes.**
@@ -247,7 +273,7 @@ Server → Client  (result):
 You are welcome to use this application as a personal XRP crypto wallet at no charge, with no restrictions, as long as use is **non-commercial**.
 
 **The game server (backend) is proprietary and not included in this repository.**  
-The gaming logic in this app is intentionally inoperative without the server — do not attempt to play with real money until the official launch announcement.
+The gaming logic in this app is intentionally inoperative without the server — do not attempt to play with real XRP until the official launch announcement.
 
 **For any commercial use, integration, licensing, or partnership proposals — please contact the author directly to negotiate terms.**
 
