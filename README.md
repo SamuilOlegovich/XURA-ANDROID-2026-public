@@ -1,92 +1,221 @@
-# XURA-ANDROID
+# XURA — XRP Wallet & Gaming Platform
 
+> **Non-custodial XRP Ledger wallet with built-in blockchain-powered games.**  
+> Android application written in Java · minSdk 28 (Android 9+) · version 26.6.17
 
+---
 
-## Getting started
+## ⚠️ Important Notice / Важное предупреждение
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+**GAME SERVER IS NOT YET LIVE.**  
+The gaming logic (Roulette, Guess the Color, Guess the Number) requires a dedicated backend server that is currently under development. **Do NOT play with real XRP until the server goes live.** The author will announce availability separately.
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+> **Игровой сервер ещё не запущен.**  
+> Игровая логика (рулетка, «Угадай цвет», «Угадай число») требует бэкенд-сервера, который сейчас в разработке. **Не играйте на реальные деньги до официального объявления запуска.**
 
-## Add your files
+---
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+## What is XURA?
+
+XURA is a **non-custodial mobile wallet** for the XRP Ledger blockchain combined with a **provably fair gaming platform** where every bet is a real on-chain XRP transaction. The game outcome is determined transparently by the server and returned as a signed XRPL payment — no hidden randomness, no trusted third party for the money flow.
+
+The wallet side works fully **right now** on XRPL Mainnet. The game side requires the backend server (ETA: a few weeks).
+
+---
+
+## Features
+
+### Wallet
+| Feature | Details |
+|---------|---------|
+| Create wallet | Generates a new XRPL keypair; seed displayed once and secured immediately |
+| Restore wallet | Import any XRPL account via 16-word seed phrase |
+| Send XRP | Address input by hand or QR scan; destination tag support; confirmation dialog |
+| Receive XRP | Your address as QR code + one-tap copy |
+| Transaction history | Real-time list of incoming/outgoing payments via WebSocket subscription |
+| Balance | Live balance updated over persistent WebSocket connection to `wss://xrplcluster.com` |
+| Testnet mode | Switch to XRPL Altnet for development without real funds |
+
+### Security
+| Feature | Details |
+|---------|---------|
+| Android Keystore AES-256-GCM | Seed phrase is encrypted inside the TEE (Trusted Execution Environment) — never exposed in plaintext |
+| Biometric unlock | Fingerprint / Face ID via `androidx.biometric` (BIOMETRIC_STRONG only) |
+| App password (PBKDF2) | Optional PIN/password as a fallback or primary lock |
+| Inactivity auto-lock | Screen locks after a configurable idle period |
+| Root detection | Warns if the device appears to be rooted |
+| Anti-debug detection | Detects debugger attachment in production builds |
+| FLAG_SECURE | Prevents screenshots on sensitive screens (seed display, password entry) |
+| Clipboard safety | Confirmation dialog before sending to guard against clipboard address-swap attacks |
+
+### Games *(backend required — not yet live)*
+| Game | Mechanic | Payout |
+|------|----------|--------|
+| Guess the Color | Pick Red or Black | **×2** |
+| Guess the Number | Pick 1–36 | **×36** |
+| European Roulette | Full table (straight, red/black, odd/even, dozens, columns) | **×2 – ×36** |
+
+All bets are sent as real XRPL transactions with a structured memo (`BET:R:…`). The server responds with a signed payment and a memo (`WIN:N` or `LOSE:N`) that the client verifies on-chain.
+
+### Referral System
+- Register as a referral partner on-chain (costs 66 XRP, recoverable for 13 XRP)
+- Enter a referral code to earn bonus lives and participate in daily prize draws
+- Full referral management UI (become / restore / view your referrals)
+
+### Internationalisation
+10 languages out of the box: **English, Russian, Chinese (中文), Hindi, Spanish, French, German, Arabic, Portuguese, Bengali**
+
+---
+
+## Architecture
 
 ```
-cd existing_repo
-git remote add origin https://gitlab.com/SamuilOlegovich/xura-android.git
-git branch -M main
-git push -uf origin main
+Java · MVVM · Dagger Hilt DI
+
+com.samuilolegovich
+├── view/           — Activities (UI layer)
+├── viewmodel/      — ViewModels + LiveData state
+├── wallet/
+│   ├── client/     — XRPL RPC + WebSocket clients (xrpl4j, OkHttp)
+│   └── model/      — PaymentManager, SocketManager
+├── async/runnable/ — Background Runnables (balance, subscriber, notifier)
+├── config/         — NetworkConfig (mainnet/testnet runtime switching)
+├── enums/          — StringEnum: all constants in one place
+├── utils/          — SecureSeedStorage, BiometricHelper, Cipher, RootDetector, …
+└── di/             — Hilt AppModule
 ```
 
-## Integrate with your tools
+**Key libraries:**
+- `org.xrpl:xrpl4j-core / xrpl4j-client 3.3.0` — XRPL account & transaction handling
+- `org.java-websocket:Java-WebSocket 1.5.7` — persistent WebSocket to XRPL cluster
+- `com.google.dagger:hilt-android 2.51.1` — dependency injection
+- `androidx.biometric 1.2.0-alpha05` — biometric authentication
+- `androidx.security:security-crypto 1.1.0-alpha06` — EncryptedSharedPreferences layer
+- `com.google.mlkit:barcode-scanning 17.0.2` + CameraX — QR code scanner
+- `com.squareup.retrofit2:retrofit 2.11.0` — REST calls to Ripple RPC nodes
+- `com.google.zxing:core 3.3.2` — QR code generation
 
-- [ ] [Set up project integrations](https://gitlab.com/SamuilOlegovich/xura-android/-/settings/integrations)
+---
 
-## Collaborate with your team
+## How to Build
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+### Prerequisites
+| Tool | Version |
+|------|---------|
+| Android Studio | Hedgehog or newer |
+| JDK | 17 |
+| Android SDK | compileSdk 36, buildToolsVersion 36.1.0 |
+| Gradle | 8.x (wrapper included) |
 
-## Test and Deploy
+### Steps
 
-Use the built-in continuous integration in GitLab.
+```bash
+# 1. Clone the repository
+git clone https://github.com/SamuilOlegovich/xura-android.git
+cd xura-android
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+# 2. Open in Android Studio  OR  build from the command line:
 
-***
+# Debug build
+./gradlew assembleDebug
 
-# Editing this README
+# Release build (requires a signing keystore — see below)
+./gradlew assembleRelease
+```
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
+### Release signing
 
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+Create `keystore.jks` and configure `app/build.gradle` signing block, or use the `RELEASE_SIGNATURE_CHECKLIST.md` file included in the repo for the full checklist before publishing.
 
-## Name
-Choose a self-explaining name for your project.
+### Run tests
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+```bash
+# Unit tests
+./gradlew test
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+# Instrumented tests (requires a connected device / emulator)
+./gradlew connectedAndroidTest
+```
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+79 tests — all green on the last CI run.
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+---
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+## Supported Devices
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+- **Android 9.0 Pie (API 28)** and higher
+- Biometric hardware optional (fallback to password is available)
+- Camera optional (QR scan — manual address entry always available)
+
+---
+
+## Network
+
+| Network | RPC | WebSocket |
+|---------|-----|-----------|
+| Mainnet | `https://s1.ripple.com:51234` | `wss://xrplcluster.com` |
+| Testnet | `https://s.altnet.rippletest.net:51234` | `wss://s.altnet.rippletest.net:51233` |
+
+Switch between networks in **Settings → DEV panel** (debug builds only). Game server addresses are stored per-network and can be overridden for self-hosted backends.
+
+---
+
+## Roulette Protocol (for backend implementors)
+
+The full server specification (memo format, bet codes, payout table, WebSocket subscription, idempotency requirements) is documented in [`ROULETTE_BACKEND_SPEC.md`](ROULETTE_BACKEND_SPEC.md).
+
+Quick summary:
+```
+Client → Server  (bet):
+  XRPL Payment to rGrEJZaBFYhPGuyM7NiJbJw2yXVB9vJHah
+  MemoData: HEX("BET:R:{code}@{amount},...:{referral}")
+
+Server → Client  (result):
+  XRPL Payment back to player address
+  MemoData: HEX("WIN:{number}") or HEX("LOSE:{number}")
+```
+
+---
+
+## License & Usage
+
+**The wallet functionality is free to use for non-commercial purposes.**
+
+You are welcome to use this application as a personal XRP crypto wallet at no charge, with no restrictions, as long as use is **non-commercial**.
+
+**The game server (backend) is proprietary and not included in this repository.**  
+The gaming logic in this app is intentionally inoperative without the server — do not attempt to play with real money until the official launch announcement.
+
+**For any commercial use, integration, licensing, or partnership proposals — please contact the author directly to negotiate terms.**
+
+> **Лицензия (кратко):**  
+> Использование в качестве некоммерческого крипто-кошелька — разрешено.  
+> Игровая логика без сервера не работает — не играйте на реальные деньги.  
+> По любым коммерческим предложениям или использованию — обращайтесь, будем договариваться.
+
+---
+
+## Contact
+
+- **GitHub:** [SamuilOlegovich](https://github.com/SamuilOlegovich)
+- **Email:** samuilolegovich@gmail.com
+
+---
 
 ## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+- [x] Non-custodial XRP wallet (mainnet ready)
+- [x] Biometric + password security
+- [x] QR send/receive
+- [x] Transaction history
+- [x] European Roulette UI + protocol
+- [x] Guess the Color / Guess the Number UI + protocol
+- [x] Referral system on-chain
+- [x] 10-language localisation
+- [ ] **Game server launch** — ETA: coming weeks
+- [ ] Push notifications for incoming payments
+- [ ] Google Play release
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+---
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+*Built with ❤️ on the XRP Ledger.*
