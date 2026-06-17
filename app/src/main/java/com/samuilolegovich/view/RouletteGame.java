@@ -208,6 +208,7 @@ public class RouletteGame extends BaseActivity {
         Flasher.TEST_SAND_AMOUNT        = totalAmount;
         Flasher.ROULETTE_BET_TAG        = pendingPrimaryTag != null ? pendingPrimaryTag : "";
         Flasher.ROULETTE_WIN_MULTIPLIER = pendingPrimaryMultiplier;
+        Flasher.ROULETTE_ALL_BETS       = new LinkedHashMap<>(tableBets);
 
         String tag = pendingPrimaryTag != null ? pendingPrimaryTag : "";
         if (tag.startsWith("N:")) {
@@ -577,11 +578,19 @@ public class RouletteGame extends BaseActivity {
     //  Lifecycle
     // ════════════════════════════════════════════════════════════════════
 
-    /** При возвращении на экран обновляет баланс кошелька. */
+    /** При уходе с экрана приостанавливает музыку казино. */
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (casinoMediaPlayer != null && casinoMediaPlayer.isPlaying()) casinoMediaPlayer.pause();
+    }
+
+    /** При возвращении на экран возобновляет музыку и обновляет баланс. */
     @Override
     protected void onResume() {
         super.onResume();
         viewModel.loadBalance();
+        if (casinoMediaPlayer != null) casinoMediaPlayer.start();
     }
 
     /** Останавливает фоновую музыку казино перед закрытием экрана. */
@@ -589,5 +598,14 @@ public class RouletteGame extends BaseActivity {
     public void onBackPressed() {
         if (casinoMediaPlayer != null) casinoMediaPlayer.stop();
         super.onBackPressed();
+    }
+
+    /** Освобождает ресурсы MediaPlayer при уничтожении Activity. */
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (casinoMediaPlayer != null) { casinoMediaPlayer.release(); casinoMediaPlayer = null; }
+        if (errorMediaPlayer  != null) { errorMediaPlayer.release();  errorMediaPlayer  = null; }
+        if (betMediaPlayer    != null) { betMediaPlayer.release();    betMediaPlayer    = null; }
     }
 }

@@ -23,6 +23,9 @@ import com.samuilolegovich.enums.TestModeEnum;
 import com.samuilolegovich.utils.Lotto;
 import dagger.hilt.android.AndroidEntryPoint;
 
+import java.math.BigDecimal;
+import java.util.LinkedHashMap;
+
 
 
 
@@ -49,6 +52,7 @@ public class Flasher extends BaseActivity {
     // Roulette-specific fields
     public static volatile String ROULETTE_BET_TAG;
     public static volatile int ROULETTE_WIN_MULTIPLIER = 2;
+    public static volatile LinkedHashMap<String, BigDecimal> ROULETTE_ALL_BETS;
 
     private volatile boolean FLAG;
 
@@ -276,7 +280,7 @@ public class Flasher extends BaseActivity {
     }
 
 
-    /** При уходе с экрана останавливает фоновый поток ожидания и анимацию вращения колеса. */
+    /** При уходе с экрана приостанавливает все звуки, останавливает поток ожидания и анимацию колеса. */
     @Override
     protected void onPause() {
         super.onPause();
@@ -284,10 +288,13 @@ public class Flasher extends BaseActivity {
         FlasherRun.FLAG = false;
         cancelCountdown();
         if (wheelView != null) wheelView.stopSpinning();
+        if (rouletteSpinMediaPlayer != null && rouletteSpinMediaPlayer.isPlaying()) rouletteSpinMediaPlayer.pause();
+        if (winMediaPlayer  != null && winMediaPlayer.isPlaying())  winMediaPlayer.pause();
+        if (lostMediaPlayer != null && lostMediaPlayer.isPlaying()) lostMediaPlayer.pause();
     }
 
 
-    /** При возвращении на экран (если ожидание ещё не завершено) перезапускает поток ожидания и вращение колеса. */
+    /** При возвращении на экран (если ожидание ещё не завершено) перезапускает поток, анимацию и звук вращения. */
     @Override
     protected void onResume() {
         super.onResume();
@@ -296,6 +303,7 @@ public class Flasher extends BaseActivity {
             FlasherRun.FLAG = true;
             goThread();
             if (wheelView != null) wheelView.startSpinning();
+            if (rouletteSpinMediaPlayer != null) rouletteSpinMediaPlayer.start();
         }
     }
 
@@ -305,18 +313,21 @@ public class Flasher extends BaseActivity {
     public void onBackPressed() {
         cancelCountdown();
         if (wheelView != null) wheelView.stopSpinning();
-        rouletteSpinMediaPlayer.stop();
-        lostMediaPlayer.stop();
-        winMediaPlayer.stop();
+        if (rouletteSpinMediaPlayer != null) rouletteSpinMediaPlayer.stop();
+        if (lostMediaPlayer != null) lostMediaPlayer.stop();
+        if (winMediaPlayer  != null) winMediaPlayer.stop();
         setColorNavigation(1);
         FlasherRun.FLAG = false;
         super.onBackPressed();
     }
 
-    /** Очищает статическую ссылку на Activity, чтобы избежать утечки памяти после уничтожения экрана. */
+    /** Освобождает ресурсы MediaPlayer и сбрасывает статическую ссылку на Activity. */
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (rouletteSpinMediaPlayer != null) { rouletteSpinMediaPlayer.release(); rouletteSpinMediaPlayer = null; }
+        if (winMediaPlayer  != null) { winMediaPlayer.release();  winMediaPlayer  = null; }
+        if (lostMediaPlayer != null) { lostMediaPlayer.release(); lostMediaPlayer = null; }
         FLASHER = null;
     }
 }

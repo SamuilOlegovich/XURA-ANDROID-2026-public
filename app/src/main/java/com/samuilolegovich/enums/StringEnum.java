@@ -10,6 +10,7 @@ package com.samuilolegovich.enums;
 public enum StringEnum {
     ONBOARDING_SEEN("onboarding_seen"),
     APP_PREFERENCES_BIOMETRIC_ENABLED("biometric_enabled"),
+    APP_PREFERENCES_LOCK_TIMEOUT("lock_timeout"),
     APP_PREFERENCES_PASSWORD_NOT_INSTALLED("password not installed"),
     APP_PREFERENCES_REFERRAL_NOT_INSTALLED("0"),
     APP_PREFERENCES_PASSWORD("password"),

@@ -6,15 +6,26 @@ package com.samuilolegovich.utils;
  */
 public class InactivityGuard {
 
-    private static final long TIMEOUT_MS = 5 * 60 * 1000L; // 5 минут
+    public static final long DEFAULT_TIMEOUT_MS = 30_000L; // 30 секунд по умолчанию
+    private static volatile long timeoutMs      = DEFAULT_TIMEOUT_MS;
     private static volatile long backgroundSince = 0L;
+
+    /** Устанавливает таймаут автоблокировки (в миллисекундах). Вызывается при старте и при смене настройки. */
+    public static void setTimeoutMs(long ms) {
+        timeoutMs = ms;
+    }
+
+    /** Возвращает текущий таймаут автоблокировки в миллисекундах. */
+    public static long getTimeoutMs() {
+        return timeoutMs;
+    }
 
     /** Вызывается, когда все Activity ушли в stopped (приложение свёрнуто) — запоминает момент ухода в фон. */
     public static void onBackground() {
         backgroundSince = System.currentTimeMillis();
     }
 
-    /** Вызывается, когда первая Activity вернулась в started (приложение снова на экране) — сбрасывает отсчёт. */
+    /** Сбрасывает таймер (используется после проверки блокировки или показа экрана блокировки). */
     public static void onForeground() {
         backgroundSince = 0L;
     }
@@ -24,9 +35,9 @@ public class InactivityGuard {
         backgroundSince = 0L;
     }
 
-    /** Возвращает true, если приложение провело в фоне больше TIMEOUT_MS и пора показать экран ввода пароля. */
+    /** Возвращает true, если приложение провело в фоне больше timeoutMs и пора показать экран ввода пароля. */
     public static boolean isLockRequired() {
         long t = backgroundSince;
-        return t > 0L && (System.currentTimeMillis() - t) >= TIMEOUT_MS;
+        return t > 0L && (System.currentTimeMillis() - t) >= timeoutMs;
     }
 }

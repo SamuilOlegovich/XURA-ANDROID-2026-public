@@ -33,6 +33,7 @@ import com.samuilolegovich.config.NetworkConfig;
 import com.samuilolegovich.enums.StringEnum;
 import com.samuilolegovich.utils.BiometricHelper;
 import com.samuilolegovich.utils.ClipboardUtil;
+import com.samuilolegovich.utils.InactivityGuard;
 import com.samuilolegovich.utils.PrefsHelper;
 import com.samuilolegovich.wallet.repository.WalletRepository;
 
@@ -74,11 +75,20 @@ public class Settings extends BaseActivity {
 
     @Inject WalletRepository repository;
 
+    private static final long[] TIMEOUT_OPTIONS_MS = {
+        30_000L, 60_000L, 2 * 60_000L, 5 * 60_000L, 15 * 60_000L
+    };
+    private static final String[] TIMEOUT_LABELS = {
+        "30 sec", "1 min", "2 min", "5 min", "15 min"
+    };
+
     // ── Существующие View ───────────────────────────────────────────────
     private View settingsSelectEnglishLinc;
     private View settingsSetPasswordLinc;
     private View settingsBiometricLinc;
+    private View settingsLockTimeoutLinc;
     private TextView biometricTitleText;
+    private TextView lockTimeoutTitle;
     private android.widget.ImageView setPasswordIcon;
     private TextView settingsTextView;
     private MaterialCardView cardTestBalance;
@@ -153,7 +163,9 @@ public class Settings extends BaseActivity {
         settingsSelectEnglishLinc = findViewById(R.id.settings_select_english_linc);
         settingsSetPasswordLinc   = findViewById(R.id.settings_set_password_linc);
         settingsBiometricLinc     = findViewById(R.id.settings_biometric_linc);
+        settingsLockTimeoutLinc   = findViewById(R.id.settings_lock_timeout_linc);
         biometricTitleText        = findViewById(R.id.biometric_title);
+        lockTimeoutTitle          = findViewById(R.id.lock_timeout_title);
         setPasswordIcon           = findViewById(R.id.set_password_icon);
         settingsTextView          = findViewById(R.id.settings_text_view);
         cardTestBalance           = findViewById(R.id.card_test_balance);
@@ -195,6 +207,7 @@ public class Settings extends BaseActivity {
     private void setLanguage() {
         settingsTextView.setText(R.string.settings_text);
         updateBiometricButton();
+        updateLockTimeoutButton();
         updateGameModeButton();
         updateTestBalanceCard();
         updatePasswordIcon();
@@ -252,6 +265,26 @@ public class Settings extends BaseActivity {
     private void updateBiometricButton() {
         String state = isBiometricEnabled() ? "  ●  ON" : "  ○  OFF";
         biometricTitleText.setText(getString(R.string.settings_biometric) + state);
+    }
+
+    /** Обновляет текст пункта таймаута, показывая текущее значение. */
+    private void updateLockTimeoutButton() {
+        lockTimeoutTitle.setText("Auto-lock  ●  " + formatTimeout(InactivityGuard.getTimeoutMs()));
+    }
+
+    /** Форматирует миллисекунды в читаемую строку (sec / min). */
+    private String formatTimeout(long ms) {
+        if (ms < 60_000L) return (ms / 1000) + " sec";
+        long min = ms / 60_000L;
+        return min + " min";
+    }
+
+    /** Сохраняет таймаут в preferences и применяет к InactivityGuard. */
+    private void saveLockTimeout(long ms) {
+        PrefsHelper.get(this).edit()
+                .putLong(StringEnum.APP_PREFERENCES_LOCK_TIMEOUT.getValue(), ms)
+                .apply();
+        InactivityGuard.setTimeoutMs(ms);
     }
 
     /** Меняет иконку пункта пароля (закрытый/открытый замок) в зависимости от того, установлен ли пароль приложения. */
@@ -389,6 +422,24 @@ public class Settings extends BaseActivity {
         settingsBiometricLinc.setOnClickListener(v -> {
             pulse(v);
             handleBiometricToggle();
+        });
+
+        settingsLockTimeoutLinc.setOnClickListener(v -> {
+            pulse(v);
+            long current = InactivityGuard.getTimeoutMs();
+            int checkedIndex = 0;
+            for (int i = 0; i < TIMEOUT_OPTIONS_MS.length; i++) {
+                if (TIMEOUT_OPTIONS_MS[i] == current) { checkedIndex = i; break; }
+            }
+            new AlertDialog.Builder(this)
+                    .setTitle("Auto-lock timeout")
+                    .setSingleChoiceItems(TIMEOUT_LABELS, checkedIndex, (d, which) -> {
+                        saveLockTimeout(TIMEOUT_OPTIONS_MS[which]);
+                        updateLockTimeoutButton();
+                        d.dismiss();
+                    })
+                    .setNegativeButton("CANCEL", null)
+                    .show();
         });
 
         btnGameMode.setOnClickListener(v -> {

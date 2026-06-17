@@ -283,15 +283,16 @@ public class GuessTheColorGame extends BaseActivity {
     }
 
 
-    /** При уходе с экрана останавливает фоновую генерацию цвета. */
+    /** При уходе с экрана приостанавливает музыку и останавливает фоновую генерацию цвета. */
     @Override
     protected void onPause() {
         super.onPause();
         VISIBLE_ON_SCREEN = false;
         GenColorRun.FLAG = false;
+        if (casinoMediaPlayer != null && casinoMediaPlayer.isPlaying()) casinoMediaPlayer.pause();
     }
 
-    /** При возвращении на экран обновляет баланс и перезапускает фоновую генерацию цвета. */
+    /** При возвращении на экран возобновляет музыку, баланс и фоновую генерацию цвета. */
     @Override
     protected void onResume() {
         super.onResume();
@@ -299,13 +300,23 @@ public class GuessTheColorGame extends BaseActivity {
         GenColorRun.FLAG = true;
         viewModel.loadBalance();
         goThread();
+        if (casinoMediaPlayer != null) casinoMediaPlayer.start();
     }
 
     /** Останавливает фоновую музыку и генерацию цвета перед закрытием экрана. */
     @Override
     public void onBackPressed() {
-        casinoMediaPlayer.stop();
+        if (casinoMediaPlayer != null) casinoMediaPlayer.stop();
         GenColorRun.FLAG = false;
         super.onBackPressed();
+    }
+
+    /** Освобождает ресурсы MediaPlayer при уничтожении Activity. */
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (casinoMediaPlayer != null) { casinoMediaPlayer.release(); casinoMediaPlayer = null; }
+        if (errorMediaPlayer  != null) { errorMediaPlayer.release();  errorMediaPlayer  = null; }
+        if (betMediaPlayer    != null) { betMediaPlayer.release();    betMediaPlayer    = null; }
     }
 }

@@ -129,9 +129,9 @@ public class GuessTheNumberGame extends BaseActivity {
             if (preparedAmount == null) return;
             setBettingState(false);
             tilBetField.setError(null);
+            setBetParam(preparedAmount, String.valueOf(selectedNumber));
             resetNumberSelection();
             bet.setText("");
-            setBetParam(preparedAmount, String.valueOf(selectedNumber));
             goToAnotherPage(FLASHER_CLASS);
             showSnackbar(root, BET_IS_MADE_EXPECT_THE_RESULT, SnackbarType.INFO);
         });
@@ -307,15 +307,16 @@ public class GuessTheNumberGame extends BaseActivity {
     }
 
 
-    /** При уходе с экрана останавливает фоновую генерацию числа. */
+    /** При уходе с экрана приостанавливает музыку и останавливает фоновую генерацию числа. */
     @Override
     protected void onPause() {
         super.onPause();
         VISIBLE_ON_SCREEN = false;
         GenNumberRun.FLAG = false;
+        if (casinoMediaPlayer != null && casinoMediaPlayer.isPlaying()) casinoMediaPlayer.pause();
     }
 
-    /** При возвращении на экран обновляет баланс и перезапускает фоновую генерацию числа. */
+    /** При возвращении на экран возобновляет музыку, баланс и фоновую генерацию числа. */
     @Override
     protected void onResume() {
         super.onResume();
@@ -323,13 +324,23 @@ public class GuessTheNumberGame extends BaseActivity {
         GenNumberRun.FLAG = true;
         viewModel.loadBalance();
         goThread();
+        if (casinoMediaPlayer != null) casinoMediaPlayer.start();
     }
 
     /** Останавливает фоновую музыку и генерацию числа перед закрытием экрана. */
     @Override
     public void onBackPressed() {
-        casinoMediaPlayer.stop();
+        if (casinoMediaPlayer != null) casinoMediaPlayer.stop();
         GenNumberRun.FLAG = false;
         super.onBackPressed();
+    }
+
+    /** Освобождает ресурсы MediaPlayer при уничтожении Activity. */
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (casinoMediaPlayer != null) { casinoMediaPlayer.release(); casinoMediaPlayer = null; }
+        if (errorMediaPlayer  != null) { errorMediaPlayer.release();  errorMediaPlayer  = null; }
+        if (betMediaPlayer    != null) { betMediaPlayer.release();    betMediaPlayer    = null; }
     }
 }

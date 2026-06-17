@@ -53,6 +53,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         checkAutoLock();
+        InactivityGuard.onForeground(); // сброс таймера ПОСЛЕ проверки, иначе блокировка не сработает
         syncBottomNavSelection();
         animateLogo();
         checkAntiDebug();

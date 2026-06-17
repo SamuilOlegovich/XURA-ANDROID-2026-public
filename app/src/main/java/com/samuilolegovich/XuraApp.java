@@ -30,12 +30,17 @@ import dagger.hilt.android.HiltAndroidApp;
 public class XuraApp extends Application {
     private static Application instance;
 
-    /** Сохраняет глобальную ссылку на приложение и регистрирует трекер видимости Activity для автоблокировки. */
+    /** Сохраняет глобальную ссылку на приложение, регистрирует трекер видимости Activity и загружает сохранённый таймаут автоблокировки. */
     @Override
     public void onCreate() {
         super.onCreate();
         instance = this;
         registerActivityLifecycleCallbacks(new ForegroundTracker());
+
+        long saved = PrefsHelper.get(this).getLong(
+                StringEnum.APP_PREFERENCES_LOCK_TIMEOUT.getValue(),
+                InactivityGuard.DEFAULT_TIMEOUT_MS);
+        InactivityGuard.setTimeoutMs(saved);
     }
 
     /** Возвращает контекст приложения для кода, у которого нет доступа к Activity/Context напрямую. */
@@ -47,9 +52,9 @@ public class XuraApp extends Application {
     private static class ForegroundTracker implements ActivityLifecycleCallbacks {
         private int started = 0;
 
-        /** При старте первой Activity сообщает InactivityGuard, что приложение видно пользователю. */
+        /** Считает запущенные Activity; сброс таймера неактивности делается в BaseActivity.onResume после checkAutoLock. */
         @Override public void onActivityStarted(Activity a) {
-            if (++started == 1) InactivityGuard.onForeground();
+            ++started;
         }
         /** При остановке последней Activity сообщает InactivityGuard, что приложение ушло в фон (запускается отсчёт неактивности). */
         @Override public void onActivityStopped(Activity a) {

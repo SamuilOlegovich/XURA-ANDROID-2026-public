@@ -3,6 +3,7 @@ package com.samuilolegovich.async.runnable;
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 import com.samuilolegovich.XuraApp;
+import com.samuilolegovich.enums.RouletteBetCode;
 import com.samuilolegovich.enums.StringEnum;
 import com.samuilolegovich.enums.TestModeEnum;
 import com.samuilolegovich.utils.Lotto;
@@ -10,6 +11,9 @@ import com.samuilolegovich.view.Flasher;
 import com.samuilolegovich.view.YourReferral;
 import com.samuilolegovich.wallet.repository.WalletRepository;
 
+import java.math.BigDecimal;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Random;
 
 
@@ -63,7 +67,7 @@ public class NotifierRunForTrialGame implements Runnable {
         }
 
         if (testModeEnum.equals(TestModeEnum.GUESS_THE_COLOR_GAME)) {
-            calculateForGuessTheColor(random.nextInt(1000) + 1);
+            calculateForGuessTheColor();
         } else if (testModeEnum.equals(TestModeEnum.ROULETTE_GAME)) {
             calculateForRoulette(random.nextInt(37)); // 0–36
         } else {
@@ -72,23 +76,31 @@ public class NotifierRunForTrialGame implements Runnable {
     }
 
 
-    /** Считает результат тестовой ставки в рулетке: проверяет выпавшее число против ставки игрока и при победе зачисляет тестовый выигрыш. */
+    /** Считает результат тестовой ставки в рулетке: бросает колесо один раз и проверяет каждую
+     * ставку игрока против выпавшего числа. Выплата суммируется по всем выигравшим позициям
+     * с учётом индивидуального мультипликатора каждой ставки. */
     private void calculateForRoulette(int winNumber) {
         Flasher.NUMBER_BET = String.valueOf(winNumber);
-
-        String betTag = Flasher.ROULETTE_BET_TAG != null ? Flasher.ROULETTE_BET_TAG : "N:0";
-        boolean win = evaluateRouletteBet(betTag, winNumber);
-
-        double multiplier = Flasher.ROULETTE_WIN_MULTIPLIER;
-        double amount = Double.parseDouble(
-                Flasher.TEST_SAND_AMOUNT != null ? Flasher.TEST_SAND_AMOUNT : "1");
-        String amountWin = String.valueOf(amount * multiplier);
 
         String lotto = String.valueOf(random.nextInt(10001 - 4000) + 4000);
         WalletRepository.getInstance().setLottoNow(lotto);
 
+        LinkedHashMap<String, BigDecimal> allBets = Flasher.ROULETTE_ALL_BETS;
+        double totalPayout = 0;
+        if (allBets != null) {
+            for (Map.Entry<String, BigDecimal> entry : allBets.entrySet()) {
+                if (evaluateRouletteBet(entry.getKey(), winNumber)) {
+                    int mult = RouletteBetCode.multiplierForTag(entry.getKey());
+                    totalPayout += entry.getValue().doubleValue() * mult;
+                }
+            }
+        }
+
+        boolean win = totalPayout > 0;
+        String amountWin = String.valueOf(totalPayout);
+
         if (win && !Boolean.TRUE.equals(MainActivity.IS_REAL_GAME_MODE)) {
-            try { WalletRepository.getInstance().creditTestBalance(new java.math.BigDecimal(amountWin)); }
+            try { WalletRepository.getInstance().creditTestBalance(new BigDecimal(amountWin)); }
             catch (Exception ignored) {}
         }
 
@@ -131,21 +143,27 @@ public class NotifierRunForTrialGame implements Runnable {
     }
 
 
-    /** Считает результат тестовой ставки в игре "Угадай цвет": сравнивает случайное число (0-999) со стороной, на которую ставил игрок. */
-    private void calculateForGuessTheColor(int randomNumber) {
-        if (randomNumber < 500 && Flasher.COLOR_BET) {
-            // победа
-            responseToBet(StringEnum.BET_WIN_GUESS_THE_COLOR.getValue());
-        } else if (randomNumber >= 500 && Flasher.COLOR_BET) {
-            // проигрыш
+    /** Считает результат тестовой ставки в игре "Угадай цвет": генерирует реальное число рулетки,
+     * записывает его в Flasher.NUMBER_BET для отображения на колесе, и определяет победу
+     * по совпадению цвета выпавшего числа с цветом ставки игрока. */
+    private void calculateForGuessTheColor() {
+        Map<Boolean, String> result = Lotto.genNumberAndColor();
+        boolean isBlack = result.containsKey(true);
+        String number = isBlack ? result.get(true) : result.get(false);
+        Flasher.NUMBER_BET = number;
+
+        int n = Integer.parseInt(number);
+        // 0 — зелёное, не красное и не чёрное: всегда проигрыш для ставок на цвет
+        if (n == 0) {
             responseToBet(StringEnum.NOT_WIN_GUESS_THE_COLOR.getValue());
-        } else if (randomNumber < 500) {
-            // проигрыш
-            responseToBet(StringEnum.NOT_WIN_GUESS_THE_COLOR.getValue());
-        } else {
-            // победа
-            responseToBet(StringEnum.BET_WIN_GUESS_THE_COLOR.getValue());
+            return;
         }
+
+        boolean playerBetBlack = Boolean.TRUE.equals(Flasher.COLOR_BET);
+        boolean win = (playerBetBlack == isBlack);
+        responseToBet(win
+                ? StringEnum.BET_WIN_GUESS_THE_COLOR.getValue()
+                : StringEnum.NOT_WIN_GUESS_THE_COLOR.getValue());
     }
 
 
