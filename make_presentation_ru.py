@@ -595,7 +595,7 @@ def slide_08_referral(c, n, T):
         rounded_card(c, x + 8, y - 48, 36, 36, col, 18)
         c.setFont("Arial-Bold", 18)
         c.setFillColor(BG)
-        c.drawCentredString(x + 26, y - 27, num)
+        c.drawCentredString(x + 26, y - 36, num)
         c.setFont("Arial-Bold", 13)
         c.setFillColor(col)
         c.drawString(x + 56, y - 18, title)
