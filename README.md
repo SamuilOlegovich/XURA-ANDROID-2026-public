@@ -1,7 +1,8 @@
 # XURA — XRP Wallet & Gaming Platform
 
 > **Non-custodial XRP Ledger wallet with built-in blockchain-powered games.**  
-> Android application written in Java · minSdk 28 (Android 9+) · version 26.6.17
+> Android application written in Java · minSdk 28 (Android 9+) · version 26.6.17  
+> *Originally started in 2022 as an XRP wallet experiment — rewritten and actively maintained through 2026.*
 
 ---
 
