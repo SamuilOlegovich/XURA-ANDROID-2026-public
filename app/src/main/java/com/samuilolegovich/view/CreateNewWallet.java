@@ -5,7 +5,10 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 
 import com.samuilolegovich.AppExecutors;
 import com.samuilolegovich.BaseActivity;
@@ -43,6 +46,8 @@ public class CreateNewWallet extends BaseActivity {
     private TextView createNewWalletText;
     private TextView seed;
     private View next;
+    private ImageView nextIcon;
+    private CircularProgressIndicator nextLoading;
 
 
 
@@ -63,17 +68,16 @@ public class CreateNewWallet extends BaseActivity {
     /** Находит и сохраняет ссылки на View разметки экрана. */
     private void setButtons() {
         createNewWalletText = (TextView) findViewById(R.id.create_new_wallet_text_view);
-        seed = (TextView) findViewById(R.id.seed_field);
-        next = findViewById(R.id.next_link);
+        seed                = (TextView) findViewById(R.id.seed_field);
+        next                = findViewById(R.id.next_link);
+        nextIcon            = findViewById(R.id.create_next_icon);
+        nextLoading         = findViewById(R.id.create_next_loading);
     }
 
 
-    /** Показывает текст-заглушку "генерация seed..." и блокирует кнопку "далее" до завершения генерации кошелька. */
+    /** Показывает текст-заглушку "генерация seed..." пока идёт асинхронная генерация. */
     private void setLanguage() {
         seed.setText(R.string.seed_generating);
-        next.setAlpha(0.4f);
-        next.setClickable(false);
-        next.setFocusable(false);
     }
 
 
@@ -95,25 +99,29 @@ public class CreateNewWallet extends BaseActivity {
     /** Асинхронно (на IO-потоке) генерирует новый XRPL-кошелёк, показывает seed на экране и временно сохраняет его как pre-seed; при ошибке предлагает перезапустить. */
     private void createNewWalletAsync() {
         isNewWallet = false;
+        setLoading(true);
         AppExecutors.io().execute(() -> {
             Map<String, String> map = repository.createNewWallet();
             runOnUiThread(() -> {
+                setLoading(false);
                 if (map != null && map.containsKey("Seed")) {
                     seedString = map.get("Seed");
                     seed.setText(seedString);
                     setPreSeed(seedString);
                     isNewWallet = true;
-                    next.setAlpha(1f);
-                    next.setClickable(true);
-                    next.setFocusable(true);
                 } else {
                     seed.setText(R.string.wrong_restart_please);
-                    next.setAlpha(1f);
-                    next.setClickable(true);
-                    next.setFocusable(true);
                 }
             });
         });
+    }
+
+    private void setLoading(boolean loading) {
+        next.setAlpha(loading ? 0.4f : 1f);
+        next.setClickable(!loading);
+        next.setFocusable(!loading);
+        nextIcon.setVisibility(loading ? View.GONE : View.VISIBLE);
+        nextLoading.setVisibility(loading ? View.VISIBLE : View.GONE);
     }
 
 

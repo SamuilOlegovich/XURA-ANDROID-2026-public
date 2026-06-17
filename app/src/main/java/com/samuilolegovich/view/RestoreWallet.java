@@ -8,7 +8,10 @@ import android.text.TextWatcher;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.samuilolegovich.AppExecutors;
@@ -47,6 +50,8 @@ public class RestoreWallet extends BaseActivity {
     private TextInputLayout tilSeed;
     private EditText seed;
     private View next;
+    private ImageView nextIcon;
+    private CircularProgressIndicator nextLoading;
 
 
 
@@ -66,9 +71,11 @@ public class RestoreWallet extends BaseActivity {
     /** Находит и сохраняет ссылки на View разметки экрана. */
     private void setButtons() {
         restoreWalletTextView = (TextView) findViewById(R.id.restore_wallet_text_view);
-        tilSeed = findViewById(R.id.til_restore_wallet_seed_field);
-        seed = (EditText) findViewById(R.id.restore_wallet_seed_field);
-        next = findViewById(R.id.restore_wallet_next_link);
+        tilSeed               = findViewById(R.id.til_restore_wallet_seed_field);
+        seed                  = (EditText) findViewById(R.id.restore_wallet_seed_field);
+        next                  = findViewById(R.id.restore_wallet_next_link);
+        nextIcon              = findViewById(R.id.restore_next_icon);
+        nextLoading           = findViewById(R.id.restore_next_loading);
     }
 
 
@@ -101,6 +108,7 @@ public class RestoreWallet extends BaseActivity {
 
     /** Асинхронно (на IO-потоке) пытается восстановить XRPL-кошелёк по seed-фразе; при успехе сохраняет seed и переходит дальше, иначе показывает ошибку. */
     private void recoverWalletAsync(String seedRestore) {
+        setLoading(true);
         AppExecutors.io().execute(() -> {
             Map<String, String> map = repository.restoreWallet(seedRestore);
             boolean success = map != null && map.containsKey("Classic Address");
@@ -111,10 +119,19 @@ public class RestoreWallet extends BaseActivity {
                     repository.loadBalance();
                     goToAnotherPage(REFERRAL_CLASS);
                 } else {
+                    setLoading(false);
                     tilSeed.setError(ERROR_CHECK_THE_SEED_AND_TRY_AGAIN);
                 }
             });
         });
+    }
+
+    private void setLoading(boolean loading) {
+        next.setClickable(!loading);
+        next.setFocusable(!loading);
+        next.setAlpha(loading ? 0.6f : 1f);
+        nextIcon.setVisibility(loading ? View.GONE : View.VISIBLE);
+        nextLoading.setVisibility(loading ? View.VISIBLE : View.GONE);
     }
 
 
