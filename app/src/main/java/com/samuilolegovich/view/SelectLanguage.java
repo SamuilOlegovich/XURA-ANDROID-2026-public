@@ -217,7 +217,7 @@ public class SelectLanguage extends BaseActivity {
                 .putString(StringEnum.APP_PREFERENCES_LOCALE.getValue(), stringEnum.getValue())
                 .apply();
 
-        runOnUiThread(this::recreate);
+        runOnUiThread(this::finish);
         if (MAIN_ACTIVITY != null)
             MAIN_ACTIVITY.runOnUiThread(MAIN_ACTIVITY::recreate);
         if (Settings.SETTINGS_ACTIVITY != null)
