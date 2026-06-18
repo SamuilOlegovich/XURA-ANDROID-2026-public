@@ -565,6 +565,12 @@ public class Settings extends BaseActivity {
                     ? getString(R.string.dev_network_switched_testnet)
                     : getString(R.string.dev_network_switched_mainnet);
             showSnackbar(root, msg, SnackbarType.INFO);
+            // Пересоздаём сокет для новой сети — иначе история и баланс через WS идут на старый узел
+            new Thread(() -> {
+                repository.closeSocket();
+                repository.restartSocket();
+                repository.startSocket();
+            }).start();
         });
 
         btnDevSave.setOnClickListener(v -> {

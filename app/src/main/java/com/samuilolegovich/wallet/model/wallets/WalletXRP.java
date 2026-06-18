@@ -381,6 +381,7 @@ public class WalletXRP implements Wallet {
 
     /** Запрашивает у RPC текущую информацию о счёте (баланс, сиквенс); если счёт не активирован, тихо логирует подсказку об этом. */
     private void getInformationAboutYourAccount() {
+        accountInfoResult = null; // сбрасываем перед запросом — иначе после смены сети останется значение со старой
         try {
             createConnect(); // всегда используем текущую сеть (testnet/mainnet могла быть переключена)
             requestParams = AccountInfoRequestParams.builder()
