@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.samuilolegovich.BaseActivity;
 import com.samuilolegovich.R;
+import com.samuilolegovich.utils.AudioHelper;
 import dagger.hilt.android.AndroidEntryPoint;
 
 
@@ -53,7 +54,7 @@ public class Lost extends BaseActivity {
         btnBackToGames  = findViewById(R.id.btn_back_to_games);
 
         lostMediaPlayer = MediaPlayer.create(this, R.raw.lost);
-        lostMediaPlayer.start();
+        if (AudioHelper.isSoundEnabled(this)) lostMediaPlayer.start();
 
         // BET LOST — purple → magenta → red
         lastTextView.post(() -> {
@@ -96,10 +97,22 @@ public class Lost extends BaseActivity {
     }
 
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (lostMediaPlayer != null && lostMediaPlayer.isPlaying()) lostMediaPlayer.pause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (lostMediaPlayer != null) { lostMediaPlayer.release(); lostMediaPlayer = null; }
+    }
+
     /** Останавливает звук проигрыша перед стандартной обработкой нажатия "назад". */
     @Override
     public void onBackPressed() {
-        lostMediaPlayer.stop();
+        if (lostMediaPlayer != null) lostMediaPlayer.stop();
         super.onBackPressed();
     }
 }

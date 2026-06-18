@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.SharedPreferences;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -34,7 +33,6 @@ public class YourReferral extends BaseActivity {
 
 
     private ClipboardManager clipboardManager;
-    private MediaPlayer erMediaPlayer;
     private ClipData clipData;
 
     private SharedPreferences.Editor editor;
@@ -60,14 +58,11 @@ public class YourReferral extends BaseActivity {
 
 
 
-    /** Находит View разметки экрана и запускает звуковой эффект. */
+    /** Находит View разметки экрана. */
     private void setButtons() {
         yourReferralPageTextView = (TextView) findViewById(R.id.your_referral_page_text_view);
         copy = findViewById(R.id.your_referral_page_copy_linc);
         code = (TextView) findViewById(R.id.your_referral_page_code);
-
-        erMediaPlayer = MediaPlayer.create(this, R.raw.error);
-        erMediaPlayer.start();
     }
 
 

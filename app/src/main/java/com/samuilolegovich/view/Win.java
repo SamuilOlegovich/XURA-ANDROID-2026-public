@@ -12,6 +12,7 @@ import android.view.View;
 import com.samuilolegovich.BaseActivity;
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
+import com.samuilolegovich.utils.AudioHelper;
 import dagger.hilt.android.AndroidEntryPoint;
 
 
@@ -58,7 +59,7 @@ public class Win extends BaseActivity {
         btnBackToGames = findViewById(R.id.btn_back_to_games);
 
         winMediaPlayer = MediaPlayer.create(this, R.raw.win);
-        winMediaPlayer.start();
+        if (AudioHelper.isSoundEnabled(this)) winMediaPlayer.start();
 
         winPageTextView.post(() -> {
             LinearGradient gradient = new LinearGradient(
@@ -104,10 +105,22 @@ public class Win extends BaseActivity {
 
 
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (winMediaPlayer != null && winMediaPlayer.isPlaying()) winMediaPlayer.pause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (winMediaPlayer != null) { winMediaPlayer.release(); winMediaPlayer = null; }
+    }
+
     /** При нажатии на кнопку "назад" останавливает звук победы и возвращается на предыдущий экран. */
     @Override
     public void onBackPressed() {
-        winMediaPlayer.stop();
+        if (winMediaPlayer != null) winMediaPlayer.stop();
         super.onBackPressed();
     }
 }

@@ -61,8 +61,6 @@ public class Flasher extends BaseActivity {
     private volatile boolean FLAG;
 
     private MediaPlayer rouletteSpinMediaPlayer;
-    private MediaPlayer winMediaPlayer;
-    private MediaPlayer lostMediaPlayer;
 
     private AudioFocusRequest audioFocusRequest;
     private BroadcastReceiver noisyReceiver;
@@ -75,8 +73,6 @@ public class Flasher extends BaseActivity {
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
                 if (rouletteSpinMediaPlayer != null && rouletteSpinMediaPlayer.isPlaying())
                     rouletteSpinMediaPlayer.pause();
-                if (winMediaPlayer  != null && winMediaPlayer.isPlaying())  winMediaPlayer.pause();
-                if (lostMediaPlayer != null && lostMediaPlayer.isPlaying()) lostMediaPlayer.pause();
                 break;
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
                 if (rouletteSpinMediaPlayer != null) rouletteSpinMediaPlayer.setVolume(0.1f, 0.1f);
@@ -125,12 +121,9 @@ public class Flasher extends BaseActivity {
 
 
 
-    /** Готовит звуковые эффекты (вращение/выигрыш/проигрыш) и запускает циклическое вращение рулетки. */
+    /** Готовит звук вращения рулетки и запускает анимацию колеса. */
     private void setSound() {
         rouletteSpinMediaPlayer = MediaPlayer.create(this, R.raw.roulette_spin);
-        winMediaPlayer  = MediaPlayer.create(this, R.raw.win);
-        lostMediaPlayer = MediaPlayer.create(this, R.raw.lost);
-
         rouletteSpinMediaPlayer.setLooping(true);
         wheelView.setCenterColor(0xFF000000);
         wheelView.startSpinning();
@@ -209,11 +202,6 @@ public class Flasher extends BaseActivity {
             btnBackToGame.setVisibility(View.VISIBLE);
             tvCountdown.setVisibility(View.VISIBLE);
             startCountdown();
-
-            if (AudioHelper.isSoundEnabled(this)) {
-                if (win) winMediaPlayer.start();
-                else     lostMediaPlayer.start();
-            }
         });
     }
 
@@ -316,8 +304,6 @@ public class Flasher extends BaseActivity {
         cancelCountdown();
         if (wheelView != null) wheelView.stopSpinning();
         if (rouletteSpinMediaPlayer != null && rouletteSpinMediaPlayer.isPlaying()) rouletteSpinMediaPlayer.pause();
-        if (winMediaPlayer  != null && winMediaPlayer.isPlaying())  winMediaPlayer.pause();
-        if (lostMediaPlayer != null && lostMediaPlayer.isPlaying()) lostMediaPlayer.pause();
         AudioHelper.abandonFocus(this, audioFocusRequest);
         AudioHelper.unregisterNoisyReceiver(this, noisyReceiver);
         audioFocusRequest = null;
@@ -341,9 +327,6 @@ public class Flasher extends BaseActivity {
             if (wheelView != null) wheelView.startSpinning();
             if (rouletteSpinMediaPlayer != null && AudioHelper.isSoundEnabled(this))
                 rouletteSpinMediaPlayer.start();
-        } else if (gameResultShown && AudioHelper.isSoundEnabled(this)) {
-            MediaPlayer resultPlayer = lastResultWin ? winMediaPlayer : lostMediaPlayer;
-            if (resultPlayer != null) resultPlayer.start();
         }
     }
 
@@ -354,8 +337,6 @@ public class Flasher extends BaseActivity {
         cancelCountdown();
         if (wheelView != null) wheelView.stopSpinning();
         if (rouletteSpinMediaPlayer != null) rouletteSpinMediaPlayer.stop();
-        if (lostMediaPlayer != null) lostMediaPlayer.stop();
-        if (winMediaPlayer  != null) winMediaPlayer.stop();
         setColorNavigation(1);
         FlasherRun.FLAG = false;
         super.onBackPressed();
@@ -368,8 +349,6 @@ public class Flasher extends BaseActivity {
         AudioHelper.abandonFocus(this, audioFocusRequest);
         AudioHelper.unregisterNoisyReceiver(this, noisyReceiver);
         if (rouletteSpinMediaPlayer != null) { rouletteSpinMediaPlayer.release(); rouletteSpinMediaPlayer = null; }
-        if (winMediaPlayer  != null) { winMediaPlayer.release();  winMediaPlayer  = null; }
-        if (lostMediaPlayer != null) { lostMediaPlayer.release(); lostMediaPlayer = null; }
         FLASHER = null;
     }
 }
