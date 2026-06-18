@@ -69,6 +69,7 @@ public class SelectGame extends BaseActivity {
     };
 
     private TextView selectTextView;
+    private TextView tvGameModeBadge;
     private View guessTheNumber;
     private View guessTheColor;
     private View roulette;
@@ -104,16 +105,31 @@ public class SelectGame extends BaseActivity {
 
     /** Находит и сохраняет ссылки на View разметки экрана. */
     private void setButtons() {
-        guessTheNumber = findViewById(R.id.double_your_bet_linc);
-        guessTheColor = findViewById(R.id.guess_the_color_linc);
-        selectTextView = (TextView) findViewById(R.id.select_text_view);
-        roulette = findViewById(R.id.roulette_linc);
+        guessTheNumber  = findViewById(R.id.double_your_bet_linc);
+        guessTheColor   = findViewById(R.id.guess_the_color_linc);
+        selectTextView  = (TextView) findViewById(R.id.select_text_view);
+        roulette        = findViewById(R.id.roulette_linc);
+        tvGameModeBadge = findViewById(R.id.tv_game_mode_badge);
     }
 
 
-    /** Устанавливает локализованный текст заголовка экрана. */
+    /** Устанавливает локализованный текст заголовка экрана и обновляет бейдж режима игры. */
     private void setLanguage() {
         selectTextView.setText(R.string.select_game);
+        updateGameModeBadge();
+    }
+
+    /** Показывает бейдж текущего режима игры: TRIAL (голубой) или LIVE (золотой). */
+    private void updateGameModeBadge() {
+        if (tvGameModeBadge == null) return;
+        boolean isReal = Boolean.TRUE.equals(MainActivity.IS_REAL_GAME_MODE);
+        if (isReal) {
+            tvGameModeBadge.setText(R.string.badge_live_mode);
+            tvGameModeBadge.setBackgroundResource(R.drawable.bg_chip_live);
+        } else {
+            tvGameModeBadge.setText(R.string.badge_trial_mode);
+            tvGameModeBadge.setBackgroundResource(R.drawable.bg_chip_trial);
+        }
     }
 
 
@@ -161,6 +177,7 @@ public class SelectGame extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        updateGameModeBadge();
         noisyReceiver = AudioHelper.registerNoisyReceiver(this,
                 () -> { if (flourOfChoiceMediaPlayer != null && flourOfChoiceMediaPlayer.isPlaying())
                             flourOfChoiceMediaPlayer.pause(); });

@@ -303,6 +303,8 @@
     <string name="settings_tap_to_copy">Tap to copy</string>
     <string name="settings_test_mode_section">TRIAL MODE</string>
     <string name="settings_testnet_badge">⬡ XRP TESTNET</string>
+    <string name="badge_trial_mode">○ TRIAL MODE</string>
+    <string name="badge_live_mode">● LIVE MODE</string>
     <string name="settings_testnet_note">Not real funds — testnet only</string>
     <string name="settings_test_balance_label">Testnet balance</string>
     <string name="settings_reset_test_balance">Reset to 1000 XRP</string>
@@ -380,6 +382,8 @@
     <string name="select_language_bengali">বাংলা</string>
     <string name="btn_sub_bengali">বাংলায় পরিবর্তন করুন</string>
     <string name="btn_sub_game_mode">Trial or live mode</string>
+    <string name="settings_game_mode_tap_to_trial">Tap to switch to TRIAL</string>
+    <string name="settings_game_mode_tap_to_live">Tap to switch to LIVE</string>
     <string name="btn_sub_spin">Spin the roulette wheel</string>
 
     <!-- DEV section (hidden, 7 taps on title) -->

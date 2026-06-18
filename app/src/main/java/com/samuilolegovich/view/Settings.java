@@ -97,10 +97,12 @@ public class Settings extends BaseActivity {
     private TextView settingsTextView;
     private MaterialCardView cardTestBalance;
     private TextView tvTestBalance;
+    private TextView chipModeBadge;
     private MaterialButton btnResetTestBalance;
     private View btnGameMode;
     private TextView gameModeTitle;
     private android.widget.ImageView gameModeIcon;
+    private TextView gameModeSubtitle;
     private View becomeReferralLinc;
     private View infoLinc;
     private View devTxHistoryLinc;
@@ -177,9 +179,11 @@ public class Settings extends BaseActivity {
         settingsTextView          = findViewById(R.id.settings_text_view);
         cardTestBalance           = findViewById(R.id.card_test_balance);
         tvTestBalance             = findViewById(R.id.tv_test_balance);
+        chipModeBadge             = findViewById(R.id.chip_mode_badge);
         btnResetTestBalance       = findViewById(R.id.btn_reset_test_balance);
         btnGameMode               = findViewById(R.id.settings_game_mode_linc);
         gameModeTitle             = findViewById(R.id.game_mode_title);
+        gameModeSubtitle          = findViewById(R.id.game_mode_subtitle);
         gameModeIcon              = findViewById(R.id.game_mode_icon);
         becomeReferralLinc        = findViewById(R.id.become_referral_linc);
         infoLinc                  = findViewById(R.id.info_settings_linc);
@@ -243,22 +247,35 @@ public class Settings extends BaseActivity {
         boolean isReal = Boolean.TRUE.equals(MainActivity.IS_REAL_GAME_MODE);
         String state = isReal ? "  ●  LIVE" : "  ○  TRIAL";
         gameModeTitle.setText(getString(R.string.settings_game_mode) + state);
-        int bgRes    = isReal ? R.drawable.bg_card_gold : R.drawable.bg_card_send;
-        int colorRes = isReal ? R.color.xura_gold       : R.color.xura_pink;
-        int iconRes  = isReal ? R.drawable.ic_flask     : R.drawable.ic_shield;
+        int bgRes       = isReal ? R.drawable.bg_card_action_primary : R.drawable.bg_card_send;
+        int colorRes    = isReal ? R.color.xura_cyan               : R.color.xura_pink;
+        int iconRes     = isReal ? R.drawable.ic_flask             : R.drawable.ic_shield;
+        int subtitleRes = isReal ? R.string.settings_game_mode_tap_to_trial
+                                 : R.string.settings_game_mode_tap_to_live;
         btnGameMode.setBackgroundResource(bgRes);
         int color = ContextCompat.getColor(this, colorRes);
         gameModeTitle.setTextColor(color);
+        gameModeSubtitle.setText(subtitleRes);
         gameModeIcon.setImageResource(iconRes);
         gameModeIcon.setImageTintList(android.content.res.ColorStateList.valueOf(color));
     }
 
-    /** Показывает карточку тестового баланса только в тестовом режиме игры (в реальном режиме скрывает её). */
+    /** Показывает карточку тестового баланса только в тестовом режиме игры; обновляет чип-бейдж:
+     *  TESTNET (dev) → фиолетовый, TRIAL (обычный) → cyan. */
     private void updateTestBalanceCard() {
         boolean isReal = Boolean.TRUE.equals(MainActivity.IS_REAL_GAME_MODE);
         if (!isReal) {
             cardTestBalance.setVisibility(View.VISIBLE);
             updateTestBalanceDisplay();
+            if (chipModeBadge != null) {
+                if (NetworkConfig.IS_TESTNET) {
+                    chipModeBadge.setText(R.string.settings_testnet_badge);
+                    chipModeBadge.setBackgroundResource(R.drawable.bg_chip_testnet);
+                } else {
+                    chipModeBadge.setText(R.string.badge_trial_mode);
+                    chipModeBadge.setBackgroundResource(R.drawable.bg_chip_trial);
+                }
+            }
         } else {
             cardTestBalance.setVisibility(View.GONE);
         }

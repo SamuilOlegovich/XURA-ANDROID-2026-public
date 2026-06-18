@@ -254,6 +254,8 @@
     <string name="settings_tap_to_copy">कॉपी करने के लिए टैप करें</string>
     <string name="settings_test_mode_section">ट्रायल मोड</string>
     <string name="settings_testnet_badge">⬡ XRP टेस्टनेट</string>
+    <string name="badge_trial_mode">○ TRIAL मोड</string>
+    <string name="badge_live_mode">● LIVE मोड</string>
     <string name="settings_testnet_note">असली फंड नहीं — केवल टेस्टनेट</string>
     <string name="settings_test_balance_label">टेस्टनेट बैलेंस</string>
     <string name="settings_reset_test_balance">1000 XRP पर रीसेट करें</string>
@@ -319,6 +321,8 @@
     <string name="btn_sub_german">Auf Deutsch wechseln</string>
     <string name="btn_sub_arabic">التبديل إلى العربية</string>
     <string name="btn_sub_game_mode">ट्रायल या लाइव मोड</string>
+    <string name="settings_game_mode_tap_to_trial">TRIAL मोड के लिए टैप करें</string>
+    <string name="settings_game_mode_tap_to_live">LIVE मोड के लिए टैप करें</string>
     <string name="btn_sub_spin">रूलेट व्हील घुमाएं</string>
 
     <string name="dev_section_title">डेव · नेटवर्क</string>

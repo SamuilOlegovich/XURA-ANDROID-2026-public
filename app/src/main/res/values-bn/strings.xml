@@ -256,6 +256,8 @@
     <string name="settings_tap_to_copy">কপি করতে ট্যাপ করুন</string>
     <string name="settings_test_mode_section">ট্রায়াল মোড</string>
     <string name="settings_testnet_badge">⬡ XRP টেস্টনেট</string>
+    <string name="badge_trial_mode">○ TRIAL মোড</string>
+    <string name="badge_live_mode">● LIVE মোড</string>
     <string name="settings_testnet_note">আসল অর্থ নয় — শুধু টেস্টনেট</string>
     <string name="settings_test_balance_label">টেস্টনেট ব্যালেন্স</string>
     <string name="settings_reset_test_balance">১০০০ XRP-এ রিসেট করুন</string>
@@ -323,6 +325,8 @@
     <string name="btn_sub_portuguese">Mudar para português</string>
     <string name="btn_sub_bengali">বাংলায় পরিবর্তন করুন</string>
     <string name="btn_sub_game_mode">ট্রায়াল বা লাইভ মোড</string>
+    <string name="settings_game_mode_tap_to_trial">TRIAL মোডে যেতে ট্যাপ করুন</string>
+    <string name="settings_game_mode_tap_to_live">LIVE মোডে যেতে ট্যাপ করুন</string>
     <string name="btn_sub_spin">রুলেট চাকা ঘোরান</string>
 
     <string name="dev_section_title">ডেভ · নেটওয়ার্ক</string>

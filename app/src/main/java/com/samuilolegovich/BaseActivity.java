@@ -76,7 +76,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             Insets safe = insets.getInsets(
                     WindowInsetsCompat.Type.systemBars() |
                     WindowInsetsCompat.Type.displayCutout());
-            v.setPadding(safe.left, safe.top, safe.right, 0);
+            v.setPadding(safe.left, safe.top, safe.right, safe.bottom);
             return insets;
         });
     }
@@ -181,10 +181,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         // Сдвигаем плавающий nav вверх на высоту системной навигационной панели,
         // чтобы он не перекрывался жестовой полосой или кнопками навигации
         ViewCompat.setOnApplyWindowInsetsListener(nav, (v, insets) -> {
-            Insets navBar = insets.getInsets(WindowInsetsCompat.Type.navigationBars());
+            // content уже имеет bottom padding = navBarHeight (см. setContentView),
+            // поэтому здесь достаточно только визуального отступа от края контента
             int baseMargin = (int) (16 * getResources().getDisplayMetrics().density);
             ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
-            lp.bottomMargin = baseMargin + navBar.bottom;
+            lp.bottomMargin = baseMargin;
             v.setLayoutParams(lp);
             return insets;
         });

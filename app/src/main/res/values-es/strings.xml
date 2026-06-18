@@ -254,6 +254,8 @@
     <string name="settings_tap_to_copy">Toca para copiar</string>
     <string name="settings_test_mode_section">Modo de prueba</string>
     <string name="settings_testnet_badge">⬡ XRP Testnet</string>
+    <string name="badge_trial_mode">○ Modo TRIAL</string>
+    <string name="badge_live_mode">● Modo LIVE</string>
     <string name="settings_testnet_note">No son fondos reales — solo testnet</string>
     <string name="settings_test_balance_label">Saldo testnet</string>
     <string name="settings_reset_test_balance">Restablecer a 1000 XRP</string>
@@ -319,6 +321,8 @@
     <string name="btn_sub_german">Auf Deutsch wechseln</string>
     <string name="btn_sub_arabic">التبديل إلى العربية</string>
     <string name="btn_sub_game_mode">Modo prueba o real</string>
+    <string name="settings_game_mode_tap_to_trial">Toca para ir al modo prueba</string>
+    <string name="settings_game_mode_tap_to_live">Toca para ir al modo real</string>
     <string name="btn_sub_spin">Girar la ruleta</string>
 
     <string name="dev_section_title">Dev · Red</string>

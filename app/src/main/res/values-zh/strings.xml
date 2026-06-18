@@ -250,6 +250,8 @@
     <string name="settings_tap_to_copy">点击复制</string>
     <string name="settings_test_mode_section">试玩模式</string>
     <string name="settings_testnet_badge">⬡ XRP 测试网</string>
+    <string name="badge_trial_mode">○ 试玩模式</string>
+    <string name="badge_live_mode">● 实盘模式</string>
     <string name="settings_testnet_note">非真实资金 — 仅限测试网</string>
     <string name="settings_test_balance_label">测试网余额</string>
     <string name="settings_reset_test_balance">重置为 1000 XRP</string>
@@ -310,6 +312,8 @@
     <string name="btn_sub_english">Switch to English</string>
     <string name="btn_sub_chinese">切换到中文</string>
     <string name="btn_sub_game_mode">试玩或真实模式</string>
+    <string name="settings_game_mode_tap_to_trial">点击切换到试玩模式</string>
+    <string name="settings_game_mode_tap_to_live">点击切换到真实模式</string>
     <string name="btn_sub_spin">旋转轮盘</string>
 
     <string name="dev_section_title">开发 · 网络</string>

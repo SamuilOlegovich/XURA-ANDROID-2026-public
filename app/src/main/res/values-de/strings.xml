@@ -254,6 +254,8 @@
     <string name="settings_tap_to_copy">Zum Kopieren tippen</string>
     <string name="settings_test_mode_section">Testmodus</string>
     <string name="settings_testnet_badge">⬡ XRP Testnet</string>
+    <string name="badge_trial_mode">○ TRIAL-Modus</string>
+    <string name="badge_live_mode">● LIVE-Modus</string>
     <string name="settings_testnet_note">Kein echtes Geld — nur Testnet</string>
     <string name="settings_test_balance_label">Testnet-Guthaben</string>
     <string name="settings_reset_test_balance">Auf 1000 XRP zurücksetzen</string>
@@ -319,6 +321,8 @@
     <string name="btn_sub_german">Auf Deutsch wechseln</string>
     <string name="btn_sub_arabic">التبديل إلى العربية</string>
     <string name="btn_sub_game_mode">Test- oder Live-Modus</string>
+    <string name="settings_game_mode_tap_to_trial">Zum Test-Modus wechseln</string>
+    <string name="settings_game_mode_tap_to_live">Zum Live-Modus wechseln</string>
     <string name="btn_sub_spin">Roulette-Rad drehen</string>
 
     <string name="dev_section_title">Entw · Netzwerk</string>

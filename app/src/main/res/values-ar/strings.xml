@@ -254,6 +254,8 @@
     <string name="settings_tap_to_copy">اضغط للنسخ</string>
     <string name="settings_test_mode_section">الوضع التجريبي</string>
     <string name="settings_testnet_badge">⬡ XRP Testnet</string>
+    <string name="badge_trial_mode">○ وضع TRIAL</string>
+    <string name="badge_live_mode">● وضع LIVE</string>
     <string name="settings_testnet_note">ليست أموالاً حقيقية — شبكة اختبار فقط</string>
     <string name="settings_test_balance_label">رصيد Testnet</string>
     <string name="settings_reset_test_balance">إعادة تعيين إلى 1000 XRP</string>
@@ -319,6 +321,8 @@
     <string name="btn_sub_german">Auf Deutsch wechseln</string>
     <string name="btn_sub_arabic">التبديل إلى العربية</string>
     <string name="btn_sub_game_mode">الوضع التجريبي أو الحقيقي</string>
+    <string name="settings_game_mode_tap_to_trial">اضغط للتبديل إلى التجريبي</string>
+    <string name="settings_game_mode_tap_to_live">اضغط للتبديل إلى الحقيقي</string>
     <string name="btn_sub_spin">تدوير عجلة الروليت</string>
 
     <string name="dev_section_title">تطوير · الشبكة</string>

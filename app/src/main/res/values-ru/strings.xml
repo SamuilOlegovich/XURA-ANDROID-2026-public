@@ -71,6 +71,8 @@
     <string name="select_language_chinese">中文</string>
     <string name="btn_sub_chinese">切换到中文</string>
     <string name="btn_sub_game_mode">Тестовый или реальный режим</string>
+    <string name="settings_game_mode_tap_to_trial">Нажмите для перехода в TRIAL</string>
+    <string name="settings_game_mode_tap_to_live">Нажмите для перехода в LIVE</string>
     <string name="btn_sub_spin">Крутить колесо рулетки</string>
 
 
@@ -333,6 +335,8 @@
     <string name="settings_game_mode_trial_info">Виртуальный баланс. Реальные XRP не задействованы.</string>
     <string name="settings_test_mode_section">ПРОБНЫЙ РЕЖИМ</string>
     <string name="settings_testnet_badge">⬡ XRP TESTNET</string>
+    <string name="badge_trial_mode">○ TRIAL РЕЖИМ</string>
+    <string name="badge_live_mode">● LIVE РЕЖИМ</string>
     <string name="settings_testnet_note">Не настоящие средства — только тестовая сеть</string>
     <string name="settings_test_balance_label">Баланс тестовой сети</string>
     <string name="settings_reset_test_balance">Сбросить до 1000 XRP</string>

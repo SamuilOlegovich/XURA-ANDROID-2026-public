@@ -87,8 +87,10 @@ public class NotifierRunForTrialGame implements Runnable {
 
         LinkedHashMap<String, BigDecimal> allBets = Flasher.ROULETTE_ALL_BETS;
         double totalPayout = 0;
+        double totalBet    = 0;
         if (allBets != null) {
             for (Map.Entry<String, BigDecimal> entry : allBets.entrySet()) {
+                totalBet += entry.getValue().doubleValue();
                 if (evaluateRouletteBet(entry.getKey(), winNumber)) {
                     int mult = RouletteBetCode.multiplierForTag(entry.getKey());
                     totalPayout += entry.getValue().doubleValue() * mult;
@@ -96,16 +98,18 @@ public class NotifierRunForTrialGame implements Runnable {
             }
         }
 
-        boolean win = totalPayout > 0;
-        String amountWin = String.valueOf(totalPayout);
+        // profit = чистая прибыль; totalPayout уже включает возврат ставки на выигравших позициях,
+        // а totalBet — сумма всех ставок (в т.ч. проигравших), которая уже списана с баланса.
+        double profit = totalPayout - totalBet;
+        boolean win = profit > 0;
 
         if (win && !Boolean.TRUE.equals(MainActivity.IS_REAL_GAME_MODE)) {
-            try { WalletRepository.getInstance().creditTestBalance(new BigDecimal(amountWin)); }
+            try { WalletRepository.getInstance().creditTestBalance(new BigDecimal(totalPayout)); }
             catch (Exception ignored) {}
         }
 
         String msg = win
-                ? String.format(CONGRATULATIONS_YOUR_BET_IS_WON, amountWin)
+                ? String.format(CONGRATULATIONS_YOUR_BET_IS_WON, String.valueOf(profit))
                 : YOUR_BET_IS_LOST_TRY_AGAIN_AND_YOU_WILL_BE_LUCKY;
         responseToBet(msg, lotto, win ? 2 : 1);
     }
@@ -173,9 +177,13 @@ public class NotifierRunForTrialGame implements Runnable {
      * зачисляет её на тестовый баланс (только если включён не "боевой" режим игры).
      */
     private void responseToBet(String tag) {
-        String amountWin = testModeEnum.equals(TestModeEnum.GUESS_THE_NUMBER_GAME)
-                ? ((Double.parseDouble(Flasher.TEST_SAND_AMOUNT)) * 36.0) + ""
-                : ((Double.parseDouble(Flasher.TEST_SAND_AMOUNT)) * 2.0) + "";
+        boolean isNumber = testModeEnum.equals(TestModeEnum.GUESS_THE_NUMBER_GAME);
+        double bet       = Double.parseDouble(Flasher.TEST_SAND_AMOUNT);
+        double mult      = isNumber ? 36.0 : 2.0;
+        // credit = полный возврат (ставка × множитель); balance корректен т.к. ставка уже списана
+        // profit = чистая прибыль (то что видит пользователь в сообщении)
+        String credit = String.valueOf(bet * mult);
+        String profit = String.valueOf(bet * (mult - 1.0));
 
         String lotto = (random.nextInt(10001 - 4000) + 4000) + "";
         WalletRepository.getInstance().setLottoNow(lotto);
@@ -185,20 +193,19 @@ public class NotifierRunForTrialGame implements Runnable {
 
         } else if (tag.equals(StringEnum.BET_WIN_GUESS_THE_COLOR.getValue())) {
             if (!Boolean.TRUE.equals(MainActivity.IS_REAL_GAME_MODE)) {
-                try { WalletRepository.getInstance().creditTestBalance(new java.math.BigDecimal(amountWin)); }
+                try { WalletRepository.getInstance().creditTestBalance(new java.math.BigDecimal(credit)); }
                 catch (Exception ignored) {}
             }
-            responseToBet(String.format(CONGRATULATIONS_YOUR_BET_IS_WON, amountWin), lotto, 2);
+            responseToBet(String.format(CONGRATULATIONS_YOUR_BET_IS_WON, profit), lotto, 2);
 
         } else if (tag.equals(StringEnum.LOTTO_WIN_GUESS_THE_COLOR.getValue())) {
             if (!Boolean.TRUE.equals(MainActivity.IS_REAL_GAME_MODE)) {
-                try { WalletRepository.getInstance().creditTestBalance(new java.math.BigDecimal(amountWin)); }
+                try { WalletRepository.getInstance().creditTestBalance(new java.math.BigDecimal(credit)); }
                 catch (Exception ignored) {}
             }
-            responseToBet(String.format(CONGRATULATIONS_YOUR_BET_IS_WON_LOTTO, amountWin), lotto, 2);
+            responseToBet(String.format(CONGRATULATIONS_YOUR_BET_IS_WON_LOTTO, profit), lotto, 2);
 
-
-        }  else if (tag.equals(StringEnum.BECOME_A_REFERRAL.getValue())) {
+        } else if (tag.equals(StringEnum.BECOME_A_REFERRAL.getValue())) {
             YourReferral.CODE = lotto;
             String s = YOUR_REFERRAL_CODE + " \n" + tag;
             responseToBet(s, lotto, 3);
