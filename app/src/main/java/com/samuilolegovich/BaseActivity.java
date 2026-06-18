@@ -8,6 +8,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.view.animation.OvershootInterpolator;
@@ -63,9 +64,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     /**
-     * Перехватывает установку разметки и подписывается на WindowInsets, чтобы
-     * автоматически добавить отступы для вырезов камеры (punch-hole / notch),
-     * статус-бара и навигационной панели — для всех экранов сразу.
+     * Перехватывает установку разметки и применяет отступы для статус-бара,
+     * выреза камеры и боковых insets. Bottom не трогаем глобально —
+     * его обрабатывает BottomNavigationView через setupBottomNav().
      */
     @Override
     public void setContentView(@LayoutRes int layoutResID) {
@@ -75,7 +76,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             Insets safe = insets.getInsets(
                     WindowInsetsCompat.Type.systemBars() |
                     WindowInsetsCompat.Type.displayCutout());
-            v.setPadding(safe.left, safe.top, safe.right, safe.bottom);
+            v.setPadding(safe.left, safe.top, safe.right, 0);
             return insets;
         });
     }
@@ -176,6 +177,17 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void setupBottomNav() {
         BottomNavigationView nav = findViewById(R.id.bottom_nav);
         if (nav == null) return;
+
+        // Сдвигаем плавающий nav вверх на высоту системной навигационной панели,
+        // чтобы он не перекрывался жестовой полосой или кнопками навигации
+        ViewCompat.setOnApplyWindowInsetsListener(nav, (v, insets) -> {
+            Insets navBar = insets.getInsets(WindowInsetsCompat.Type.navigationBars());
+            int baseMargin = (int) (16 * getResources().getDisplayMetrics().density);
+            ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+            lp.bottomMargin = baseMargin + navBar.bottom;
+            v.setLayoutParams(lp);
+            return insets;
+        });
 
         nav.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
