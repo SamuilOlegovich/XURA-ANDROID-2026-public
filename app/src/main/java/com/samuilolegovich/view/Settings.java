@@ -101,7 +101,8 @@ public class Settings extends BaseActivity {
     private MaterialButton btnResetTestBalance;
     private View btnGameMode;
     private TextView gameModeTitle;
-    private android.widget.ImageView gameModeIcon;
+    private View gameModeIconOutline;
+    private android.widget.TextView gameModeIconLetter;
     private TextView gameModeSubtitle;
     private View becomeReferralLinc;
     private View infoLinc;
@@ -184,7 +185,8 @@ public class Settings extends BaseActivity {
         btnGameMode               = findViewById(R.id.settings_game_mode_linc);
         gameModeTitle             = findViewById(R.id.game_mode_title);
         gameModeSubtitle          = findViewById(R.id.game_mode_subtitle);
-        gameModeIcon              = findViewById(R.id.game_mode_icon);
+        gameModeIconOutline       = findViewById(R.id.game_mode_icon_outline);
+        gameModeIconLetter        = findViewById(R.id.game_mode_icon_letter);
         becomeReferralLinc        = findViewById(R.id.become_referral_linc);
         infoLinc                  = findViewById(R.id.info_settings_linc);
         devTxHistoryLinc          = findViewById(R.id.dev_tx_history_linc);
@@ -250,15 +252,15 @@ public class Settings extends BaseActivity {
         gameModeTitle.setText(getString(R.string.settings_game_mode) + state);
         int bgRes       = isReal ? R.drawable.bg_card_action_primary : R.drawable.bg_card_send;
         int colorRes    = isReal ? R.color.xura_cyan               : R.color.xura_pink;
-        int iconRes     = isReal ? R.drawable.ic_flask             : R.drawable.ic_shield;
         int subtitleRes = isReal ? R.string.settings_game_mode_tap_to_trial
                                  : R.string.settings_game_mode_tap_to_live;
         btnGameMode.setBackgroundResource(bgRes);
         int color = ContextCompat.getColor(this, colorRes);
         gameModeTitle.setTextColor(color);
         gameModeSubtitle.setText(subtitleRes);
-        gameModeIcon.setImageResource(iconRes);
-        gameModeIcon.setImageTintList(android.content.res.ColorStateList.valueOf(color));
+        android.content.res.ColorStateList tint = android.content.res.ColorStateList.valueOf(color);
+        gameModeIconOutline.setBackgroundTintList(tint);
+        gameModeIconLetter.setTextColor(color);
     }
 
     /** Показывает карточку тестового баланса только в тестовом режиме игры; обновляет чип-бейдж:
