@@ -379,6 +379,11 @@
     <string name="detail_bet_dozen">Docena %d</string>
     <string name="detail_bet_column">Columna %d</string>
 
+    <string name="settings_auto_lock">Bloqueo automático</string>
+    <string name="settings_auto_lock_subtitle">Tiempo de espera antes del bloqueo en segundo plano</string>
+    <string name="settings_sound">Sonido</string>
+    <string name="settings_sound_subtitle">Música y efectos de sonido en los juegos</string>
+
     <string name="chip_01_xrp">0.1 XRP</string>
     <string name="chip_05_xrp">0.5 XRP</string>
     <string name="chip_20_xrp">20 XRP</string>
