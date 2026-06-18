@@ -6,6 +6,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.samuilolegovich.AppExecutors;
 import com.samuilolegovich.BaseActivity;
@@ -39,6 +40,7 @@ public class TransactionHistory extends BaseActivity {
     private RecyclerView recyclerView;
     private com.google.android.material.progressindicator.CircularProgressIndicator historyLoading;
     private LinearLayout emptyState;
+    private SwipeRefreshLayout swipeRefresh;
 
 
 
@@ -62,6 +64,11 @@ public class TransactionHistory extends BaseActivity {
         recyclerView = findViewById(R.id.list_of_history);
         historyLoading = findViewById(R.id.history_loading);
         emptyState = findViewById(R.id.empty_state);
+        swipeRefresh = findViewById(R.id.swipe_refresh);
+        swipeRefresh.setColorSchemeResources(R.color.xura_purple, R.color.xura_cyan);
+        swipeRefresh.setProgressBackgroundColorSchemeResource(R.color.xura_card);
+        swipeRefresh.setOnRefreshListener(() ->
+                AppExecutors.io().execute(() -> historyCreator.createHistory()));
         adapter = new HistoryPaymentAdapter(this);
         adapter.setOnItemClickListener(dto ->
                 TxDetailSheet.show(getSupportFragmentManager(), dto));
@@ -121,6 +128,7 @@ public class TransactionHistory extends BaseActivity {
     public void selectTabButtonThread(ArrayList<HistoryPaymentDto> list) {
         runOnUiThread(() -> {
             historyLoading.setVisibility(View.GONE);
+            swipeRefresh.setRefreshing(false);
             if (list == null || list.isEmpty()) {
                 recyclerView.setVisibility(View.GONE);
                 emptyState.setVisibility(View.VISIBLE);
