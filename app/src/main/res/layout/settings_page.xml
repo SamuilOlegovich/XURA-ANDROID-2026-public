@@ -310,10 +310,10 @@
 
                 <ImageView
                     android:id="@+id/biometric_icon"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_marginEnd="16dp"
-                    android:src="@drawable/ic_fingerprint"
+                    android:src="@drawable/ic_face_scan"
                     android:importantForAccessibility="no"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
