@@ -92,6 +92,13 @@ public class MainActivity extends BaseActivity {
         MAIN_ACTIVITY = this;
 
         preferences = PrefsHelper.get(this);
+        // При первом запуске явно фиксируем trial-режим — безопаснее полагаться на явную запись, а не на дефолт
+        if (!preferences.contains("first_run_done")) {
+            preferences.edit()
+                    .putString(StringEnum.APP_GAME_MODE.getValue(), StringEnum.APP_GAME_MODE_TEST.getValue())
+                    .putBoolean("first_run_done", true)
+                    .apply();
+        }
         IS_REAL_GAME_MODE = preferences.getString(StringEnum.APP_GAME_MODE.getValue(), "false")
                 .equalsIgnoreCase("true");
         NetworkConfig.load(preferences);
