@@ -194,6 +194,7 @@ public class Settings extends BaseActivity {
         // DEV
         cardDevNetwork  = findViewById(R.id.card_dev_network);
         devNetworkSwitch = findViewById(R.id.dev_network_switch);
+        devNetworkSwitch.setTrackTintList(null); // убираем Material-тинт, чтобы работал наш drawable с контуром
         devNetworkLabel  = findViewById(R.id.dev_network_label);
         etDevRoulette    = findViewById(R.id.et_dev_roulette);
         etDevColor       = findViewById(R.id.et_dev_color);

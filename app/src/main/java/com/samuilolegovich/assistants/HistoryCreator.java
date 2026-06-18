@@ -44,7 +44,8 @@ public class HistoryCreator {
 
 
 
-    /** Отправляет на XRPL-узел запрос account_tx (последние 100 валидированных транзакций по счёту). */
+    /** Отправляет на XRPL-узел запрос account_tx (последние 100 валидированных транзакций по счёту).
+     *  Если сокет не подключён — пересоздаёт и переподключает его перед отправкой. */
     private void getAllHistory() {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("account", myAccount);
@@ -56,7 +57,19 @@ public class HistoryCreator {
                 parseResponse(response.toString());
             });
         } catch (Exception e) {
-            e.printStackTrace();
+            // Сокет не был открыт (InvalidStateException или другая ошибка) — пересоединяем и повторяем
+            try {
+                repository.closeSocket();
+                repository.restartSocket();
+                boolean connected = repository.startSocket();
+                if (connected) {
+                    repository.sendCommand("account_tx", parameters, (response) -> {
+                        parseResponse(response.toString());
+                    });
+                }
+            } catch (Exception retryEx) {
+                retryEx.printStackTrace();
+            }
         }
     }
 

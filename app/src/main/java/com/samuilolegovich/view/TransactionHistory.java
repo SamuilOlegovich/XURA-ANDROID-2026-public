@@ -75,13 +75,9 @@ public class TransactionHistory extends BaseActivity {
     }
 
 
-    /** В реальном режиме игры запускает загрузку реальной истории платежей на фоновом потоке, в тестовом — подставляет демонстрационные данные. */
+    /** Загружает реальную историю платежей на фоновом потоке — всегда, независимо от режима игры. */
     private void createHistoryThread() {
-        if (Boolean.TRUE.equals(MainActivity.IS_REAL_GAME_MODE)) {
-            AppExecutors.io().execute(() -> historyCreator.createHistory());
-        } else {
-            injectTestData();
-        }
+        AppExecutors.io().execute(() -> historyCreator.createHistory());
     }
 
     /** Заполняет историю тестовыми данными — все возможные типы записей (выигрыши, ставки, рефералы, прочее) для визуальной проверки экрана. */
