@@ -106,21 +106,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_testnet_badge" />
 
-        <!-- Balance type label: "Trial balance" in TRIAL, "Real XRP" in LIVE -->
-        <TextView
-            android:id="@+id/tv_balance_type"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:fontFamily="@font/montserrat"
-            android:textSize="11sp"
-            android:letterSpacing="0.08"
-            android:textColor="@color/xura_text_tertiary"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/balance_linc" />
-
         <!-- SEND card -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/next_link"

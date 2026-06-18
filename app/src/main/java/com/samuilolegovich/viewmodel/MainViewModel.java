@@ -1,6 +1,7 @@
 package com.samuilolegovich.viewmodel;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.samuilolegovich.wallet.repository.WalletRepository;
@@ -25,6 +26,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 public class MainViewModel extends ViewModel {
     private final WalletRepository repository;
     private final ExecutorService executor;
+    private final MutableLiveData<BigDecimal> realBalanceLiveData = new MutableLiveData<>();
 
 
 
@@ -39,9 +41,9 @@ public class MainViewModel extends ViewModel {
 
     // LiveData для Activity
 
-    /** Возвращает LiveData текущего баланса кошелька в XRP. */
+    /** Возвращает LiveData реального XRP-баланса кошелька (всегда сетевой, независимо от режима игры). */
     public LiveData<BigDecimal> getBalance() {
-        return repository.getBalanceLiveData();
+        return realBalanceLiveData;
     }
 
     /** Возвращает LiveData текста лотерейного номера/джекпота. */
@@ -63,9 +65,9 @@ public class MainViewModel extends ViewModel {
 
     // Действия
 
-    /** Запускает загрузку текущего баланса кошелька. */
+    /** Загружает реальный XRP-баланс из сети и публикует его в LiveData кошелька. */
     public void loadBalance() {
-        repository.loadBalance();
+        executor.execute(() -> realBalanceLiveData.postValue(repository.getRealBalance()));
     }
 
     /** Сбрасывает событие навигации после обработки, чтобы оно не доставилось повторно следующему наблюдателю. */
@@ -73,14 +75,13 @@ public class MainViewModel extends ViewModel {
         repository.clearNavigationEvent();
     }
 
-    /** Восстанавливает кошелёк из сид-фразы и загружает баланс; сокет запускает XrplSocketService. */
+    /** Восстанавливает кошелёк из сид-фразы и загружает реальный баланс; сокет запускает XrplSocketService. */
     public void restoreAndInit(String seed) {
         executor.execute(() -> {
             try {
                 Map<String, String> result = repository.restoreWallet(seed);
                 if (result == null || !result.containsKey("Classic Address")) return;
-                BigDecimal balance = repository.getBalance();
-                repository.updateBalance(balance);
+                realBalanceLiveData.postValue(repository.getRealBalance());
             } catch (Exception e) {
                 e.printStackTrace();
             }

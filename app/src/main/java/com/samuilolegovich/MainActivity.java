@@ -78,7 +78,6 @@ public class MainActivity extends BaseActivity {
     private View send;
 
     private com.google.android.material.progressindicator.CircularProgressIndicator balanceLoading;
-    private TextView tvBalanceType;
 
 
 
@@ -258,18 +257,11 @@ public class MainActivity extends BaseActivity {
         balanceLoading     = findViewById(R.id.balance_loading);
         send               = findViewById(R.id.next_link);
         tvTestnetBadge     = findViewById(R.id.tv_testnet_badge);
-        tvBalanceType      = findViewById(R.id.tv_balance_type);
         swipeRefresh       = findViewById(R.id.swipe_refresh);
 
         swipeRefresh.setColorSchemeResources(R.color.xura_purple, R.color.xura_cyan);
         swipeRefresh.setProgressBackgroundColorSchemeResource(R.color.xura_card);
-        swipeRefresh.setOnRefreshListener(() -> {
-            if (com.samuilolegovich.config.NetworkConfig.IS_TESTNET) {
-                com.samuilolegovich.wallet.repository.WalletRepository.getInstance().loadNetworkBalance();
-            } else {
-                viewModel.loadBalance();
-            }
-        });
+        swipeRefresh.setOnRefreshListener(() -> viewModel.loadBalance());
     }
 
 
@@ -278,19 +270,6 @@ public class MainActivity extends BaseActivity {
     private void setLanguage() {
         yourBalanceText.setText(R.string.your_balance);
         updateTestnetBadge();
-        updateBalanceTypeLabel();
-    }
-
-    /** Обновляет подпись под суммой баланса: в TRIAL — "Trial balance", в LIVE — скрыта. */
-    private void updateBalanceTypeLabel() {
-        if (tvBalanceType == null) return;
-        boolean isReal = Boolean.TRUE.equals(IS_REAL_GAME_MODE);
-        if (!isReal) {
-            tvBalanceType.setText("Trial balance");
-            tvBalanceType.setVisibility(View.VISIBLE);
-        } else {
-            tvBalanceType.setVisibility(View.GONE);
-        }
     }
 
     /** Показывает бейдж над балансом: TESTNET (только если включён) → скрыт (mainnet). */
@@ -352,7 +331,6 @@ public class MainActivity extends BaseActivity {
         super.onResume();
         VISIBLE_ON_SCREEN = true;
         updateTestnetBadge();
-        updateBalanceTypeLabel();
         if (Boolean.TRUE.equals(viewModel.getWalletReady().getValue())) {
             viewModel.loadBalance();
         }
