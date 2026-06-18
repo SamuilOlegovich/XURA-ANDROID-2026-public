@@ -156,6 +156,7 @@ public class SocketXRP extends WebSocketClient {
         try {
             JSONObject json = new JSONObject(message);
 
+            // Подписочные события (ledger, transaction, и т.д.) — НЕ "response"
             if (json.has(ATTRIBUTE_TYPE)) {
                 for (StreamSubscriptionEnum subscription
                         : StreamSubscriptionEnum.byMessageType(json.getString(ATTRIBUTE_TYPE))) {
@@ -164,10 +165,14 @@ public class SocketXRP extends WebSocketClient {
                         subscriber.onSubscription(subscription, json);
                     }
                 }
-            } else if (json.has(ATTRIBUTE_ID)
-                    && commandListeners.get(json.getString(ATTRIBUTE_ID)) != null) {
-                commandListeners.get(json.getString(ATTRIBUTE_ID)).onResponse(json);
-                commandListeners.remove(json.getString(ATTRIBUTE_ID));
+            }
+            // Ответы команд (account_tx, fee, и т.д.) — XRPL возвращает оба поля "type":"response" и "id"
+            // в одном пакете, поэтому проверяем отдельным if, а не else if
+            if (json.has(ATTRIBUTE_ID)) {
+                CommandListener listener = commandListeners.remove(json.getString(ATTRIBUTE_ID));
+                if (listener != null) {
+                    listener.onResponse(json);
+                }
             }
 
             if (closeWhenComplete && commandListeners.isEmpty() && activeSubscriptions.isEmpty()) {

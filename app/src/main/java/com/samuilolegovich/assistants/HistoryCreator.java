@@ -127,7 +127,8 @@ public class HistoryCreator {
             list.add(new HistoryPaymentDto("Maybe you don't have a story yet", "-------", "---"));
         }
 
-        TransactionHistory.TRANSACTION_HISTORY.selectTabButtonThread(list);
+        TransactionHistory screen = TransactionHistory.TRANSACTION_HISTORY;
+        if (screen != null) screen.selectTabButtonThread(list);
 
     }
 
