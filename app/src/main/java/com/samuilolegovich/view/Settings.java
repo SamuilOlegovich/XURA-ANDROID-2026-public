@@ -92,6 +92,7 @@ public class Settings extends BaseActivity {
     private TextView biometricTitleText;
     private TextView lockTimeoutTitle;
     private TextView soundTitle;
+    private android.widget.ImageView soundIcon;
     private android.widget.ImageView setPasswordIcon;
     private TextView settingsTextView;
     private MaterialCardView cardTestBalance;
@@ -171,6 +172,7 @@ public class Settings extends BaseActivity {
         biometricTitleText        = findViewById(R.id.biometric_title);
         lockTimeoutTitle          = findViewById(R.id.lock_timeout_title);
         soundTitle                = findViewById(R.id.sound_title);
+        soundIcon                 = findViewById(R.id.sound_icon);
         setPasswordIcon           = findViewById(R.id.set_password_icon);
         settingsTextView          = findViewById(R.id.settings_text_view);
         cardTestBalance           = findViewById(R.id.card_test_balance);
@@ -273,10 +275,11 @@ public class Settings extends BaseActivity {
         biometricTitleText.setText(getString(R.string.settings_biometric) + state);
     }
 
-    /** Обновляет текст пункта звука, показывая его текущее состояние (ON/OFF). */
+    /** Обновляет текст и иконку пункта звука в зависимости от текущего состояния (ON/OFF). */
     private void updateSoundButton() {
         boolean enabled = AudioHelper.isSoundEnabled(this);
         soundTitle.setText("Sound" + (enabled ? "  ●  ON" : "  ○  OFF"));
+        soundIcon.setImageResource(enabled ? R.drawable.ic_volume_up : R.drawable.ic_volume_off);
     }
 
     /** Обновляет текст пункта таймаута, показывая текущее значение. */
