@@ -495,33 +495,17 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/game_mode_title" />
 
-                <FrameLayout
+                <ImageView
                     android:id="@+id/game_mode_icon"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
                     android:layout_marginEnd="16dp"
+                    android:src="@drawable/ic_nav_games"
                     android:importantForAccessibility="no"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <View
-                        android:id="@+id/game_mode_icon_outline"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/bg_game_icon_circle" />
-
-                    <TextView
-                        android:id="@+id/game_mode_icon_letter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:fontFamily="@font/montserrat"
-                        android:text="X"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-
-                </FrameLayout>
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/xura_gold" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
