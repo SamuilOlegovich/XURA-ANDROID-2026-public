@@ -238,6 +238,20 @@ public abstract class BaseActivity extends AppCompatActivity {
         overridePendingTransition(0, 0);
     }
 
+    /** Все переходы вглубь — slide+fade справа. Вкладки переопределяют это через overridePendingTransition(0,0) после вызова. */
+    @Override
+    public void startActivity(Intent intent) {
+        super.startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
+
+    /** При возврате назад экран уезжает вправо, предыдущий въезжает слева. */
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
+
     /** Виды Snackbar-уведомлений, влияющие на префикс-иконку и цвет текста. */
     public enum SnackbarType { SUCCESS, ERROR, INFO }
 
