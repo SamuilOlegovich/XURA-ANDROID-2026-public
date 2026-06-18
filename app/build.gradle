@@ -12,7 +12,7 @@ android {
         applicationId "com.samuil.olegovich"
         minSdk 28
         targetSdk 36
-        versionCode 10
+        versionCode 11
         versionName "26.6.18"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

@@ -4,7 +4,57 @@
     android:height="24dp"
     android:viewportWidth="24"
     android:viewportHeight="24">
+
+    <!-- Корпус ракеты -->
     <path
-        android:fillColor="@android:color/white"
-        android:pathData="M20.5,11H19V7c0-1.1-0.9-2-2-2h-4V3.5C13,2.12 11.88,1 10.5,1S8,2.12 8,3.5V5H4C2.9,5 2,5.9 2,7v3.8h1.5c1.49,0 2.7,1.21 2.7,2.7s-1.21,2.7-2.7,2.7H2V20c0,1.1 0.9,2 2,2h3.8v-1.5c0-1.49 1.21-2.7 2.7-2.7 1.49,0 2.7,1.21 2.7,2.7V22H17c1.1,0 2-0.9 2-2v-4h1.5c1.38,0 2.5-1.12 2.5-2.5S21.88,11 20.5,11z"/>
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.8"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M12,2 C9.5,5 7.5,9 7.5,15 L16.5,15 C16.5,9 14.5,5 12,2 Z"/>
+
+    <!-- Иллюминатор -->
+    <path
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.6"
+        android:pathData="M10,9.5 A2,2 0,1,0 14,9.5 A2,2 0,1,0 10,9.5"/>
+
+    <!-- Нижняя пластина (нозл) -->
+    <path
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.8"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M7.5,15 L7.5,17 L16.5,17 L16.5,15"/>
+
+    <!-- Левый стабилизатор -->
+    <path
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.8"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M7.5,15 L4.5,21 L7.5,17"/>
+
+    <!-- Правый стабилизатор -->
+    <path
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.8"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M16.5,15 L19.5,21 L16.5,17"/>
+
+    <!-- Пламя -->
+    <path
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.6"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M9.5,17 L12,21.5 L14.5,17"/>
+
 </vector>
