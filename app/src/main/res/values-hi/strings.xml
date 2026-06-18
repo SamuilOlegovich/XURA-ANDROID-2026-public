@@ -380,6 +380,7 @@
     <string name="detail_bet_column">कॉलम %d</string>
 
     <string name="settings_auto_lock">स्वतः लॉक</string>
+    <string name="settings_auto_lock_timeout_title">स्वतः लॉक टाइमआउट</string>
     <string name="settings_auto_lock_subtitle">बैकग्राउंड में जाने पर लॉक टाइमआउट</string>
     <string name="settings_sound">ध्वनि</string>
     <string name="settings_sound_subtitle">खेलों में संगीत और ध्वनि प्रभाव</string>

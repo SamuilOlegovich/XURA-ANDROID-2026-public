@@ -298,13 +298,13 @@ public class Settings extends BaseActivity {
     /** Обновляет текст и иконку пункта звука в зависимости от текущего состояния (ON/OFF). */
     private void updateSoundButton() {
         boolean enabled = AudioHelper.isSoundEnabled(this);
-        soundTitle.setText("Sound" + (enabled ? "  ●  ON" : "  ○  OFF"));
+        soundTitle.setText(getString(R.string.settings_sound) + (enabled ? "  ●  ON" : "  ○  OFF"));
         soundIcon.setImageResource(enabled ? R.drawable.ic_volume_up : R.drawable.ic_volume_off);
     }
 
     /** Обновляет текст пункта таймаута, показывая текущее значение. */
     private void updateLockTimeoutButton() {
-        lockTimeoutTitle.setText("Auto-lock  ●  " + formatTimeout(InactivityGuard.getTimeoutMs()));
+        lockTimeoutTitle.setText(getString(R.string.settings_auto_lock) + "  ●  " + formatTimeout(InactivityGuard.getTimeoutMs()));
     }
 
     /** Форматирует миллисекунды в читаемую строку (sec / min). */
@@ -474,7 +474,7 @@ public class Settings extends BaseActivity {
                 if (TIMEOUT_OPTIONS_MS[i] == current) { checkedIndex = i; break; }
             }
             new AlertDialog.Builder(this)
-                    .setTitle("Auto-lock timeout")
+                    .setTitle(getString(R.string.settings_auto_lock_timeout_title))
                     .setSingleChoiceItems(TIMEOUT_LABELS, checkedIndex, (d, which) -> {
                         saveLockTimeout(TIMEOUT_OPTIONS_MS[which]);
                         updateLockTimeoutButton();

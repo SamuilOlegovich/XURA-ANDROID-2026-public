@@ -380,6 +380,7 @@
     <string name="detail_bet_column">عمود %d</string>
 
     <string name="settings_auto_lock">القفل التلقائي</string>
+    <string name="settings_auto_lock_timeout_title">مهلة القفل التلقائي</string>
     <string name="settings_auto_lock_subtitle">مهلة القفل عند انتقال التطبيق إلى الخلفية</string>
     <string name="settings_sound">الصوت</string>
     <string name="settings_sound_subtitle">الموسيقى والمؤثرات الصوتية في الألعاب</string>

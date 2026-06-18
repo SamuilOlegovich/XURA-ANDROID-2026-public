@@ -380,6 +380,7 @@
     <string name="detail_bet_column">কলাম %d</string>
 
     <string name="settings_auto_lock">স্বয়ংক্রিয় লক</string>
+    <string name="settings_auto_lock_timeout_title">স্বয়ংক্রিয় লক টাইমআউট</string>
     <string name="settings_auto_lock_subtitle">ব্যাকগ্রাউন্ডে গেলে লক টাইমআউট</string>
     <string name="settings_sound">শব্দ</string>
     <string name="settings_sound_subtitle">গেমে সংগীত ও শব্দ প্রভাব</string>

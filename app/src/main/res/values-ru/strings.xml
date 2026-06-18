@@ -407,6 +407,7 @@
     <string name="detail_bet_column">Колонна %d</string>
 
     <string name="settings_auto_lock">Авто-блокировка</string>
+    <string name="settings_auto_lock_timeout_title">Таймаут авто-блокировки</string>
     <string name="settings_auto_lock_subtitle">Блокировка при переходе приложения в фон</string>
     <string name="settings_sound">Звук</string>
     <string name="settings_sound_subtitle">Музыка и звуки в играх</string>
