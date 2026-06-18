@@ -243,11 +243,13 @@ public class Settings extends BaseActivity {
         boolean isReal = Boolean.TRUE.equals(MainActivity.IS_REAL_GAME_MODE);
         String state = isReal ? "  ●  LIVE" : "  ○  TRIAL";
         gameModeTitle.setText(getString(R.string.settings_game_mode) + state);
-        int bgRes    = isReal ? R.drawable.bg_card_gold   : R.drawable.bg_card_send;
-        int colorRes = isReal ? R.color.xura_gold         : R.color.xura_pink;
+        int bgRes    = isReal ? R.drawable.bg_card_gold : R.drawable.bg_card_send;
+        int colorRes = isReal ? R.color.xura_gold       : R.color.xura_pink;
+        int iconRes  = isReal ? R.drawable.ic_bolt      : R.drawable.ic_shield;
         btnGameMode.setBackgroundResource(bgRes);
         int color = ContextCompat.getColor(this, colorRes);
         gameModeTitle.setTextColor(color);
+        gameModeIcon.setImageResource(iconRes);
         gameModeIcon.setImageTintList(android.content.res.ColorStateList.valueOf(color));
     }
 
