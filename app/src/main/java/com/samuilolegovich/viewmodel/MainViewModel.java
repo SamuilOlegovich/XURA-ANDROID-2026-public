@@ -26,7 +26,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 public class MainViewModel extends ViewModel {
     private final WalletRepository repository;
     private final ExecutorService executor;
-    private final MutableLiveData<BigDecimal> realBalanceLiveData = new MutableLiveData<>();
 
 
 
@@ -41,9 +40,9 @@ public class MainViewModel extends ViewModel {
 
     // LiveData для Activity
 
-    /** Возвращает LiveData реального XRP-баланса кошелька (всегда сетевой, независимо от режима игры). */
+    /** Возвращает LiveData баланса кошелька из репозитория. */
     public LiveData<BigDecimal> getBalance() {
-        return realBalanceLiveData;
+        return repository.getBalanceLiveData();
     }
 
     /** Возвращает LiveData текста лотерейного номера/джекпота. */
@@ -65,9 +64,9 @@ public class MainViewModel extends ViewModel {
 
     // Действия
 
-    /** Загружает реальный XRP-баланс из сети и публикует его в LiveData кошелька. */
+    /** Загружает баланс и публикует его в LiveData репозитория. */
     public void loadBalance() {
-        executor.execute(() -> realBalanceLiveData.postValue(repository.getRealBalance()));
+        repository.loadBalance();
     }
 
     /** Сбрасывает событие навигации после обработки, чтобы оно не доставилось повторно следующему наблюдателю. */
@@ -75,13 +74,13 @@ public class MainViewModel extends ViewModel {
         repository.clearNavigationEvent();
     }
 
-    /** Восстанавливает кошелёк из сид-фразы и загружает реальный баланс; сокет запускает XrplSocketService. */
+    /** Восстанавливает кошелёк из сид-фразы и обновляет баланс через репозиторий. */
     public void restoreAndInit(String seed) {
         executor.execute(() -> {
             try {
                 Map<String, String> result = repository.restoreWallet(seed);
                 if (result == null || !result.containsKey("Classic Address")) return;
-                realBalanceLiveData.postValue(repository.getRealBalance());
+                repository.updateBalance(repository.getBalance());
             } catch (Exception e) {
                 e.printStackTrace();
             }

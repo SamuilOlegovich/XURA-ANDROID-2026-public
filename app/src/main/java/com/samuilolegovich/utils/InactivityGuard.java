@@ -6,7 +6,7 @@ package com.samuilolegovich.utils;
  */
 public class InactivityGuard {
 
-    public static final long DEFAULT_TIMEOUT_MS = 30_000L; // 30 секунд по умолчанию
+    public static final long DEFAULT_TIMEOUT_MS = 5 * 60 * 1000L; // 5 минут по умолчанию
     private static volatile long timeoutMs      = DEFAULT_TIMEOUT_MS;
     private static volatile long backgroundSince = 0L;
 
