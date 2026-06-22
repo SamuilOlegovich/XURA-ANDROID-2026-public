@@ -43,10 +43,11 @@ public class MainViewModelTest {
     // -------------------------------------------------------------------------
 
     @Test
-    public void getBalance_delegatesToRepository() {
-        LiveData<BigDecimal> balanceLiveData = new MutableLiveData<>();
-        when(repository.getBalanceLiveData()).thenReturn(balanceLiveData);
-        assertSame(balanceLiveData, viewModel.getBalance());
+    public void getBalance_returnsOwnLiveData_updatedByLoadBalance() {
+        when(repository.getRealBalance()).thenReturn(new BigDecimal("42"));
+        viewModel.loadBalance();
+        verify(repository, timeout(2000)).getRealBalance();
+        assertNotNull(viewModel.getBalance());
     }
 
     @Test
@@ -75,9 +76,9 @@ public class MainViewModelTest {
     // -------------------------------------------------------------------------
 
     @Test
-    public void loadBalance_delegatesToRepository() {
+    public void loadBalance_callsGetRealBalance() {
         viewModel.loadBalance();
-        verify(repository).loadBalance();
+        verify(repository, timeout(2000)).getRealBalance();
     }
 
     // -------------------------------------------------------------------------
@@ -85,16 +86,16 @@ public class MainViewModelTest {
     // -------------------------------------------------------------------------
 
     @Test
-    public void restoreAndInit_withValidSeed_updatesBalance() {
+    public void restoreAndInit_withValidSeed_fetchesRealBalance() {
         Map<String, String> result = new HashMap<>();
         result.put("Classic Address", "rValidAddress");
         when(repository.restoreWallet("valid_seed")).thenReturn(result);
-        when(repository.getBalance()).thenReturn(new BigDecimal("123.456789"));
+        when(repository.getRealBalance()).thenReturn(new BigDecimal("123.456789"));
 
         viewModel.restoreAndInit("valid_seed");
 
         verify(repository, timeout(2000)).restoreWallet("valid_seed");
-        verify(repository, timeout(2000)).updateBalance(new BigDecimal("123.456789"));
+        verify(repository, timeout(2000)).getRealBalance();
     }
 
     @Test

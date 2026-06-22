@@ -26,6 +26,7 @@ public class SendPaymentViewModel extends ViewModel {
     private final WalletRepository repository;
     private final ExecutorService executor;
 
+    private final MutableLiveData<BigDecimal> realBalanceLiveData = new MutableLiveData<>();
     private final MutableLiveData<SendError> errorLiveData = new MutableLiveData<>();
     private final MutableLiveData<Boolean> paymentSuccessLiveData = new MutableLiveData<>();
 
@@ -40,9 +41,9 @@ public class SendPaymentViewModel extends ViewModel {
 
 
 
-    /** Возвращает LiveData баланса кошелька из репозитория. */
+    /** Возвращает LiveData реального XRP-баланса кошелька (всегда из сети, независимо от игрового режима). */
     public LiveData<BigDecimal> getBalance() {
-        return repository.getBalanceLiveData();
+        return realBalanceLiveData;
     }
 
     /** Возвращает LiveData ошибки валидации/отправки последнего платежа. */
@@ -57,9 +58,9 @@ public class SendPaymentViewModel extends ViewModel {
 
 
 
-    /** Загружает баланс и публикует его в LiveData репозитория. */
+    /** Загружает реальный XRP-баланс из сети и публикует его в собственный LiveData экрана. */
     public void loadBalance() {
-        repository.loadBalance();
+        executor.execute(() -> realBalanceLiveData.postValue(repository.getRealBalance()));
     }
 
     /** Проверяет адрес/сумму/тег, отправляет платёж (с тегом назначения или без) и публикует результат успеха либо ошибки. */
@@ -80,7 +81,7 @@ public class SendPaymentViewModel extends ViewModel {
             }
 
             if (success) {
-                repository.updateBalance(repository.getBalance());
+                realBalanceLiveData.postValue(repository.getRealBalance());
                 paymentSuccessLiveData.postValue(true);
             } else {
                 errorLiveData.postValue(SendError.PAYMENT_FAILED);
@@ -104,7 +105,7 @@ public class SendPaymentViewModel extends ViewModel {
 
         if (amountDecimal.compareTo(BigDecimal.ZERO) == 0) return SendError.AMOUNT_IS_ZERO;
 
-        BigDecimal currentBalance = repository.getBalanceLiveData().getValue();
+        BigDecimal currentBalance = realBalanceLiveData.getValue();
         if (currentBalance != null && amountDecimal.compareTo(currentBalance) > 0) {
             return SendError.INSUFFICIENT_BALANCE;
         }

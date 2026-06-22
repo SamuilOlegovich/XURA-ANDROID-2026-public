@@ -123,15 +123,14 @@ public class RouletteViewModelTest {
     // -------------------------------------------------------------------------
 
     @Test
-    public void placeBets_testMode_validBets_updatesBalanceAndPostsSuccess() throws InterruptedException {
+    public void placeBets_testMode_validBets_deductsBalanceAndPostsSuccess() throws InterruptedException {
         MainActivity.IS_REAL_GAME_MODE = false;
         stubBalance("100");
-        when(repository.getBalance()).thenReturn(new BigDecimal("70"));
 
         viewModel.placeBets(betsOf("RED", "30"), "ref");
 
         assertEquals("30", awaitValue(viewModel.getBetSuccess()));
-        verify(repository).updateBalance(new BigDecimal("70"));
+        verify(repository).deductTestBalance(new BigDecimal("30"));
         verify(repository, never()).sendPayment(anyString(), anyString(), any(BigDecimal.class));
     }
 

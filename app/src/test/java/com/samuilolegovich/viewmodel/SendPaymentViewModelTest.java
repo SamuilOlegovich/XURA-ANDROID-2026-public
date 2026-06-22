@@ -2,7 +2,6 @@ package com.samuilolegovich.viewmodel;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
 import com.samuilolegovich.wallet.repository.WalletRepository;
@@ -25,6 +24,12 @@ import static org.mockito.Mockito.*;
 /**
  * Тесты для SendPaymentViewModel: валидация адреса/суммы/тега и обе перегрузки
  * отправки платежа (с числовым destination tag и без него).
+ *
+ * Баланс для валидации хранится в собственном realBalanceLiveData ViewModel
+ * и заполняется только через loadBalance() → repository.getRealBalance().
+ * Поэтому тесты, проверяющие валидацию адреса/тега/формата суммы, не вызывают
+ * loadBalance — balance-check при null балансе пропускается, что является
+ * корректным поведением (Activity всегда вызывает loadBalance при открытии экрана).
  */
 @RunWith(MockitoJUnitRunner.class)
 public class SendPaymentViewModelTest {
@@ -43,10 +48,6 @@ public class SendPaymentViewModelTest {
     @Before
     public void setUp() {
         viewModel = new SendPaymentViewModel(repository);
-    }
-
-    private void stubBalance(String balance) {
-        when(repository.getBalanceLiveData()).thenReturn(new MutableLiveData<>(new BigDecimal(balance)));
     }
 
     private <T> T awaitValue(LiveData<T> liveData) throws InterruptedException {
@@ -68,14 +69,12 @@ public class SendPaymentViewModelTest {
 
     @Test
     public void sendPayment_nullAddress_postsWrongAddress() throws InterruptedException {
-        stubBalance("500");
         viewModel.sendPayment(null, "10", null);
         assertEquals(SendError.WRONG_ADDRESS, awaitValue(viewModel.getError()));
     }
 
     @Test
     public void sendPayment_tooShortAddress_postsWrongAddress() throws InterruptedException {
-        stubBalance("500");
         viewModel.sendPayment("short", "10", null);
         assertEquals(SendError.WRONG_ADDRESS, awaitValue(viewModel.getError()));
     }
@@ -86,21 +85,22 @@ public class SendPaymentViewModelTest {
 
     @Test
     public void sendPayment_emptyAmount_postsInvalidAmount() throws InterruptedException {
-        stubBalance("500");
         viewModel.sendPayment(VALID_ADDRESS, "", null);
         assertEquals(SendError.INVALID_AMOUNT, awaitValue(viewModel.getError()));
     }
 
     @Test
     public void sendPayment_zeroAmount_postsAmountIsZero() throws InterruptedException {
-        stubBalance("500");
         viewModel.sendPayment(VALID_ADDRESS, "0", null);
         assertEquals(SendError.AMOUNT_IS_ZERO, awaitValue(viewModel.getError()));
     }
 
     @Test
     public void sendPayment_amountAboveBalance_postsInsufficientBalance() throws InterruptedException {
-        stubBalance("500");
+        when(repository.getRealBalance()).thenReturn(new BigDecimal("500"));
+        viewModel.loadBalance();
+        awaitValue(viewModel.getBalance()); // ждём пока реальный баланс загрузится асинхронно
+
         viewModel.sendPayment(VALID_ADDRESS, "600", null);
         assertEquals(SendError.INSUFFICIENT_BALANCE, awaitValue(viewModel.getError()));
     }
@@ -111,21 +111,18 @@ public class SendPaymentViewModelTest {
 
     @Test
     public void sendPayment_tagTooLong_postsTagTooLong() throws InterruptedException {
-        stubBalance("500");
         viewModel.sendPayment(VALID_ADDRESS, "10", "123456789012"); // 12 символов > 11
         assertEquals(SendError.TAG_TOO_LONG, awaitValue(viewModel.getError()));
     }
 
     @Test
     public void sendPayment_nonNumericTag_postsTagTooLong() throws InterruptedException {
-        stubBalance("500");
         viewModel.sendPayment(VALID_ADDRESS, "10", "abc");
         assertEquals(SendError.TAG_TOO_LONG, awaitValue(viewModel.getError()));
     }
 
     @Test
     public void sendPayment_tagAtOrAboveIntMax_postsTagTooLarge() throws InterruptedException {
-        stubBalance("500");
         viewModel.sendPayment(VALID_ADDRESS, "10", "2147483648"); // Integer.MAX_VALUE + 1
         assertEquals(SendError.TAG_TOO_LARGE, awaitValue(viewModel.getError()));
     }
@@ -136,23 +133,24 @@ public class SendPaymentViewModelTest {
 
     @Test
     public void sendPayment_withoutTag_usesPlainPaymentOverload() throws InterruptedException {
-        stubBalance("500");
+        when(repository.getRealBalance()).thenReturn(new BigDecimal("500"));
+        viewModel.loadBalance();
+        awaitValue(viewModel.getBalance()); // ждём пока реальный баланс загрузится
+
+        when(repository.getRealBalance()).thenReturn(new BigDecimal("490")); // баланс после отправки
         when(repository.sendPayment(eq(VALID_ADDRESS), eq(new BigDecimal("10")))).thenReturn(true);
-        when(repository.getBalance()).thenReturn(new BigDecimal("490"));
 
         viewModel.sendPayment(VALID_ADDRESS, "10", null);
 
         assertTrue(awaitValue(viewModel.getPaymentSuccess()));
         verify(repository).sendPayment(VALID_ADDRESS, new BigDecimal("10"));
-        verify(repository).updateBalance(new BigDecimal("490"));
+        verify(repository, times(2)).getRealBalance(); // раз при loadBalance, раз после успешного платежа
     }
 
     @Test
     public void sendPayment_withTag_usesTaggedPaymentOverload() throws InterruptedException {
-        stubBalance("500");
         when(repository.sendPayment(eq(VALID_ADDRESS), eq(Integer.valueOf(42)), eq(new BigDecimal("10"))))
                 .thenReturn(true);
-        when(repository.getBalance()).thenReturn(new BigDecimal("490"));
 
         viewModel.sendPayment(VALID_ADDRESS, "10", "42");
 
@@ -162,7 +160,6 @@ public class SendPaymentViewModelTest {
 
     @Test
     public void sendPayment_failedPayment_postsPaymentFailed() throws InterruptedException {
-        stubBalance("500");
         when(repository.sendPayment(eq(VALID_ADDRESS), any(BigDecimal.class))).thenReturn(false);
 
         viewModel.sendPayment(VALID_ADDRESS, "10", null);

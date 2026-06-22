@@ -120,7 +120,11 @@ public class RouletteViewModel extends ViewModel {
             }
 
             if (success) {
-                repository.updateBalance(repository.getBalance());
+                if (Boolean.TRUE.equals(MainActivity.IS_REAL_GAME_MODE)) {
+                    repository.updateBalance(repository.getBalance());
+                } else {
+                    repository.deductTestBalance(total);
+                }
                 betSuccessLiveData.postValue(total.toPlainString());
             } else {
                 errorLiveData.postValue(GameBetError.PAYMENT_FAILED);
