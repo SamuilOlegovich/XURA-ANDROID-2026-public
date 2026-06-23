@@ -16,6 +16,8 @@
     <string name="rules_of_the_game">খেলার নিয়ম</string>
     <string name="become_a_referral">রেফারেল হন</string>
     <string name="settings_set_password">পাসওয়ার্ড সেট করুন</string>
+    <string name="settings_change_password">পাসওয়ার্ড পরিবর্তন করুন</string>
+    <string name="settings_disable_password">পাসওয়ার্ড অক্ষম করুন</string>
     <string name="select_game_mode">গেম মোড নির্বাচন করুন</string>
     <string name="become_referral">রেফারেল হন</string>
     <string name="restore_referral">রেফারেল পুনরুদ্ধার করুন</string>
@@ -89,7 +91,7 @@
     <string name="transaction_history_text">লেনদেনের ইতিহাস</string>
     <string name="wrong_restart_please">সিড ফ্রেজ ভুল, অনুগ্রহ করে আবার চেষ্টা করুন।</string>
     <string name="enter_referral_code">রেফারেল কোড দিন</string>
-    <string name="enter_password_low_case">পাসওয়ার্ড দিন</string>
+    <string name="enter_password_low_case">নতুন PIN (৪–৮ সংখ্যা)</string>
     <string name="select_game_mode_text">গেম মোড নির্বাচন করুন</string>
     <string name="your_referral_code">আপনার রেফারেল কোড</string>
     <string name="and_double_the_bet">বাজি দ্বিগুণ</string>
@@ -109,7 +111,7 @@
     <string name="info_referral">তথ্য</string>
     <string name="your_balance">আপনার ব্যালেন্স</string>
     <string name="send_payment">পেমেন্ট পাঠান</string>
-    <string name="repeat_enter">আবার দিন</string>
+    <string name="repeat_enter">PIN পুনরাবৃত্তি করুন (৪–৮ সংখ্যা)</string>
     <string name="request_xrp">XRP অনুরোধ</string>
     <string name="select_game">গেম নির্বাচন</string>
     <string name="coming_soon">শীঘ্রই আসছে</string>

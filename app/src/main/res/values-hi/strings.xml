@@ -16,6 +16,8 @@
     <string name="rules_of_the_game">खेल के नियम</string>
     <string name="become_a_referral">रेफरल बनें</string>
     <string name="settings_set_password">पासवर्ड सेट करें</string>
+    <string name="settings_change_password">पासवर्ड बदलें</string>
+    <string name="settings_disable_password">पासवर्ड हटाएं</string>
     <string name="select_game_mode">खेल मोड चुनें</string>
     <string name="become_referral">रेफरल बनें</string>
     <string name="restore_referral">रेफरल पुनर्स्थापित करें</string>
@@ -87,7 +89,7 @@
     <string name="transaction_history_text">लेनदेन इतिहास</string>
     <string name="wrong_restart_please">सीड फ्रेज़ गलत है, कृपया पुनः प्रयास करें।</string>
     <string name="enter_referral_code">रेफरल कोड दर्ज करें</string>
-    <string name="enter_password_low_case">पासवर्ड दर्ज करें</string>
+    <string name="enter_password_low_case">नया PIN (4–8 अंक)</string>
     <string name="select_game_mode_text">खेल मोड चुनें</string>
     <string name="your_referral_code">आपका रेफरल कोड</string>
     <string name="and_double_the_bet">दांव दोगुना</string>
@@ -107,7 +109,7 @@
     <string name="info_referral">जानकारी</string>
     <string name="your_balance">आपका शेष</string>
     <string name="send_payment">भुगतान भेजें</string>
-    <string name="repeat_enter">दोबारा दर्ज करें</string>
+    <string name="repeat_enter">PIN दोहराएं (4–8 अंक)</string>
     <string name="request_xrp">XRP अनुरोध</string>
     <string name="select_game">खेल चुनें</string>
     <string name="coming_soon">जल्द आ रहा है</string>

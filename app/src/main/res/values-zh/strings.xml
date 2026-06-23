@@ -16,6 +16,8 @@
     <string name="rules_of_the_game">游戏规则</string>
     <string name="become_a_referral">成为推荐人</string>
     <string name="settings_set_password">设置密码</string>
+    <string name="settings_change_password">更改密码</string>
+    <string name="settings_disable_password">禁用密码</string>
     <string name="select_game_mode">选择游戏模式</string>
     <string name="become_referral">成为推荐人</string>
     <string name="restore_referral">恢复推荐</string>
@@ -82,7 +84,7 @@
     <string name="transaction_history_text">交易记录</string>
     <string name="wrong_restart_please">助记词不正确，请重试。</string>
     <string name="enter_referral_code">输入推荐码</string>
-    <string name="enter_password_low_case">输入密码</string>
+    <string name="enter_password_low_case">新PIN（4–8位数字）</string>
     <string name="select_game_mode_text">选择游戏模式</string>
     <string name="your_referral_code">您的推荐码</string>
     <string name="and_double_the_bet">双倍押注</string>
@@ -102,7 +104,7 @@
     <string name="info_referral">信息</string>
     <string name="your_balance">您的余额</string>
     <string name="send_payment">发送付款</string>
-    <string name="repeat_enter">重新输入</string>
+    <string name="repeat_enter">重复PIN（4–8位数字）</string>
     <string name="request_xrp">请求 XRP</string>
     <string name="select_game">选择游戏</string>
     <string name="coming_soon">即将推出</string>

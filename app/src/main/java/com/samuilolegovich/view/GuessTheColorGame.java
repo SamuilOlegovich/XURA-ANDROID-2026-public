@@ -18,13 +18,11 @@ import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputLayout;
 
-import com.samuilolegovich.AppExecutors;
 import com.samuilolegovich.BaseActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
-import com.samuilolegovich.async.runnable.GenColorRun;
 import com.samuilolegovich.enums.StringEnum;
 import com.samuilolegovich.enums.TestModeEnum;
 import com.samuilolegovich.utils.AudioHelper;
@@ -157,7 +155,6 @@ public class GuessTheColorGame extends BaseActivity {
         });
 
         viewModel.loadBalance();
-        goThread();
     }
 
 
@@ -293,12 +290,6 @@ public class GuessTheColorGame extends BaseActivity {
         });
     }
 
-    /** Запускает на IO-потоке GenColorRun — фоновую непрерывную генерацию случайного цвета для следующей игры. */
-    private void goThread() {
-        AppExecutors.io().execute(new GenColorRun());
-    }
-
-
     /** Запускает Activity по имени её класса/действия. */
     private void goToAnotherPage(String namePage) {
         startActivity(new Intent(namePage));
@@ -310,7 +301,6 @@ public class GuessTheColorGame extends BaseActivity {
     protected void onPause() {
         super.onPause();
         VISIBLE_ON_SCREEN = false;
-        GenColorRun.FLAG = false;
         if (casinoMediaPlayer != null && casinoMediaPlayer.isPlaying()) casinoMediaPlayer.pause();
         AudioHelper.abandonFocus(this, audioFocusRequest);
         AudioHelper.unregisterNoisyReceiver(this, noisyReceiver);
@@ -323,20 +313,17 @@ public class GuessTheColorGame extends BaseActivity {
     protected void onResume() {
         super.onResume();
         VISIBLE_ON_SCREEN = true;
-        GenColorRun.FLAG = true;
         viewModel.loadBalance();
-        goThread();
         noisyReceiver = AudioHelper.registerNoisyReceiver(this,
                 () -> { if (casinoMediaPlayer != null && casinoMediaPlayer.isPlaying()) casinoMediaPlayer.pause(); });
         audioFocusRequest = AudioHelper.requestFocus(this, focusListener);
         if (casinoMediaPlayer != null && AudioHelper.isSoundEnabled(this)) casinoMediaPlayer.start();
     }
 
-    /** Останавливает фоновую музыку и генерацию цвета перед закрытием экрана. */
+    /** Останавливает фоновую музыку перед закрытием экрана. */
     @Override
     public void onBackPressed() {
         if (casinoMediaPlayer != null) casinoMediaPlayer.stop();
-        GenColorRun.FLAG = false;
         super.onBackPressed();
     }
 

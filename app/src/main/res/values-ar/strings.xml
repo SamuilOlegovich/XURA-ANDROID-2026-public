@@ -16,6 +16,8 @@
     <string name="rules_of_the_game">قواعد اللعبة</string>
     <string name="become_a_referral">كن مرجعاً</string>
     <string name="settings_set_password">تعيين كلمة المرور</string>
+    <string name="settings_change_password">تغيير كلمة المرور</string>
+    <string name="settings_disable_password">تعطيل كلمة المرور</string>
     <string name="select_game_mode">اختر وضع اللعب</string>
     <string name="become_referral">كن مرجعاً</string>
     <string name="restore_referral">استعادة الإحالة</string>
@@ -87,7 +89,7 @@
     <string name="transaction_history_text">سجل المعاملات</string>
     <string name="wrong_restart_please">عبارة البذور غير صحيحة، يرجى المحاولة مجدداً.</string>
     <string name="enter_referral_code">أدخل رمز الإحالة</string>
-    <string name="enter_password_low_case">أدخل كلمة المرور</string>
+    <string name="enter_password_low_case">رمز PIN جديد (4–8 أرقام)</string>
     <string name="select_game_mode_text">اختر وضع اللعب</string>
     <string name="your_referral_code">رمز الإحالة الخاص بك</string>
     <string name="and_double_the_bet">مضاعفة الرهان</string>
@@ -107,7 +109,7 @@
     <string name="info_referral">معلومات</string>
     <string name="your_balance">رصيدك</string>
     <string name="send_payment">إرسال دفعة</string>
-    <string name="repeat_enter">إعادة الإدخال</string>
+    <string name="repeat_enter">أعد رمز PIN (4–8 أرقام)</string>
     <string name="request_xrp">طلب XRP</string>
     <string name="select_game">اختر لعبة</string>
     <string name="coming_soon">قريباً</string>

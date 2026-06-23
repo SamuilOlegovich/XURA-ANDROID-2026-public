@@ -202,6 +202,68 @@
 
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- GAME MODE — gold (TRIAL) / pink (LIVE) card -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/settings_game_mode_linc"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/bg_card_history"
+                android:clickable="true"
+                android:focusable="true"
+                android:contentDescription="@string/settings_game_mode">
+
+                <TextView
+                    android:id="@+id/game_mode_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="@string/settings_game_mode"
+                    android:textColor="@color/xura_gold"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.03"
+                    app:layout_constraintBottom_toTopOf="@+id/game_mode_subtitle"
+                    app:layout_constraintEnd_toStartOf="@+id/game_mode_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="packed" />
+
+                <TextView
+                    android:id="@+id/game_mode_subtitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="8dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="@string/btn_sub_game_mode"
+                    android:textColor="@color/xura_text_tertiary"
+                    android:textSize="11sp"
+                    android:letterSpacing="0.02"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/game_mode_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/game_mode_title" />
+
+                <ImageView
+                    android:id="@+id/game_mode_icon"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/ic_nav_games"
+                    android:importantForAccessibility="no"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/xura_gold" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
             <!-- SET PASSWORD — pink card -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/settings_set_password_linc"
@@ -326,7 +388,7 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <!-- AUTO-LOCK TIMEOUT — cyan card -->
+            <!-- AUTO-LOCK TIMEOUT — glass card -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/settings_lock_timeout_linc"
                 android:layout_width="match_parent"
@@ -334,7 +396,7 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
                 android:layout_marginBottom="12dp"
-                android:background="@drawable/bg_card_action_primary"
+                android:background="@drawable/bg_card_glass_clickable"
                 android:clickable="true"
                 android:focusable="true"
                 android:contentDescription="Auto-lock timeout">
@@ -347,7 +409,7 @@
                     android:layout_marginEnd="8dp"
                     android:fontFamily="@font/montserrat"
                     android:text="@string/settings_auto_lock"
-                    android:textColor="@color/xura_cyan"
+                    android:textColor="@color/xura_text_primary"
                     android:textSize="15sp"
                     android:textStyle="bold"
                     android:letterSpacing="0.03"
@@ -384,11 +446,11 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/xura_cyan" />
+                    app:tint="@color/xura_text_primary" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <!-- SOUND TOGGLE — cyan card -->
+            <!-- SOUND TOGGLE — glass card -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/settings_sound_linc"
                 android:layout_width="match_parent"
@@ -396,7 +458,7 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
                 android:layout_marginBottom="12dp"
-                android:background="@drawable/bg_card_action_primary"
+                android:background="@drawable/bg_card_glass_clickable"
                 android:clickable="true"
                 android:focusable="true"
                 android:contentDescription="Sound toggle">
@@ -409,7 +471,7 @@
                     android:layout_marginEnd="8dp"
                     android:fontFamily="@font/montserrat"
                     android:text="@string/settings_sound"
-                    android:textColor="@color/xura_cyan"
+                    android:textColor="@color/xura_text_primary"
                     android:textSize="15sp"
                     android:textStyle="bold"
                     android:letterSpacing="0.03"
@@ -446,69 +508,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/xura_cyan" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <!-- GAME MODE — gold (TRIAL) / pink (LIVE) card -->
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/settings_game_mode_linc"
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="24dp"
-                android:layout_marginBottom="12dp"
-                android:background="@drawable/bg_card_history"
-                android:clickable="true"
-                android:focusable="true"
-                android:contentDescription="@string/settings_game_mode">
-
-                <TextView
-                    android:id="@+id/game_mode_title"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="8dp"
-                    android:fontFamily="@font/montserrat"
-                    android:text="@string/settings_game_mode"
-                    android:textColor="@color/xura_gold"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:letterSpacing="0.03"
-                    app:layout_constraintBottom_toTopOf="@+id/game_mode_subtitle"
-                    app:layout_constraintEnd_toStartOf="@+id/game_mode_icon"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_chainStyle="packed" />
-
-                <TextView
-                    android:id="@+id/game_mode_subtitle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginEnd="8dp"
-                    android:fontFamily="@font/montserrat"
-                    android:text="@string/btn_sub_game_mode"
-                    android:textColor="@color/xura_text_tertiary"
-                    android:textSize="11sp"
-                    android:letterSpacing="0.02"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/game_mode_icon"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/game_mode_title" />
-
-                <ImageView
-                    android:id="@+id/game_mode_icon"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="16dp"
-                    android:src="@drawable/ic_nav_games"
-                    android:importantForAccessibility="no"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/xura_gold" />
+                    app:tint="@color/xura_text_primary" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

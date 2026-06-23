@@ -9,6 +9,8 @@
     <string name="want_to_win">ХОТИТЕ ВЫИГРАТЬ 386301 XRP - НАЖМИТЕ И НАЧНИТЕ ИГРАТЬ!</string>
     <string name="collect_and_renew_bet">СОБРАТЬ И ПЕРЕНОВИТЬ СТАВКУ</string>
     <string name="settings_set_password">УСТАНОВИТЬ ПАРОЛЬ</string>
+    <string name="settings_change_password">СМЕНИТЬ ПАРОЛЬ</string>
+    <string name="settings_disable_password">ОТКЛЮЧИТЬ ПАРОЛЬ</string>
     <string name="create_new_wallet">СОЗДАТЬ НОВЫЙ КОШЕЛЕК</string>
     <string name="settings_select_language">ВЫБРАТЬ ЯЗЫК</string>
     <string name="restore_referral">ВОССТАНОВИТЬ РЕФЕРАЛ</string>
@@ -124,7 +126,7 @@
     <string name="and_double_the_bet">И ПОЛУЧИТЕ В 2 РАЗА БОЛЬШЕ</string>
     <string name="enter_number_1_36">Введите число от 1 до 36</string>
     <string name="enter_referral_code">Введите код реферала</string>
-    <string name="enter_password_low_case">Введите пароль</string>
+    <string name="enter_password_low_case">Новый PIN (4–8 цифр)</string>
     <string name="select_game_mode_text">ВЫБЕРИТЕ РЕЖИМ</string>
     <string name="your_referral_code">ВАШ КОД РЕФЕРАЛА</string>
     <string name="game_notifications">УВЕДОМЛЕНИЯ ИГРЫ</string>
@@ -136,7 +138,7 @@
     <string name="enter_password">ВВЕДИТЕ ПАРОЛЬ</string>
     <string name="guess_the_color">УГАДАЙТЕ ЦВЕТ</string>
     <string name="congratulations">ПОЗДРАВЛЯЕМ</string>
-    <string name="repeat_enter">Повторите ввод</string>
+    <string name="repeat_enter">Повторите PIN (4–8 цифр)</string>
     <string name="lead_the_seed">Введите ключ</string>
     <string name="seed_generating">Генерация seed-фразы…</string>
     <string name="seed_input_hint">Введите вашу seed-фразу</string>

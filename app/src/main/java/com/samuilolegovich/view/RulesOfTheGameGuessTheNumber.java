@@ -8,7 +8,6 @@ import com.samuilolegovich.BaseActivity;
 
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
-import com.samuilolegovich.async.runnable.GenNumberRun;
 import dagger.hilt.android.AndroidEntryPoint;
 
 
@@ -58,10 +57,8 @@ public class RulesOfTheGameGuessTheNumber extends BaseActivity {
     }
 
 
-    /** При выходе с экрана правил сбрасывает флаг фоновой генерации числа {@link GenNumberRun#FLAG} и возвращается назад. */
     @Override
     public void onBackPressed() {
-        GenNumberRun.FLAG =  false;
         super.onBackPressed();
     }
 }

@@ -22,14 +22,12 @@ import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputLayout;
 
-import com.samuilolegovich.AppExecutors;
 import com.samuilolegovich.BaseActivity;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
-import com.samuilolegovich.async.runnable.GenNumberRun;
 import com.samuilolegovich.enums.StringEnum;
 import com.samuilolegovich.enums.TestModeEnum;
 import com.samuilolegovich.utils.AudioHelper;
@@ -161,7 +159,6 @@ public class GuessTheNumberGame extends BaseActivity {
         });
 
         viewModel.loadBalance();
-        goThread();
     }
 
 
@@ -317,12 +314,6 @@ public class GuessTheNumberGame extends BaseActivity {
         });
     }
 
-    /** Запускает на IO-потоке GenNumberRun — фоновую непрерывную генерацию случайного числа для следующей игры. */
-    private void goThread() {
-        AppExecutors.io().execute(new GenNumberRun());
-    }
-
-
     /** Запускает Activity по имени её класса/действия. */
     private void goToAnotherPage(String namePage) {
         startActivity(new Intent(namePage));
@@ -334,7 +325,6 @@ public class GuessTheNumberGame extends BaseActivity {
     protected void onPause() {
         super.onPause();
         VISIBLE_ON_SCREEN = false;
-        GenNumberRun.FLAG = false;
         if (casinoMediaPlayer != null && casinoMediaPlayer.isPlaying()) casinoMediaPlayer.pause();
         AudioHelper.abandonFocus(this, audioFocusRequest);
         AudioHelper.unregisterNoisyReceiver(this, noisyReceiver);
@@ -347,20 +337,17 @@ public class GuessTheNumberGame extends BaseActivity {
     protected void onResume() {
         super.onResume();
         VISIBLE_ON_SCREEN = true;
-        GenNumberRun.FLAG = true;
         viewModel.loadBalance();
-        goThread();
         noisyReceiver = AudioHelper.registerNoisyReceiver(this,
                 () -> { if (casinoMediaPlayer != null && casinoMediaPlayer.isPlaying()) casinoMediaPlayer.pause(); });
         audioFocusRequest = AudioHelper.requestFocus(this, focusListener);
         if (casinoMediaPlayer != null && AudioHelper.isSoundEnabled(this)) casinoMediaPlayer.start();
     }
 
-    /** Останавливает фоновую музыку и генерацию числа перед закрытием экрана. */
+    /** Останавливает фоновую музыку перед закрытием экрана. */
     @Override
     public void onBackPressed() {
         if (casinoMediaPlayer != null) casinoMediaPlayer.stop();
-        GenNumberRun.FLAG = false;
         super.onBackPressed();
     }
 

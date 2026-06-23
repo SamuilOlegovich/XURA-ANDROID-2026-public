@@ -12,9 +12,9 @@ import com.samuilolegovich.view.YourReferral;
 import com.samuilolegovich.wallet.repository.WalletRepository;
 
 import java.math.BigDecimal;
+import java.security.SecureRandom;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Random;
 
 
 
@@ -31,14 +31,13 @@ public class NotifierRunForTrialGame implements Runnable {
     private String CONGRATULATIONS_YOUR_BET_IS_WON;
     private String YOUR_REFERRAL_CODE;
 
-    Random random;
+    private final SecureRandom random = new SecureRandom();
 
 
 
     /** Запоминает, для какой игры имитируется ответ сервера, и подгружает локализованные тексты уведомлений. */
     public NotifierRunForTrialGame(TestModeEnum testModeEnum) {
         this.testModeEnum = testModeEnum;
-        this.random = new Random();
         setLanguage();
     }
 

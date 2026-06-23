@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+
 import com.google.android.material.textfield.TextInputLayout;
 import com.samuilolegovich.BaseActivity;
 
@@ -37,10 +38,12 @@ public class SettingsSetPasswordForApp extends BaseActivity {
     private TextInputLayout tilPasswordTwo;
     private TextInputLayout tilCurrentPassword;
     private TextView textView;
+    private TextView confirmTitle;
     private ImageView confirmIcon;
     private View confirm;
 
     private boolean hasPassword;
+    private boolean disableMode = false;
 
 
 
@@ -72,6 +75,7 @@ public class SettingsSetPasswordForApp extends BaseActivity {
         passwordOne           = findViewById(R.id.password_field);
         currentPasswordField  = findViewById(R.id.current_password_field);
         confirmIcon           = findViewById(R.id.confirm_link_icon);
+        confirmTitle          = findViewById(R.id.confirm_link_title);
         confirm               = findViewById(R.id.confirm_link);
     }
 
@@ -87,6 +91,28 @@ public class SettingsSetPasswordForApp extends BaseActivity {
             textView.setText(R.string.set_password_to_enter_application);
             tilCurrentPassword.setVisibility(View.GONE);
             confirmIcon.setImageResource(R.drawable.ic_lock_open);
+        }
+        setConfirmMode(false);
+    }
+
+    /**
+     * Переключает кнопку между режимом "Подтвердить" (false) и "Отключить пароль" (true).
+     * В режиме отключения — розовый outline, в обычном — розовый fill.
+     */
+    private void setConfirmMode(boolean disable) {
+        disableMode = disable;
+        if (disable) {
+            confirm.setBackgroundResource(R.drawable.bg_card_glass_clickable);
+            confirmTitle.setText(R.string.settings_disable_password);
+            confirmTitle.setTextColor(getColor(R.color.xura_pink));
+            confirmIcon.setImageResource(R.drawable.ic_lock_open);
+            confirmIcon.setColorFilter(getColor(R.color.xura_pink));
+        } else {
+            confirm.setBackgroundResource(R.drawable.bg_card_send);
+            confirmTitle.setText(R.string.set_password);
+            confirmTitle.setTextColor(getColor(R.color.xura_pink));
+            confirmIcon.setImageResource(hasPassword ? R.drawable.ic_lock : R.drawable.ic_lock_open);
+            confirmIcon.clearColorFilter();
         }
     }
 
@@ -110,12 +136,18 @@ public class SettingsSetPasswordForApp extends BaseActivity {
     }
 
 
-    /** Назначает обработчик подтверждения пароля: при смене — сначала верифицирует старый, затем проверяет совпадение нового. После успеха замок закрывается и экран закрывается. */
+    /** Назначает обработчики кнопки подтверждения и watchers для переключения режима кнопки. */
     private void listeners() {
         confirm.setOnClickListener(v -> {
             pulse(v);
 
-            // Если пароль уже установлен — проверяем старый
+            if (disableMode) {
+                // Режим отключения: старый пароль уже верный (кнопка в этом режиме только после успешной проверки)
+                setPasswordForApp("", false);
+                onBackPressed();
+                return;
+            }
+
             if (hasPassword) {
                 String current = currentPasswordField.getText().toString();
                 if (!verifyCurrentPassword(current)) {
@@ -130,7 +162,6 @@ public class SettingsSetPasswordForApp extends BaseActivity {
 
             if (one.length() > 3 && one.equals(two)) {
                 setPasswordForApp(one, true);
-                // Показываем закрытый замок как обратную связь, затем закрываем экран
                 confirmIcon.setImageResource(R.drawable.ic_lock);
                 confirm.postDelayed(this::onBackPressed, 350);
             } else {
@@ -140,17 +171,32 @@ public class SettingsSetPasswordForApp extends BaseActivity {
             }
         });
 
-        passwordTwo.addTextChangedListener(new TextWatcher() {
+        // Следим за полем текущего пароля — переключаем режим кнопки
+        currentPasswordField.addTextChangedListener(new TextWatcher() {
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            @Override public void onTextChanged(CharSequence s, int start, int before, int count) { tilPasswordTwo.setError(null); }
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
+                tilCurrentPassword.setError(null);
+                if (hasPassword) {
+                    boolean oldCorrect = verifyCurrentPassword(s.toString());
+                    boolean newEmpty = passwordOne.getText().toString().isEmpty()
+                            && passwordTwo.getText().toString().isEmpty();
+                    setConfirmMode(oldCorrect && newEmpty);
+                }
+            }
             @Override public void afterTextChanged(Editable s) {}
         });
 
-        currentPasswordField.addTextChangedListener(new TextWatcher() {
+        // Если пользователь начал вводить новый пароль — возвращаем режим "Подтвердить"
+        TextWatcher newPasswordWatcher = new TextWatcher() {
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            @Override public void onTextChanged(CharSequence s, int start, int before, int count) { tilCurrentPassword.setError(null); }
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
+                tilPasswordTwo.setError(null);
+                if (disableMode && !s.toString().isEmpty()) setConfirmMode(false);
+            }
             @Override public void afterTextChanged(Editable s) {}
-        });
+        };
+        passwordOne.addTextChangedListener(newPasswordWatcher);
+        passwordTwo.addTextChangedListener(newPasswordWatcher);
     }
 
 
