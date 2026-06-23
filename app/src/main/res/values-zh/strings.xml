@@ -10,7 +10,7 @@
     <string name="name_guess_the_number">猜数字</string>
     <string name="name_guess_the_color">猜颜色</string>
     <string name="game_color_subtitle">猜颜色 — 双倍投注</string>
-    <string name="game_number_subtitle">选 1–36，赢得 ×36</string>
+    <string name="game_number_subtitle">选 1–36，赢得 ×35</string>
     <string name="game_roulette_subtitle">欧式轮盘 · 由 XRP 驱动</string>
     <string name="create_new_wallet">创建新钱包</string>
     <string name="rules_of_the_game">游戏规则</string>
@@ -46,12 +46,12 @@
     <string name="red">红色</string>
     <string name="set">设置</string>
 
-    <string name="rules_guess_the_number_text"><![CDATA[<font color="#FFB000"><b>如何游戏</b></font><br><br>从 <font color="#00D4FF"><b>1 到 36</b></font> 中选择任意数字并下注。<br>如果旋转结果是您的数字 — 您赢得 <font color="#FFB000"><b>×36</b></font> 倍押注！<br><br><font color="#FFB000"><b>乐透基金</b></font><br>输掉的赌注进入乐透储蓄基金。<br>任何玩家在零扇区出现时都可赢得乐透。<br>迷你乐透 = 乐透的1/10。<br><br><font color="#FFB000"><b>限额</b></font><br>最低下注: <font color="#00D4FF">0.1 XRP</font><br>最高下注: <font color="#00D4FF">100 XRP</font><br><br><font color="#555577"><i>请理性博彩。年满18岁。</i></font>]]></string>
-    <string name="rules_double_your_bet">这个游戏的规则非常简单。您只需选择要押注的数字（从 1 到 36）。如果猜中，押注金额将增加 36 倍。如果押注失败，金额将进入储蓄基金 — lotto。任何用户都可以赢得 lotto，无论押注多少——只要 lotto 扇区出现。您也可以赢得迷你 lotto，即 lotto 的十分之一。\n\n最低押注为 0.1 XRP，最高为 100 XRP。</string>
+    <string name="rules_guess_the_number_text"><![CDATA[<font color="#FFB000"><b>如何游戏</b></font><br><br>从 <font color="#00D4FF"><b>1 到 36</b></font> 中选择任意数字并下注。<br>如果旋转结果是您的数字 — 您赢得 <font color="#FFB000"><b>×35</b></font> 倍押注！<br><br><font color="#FFB000"><b>乐透基金</b></font><br>输掉的赌注进入乐透储蓄基金。<br>任何玩家在零扇区出现时都可赢得乐透。<br>迷你乐透 = 乐透的1/10。<br><br><font color="#FFB000"><b>限额</b></font><br>最低下注: <font color="#00D4FF">0.1 XRP</font><br>最高下注: <font color="#00D4FF">100 XRP</font><br><br><font color="#555577"><i>请理性博彩。年满18岁。</i></font>]]></string>
+    <string name="rules_double_your_bet">这个游戏的规则非常简单。您只需选择要押注的数字（从 1 到 36）。如果猜中，押注金额将增加 35 倍。如果押注失败，金额将进入储蓄基金 — lotto。任何用户都可以赢得 lotto，无论押注多少——只要 lotto 扇区出现。您也可以赢得迷你 lotto，即 lotto 的十分之一。\n\n最低押注为 0.1 XRP，最高为 100 XRP。</string>
     <string name="rules_guess_the_color_text"><![CDATA[<font color="#FFB000"><b>如何游戏</b></font><br><br>下注并选择 — <font color="#FF2080"><b>红色</b></font> 或 <b>黑色</b>。<br>如果旋转结果与您的颜色匹配，押注翻倍！<br><br><font color="#FF2080"><b>×2</b></font> &nbsp; 红色或黑色<br><br><font color="#FFB000"><b>乐透基金</b></font><br>输掉的赌注进入乐透储蓄基金。<br>任何玩家在零扇区出现时都可赢得乐透。<br>迷你乐透 = 乐透的1/10。<br><br><font color="#FFB000"><b>限额</b></font><br>最低下注: <font color="#00D4FF">0.1 XRP</font><br>最高下注: <font color="#00D4FF">100 XRP</font><br><br><font color="#555577"><i>请理性博彩。年满18岁。</i></font>]]></string>
     <string name="rules_guess_the_color">这个游戏的规则非常简单。您下注并选择颜色。如果颜色猜对 — 您的押注将翻倍。如果押注失败，金额将进入储蓄基金 — lotto。任何用户都可以赢得 lotto，无论押注多少——只要 lotto 扇区出现。您也可以赢得迷你 lotto，即 lotto 的十分之一。\n\n最低押注为 0.1 XRP，最高为 100 XRP。</string>
     <string name="referral_text">如果您有推荐码 — 请务必输入 — 这将为您提供额外的游戏机会并参与每日奖品抽奖</string>
-    <string name="rules_roulette"><![CDATA[基于XRP Ledger区块链的欧式轮盘赌。<br>每次旋转的结果由XRP网络数据透明决定。<br><br><font color="#FFB000"><b>投注类型和赔率</b></font><br><br>• 单个数字 (0–36) &nbsp; <font color="#FFB000"><b>×36</b></font><br>• 红色 / 黑色 &nbsp; <font color="#FF2080"><b>×2</b></font><br>• 单数 / 双数 &nbsp; <b>×2</b><br>• 小 1–18 / 大 19–36 &nbsp; <b>×2</b><br>• 打 (1–12, 13–24, 25–36) &nbsp; <font color="#00D4FF"><b>×3</b></font><br>• 列 &nbsp; <font color="#00D4FF"><b>×3</b></font><br><br><font color="#FFB000"><b>多重下注</b></font><br>同一次旋转可押多个位置，金额合并为一笔支付。<br><br><font color="#FF2080"><b>零</b></font><br>只有直接押0才获胜，其他所有下注在出现0时均输。<br><br><font color="#FFB000"><b>限额</b></font><br>最低每注: <font color="#00D4FF">0.1 XRP</font><br>所有注总额上限: <font color="#00D4FF">100 XRP</font><br><br><font color="#555577"><i>请理性博彩。年满18岁。</i></font>]]></string>
+    <string name="rules_roulette"><![CDATA[基于XRP Ledger区块链的欧式轮盘赌。<br>每次旋转的结果由XRP网络数据透明决定。<br><br><font color="#FFB000"><b>投注类型和赔率</b></font><br><br>• 单个数字 (0–36) &nbsp; <font color="#FFB000"><b>×35</b></font><br>• 红色 / 黑色 &nbsp; <font color="#FF2080"><b>×2</b></font><br>• 单数 / 双数 &nbsp; <b>×2</b><br>• 小 1–18 / 大 19–36 &nbsp; <b>×2</b><br>• 打 (1–12, 13–24, 25–36) &nbsp; <font color="#00D4FF"><b>×3</b></font><br>• 列 &nbsp; <font color="#00D4FF"><b>×3</b></font><br><br><font color="#FFB000"><b>多重下注</b></font><br>同一次旋转可押多个位置，金额合并为一笔支付。<br><br><font color="#FF2080"><b>零</b></font><br>只有直接押0才获胜，其他所有下注在出现0时均输。<br><br><font color="#FFB000"><b>限额</b></font><br>最低每注: <font color="#00D4FF">0.1 XRP</font><br>所有注总额上限: <font color="#00D4FF">100 XRP</font><br><br><font color="#555577"><i>请理性博彩。年满18岁。</i></font>]]></string>
     <string name="congratulations_your_bet_is_won_loto">恭喜！您的押注赢得了 LOTTO！奖励为 %s XRP — 继续游戏，继续获胜！</string>
     <string name="get_recovery_become_referral">推荐恢复请求已发送 — 请等待服务器响应</string>
     <string name="congratulations_your_bet_is_won">恭喜！您的押注获胜！奖励为 %s XRP — 继续游戏，继续获胜！</string>
@@ -72,7 +72,7 @@
     <string name="address_copied_to_phone_buffer">地址已复制到剪贴板</string>
     <string name="payment_amount_is_incorrect">付款金额不正确</string>
     <string name="code_copied_to_phone_buffer">代码已复制到剪贴板</string>
-    <string name="and_get_36_times_more">赢得 36 倍奖励</string>
+    <string name="and_get_36_times_more">赢得 35 倍奖励</string>
     <string name="wrong_destination_address">目标地址错误</string>
     <string name="payment_sent">付款已发送</string>
     <string name="biometrics_not_set_up">此设备未设置生物识别</string>

@@ -10,7 +10,7 @@
     <string name="name_guess_the_number">संख्या अनुमान</string>
     <string name="name_guess_the_color">रंग अनुमान</string>
     <string name="game_color_subtitle">रंग अनुमान — दांव दोगुना</string>
-    <string name="game_number_subtitle">1–36 चुनें और ×36 जीतें</string>
+    <string name="game_number_subtitle">1–36 चुनें और ×35 जीतें</string>
     <string name="game_roulette_subtitle">यूरोपीय रूलेट · XRP द्वारा संचालित</string>
     <string name="create_new_wallet">नया वॉलेट बनाएं</string>
     <string name="rules_of_the_game">खेल के नियम</string>
@@ -51,12 +51,12 @@
     <string name="red">लाल</string>
     <string name="set">सेट करें</string>
 
-    <string name="rules_guess_the_number_text"><![CDATA[<font color="#FFB000"><b>कैसे खेलें</b></font><br><br><font color="#00D4FF"><b>1 से 36</b></font> में से कोई भी संख्या चुनें और दांव लगाएं।<br>अगर आपकी संख्या निकली — आप <font color="#FFB000"><b>×36</b></font> जीतते हैं!<br><br><font color="#FFB000"><b>LOTTO फंड</b></font><br>हारे हुए दांव LOTTO बचत फंड में जाते हैं।<br>शून्य सेक्टर आने पर कोई भी खिलाड़ी LOTTO जीत सकता है।<br>मिनी-LOTTO = LOTTO का 1/10।<br><br><font color="#FFB000"><b>सीमाएं</b></font><br>न्यूनतम दांव: <font color="#00D4FF">0.1 XRP</font><br>अधिकतम दांव: <font color="#00D4FF">100 XRP</font><br><br><font color="#555577"><i>जिम्मेदारी से खेलें। आयु 18+.</i></font>]]></string>
-    <string name="rules_double_your_bet">इस खेल के नियम बहुत सरल हैं। आपको 1 से 36 तक एक संख्या चुननी है। सही होने पर दांव 36 गुना बढ़ता है। हारने पर राशि LOTTO में जाती है। न्यूनतम दांव 0.1 XRP, अधिकतम 100 XRP।</string>
+    <string name="rules_guess_the_number_text"><![CDATA[<font color="#FFB000"><b>कैसे खेलें</b></font><br><br><font color="#00D4FF"><b>1 से 36</b></font> में से कोई भी संख्या चुनें और दांव लगाएं।<br>अगर आपकी संख्या निकली — आप <font color="#FFB000"><b>×35</b></font> जीतते हैं!<br><br><font color="#FFB000"><b>LOTTO फंड</b></font><br>हारे हुए दांव LOTTO बचत फंड में जाते हैं।<br>शून्य सेक्टर आने पर कोई भी खिलाड़ी LOTTO जीत सकता है।<br>मिनी-LOTTO = LOTTO का 1/10।<br><br><font color="#FFB000"><b>सीमाएं</b></font><br>न्यूनतम दांव: <font color="#00D4FF">0.1 XRP</font><br>अधिकतम दांव: <font color="#00D4FF">100 XRP</font><br><br><font color="#555577"><i>जिम्मेदारी से खेलें। आयु 18+.</i></font>]]></string>
+    <string name="rules_double_your_bet">इस खेल के नियम बहुत सरल हैं। आपको 1 से 36 तक एक संख्या चुननी है। सही होने पर दांव 35 गुना बढ़ता है। हारने पर राशि LOTTO में जाती है। न्यूनतम दांव 0.1 XRP, अधिकतम 100 XRP।</string>
     <string name="rules_guess_the_color_text"><![CDATA[<font color="#FFB000"><b>कैसे खेलें</b></font><br><br>दांव लगाएं और चुनें — <font color="#FF2080"><b>लाल</b></font> या <b>काला</b>।<br>अगर परिणाम आपके रंग से मेल खाता है — दांव दोगुना हो जाता है!<br><br><font color="#FF2080"><b>×2</b></font> &nbsp; लाल या काला<br><br><font color="#FFB000"><b>LOTTO फंड</b></font><br>हारे हुए दांव LOTTO बचत फंड में जाते हैं।<br>शून्य सेक्टर आने पर कोई भी खिलाड़ी LOTTO जीत सकता है।<br>मिनी-LOTTO = LOTTO का 1/10।<br><br><font color="#FFB000"><b>सीमाएं</b></font><br>न्यूनतम दांव: <font color="#00D4FF">0.1 XRP</font><br>अधिकतम दांव: <font color="#00D4FF">100 XRP</font><br><br><font color="#555577"><i>जिम्मेदारी से खेलें। आयु 18+.</i></font>]]></string>
     <string name="rules_guess_the_color">इस खेल के नियम बहुत सरल हैं। दांव लगाएं और रंग चुनें। सही रंग पर दांव दोगुना होता है। हारने पर LOTTO में जाता है। न्यूनतम 0.1 XRP, अधिकतम 100 XRP।</string>
     <string name="referral_text">यदि आपके पास रेफरल कोड है — इसे ज़रूर दर्ज करें — इससे आपको अतिरिक्त गेम चांस और दैनिक पुरस्कार ड्रा में भाग मिलेगा</string>
-    <string name="rules_roulette"><![CDATA[XRP Ledger ब्लॉकचेन पर यूरोपीय रूलेट।<br>हर स्पिन का परिणाम XRP नेटवर्क डेटा से पारदर्शी रूप से निर्धारित होता है।<br><br><font color="#FFB000"><b>दांव के प्रकार और भुगतान</b></font><br><br>• सटीक संख्या (0–36) &nbsp; <font color="#FFB000"><b>×36</b></font><br>• लाल / काला &nbsp; <font color="#FF2080"><b>×2</b></font><br>• विषम / सम &nbsp; <b>×2</b><br>• कम 1–18 / अधिक 19–36 &nbsp; <b>×2</b><br>• दर्जन (1–12, 13–24, 25–36) &nbsp; <font color="#00D4FF"><b>×3</b></font><br>• कॉलम &nbsp; <font color="#00D4FF"><b>×3</b></font><br><br><font color="#FFB000"><b>मल्टी-बेट</b></font><br>एक स्पिन में कई स्थानों पर दांव लगाएं — राशियां एक भुगतान में जोड़ी जाती हैं।<br><br><font color="#FF2080"><b>शून्य</b></font><br>केवल 0 पर सीधा दांव जीतता है। शून्य पर सभी अन्य दांव हारते हैं।<br><br><font color="#FFB000"><b>सीमाएं</b></font><br>प्रति पोजीशन न्यूनतम: <font color="#00D4FF">0.1 XRP</font><br>कुल अधिकतम: <font color="#00D4FF">100 XRP</font><br><br><font color="#555577"><i>जिम्मेदारी से खेलें। आयु 18+.</i></font>]]></string>
+    <string name="rules_roulette"><![CDATA[XRP Ledger ब्लॉकचेन पर यूरोपीय रूलेट।<br>हर स्पिन का परिणाम XRP नेटवर्क डेटा से पारदर्शी रूप से निर्धारित होता है।<br><br><font color="#FFB000"><b>दांव के प्रकार और भुगतान</b></font><br><br>• सटीक संख्या (0–36) &nbsp; <font color="#FFB000"><b>×35</b></font><br>• लाल / काला &nbsp; <font color="#FF2080"><b>×2</b></font><br>• विषम / सम &nbsp; <b>×2</b><br>• कम 1–18 / अधिक 19–36 &nbsp; <b>×2</b><br>• दर्जन (1–12, 13–24, 25–36) &nbsp; <font color="#00D4FF"><b>×3</b></font><br>• कॉलम &nbsp; <font color="#00D4FF"><b>×3</b></font><br><br><font color="#FFB000"><b>मल्टी-बेट</b></font><br>एक स्पिन में कई स्थानों पर दांव लगाएं — राशियां एक भुगतान में जोड़ी जाती हैं।<br><br><font color="#FF2080"><b>शून्य</b></font><br>केवल 0 पर सीधा दांव जीतता है। शून्य पर सभी अन्य दांव हारते हैं।<br><br><font color="#FFB000"><b>सीमाएं</b></font><br>प्रति पोजीशन न्यूनतम: <font color="#00D4FF">0.1 XRP</font><br>कुल अधिकतम: <font color="#00D4FF">100 XRP</font><br><br><font color="#555577"><i>जिम्मेदारी से खेलें। आयु 18+.</i></font>]]></string>
     <string name="congratulations_your_bet_is_won_loto">बधाई! आपका दांव LOTTO जीत गया! पुरस्कार: %s XRP — खेलते रहें!</string>
     <string name="get_recovery_become_referral">रेफरल रिकवरी अनुरोध भेजा गया — सर्वर के जवाब की प्रतीक्षा करें</string>
     <string name="congratulations_your_bet_is_won">बधाई! आपका दांव जीत गया! पुरस्कार: %s XRP — जीतते रहें!</string>
@@ -77,7 +77,7 @@
     <string name="address_copied_to_phone_buffer">पता क्लिपबोर्ड पर कॉपी किया गया</string>
     <string name="payment_amount_is_incorrect">भुगतान राशि गलत है</string>
     <string name="code_copied_to_phone_buffer">कोड क्लिपबोर्ड पर कॉपी किया गया</string>
-    <string name="and_get_36_times_more">36 गुना जीतें</string>
+    <string name="and_get_36_times_more">35 गुना जीतें</string>
     <string name="wrong_destination_address">गंतव्य पता गलत है</string>
     <string name="payment_sent">भुगतान भेजा गया</string>
     <string name="biometrics_not_set_up">इस डिवाइस पर बायोमेट्रिक्स सेटअप नहीं है</string>
