@@ -138,7 +138,11 @@ public class NotifierRunForTrialGame implements Runnable {
 
     /** Считает результат тестовой ставки в игре "Угадай число": совпадает ли сгенерированное число со ставкой игрока. */
     private void calculateForGuessTheNumber(int i) {
-        if (Flasher.NUMBER_BET.equalsIgnoreCase(i + "")) {
+        // NUMBER_BET хранит ставку игрока; сохраняем её до перезаписи
+        String playerBet = Flasher.NUMBER_BET;
+        // Записываем выпавшее число, чтобы барабан остановился на нём
+        Flasher.NUMBER_BET = String.valueOf(i);
+        if (playerBet != null && playerBet.equalsIgnoreCase(String.valueOf(i))) {
             responseToBet(StringEnum.BET_WIN_GUESS_THE_COLOR.getValue());
         } else {
             responseToBet(StringEnum.NOT_WIN_GUESS_THE_COLOR.getValue());
