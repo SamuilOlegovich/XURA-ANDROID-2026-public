@@ -41,6 +41,16 @@ public class NotifierRunForTrialGame implements Runnable {
         setLanguage();
     }
 
+    /** Конструктор для unit-тестов — принимает строки напрямую, не обращается к Android-ресурсам. */
+    NotifierRunForTrialGame(TestModeEnum testModeEnum,
+                            String lostMsg, String wonMsg, String wonLotoMsg, String referralMsg) {
+        this.testModeEnum = testModeEnum;
+        YOUR_BET_IS_LOST_TRY_AGAIN_AND_YOU_WILL_BE_LUCKY = lostMsg;
+        CONGRATULATIONS_YOUR_BET_IS_WON                  = wonMsg;
+        CONGRATULATIONS_YOUR_BET_IS_WON_LOTTO            = wonLotoMsg;
+        YOUR_REFERRAL_CODE                               = referralMsg;
+    }
+
 
 
     /** Загружает локализованные строки уведомлений (проигрыш/выигрыш/реферальный код) для текущего языка приложения. */
@@ -78,7 +88,7 @@ public class NotifierRunForTrialGame implements Runnable {
     /** Считает результат тестовой ставки в рулетке: бросает колесо один раз и проверяет каждую
      * ставку игрока против выпавшего числа. Выплата суммируется по всем выигравшим позициям
      * с учётом индивидуального мультипликатора каждой ставки. */
-    private void calculateForRoulette(int winNumber) {
+    void calculateForRoulette(int winNumber) {
         Flasher.NUMBER_BET = String.valueOf(winNumber);
 
         String lotto = String.valueOf(random.nextInt(10001 - 4000) + 4000);
@@ -137,7 +147,7 @@ public class NotifierRunForTrialGame implements Runnable {
     }
 
     /** Считает результат тестовой ставки в игре "Угадай число": совпадает ли сгенерированное число со ставкой игрока. */
-    private void calculateForGuessTheNumber(int i) {
+    void calculateForGuessTheNumber(int i) {
         // NUMBER_BET хранит ставку игрока; сохраняем её до перезаписи
         String playerBet = Flasher.NUMBER_BET;
         // Записываем выпавшее число, чтобы барабан остановился на нём
@@ -153,7 +163,7 @@ public class NotifierRunForTrialGame implements Runnable {
     /** Считает результат тестовой ставки в игре "Угадай цвет": генерирует реальное число рулетки,
      * записывает его в Flasher.NUMBER_BET для отображения на колесе, и определяет победу
      * по совпадению цвета выпавшего числа с цветом ставки игрока. */
-    private void calculateForGuessTheColor() {
+    void calculateForGuessTheColor() {
         Map<Boolean, String> result = Lotto.genNumberAndColor();
         boolean isBlack = result.containsKey(true);
         String number = isBlack ? result.get(true) : result.get(false);
