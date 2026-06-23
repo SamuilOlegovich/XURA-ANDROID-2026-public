@@ -15,6 +15,8 @@
     <string name="rules_of_the_game">RULES OF THE GAME</string>
     <string name="become_a_referral">BECOME A REFERRAL</string>
     <string name="settings_set_password">SET PASSWORD</string>
+    <string name="settings_change_password">CHANGE PASSWORD</string>
+    <string name="settings_disable_password">DISABLE PASSWORD</string>
     <string name="select_game_mode">SELECT GAME MODE</string>
     <string name="become_referral">BECOME A REFERRAL</string>
     <string name="restore_referral">RESTORE REFERRAL</string>
@@ -100,7 +102,7 @@
     <string name="transaction_history_text">TRANSACTION HISTORY</string>
     <string name="wrong_restart_please">Incorrect seed phrase. Please try again.</string>
     <string name="enter_referral_code">Enter referral code</string>
-    <string name="enter_password_low_case">Enter password</string>
+    <string name="enter_password_low_case">New PIN (4–8 digits)</string>
     <string name="select_game_mode_text">SELECT GAME MODE</string>
     <string name="your_referral_code">YOUR REFERRAL CODE</string>
     <string name="and_double_the_bet">AND DOUBLE THE BET</string>
@@ -120,7 +122,7 @@
     <string name="info_referral">INFORMATION</string>
     <string name="your_balance">YOUR BALANCE</string>
     <string name="send_payment">SEND PAYMENT</string>
-    <string name="repeat_enter">Repeat enter</string>
+    <string name="repeat_enter">Repeat PIN (4–8 digits)</string>
     <string name="request_xrp">REQUEST XRP</string>
     <string name="select_game">SELECT GAME</string>
     <string name="coming_soon">COMING SOON</string>

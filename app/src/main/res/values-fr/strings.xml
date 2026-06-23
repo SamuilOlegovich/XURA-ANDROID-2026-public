@@ -16,6 +16,8 @@
     <string name="rules_of_the_game">Règles du jeu</string>
     <string name="become_a_referral">Devenir parrain</string>
     <string name="settings_set_password">Définir un mot de passe</string>
+    <string name="settings_change_password">Changer le mot de passe</string>
+    <string name="settings_disable_password">Désactiver le mot de passe</string>
     <string name="select_game_mode">Choisir le mode de jeu</string>
     <string name="become_referral">Devenir parrain</string>
     <string name="restore_referral">Restaurer le parrainage</string>
@@ -87,7 +89,7 @@
     <string name="transaction_history_text">Historique des transactions</string>
     <string name="wrong_restart_please">Phrase de récupération incorrecte, veuillez réessayer.</string>
     <string name="enter_referral_code">Entrer le code de parrainage</string>
-    <string name="enter_password_low_case">Entrer le mot de passe</string>
+    <string name="enter_password_low_case">Nouveau PIN (4–8 chiffres)</string>
     <string name="select_game_mode_text">Choisir le mode de jeu</string>
     <string name="your_referral_code">Votre code de parrainage</string>
     <string name="and_double_the_bet">Doubler la mise</string>
@@ -107,7 +109,7 @@
     <string name="info_referral">Info</string>
     <string name="your_balance">Votre solde</string>
     <string name="send_payment">Envoyer un paiement</string>
-    <string name="repeat_enter">Ressaisir</string>
+    <string name="repeat_enter">Répéter PIN (4–8 chiffres)</string>
     <string name="request_xrp">Demander des XRP</string>
     <string name="select_game">Choisir un jeu</string>
     <string name="coming_soon">Bientôt disponible</string>

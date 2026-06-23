@@ -51,57 +51,57 @@
             android:paddingEnd="24dp"
             android:paddingBottom="8dp">
 
-            <!-- ENGLISH -->
+            <!-- ARABIC -->
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/settings_english_linc"
+                android:id="@+id/settings_arabic_linc"
                 android:layout_width="match_parent"
                 android:layout_height="72dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/bg_card_glass_clickable"
                 android:clickable="true"
                 android:focusable="true"
-                android:contentDescription="@string/select_language_english">
+                android:contentDescription="@string/select_language_arabic">
 
                 <TextView
-                    android:id="@+id/english_title"
+                    android:id="@+id/arabic_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="8dp"
                     android:fontFamily="@font/montserrat"
-                    android:text="@string/select_language_english"
+                    android:text="@string/select_language_arabic"
                     android:textColor="@color/xura_text_primary"
                     android:textSize="14sp"
                     android:textStyle="bold"
                     android:letterSpacing="0.03"
-                    app:layout_constraintBottom_toTopOf="@+id/english_subtitle"
-                    app:layout_constraintEnd_toStartOf="@+id/english_icon"
+                    app:layout_constraintBottom_toTopOf="@+id/arabic_subtitle"
+                    app:layout_constraintEnd_toStartOf="@+id/arabic_icon"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_chainStyle="packed" />
 
                 <TextView
-                    android:id="@+id/english_subtitle"
+                    android:id="@+id/arabic_subtitle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="3dp"
                     android:layout_marginEnd="8dp"
                     android:fontFamily="@font/montserrat"
-                    android:text="@string/btn_sub_english"
+                    android:text="@string/btn_sub_arabic"
                     android:textColor="@color/xura_text_tertiary"
                     android:textSize="10sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/english_icon"
+                    app:layout_constraintEnd_toStartOf="@+id/arabic_icon"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/english_title" />
+                    app:layout_constraintTop_toBottomOf="@+id/arabic_title" />
 
                 <ImageView
-                    android:id="@+id/english_icon"
+                    android:id="@+id/arabic_icon"
                     android:layout_width="36dp"
                     android:layout_height="24dp"
                     android:layout_marginEnd="16dp"
-                    android:src="@drawable/ic_flag_en"
+                    android:src="@drawable/ic_flag_ar"
                     android:importantForAccessibility="no"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -109,57 +109,57 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <!-- RUSSIAN -->
+            <!-- BENGALI -->
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/settings_russian_linc"
+                android:id="@+id/settings_bengali_linc"
                 android:layout_width="match_parent"
                 android:layout_height="72dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/bg_card_glass_clickable"
                 android:clickable="true"
                 android:focusable="true"
-                android:contentDescription="@string/select_language_russian">
+                android:contentDescription="@string/select_language_bengali">
 
                 <TextView
-                    android:id="@+id/russian_title"
+                    android:id="@+id/bengali_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="8dp"
                     android:fontFamily="@font/montserrat"
-                    android:text="@string/select_language_russian"
+                    android:text="@string/select_language_bengali"
                     android:textColor="@color/xura_text_primary"
                     android:textSize="14sp"
                     android:textStyle="bold"
                     android:letterSpacing="0.03"
-                    app:layout_constraintBottom_toTopOf="@+id/russian_subtitle"
-                    app:layout_constraintEnd_toStartOf="@+id/russian_icon"
+                    app:layout_constraintBottom_toTopOf="@+id/bengali_subtitle"
+                    app:layout_constraintEnd_toStartOf="@+id/bengali_icon"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_chainStyle="packed" />
 
                 <TextView
-                    android:id="@+id/russian_subtitle"
+                    android:id="@+id/bengali_subtitle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="3dp"
                     android:layout_marginEnd="8dp"
                     android:fontFamily="@font/montserrat"
-                    android:text="@string/btn_sub_russian"
+                    android:text="@string/btn_sub_bengali"
                     android:textColor="@color/xura_text_tertiary"
                     android:textSize="10sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/russian_icon"
+                    app:layout_constraintEnd_toStartOf="@+id/bengali_icon"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/russian_title" />
+                    app:layout_constraintTop_toBottomOf="@+id/bengali_title" />
 
                 <ImageView
-                    android:id="@+id/russian_icon"
+                    android:id="@+id/bengali_icon"
                     android:layout_width="36dp"
                     android:layout_height="24dp"
                     android:layout_marginEnd="16dp"
-                    android:src="@drawable/ic_flag_ru"
+                    android:src="@drawable/ic_flag_bn"
                     android:importantForAccessibility="no"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -225,115 +225,57 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <!-- HINDI -->
+            <!-- ENGLISH -->
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/settings_hindi_linc"
+                android:id="@+id/settings_english_linc"
                 android:layout_width="match_parent"
                 android:layout_height="72dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/bg_card_glass_clickable"
                 android:clickable="true"
                 android:focusable="true"
-                android:contentDescription="@string/select_language_hindi">
+                android:contentDescription="@string/select_language_english">
 
                 <TextView
-                    android:id="@+id/hindi_title"
+                    android:id="@+id/english_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="8dp"
                     android:fontFamily="@font/montserrat"
-                    android:text="@string/select_language_hindi"
+                    android:text="@string/select_language_english"
                     android:textColor="@color/xura_text_primary"
                     android:textSize="14sp"
                     android:textStyle="bold"
                     android:letterSpacing="0.03"
-                    app:layout_constraintBottom_toTopOf="@+id/hindi_subtitle"
-                    app:layout_constraintEnd_toStartOf="@+id/hindi_icon"
+                    app:layout_constraintBottom_toTopOf="@+id/english_subtitle"
+                    app:layout_constraintEnd_toStartOf="@+id/english_icon"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_chainStyle="packed" />
 
                 <TextView
-                    android:id="@+id/hindi_subtitle"
+                    android:id="@+id/english_subtitle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="3dp"
                     android:layout_marginEnd="8dp"
                     android:fontFamily="@font/montserrat"
-                    android:text="@string/btn_sub_hindi"
+                    android:text="@string/btn_sub_english"
                     android:textColor="@color/xura_text_tertiary"
                     android:textSize="10sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/hindi_icon"
+                    app:layout_constraintEnd_toStartOf="@+id/english_icon"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/hindi_title" />
+                    app:layout_constraintTop_toBottomOf="@+id/english_title" />
 
                 <ImageView
-                    android:id="@+id/hindi_icon"
+                    android:id="@+id/english_icon"
                     android:layout_width="36dp"
                     android:layout_height="24dp"
                     android:layout_marginEnd="16dp"
-                    android:src="@drawable/ic_flag_in"
-                    android:importantForAccessibility="no"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <!-- SPANISH -->
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/settings_spanish_linc"
-                android:layout_width="match_parent"
-                android:layout_height="72dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/bg_card_glass_clickable"
-                android:clickable="true"
-                android:focusable="true"
-                android:contentDescription="@string/select_language_spanish">
-
-                <TextView
-                    android:id="@+id/spanish_title"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="8dp"
-                    android:fontFamily="@font/montserrat"
-                    android:text="@string/select_language_spanish"
-                    android:textColor="@color/xura_text_primary"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:letterSpacing="0.03"
-                    app:layout_constraintBottom_toTopOf="@+id/spanish_subtitle"
-                    app:layout_constraintEnd_toStartOf="@+id/spanish_icon"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_chainStyle="packed" />
-
-                <TextView
-                    android:id="@+id/spanish_subtitle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="3dp"
-                    android:layout_marginEnd="8dp"
-                    android:fontFamily="@font/montserrat"
-                    android:text="@string/btn_sub_spanish"
-                    android:textColor="@color/xura_text_tertiary"
-                    android:textSize="10sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/spanish_icon"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/spanish_title" />
-
-                <ImageView
-                    android:id="@+id/spanish_icon"
-                    android:layout_width="36dp"
-                    android:layout_height="24dp"
-                    android:layout_marginEnd="16dp"
-                    android:src="@drawable/ic_flag_es"
+                    android:src="@drawable/ic_flag_en"
                     android:importantForAccessibility="no"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -457,57 +399,57 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <!-- ARABIC -->
+            <!-- HINDI -->
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/settings_arabic_linc"
+                android:id="@+id/settings_hindi_linc"
                 android:layout_width="match_parent"
                 android:layout_height="72dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/bg_card_glass_clickable"
                 android:clickable="true"
                 android:focusable="true"
-                android:contentDescription="@string/select_language_arabic">
+                android:contentDescription="@string/select_language_hindi">
 
                 <TextView
-                    android:id="@+id/arabic_title"
+                    android:id="@+id/hindi_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="8dp"
                     android:fontFamily="@font/montserrat"
-                    android:text="@string/select_language_arabic"
+                    android:text="@string/select_language_hindi"
                     android:textColor="@color/xura_text_primary"
                     android:textSize="14sp"
                     android:textStyle="bold"
                     android:letterSpacing="0.03"
-                    app:layout_constraintBottom_toTopOf="@+id/arabic_subtitle"
-                    app:layout_constraintEnd_toStartOf="@+id/arabic_icon"
+                    app:layout_constraintBottom_toTopOf="@+id/hindi_subtitle"
+                    app:layout_constraintEnd_toStartOf="@+id/hindi_icon"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_chainStyle="packed" />
 
                 <TextView
-                    android:id="@+id/arabic_subtitle"
+                    android:id="@+id/hindi_subtitle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="3dp"
                     android:layout_marginEnd="8dp"
                     android:fontFamily="@font/montserrat"
-                    android:text="@string/btn_sub_arabic"
+                    android:text="@string/btn_sub_hindi"
                     android:textColor="@color/xura_text_tertiary"
                     android:textSize="10sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/arabic_icon"
+                    app:layout_constraintEnd_toStartOf="@+id/hindi_icon"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/arabic_title" />
+                    app:layout_constraintTop_toBottomOf="@+id/hindi_title" />
 
                 <ImageView
-                    android:id="@+id/arabic_icon"
+                    android:id="@+id/hindi_icon"
                     android:layout_width="36dp"
                     android:layout_height="24dp"
                     android:layout_marginEnd="16dp"
-                    android:src="@drawable/ic_flag_ar"
+                    android:src="@drawable/ic_flag_in"
                     android:importantForAccessibility="no"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -573,57 +515,115 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <!-- BENGALI -->
+            <!-- RUSSIAN -->
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/settings_bengali_linc"
+                android:id="@+id/settings_russian_linc"
                 android:layout_width="match_parent"
                 android:layout_height="72dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/bg_card_glass_clickable"
                 android:clickable="true"
                 android:focusable="true"
-                android:contentDescription="@string/select_language_bengali">
+                android:contentDescription="@string/select_language_russian">
 
                 <TextView
-                    android:id="@+id/bengali_title"
+                    android:id="@+id/russian_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="8dp"
                     android:fontFamily="@font/montserrat"
-                    android:text="@string/select_language_bengali"
+                    android:text="@string/select_language_russian"
                     android:textColor="@color/xura_text_primary"
                     android:textSize="14sp"
                     android:textStyle="bold"
                     android:letterSpacing="0.03"
-                    app:layout_constraintBottom_toTopOf="@+id/bengali_subtitle"
-                    app:layout_constraintEnd_toStartOf="@+id/bengali_icon"
+                    app:layout_constraintBottom_toTopOf="@+id/russian_subtitle"
+                    app:layout_constraintEnd_toStartOf="@+id/russian_icon"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_chainStyle="packed" />
 
                 <TextView
-                    android:id="@+id/bengali_subtitle"
+                    android:id="@+id/russian_subtitle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="3dp"
                     android:layout_marginEnd="8dp"
                     android:fontFamily="@font/montserrat"
-                    android:text="@string/btn_sub_bengali"
+                    android:text="@string/btn_sub_russian"
                     android:textColor="@color/xura_text_tertiary"
                     android:textSize="10sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/bengali_icon"
+                    app:layout_constraintEnd_toStartOf="@+id/russian_icon"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/bengali_title" />
+                    app:layout_constraintTop_toBottomOf="@+id/russian_title" />
 
                 <ImageView
-                    android:id="@+id/bengali_icon"
+                    android:id="@+id/russian_icon"
                     android:layout_width="36dp"
                     android:layout_height="24dp"
                     android:layout_marginEnd="16dp"
-                    android:src="@drawable/ic_flag_bn"
+                    android:src="@drawable/ic_flag_ru"
+                    android:importantForAccessibility="no"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- SPANISH -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/settings_spanish_linc"
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/bg_card_glass_clickable"
+                android:clickable="true"
+                android:focusable="true"
+                android:contentDescription="@string/select_language_spanish">
+
+                <TextView
+                    android:id="@+id/spanish_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="@string/select_language_spanish"
+                    android:textColor="@color/xura_text_primary"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.03"
+                    app:layout_constraintBottom_toTopOf="@+id/spanish_subtitle"
+                    app:layout_constraintEnd_toStartOf="@+id/spanish_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="packed" />
+
+                <TextView
+                    android:id="@+id/spanish_subtitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginEnd="8dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="@string/btn_sub_spanish"
+                    android:textColor="@color/xura_text_tertiary"
+                    android:textSize="10sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/spanish_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/spanish_title" />
+
+                <ImageView
+                    android:id="@+id/spanish_icon"
+                    android:layout_width="36dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/ic_flag_es"
                     android:importantForAccessibility="no"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

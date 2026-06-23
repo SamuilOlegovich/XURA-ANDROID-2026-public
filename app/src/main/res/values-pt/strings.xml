@@ -16,6 +16,8 @@
     <string name="rules_of_the_game">Regras do jogo</string>
     <string name="become_a_referral">Torne-se indicador</string>
     <string name="settings_set_password">Definir senha</string>
+    <string name="settings_change_password">Alterar senha</string>
+    <string name="settings_disable_password">Desativar senha</string>
     <string name="select_game_mode">Selecionar modo de jogo</string>
     <string name="become_referral">Torne-se indicador</string>
     <string name="restore_referral">Restaurar indicação</string>
@@ -89,7 +91,7 @@
     <string name="transaction_history_text">Histórico de transações</string>
     <string name="wrong_restart_please">Frase semente incorreta, tente novamente.</string>
     <string name="enter_referral_code">Inserir código de indicação</string>
-    <string name="enter_password_low_case">Inserir senha</string>
+    <string name="enter_password_low_case">Novo PIN (4–8 dígitos)</string>
     <string name="select_game_mode_text">Selecionar modo de jogo</string>
     <string name="your_referral_code">Seu código de indicação</string>
     <string name="and_double_the_bet">Dobrar aposta</string>
@@ -109,7 +111,7 @@
     <string name="info_referral">Info</string>
     <string name="your_balance">Seu saldo</string>
     <string name="send_payment">Enviar pagamento</string>
-    <string name="repeat_enter">Reinserir</string>
+    <string name="repeat_enter">Repetir PIN (4–8 dígitos)</string>
     <string name="request_xrp">Solicitar XRP</string>
     <string name="select_game">Selecionar jogo</string>
     <string name="coming_soon">Em breve</string>

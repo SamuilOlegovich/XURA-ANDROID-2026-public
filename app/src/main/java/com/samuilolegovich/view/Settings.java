@@ -90,10 +90,12 @@ public class Settings extends BaseActivity {
     private View settingsLockTimeoutLinc;
     private View settingsSoundLinc;
     private TextView biometricTitleText;
+    private android.widget.ImageView biometricIcon;
     private TextView lockTimeoutTitle;
     private TextView soundTitle;
     private android.widget.ImageView soundIcon;
     private android.widget.ImageView setPasswordIcon;
+    private TextView setPasswordTitle;
     private TextView settingsTextView;
     private MaterialCardView cardTestBalance;
     private TextView tvTestBalance;
@@ -172,10 +174,12 @@ public class Settings extends BaseActivity {
         settingsLockTimeoutLinc   = findViewById(R.id.settings_lock_timeout_linc);
         settingsSoundLinc         = findViewById(R.id.settings_sound_linc);
         biometricTitleText        = findViewById(R.id.biometric_title);
+        biometricIcon             = findViewById(R.id.biometric_icon);
         lockTimeoutTitle          = findViewById(R.id.lock_timeout_title);
         soundTitle                = findViewById(R.id.sound_title);
         soundIcon                 = findViewById(R.id.sound_icon);
         setPasswordIcon           = findViewById(R.id.set_password_icon);
+        setPasswordTitle          = findViewById(R.id.set_password_title);
         settingsTextView          = findViewById(R.id.settings_text_view);
         cardTestBalance           = findViewById(R.id.card_test_balance);
         tvTestBalance             = findViewById(R.id.tv_test_balance);
@@ -291,8 +295,18 @@ public class Settings extends BaseActivity {
 
     /** Обновляет текст пункта биометрии, показывая её текущее состояние (ON/OFF). */
     private void updateBiometricButton() {
-        String state = isBiometricEnabled() ? "  ●  ON" : "  ○  OFF";
+        boolean enabled = isBiometricEnabled();
+        String state = enabled ? "  ●  ON" : "  ○  OFF";
         biometricTitleText.setText(getString(R.string.settings_biometric) + state);
+        if (enabled) {
+            settingsBiometricLinc.setBackgroundResource(R.drawable.bg_card_action_primary);
+            biometricTitleText.setTextColor(getColor(R.color.xura_cyan));
+            biometricIcon.setColorFilter(getColor(R.color.xura_cyan));
+        } else {
+            settingsBiometricLinc.setBackgroundResource(R.drawable.bg_card_send);
+            biometricTitleText.setTextColor(getColor(R.color.xura_pink));
+            biometricIcon.setColorFilter(getColor(R.color.xura_pink));
+        }
     }
 
     /** Обновляет текст и иконку пункта звука в зависимости от текущего состояния (ON/OFF). */
@@ -322,10 +336,22 @@ public class Settings extends BaseActivity {
         InactivityGuard.setTimeoutMs(ms);
     }
 
-    /** Меняет иконку пункта пароля (закрытый/открытый замок) в зависимости от того, установлен ли пароль приложения. */
+    /** Обновляет внешний вид кнопки пароля: фон, цвет текста/иконки и надпись зависят от наличия пароля. */
     private void updatePasswordIcon() {
         boolean hasPassword = isPasswordSet();
-        setPasswordIcon.setImageResource(hasPassword ? R.drawable.ic_lock : R.drawable.ic_lock_open);
+        if (hasPassword) {
+            settingsSetPasswordLinc.setBackgroundResource(R.drawable.bg_card_action_primary);
+            setPasswordTitle.setText(R.string.settings_change_password);
+            setPasswordTitle.setTextColor(getColor(R.color.xura_cyan));
+            setPasswordIcon.setImageResource(R.drawable.ic_lock);
+            setPasswordIcon.setColorFilter(getColor(R.color.xura_cyan));
+        } else {
+            settingsSetPasswordLinc.setBackgroundResource(R.drawable.bg_card_send);
+            setPasswordTitle.setText(R.string.settings_set_password);
+            setPasswordTitle.setTextColor(getColor(R.color.xura_pink));
+            setPasswordIcon.setImageResource(R.drawable.ic_lock_open);
+            setPasswordIcon.setColorFilter(getColor(R.color.xura_pink));
+        }
     }
 
 

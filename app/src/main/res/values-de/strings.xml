@@ -16,6 +16,8 @@
     <string name="rules_of_the_game">Spielregeln</string>
     <string name="become_a_referral">Referral werden</string>
     <string name="settings_set_password">Passwort setzen</string>
+    <string name="settings_change_password">Passwort ändern</string>
+    <string name="settings_disable_password">Passwort deaktivieren</string>
     <string name="select_game_mode">Spielmodus wählen</string>
     <string name="become_referral">Referral werden</string>
     <string name="restore_referral">Referral wiederherstellen</string>
@@ -87,7 +89,7 @@
     <string name="transaction_history_text">Transaktionsverlauf</string>
     <string name="wrong_restart_please">Seed-Phrase falsch, bitte erneut versuchen.</string>
     <string name="enter_referral_code">Referral-Code eingeben</string>
-    <string name="enter_password_low_case">Passwort eingeben</string>
+    <string name="enter_password_low_case">Neuer PIN (4–8 Ziffern)</string>
     <string name="select_game_mode_text">Spielmodus wählen</string>
     <string name="your_referral_code">Ihr Referral-Code</string>
     <string name="and_double_the_bet">Einsatz verdoppeln</string>
@@ -107,7 +109,7 @@
     <string name="info_referral">Info</string>
     <string name="your_balance">Ihr Guthaben</string>
     <string name="send_payment">Zahlung senden</string>
-    <string name="repeat_enter">Erneut eingeben</string>
+    <string name="repeat_enter">PIN wiederholen (4–8 Ziffern)</string>
     <string name="request_xrp">XRP anfordern</string>
     <string name="select_game">Spiel wählen</string>
     <string name="coming_soon">Demnächst</string>
