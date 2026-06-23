@@ -12,6 +12,7 @@ import com.samuilolegovich.AppExecutors;
 import com.samuilolegovich.BaseActivity;
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
+import com.samuilolegovich.config.NetworkConfig;
 import com.samuilolegovich.enums.StringEnum;
 import com.samuilolegovich.wallet.repository.WalletRepository;
 
@@ -144,7 +145,7 @@ public class BecomeReferral extends BaseActivity {
         boolean success;
         try {
             success = repository
-                    .sendPayment(StringEnum.SERVER_ADDRESS_BECOME_REFERRAL.getValue(),
+                    .sendPayment(NetworkConfig.SERVER_REFERRAL,
                             memo,
                             new BigDecimal(sendAmount));
         } catch (Exception e) {

@@ -395,6 +395,7 @@
     <string name="dev_server_roulette_hint">Roulette server address</string>
     <string name="dev_server_color_hint">Guess Color server address</string>
     <string name="dev_server_number_hint">Guess Number server address</string>
+    <string name="dev_server_referral_hint">Referral server address</string>
     <string name="dev_save_btn">SAVE</string>
     <string name="dev_faucet_btn">GET TESTNET XRP</string>
     <string name="dev_faucet_loading">Requesting…</string>

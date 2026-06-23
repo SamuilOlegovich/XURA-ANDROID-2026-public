@@ -119,6 +119,7 @@ public class Settings extends BaseActivity {
     private EditText         etDevRoulette;
     private EditText         etDevColor;
     private EditText         etDevNumber;
+    private EditText         etDevReferral;
     private MaterialButton   btnDevSave;
     private MaterialButton   btnDevFaucet;
     private MaterialButton   btnDevGenWallet;
@@ -126,6 +127,7 @@ public class Settings extends BaseActivity {
     private MaterialButton   btnDevPasteRoulette;
     private MaterialButton   btnDevPasteColor;
     private MaterialButton   btnDevPasteNumber;
+    private MaterialButton   btnDevPasteReferral;
     private View             layoutDevWalletResult;
     private TextInputLayout  tilDevWalletAddress;
     private TextInputLayout  tilDevWalletSeed;
@@ -203,6 +205,7 @@ public class Settings extends BaseActivity {
         etDevRoulette    = findViewById(R.id.et_dev_roulette);
         etDevColor       = findViewById(R.id.et_dev_color);
         etDevNumber      = findViewById(R.id.et_dev_number);
+        etDevReferral    = findViewById(R.id.et_dev_referral);
         btnDevSave          = findViewById(R.id.btn_dev_save);
         btnDevFaucet        = findViewById(R.id.btn_dev_faucet);
         btnDevGenWallet       = findViewById(R.id.btn_dev_gen_wallet);
@@ -210,6 +213,7 @@ public class Settings extends BaseActivity {
         btnDevPasteRoulette   = findViewById(R.id.btn_dev_paste_roulette);
         btnDevPasteColor      = findViewById(R.id.btn_dev_paste_color);
         btnDevPasteNumber     = findViewById(R.id.btn_dev_paste_number);
+        btnDevPasteReferral   = findViewById(R.id.btn_dev_paste_referral);
         layoutDevWalletResult = findViewById(R.id.layout_dev_wallet_result);
         tilDevWalletAddress   = findViewById(R.id.til_dev_wallet_address);
         tilDevWalletSeed      = findViewById(R.id.til_dev_wallet_seed);
@@ -367,6 +371,7 @@ public class Settings extends BaseActivity {
         etDevRoulette.setText(NetworkConfig.SERVER_ROULETTE);
         etDevColor.setText(NetworkConfig.SERVER_COLOR);
         etDevNumber.setText(NetworkConfig.SERVER_NUMBER);
+        etDevReferral.setText(NetworkConfig.SERVER_REFERRAL);
         btnDevFaucet.setVisibility(NetworkConfig.IS_TESTNET ? View.VISIBLE : View.GONE);
 
         // Показываем карточку, если testnet уже активен (сохранён с предыдущей сессии)
@@ -388,13 +393,15 @@ public class Settings extends BaseActivity {
     private void saveDevSettings() {
         SharedPreferences prefs = PrefsHelper.get(this);
 
-        String roulette = textOf(etDevRoulette, NetworkConfig.SERVER_ROULETTE);
-        String color    = textOf(etDevColor,    NetworkConfig.SERVER_COLOR);
-        String number   = textOf(etDevNumber,   NetworkConfig.SERVER_NUMBER);
+        String roulette  = textOf(etDevRoulette, NetworkConfig.SERVER_ROULETTE);
+        String color     = textOf(etDevColor,    NetworkConfig.SERVER_COLOR);
+        String number    = textOf(etDevNumber,   NetworkConfig.SERVER_NUMBER);
+        String referral  = textOf(etDevReferral, NetworkConfig.SERVER_REFERRAL);
 
         NetworkConfig.SERVER_ROULETTE = roulette;
         NetworkConfig.SERVER_COLOR    = color;
         NetworkConfig.SERVER_NUMBER   = number;
+        NetworkConfig.SERVER_REFERRAL = referral;
         NetworkConfig.save(prefs);
 
         showSnackbar(root, getString(R.string.dev_saved_toast), SnackbarType.INFO);
@@ -588,6 +595,7 @@ public class Settings extends BaseActivity {
             etDevRoulette.setText(NetworkConfig.SERVER_ROULETTE);
             etDevColor.setText(NetworkConfig.SERVER_COLOR);
             etDevNumber.setText(NetworkConfig.SERVER_NUMBER);
+            etDevReferral.setText(NetworkConfig.SERVER_REFERRAL);
             String msg = isTestnet
                     ? getString(R.string.dev_network_switched_testnet)
                     : getString(R.string.dev_network_switched_mainnet);
@@ -630,6 +638,10 @@ public class Settings extends BaseActivity {
 
         btnDevPasteNumber.setOnClickListener(v -> {
             pasteAddressToGame(etDevNumber, "NUMBER");
+        });
+
+        btnDevPasteReferral.setOnClickListener(v -> {
+            pasteAddressToGame(etDevReferral, "REFERRAL");
         });
 
         tilDevWalletAddress.setEndIconOnClickListener(v ->
