@@ -351,6 +351,7 @@
     <string name="dev_wallet_copied_seed">Semente copiada para a área de transferência</string>
     <string name="dev_wallet_fund_btn">Carregar via faucet</string>
     <string name="dev_wallet_paste_btn">→ Colar endereço no servidor de jogo:</string>
+    <string name="dev_paste_server_btn">Colar endereço do servidor</string>
     <string name="dev_wallet_pasted">Endereço colado</string>
     <string name="dev_wallet_fund_loading">Solicitando fundos…</string>
     <string name="dev_wallet_fund_success">Carregado! Verifique o saldo em alguns segundos.</string>

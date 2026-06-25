@@ -351,6 +351,7 @@
     <string name="dev_wallet_copied_seed">সিড ক্লিপবোর্ডে কপি হয়েছে</string>
     <string name="dev_wallet_fund_btn">ফসেট থেকে ফান্ড করুন</string>
     <string name="dev_wallet_paste_btn">→ গেম সার্ভারে ঠিকানা পেস্ট করুন:</string>
+    <string name="dev_paste_server_btn">সার্ভারের ঠিকানা পেস্ট করুন</string>
     <string name="dev_wallet_pasted">ঠিকানা পেস্ট হয়েছে</string>
     <string name="dev_wallet_fund_loading">ফান্ড অনুরোধ চলছে…</string>
     <string name="dev_wallet_fund_success">ফান্ড হয়েছে! কিছু সেকেন্ডে ব্যালেন্স দেখুন।</string>

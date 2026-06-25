@@ -347,6 +347,7 @@
     <string name="dev_wallet_copied_seed">सीड क्लिपबोर्ड पर कॉपी</string>
     <string name="dev_wallet_fund_btn">फॉसेट से फंड</string>
     <string name="dev_wallet_paste_btn">→ गेम सर्वर पर पता पेस्ट:</string>
+    <string name="dev_paste_server_btn">सर्वर पता पेस्ट करें</string>
     <string name="dev_wallet_pasted">पता पेस्ट किया</string>
     <string name="dev_wallet_fund_loading">फंड अनुरोध हो रहा है…</string>
     <string name="dev_wallet_fund_success">फंड हो गया! कुछ सेकंड में बैलेंस देखें।</string>

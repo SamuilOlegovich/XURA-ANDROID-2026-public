@@ -347,6 +347,7 @@
     <string name="dev_wallet_copied_seed">Phrase copiée dans le presse-papiers</string>
     <string name="dev_wallet_fund_btn">Recharger via faucet</string>
     <string name="dev_wallet_paste_btn">→ Coller l\'adresse dans le serveur de jeu :</string>
+    <string name="dev_paste_server_btn">Coller l\'adresse du serveur</string>
     <string name="dev_wallet_pasted">Adresse collée</string>
     <string name="dev_wallet_fund_loading">Demande de fonds en cours…</string>
     <string name="dev_wallet_fund_success">Rechargé ! Vérifiez le solde dans quelques secondes.</string>

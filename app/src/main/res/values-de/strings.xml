@@ -347,6 +347,7 @@
     <string name="dev_wallet_copied_seed">Seed in Zwischenablage kopiert</string>
     <string name="dev_wallet_fund_btn">Über Faucet aufladen</string>
     <string name="dev_wallet_paste_btn">→ Adresse in Spielserver einfügen:</string>
+    <string name="dev_paste_server_btn">Serveradresse einfügen</string>
     <string name="dev_wallet_pasted">Adresse eingefügt</string>
     <string name="dev_wallet_fund_loading">Gelder werden angefordert…</string>
     <string name="dev_wallet_fund_success">Aufgeladen! Guthaben in wenigen Sekunden prüfen.</string>

@@ -338,6 +338,7 @@
     <string name="dev_wallet_copied_seed">助记词已复制到剪贴板</string>
     <string name="dev_wallet_fund_btn">通过水龙头充值</string>
     <string name="dev_wallet_paste_btn">→ 粘贴地址到游戏服务器：</string>
+    <string name="dev_paste_server_btn">粘贴服务器地址</string>
     <string name="dev_wallet_pasted">地址已粘贴</string>
     <string name="dev_wallet_fund_loading">请求资金中…</string>
     <string name="dev_wallet_fund_success">已充值！几秒钟后查看余额。</string>

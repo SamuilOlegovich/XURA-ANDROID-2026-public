@@ -179,6 +179,7 @@
     <string name="dev_wallet_copied_seed">Seed скопирован в буфер обмена</string>
     <string name="dev_wallet_fund_btn">ПОПОЛНИТЬ ЧЕРЕЗ FAUCET</string>
     <string name="dev_wallet_paste_btn">→ ВСТАВИТЬ АДРЕС В СЕРВЕР ИГРЫ:</string>
+    <string name="dev_paste_server_btn">ВСТАВИТЬ АДРЕС СЕРВЕРА</string>
     <string name="dev_wallet_pasted">Адрес вставлен</string>
     <string name="dev_wallet_fund_loading">Запрашиваем монеты…</string>
     <string name="dev_wallet_fund_success">Готово! Баланс обновится через несколько секунд.</string>

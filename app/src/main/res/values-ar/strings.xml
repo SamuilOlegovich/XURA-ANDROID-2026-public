@@ -347,6 +347,7 @@
     <string name="dev_wallet_copied_seed">تم نسخ البذور إلى الحافظة</string>
     <string name="dev_wallet_fund_btn">شحن عبر الصنبور</string>
     <string name="dev_wallet_paste_btn">← لصق العنوان في خادم اللعبة:</string>
+    <string name="dev_paste_server_btn">لصق عنوان الخادم</string>
     <string name="dev_wallet_pasted">تم لصق العنوان</string>
     <string name="dev_wallet_fund_loading">جارٍ طلب الأموال…</string>
     <string name="dev_wallet_fund_success">تم الشحن! تحقق من الرصيد بعد ثوانٍ.</string>

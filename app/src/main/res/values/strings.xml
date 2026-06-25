@@ -410,6 +410,7 @@
     <string name="dev_wallet_copied_seed">Seed copied to clipboard</string>
     <string name="dev_wallet_fund_btn">FUND VIA FAUCET</string>
     <string name="dev_wallet_paste_btn">→ PASTE ADDRESS TO GAME SERVER:</string>
+    <string name="dev_paste_server_btn">PASTE SERVER ADDRESS</string>
     <string name="dev_wallet_pasted">Address pasted</string>
     <string name="dev_wallet_fund_loading">Requesting funds…</string>
     <string name="dev_wallet_fund_success">Funded! Check balance in a few seconds.</string>

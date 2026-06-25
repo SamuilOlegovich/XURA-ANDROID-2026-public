@@ -973,7 +973,7 @@
                             android:insetTop="0dp"
                             android:insetBottom="0dp"
                             android:fontFamily="@font/montserrat"
-                            android:text="PASTE SERVER ADDRESS"
+                            android:text="@string/dev_paste_server_btn"
                             android:textAllCaps="false"
                             android:textColor="@color/xura_black"
                             android:textSize="8sp"

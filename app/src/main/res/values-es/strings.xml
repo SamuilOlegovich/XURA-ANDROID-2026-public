@@ -347,6 +347,7 @@
     <string name="dev_wallet_copied_seed">Semilla copiada al portapapeles</string>
     <string name="dev_wallet_fund_btn">Recargar via faucet</string>
     <string name="dev_wallet_paste_btn">→ Pegar dirección en servidor de juego:</string>
+    <string name="dev_paste_server_btn">Pegar dirección del servidor</string>
     <string name="dev_wallet_pasted">Dirección pegada</string>
     <string name="dev_wallet_fund_loading">Solicitando fondos…</string>
     <string name="dev_wallet_fund_success">¡Fondos recibidos! Comprueba el saldo en unos segundos.</string>
