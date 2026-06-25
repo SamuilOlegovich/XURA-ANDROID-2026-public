@@ -117,16 +117,12 @@ public class Settings extends BaseActivity {
     private SwitchMaterial   devNetworkSwitch;
     private TextView         devNetworkLabel;
     private EditText         etDevRoulette;
-    private EditText         etDevColor;
-    private EditText         etDevNumber;
     private EditText         etDevReferral;
     private MaterialButton   btnDevSave;
     private MaterialButton   btnDevFaucet;
     private MaterialButton   btnDevGenWallet;
     private MaterialButton   btnDevFundWallet;
     private MaterialButton   btnDevPasteRoulette;
-    private MaterialButton   btnDevPasteColor;
-    private MaterialButton   btnDevPasteNumber;
     private MaterialButton   btnDevPasteReferral;
     private View             layoutDevWalletResult;
     private TextInputLayout  tilDevWalletAddress;
@@ -203,16 +199,12 @@ public class Settings extends BaseActivity {
         devNetworkSwitch.setTrackTintList(null); // убираем Material-тинт, чтобы работал наш drawable с контуром
         devNetworkLabel  = findViewById(R.id.dev_network_label);
         etDevRoulette    = findViewById(R.id.et_dev_roulette);
-        etDevColor       = findViewById(R.id.et_dev_color);
-        etDevNumber      = findViewById(R.id.et_dev_number);
         etDevReferral    = findViewById(R.id.et_dev_referral);
         btnDevSave          = findViewById(R.id.btn_dev_save);
         btnDevFaucet        = findViewById(R.id.btn_dev_faucet);
         btnDevGenWallet       = findViewById(R.id.btn_dev_gen_wallet);
         btnDevFundWallet      = findViewById(R.id.btn_dev_fund_wallet);
         btnDevPasteRoulette   = findViewById(R.id.btn_dev_paste_roulette);
-        btnDevPasteColor      = findViewById(R.id.btn_dev_paste_color);
-        btnDevPasteNumber     = findViewById(R.id.btn_dev_paste_number);
         btnDevPasteReferral   = findViewById(R.id.btn_dev_paste_referral);
         layoutDevWalletResult = findViewById(R.id.layout_dev_wallet_result);
         tilDevWalletAddress   = findViewById(R.id.til_dev_wallet_address);
@@ -369,8 +361,6 @@ public class Settings extends BaseActivity {
         devNetworkSwitch.setChecked(NetworkConfig.IS_TESTNET);
         updateNetworkLabel(NetworkConfig.IS_TESTNET);
         etDevRoulette.setText(NetworkConfig.SERVER_ROULETTE);
-        etDevColor.setText(NetworkConfig.SERVER_COLOR);
-        etDevNumber.setText(NetworkConfig.SERVER_NUMBER);
         etDevReferral.setText(NetworkConfig.SERVER_REFERRAL);
         btnDevFaucet.setVisibility(NetworkConfig.IS_TESTNET ? View.VISIBLE : View.GONE);
 
@@ -394,13 +384,9 @@ public class Settings extends BaseActivity {
         SharedPreferences prefs = PrefsHelper.get(this);
 
         String roulette  = textOf(etDevRoulette, NetworkConfig.SERVER_ROULETTE);
-        String color     = textOf(etDevColor,    NetworkConfig.SERVER_COLOR);
-        String number    = textOf(etDevNumber,   NetworkConfig.SERVER_NUMBER);
         String referral  = textOf(etDevReferral, NetworkConfig.SERVER_REFERRAL);
 
         NetworkConfig.SERVER_ROULETTE = roulette;
-        NetworkConfig.SERVER_COLOR    = color;
-        NetworkConfig.SERVER_NUMBER   = number;
         NetworkConfig.SERVER_REFERRAL = referral;
         NetworkConfig.save(prefs);
 
@@ -593,8 +579,6 @@ public class Settings extends BaseActivity {
             btnDevFaucet.setVisibility(isTestnet ? View.VISIBLE : View.GONE);
             // Перезагружаем поля адресов для только что выбранной сети
             etDevRoulette.setText(NetworkConfig.SERVER_ROULETTE);
-            etDevColor.setText(NetworkConfig.SERVER_COLOR);
-            etDevNumber.setText(NetworkConfig.SERVER_NUMBER);
             etDevReferral.setText(NetworkConfig.SERVER_REFERRAL);
             String msg = isTestnet
                     ? getString(R.string.dev_network_switched_testnet)
@@ -630,14 +614,6 @@ public class Settings extends BaseActivity {
 
         btnDevPasteRoulette.setOnClickListener(v -> {
             pasteAddressToGame(etDevRoulette, "ROULETTE");
-        });
-
-        btnDevPasteColor.setOnClickListener(v -> {
-            pasteAddressToGame(etDevColor, "COLOR");
-        });
-
-        btnDevPasteNumber.setOnClickListener(v -> {
-            pasteAddressToGame(etDevNumber, "NUMBER");
         });
 
         btnDevPasteReferral.setOnClickListener(v -> {

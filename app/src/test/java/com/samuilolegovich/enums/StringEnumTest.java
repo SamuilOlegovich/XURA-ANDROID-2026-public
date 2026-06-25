@@ -17,24 +17,6 @@ public class StringEnumTest {
     // Адреса серверов игр — критические константы
     // -------------------------------------------------------------------------
 
-    /** Адрес сервера игры "Угадай цвет" должен быть неизменным */
-    @Test
-    public void guessTheColorServer_hasCorrectAddress() {
-        assertEquals(
-                "rGrEJZaBFYhPGuyM7NiJbJw2yXVB9vJHah",
-                StringEnum.SERVER_ADDRESS_GUESS_THE_COLOR.getValue()
-        );
-    }
-
-    /** Адрес сервера игры "Угадай число" должен быть неизменным */
-    @Test
-    public void guessTheNumberServer_hasCorrectAddress() {
-        assertEquals(
-                "rfcMxSEz4JP8zj65LU5Nw9hKfpEaD6Ss9",
-                StringEnum.SERVER_ADDRESS_GUESS_THE_NUMBER.getValue()
-        );
-    }
-
     // -------------------------------------------------------------------------
     // Теги результатов — логика выплат
     // -------------------------------------------------------------------------

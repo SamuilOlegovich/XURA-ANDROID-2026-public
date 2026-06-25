@@ -148,14 +148,14 @@ public class GuessColorViewModelTest {
     public void placeBet_realMode_redTag_buildsCorrectMemoAndUpdatesBalance() throws InterruptedException {
         MainActivity.IS_REAL_GAME_MODE = true;
         stubBalance("500");
-        when(repository.sendPayment(eq(NetworkConfig.SERVER_COLOR), eq("BET:RED:ref"), eq(new BigDecimal("50"))))
+        when(repository.sendPayment(eq(NetworkConfig.SERVER_ROULETTE), eq("BET:R:r@50:ref"), eq(new BigDecimal("50"))))
                 .thenReturn(true);
         when(repository.getBalance()).thenReturn(new BigDecimal("450"));
 
         viewModel.placeBet("50", RED_TAG, "ref");
 
         assertEquals("50", awaitValue(viewModel.getBetSuccess()));
-        verify(repository).sendPayment(NetworkConfig.SERVER_COLOR, "BET:RED:ref", new BigDecimal("50"));
+        verify(repository).sendPayment(NetworkConfig.SERVER_ROULETTE, "BET:R:r@50:ref", new BigDecimal("50"));
         verify(repository).updateBalance(new BigDecimal("450"));
     }
 
@@ -163,14 +163,14 @@ public class GuessColorViewModelTest {
     public void placeBet_realMode_blackTag_buildsCorrectMemo() throws InterruptedException {
         MainActivity.IS_REAL_GAME_MODE = true;
         stubBalance("500");
-        when(repository.sendPayment(eq(NetworkConfig.SERVER_COLOR), eq("BET:BLK:ref"), eq(new BigDecimal("50"))))
+        when(repository.sendPayment(eq(NetworkConfig.SERVER_ROULETTE), eq("BET:R:b@50:ref"), eq(new BigDecimal("50"))))
                 .thenReturn(true);
         when(repository.getBalance()).thenReturn(new BigDecimal("450"));
 
         viewModel.placeBet("50", BLACK_TAG, "ref");
 
         assertEquals("50", awaitValue(viewModel.getBetSuccess()));
-        verify(repository).sendPayment(NetworkConfig.SERVER_COLOR, "BET:BLK:ref", new BigDecimal("50"));
+        verify(repository).sendPayment(NetworkConfig.SERVER_ROULETTE, "BET:R:b@50:ref", new BigDecimal("50"));
     }
 
     @Test

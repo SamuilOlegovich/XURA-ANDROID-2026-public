@@ -2,7 +2,7 @@ package com.samuilolegovich.async.runnable;
 
 import com.samuilolegovich.R;
 import com.samuilolegovich.XuraApp;
-import com.samuilolegovich.enums.StringEnum;
+import com.samuilolegovich.config.NetworkConfig;
 import com.samuilolegovich.view.Flasher;
 import com.samuilolegovich.view.YourReferral;
 import com.samuilolegovich.wallet.repository.WalletRepository;
@@ -47,7 +47,7 @@ public class NotifierRun implements Runnable {
             // входящая транзакция с memo (ответ сервера игроку)
             if (message.getJSONObject("transaction").has("Memos")
                     && !message.getJSONObject("transaction").getString("Destination")
-                    .equals(StringEnum.SERVER_ADDRESS_GUESS_THE_COLOR.getValue())) {
+                    .equals(NetworkConfig.SERVER_ROULETTE)) {
                 responseToBet(message);
             }
         } catch (JSONException e) {
