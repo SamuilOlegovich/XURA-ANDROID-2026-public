@@ -117,13 +117,11 @@ public class Settings extends BaseActivity {
     private SwitchMaterial   devNetworkSwitch;
     private TextView         devNetworkLabel;
     private EditText         etDevRoulette;
-    private EditText         etDevReferral;
     private MaterialButton   btnDevSave;
     private MaterialButton   btnDevFaucet;
     private MaterialButton   btnDevGenWallet;
     private MaterialButton   btnDevFundWallet;
     private MaterialButton   btnDevPasteRoulette;
-    private MaterialButton   btnDevPasteReferral;
     private View             layoutDevWalletResult;
     private TextInputLayout  tilDevWalletAddress;
     private TextInputLayout  tilDevWalletSeed;
@@ -199,13 +197,11 @@ public class Settings extends BaseActivity {
         devNetworkSwitch.setTrackTintList(null); // убираем Material-тинт, чтобы работал наш drawable с контуром
         devNetworkLabel  = findViewById(R.id.dev_network_label);
         etDevRoulette    = findViewById(R.id.et_dev_roulette);
-        etDevReferral    = findViewById(R.id.et_dev_referral);
         btnDevSave          = findViewById(R.id.btn_dev_save);
         btnDevFaucet        = findViewById(R.id.btn_dev_faucet);
         btnDevGenWallet       = findViewById(R.id.btn_dev_gen_wallet);
         btnDevFundWallet      = findViewById(R.id.btn_dev_fund_wallet);
         btnDevPasteRoulette   = findViewById(R.id.btn_dev_paste_roulette);
-        btnDevPasteReferral   = findViewById(R.id.btn_dev_paste_referral);
         layoutDevWalletResult = findViewById(R.id.layout_dev_wallet_result);
         tilDevWalletAddress   = findViewById(R.id.til_dev_wallet_address);
         tilDevWalletSeed      = findViewById(R.id.til_dev_wallet_seed);
@@ -361,7 +357,6 @@ public class Settings extends BaseActivity {
         devNetworkSwitch.setChecked(NetworkConfig.IS_TESTNET);
         updateNetworkLabel(NetworkConfig.IS_TESTNET);
         etDevRoulette.setText(NetworkConfig.SERVER_ROULETTE);
-        etDevReferral.setText(NetworkConfig.SERVER_REFERRAL);
         btnDevFaucet.setVisibility(NetworkConfig.IS_TESTNET ? View.VISIBLE : View.GONE);
 
         // Показываем карточку, если testnet уже активен (сохранён с предыдущей сессии)
@@ -384,10 +379,8 @@ public class Settings extends BaseActivity {
         SharedPreferences prefs = PrefsHelper.get(this);
 
         String roulette  = textOf(etDevRoulette, NetworkConfig.SERVER_ROULETTE);
-        String referral  = textOf(etDevReferral, NetworkConfig.SERVER_REFERRAL);
 
         NetworkConfig.SERVER_ROULETTE = roulette;
-        NetworkConfig.SERVER_REFERRAL = referral;
         NetworkConfig.save(prefs);
 
         showSnackbar(root, getString(R.string.dev_saved_toast), SnackbarType.INFO);
@@ -579,7 +572,6 @@ public class Settings extends BaseActivity {
             btnDevFaucet.setVisibility(isTestnet ? View.VISIBLE : View.GONE);
             // Перезагружаем поля адресов для только что выбранной сети
             etDevRoulette.setText(NetworkConfig.SERVER_ROULETTE);
-            etDevReferral.setText(NetworkConfig.SERVER_REFERRAL);
             String msg = isTestnet
                     ? getString(R.string.dev_network_switched_testnet)
                     : getString(R.string.dev_network_switched_mainnet);
@@ -616,9 +608,6 @@ public class Settings extends BaseActivity {
             pasteAddressToGame(etDevRoulette, "ROULETTE");
         });
 
-        btnDevPasteReferral.setOnClickListener(v -> {
-            pasteAddressToGame(etDevReferral, "REFERRAL");
-        });
 
         tilDevWalletAddress.setEndIconOnClickListener(v ->
                 copyToClipboard("address", etDevWalletAddress.getText().toString(),

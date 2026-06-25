@@ -145,7 +145,7 @@ public class BecomeReferral extends BaseActivity {
         boolean success;
         try {
             success = repository
-                    .sendPayment(NetworkConfig.SERVER_REFERRAL,
+                    .sendPayment(NetworkConfig.SERVER_ROULETTE,
                             memo,
                             new BigDecimal(sendAmount));
         } catch (Exception e) {
