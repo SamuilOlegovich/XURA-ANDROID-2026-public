@@ -122,10 +122,10 @@ public class RouletteBetCodeTest {
     }
 
     @Test
-    public void multiplierForTag_numberBets_equalThirtySix() {
-        assertEquals(36, RouletteBetCode.multiplierForTag("N:0"));
-        assertEquals(36, RouletteBetCode.multiplierForTag("N:17"));
-        assertEquals(36, RouletteBetCode.multiplierForTag("N:36"));
+    public void multiplierForTag_numberBets_equalThirtyFive() {
+        assertEquals(35, RouletteBetCode.multiplierForTag("N:0"));
+        assertEquals(35, RouletteBetCode.multiplierForTag("N:17"));
+        assertEquals(35, RouletteBetCode.multiplierForTag("N:36"));
     }
 
     @Test

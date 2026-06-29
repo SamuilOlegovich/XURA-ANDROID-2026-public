@@ -192,7 +192,7 @@ public class NotifierRunForTrialGame implements Runnable {
     private void responseToBet(String tag) {
         boolean isNumber = testModeEnum.equals(TestModeEnum.GUESS_THE_NUMBER_GAME);
         double bet       = Double.parseDouble(Flasher.TEST_SAND_AMOUNT);
-        double mult      = isNumber ? 36.0 : 2.0;
+        double mult      = isNumber ? 35.0 : 2.0;
         // credit = полный возврат (ставка × множитель); balance корректен т.к. ставка уже списана
         // profit = чистая прибыль (то что видит пользователь в сообщении)
         String credit = String.valueOf(bet * mult);

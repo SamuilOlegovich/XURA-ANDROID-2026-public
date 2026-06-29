@@ -86,12 +86,13 @@ public class RouletteViewModel extends ViewModel {
             // Проверяем каждую позицию (только минимум) и накапливаем общую сумму
             BigDecimal total = BigDecimal.ZERO;
             for (Map.Entry<String, BigDecimal> entry : bets.entrySet()) {
-                BigDecimal amount = roundToDrops(entry.getValue());
-                GameBetError err = validateSingleBetAmount(amount);
+                // Валидируем исходную сумму до усечения, чтобы 0.05 давало BET_TOO_LOW, а не AMOUNT_IS_ZERO
+                GameBetError err = validateSingleBetAmount(entry.getValue());
                 if (err != null) {
                     errorLiveData.postValue(err);
                     return;
                 }
+                BigDecimal amount = roundToDrops(entry.getValue());
                 total = total.add(amount);
             }
 
@@ -162,11 +163,12 @@ public class RouletteViewModel extends ViewModel {
     }
 
     /** Обрезает значение до 6 знаков после запятой (точность дропов XRP). */
+    /** Обрезает сумму до 1 знака после точки (шаг 0.1 XRP). Целые числа не получают лишний .0. */
     private BigDecimal roundToDrops(BigDecimal value) {
         if (value == null) return BigDecimal.ZERO;
         String s = value.toPlainString();
         int dot = s.indexOf('.');
-        if (dot >= 0 && dot + 7 < s.length()) s = s.substring(0, dot + 7);
+        if (dot >= 0 && s.length() > dot + 2) s = s.substring(0, dot + 2);
         try { return new BigDecimal(s); }
         catch (NumberFormatException e) { return BigDecimal.ZERO; }
     }

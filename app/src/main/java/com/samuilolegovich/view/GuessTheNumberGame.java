@@ -254,11 +254,21 @@ public class GuessTheNumberGame extends BaseActivity {
         });
 
         bet.addTextChangedListener(new android.text.TextWatcher() {
+            private boolean editing = false;
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
                 tilBetField.setError(null);
             }
-            @Override public void afterTextChanged(android.text.Editable s) {}
+            @Override public void afterTextChanged(android.text.Editable s) {
+                if (editing) return;
+                String text = s.toString();
+                int dot = text.indexOf('.');
+                if (dot >= 0 && text.length() > dot + 2) {
+                    editing = true;
+                    s.replace(0, s.length(), text.substring(0, dot + 2));
+                    editing = false;
+                }
+            }
         });
 
         rulesInfo.setOnClickListener(v -> {

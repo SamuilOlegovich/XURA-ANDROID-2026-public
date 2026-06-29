@@ -89,7 +89,7 @@ public enum RouletteBetCode {
 
     /** Возвращает множитель выигрыша для заданного полного внутреннего тега ставки. */
     public static int multiplierForTag(String tag) {
-        if (tag != null && tag.startsWith("N:")) return 36;
+        if (tag != null && tag.startsWith("N:")) return 35;
         for (RouletteBetCode b : values()) {
             if (b.fullTag.equals(tag)) return b.multiplier;
         }

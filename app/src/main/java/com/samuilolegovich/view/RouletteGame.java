@@ -173,6 +173,7 @@ public class RouletteGame extends BaseActivity {
             setSpinningState(false);
             tilBetField.setError(null);
             bet.setText("");
+            chipGroupAmounts.clearCheck();
             setBetParamsForFlasher(totalAmount);
             clearAllBets();
             startActivity(new Intent(FLASHER_CLASS));
@@ -478,11 +479,21 @@ public class RouletteGame extends BaseActivity {
         });
 
         bet.addTextChangedListener(new android.text.TextWatcher() {
+            private boolean editing = false;
             @Override public void beforeTextChanged(CharSequence s, int i, int c, int a) {}
             @Override public void onTextChanged(CharSequence s, int i, int b, int c) {
                 tilBetField.setError(null);
             }
-            @Override public void afterTextChanged(android.text.Editable s) {}
+            @Override public void afterTextChanged(android.text.Editable s) {
+                if (editing) return;
+                String text = s.toString();
+                int dot = text.indexOf('.');
+                if (dot >= 0 && text.length() > dot + 2) {
+                    editing = true;
+                    s.replace(0, s.length(), text.substring(0, dot + 2));
+                    editing = false;
+                }
+            }
         });
 
         rulesInfo.setOnClickListener(v -> {

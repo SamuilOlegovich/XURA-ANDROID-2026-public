@@ -67,12 +67,12 @@ public class GuessNumberViewModel extends ViewModel {
                 return;
             }
 
-            String amount = prepareAmount(rawAmount);
-            GameBetError error = validateAmount(amount);
+            GameBetError error = validateAmount(rawAmount);
             if (error != null) {
                 errorLiveData.postValue(error);
                 return;
             }
+            String amount = prepareAmount(rawAmount);
 
             String memo = "RLT:n" + selectedNumber + "@" + amount + ":" + myReferral;
 
@@ -120,12 +120,11 @@ public class GuessNumberViewModel extends ViewModel {
         return null;
     }
 
-    /** Обрезает сумму до 6 знаков после запятой, чтобы избежать слишком длинного числа в мемо-теге платежа. */
+    /** Обрезает сумму до 1 знака после точки (шаг 0.1 XRP). */
     private String prepareAmount(String amount) {
         if (amount.contains(".")) {
             int i = amount.indexOf(".");
-            int max = i + 6;
-            if (max < amount.length()) return amount.substring(0, max + 1);
+            if (i + 1 < amount.length()) return amount.substring(0, i + 2);
         }
         return amount;
     }

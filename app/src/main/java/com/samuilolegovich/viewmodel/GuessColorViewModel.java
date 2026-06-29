@@ -60,12 +60,12 @@ public class GuessColorViewModel extends ViewModel {
     /** Проверяет и размещает ставку на выбранный цвет: формирует мемо-тег с реферальным кодом, отправляет платёж (или списывает тестовый баланс) и публикует результат. */
     public void placeBet(String rawAmount, String colorTag, String myReferral) {
         executor.execute(() -> {
-            String amount = prepareAmount(rawAmount);
-            GameBetError error = validateAmount(amount);
+            GameBetError error = validateAmount(rawAmount);
             if (error != null) {
                 errorLiveData.postValue(error);
                 return;
             }
+            String amount = prepareAmount(rawAmount);
 
             String colorCode = colorTag.equals(StringEnum.TAG_RED_GUESS_THE_COLOR.getValue())
                     ? "r" : "b";
@@ -118,11 +118,11 @@ public class GuessColorViewModel extends ViewModel {
     }
 
     /** Обрезает сумму до 6 знаков после запятой, чтобы избежать слишком длинного числа в мемо-теге платежа. */
+    /** Обрезает сумму до 1 знака после точки (шаг 0.1 XRP). */
     private String prepareAmount(String amount) {
         if (amount.contains(".")) {
             int i = amount.indexOf(".");
-            int max = i + 6;
-            if (max < amount.length()) return amount.substring(0, max + 1);
+            if (i + 1 < amount.length()) return amount.substring(0, i + 2);
         }
         return amount;
     }
