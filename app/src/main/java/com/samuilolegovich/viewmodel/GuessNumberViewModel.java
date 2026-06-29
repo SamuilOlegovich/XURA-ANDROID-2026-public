@@ -21,7 +21,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 
 /**
  * ViewModel игры "угадай число": проверяет выбранное число и размер ставки,
- * отправляет платёж с мемо-тегом в формате рулетки ("BET:R:n{N}@{сумма}:ref")
+ * отправляет платёж с мемо-тегом в формате рулетки ("RLT:n{N}@{сумма}:ref")
  * на сервер чисел в реальном режиме или списывает тестовый баланс в тестовом.
  */
 @HiltViewModel
@@ -74,7 +74,7 @@ public class GuessNumberViewModel extends ViewModel {
                 return;
             }
 
-            String memo = "BET:R:n" + selectedNumber + "@" + amount + ":" + myReferral;
+            String memo = "RLT:n" + selectedNumber + "@" + amount + ":" + myReferral;
 
             boolean success;
             if (Boolean.TRUE.equals(MainActivity.IS_REAL_GAME_MODE)) {

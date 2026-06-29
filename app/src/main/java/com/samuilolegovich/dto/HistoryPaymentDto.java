@@ -11,6 +11,7 @@ public class HistoryPaymentDto implements Serializable {
     private String amount;
     private String tag;
     private String time;
+    private String destTag;
 
     /** Создаёт запись истории без указания времени (используется, когда время транзакции неизвестно). */
     public HistoryPaymentDto(String address, String amount, String tag) {
@@ -44,4 +45,9 @@ public class HistoryPaymentDto implements Serializable {
     public String getTime() { return time; }
     /** Задаёт отформатированное время транзакции. */
     public void   setTime(String time) { this.time = time; }
+
+    /** Возвращает числовой тег назначения XRPL (DestinationTag), или null если его не было в транзакции. */
+    public String getDestTag() { return destTag; }
+    /** Задаёт числовой тег назначения XRPL. */
+    public void   setDestTag(String destTag) { this.destTag = destTag; }
 }

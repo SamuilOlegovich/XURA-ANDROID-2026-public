@@ -146,14 +146,14 @@ public class RouletteViewModelTest {
         bets.put("RED", new BigDecimal("30"));
         bets.put("D1", new BigDecimal("20"));
 
-        when(repository.sendPayment(eq(NetworkConfig.SERVER_ROULETTE), eq("BET:R:r@30,d1@20:ref123"), eq(new BigDecimal("50"))))
+        when(repository.sendPayment(eq(NetworkConfig.SERVER_ROULETTE), eq("RLT:r@30,d1@20:ref123"), eq(new BigDecimal("50"))))
                 .thenReturn(true);
         when(repository.getBalance()).thenReturn(new BigDecimal("50"));
 
         viewModel.placeBets(bets, "ref123");
 
         assertEquals("50", awaitValue(viewModel.getBetSuccess()));
-        verify(repository).sendPayment(NetworkConfig.SERVER_ROULETTE, "BET:R:r@30,d1@20:ref123", new BigDecimal("50"));
+        verify(repository).sendPayment(NetworkConfig.SERVER_ROULETTE, "RLT:r@30,d1@20:ref123", new BigDecimal("50"));
         verify(repository).updateBalance(new BigDecimal("50"));
     }
 

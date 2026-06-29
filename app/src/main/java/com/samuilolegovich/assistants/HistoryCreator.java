@@ -106,11 +106,13 @@ public class HistoryCreator {
                             .getJSONObject("Memo")
                             .getString("MemoData");
                     label = new String(hexToBytes(hexMemo), StandardCharsets.UTF_8);
-                } else if (tx.has("DestinationTag")) {
-                    label = tx.get("DestinationTag").toString();
                 } else {
                     label = "---";
                 }
+
+                String destTagStr = tx.has("DestinationTag")
+                        ? tx.get("DestinationTag").toString()
+                        : null;
 
                 // XRP Epoch: секунды с 2000-01-01 UTC → Java ms
                 String time = "";
@@ -120,7 +122,9 @@ public class HistoryCreator {
                     time = new SimpleDateFormat("dd MMM HH:mm", Locale.getDefault()).format(date);
                 }
 
-                list.add(new HistoryPaymentDto(account, amount, label, time));
+                HistoryPaymentDto dto = new HistoryPaymentDto(account, amount, label, time);
+                dto.setDestTag(destTagStr);
+                list.add(dto);
             }
         } catch (JSONException e) {
             e.printStackTrace();

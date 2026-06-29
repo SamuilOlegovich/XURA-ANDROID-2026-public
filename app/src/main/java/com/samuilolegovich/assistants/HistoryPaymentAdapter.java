@@ -168,7 +168,7 @@ public class HistoryPaymentAdapter extends ListAdapter<HistoryPaymentDto, Histor
 
     /** Сопоставляет служебный тег транзакции (BET:, WIN, JKPT, REF: и т.д.) с человекочитаемым локализованным текстом. */
     private String processTag(String tag) {
-        if (tag.startsWith("BET:R:"))  return " " + rouletteBetHistory;
+        if (tag.startsWith("RLT:"))  return " " + rouletteBetHistory;
         if (tag.startsWith("BET:RED")) return " " + betOnRedHistory;
         if (tag.startsWith("BET:BLK")) return " " + betOnBlackHistory;
 
@@ -197,7 +197,7 @@ public class HistoryPaymentAdapter extends ListAdapter<HistoryPaymentDto, Histor
         if (tag.equals("WIN")    || tag.startsWith("WIN:"))  return ContextCompat.getColor(ctx, R.color.xura_success);
         if (tag.equals("LOSE")   || tag.startsWith("LOSE:")) return ContextCompat.getColor(ctx, R.color.xura_error);
         if (tag.equals("JKPT")   || tag.startsWith("JKPT:")) return ContextCompat.getColor(ctx, R.color.xura_gold);
-        if (tag.startsWith("BET:R:"))                         return ContextCompat.getColor(ctx, R.color.xura_pink);
+        if (tag.startsWith("RLT:"))                         return ContextCompat.getColor(ctx, R.color.xura_pink);
         if (tag.startsWith("BET:RED"))                        return ContextCompat.getColor(ctx, R.color.xura_pink);
         if (tag.startsWith("BET:BLK"))                        return ContextCompat.getColor(ctx, R.color.xura_text_secondary);
         if (tag.startsWith("BET:N:"))                         return ContextCompat.getColor(ctx, R.color.xura_cyan);
@@ -217,7 +217,7 @@ public class HistoryPaymentAdapter extends ListAdapter<HistoryPaymentDto, Histor
         if (tag.equals("WIN")    || tag.startsWith("WIN:"))  return R.drawable.ic_check_circle;
         if (tag.equals("LOSE")   || tag.startsWith("LOSE:")) return R.drawable.ic_lost_x;
         if (tag.equals("JKPT")   || tag.startsWith("JKPT:")) return R.drawable.ic_bolt;
-        if (tag.startsWith("BET:R:"))                         return R.drawable.ic_send_arrow;
+        if (tag.startsWith("RLT:"))                         return R.drawable.ic_send_arrow;
         if (tag.startsWith("BET:RED"))                        return R.drawable.ic_favorite;
         if (tag.startsWith("BET:BLK"))                        return R.drawable.ic_clubs;
         if (tag.startsWith("BET:N:"))                         return R.drawable.ic_target;

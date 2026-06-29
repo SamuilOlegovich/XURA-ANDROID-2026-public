@@ -73,7 +73,7 @@ public class TxDetailSheet extends BottomSheetDialogFragment {
 
         bindHeader(view, dto);
         bindInfoRow(view, dto);
-        if (dto.getTag() != null && dto.getTag().startsWith("BET:R:")) {
+        if (dto.getTag() != null && dto.getTag().startsWith("RLT:")) {
             bindBetsBreakdown(view, dto.getTag());
         }
     }
@@ -120,50 +120,55 @@ public class TxDetailSheet extends BottomSheetDialogFragment {
 
     // ── Доп. информация (тег назначения или мемо для нераспознанных типов) ─
 
-    /** Показывает дополнительную строку: числовой тег назначения, либо сырой текст мемо для типов, которые не удалось распознать, либо скрывает блок. */
+    /** Показывает строку мемо и/или строку тега назначения — оба поля независимы и могут отображаться одновременно.
+     *  В debug-сборке мемо показывается для всех транзакций (включая внутренние коды приложения). */
     private void bindInfoRow(View root, HistoryPaymentDto dto) {
-        String tag = dto.getTag() != null ? dto.getTag() : "";
+        String tag     = dto.getTag() != null ? dto.getTag() : "";
+        String destTag = dto.getDestTag();
 
-        // Показываем числовой тег назначения
-        boolean isNumericTag = !tag.isEmpty() && tag.matches("\\d+");
-        // Показываем содержимое мемо для типов, которые не можем полностью распознать
-        boolean isRawMemo = !tag.isEmpty()
-                && !tag.startsWith("BET:")
-                && !tag.equals("WIN")   && !tag.startsWith("WIN:")
-                && !tag.equals("LOSE")  && !tag.startsWith("LOSE:")
-                && !tag.equals("JKPT")  && !tag.startsWith("JKPT:")
-                && !tag.equals("RFD")   && !tag.startsWith("RFD:")
-                && !tag.equals("DON")   && !tag.startsWith("DON:")
-                && !tag.equals("REF")   && !tag.startsWith("REF:")
-                && !tag.equals("---")
-                && !isNumericTag;
+        boolean isInternalCode = tag.startsWith("BET:")
+                || tag.startsWith("RLT:")
+                || tag.equals("WIN")   || tag.startsWith("WIN:")
+                || tag.equals("LOSE")  || tag.startsWith("LOSE:")
+                || tag.equals("JKPT")  || tag.startsWith("JKPT:")
+                || tag.equals("RFD")   || tag.startsWith("RFD:")
+                || tag.equals("DON")   || tag.startsWith("DON:")
+                || tag.equals("REF")   || tag.startsWith("REF:");
 
-        LinearLayout section = root.findViewById(R.id.detail_info_section);
-        TextView label = root.findViewById(R.id.detail_info_label);
-        TextView value = root.findViewById(R.id.detail_info_value);
+        // В release: только нераспознанные мемо. В debug: любой непустой тег.
+        boolean showMemo = !tag.isEmpty() && !tag.equals("---")
+                && (com.samuilolegovich.BuildConfig.DEBUG || !isInternalCode);
 
-        if (isNumericTag) {
-            section.setVisibility(View.VISIBLE);
-            label.setText(getString(R.string.detail_dest_tag));
-            value.setText(tag);
-        } else if (isRawMemo) {
-            section.setVisibility(View.VISIBLE);
-            label.setText(getString(R.string.detail_memo));
-            value.setText(tag);
+        LinearLayout memoSection = root.findViewById(R.id.detail_info_section);
+        if (showMemo) {
+            memoSection.setVisibility(View.VISIBLE);
+            ((TextView) root.findViewById(R.id.detail_info_label)).setText(
+                    com.samuilolegovich.BuildConfig.DEBUG && isInternalCode ? "DEBUG MEMO" : getString(R.string.detail_memo));
+            ((TextView) root.findViewById(R.id.detail_info_value)).setText(tag);
         } else {
-            section.setVisibility(View.GONE);
+            memoSection.setVisibility(View.GONE);
+        }
+
+        // Тег назначения: показываем если присутствует в транзакции
+        LinearLayout tagSection = root.findViewById(R.id.detail_dest_tag_section);
+        if (destTag != null && !destTag.isEmpty()) {
+            tagSection.setVisibility(View.VISIBLE);
+            ((TextView) root.findViewById(R.id.detail_dest_tag_label)).setText(getString(R.string.detail_dest_tag));
+            ((TextView) root.findViewById(R.id.detail_dest_tag_value)).setText(destTag);
+        } else {
+            tagSection.setVisibility(View.GONE);
         }
     }
 
-    // ── Разбивка по ставкам (только для составной ставки BET:R:) ──────────
+    // ── Разбивка по ставкам (только для составной ставки RLT:) ──────────
 
     /** Разбирает строку составной ставки на рулетку и строит для каждой отдельной ставки строку с названием, суммой и множителем; внизу — общая сумма. */
     private void bindBetsBreakdown(View root, String tag) {
-        // Формат: BET:R:n5@1.5,r@2.0,d1@0.5:referralCode
+        // Формат: RLT:n5@1.5,r@2.0,d1@0.5:referralCode
         String[] parts = tag.split(":", -1);
-        if (parts.length < 3) return;
+        if (parts.length < 2) return;
 
-        String betsStr = parts[2];
+        String betsStr = parts[1];
         String[] bets  = betsStr.split(",");
 
         LinearLayout section   = root.findViewById(R.id.detail_bets_section);
@@ -252,7 +257,7 @@ public class TxDetailSheet extends BottomSheetDialogFragment {
 
     /** Подбирает локализованный заголовок записи по её тегу (вид ставки, выигрыш, проигрыш, джекпот, возврат, донат, реферал и т.д.). */
     private String resolveTitle(String tag) {
-        if (tag.startsWith("BET:R:"))  return getString(R.string.roulette_bet_history);
+        if (tag.startsWith("RLT:"))  return getString(R.string.roulette_bet_history);
         if (tag.startsWith("BET:RED")) return getString(R.string.bet_on_red_history);
         if (tag.startsWith("BET:BLK")) return getString(R.string.bet_on_black_history);
         if (tag.startsWith("BET:N:"))  {
@@ -274,7 +279,7 @@ public class TxDetailSheet extends BottomSheetDialogFragment {
         if (tag.equals("WIN")   || tag.startsWith("WIN:"))  return ContextCompat.getColor(requireContext(), R.color.xura_success);
         if (tag.equals("LOSE")  || tag.startsWith("LOSE:")) return ContextCompat.getColor(requireContext(), R.color.xura_error);
         if (tag.equals("JKPT")  || tag.startsWith("JKPT:")) return ContextCompat.getColor(requireContext(), R.color.xura_gold);
-        if (tag.startsWith("BET:R:"))                        return ContextCompat.getColor(requireContext(), R.color.xura_pink);
+        if (tag.startsWith("RLT:"))                        return ContextCompat.getColor(requireContext(), R.color.xura_pink);
         if (tag.startsWith("BET:RED"))                       return ContextCompat.getColor(requireContext(), R.color.xura_pink);
         if (tag.startsWith("BET:BLK"))                       return ContextCompat.getColor(requireContext(), R.color.xura_text_secondary);
         if (tag.startsWith("BET:N:"))                        return ContextCompat.getColor(requireContext(), R.color.xura_cyan);
@@ -291,7 +296,7 @@ public class TxDetailSheet extends BottomSheetDialogFragment {
         if (tag.equals("WIN")   || tag.startsWith("WIN:"))  return R.drawable.ic_check_circle;
         if (tag.equals("LOSE")  || tag.startsWith("LOSE:")) return R.drawable.ic_lost_x;
         if (tag.equals("JKPT")  || tag.startsWith("JKPT:")) return R.drawable.ic_bolt;
-        if (tag.startsWith("BET:R:"))                        return R.drawable.ic_roulette_wheel;
+        if (tag.startsWith("RLT:"))                        return R.drawable.ic_roulette_wheel;
         if (tag.startsWith("BET:RED"))                       return R.drawable.ic_favorite;
         if (tag.startsWith("BET:BLK"))                       return R.drawable.ic_clubs;
         if (tag.startsWith("BET:N:"))                        return R.drawable.ic_target;

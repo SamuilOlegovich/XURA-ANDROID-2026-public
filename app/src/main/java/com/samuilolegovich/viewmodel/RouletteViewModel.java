@@ -67,7 +67,7 @@ public class RouletteViewModel extends ViewModel {
      *
      * В РЕАЛЬНОМ режиме: отправляет единый XRP-платёж на сервер. Мемо кодирует
      * каждую ставку компактными кодами из {@link RouletteBetCode}:
-     *   BET:R:n5@1.5,r@2.0,d1@0.5:referralCode
+     *   RLT:n5@1.5,r@2.0,d1@0.5:referralCode
      * Итоговая отправляемая сумма = сумма всех отдельных ставок.
      *
      * В ДЕМО-режиме: сетевой вызов не выполняется — результат вычисляется
@@ -135,11 +135,11 @@ public class RouletteViewModel extends ViewModel {
     /**
      * Строит строку мемо XRP-платежа, кодирующую все размещённые ставки.
      *
-     * Формат:  BET:R:{код1}@{сумма1},{код2}@{сумма2},...:{referral}
-     * Пример:  BET:R:n5@1.5,r@2.0,d1@0.5:ref123
+     * Формат:  RLT:{код1}@{сумма1},{код2}@{сумма2},...:{referral}
+     * Пример:  RLT:n5@1.5,r@2.0,d1@0.5:ref123
      */
     private String buildMemo(LinkedHashMap<String, BigDecimal> bets, String referral) {
-        StringBuilder sb = new StringBuilder("BET:R:");
+        StringBuilder sb = new StringBuilder("RLT:");
         boolean first = true;
         for (Map.Entry<String, BigDecimal> entry : bets.entrySet()) {
             if (!first) sb.append(",");

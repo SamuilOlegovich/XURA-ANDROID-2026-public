@@ -168,14 +168,14 @@ public class GuessNumberViewModelTest {
     public void placeBet_realMode_validBet_sendsPaymentWithNumberMemo() throws InterruptedException {
         MainActivity.IS_REAL_GAME_MODE = true;
         stubBalance("500");
-        when(repository.sendPayment(eq(NetworkConfig.SERVER_ROULETTE), eq("BET:R:n17@50:ref"), eq(new BigDecimal("50"))))
+        when(repository.sendPayment(eq(NetworkConfig.SERVER_ROULETTE), eq("RLT:n17@50:ref"), eq(new BigDecimal("50"))))
                 .thenReturn(true);
         when(repository.getBalance()).thenReturn(new BigDecimal("450"));
 
         viewModel.placeBet("50", 17, "ref");
 
         assertEquals("50", awaitValue(viewModel.getBetSuccess()));
-        verify(repository).sendPayment(NetworkConfig.SERVER_ROULETTE, "BET:R:n17@50:ref", new BigDecimal("50"));
+        verify(repository).sendPayment(NetworkConfig.SERVER_ROULETTE, "RLT:n17@50:ref", new BigDecimal("50"));
         verify(repository).updateBalance(new BigDecimal("450"));
     }
 

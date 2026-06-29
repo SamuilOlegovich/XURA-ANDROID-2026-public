@@ -21,7 +21,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 
 /**
  * ViewModel игры "угадай цвет": валидирует размер ставки, отправляет платёж с
- * мемо-тегом в формате рулетки ("BET:R:r@сумма:ref" / "BET:R:b@сумма:ref") на
+ * мемо-тегом в формате рулетки ("RLT:r@сумма:ref" / "RLT:b@сумма:ref") на
  * сервер цвета в реальном режиме или списывает тестовый баланс в тестовом.
  */
 @HiltViewModel
@@ -69,7 +69,7 @@ public class GuessColorViewModel extends ViewModel {
 
             String colorCode = colorTag.equals(StringEnum.TAG_RED_GUESS_THE_COLOR.getValue())
                     ? "r" : "b";
-            String memo = "BET:R:" + colorCode + "@" + amount + ":" + myReferral;
+            String memo = "RLT:" + colorCode + "@" + amount + ":" + myReferral;
 
             boolean success;
             if (Boolean.TRUE.equals(MainActivity.IS_REAL_GAME_MODE)) {

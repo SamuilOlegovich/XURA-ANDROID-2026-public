@@ -104,7 +104,7 @@ public class TransactionHistory extends BaseActivity {
         list.add(new HistoryPaymentDto(server, "+1.00 XRP",     "RFD",                          "14 Jun 20:03"));
 
         // Ставки (исходящие к серверу)
-        list.add(new HistoryPaymentDto(server, "-4.00 XRP",     "BET:R:n5@1.5,r@2.0,d1@0.5:0", "14 Jun 23:50"));
+        list.add(new HistoryPaymentDto(server, "-4.00 XRP",     "RLT:n5@1.5,r@2.0,d1@0.5:0", "14 Jun 23:50"));
         list.add(new HistoryPaymentDto(server, "-5.00 XRP",     "BET:RED",                      "14 Jun 23:41"));
         list.add(new HistoryPaymentDto(server, "-5.00 XRP",     "BET:BLK",                      "14 Jun 22:17"));
         list.add(new HistoryPaymentDto(server, "-10.00 XRP",    "BET:N:7",                      "14 Jun 21:55"));

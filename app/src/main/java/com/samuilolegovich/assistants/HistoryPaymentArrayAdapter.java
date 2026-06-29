@@ -107,7 +107,7 @@ public class HistoryPaymentArrayAdapter extends ArrayAdapter<HistoryPaymentDto> 
     }
 
 
-    /** Сопоставляет служебный тег транзакции с человекочитаемым локализованным текстом (упрощённая версия без BET:R: и BLK-цвета). */
+    /** Сопоставляет служебный тег транзакции с человекочитаемым локализованным текстом (упрощённая версия без RLT: и BLK-цвета). */
     private String processTag(String tag) {
         if (tag.startsWith("BET:RED")) return " " + betOnRedHistory;
         if (tag.startsWith("BET:BLK")) return " " + betOnBlackHistory;
