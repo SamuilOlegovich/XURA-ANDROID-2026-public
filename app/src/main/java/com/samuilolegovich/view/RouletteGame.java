@@ -21,7 +21,6 @@ import android.widget.FrameLayout;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import androidx.core.content.res.ResourcesCompat;
@@ -79,9 +78,8 @@ public class RouletteGame extends BaseActivity {
 
     private static final int CELL_H = 44;
 
-    private static final String STYLE_CHIPS    = "chips";
-    private static final String STYLE_DRUM     = "drum";
-    private static final String STYLE_SLIDER   = "slider";
+    private static final String STYLE_CHIPS  = "chips";
+    private static final String STYLE_SLIDER = "slider";
 
     private static final int MAX_BET_TENTHS     = 1000; // 100.0 XRP × 10
     private static final int DEFAULT_BET_TENTHS = 10;   // 1.0 XRP
@@ -148,10 +146,6 @@ public class RouletteGame extends BaseActivity {
     private TextInputLayout tilBetField;
     private EditText       bet;
     private ChipGroup      chipGroupAmounts;
-
-    // Bet input — DRUM style
-    private View         styleDrumContainer;
-    private NumberPicker betPicker;
 
     // Bet input — SLIDER + +/− (combined)
     private View          styleSliderContainer;
@@ -238,10 +232,6 @@ public class RouletteGame extends BaseActivity {
         tilBetField         = findViewById(R.id.til_bet_field);
         bet                 = findViewById(R.id.bet_field);
         chipGroupAmounts    = findViewById(R.id.chip_group_amounts);
-
-        // Drum style
-        styleDrumContainer = findViewById(R.id.style_drum_container);
-        betPicker          = findViewById(R.id.bet_picker);
 
         // Slider + +/− style (combined)
         styleSliderContainer = findViewById(R.id.style_slider_container);
@@ -532,9 +522,6 @@ public class RouletteGame extends BaseActivity {
             String style = preferences.getString(
                     StringEnum.APP_PREFERENCES_BET_INPUT_STYLE.getValue(), STYLE_CHIPS);
             switch (style) {
-                case STYLE_DRUM:
-                    betPicker.setValue(Math.min(tenths, MAX_BET_TENTHS));
-                    break;
                 case STYLE_SLIDER:
                     betTenths = Math.min(tenths, MAX_BET_TENTHS);
                     tvBetPlusMinus.setText(formatTenths(betTenths) + " XRP");
@@ -656,41 +643,7 @@ public class RouletteGame extends BaseActivity {
                 StringEnum.APP_PREFERENCES_BET_INPUT_STYLE.getValue(), STYLE_CHIPS);
 
         styleChipsContainer.setVisibility(STYLE_CHIPS.equals(style) ? View.VISIBLE : View.GONE);
-        styleDrumContainer.setVisibility(STYLE_DRUM.equals(style) ? View.VISIBLE : View.GONE);
         styleSliderContainer.setVisibility(STYLE_SLIDER.equals(style) ? View.VISIBLE : View.GONE);
-
-        if (STYLE_DRUM.equals(style)) {
-            setupDrumPicker(MAX_BET_TENTHS);
-        }
-    }
-
-    private void setupDrumPicker(int maxTenths) {
-        String[] values = new String[maxTenths];
-        for (int i = 1; i <= maxTenths; i++) {
-            values[i - 1] = formatTenths(i);
-        }
-        betPicker.setMinValue(1);
-        betPicker.setMaxValue(maxTenths);
-        betPicker.setDisplayedValues(values);
-        betPicker.setValue(DEFAULT_BET_TENTHS);
-        betPicker.setWrapSelectorWheel(false);
-        betPicker.setOnValueChangedListener((picker, oldVal, newVal) -> clearBetError());
-        betPicker.post(() -> setNumberPickerTextColor(betPicker, getColor(R.color.xura_gold)));
-    }
-
-    private void setNumberPickerTextColor(android.widget.NumberPicker picker, int color) {
-        try {
-            java.lang.reflect.Field f = android.widget.NumberPicker.class.getDeclaredField("mSelectorWheelPaint");
-            f.setAccessible(true);
-            ((android.graphics.Paint) f.get(picker)).setColor(color);
-        } catch (Exception ignored) {}
-        for (int i = 0; i < picker.getChildCount(); i++) {
-            android.view.View child = picker.getChildAt(i);
-            if (child instanceof android.widget.EditText) {
-                ((android.widget.EditText) child).setTextColor(color);
-            }
-        }
-        picker.invalidate();
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -738,7 +691,6 @@ public class RouletteGame extends BaseActivity {
         String style = preferences.getString(
                 StringEnum.APP_PREFERENCES_BET_INPUT_STYLE.getValue(), STYLE_CHIPS);
         switch (style) {
-            case STYLE_DRUM:   return formatTenths(betPicker.getValue());
             case STYLE_SLIDER: return formatTenths(betTenths);
             default:           return bet.getText().toString();
         }
@@ -770,9 +722,6 @@ public class RouletteGame extends BaseActivity {
         String style = preferences.getString(
                 StringEnum.APP_PREFERENCES_BET_INPUT_STYLE.getValue(), STYLE_CHIPS);
         switch (style) {
-            case STYLE_DRUM:
-                betPicker.setValue(DEFAULT_BET_TENTHS);
-                break;
             case STYLE_SLIDER:
                 betTenths = DEFAULT_BET_TENTHS;
                 tvBetPlusMinus.setText(formatTenths(DEFAULT_BET_TENTHS) + " XRP");

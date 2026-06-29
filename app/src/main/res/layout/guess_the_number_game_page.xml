@@ -153,32 +153,6 @@
 
         </LinearLayout>
 
-        <!-- Style: DRUM (NumberPicker scroll wheel) — max 36 for number game -->
-        <LinearLayout
-            android:id="@+id/style_drum_container"
-            android:layout_width="match_parent"
-            android:layout_height="130dp"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:visibility="gone">
-
-            <NumberPicker
-                android:id="@+id/bet_picker"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:fontFamily="@font/montserrat"
-                android:text="XRP"
-                android:textColor="@color/xura_cyan"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
         <!-- Style: SLIDER + +/− (combined) — max 36 for number game -->
         <LinearLayout
             android:id="@+id/style_slider_container"
@@ -204,9 +178,9 @@
                     android:insetBottom="0dp"
                     android:fontFamily="@font/montserrat"
                     android:text="−"
-                    android:textColor="@color/xura_text_primary"
+                    android:textColor="@color/xura_cyan"
                     android:textSize="22sp"
-                    app:strokeColor="@color/xura_glass_border"
+                    app:strokeColor="@color/xura_cyan"
                     app:cornerRadius="24dp" />
 
                 <TextView
@@ -231,9 +205,9 @@
                     android:insetBottom="0dp"
                     android:fontFamily="@font/montserrat"
                     android:text="+"
-                    android:textColor="@color/xura_text_primary"
+                    android:textColor="@color/xura_gold"
                     android:textSize="22sp"
-                    app:strokeColor="@color/xura_glass_border"
+                    app:strokeColor="@color/xura_gold"
                     app:cornerRadius="24dp" />
 
             </LinearLayout>

@@ -339,7 +339,6 @@ public class Settings extends BaseActivity {
                 .getString(StringEnum.APP_PREFERENCES_BET_INPUT_STYLE.getValue(), "chips");
         int chipId;
         switch (saved) {
-            case "drum":   chipId = R.id.chip_bet_style_drum;   break;
             case "slider": chipId = R.id.chip_bet_style_slider; break;
             default:          chipId = R.id.chip_bet_style_chips;     break;
         }
@@ -476,8 +475,7 @@ public class Settings extends BaseActivity {
     private void listeners() {
         chipGroupBetStyle.setOnCheckedStateChangeListener((group, checkedIds) -> {
             String style = "chips";
-            if      (checkedIds.contains(R.id.chip_bet_style_drum))   style = "drum";
-            else if (checkedIds.contains(R.id.chip_bet_style_slider)) style = "slider";
+            if (checkedIds.contains(R.id.chip_bet_style_slider)) style = "slider";
             PrefsHelper.get(this).edit()
                     .putString(StringEnum.APP_PREFERENCES_BET_INPUT_STYLE.getValue(), style)
                     .apply();

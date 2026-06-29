@@ -579,19 +579,6 @@
                             app:checkedIconVisible="false" />
 
                         <com.google.android.material.chip.Chip
-                            android:id="@+id/chip_bet_style_drum"
-                            style="@style/Widget.Material3.Chip.Filter"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/montserrat"
-                            android:text="@string/bet_style_drum"
-                            android:textColor="@color/xura_text_primary"
-                            app:chipBackgroundColor="@color/chip_bg_quick_bet"
-                            app:chipStrokeColor="@color/chip_stroke_quick_bet"
-                            app:chipStrokeWidth="1dp"
-                            app:checkedIconVisible="false" />
-
-                        <com.google.android.material.chip.Chip
                             android:id="@+id/chip_bet_style_slider"
                             style="@style/Widget.Material3.Chip.Filter"
                             android:layout_width="wrap_content"
