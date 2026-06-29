@@ -418,4 +418,10 @@
     <string name="chip_01_xrp">0.1 XRP</string>
     <string name="chip_05_xrp">0.5 XRP</string>
     <string name="chip_20_xrp">20 XRP</string>
+    <string name="settings_bet_input_style">СТИЛЬ ВВОДА СТАВКИ</string>
+    <string name="settings_bet_input_style_sub">Выберите способ указать сумму ставки</string>
+    <string name="bet_style_chips">Чипы</string>
+    <string name="bet_style_drum">Барабан</string>
+    <string name="bet_style_plusminus">+/−</string>
+    <string name="bet_style_slider">Слайдер</string>
 </resources>

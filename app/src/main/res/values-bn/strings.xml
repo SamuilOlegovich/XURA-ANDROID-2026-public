@@ -391,4 +391,10 @@
     <string name="chip_01_xrp">0.1 XRP</string>
     <string name="chip_05_xrp">0.5 XRP</string>
     <string name="chip_20_xrp">20 XRP</string>
+    <string name="settings_bet_input_style">বাজির ইনপুট শৈলী</string>
+    <string name="settings_bet_input_style_sub">বাজির পরিমাণ কীভাবে লিখবেন</string>
+    <string name="bet_style_chips">চিপস</string>
+    <string name="bet_style_drum">ড্রাম</string>
+    <string name="bet_style_plusminus">+/−</string>
+    <string name="bet_style_slider">স্লাইডার</string>
 </resources>

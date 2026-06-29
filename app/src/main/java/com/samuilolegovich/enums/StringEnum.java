@@ -78,7 +78,9 @@ public enum StringEnum {
     ACTIVATION_PAYMENT_SOCKET("10000000"),
     ACTIVATION_PAYMENT("10.000000"),
 
-    WALLET_NOT_ACTIVATED("Wallet not activated.")
+    WALLET_NOT_ACTIVATED("Wallet not activated."),
+
+    APP_PREFERENCES_BET_INPUT_STYLE("bet_input_style")
 
     ;
 

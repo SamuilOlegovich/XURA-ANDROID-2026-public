@@ -391,4 +391,10 @@
     <string name="chip_01_xrp">0.1 XRP</string>
     <string name="chip_05_xrp">0.5 XRP</string>
     <string name="chip_20_xrp">20 XRP</string>
+    <string name="settings_bet_input_style">STYLE DE MISE</string>
+    <string name="settings_bet_input_style_sub">Choisissez comment entrer le montant</string>
+    <string name="bet_style_chips">Jetons</string>
+    <string name="bet_style_drum">Tambour</string>
+    <string name="bet_style_plusminus">+/−</string>
+    <string name="bet_style_slider">Curseur</string>
 </resources>

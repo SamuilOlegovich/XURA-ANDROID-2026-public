@@ -24,6 +24,7 @@ import androidx.core.content.ContextCompat;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputLayout;
 import com.samuilolegovich.BaseActivity;
@@ -112,6 +113,8 @@ public class Settings extends BaseActivity {
     private TextView settingsFooterVersion;
     private TextView settingsFooterDeveloper;
 
+    private ChipGroup chipGroupBetStyle;
+
     // ── View скрытой DEV-секции ──────────────────────────────────────────
     private MaterialCardView cardDevNetwork;
     private SwitchMaterial   devNetworkSwitch;
@@ -150,6 +153,7 @@ public class Settings extends BaseActivity {
         root = findViewById(android.R.id.content);
         setButtons();
         setLanguage();
+        updateBetInputStyleChip();
         listeners();
         setupBottomNav();
         repository.getBalanceLiveData().observe(this, balance -> {
@@ -190,6 +194,7 @@ public class Settings extends BaseActivity {
         devTxHistoryLinc          = findViewById(R.id.dev_tx_history_linc);
         settingsFooterVersion     = findViewById(R.id.settings_footer_version);
         settingsFooterDeveloper   = findViewById(R.id.settings_footer_developer);
+        chipGroupBetStyle         = findViewById(R.id.chip_group_bet_style);
 
         // DEV
         cardDevNetwork  = findViewById(R.id.card_dev_network);
@@ -328,6 +333,20 @@ public class Settings extends BaseActivity {
         InactivityGuard.setTimeoutMs(ms);
     }
 
+    /** Восстанавливает выбор чипа стиля ввода ставки из сохранённых настроек. */
+    private void updateBetInputStyleChip() {
+        String saved = PrefsHelper.get(this)
+                .getString(StringEnum.APP_PREFERENCES_BET_INPUT_STYLE.getValue(), "chips");
+        int chipId;
+        switch (saved) {
+            case "drum":      chipId = R.id.chip_bet_style_drum;      break;
+            case "plusminus": chipId = R.id.chip_bet_style_plusminus; break;
+            case "slider":    chipId = R.id.chip_bet_style_slider;    break;
+            default:          chipId = R.id.chip_bet_style_chips;     break;
+        }
+        chipGroupBetStyle.check(chipId);
+    }
+
     /** Обновляет внешний вид кнопки пароля: фон, цвет текста/иконки и надпись зависят от наличия пароля. */
     private void updatePasswordIcon() {
         boolean hasPassword = isPasswordSet();
@@ -456,6 +475,16 @@ public class Settings extends BaseActivity {
      * DEV-секции по 7 нажатиям на заголовок, и все элементы управления DEV-секцией.
      */
     private void listeners() {
+        chipGroupBetStyle.setOnCheckedStateChangeListener((group, checkedIds) -> {
+            String style = "chips";
+            if      (checkedIds.contains(R.id.chip_bet_style_drum))      style = "drum";
+            else if (checkedIds.contains(R.id.chip_bet_style_plusminus)) style = "plusminus";
+            else if (checkedIds.contains(R.id.chip_bet_style_slider))    style = "slider";
+            PrefsHelper.get(this).edit()
+                    .putString(StringEnum.APP_PREFERENCES_BET_INPUT_STYLE.getValue(), style)
+                    .apply();
+        });
+
         settingsSetPasswordLinc.setOnClickListener(v -> {
             pulse(v);
             goToAnotherPage(SETTINGS_SET_PASSWORD_FOR_APP_CLASS);

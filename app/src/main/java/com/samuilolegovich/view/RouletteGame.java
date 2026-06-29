@@ -1,5 +1,6 @@
 package com.samuilolegovich.view;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,22 +10,30 @@ import android.media.AudioManager;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import androidx.core.content.res.ResourcesCompat;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
+import com.google.android.material.slider.Slider;
 import com.google.android.material.textfield.TextInputLayout;
+
+import java.util.Locale;
 import com.samuilolegovich.BaseActivity;
 import com.samuilolegovich.R;
 import com.samuilolegovich.enums.RouletteBetCode;
@@ -69,6 +78,14 @@ public class RouletteGame extends BaseActivity {
             2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35));
 
     private static final int CELL_H = 44;
+
+    private static final String STYLE_CHIPS    = "chips";
+    private static final String STYLE_DRUM     = "drum";
+    private static final String STYLE_PLUSMINUS = "plusminus";
+    private static final String STYLE_SLIDER   = "slider";
+
+    private static final int MAX_BET_TENTHS     = 1000; // 100.0 XRP × 10
+    private static final int DEFAULT_BET_TENTHS = 10;   // 1.0 XRP
 
     // ── ViewModel + prefs ────────────────────────────────────────────────
     private RouletteViewModel viewModel;
@@ -122,13 +139,37 @@ public class RouletteGame extends BaseActivity {
     private View                       rulesInfo;
     private TextView                   balance;
     private TextView                   selectedBetLabel;
-    private EditText                   bet;
-    private ChipGroup                  chipGroupAmounts;
-    private TextInputLayout            tilBetField;
     private View                       btnSpin;
     private View                       btnClearBets;
     private ImageView                  spinIcon;
     private CircularProgressIndicator  spinProgress;
+
+    // Bet input — CHIPS style
+    private View          styleChipsContainer;
+    private TextInputLayout tilBetField;
+    private EditText       bet;
+    private ChipGroup      chipGroupAmounts;
+
+    // Bet input — DRUM style
+    private View         styleDrumContainer;
+    private NumberPicker betPicker;
+
+    // Bet input — +/− style
+    private View          stylePlusMinusContainer;
+    private MaterialButton btnBetMinus;
+    private MaterialButton btnBetPlus;
+    private TextView       tvBetPlusMinus;
+    private int            betTenths = DEFAULT_BET_TENTHS;
+    private final Handler pmHandler = new Handler(Looper.getMainLooper());
+    private Runnable pmRunnable;
+
+    // Bet input — SLIDER style
+    private View     styleSliderContainer;
+    private Slider   sliderBet;
+    private TextView tvSliderValue;
+
+    // Shared error for non-chip styles
+    private TextView tvBetInputError;
 
 
 
@@ -165,15 +206,14 @@ public class RouletteGame extends BaseActivity {
                 case BET_TOO_LOW:          msg = BET_CANNOT_BE_LESS_THAN + StringEnum.MIN_BET_ROULETTE.getValue() + " XRP"; break;
                 default:                   msg = WRONG_DESTINATION_ADDRESS; break;
             }
-            tilBetField.setError(msg);
+            showBetError(msg);
         });
 
         viewModel.getBetSuccess().observe(this, totalAmount -> {
             if (totalAmount == null) return;
             setSpinningState(false);
-            tilBetField.setError(null);
-            bet.setText("");
-            chipGroupAmounts.clearCheck();
+            clearBetError();
+            resetBetInput();
             setBetParamsForFlasher(totalAmount);
             clearAllBets();
             startActivity(new Intent(FLASHER_CLASS));
@@ -193,13 +233,33 @@ public class RouletteGame extends BaseActivity {
         rulesInfo        = findViewById(R.id.rules_of_the_game_link);
         balance          = findViewById(R.id.your_balance_xrp_text);
         selectedBetLabel = findViewById(R.id.roulette_selected_bet_label);
-        bet              = findViewById(R.id.bet_field);
-        tilBetField      = findViewById(R.id.til_bet_field);
-        chipGroupAmounts = findViewById(R.id.chip_group_amounts);
         btnSpin          = findViewById(R.id.btn_spin_roulette);
         btnClearBets     = findViewById(R.id.btn_clear_bets);
         spinIcon         = findViewById(R.id.spin_icon);
         spinProgress     = findViewById(R.id.spin_progress);
+
+        // Chips style
+        styleChipsContainer = findViewById(R.id.style_chips_container);
+        tilBetField         = findViewById(R.id.til_bet_field);
+        bet                 = findViewById(R.id.bet_field);
+        chipGroupAmounts    = findViewById(R.id.chip_group_amounts);
+
+        // Drum style
+        styleDrumContainer = findViewById(R.id.style_drum_container);
+        betPicker          = findViewById(R.id.bet_picker);
+
+        // +/− style
+        stylePlusMinusContainer = findViewById(R.id.style_plusminus_container);
+        btnBetMinus             = findViewById(R.id.btn_bet_minus);
+        btnBetPlus              = findViewById(R.id.btn_bet_plus);
+        tvBetPlusMinus          = findViewById(R.id.tv_bet_plus_minus);
+
+        // Slider style
+        styleSliderContainer = findViewById(R.id.style_slider_container);
+        sliderBet            = findViewById(R.id.slider_bet);
+        tvSliderValue        = findViewById(R.id.tv_slider_value);
+
+        tvBetInputError = findViewById(R.id.tv_bet_input_error);
 
         casinoMediaPlayer = MediaPlayer.create(this, R.raw.in_casino);
         casinoMediaPlayer.setVolume(0.4f, 0.4f);
@@ -399,17 +459,17 @@ public class RouletteGame extends BaseActivity {
             return;
         }
 
-        // Parse amount from field
-        String rawAmount = bet.getText().toString().trim();
+        // Parse amount from active input style
+        String rawAmount = getBetAmount().trim();
         if (rawAmount.isEmpty()) {
-            tilBetField.setError(ENTER_AMOUNT_FIRST);
+            showBetError(ENTER_AMOUNT_FIRST);
             return;
         }
         BigDecimal amount;
         try {
             amount = new BigDecimal(rawAmount);
         } catch (NumberFormatException e) {
-            tilBetField.setError(PAYMENT_AMOUNT_IS_INCORRECT);
+            showBetError(PAYMENT_AMOUNT_IS_INCORRECT);
             return;
         }
 
@@ -424,7 +484,7 @@ public class RouletteGame extends BaseActivity {
             chip.setText(amount.stripTrailingZeros().toPlainString());
             chip.setVisibility(View.VISIBLE);
         }
-        tilBetField.setError(null);
+        clearBetError();
         updateBetsLabel();
     }
 
@@ -482,7 +542,7 @@ public class RouletteGame extends BaseActivity {
             private boolean editing = false;
             @Override public void beforeTextChanged(CharSequence s, int i, int c, int a) {}
             @Override public void onTextChanged(CharSequence s, int i, int b, int c) {
-                tilBetField.setError(null);
+                clearBetError();
             }
             @Override public void afterTextChanged(android.text.Editable s) {
                 if (editing) return;
@@ -495,6 +555,9 @@ public class RouletteGame extends BaseActivity {
                 }
             }
         });
+
+        setupPlusMinusButtons();
+        setupSliderListener();
 
         rulesInfo.setOnClickListener(v -> {
             pulse(v);
@@ -576,6 +639,136 @@ public class RouletteGame extends BaseActivity {
 
 
     // ════════════════════════════════════════════════════════════════════
+    //  Bet input style helpers
+    // ════════════════════════════════════════════════════════════════════
+
+    private void applyBetInputStyle() {
+        String style = preferences.getString(
+                StringEnum.APP_PREFERENCES_BET_INPUT_STYLE.getValue(), STYLE_CHIPS);
+
+        styleChipsContainer.setVisibility(STYLE_CHIPS.equals(style) ? View.VISIBLE : View.GONE);
+        styleDrumContainer.setVisibility(STYLE_DRUM.equals(style) ? View.VISIBLE : View.GONE);
+        stylePlusMinusContainer.setVisibility(STYLE_PLUSMINUS.equals(style) ? View.VISIBLE : View.GONE);
+        styleSliderContainer.setVisibility(STYLE_SLIDER.equals(style) ? View.VISIBLE : View.GONE);
+
+        if (STYLE_DRUM.equals(style)) {
+            setupDrumPicker(MAX_BET_TENTHS);
+        }
+    }
+
+    private void setupDrumPicker(int maxTenths) {
+        String[] values = new String[maxTenths];
+        for (int i = 1; i <= maxTenths; i++) {
+            values[i - 1] = formatTenths(i);
+        }
+        betPicker.setMinValue(1);
+        betPicker.setMaxValue(maxTenths);
+        betPicker.setDisplayedValues(values);
+        betPicker.setValue(DEFAULT_BET_TENTHS);
+        betPicker.setWrapSelectorWheel(false);
+        betPicker.setOnValueChangedListener((picker, oldVal, newVal) -> clearBetError());
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private void setupPlusMinusButtons() {
+        btnBetMinus.setOnClickListener(v -> changeBetBy(-1));
+        btnBetPlus.setOnClickListener(v -> changeBetBy(+1));
+
+        btnBetMinus.setOnTouchListener((v, event) -> handlePmTouch(event, -1));
+        btnBetPlus.setOnTouchListener((v, event) -> handlePmTouch(event, +1));
+    }
+
+    private boolean handlePmTouch(MotionEvent event, int delta) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            pmRunnable = new Runnable() {
+                @Override public void run() {
+                    changeBetBy(delta);
+                    pmHandler.postDelayed(this, 100);
+                }
+            };
+            pmHandler.postDelayed(pmRunnable, 400);
+        } else if (event.getAction() == MotionEvent.ACTION_UP
+                || event.getAction() == MotionEvent.ACTION_CANCEL) {
+            pmHandler.removeCallbacks(pmRunnable);
+        }
+        return false;
+    }
+
+    private void changeBetBy(int delta) {
+        betTenths = Math.max(1, Math.min(MAX_BET_TENTHS, betTenths + delta));
+        tvBetPlusMinus.setText(formatTenths(betTenths) + " XRP");
+        clearBetError();
+    }
+
+    private void setupSliderListener() {
+        sliderBet.addOnChangeListener((slider, value, fromUser) -> {
+            int tenths = Math.round(value * 10);
+            tvSliderValue.setText(formatTenths(tenths) + " XRP");
+            clearBetError();
+        });
+    }
+
+    private String getBetAmount() {
+        String style = preferences.getString(
+                StringEnum.APP_PREFERENCES_BET_INPUT_STYLE.getValue(), STYLE_CHIPS);
+        switch (style) {
+            case STYLE_DRUM:
+                return formatTenths(betPicker.getValue());
+            case STYLE_PLUSMINUS:
+                return formatTenths(betTenths);
+            case STYLE_SLIDER:
+                return formatTenths(Math.round(sliderBet.getValue() * 10));
+            default:
+                return bet.getText().toString();
+        }
+    }
+
+    private String formatTenths(int tenths) {
+        if (tenths % 10 == 0) return String.valueOf(tenths / 10);
+        return String.format(Locale.US, "%.1f", tenths / 10.0);
+    }
+
+    private void showBetError(String msg) {
+        String style = preferences.getString(
+                StringEnum.APP_PREFERENCES_BET_INPUT_STYLE.getValue(), STYLE_CHIPS);
+        if (STYLE_CHIPS.equals(style)) {
+            tilBetField.setError(msg);
+        } else {
+            tilBetField.setError(null);
+            tvBetInputError.setText(msg);
+            tvBetInputError.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void clearBetError() {
+        tilBetField.setError(null);
+        if (tvBetInputError != null) tvBetInputError.setVisibility(View.GONE);
+    }
+
+    private void resetBetInput() {
+        String style = preferences.getString(
+                StringEnum.APP_PREFERENCES_BET_INPUT_STYLE.getValue(), STYLE_CHIPS);
+        switch (style) {
+            case STYLE_DRUM:
+                betPicker.setValue(DEFAULT_BET_TENTHS);
+                break;
+            case STYLE_PLUSMINUS:
+                betTenths = DEFAULT_BET_TENTHS;
+                tvBetPlusMinus.setText(formatTenths(DEFAULT_BET_TENTHS) + " XRP");
+                break;
+            case STYLE_SLIDER:
+                sliderBet.setValue(1.0f);
+                tvSliderValue.setText("1.0 XRP");
+                break;
+            default:
+                bet.setText("");
+                chipGroupAmounts.clearCheck();
+                break;
+        }
+    }
+
+
+    // ════════════════════════════════════════════════════════════════════
     //  Misc helpers
     // ════════════════════════════════════════════════════════════════════
 
@@ -615,6 +808,7 @@ public class RouletteGame extends BaseActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        pmHandler.removeCallbacksAndMessages(null);
         if (casinoMediaPlayer != null && casinoMediaPlayer.isPlaying()) casinoMediaPlayer.pause();
         AudioHelper.abandonFocus(this, audioFocusRequest);
         AudioHelper.unregisterNoisyReceiver(this, noisyReceiver);
@@ -622,10 +816,12 @@ public class RouletteGame extends BaseActivity {
         noisyReceiver = null;
     }
 
-    /** При возвращении запрашивает аудиофокус, регистрирует приёмник наушников и запускает музыку (если не замьючено). */
+    /** При возвращении применяет выбранный стиль ввода ставки, запрашивает аудиофокус и запускает музыку. */
     @Override
     protected void onResume() {
         super.onResume();
+        preferences = PrefsHelper.get(this);
+        applyBetInputStyle();
         viewModel.loadBalance();
         noisyReceiver = AudioHelper.registerNoisyReceiver(this,
                 () -> { if (casinoMediaPlayer != null && casinoMediaPlayer.isPlaying()) casinoMediaPlayer.pause(); });
@@ -644,6 +840,7 @@ public class RouletteGame extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        pmHandler.removeCallbacksAndMessages(null);
         if (casinoMediaPlayer != null) { casinoMediaPlayer.release(); casinoMediaPlayer = null; }
         if (soundPool != null) { soundPool.release(); soundPool = null; }
     }
