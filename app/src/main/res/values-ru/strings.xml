@@ -423,5 +423,5 @@
     <string name="bet_style_chips">Чипы</string>
     <string name="bet_style_drum">Барабан</string>
     <string name="bet_style_plusminus">+/−</string>
-    <string name="bet_style_slider">Слайдер</string>
+    <string name="bet_style_slider">Слайдер +/−</string>
 </resources>

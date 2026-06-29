@@ -396,5 +396,5 @@
     <string name="bet_style_chips">चिप्स</string>
     <string name="bet_style_drum">ड्रम</string>
     <string name="bet_style_plusminus">+/−</string>
-    <string name="bet_style_slider">स्लाइडर</string>
+    <string name="bet_style_slider">स्लाइडर +/−</string>
 </resources>

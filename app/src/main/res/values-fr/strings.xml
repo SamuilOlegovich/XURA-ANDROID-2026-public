@@ -396,5 +396,5 @@
     <string name="bet_style_chips">Jetons</string>
     <string name="bet_style_drum">Tambour</string>
     <string name="bet_style_plusminus">+/−</string>
-    <string name="bet_style_slider">Curseur</string>
+    <string name="bet_style_slider">Curseur +/−</string>
 </resources>

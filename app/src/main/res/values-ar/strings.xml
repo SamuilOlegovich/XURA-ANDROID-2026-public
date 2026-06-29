@@ -396,5 +396,5 @@
     <string name="bet_style_chips">رقائق</string>
     <string name="bet_style_drum">طبل</string>
     <string name="bet_style_plusminus">+/−</string>
-    <string name="bet_style_slider">شريط التمرير</string>
+    <string name="bet_style_slider">شريط التمرير +/−</string>
 </resources>

@@ -398,5 +398,5 @@
     <string name="bet_style_chips">筹码</string>
     <string name="bet_style_drum">滚轮</string>
     <string name="bet_style_plusminus">+/−</string>
-    <string name="bet_style_slider">滑块</string>
+    <string name="bet_style_slider">滑块 +/−</string>
 </resources>

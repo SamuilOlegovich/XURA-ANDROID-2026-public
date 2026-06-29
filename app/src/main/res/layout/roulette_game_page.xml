@@ -233,87 +233,71 @@
 
                 </LinearLayout>
 
-                <!-- Style: +/− BUTTONS -->
-                <LinearLayout
-                    android:id="@+id/style_plusminus_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp"
-                    android:visibility="gone">
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btn_bet_minus"
-                        style="@style/Widget.Material3.Button.OutlinedButton"
-                        android:layout_width="56dp"
-                        android:layout_height="56dp"
-                        android:insetTop="0dp"
-                        android:insetBottom="0dp"
-                        android:fontFamily="@font/montserrat"
-                        android:text="−"
-                        android:textColor="@color/xura_text_primary"
-                        android:textSize="24sp"
-                        app:strokeColor="@color/xura_glass_border"
-                        app:cornerRadius="28dp" />
-
-                    <TextView
-                        android:id="@+id/tv_bet_plus_minus"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/montserrat"
-                        android:gravity="center"
-                        android:textAlignment="center"
-                        android:textColor="@color/xura_text_primary"
-                        android:textSize="22sp"
-                        android:textStyle="bold"
-                        android:text="1.0 XRP" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btn_bet_plus"
-                        style="@style/Widget.Material3.Button.OutlinedButton"
-                        android:layout_width="56dp"
-                        android:layout_height="56dp"
-                        android:insetTop="0dp"
-                        android:insetBottom="0dp"
-                        android:fontFamily="@font/montserrat"
-                        android:text="+"
-                        android:textColor="@color/xura_text_primary"
-                        android:textSize="24sp"
-                        app:strokeColor="@color/xura_glass_border"
-                        app:cornerRadius="28dp" />
-
-                </LinearLayout>
-
-                <!-- Style: SLIDER -->
+                <!-- Style: SLIDER + +/− (combined) -->
                 <LinearLayout
                     android:id="@+id/style_slider_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:gravity="center_horizontal"
                     android:paddingTop="8dp"
                     android:paddingStart="24dp"
                     android:paddingEnd="24dp"
                     android:visibility="gone">
 
-                    <TextView
-                        android:id="@+id/tv_slider_value"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/montserrat"
-                        android:textColor="@color/xura_text_primary"
-                        android:textSize="22sp"
-                        android:textStyle="bold"
-                        android:text="1.0 XRP" />
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:paddingBottom="4dp">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_bet_minus"
+                            style="@style/Widget.Material3.Button.OutlinedButton"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:insetTop="0dp"
+                            android:insetBottom="0dp"
+                            android:fontFamily="@font/montserrat"
+                            android:text="−"
+                            android:textColor="@color/xura_text_primary"
+                            android:textSize="22sp"
+                            app:strokeColor="@color/xura_glass_border"
+                            app:cornerRadius="24dp" />
+
+                        <TextView
+                            android:id="@+id/tv_bet_plus_minus"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/montserrat"
+                            android:gravity="center"
+                            android:textAlignment="center"
+                            android:textColor="@color/xura_text_primary"
+                            android:textSize="22sp"
+                            android:textStyle="bold"
+                            android:text="1.0 XRP" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_bet_plus"
+                            style="@style/Widget.Material3.Button.OutlinedButton"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:insetTop="0dp"
+                            android:insetBottom="0dp"
+                            android:fontFamily="@font/montserrat"
+                            android:text="+"
+                            android:textColor="@color/xura_text_primary"
+                            android:textSize="22sp"
+                            app:strokeColor="@color/xura_glass_border"
+                            app:cornerRadius="24dp" />
+
+                    </LinearLayout>
 
                     <com.google.android.material.slider.Slider
                         android:id="@+id/slider_bet"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
                         android:valueFrom="0.1"
                         android:valueTo="100.0"
                         android:stepSize="0.1"

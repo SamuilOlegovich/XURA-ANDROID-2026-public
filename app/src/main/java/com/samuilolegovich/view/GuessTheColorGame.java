@@ -59,7 +59,6 @@ public class GuessTheColorGame extends BaseActivity {
 
     private static final String STYLE_CHIPS    = "chips";
     private static final String STYLE_DRUM     = "drum";
-    private static final String STYLE_PLUSMINUS = "plusminus";
     private static final String STYLE_SLIDER   = "slider";
 
     private static final int MAX_BET_TENTHS = 1000; // 100.0 XRP × 10
@@ -126,19 +125,15 @@ public class GuessTheColorGame extends BaseActivity {
     private View         styleDrumContainer;
     private NumberPicker betPicker;
 
-    // Bet input — +/− style
-    private View          stylePlusMinusContainer;
+    // Bet input — SLIDER + +/− (combined)
+    private View          styleSliderContainer;
+    private Slider        sliderBet;
     private MaterialButton btnBetMinus;
     private MaterialButton btnBetPlus;
     private TextView       tvBetPlusMinus;
     private int            betTenths = DEFAULT_BET_TENTHS;
     private final Handler pmHandler = new Handler(Looper.getMainLooper());
     private Runnable pmRunnable;
-
-    // Bet input — SLIDER style
-    private View    styleSliderContainer;
-    private Slider  sliderBet;
-    private TextView tvSliderValue;
 
     // Shared error for non-chip styles
     private TextView tvBetInputError;
@@ -216,16 +211,12 @@ public class GuessTheColorGame extends BaseActivity {
         styleDrumContainer = findViewById(R.id.style_drum_container);
         betPicker          = findViewById(R.id.bet_picker);
 
-        // +/− style
-        stylePlusMinusContainer = findViewById(R.id.style_plusminus_container);
-        btnBetMinus             = findViewById(R.id.btn_bet_minus);
-        btnBetPlus              = findViewById(R.id.btn_bet_plus);
-        tvBetPlusMinus          = findViewById(R.id.tv_bet_plus_minus);
-
-        // Slider style
+        // Slider + +/− style (combined)
         styleSliderContainer = findViewById(R.id.style_slider_container);
         sliderBet            = findViewById(R.id.slider_bet);
-        tvSliderValue        = findViewById(R.id.tv_slider_value);
+        btnBetMinus          = findViewById(R.id.btn_bet_minus);
+        btnBetPlus           = findViewById(R.id.btn_bet_plus);
+        tvBetPlusMinus       = findViewById(R.id.tv_bet_plus_minus);
 
         tvBetInputError = findViewById(R.id.tv_bet_input_error);
 
@@ -268,12 +259,10 @@ public class GuessTheColorGame extends BaseActivity {
                 case STYLE_DRUM:
                     betPicker.setValue(Math.min(tenths, MAX_BET_TENTHS));
                     break;
-                case STYLE_PLUSMINUS:
+                case STYLE_SLIDER:
                     betTenths = Math.min(tenths, MAX_BET_TENTHS);
                     tvBetPlusMinus.setText(formatTenths(betTenths) + " XRP");
-                    break;
-                case STYLE_SLIDER:
-                    sliderBet.setValue(Math.min(tenths / 10.0f, sliderBet.getValueTo()));
+                    sliderBet.setValue(Math.min(betTenths / 10.0f, sliderBet.getValueTo()));
                     break;
                 default:
                     bet.setText(formatTenths(tenths));
@@ -357,13 +346,15 @@ public class GuessTheColorGame extends BaseActivity {
     private void changeBetBy(int delta) {
         betTenths = Math.max(1, Math.min(MAX_BET_TENTHS, betTenths + delta));
         tvBetPlusMinus.setText(formatTenths(betTenths) + " XRP");
+        sliderBet.setValue(Math.max(sliderBet.getValueFrom(), Math.min(sliderBet.getValueTo(), betTenths / 10.0f)));
         clearBetError();
     }
 
     private void setupSliderListener() {
         sliderBet.addOnChangeListener((slider, value, fromUser) -> {
-            int tenths = Math.round(value * 10);
-            tvSliderValue.setText(formatTenths(tenths) + " XRP");
+            if (!fromUser) return;
+            betTenths = Math.round(value * 10);
+            tvBetPlusMinus.setText(formatTenths(betTenths) + " XRP");
             clearBetError();
         });
     }
@@ -376,7 +367,6 @@ public class GuessTheColorGame extends BaseActivity {
 
         styleChipsContainer.setVisibility(STYLE_CHIPS.equals(style) ? View.VISIBLE : View.GONE);
         styleDrumContainer.setVisibility(STYLE_DRUM.equals(style) ? View.VISIBLE : View.GONE);
-        stylePlusMinusContainer.setVisibility(STYLE_PLUSMINUS.equals(style) ? View.VISIBLE : View.GONE);
         styleSliderContainer.setVisibility(STYLE_SLIDER.equals(style) ? View.VISIBLE : View.GONE);
 
         if (STYLE_DRUM.equals(style)) {
@@ -395,7 +385,7 @@ public class GuessTheColorGame extends BaseActivity {
         betPicker.setValue(DEFAULT_BET_TENTHS);
         betPicker.setWrapSelectorWheel(false);
         betPicker.setOnValueChangedListener((picker, oldVal, newVal) -> clearBetError());
-        setNumberPickerTextColor(betPicker, 0xFFFFFFFF);
+        betPicker.post(() -> setNumberPickerTextColor(betPicker, getColor(R.color.xura_gold)));
     }
 
     private void setNumberPickerTextColor(android.widget.NumberPicker picker, int color) {
@@ -418,14 +408,9 @@ public class GuessTheColorGame extends BaseActivity {
         String style = preferences.getString(
                 StringEnum.APP_PREFERENCES_BET_INPUT_STYLE.getValue(), STYLE_CHIPS);
         switch (style) {
-            case STYLE_DRUM:
-                return formatTenths(betPicker.getValue());
-            case STYLE_PLUSMINUS:
-                return formatTenths(betTenths);
-            case STYLE_SLIDER:
-                return formatTenths(Math.round(sliderBet.getValue() * 10));
-            default:
-                return bet.getText().toString();
+            case STYLE_DRUM:   return formatTenths(betPicker.getValue());
+            case STYLE_SLIDER: return formatTenths(betTenths);
+            default:           return bet.getText().toString();
         }
     }
 
@@ -459,13 +444,10 @@ public class GuessTheColorGame extends BaseActivity {
             case STYLE_DRUM:
                 betPicker.setValue(DEFAULT_BET_TENTHS);
                 break;
-            case STYLE_PLUSMINUS:
+            case STYLE_SLIDER:
                 betTenths = DEFAULT_BET_TENTHS;
                 tvBetPlusMinus.setText(formatTenths(DEFAULT_BET_TENTHS) + " XRP");
-                break;
-            case STYLE_SLIDER:
-                sliderBet.setValue(1.0f);
-                tvSliderValue.setText("1.0 XRP");
+                sliderBet.setValue(DEFAULT_BET_TENTHS / 10.0f);
                 break;
             default:
                 bet.setText("");
