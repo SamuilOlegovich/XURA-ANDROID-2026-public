@@ -151,94 +151,6 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.chip.ChipGroup
-                android:id="@+id/chip_group_amounts"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                app:singleSelection="true"
-                app:selectionRequired="false">
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chip_01_xrp"
-                    style="@style/Widget.Material3.Chip.Filter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="36dp"
-                    android:fontFamily="@font/montserrat"
-                    android:text="@string/chip_01_xrp"
-                    android:textColor="@color/xura_text_primary"
-                    app:chipBackgroundColor="@color/chip_bg_quick_bet"
-                    app:chipStrokeColor="@color/chip_stroke_quick_bet"
-                    app:chipStrokeWidth="1dp"
-                    app:checkedIconVisible="false" />
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chip_05_xrp"
-                    style="@style/Widget.Material3.Chip.Filter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="36dp"
-                    android:fontFamily="@font/montserrat"
-                    android:text="@string/chip_05_xrp"
-                    android:textColor="@color/xura_text_primary"
-                    app:chipBackgroundColor="@color/chip_bg_quick_bet"
-                    app:chipStrokeColor="@color/chip_stroke_quick_bet"
-                    app:chipStrokeWidth="1dp"
-                    app:checkedIconVisible="false" />
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chip_1_xrp"
-                    style="@style/Widget.Material3.Chip.Filter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="36dp"
-                    android:fontFamily="@font/montserrat"
-                    android:text="@string/chip_1_xrp"
-                    android:textColor="@color/xura_text_primary"
-                    app:chipBackgroundColor="@color/chip_bg_quick_bet"
-                    app:chipStrokeColor="@color/chip_stroke_quick_bet"
-                    app:chipStrokeWidth="1dp"
-                    app:checkedIconVisible="false" />
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chip_5_xrp"
-                    style="@style/Widget.Material3.Chip.Filter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="36dp"
-                    android:fontFamily="@font/montserrat"
-                    android:text="@string/chip_5_xrp"
-                    android:textColor="@color/xura_text_primary"
-                    app:chipBackgroundColor="@color/chip_bg_quick_bet"
-                    app:chipStrokeColor="@color/chip_stroke_quick_bet"
-                    app:chipStrokeWidth="1dp"
-                    app:checkedIconVisible="false" />
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chip_10_xrp"
-                    style="@style/Widget.Material3.Chip.Filter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="36dp"
-                    android:fontFamily="@font/montserrat"
-                    android:text="@string/chip_10_xrp"
-                    android:textColor="@color/xura_text_primary"
-                    app:chipBackgroundColor="@color/chip_bg_quick_bet"
-                    app:chipStrokeColor="@color/chip_stroke_quick_bet"
-                    app:chipStrokeWidth="1dp"
-                    app:checkedIconVisible="false" />
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chip_20_xrp"
-                    style="@style/Widget.Material3.Chip.Filter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="36dp"
-                    android:fontFamily="@font/montserrat"
-                    android:text="@string/chip_20_xrp"
-                    android:textColor="@color/xura_text_primary"
-                    app:chipBackgroundColor="@color/chip_bg_quick_bet"
-                    app:chipStrokeColor="@color/chip_stroke_quick_bet"
-                    app:chipStrokeWidth="1dp"
-                    app:checkedIconVisible="false" />
-
-            </com.google.android.material.chip.ChipGroup>
-
         </LinearLayout>
 
         <!-- Style: DRUM (NumberPicker scroll wheel) — max 36 for number game -->
@@ -354,6 +266,95 @@
                 app:trackColorInactive="@color/xura_glass_border" />
 
         </LinearLayout>
+
+        <!-- Quick-amount chips (shown in all styles) -->
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chip_group_amounts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            app:singleSelection="true"
+            app:selectionRequired="false">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_01_xrp"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/chip_01_xrp"
+                android:textColor="@color/xura_text_primary"
+                app:chipBackgroundColor="@color/chip_bg_quick_bet"
+                app:chipStrokeColor="@color/chip_stroke_quick_bet"
+                app:chipStrokeWidth="1dp"
+                app:checkedIconVisible="false" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_05_xrp"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/chip_05_xrp"
+                android:textColor="@color/xura_text_primary"
+                app:chipBackgroundColor="@color/chip_bg_quick_bet"
+                app:chipStrokeColor="@color/chip_stroke_quick_bet"
+                app:chipStrokeWidth="1dp"
+                app:checkedIconVisible="false" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_1_xrp"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/chip_1_xrp"
+                android:textColor="@color/xura_text_primary"
+                app:chipBackgroundColor="@color/chip_bg_quick_bet"
+                app:chipStrokeColor="@color/chip_stroke_quick_bet"
+                app:chipStrokeWidth="1dp"
+                app:checkedIconVisible="false" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_5_xrp"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/chip_5_xrp"
+                android:textColor="@color/xura_text_primary"
+                app:chipBackgroundColor="@color/chip_bg_quick_bet"
+                app:chipStrokeColor="@color/chip_stroke_quick_bet"
+                app:chipStrokeWidth="1dp"
+                app:checkedIconVisible="false" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_10_xrp"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/chip_10_xrp"
+                android:textColor="@color/xura_text_primary"
+                app:chipBackgroundColor="@color/chip_bg_quick_bet"
+                app:chipStrokeColor="@color/chip_stroke_quick_bet"
+                app:chipStrokeWidth="1dp"
+                app:checkedIconVisible="false" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_20_xrp"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/chip_20_xrp"
+                android:textColor="@color/xura_text_primary"
+                app:chipBackgroundColor="@color/chip_bg_quick_bet"
+                app:chipStrokeColor="@color/chip_stroke_quick_bet"
+                app:chipStrokeWidth="1dp"
+                app:checkedIconVisible="false" />
+
+        </com.google.android.material.chip.ChipGroup>
 
         <!-- Shared error display for non-chip styles -->
         <TextView

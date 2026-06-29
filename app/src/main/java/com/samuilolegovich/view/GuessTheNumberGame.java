@@ -294,12 +294,32 @@ public class GuessTheNumberGame extends BaseActivity {
 
     private void listeners() {
         chipGroupAmounts.setOnCheckedStateChangeListener((group, checkedIds) -> {
-            if      (checkedIds.contains(R.id.chip_01_xrp)) bet.setText("0.1");
-            else if (checkedIds.contains(R.id.chip_05_xrp)) bet.setText("0.5");
-            else if (checkedIds.contains(R.id.chip_1_xrp))  bet.setText("1");
-            else if (checkedIds.contains(R.id.chip_5_xrp))  bet.setText("5");
-            else if (checkedIds.contains(R.id.chip_10_xrp)) bet.setText("10");
-            else if (checkedIds.contains(R.id.chip_20_xrp)) bet.setText("20");
+            int tenths = 0;
+            if      (checkedIds.contains(R.id.chip_01_xrp)) tenths = 1;
+            else if (checkedIds.contains(R.id.chip_05_xrp)) tenths = 5;
+            else if (checkedIds.contains(R.id.chip_1_xrp))  tenths = 10;
+            else if (checkedIds.contains(R.id.chip_5_xrp))  tenths = 50;
+            else if (checkedIds.contains(R.id.chip_10_xrp)) tenths = 100;
+            else if (checkedIds.contains(R.id.chip_20_xrp)) tenths = 200;
+            if (tenths == 0) return;
+            String style = preferences.getString(
+                    StringEnum.APP_PREFERENCES_BET_INPUT_STYLE.getValue(), STYLE_CHIPS);
+            switch (style) {
+                case STYLE_DRUM:
+                    betPicker.setValue(Math.min(tenths, MAX_BET_TENTHS));
+                    break;
+                case STYLE_PLUSMINUS:
+                    betTenths = Math.min(tenths, MAX_BET_TENTHS);
+                    tvBetPlusMinus.setText(formatTenths(betTenths) + " XRP");
+                    break;
+                case STYLE_SLIDER:
+                    sliderBet.setValue(Math.min(tenths / 10.0f, sliderBet.getValueTo()));
+                    break;
+                default:
+                    bet.setText(formatTenths(tenths));
+                    break;
+            }
+            clearBetError();
         });
 
         bet.addTextChangedListener(new android.text.TextWatcher() {
@@ -401,6 +421,22 @@ public class GuessTheNumberGame extends BaseActivity {
         betPicker.setValue(DEFAULT_BET_TENTHS);
         betPicker.setWrapSelectorWheel(false);
         betPicker.setOnValueChangedListener((picker, oldVal, newVal) -> clearBetError());
+        setNumberPickerTextColor(betPicker, 0xFFFFFFFF);
+    }
+
+    private void setNumberPickerTextColor(android.widget.NumberPicker picker, int color) {
+        try {
+            java.lang.reflect.Field f = android.widget.NumberPicker.class.getDeclaredField("mSelectorWheelPaint");
+            f.setAccessible(true);
+            ((android.graphics.Paint) f.get(picker)).setColor(color);
+        } catch (Exception ignored) {}
+        for (int i = 0; i < picker.getChildCount(); i++) {
+            android.view.View child = picker.getChildAt(i);
+            if (child instanceof android.widget.EditText) {
+                ((android.widget.EditText) child).setTextColor(color);
+            }
+        }
+        picker.invalidate();
     }
 
 
@@ -459,9 +495,9 @@ public class GuessTheNumberGame extends BaseActivity {
                 break;
             default:
                 bet.setText("");
-                chipGroupAmounts.clearCheck();
                 break;
         }
+        chipGroupAmounts.clearCheck();
     }
 
 
