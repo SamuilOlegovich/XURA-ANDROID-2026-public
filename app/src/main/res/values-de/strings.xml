@@ -63,7 +63,7 @@
     <string name="guessed_number_should_not_be_less_than">Die Zahl muss zwischen 1 und 36 liegen</string>
     <string name="get_become_referral_enum">Referral-Anfrage gesendet — warten Sie auf die Serverantwort</string>
     <string name="go_to_the_dark_side_find_the_secret_button">Zur dunklen Seite — finden Sie den geheimen Knopf!</string>
-    <string name="your_bet_is_lost_try_again">IHR EINSATZ HAT NICHT GEWONNEN. GUTHABEN SICHER — ÜBERPRÜFEN SIE DIE HISTORIE.</string>
+    <string name="your_bet_is_lost_try_again">EINSATZ VERLOREN</string>
     <string name="create_new_wallet_text">Speichern Sie die Seed-Phrase unbedingt und teilen Sie sie niemandem mit</string>
     <string name="set_password_to_enter_application">Passwort für den App-Zugang setzen</string>
     <string name="error_check_the_seed_and_try_again">Fehler: Überprüfen Sie Ihre Seed-Phrase und versuchen Sie es erneut</string>

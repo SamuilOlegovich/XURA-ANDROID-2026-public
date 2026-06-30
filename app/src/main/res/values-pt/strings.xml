@@ -65,7 +65,7 @@
     <string name="guessed_number_should_not_be_less_than">O número deve estar entre 1 e 36</string>
     <string name="get_become_referral_enum">Pedido de indicação enviado — aguarde a resposta do servidor</string>
     <string name="go_to_the_dark_side_find_the_secret_button">Vá para o lado sombrio — encontre o botão secreto!</string>
-    <string name="your_bet_is_lost_try_again">SUA APOSTA NÃO GANHOU. FUNDOS SEGUROS — VERIFIQUE O HISTÓRICO.</string>
+    <string name="your_bet_is_lost_try_again">APOSTA PERDIDA</string>
     <string name="create_new_wallet_text">Salve a frase semente e não a compartilhe com ninguém</string>
     <string name="set_password_to_enter_application">Defina uma senha para acessar o aplicativo</string>
     <string name="error_check_the_seed_and_try_again">Erro: verifique sua frase semente e tente novamente</string>

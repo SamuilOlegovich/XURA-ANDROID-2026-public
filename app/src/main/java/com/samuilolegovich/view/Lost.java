@@ -29,7 +29,6 @@ public class Lost extends BaseActivity {
 
     private TextView lastTextViewTwo;
     private TextView lastTextView;
-    private View btnPlayAgain;
     private View btnBackToGames;
 
 
@@ -50,7 +49,6 @@ public class Lost extends BaseActivity {
     private void setButtons() {
         lastTextViewTwo = (TextView) findViewById(R.id.last_text_view_two);
         lastTextView    = (TextView) findViewById(R.id.last_text_view);
-        btnPlayAgain    = findViewById(R.id.btn_play_again);
         btnBackToGames  = findViewById(R.id.btn_back_to_games);
 
         lostMediaPlayer = MediaPlayer.create(this, R.raw.lost);
@@ -66,11 +64,6 @@ public class Lost extends BaseActivity {
             );
             lastTextView.getPaint().setShader(gradient);
             lastTextView.invalidate();
-        });
-
-        btnPlayAgain.setOnClickListener(v -> {
-            lostMediaPlayer.stop();
-            finish();
         });
 
         btnBackToGames.setOnClickListener(v -> {

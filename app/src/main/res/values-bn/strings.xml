@@ -65,7 +65,7 @@
     <string name="guessed_number_should_not_be_less_than">সংখ্যা ১ থেকে ৩৬ এর মধ্যে হতে হবে</string>
     <string name="get_become_referral_enum">রেফারেল অনুরোধ পাঠানো হয়েছে — সার্ভারের উত্তরের জন্য অপেক্ষা করুন</string>
     <string name="go_to_the_dark_side_find_the_secret_button">অন্ধকার দিকে যান — গোপন বোতাম খুঁজুন!</string>
-    <string name="your_bet_is_lost_try_again">আপনার বাজি জেতেনি। তহবিল নিরাপদ — লেনদেনের ইতিহাস দেখুন।</string>
+    <string name="your_bet_is_lost_try_again">বাজি হারলেন</string>
     <string name="create_new_wallet_text">সিড ফ্রেজ অবশ্যই সংরক্ষণ করুন, কাউকে বলবেন না</string>
     <string name="set_password_to_enter_application">অ্যাপে প্রবেশের জন্য পাসওয়ার্ড সেট করুন</string>
     <string name="error_check_the_seed_and_try_again">ত্রুটি: আপনার সিড ফ্রেজ যাচাই করুন এবং আবার চেষ্টা করুন</string>

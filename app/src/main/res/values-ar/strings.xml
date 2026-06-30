@@ -63,7 +63,7 @@
     <string name="guessed_number_should_not_be_less_than">يجب أن يكون الرقم بين 1 و 36</string>
     <string name="get_become_referral_enum">تم إرسال طلب الإحالة — انتظر رد الخادم</string>
     <string name="go_to_the_dark_side_find_the_secret_button">انتقل إلى الجانب المظلم — ابحث عن الزر السري!</string>
-    <string name="your_bet_is_lost_try_again">لم يفز رهانك. الأموال بأمان — تحقق من السجل.</string>
+    <string name="your_bet_is_lost_try_again">رهانك خسر</string>
     <string name="create_new_wallet_text">احفظ عبارة البذور بالتأكيد ولا تخبر أحداً بها</string>
     <string name="set_password_to_enter_application">عيّن كلمة مرور للوصول إلى التطبيق</string>
     <string name="error_check_the_seed_and_try_again">خطأ: تحقق من عبارة البذور وحاول مجدداً</string>

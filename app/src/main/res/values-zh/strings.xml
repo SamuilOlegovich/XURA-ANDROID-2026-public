@@ -58,7 +58,7 @@
     <string name="guessed_number_should_not_be_less_than">数字必须在 1 到 36 之间</string>
     <string name="get_become_referral_enum">推荐请求已发送 — 请等待服务器响应</string>
     <string name="go_to_the_dark_side_find_the_secret_button">走向黑暗面 — 找到秘密按钮！</string>
-    <string name="your_bet_is_lost_try_again">您的押注未赢。资金安全 — 请查看交易记录。</string>
+    <string name="your_bet_is_lost_try_again">押注未赢</string>
     <string name="create_new_wallet_text">请务必保存助记词，不要告诉任何人</string>
     <string name="set_password_to_enter_application">设置应用程序登录密码</string>
     <string name="error_check_the_seed_and_try_again">错误：请检查您的助记词并重试</string>
