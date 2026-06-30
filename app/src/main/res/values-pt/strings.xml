@@ -395,6 +395,7 @@
     <string name="settings_bet_input_style_sub">Escolha como inserir o valor da aposta</string>
     <string name="settings_bet_timeout">TEMPO LIMITE DE RESPOSTA</string>
     <string name="settings_bet_timeout_sub">Se o servidor não responder neste tempo, o giro será cancelado</string>
+    <string name="referral_reward_message">RECOMPENSA! SEU CÓDIGO %1$s TROUXE %2$s XRP — CONTINUE GANHANDO!</string>
     <string name="flasher_timeout_title">SEM RESPOSTA</string>
     <string name="flasher_timeout_message">Sem resposta do servidor. Por favor, tente mais tarde.</string>
     <string name="bet_style_chips">Fichas</string>

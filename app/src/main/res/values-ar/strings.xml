@@ -395,6 +395,7 @@
     <string name="settings_bet_input_style_sub">اختر كيفية إدخال مبلغ الرهان</string>
     <string name="settings_bet_timeout">مهلة استجابة الخادم</string>
     <string name="settings_bet_timeout_sub">إذا لم يستجب الخادم في هذا الوقت، سيتم إلغاء الدوران</string>
+    <string name="referral_reward_message">مكافأة الإحالة! أضاف رمزك %1$s مبلغ %2$s XRP — واصل الربح!</string>
     <string name="flasher_timeout_title">لا استجابة</string>
     <string name="flasher_timeout_message">لا توجد استجابة من الخادم. يرجى المحاولة لاحقاً.</string>
     <string name="bet_style_chips">رقائق</string>

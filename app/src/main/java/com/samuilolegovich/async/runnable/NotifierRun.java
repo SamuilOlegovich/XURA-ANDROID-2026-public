@@ -27,6 +27,7 @@ public class NotifierRun implements Runnable {
     private String YOUR_BET_IS_LOST_TRY_AGAIN_AND_YOU_WILL_BE_LUCKY;
     private String CONGRATULATIONS_YOUR_BET_IS_WON_LOTTO;
     private String CONGRATULATIONS_YOUR_BET_IS_WON;
+    private String YOUR_REFERRAL_REWARD;
     private String YOUR_REFERRAL_CODE;
 
 
@@ -62,6 +63,7 @@ public class NotifierRun implements Runnable {
         YOUR_BET_IS_LOST_TRY_AGAIN_AND_YOU_WILL_BE_LUCKY = resources.getString(R.string.your_bet_is_lost_try_again);
         CONGRATULATIONS_YOUR_BET_IS_WON_LOTTO = resources.getString(R.string.congratulations_your_bet_is_won_loto);
         CONGRATULATIONS_YOUR_BET_IS_WON = resources.getString(R.string.congratulations_your_bet_is_won);
+        YOUR_REFERRAL_REWARD = resources.getString(R.string.referral_reward_message);
         YOUR_REFERRAL_CODE = resources.getString(R.string.your_referral_code);
     }
 
@@ -88,18 +90,32 @@ public class NotifierRun implements Runnable {
                     .divide(BigDecimal.valueOf(1_000_000L), MathContext.DECIMAL128)
                     .toString();
 
-            // рулетка и лотерея — все форматы с префиксом RLT:
+            // все форматы с префиксом RLT:
             if (memoText.startsWith("RLT:")) {
                 String[] parts = memoText.split(":");
 
                 if (parts.length >= 3 && "LOTTO".equals(parts[1])) {
                     // ежедневная: RLT:LOTTO:DAILY:2026-06-30
                     // супер:      RLT:LOTTO:SUPER:2026-06
-                    // дата содержит '-', а не ':', поэтому parts[3] — чистая дата/месяц
                     String lottoDate = parts.length > 3 ? parts[3] : "";
                     Flasher.NUMBER_BET = "0";
                     WalletRepository.getInstance().setLottoNow(lottoDate);
                     responseToBet(String.format(CONGRATULATIONS_YOUR_BET_IS_WON_LOTTO, amountWin), lottoDate, 2);
+
+                } else if (parts.length >= 3 && "REF".equals(parts[1])) {
+                    // реферал: RLT:REF:CODE:123   — выдача/восстановление кода
+                    //          RLT:REF:REWARD:123  — вознаграждение рефереру
+                    String refType = parts[2];
+                    String refCode = parts.length > 3 ? parts[3] : "";
+                    if ("CODE".equals(refType)) {
+                        YourReferral.CODE = refCode;
+                        responseToBet(YOUR_REFERRAL_CODE + " \n" + refCode, refCode, 3);
+                    } else if ("REWARD".equals(refType)) {
+                        // не прерываем Flasher — вознаграждение не связано с текущей ставкой
+                        WalletRepository.getInstance().notifyEvent(
+                                String.format(YOUR_REFERRAL_REWARD, refCode, amountWin), refCode, 2);
+                    }
+
                 } else {
                     // обычная рулетка: RLT:{число}:{WIN|LOSE}
                     String rltNumber  = parts.length > 1 ? parts[1] : "0";

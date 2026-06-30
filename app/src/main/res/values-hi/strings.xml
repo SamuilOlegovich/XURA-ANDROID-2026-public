@@ -395,6 +395,7 @@
     <string name="settings_bet_input_style_sub">दांव राशि कैसे दर्ज करें</string>
     <string name="settings_bet_timeout">सर्वर प्रतिक्रिया टाइमआउट</string>
     <string name="settings_bet_timeout_sub">यदि सर्वर इस समय में जवाब नहीं देता, तो स्पिन रद्द हो जाएगा</string>
+    <string name="referral_reward_message">रेफरल पुरस्कार! आपके कोड %1$s ने %2$s XRP दिलाए — जीतते रहें!</string>
     <string name="flasher_timeout_title">कोई प्रतिक्रिया नहीं</string>
     <string name="flasher_timeout_message">सर्वर से कोई प्रतिक्रिया नहीं। कृपया बाद में पुनः प्रयास करें।</string>
     <string name="bet_style_chips">चिप्स</string>

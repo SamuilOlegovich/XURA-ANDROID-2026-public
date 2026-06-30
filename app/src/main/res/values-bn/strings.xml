@@ -395,6 +395,7 @@
     <string name="settings_bet_input_style_sub">বাজির পরিমাণ কীভাবে লিখবেন</string>
     <string name="settings_bet_timeout">সার্ভার রেসপন্স টাইমআউট</string>
     <string name="settings_bet_timeout_sub">সার্ভার এই সময়ের মধ্যে সাড়া না দিলে স্পিন বাতিল হবে</string>
+    <string name="referral_reward_message">রেফারেল পুরস্কার! আপনার কোড %1$s আপনাকে %2$s XRP এনেছে!</string>
     <string name="flasher_timeout_title">কোনো সাড়া নেই</string>
     <string name="flasher_timeout_message">সার্ভার থেকে কোনো সাড়া নেই। পরে আবার চেষ্টা করুন।</string>
     <string name="bet_style_chips">চিপস</string>

@@ -395,6 +395,7 @@
     <string name="settings_bet_input_style_sub">Wählen Sie, wie Sie den Einsatz eingeben</string>
     <string name="settings_bet_timeout">SERVER-ANTWORT-TIMEOUT</string>
     <string name="settings_bet_timeout_sub">Antwortet der Server nicht rechtzeitig, wird der Spin abgebrochen</string>
+    <string name="referral_reward_message">EMPFEHLUNGSBONUS! IHR CODE %1$s BRACHTE IHNEN %2$s XRP — WEITER SO!</string>
     <string name="flasher_timeout_title">KEINE ANTWORT</string>
     <string name="flasher_timeout_message">Keine Antwort vom Server. Bitte später erneut versuchen.</string>
     <string name="bet_style_chips">Chips</string>
