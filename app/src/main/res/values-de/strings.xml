@@ -382,10 +382,10 @@
     <string name="detail_bet_dozen">Dutzend %d</string>
     <string name="detail_bet_column">Kolonne %d</string>
 
-    <string name="settings_auto_lock">Auto-Sperre</string>
+    <string name="settings_auto_lock">AUTO-SPERRE</string>
     <string name="settings_auto_lock_timeout_title">Zeitlimit für Auto-Sperre</string>
     <string name="settings_auto_lock_subtitle">Zeitlimit bis zur Sperre bei Inaktivität</string>
-    <string name="settings_sound">Ton</string>
+    <string name="settings_sound">TON</string>
     <string name="settings_sound_subtitle">Musik und Soundeffekte in den Spielen</string>
 
     <string name="chip_01_xrp">0.1 XRP</string>

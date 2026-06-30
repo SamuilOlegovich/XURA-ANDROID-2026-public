@@ -382,10 +382,10 @@
     <string name="detail_bet_dozen">Dezena %d</string>
     <string name="detail_bet_column">Coluna %d</string>
 
-    <string name="settings_auto_lock">Bloqueio automático</string>
+    <string name="settings_auto_lock">BLOQUEIO AUTOMÁTICO</string>
     <string name="settings_auto_lock_timeout_title">Tempo limite do bloqueio automático</string>
     <string name="settings_auto_lock_subtitle">Tempo de bloqueio quando o app vai para segundo plano</string>
-    <string name="settings_sound">Som</string>
+    <string name="settings_sound">SOM</string>
     <string name="settings_sound_subtitle">Música e efeitos sonoros nos jogos</string>
 
     <string name="chip_01_xrp">0.1 XRP</string>

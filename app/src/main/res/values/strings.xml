@@ -418,10 +418,10 @@
     <string name="dev_network_switched_mainnet">Switched to MAINNET. Restart recommended.</string>
     <string name="dev_network_switched_testnet">Switched to TESTNET. Restart recommended.</string>
 
-    <string name="settings_auto_lock">Auto-lock</string>
+    <string name="settings_auto_lock">AUTO-LOCK</string>
     <string name="settings_auto_lock_timeout_title">Auto-lock timeout</string>
     <string name="settings_auto_lock_subtitle">Lock timeout when app goes to background</string>
-    <string name="settings_sound">Sound</string>
+    <string name="settings_sound">SOUND</string>
     <string name="settings_sound_subtitle">Music and sound effects in casino games</string>
 
     <string name="chip_01_xrp">0.1 XRP</string>

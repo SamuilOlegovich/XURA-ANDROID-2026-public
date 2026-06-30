@@ -382,10 +382,10 @@
     <string name="detail_bet_dozen">Douzaine %d</string>
     <string name="detail_bet_column">Colonne %d</string>
 
-    <string name="settings_auto_lock">Verrouillage auto</string>
+    <string name="settings_auto_lock">VERROUILLAGE AUTO</string>
     <string name="settings_auto_lock_timeout_title">Délai de verrouillage automatique</string>
     <string name="settings_auto_lock_subtitle">Délai avant verrouillage en arrière-plan</string>
-    <string name="settings_sound">Son</string>
+    <string name="settings_sound">SON</string>
     <string name="settings_sound_subtitle">Musique et effets sonores dans les jeux</string>
 
     <string name="chip_01_xrp">0.1 XRP</string>
