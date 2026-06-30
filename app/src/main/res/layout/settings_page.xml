@@ -634,203 +634,129 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <!-- BET INPUT STYLE — card with 2 chip options -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/card_bet_input_style"
+            <!-- BET INPUT STYLE — row (same pattern as auto-lock) -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/settings_bet_style_linc"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
                 android:layout_marginBottom="12dp"
-                app:cardBackgroundColor="@color/xura_card"
-                app:cardCornerRadius="16dp"
-                app:strokeColor="@color/xura_glass_border"
-                app:strokeWidth="1dp"
-                app:cardElevation="0dp">
+                android:background="@drawable/bg_card_glass_clickable"
+                android:clickable="true"
+                android:focusable="true"
+                android:contentDescription="Bet input style">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/bet_style_title"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="@string/settings_bet_input_style"
+                    android:textColor="@color/xura_text_primary"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.03"
+                    app:layout_constraintBottom_toTopOf="@+id/bet_style_subtitle"
+                    app:layout_constraintEnd_toStartOf="@+id/bet_style_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="packed" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/montserrat"
-                        android:text="@string/settings_bet_input_style"
-                        android:textColor="@color/xura_gold"
-                        android:textSize="10sp"
-                        android:letterSpacing="0.12" />
+                <TextView
+                    android:id="@+id/bet_style_subtitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="8dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="@string/settings_bet_input_style_sub"
+                    android:textColor="@color/xura_text_tertiary"
+                    android:textSize="11sp"
+                    android:letterSpacing="0.02"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/bet_style_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/bet_style_title" />
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="6dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="@color/xura_gold"
-                        android:alpha="0.2" />
+                <ImageView
+                    android:id="@+id/bet_style_icon"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/ic_apps_grid"
+                    android:importantForAccessibility="no"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/xura_text_primary" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:fontFamily="@font/montserrat"
-                        android:text="@string/settings_bet_input_style_sub"
-                        android:textColor="@color/xura_text_tertiary"
-                        android:textSize="11sp" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <com.google.android.material.chip.ChipGroup
-                        android:id="@+id/chip_group_bet_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:singleSelection="true"
-                        app:selectionRequired="true">
-
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/chip_bet_style_chips"
-                            style="@style/Widget.Material3.Chip.Filter"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/montserrat"
-                            android:text="@string/bet_style_chips"
-                            android:textColor="@color/xura_text_primary"
-                            android:checked="true"
-                            app:chipBackgroundColor="@color/chip_bg_quick_bet"
-                            app:chipStrokeColor="@color/chip_stroke_quick_bet"
-                            app:chipStrokeWidth="1dp"
-                            app:checkedIconVisible="false" />
-
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/chip_bet_style_slider"
-                            style="@style/Widget.Material3.Chip.Filter"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/montserrat"
-                            android:text="@string/bet_style_slider"
-                            android:textColor="@color/xura_text_primary"
-                            app:chipBackgroundColor="@color/chip_bg_quick_bet"
-                            app:chipStrokeColor="@color/chip_stroke_quick_bet"
-                            app:chipStrokeWidth="1dp"
-                            app:checkedIconVisible="false" />
-
-                    </com.google.android.material.chip.ChipGroup>
-
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- BET RESPONSE TIMEOUT — card with chip options -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/card_bet_timeout"
+            <!-- BET RESPONSE TIMEOUT — row (same pattern as auto-lock) -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/settings_bet_timeout_linc"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
                 android:layout_marginBottom="12dp"
-                app:cardBackgroundColor="@color/xura_card"
-                app:cardCornerRadius="16dp"
-                app:strokeColor="@color/xura_glass_border"
-                app:strokeWidth="1dp"
-                app:cardElevation="0dp">
+                android:background="@drawable/bg_card_glass_clickable"
+                android:clickable="true"
+                android:focusable="true"
+                android:contentDescription="Server response timeout">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/bet_timeout_title"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="@string/settings_bet_timeout"
+                    android:textColor="@color/xura_text_primary"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.03"
+                    app:layout_constraintBottom_toTopOf="@+id/bet_timeout_subtitle"
+                    app:layout_constraintEnd_toStartOf="@+id/bet_timeout_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="packed" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/montserrat"
-                        android:text="@string/settings_bet_timeout"
-                        android:textColor="@color/xura_gold"
-                        android:textSize="10sp"
-                        android:letterSpacing="0.12" />
+                <TextView
+                    android:id="@+id/bet_timeout_subtitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="8dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="@string/settings_bet_timeout_sub"
+                    android:textColor="@color/xura_text_tertiary"
+                    android:textSize="11sp"
+                    android:letterSpacing="0.02"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/bet_timeout_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/bet_timeout_title" />
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="6dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="@color/xura_gold"
-                        android:alpha="0.2" />
+                <ImageView
+                    android:id="@+id/bet_timeout_icon"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/ic_hourglass"
+                    android:importantForAccessibility="no"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/xura_text_primary" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:fontFamily="@font/montserrat"
-                        android:text="@string/settings_bet_timeout_sub"
-                        android:textColor="@color/xura_text_tertiary"
-                        android:textSize="11sp" />
-
-                    <com.google.android.material.chip.ChipGroup
-                        android:id="@+id/chip_group_bet_timeout"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:singleSelection="true"
-                        app:selectionRequired="true">
-
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/chip_timeout_60"
-                            style="@style/Widget.Material3.Chip.Filter"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/montserrat"
-                            android:text="1 min"
-                            android:textColor="@color/xura_text_primary"
-                            app:chipBackgroundColor="@color/chip_bg_quick_bet"
-                            app:chipStrokeColor="@color/chip_stroke_quick_bet"
-                            app:chipStrokeWidth="1dp"
-                            app:checkedIconVisible="false" />
-
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/chip_timeout_120"
-                            style="@style/Widget.Material3.Chip.Filter"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/montserrat"
-                            android:text="2 min"
-                            android:checked="true"
-                            android:textColor="@color/xura_text_primary"
-                            app:chipBackgroundColor="@color/chip_bg_quick_bet"
-                            app:chipStrokeColor="@color/chip_stroke_quick_bet"
-                            app:chipStrokeWidth="1dp"
-                            app:checkedIconVisible="false" />
-
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/chip_timeout_180"
-                            style="@style/Widget.Material3.Chip.Filter"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/montserrat"
-                            android:text="3 min"
-                            android:textColor="@color/xura_text_primary"
-                            app:chipBackgroundColor="@color/chip_bg_quick_bet"
-                            app:chipStrokeColor="@color/chip_stroke_quick_bet"
-                            app:chipStrokeWidth="1dp"
-                            app:checkedIconVisible="false" />
-
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/chip_timeout_300"
-                            style="@style/Widget.Material3.Chip.Filter"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/montserrat"
-                            android:text="5 min"
-                            android:textColor="@color/xura_text_primary"
-                            app:chipBackgroundColor="@color/chip_bg_quick_bet"
-                            app:chipStrokeColor="@color/chip_stroke_quick_bet"
-                            app:chipStrokeWidth="1dp"
-                            app:checkedIconVisible="false" />
-
-                    </com.google.android.material.chip.ChipGroup>
-
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <!-- INFO — glass card -->
             <androidx.constraintlayout.widget.ConstraintLayout

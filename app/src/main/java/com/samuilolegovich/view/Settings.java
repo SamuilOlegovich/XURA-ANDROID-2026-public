@@ -24,7 +24,6 @@ import androidx.core.content.ContextCompat;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
-import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputLayout;
 import com.samuilolegovich.BaseActivity;
@@ -84,6 +83,12 @@ public class Settings extends BaseActivity {
         "30 sec", "1 min", "2 min", "5 min", "15 min"
     };
 
+    private static final String[] BET_STYLE_VALUES = {"chips", "slider"};
+    private static final String[] BET_STYLE_LABELS = {"Chips", "Slider +/-"};
+
+    private static final int[]    BET_TIMEOUT_VALUES = {60, 120, 180, 300};
+    private static final String[] BET_TIMEOUT_LABELS = {"1 min", "2 min", "3 min", "5 min"};
+
     // ── Существующие View ───────────────────────────────────────────────
     private View settingsSelectEnglishLinc;
     private View settingsSetPasswordLinc;
@@ -113,8 +118,10 @@ public class Settings extends BaseActivity {
     private TextView settingsFooterVersion;
     private TextView settingsFooterDeveloper;
 
-    private ChipGroup chipGroupBetStyle;
-    private ChipGroup chipGroupBetTimeout;
+    private View     settingsBetStyleLinc;
+    private View     settingsBetTimeoutLinc;
+    private TextView betStyleTitle;
+    private TextView betTimeoutTitle;
 
     // ── View скрытой DEV-секции ──────────────────────────────────────────
     private MaterialCardView cardDevNetwork;
@@ -154,8 +161,6 @@ public class Settings extends BaseActivity {
         root = findViewById(android.R.id.content);
         setButtons();
         setLanguage();
-        updateBetInputStyleChip();
-        updateBetTimeoutChip();
         listeners();
         setupBottomNav();
         repository.getBalanceLiveData().observe(this, balance -> {
@@ -196,8 +201,10 @@ public class Settings extends BaseActivity {
         devTxHistoryLinc          = findViewById(R.id.dev_tx_history_linc);
         settingsFooterVersion     = findViewById(R.id.settings_footer_version);
         settingsFooterDeveloper   = findViewById(R.id.settings_footer_developer);
-        chipGroupBetStyle         = findViewById(R.id.chip_group_bet_style);
-        chipGroupBetTimeout       = findViewById(R.id.chip_group_bet_timeout);
+        settingsBetStyleLinc   = findViewById(R.id.settings_bet_style_linc);
+        settingsBetTimeoutLinc = findViewById(R.id.settings_bet_timeout_linc);
+        betStyleTitle          = findViewById(R.id.bet_style_title);
+        betTimeoutTitle        = findViewById(R.id.bet_timeout_title);
 
         // DEV
         cardDevNetwork  = findViewById(R.id.card_dev_network);
@@ -224,6 +231,8 @@ public class Settings extends BaseActivity {
         settingsTextView.setText(R.string.settings_text);
         updateBiometricButton();
         updateLockTimeoutButton();
+        updateBetStyleRow();
+        updateBetTimeoutRow();
         updateSoundButton();
         updateGameModeButton();
         updateTestBalanceCard();
@@ -336,30 +345,23 @@ public class Settings extends BaseActivity {
         InactivityGuard.setTimeoutMs(ms);
     }
 
-    /** Восстанавливает выбор чипа таймаута ответа сервера из сохранённых настроек. */
-    private void updateBetTimeoutChip() {
-        int saved = PrefsHelper.get(this)
-                .getInt(StringEnum.APP_PREFERENCES_BET_TIMEOUT.getValue(), 120);
-        int chipId;
-        switch (saved) {
-            case 60:  chipId = R.id.chip_timeout_60;  break;
-            case 180: chipId = R.id.chip_timeout_180; break;
-            case 300: chipId = R.id.chip_timeout_300; break;
-            default:  chipId = R.id.chip_timeout_120; break;
-        }
-        chipGroupBetTimeout.check(chipId);
-    }
-
-    /** Восстанавливает выбор чипа стиля ввода ставки из сохранённых настроек. */
-    private void updateBetInputStyleChip() {
+    /** Обновляет строку стиля ввода ставки, показывая текущее значение. */
+    private void updateBetStyleRow() {
         String saved = PrefsHelper.get(this)
                 .getString(StringEnum.APP_PREFERENCES_BET_INPUT_STYLE.getValue(), "chips");
-        int chipId;
-        switch (saved) {
-            case "slider": chipId = R.id.chip_bet_style_slider; break;
-            default:          chipId = R.id.chip_bet_style_chips;     break;
+        String label = "slider".equals(saved) ? BET_STYLE_LABELS[1] : BET_STYLE_LABELS[0];
+        betStyleTitle.setText(getString(R.string.settings_bet_input_style) + "  ●  " + label);
+    }
+
+    /** Обновляет строку таймаута ответа сервера, показывая текущее значение. */
+    private void updateBetTimeoutRow() {
+        int saved = PrefsHelper.get(this)
+                .getInt(StringEnum.APP_PREFERENCES_BET_TIMEOUT.getValue(), 120);
+        String label = "2 min";
+        for (int i = 0; i < BET_TIMEOUT_VALUES.length; i++) {
+            if (BET_TIMEOUT_VALUES[i] == saved) { label = BET_TIMEOUT_LABELS[i]; break; }
         }
-        chipGroupBetStyle.check(chipId);
+        betTimeoutTitle.setText(getString(R.string.settings_bet_timeout) + "  ●  " + label);
     }
 
     /** Обновляет внешний вид кнопки пароля: фон, цвет текста/иконки и надпись зависят от наличия пароля. */
@@ -490,22 +492,45 @@ public class Settings extends BaseActivity {
      * DEV-секции по 7 нажатиям на заголовок, и все элементы управления DEV-секцией.
      */
     private void listeners() {
-        chipGroupBetStyle.setOnCheckedStateChangeListener((group, checkedIds) -> {
-            String style = "chips";
-            if (checkedIds.contains(R.id.chip_bet_style_slider)) style = "slider";
-            PrefsHelper.get(this).edit()
-                    .putString(StringEnum.APP_PREFERENCES_BET_INPUT_STYLE.getValue(), style)
-                    .apply();
+        settingsBetStyleLinc.setOnClickListener(v -> {
+            pulse(v);
+            String saved = PrefsHelper.get(this)
+                    .getString(StringEnum.APP_PREFERENCES_BET_INPUT_STYLE.getValue(), "chips");
+            int current = "slider".equals(saved) ? 1 : 0;
+            new AlertDialog.Builder(this)
+                    .setTitle(getString(R.string.settings_bet_input_style))
+                    .setSingleChoiceItems(BET_STYLE_LABELS, current, (d, which) -> {
+                        PrefsHelper.get(this).edit()
+                                .putString(StringEnum.APP_PREFERENCES_BET_INPUT_STYLE.getValue(),
+                                        BET_STYLE_VALUES[which])
+                                .apply();
+                        updateBetStyleRow();
+                        d.dismiss();
+                    })
+                    .setNegativeButton("CANCEL", null)
+                    .show();
         });
 
-        chipGroupBetTimeout.setOnCheckedStateChangeListener((group, checkedIds) -> {
-            int seconds = 120;
-            if      (checkedIds.contains(R.id.chip_timeout_60))  seconds = 60;
-            else if (checkedIds.contains(R.id.chip_timeout_180)) seconds = 180;
-            else if (checkedIds.contains(R.id.chip_timeout_300)) seconds = 300;
-            PrefsHelper.get(this).edit()
-                    .putInt(StringEnum.APP_PREFERENCES_BET_TIMEOUT.getValue(), seconds)
-                    .apply();
+        settingsBetTimeoutLinc.setOnClickListener(v -> {
+            pulse(v);
+            int saved = PrefsHelper.get(this)
+                    .getInt(StringEnum.APP_PREFERENCES_BET_TIMEOUT.getValue(), 120);
+            int current = 1; // default 2 min
+            for (int i = 0; i < BET_TIMEOUT_VALUES.length; i++) {
+                if (BET_TIMEOUT_VALUES[i] == saved) { current = i; break; }
+            }
+            new AlertDialog.Builder(this)
+                    .setTitle(getString(R.string.settings_bet_timeout))
+                    .setSingleChoiceItems(BET_TIMEOUT_LABELS, current, (d, which) -> {
+                        PrefsHelper.get(this).edit()
+                                .putInt(StringEnum.APP_PREFERENCES_BET_TIMEOUT.getValue(),
+                                        BET_TIMEOUT_VALUES[which])
+                                .apply();
+                        updateBetTimeoutRow();
+                        d.dismiss();
+                    })
+                    .setNegativeButton("CANCEL", null)
+                    .show();
         });
 
         settingsSetPasswordLinc.setOnClickListener(v -> {
