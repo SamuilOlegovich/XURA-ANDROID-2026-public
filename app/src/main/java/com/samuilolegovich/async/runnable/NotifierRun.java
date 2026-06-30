@@ -67,9 +67,11 @@ public class NotifierRun implements Runnable {
 
 
     /**
-     * Извлекает из Memo транзакции команду и число сервера (формат "CMD:serverNumber"),
-     * сохраняет это число как контрольное значение лотереи и в зависимости от команды
-     * (LOSE/WIN/JKPT/LOTO/REF) формирует соответствующее сообщение для игрока.
+     * Извлекает из Memo транзакции команду и число сервера, формирует сообщение для игрока.
+     *
+     * Форматы:
+     *   - рулетка:       RLT:{число}:{WIN|LOSE}
+     *   - остальные игры: CMD:{serverNumber}  (WIN/LOSE/JKPT/LOTO/REF)
      */
     private void responseToBet(JSONObject message) {
         try {
@@ -84,7 +86,22 @@ public class NotifierRun implements Runnable {
                     .divide(BigDecimal.valueOf(1_000_000L), MathContext.DECIMAL128)
                     .toString();
 
-            // формат memo ответа сервера: CMD:serverNumber
+            // рулетка: RLT:{число}:{WIN|LOSE}
+            if (memoText.startsWith("RLT:")) {
+                String[] parts    = memoText.split(":", 3);
+                String rltNumber  = parts.length > 1 ? parts[1] : "0";
+                String rltOutcome = parts.length > 2 ? parts[2] : "";
+                Flasher.NUMBER_BET = rltNumber;
+                WalletRepository.getInstance().setLottoNow(rltNumber);
+                if ("WIN".equals(rltOutcome)) {
+                    responseToBet(String.format(CONGRATULATIONS_YOUR_BET_IS_WON, amountWin), rltNumber, 2);
+                } else {
+                    responseToBet(YOUR_BET_IS_LOST_TRY_AGAIN_AND_YOU_WILL_BE_LUCKY, rltNumber, 1);
+                }
+                return;
+            }
+
+            // остальные игры: CMD:{serverNumber}
             String[] parts = memoText.split(":", 2);
             String cmd          = parts[0];
             String serverNumber = parts.length > 1 ? parts[1] : "0";
