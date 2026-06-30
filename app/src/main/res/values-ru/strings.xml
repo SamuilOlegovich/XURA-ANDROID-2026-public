@@ -420,6 +420,9 @@
     <string name="chip_20_xrp">20 XRP</string>
     <string name="settings_bet_input_style">СТИЛЬ ВВОДА СТАВКИ</string>
     <string name="settings_bet_input_style_sub">Выберите способ указать сумму ставки</string>
+    <string name="settings_bet_timeout">ТАЙМАУТ ОТВЕТА СЕРВЕРА</string>
+    <string name="settings_bet_timeout_sub">Если сервер не ответит за это время — спин отменится</string>
+    <string name="flasher_timeout_message">Сервер не ответил. Попробуйте позже.</string>
     <string name="bet_style_chips">Чипы</string>
     <string name="bet_style_drum">Барабан</string>
     <string name="bet_style_plusminus">+/−</string>

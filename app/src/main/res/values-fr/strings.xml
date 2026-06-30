@@ -393,6 +393,9 @@
     <string name="chip_20_xrp">20 XRP</string>
     <string name="settings_bet_input_style">STYLE DE MISE</string>
     <string name="settings_bet_input_style_sub">Choisissez comment entrer le montant</string>
+    <string name="settings_bet_timeout">DÉLAI DE RÉPONSE SERVEUR</string>
+    <string name="settings_bet_timeout_sub">Si le serveur ne répond pas dans ce délai, le spin sera annulé</string>
+    <string name="flasher_timeout_message">Pas de réponse du serveur. Veuillez réessayer plus tard.</string>
     <string name="bet_style_chips">Jetons</string>
     <string name="bet_style_drum">Tambour</string>
     <string name="bet_style_plusminus">+/−</string>

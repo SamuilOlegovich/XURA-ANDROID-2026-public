@@ -393,6 +393,9 @@
     <string name="chip_20_xrp">20 XRP</string>
     <string name="settings_bet_input_style">أسلوب إدخال الرهان</string>
     <string name="settings_bet_input_style_sub">اختر كيفية إدخال مبلغ الرهان</string>
+    <string name="settings_bet_timeout">مهلة استجابة الخادم</string>
+    <string name="settings_bet_timeout_sub">إذا لم يستجب الخادم في هذا الوقت، سيتم إلغاء الدوران</string>
+    <string name="flasher_timeout_message">لا توجد استجابة من الخادم. يرجى المحاولة لاحقاً.</string>
     <string name="bet_style_chips">رقائق</string>
     <string name="bet_style_drum">طبل</string>
     <string name="bet_style_plusminus">+/−</string>

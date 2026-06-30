@@ -22,9 +22,11 @@ import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 import com.samuilolegovich.async.runnable.FlasherRun;
 import com.samuilolegovich.async.runnable.NotifierRunForTrialGame;
+import com.samuilolegovich.enums.StringEnum;
 import com.samuilolegovich.enums.TestModeEnum;
 import com.samuilolegovich.utils.AudioHelper;
 import com.samuilolegovich.utils.Lotto;
+import com.samuilolegovich.utils.PrefsHelper;
 import dagger.hilt.android.AndroidEntryPoint;
 
 import java.math.BigDecimal;
@@ -95,6 +97,9 @@ public class Flasher extends BaseActivity {
     private Handler countdownHandler;
     private Runnable countdownRunnable;
 
+    private Handler timeoutHandler;
+    private Runnable timeoutRunnable;
+
     private String CONGRATULATIONS;
     private String DONT_GIVE_UP;
     private String BET_LOST;
@@ -113,6 +118,7 @@ public class Flasher extends BaseActivity {
         setLanguage();
         setSound();
         goThread();
+        startBetTimeout();
 
         if (!MainActivity.IS_REAL_GAME_MODE) {
             goThreadTest();
@@ -166,12 +172,33 @@ public class Flasher extends BaseActivity {
     /** Завершает ожидание и переводит экран в режим показа итога ставки (вызывается из фонового потока, переключается на UI-поток). */
     public void stopGame(String text, boolean win) {
         runOnUiThread(() -> {
+            cancelBetTimeout();
             FLAG = false;
             FlasherRun.FLAG = false;
             gameResultShown = true;
             lastResultWin   = win;
             gameStop(text, win);
         });
+    }
+
+    /** Запускает таймер ожидания ответа сервера; при срабатывании показывает сообщение об ошибке. */
+    private void startBetTimeout() {
+        int seconds = PrefsHelper.get(this).getInt(
+                StringEnum.APP_PREFERENCES_BET_TIMEOUT.getValue(), 120);
+        timeoutHandler  = new Handler(Looper.getMainLooper());
+        timeoutRunnable = () -> {
+            if (!gameResultShown) {
+                stopGame(getString(R.string.flasher_timeout_message), false);
+            }
+        };
+        timeoutHandler.postDelayed(timeoutRunnable, seconds * 1000L);
+    }
+
+    /** Отменяет таймер ожидания ответа (вызывается при получении ответа от сервера). */
+    private void cancelBetTimeout() {
+        if (timeoutHandler != null && timeoutRunnable != null) {
+            timeoutHandler.removeCallbacks(timeoutRunnable);
+        }
     }
 
 
@@ -302,6 +329,7 @@ public class Flasher extends BaseActivity {
         VISIBLE_ON_SCREEN = false;
         FlasherRun.FLAG = false;
         cancelCountdown();
+        cancelBetTimeout();
         if (wheelView != null) wheelView.stopSpinning();
         if (rouletteSpinMediaPlayer != null && rouletteSpinMediaPlayer.isPlaying()) rouletteSpinMediaPlayer.pause();
         AudioHelper.abandonFocus(this, audioFocusRequest);
@@ -335,6 +363,7 @@ public class Flasher extends BaseActivity {
     @Override
     public void onBackPressed() {
         cancelCountdown();
+        cancelBetTimeout();
         if (wheelView != null) wheelView.stopSpinning();
         if (rouletteSpinMediaPlayer != null) rouletteSpinMediaPlayer.stop();
         setColorNavigation(1);

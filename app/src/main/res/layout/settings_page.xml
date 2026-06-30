@@ -720,6 +720,118 @@
 
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- BET RESPONSE TIMEOUT — card with chip options -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_bet_timeout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="12dp"
+                app:cardBackgroundColor="@color/xura_card"
+                app:cardCornerRadius="16dp"
+                app:strokeColor="@color/xura_glass_border"
+                app:strokeWidth="1dp"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat"
+                        android:text="@string/settings_bet_timeout"
+                        android:textColor="@color/xura_gold"
+                        android:textSize="10sp"
+                        android:letterSpacing="0.12" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="6dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@color/xura_gold"
+                        android:alpha="0.2" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:fontFamily="@font/montserrat"
+                        android:text="@string/settings_bet_timeout_sub"
+                        android:textColor="@color/xura_text_tertiary"
+                        android:textSize="11sp" />
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/chip_group_bet_timeout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:singleSelection="true"
+                        app:selectionRequired="true">
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chip_timeout_60"
+                            style="@style/Widget.Material3.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat"
+                            android:text="1 min"
+                            android:textColor="@color/xura_text_primary"
+                            app:chipBackgroundColor="@color/chip_bg_quick_bet"
+                            app:chipStrokeColor="@color/chip_stroke_quick_bet"
+                            app:chipStrokeWidth="1dp"
+                            app:checkedIconVisible="false" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chip_timeout_120"
+                            style="@style/Widget.Material3.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat"
+                            android:text="2 min"
+                            android:checked="true"
+                            android:textColor="@color/xura_text_primary"
+                            app:chipBackgroundColor="@color/chip_bg_quick_bet"
+                            app:chipStrokeColor="@color/chip_stroke_quick_bet"
+                            app:chipStrokeWidth="1dp"
+                            app:checkedIconVisible="false" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chip_timeout_180"
+                            style="@style/Widget.Material3.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat"
+                            android:text="3 min"
+                            android:textColor="@color/xura_text_primary"
+                            app:chipBackgroundColor="@color/chip_bg_quick_bet"
+                            app:chipStrokeColor="@color/chip_stroke_quick_bet"
+                            app:chipStrokeWidth="1dp"
+                            app:checkedIconVisible="false" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chip_timeout_300"
+                            style="@style/Widget.Material3.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat"
+                            android:text="5 min"
+                            android:textColor="@color/xura_text_primary"
+                            app:chipBackgroundColor="@color/chip_bg_quick_bet"
+                            app:chipStrokeColor="@color/chip_stroke_quick_bet"
+                            app:chipStrokeWidth="1dp"
+                            app:checkedIconVisible="false" />
+
+                    </com.google.android.material.chip.ChipGroup>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
             <!-- INFO — glass card -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/info_settings_linc"

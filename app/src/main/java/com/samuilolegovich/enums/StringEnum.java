@@ -80,7 +80,8 @@ public enum StringEnum {
 
     WALLET_NOT_ACTIVATED("Wallet not activated."),
 
-    APP_PREFERENCES_BET_INPUT_STYLE("bet_input_style")
+    APP_PREFERENCES_BET_INPUT_STYLE("bet_input_style"),
+    APP_PREFERENCES_BET_TIMEOUT("bet_response_timeout")
 
     ;
 

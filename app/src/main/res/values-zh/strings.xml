@@ -395,6 +395,9 @@
     <string name="chip_20_xrp">20 XRP</string>
     <string name="settings_bet_input_style">下注方式</string>
     <string name="settings_bet_input_style_sub">选择输入下注金额的方式</string>
+    <string name="settings_bet_timeout">服务器响应超时</string>
+    <string name="settings_bet_timeout_sub">如果服务器未在此时间内响应，旋转将被取消</string>
+    <string name="flasher_timeout_message">服务器无响应，请稍后再试。</string>
     <string name="bet_style_chips">筹码</string>
     <string name="bet_style_drum">滚轮</string>
     <string name="bet_style_plusminus">+/−</string>

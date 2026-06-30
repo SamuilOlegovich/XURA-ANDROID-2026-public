@@ -114,6 +114,7 @@ public class Settings extends BaseActivity {
     private TextView settingsFooterDeveloper;
 
     private ChipGroup chipGroupBetStyle;
+    private ChipGroup chipGroupBetTimeout;
 
     // ── View скрытой DEV-секции ──────────────────────────────────────────
     private MaterialCardView cardDevNetwork;
@@ -154,6 +155,7 @@ public class Settings extends BaseActivity {
         setButtons();
         setLanguage();
         updateBetInputStyleChip();
+        updateBetTimeoutChip();
         listeners();
         setupBottomNav();
         repository.getBalanceLiveData().observe(this, balance -> {
@@ -195,6 +197,7 @@ public class Settings extends BaseActivity {
         settingsFooterVersion     = findViewById(R.id.settings_footer_version);
         settingsFooterDeveloper   = findViewById(R.id.settings_footer_developer);
         chipGroupBetStyle         = findViewById(R.id.chip_group_bet_style);
+        chipGroupBetTimeout       = findViewById(R.id.chip_group_bet_timeout);
 
         // DEV
         cardDevNetwork  = findViewById(R.id.card_dev_network);
@@ -331,6 +334,20 @@ public class Settings extends BaseActivity {
                 .putLong(StringEnum.APP_PREFERENCES_LOCK_TIMEOUT.getValue(), ms)
                 .apply();
         InactivityGuard.setTimeoutMs(ms);
+    }
+
+    /** Восстанавливает выбор чипа таймаута ответа сервера из сохранённых настроек. */
+    private void updateBetTimeoutChip() {
+        int saved = PrefsHelper.get(this)
+                .getInt(StringEnum.APP_PREFERENCES_BET_TIMEOUT.getValue(), 120);
+        int chipId;
+        switch (saved) {
+            case 60:  chipId = R.id.chip_timeout_60;  break;
+            case 180: chipId = R.id.chip_timeout_180; break;
+            case 300: chipId = R.id.chip_timeout_300; break;
+            default:  chipId = R.id.chip_timeout_120; break;
+        }
+        chipGroupBetTimeout.check(chipId);
     }
 
     /** Восстанавливает выбор чипа стиля ввода ставки из сохранённых настроек. */
@@ -478,6 +495,16 @@ public class Settings extends BaseActivity {
             if (checkedIds.contains(R.id.chip_bet_style_slider)) style = "slider";
             PrefsHelper.get(this).edit()
                     .putString(StringEnum.APP_PREFERENCES_BET_INPUT_STYLE.getValue(), style)
+                    .apply();
+        });
+
+        chipGroupBetTimeout.setOnCheckedStateChangeListener((group, checkedIds) -> {
+            int seconds = 120;
+            if      (checkedIds.contains(R.id.chip_timeout_60))  seconds = 60;
+            else if (checkedIds.contains(R.id.chip_timeout_180)) seconds = 180;
+            else if (checkedIds.contains(R.id.chip_timeout_300)) seconds = 300;
+            PrefsHelper.get(this).edit()
+                    .putInt(StringEnum.APP_PREFERENCES_BET_TIMEOUT.getValue(), seconds)
                     .apply();
         });
 
