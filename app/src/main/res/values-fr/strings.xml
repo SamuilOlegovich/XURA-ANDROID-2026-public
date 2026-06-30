@@ -63,7 +63,7 @@
     <string name="guessed_number_should_not_be_less_than">Le nombre doit être compris entre 1 et 36</string>
     <string name="get_become_referral_enum">Demande de parrainage envoyée — attendez la réponse du serveur</string>
     <string name="go_to_the_dark_side_find_the_secret_button">Passez du côté obscur — trouvez le bouton secret !</string>
-    <string name="your_bet_is_lost_try_again">Votre mise est perdue — réessayez, la chance viendra !</string>
+    <string name="your_bet_is_lost_try_again">VOTRE MISE N\'A PAS GAGNÉ. FONDS EN SÉCURITÉ — VÉRIFIEZ L\'HISTORIQUE.</string>
     <string name="create_new_wallet_text">Sauvegardez impérativement la phrase de récupération, ne la partagez avec personne</string>
     <string name="set_password_to_enter_application">Définissez un mot de passe pour accéder à l\'application</string>
     <string name="error_check_the_seed_and_try_again">Erreur : vérifiez votre phrase de récupération et réessayez</string>

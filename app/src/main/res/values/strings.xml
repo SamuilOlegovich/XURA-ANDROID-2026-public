@@ -58,7 +58,7 @@
     <string name="guessed_number_should_not_be_less_than">Number must be between 1 and 36</string>
     <string name="get_become_referral_enum">Referral request sent — please wait for the server response</string>
     <string name="go_to_the_dark_side_find_the_secret_button">GO TO THE DARK SIDE - FIND THE SECRET BUTTON!</string>
-    <string name="your_bet_is_lost_try_again">YOUR BET IS LOST — TRY AGAIN AND LUCK WILL COME!</string>
+    <string name="your_bet_is_lost_try_again">YOUR BET DID NOT WIN. FUNDS ARE SAFE — CHECK TRANSACTION HISTORY.</string>
     <string name="create_new_wallet_text">BE SURE TO SAVE THE SEED AND DO NOT GIVE IT TO ANYONE</string>
 
     <!-- Onboarding -->

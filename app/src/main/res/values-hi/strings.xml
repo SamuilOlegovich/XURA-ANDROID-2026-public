@@ -63,7 +63,7 @@
     <string name="guessed_number_should_not_be_less_than">संख्या 1 से 36 के बीच होनी चाहिए</string>
     <string name="get_become_referral_enum">रेफरल अनुरोध भेजा गया — सर्वर के जवाब की प्रतीक्षा करें</string>
     <string name="go_to_the_dark_side_find_the_secret_button">डार्क साइड पर जाएं — गुप्त बटन खोजें!</string>
-    <string name="your_bet_is_lost_try_again">आपका दांव हार गया — फिर कोशिश करें, किस्मत आएगी!</string>
+    <string name="your_bet_is_lost_try_again">आपका दांव नहीं जीता। फंड सुरक्षित हैं — इतिहास जांचें।</string>
     <string name="create_new_wallet_text">सीड फ्रेज़ ज़रूर सेव करें, किसी को न बताएं</string>
     <string name="set_password_to_enter_application">ऐप में प्रवेश के लिए पासवर्ड सेट करें</string>
     <string name="error_check_the_seed_and_try_again">त्रुटि: अपना सीड फ्रेज़ जांचें और पुनः प्रयास करें</string>
