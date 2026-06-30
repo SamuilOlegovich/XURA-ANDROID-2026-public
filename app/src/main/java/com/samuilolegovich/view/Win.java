@@ -30,10 +30,8 @@ public class Win extends BaseActivity {
 
     private MediaPlayer winMediaPlayer;
 
-    private TextView winPageTextViewTree;
     private TextView winPageTextViewTwo;
     private TextView winPageTextView;
-    private View btnPlayAgain;
     private View btnBackToGames;
 
 
@@ -52,10 +50,8 @@ public class Win extends BaseActivity {
 
     /** Находит View разметки, запускает звук победы, накладывает градиентную заливку на основной текст и назначает слушатели кнопок "сыграть снова"/"вернуться к играм". */
     private void setButtons() {
-        winPageTextViewTree = (TextView) findViewById(R.id.win_page_text_view_tree);
         winPageTextViewTwo = (TextView) findViewById(R.id.win_page_text_view_tow);
         winPageTextView = (TextView) findViewById(R.id.win_page_text_view);
-        btnPlayAgain = findViewById(R.id.btn_play_again);
         btnBackToGames = findViewById(R.id.btn_back_to_games);
 
         winMediaPlayer = MediaPlayer.create(this, R.raw.win);
@@ -72,11 +68,6 @@ public class Win extends BaseActivity {
             winPageTextView.invalidate();
         });
 
-        btnPlayAgain.setOnClickListener(v -> {
-            winMediaPlayer.stop();
-            finish();
-        });
-
         btnBackToGames.setOnClickListener(v -> {
             winMediaPlayer.stop();
             Intent intent = new Intent(SelectGame.SELECT_GAME_CLASS);
@@ -88,9 +79,8 @@ public class Win extends BaseActivity {
     }
 
 
-    /** Устанавливает локализованный текст поздравления. */
+    /** Устанавливает локализованный заголовок победы. */
     private void setLanguage() {
-        winPageTextViewTree.setText(R.string.congratulations);
         winPageTextView.setText(R.string.bet_won);
     }
 
@@ -100,7 +90,6 @@ public class Win extends BaseActivity {
     @SuppressLint("SetTextI18n")
     private void goText() {
         winPageTextViewTwo.setText(MASSAGE);
-        winPageTextViewTwo.setSelected(true);
     }
 
 

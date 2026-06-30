@@ -57,9 +57,9 @@
     <string name="rules_guess_the_color">راهن واختر لوناً. اللون الصحيح يضاعف الرهان. إذا خسرت، يذهب إلى LOTTO. الحد الأدنى: 0.1 XRP، الأقصى: 100 XRP.</string>
     <string name="referral_text">إذا كان لديك رمز إحالة — أدخله حتماً — سيمنحك فرص لعب إضافية ومشاركة في السحب اليومي</string>
     <string name="rules_roulette"><![CDATA[روليت أوروبية على بلوكشين XRP Ledger.<br>يُحدَّد نتيجة كل دورة بشكل شفاف من بيانات شبكة XRP.<br><br><font color="#FFB000"><b>أنواع الرهانات والمضاعفات</b></font><br><br>• رقم محدد (0–36) &nbsp; <font color="#FFB000"><b>×35</b></font><br>• أحمر / أسود &nbsp; <font color="#FF2080"><b>×2</b></font><br>• فردي / زوجي &nbsp; <b>×2</b><br>• منخفض 1–18 / مرتفع 19–36 &nbsp; <b>×2</b><br>• عشرة (1–12, 13–24, 25–36) &nbsp; <font color="#00D4FF"><b>×3</b></font><br>• عمود &nbsp; <font color="#00D4FF"><b>×3</b></font><br><br><font color="#FFB000"><b>رهانات متعددة</b></font><br>راهن على عدة مواضع في دورة واحدة — تُجمع المبالغ في دفعة واحدة.<br><br><font color="#FF2080"><b>الصفر</b></font><br>فقط الرهان المباشر على 0 يفوز. جميع الرهانات الأخرى تخسر عند الصفر.<br><br><font color="#FFB000"><b>الحدود</b></font><br>أدنى رهان: <font color="#00D4FF">0.1 XRP</font><br>الحد الأقصى للمجموع: <font color="#00D4FF">100 XRP</font><br><br><font color="#555577"><i>العب بمسؤولية. العمر 18+.</i></font>]]></string>
-    <string name="congratulations_your_bet_is_won_loto">تهانينا! فاز رهانك بـ LOTTO! الجائزة: %s XRP — استمر في اللعب!</string>
+    <string name="congratulations_your_bet_is_won_loto">لوتو — %s XRP</string>
     <string name="get_recovery_become_referral">تم إرسال طلب استعادة الإحالة — انتظر رد الخادم</string>
-    <string name="congratulations_your_bet_is_won">تهانينا! فاز رهانك! الجائزة: %s XRP — استمر في الفوز!</string>
+    <string name="congratulations_your_bet_is_won">الفوز — %s XRP</string>
     <string name="guessed_number_should_not_be_less_than">يجب أن يكون الرقم بين 1 و 36</string>
     <string name="get_become_referral_enum">تم إرسال طلب الإحالة — انتظر رد الخادم</string>
     <string name="go_to_the_dark_side_find_the_secret_button">انتقل إلى الجانب المظلم — ابحث عن الزر السري!</string>
