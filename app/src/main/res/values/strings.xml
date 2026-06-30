@@ -432,6 +432,7 @@
     <string name="settings_bet_input_style_sub">Choose how to enter your bet amount</string>
     <string name="settings_bet_timeout">SERVER RESPONSE TIMEOUT</string>
     <string name="settings_bet_timeout_sub">If the server does not respond within this time, the spin will be cancelled</string>
+    <string name="flasher_timeout_title">NO RESPONSE</string>
     <string name="flasher_timeout_message">No response from server. Please try again later.</string>
     <string name="bet_style_chips">Chips</string>
     <string name="bet_style_drum">Drum</string>

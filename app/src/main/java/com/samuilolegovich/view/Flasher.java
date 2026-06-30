@@ -172,6 +172,7 @@ public class Flasher extends BaseActivity {
     /** Завершает ожидание и переводит экран в режим показа итога ставки (вызывается из фонового потока, переключается на UI-поток). */
     public void stopGame(String text, boolean win) {
         runOnUiThread(() -> {
+            if (gameResultShown) return;
             cancelBetTimeout();
             FLAG = false;
             FlasherRun.FLAG = false;
@@ -181,16 +182,44 @@ public class Flasher extends BaseActivity {
         });
     }
 
-    /** Запускает таймер ожидания ответа сервера; при срабатывании показывает сообщение об ошибке. */
+    /** Показывает нейтральный экран таймаута — без Win/Lost оформления; деньги в безопасности, ответ мог прийти позже. */
+    private void showTimeout() {
+        runOnUiThread(() -> {
+            if (gameResultShown) return;
+            gameResultShown = true;
+            FLAG = false;
+            FlasherRun.FLAG = false;
+            cancelBetTimeout();
+
+            if (rouletteSpinMediaPlayer != null) {
+                try { rouletteSpinMediaPlayer.stop(); } catch (Exception ignored) {}
+            }
+            if (wheelView != null) wheelView.stopSpinning();
+
+            winInfo.getPaint().setShader(null);
+            winInfo.setTextColor(0xFFFFB000);
+            winInfo.setText(getString(R.string.flasher_timeout_title));
+            winInfo.setVisibility(View.VISIBLE);
+
+            infoTwo.setText(getString(R.string.flasher_timeout_message));
+            infoTwo.setVisibility(View.VISIBLE);
+
+            infoThree.setVisibility(View.GONE);
+            numberInfo.setVisibility(View.GONE);
+
+            llContinueBet.setVisibility(View.GONE);
+            btnBackToGame.setVisibility(View.VISIBLE);
+            tvCountdown.setVisibility(View.VISIBLE);
+            startCountdown();
+        });
+    }
+
+    /** Запускает таймер ожидания ответа сервера; при срабатывании показывает нейтральный экран таймаута. */
     private void startBetTimeout() {
         int seconds = PrefsHelper.get(this).getInt(
                 StringEnum.APP_PREFERENCES_BET_TIMEOUT.getValue(), 120);
         timeoutHandler  = new Handler(Looper.getMainLooper());
-        timeoutRunnable = () -> {
-            if (!gameResultShown) {
-                stopGame(getString(R.string.flasher_timeout_message), false);
-            }
-        };
+        timeoutRunnable = this::showTimeout;
         timeoutHandler.postDelayed(timeoutRunnable, seconds * 1000L);
     }
 

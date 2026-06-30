@@ -395,6 +395,7 @@
     <string name="settings_bet_input_style_sub">Elige cómo introducir el importe</string>
     <string name="settings_bet_timeout">TIEMPO DE ESPERA DEL SERVIDOR</string>
     <string name="settings_bet_timeout_sub">Si el servidor no responde en este tiempo, el giro se cancelará</string>
+    <string name="flasher_timeout_title">SIN RESPUESTA</string>
     <string name="flasher_timeout_message">Sin respuesta del servidor. Por favor, inténtalo más tarde.</string>
     <string name="bet_style_chips">Fichas</string>
     <string name="bet_style_drum">Tambor</string>

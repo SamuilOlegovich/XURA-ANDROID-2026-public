@@ -395,6 +395,7 @@
     <string name="settings_bet_input_style_sub">Escolha como inserir o valor da aposta</string>
     <string name="settings_bet_timeout">TEMPO LIMITE DE RESPOSTA</string>
     <string name="settings_bet_timeout_sub">Se o servidor não responder neste tempo, o giro será cancelado</string>
+    <string name="flasher_timeout_title">SEM RESPOSTA</string>
     <string name="flasher_timeout_message">Sem resposta do servidor. Por favor, tente mais tarde.</string>
     <string name="bet_style_chips">Fichas</string>
     <string name="bet_style_drum">Tambor</string>
