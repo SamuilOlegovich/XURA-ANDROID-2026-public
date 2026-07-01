@@ -10,6 +10,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.content.res.ColorStateList;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MotionEvent;
@@ -187,10 +188,10 @@ public class SlotGame extends BaseActivity {
     private void setupPlusMinusButtons() {
         if (btnBetMinus == null || btnBetPlus == null) return;
 
-        // Force magenta color regardless of M3 theme overrides
-        int slotColor = 0xFFD020A0;
-        btnBetMinus.setTextColor(slotColor);
-        btnBetPlus.setTextColor(slotColor);
+        // Force magenta icon tint regardless of M3 theme overrides
+        ColorStateList slotTint = ColorStateList.valueOf(0xFFD020A0);
+        btnBetMinus.setIconTint(slotTint);
+        btnBetPlus.setIconTint(slotTint);
 
         btnBetMinus.setOnClickListener(v -> changeBetBy(-1));
         btnBetPlus.setOnClickListener(v -> changeBetBy(+1));
