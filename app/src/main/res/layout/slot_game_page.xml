@@ -10,9 +10,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingBottom="32dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <!-- LOGO -->
         <include
@@ -24,47 +23,50 @@
             android:layout_marginTop="32dp"
             android:layout_marginEnd="80dp" />
 
-        <!-- SLOT MACHINE title -->
-        <TextView
-            android:id="@+id/tv_slot_title"
+        <!-- Заголовок + кнопка правил -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
             android:layout_marginTop="12dp"
-            android:layout_marginEnd="24dp"
-            android:fontFamily="@font/montserrat"
-            android:text="@string/name_slot"
-            android:textAlignment="center"
-            android:textColor="#D020A0"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:letterSpacing="0.06" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingStart="24dp"
+            android:paddingEnd="8dp">
 
-        <!-- Game mode badge TRIAL / LIVE -->
-        <TextView
-            android:id="@+id/tv_game_mode_badge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="6dp"
-            android:background="@drawable/bg_chip_trial"
-            android:fontFamily="@font/montserrat"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:paddingTop="4dp"
-            android:paddingBottom="4dp"
-            android:textColor="@color/xura_black"
-            android:textSize="10sp"
-            android:textStyle="bold"
-            android:letterSpacing="0.1" />
+            <TextView
+                android:id="@+id/tv_slot_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/name_slot"
+                android:textColor="#D020A0"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.06" />
 
-        <!-- Balance label -->
+            <!-- Кнопка правил — золотой круглый info (как везде) -->
+            <ImageView
+                android:id="@+id/tv_rules_link"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:padding="12dp"
+                android:src="@drawable/ic_info"
+                android:background="@drawable/bg_btn_info"
+                android:clickable="true"
+                android:focusable="true"
+                android:contentDescription="@string/rules_of_the_game"
+                app:tint="@color/xura_gold" />
+
+        </LinearLayout>
+
+        <!-- Баланс -->
         <TextView
             android:id="@+id/tv_balance_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="14dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="24dp"
             android:fontFamily="@font/montserrat"
             android:text="@string/your_balance"
@@ -73,7 +75,6 @@
             android:textSize="11sp"
             android:letterSpacing="0.12" />
 
-        <!-- Balance value -->
         <TextView
             android:id="@+id/tv_balance"
             android:layout_width="match_parent"
@@ -86,13 +87,13 @@
             android:textSize="28sp"
             android:textStyle="bold" />
 
-        <!-- ═══ CHIPS STYLE BET INPUT ═══ -->
+        <!-- ═══ CHIPS STYLE ═══ -->
         <LinearLayout
             android:id="@+id/style_chips_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="14dp"
             android:layout_marginEnd="24dp"
             android:orientation="vertical">
 
@@ -194,13 +195,13 @@
             </com.google.android.material.chip.ChipGroup>
         </LinearLayout>
 
-        <!-- ═══ SLIDER STYLE BET INPUT ═══ -->
+        <!-- ═══ SLIDER STYLE ═══ -->
         <LinearLayout
             android:id="@+id/style_slider_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="14dp"
             android:layout_marginEnd="24dp"
             android:orientation="vertical"
             android:visibility="gone">
@@ -272,14 +273,20 @@
                 android:visibility="gone" />
         </LinearLayout>
 
-        <!-- SPIN button -->
+        <!-- Распорка — толкает кнопку SPIN вниз -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <!-- SPIN button — внизу экрана -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/btn_spin"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
             android:layout_marginEnd="24dp"
+            android:layout_marginBottom="24dp"
             android:background="@drawable/bg_card_slot"
             android:clickable="true"
             android:focusable="true"
@@ -332,20 +339,6 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <!-- Rules link -->
-        <TextView
-            android:id="@+id/tv_rules_link"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/montserrat"
-            android:text="@string/rules_of_the_game"
-            android:textColor="@color/xura_text_muted"
-            android:textSize="12sp"
-            android:clickable="true"
-            android:focusable="true" />
 
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

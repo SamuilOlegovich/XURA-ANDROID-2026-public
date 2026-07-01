@@ -85,7 +85,6 @@ public class SlotGame extends BaseActivity {
 
     // UI
     private TextView tvBalance;
-    private TextView tvGameModeBadge;
     private View     btnSpin;
     private View     tvRulesLink;
     private View     styleChipsContainer;
@@ -139,7 +138,6 @@ public class SlotGame extends BaseActivity {
 
     private void bindViews() {
         tvBalance        = findViewById(R.id.tv_balance);
-        tvGameModeBadge  = findViewById(R.id.tv_game_mode_badge);
         btnSpin          = findViewById(R.id.btn_spin);
         tvRulesLink      = findViewById(R.id.tv_rules_link);
         styleChipsContainer  = findViewById(R.id.style_chips_container);
@@ -163,14 +161,6 @@ public class SlotGame extends BaseActivity {
         ERR_INVALID = getString(R.string.payment_amount_is_incorrect);
         ERR_PAYMENT = getString(R.string.bet_is_made_expect_the_result);
 
-        updateBadge();
-    }
-
-    private void updateBadge() {
-        if (tvGameModeBadge == null) return;
-        boolean live = Boolean.TRUE.equals(MainActivity.IS_REAL_GAME_MODE);
-        tvGameModeBadge.setText(live ? R.string.badge_live_mode : R.string.badge_trial_mode);
-        tvGameModeBadge.setBackgroundResource(live ? R.drawable.bg_chip_live : R.drawable.bg_chip_trial);
     }
 
     private void loadReferral() {
@@ -321,7 +311,6 @@ public class SlotGame extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        updateBadge();
         viewModel.loadBalance();
         soundPool = new GameSoundPool(this);
         noisyReceiver = AudioHelper.registerNoisyReceiver(this,
