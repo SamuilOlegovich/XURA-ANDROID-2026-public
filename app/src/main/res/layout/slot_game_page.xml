@@ -169,7 +169,7 @@
 
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- BET INPUT CONTAINER — slider always shown, chips as quick-select -->
+            <!-- BET INPUT CONTAINER -->
             <LinearLayout
                 android:id="@+id/bet_input_container"
                 android:layout_width="match_parent"
@@ -177,73 +177,121 @@
                 android:layout_marginTop="14dp"
                 android:orientation="vertical">
 
-                <!-- Текущая ставка -->
-                <TextView
-                    android:id="@+id/tv_bet_plus_minus"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginEnd="24dp"
-                    android:fontFamily="@font/montserrat"
-                    android:gravity="center"
-                    android:textAlignment="center"
-                    android:textColor="@color/xura_text_primary"
-                    android:textSize="22sp"
-                    android:textStyle="bold"
-                    android:text="1.0 XRP" />
-
-                <!-- [−]  ══════слайдер══════  [+] -->
+                <!-- Режим: текстовый ввод (chips) -->
                 <LinearLayout
+                    android:id="@+id/style_chips_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginTop="6dp">
+                    android:orientation="vertical">
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btn_bet_minus"
-                        style="@style/Widget.Material3.Button.OutlinedButton"
-                        android:layout_width="52dp"
-                        android:layout_height="40dp"
-                        android:insetTop="0dp"
-                        android:insetBottom="0dp"
-                        android:fontFamily="@font/montserrat"
-                        android:text="−"
-                        android:textColor="#D020A0"
-                        android:textSize="20sp"
-                        app:strokeColor="#D020A0"
-                        app:strokeWidth="1.5dp"
-                        app:cornerRadius="10dp" />
-
-                    <com.google.android.material.slider.Slider
-                        android:id="@+id/slider_bet"
-                        android:layout_width="0dp"
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_bet_field"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:valueFrom="0.1"
-                        android:valueTo="100.0"
-                        android:value="1.0"
-                        android:stepSize="0.1"
-                        app:thumbColor="#D020A0"
-                        app:trackColorActive="#D020A0"
-                        app:trackColorInactive="#33D020A0" />
+                        android:layout_marginStart="24dp"
+                        android:layout_marginEnd="24dp"
+                        android:hint="@string/place_your_bet"
+                        app:boxBackgroundColor="@color/xura_glass_fill"
+                        app:boxStrokeColor="@color/xura_glass_border"
+                        app:boxStrokeErrorColor="@color/xura_error"
+                        app:hintTextColor="@color/xura_text_tertiary"
+                        app:errorEnabled="true"
+                        app:errorTextColor="@color/xura_error"
+                        app:suffixText="XRP"
+                        app:suffixTextColor="#D020A0">
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btn_bet_plus"
-                        style="@style/Widget.Material3.Button.OutlinedButton"
-                        android:layout_width="52dp"
-                        android:layout_height="40dp"
-                        android:insetTop="0dp"
-                        android:insetBottom="0dp"
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_bet"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat"
+                            android:inputType="numberDecimal"
+                            android:textColor="@color/xura_text_primary" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+                <!-- Режим: ползунок + кнопки (slider) -->
+                <LinearLayout
+                    android:id="@+id/style_slider_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <!-- Текущая ставка -->
+                    <TextView
+                        android:id="@+id/tv_bet_plus_minus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginEnd="24dp"
                         android:fontFamily="@font/montserrat"
-                        android:text="+"
-                        android:textColor="#D020A0"
-                        android:textSize="20sp"
-                        app:strokeColor="#D020A0"
-                        app:strokeWidth="1.5dp"
-                        app:cornerRadius="10dp" />
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textColor="@color/xura_text_primary"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        android:text="1.0 XRP" />
+
+                    <!-- [−]  ══════слайдер══════  [+] -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginTop="6dp">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_bet_minus"
+                            style="@style/Widget.Material3.Button.OutlinedButton"
+                            android:layout_width="52dp"
+                            android:layout_height="40dp"
+                            android:insetTop="0dp"
+                            android:insetBottom="0dp"
+                            android:gravity="center"
+                            android:fontFamily="@font/montserrat"
+                            android:text="−"
+                            android:textColor="#D020A0"
+                            android:textSize="20sp"
+                            app:strokeColor="#D020A0"
+                            app:strokeWidth="1.5dp"
+                            app:cornerRadius="10dp" />
+
+                        <com.google.android.material.slider.Slider
+                            android:id="@+id/slider_bet"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:valueFrom="0.1"
+                            android:valueTo="100.0"
+                            android:value="1.0"
+                            android:stepSize="0.1"
+                            app:thumbColor="#D020A0"
+                            app:trackColorActive="#D020A0"
+                            app:trackColorInactive="#33D020A0" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_bet_plus"
+                            style="@style/Widget.Material3.Button.OutlinedButton"
+                            android:layout_width="52dp"
+                            android:layout_height="40dp"
+                            android:insetTop="0dp"
+                            android:insetBottom="0dp"
+                            android:gravity="center"
+                            android:fontFamily="@font/montserrat"
+                            android:text="+"
+                            android:textColor="#D020A0"
+                            android:textSize="20sp"
+                            app:strokeColor="#D020A0"
+                            app:strokeWidth="1.5dp"
+                            app:cornerRadius="10dp" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
