@@ -201,7 +201,7 @@ public class SlotGame extends BaseActivity {
             if (chip != null) chip.setOnClickListener(c -> {
                 etBet.setText(v);
                 clearError();
-                if (soundPool != null) soundPool.playBet();
+                if (soundPool != null) soundPool.playBet(SlotGame.this);
             });
         }
     }

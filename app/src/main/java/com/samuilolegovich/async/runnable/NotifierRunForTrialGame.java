@@ -8,6 +8,8 @@ import com.samuilolegovich.enums.StringEnum;
 import com.samuilolegovich.enums.TestModeEnum;
 import com.samuilolegovich.utils.Lotto;
 import com.samuilolegovich.view.Flasher;
+import com.samuilolegovich.view.SlotFlasher;
+import com.samuilolegovich.view.SlotReelView;
 import com.samuilolegovich.view.YourReferral;
 import com.samuilolegovich.wallet.repository.WalletRepository;
 

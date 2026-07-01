@@ -55,11 +55,9 @@
         android:strokeWidth="2.5"
         android:strokeLineCap="round"
         android:pathData="M50,18 L54,18 L54,30" />
-    <circle
+    <path
         android:fillColor="#D020A0"
-        android:cx="54"
-        android:cy="32"
-        android:r="3" />
+        android:pathData="M51,32 A3,3 0 0 1 57,32 A3,3 0 0 1 51,32 Z" />
 
     <!-- Coin slot at bottom -->
     <path
