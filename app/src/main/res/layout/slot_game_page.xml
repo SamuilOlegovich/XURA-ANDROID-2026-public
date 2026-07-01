@@ -272,35 +272,6 @@
                 android:visibility="gone" />
         </LinearLayout>
 
-        <!-- Referral field -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_referral"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="24dp"
-            android:hint="@string/enter_referral_code"
-            app:boxStrokeColor="#40D020A0"
-            app:hintTextColor="@color/xura_text_tertiary"
-            app:boxCornerRadiusTopStart="12dp"
-            app:boxCornerRadiusTopEnd="12dp"
-            app:boxCornerRadiusBottomStart="12dp"
-            app:boxCornerRadiusBottomEnd="12dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_referral"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat"
-                android:inputType="text"
-                android:textColor="@color/xura_text_secondary"
-                android:textSize="13sp"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp" />
-        </com.google.android.material.textfield.TextInputLayout>
-
         <!-- SPIN button -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/btn_spin"

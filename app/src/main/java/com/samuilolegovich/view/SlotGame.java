@@ -98,7 +98,7 @@ public class SlotGame extends BaseActivity {
     private MaterialButton btnBetPlus;
     private TextView tvBetPlusMinus;
     private TextView tvBetInputError;
-    private EditText etReferral;
+
 
     private int betTenths = DEFAULT_BET_TENTHS;
     private final Handler pmHandler = new Handler(Looper.getMainLooper());
@@ -152,7 +152,7 @@ public class SlotGame extends BaseActivity {
         btnBetPlus       = findViewById(R.id.btn_bet_plus);
         tvBetPlusMinus   = findViewById(R.id.tv_bet_plus_minus);
         tvBetInputError  = findViewById(R.id.tv_bet_input_error);
-        etReferral       = findViewById(R.id.et_referral);
+
     }
 
     private void setLanguage() {
@@ -175,9 +175,6 @@ public class SlotGame extends BaseActivity {
 
     private void loadReferral() {
         myReferral = preferences.getString(StringEnum.APP_PREFERENCES_REFERRAL.getValue(), "0");
-        if (!myReferral.isEmpty() && !myReferral.equals("0")) {
-            etReferral.setText(myReferral);
-        }
     }
 
     private void setupBetStyle() {
@@ -256,10 +253,6 @@ public class SlotGame extends BaseActivity {
         tvRulesLink.setOnClickListener(v -> startActivity(new Intent(RULES_SLOT_CLASS)));
 
         if (etBet != null) etBet.setOnFocusChangeListener((v, f) -> { if (f) clearError(); });
-        if (etReferral != null) etReferral.setOnFocusChangeListener((v, f) -> {
-            String code = etReferral.getText().toString().trim();
-            if (!code.isEmpty()) myReferral = code;
-        });
     }
 
     private void onSpinClicked() {
@@ -282,8 +275,7 @@ public class SlotGame extends BaseActivity {
     }
 
     private String resolveReferral() {
-        String code = etReferral != null ? etReferral.getText().toString().trim() : "";
-        return code.isEmpty() ? myReferral : code;
+        return myReferral;
     }
 
     private void setupObservers() {
