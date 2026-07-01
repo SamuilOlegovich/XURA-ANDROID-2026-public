@@ -13,21 +13,68 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <!-- LOGO -->
-        <include
-            layout="@layout/logo_xura"
-            android:id="@+id/logo_xura"
+        <!-- ── Три барабана вместо логотипа ──────────────────── -->
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="80dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="80dp" />
+            android:layout_height="140dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginTop="20dp">
 
-        <!-- Заголовок + кнопка правил -->
+            <!-- Контейнер барабанов -->
+            <LinearLayout
+                android:id="@+id/reel_preview_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_reel_preview"
+                android:clipToOutline="true"
+                android:orientation="horizontal">
+
+                <com.samuilolegovich.view.SlotReelView
+                    android:id="@+id/reel_preview_left"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="#40D020A0" />
+
+                <com.samuilolegovich.view.SlotReelView
+                    android:id="@+id/reel_preview_center"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="#40D020A0" />
+
+                <com.samuilolegovich.view.SlotReelView
+                    android:id="@+id/reel_preview_right"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+            <!-- Линия выплат поверх барабанов -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_gravity="center_vertical"
+                android:background="#66FF3060"
+                android:importantForAccessibility="no" />
+
+        </FrameLayout>
+
+        <!-- ── Заголовок + кнопка правил ─────────────────────── -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:paddingStart="24dp"
@@ -45,7 +92,6 @@
                 android:textStyle="bold"
                 android:letterSpacing="0.06" />
 
-            <!-- Кнопка правил — золотой круглый info (как везде) -->
             <ImageView
                 android:id="@+id/tv_rules_link"
                 android:layout_width="48dp"
@@ -60,13 +106,13 @@
 
         </LinearLayout>
 
-        <!-- Баланс -->
+        <!-- ── Баланс ─────────────────────────────────────────── -->
         <TextView
             android:id="@+id/tv_balance_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="24dp"
             android:fontFamily="@font/montserrat"
             android:text="@string/your_balance"
@@ -84,124 +130,133 @@
             android:fontFamily="@font/montserrat"
             android:textAlignment="center"
             android:textColor="@color/xura_text_primary"
-            android:textSize="28sp"
+            android:textSize="26sp"
             android:textStyle="bold" />
 
-        <!-- ═══ CHIPS STYLE ═══ -->
+        <!-- ── Быстрые ставки (chips style) ──────────────────── -->
         <LinearLayout
             android:id="@+id/style_chips_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="14dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="24dp"
             android:orientation="vertical">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_bet_field"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/slot_bet_hint"
-                app:boxStrokeColor="#D020A0"
-                app:hintTextColor="#D020A0"
-                app:boxCornerRadiusTopStart="12dp"
-                app:boxCornerRadiusTopEnd="12dp"
-                app:boxCornerRadiusBottomStart="12dp"
-                app:boxCornerRadiusBottomEnd="12dp"
-                app:counterEnabled="false">
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/slot_bet_hint"
+                android:textColor="@color/xura_text_tertiary"
+                android:textSize="11sp"
+                android:letterSpacing="0.08" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_bet"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat"
-                    android:inputType="numberDecimal"
-                    android:textColor="@color/xura_text_primary"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.chip.ChipGroup
-                android:id="@+id/chip_group_amounts"
+            <!-- 5 кнопок ставок -->
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:singleSelection="true"
-                app:chipSpacingHorizontal="6dp">
+                android:layout_height="48dp"
+                android:orientation="horizontal">
 
-                <com.google.android.material.chip.Chip
+                <TextView
                     android:id="@+id/chip_01"
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="6dp"
+                    android:background="@drawable/bg_bet_chip_slot"
                     android:fontFamily="@font/montserrat"
+                    android:gravity="center"
                     android:text="0.1"
-                    android:textColor="@color/xura_text_primary"
-                    app:chipBackgroundColor="#1AD020A0"
-                    app:chipStrokeColor="#D020A0"
-                    app:chipStrokeWidth="1dp" />
+                    android:textColor="#D020A0"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:clickable="true"
+                    android:focusable="true" />
 
-                <com.google.android.material.chip.Chip
+                <TextView
                     android:id="@+id/chip_05"
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="6dp"
+                    android:background="@drawable/bg_bet_chip_slot"
                     android:fontFamily="@font/montserrat"
+                    android:gravity="center"
                     android:text="0.5"
-                    android:textColor="@color/xura_text_primary"
-                    app:chipBackgroundColor="#1AD020A0"
-                    app:chipStrokeColor="#D020A0"
-                    app:chipStrokeWidth="1dp" />
+                    android:textColor="#D020A0"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:clickable="true"
+                    android:focusable="true" />
 
-                <com.google.android.material.chip.Chip
+                <TextView
                     android:id="@+id/chip_1"
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="6dp"
+                    android:background="@drawable/bg_bet_chip_slot"
                     android:fontFamily="@font/montserrat"
+                    android:gravity="center"
                     android:text="1"
-                    android:textColor="@color/xura_text_primary"
-                    app:chipBackgroundColor="#1AD020A0"
-                    app:chipStrokeColor="#D020A0"
-                    app:chipStrokeWidth="1dp" />
+                    android:textColor="#D020A0"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:clickable="true"
+                    android:focusable="true" />
 
-                <com.google.android.material.chip.Chip
+                <TextView
                     android:id="@+id/chip_5"
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="6dp"
+                    android:background="@drawable/bg_bet_chip_slot"
                     android:fontFamily="@font/montserrat"
+                    android:gravity="center"
                     android:text="5"
-                    android:textColor="@color/xura_text_primary"
-                    app:chipBackgroundColor="#1AD020A0"
-                    app:chipStrokeColor="#D020A0"
-                    app:chipStrokeWidth="1dp" />
+                    android:textColor="#D020A0"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:clickable="true"
+                    android:focusable="true" />
 
-                <com.google.android.material.chip.Chip
+                <TextView
                     android:id="@+id/chip_10"
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_bet_chip_slot"
                     android:fontFamily="@font/montserrat"
+                    android:gravity="center"
                     android:text="10"
-                    android:textColor="@color/xura_text_primary"
-                    app:chipBackgroundColor="#1AD020A0"
-                    app:chipStrokeColor="#D020A0"
-                    app:chipStrokeWidth="1dp" />
+                    android:textColor="#D020A0"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:clickable="true"
+                    android:focusable="true" />
 
-            </com.google.android.material.chip.ChipGroup>
+            </LinearLayout>
+
         </LinearLayout>
 
-        <!-- ═══ SLIDER STYLE ═══ -->
+        <!-- et_bet: скрытое поле — хранит выбранное значение ставки -->
+        <EditText
+            android:id="@+id/et_bet"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            android:inputType="numberDecimal" />
+
+        <!-- ── Ввод через слайдер ─────────────────────────────── -->
         <LinearLayout
             android:id="@+id/style_slider_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="14dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="24dp"
             android:orientation="vertical"
             android:visibility="gone">
@@ -262,24 +317,28 @@
                     app:cornerRadius="12dp" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/tv_bet_input_error"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:fontFamily="@font/montserrat"
-                android:textColor="@color/xura_error"
-                android:textSize="12sp"
-                android:visibility="gone" />
         </LinearLayout>
 
-        <!-- Распорка — толкает кнопку SPIN вниз -->
+        <!-- Ошибка ввода -->
+        <TextView
+            android:id="@+id/tv_bet_input_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="24dp"
+            android:fontFamily="@font/montserrat"
+            android:textColor="@color/xura_error"
+            android:textSize="12sp"
+            android:visibility="gone" />
+
+        <!-- Распорка — SPIN всегда внизу -->
         <View
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-        <!-- SPIN button — внизу экрана -->
+        <!-- ── Кнопка КРУТИТЬ ─────────────────────────────────── -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/btn_spin"
             android:layout_width="match_parent"
