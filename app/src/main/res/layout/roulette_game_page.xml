@@ -193,7 +193,7 @@
                         app:errorEnabled="true"
                         app:errorTextColor="@color/xura_error"
                         app:suffixText="XRP"
-                        app:suffixTextColor="@color/xura_cyan">
+                        app:suffixTextColor="@color/xura_gold">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/bet_field"
@@ -213,71 +213,81 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingTop="8dp"
-                    android:paddingStart="24dp"
-                    android:paddingEnd="24dp"
                     android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/tv_bet_plus_minus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginEnd="24dp"
+                        android:fontFamily="@font/montserrat"
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textColor="@color/xura_text_primary"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        android:text="1.0 XRP" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:gravity="center"
-                        android:paddingBottom="4dp">
+                        android:gravity="center_vertical"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginTop="6dp">
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/btn_bet_minus"
                             style="@style/Widget.Material3.Button.OutlinedButton"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
+                            android:layout_width="52dp"
+                            android:layout_height="40dp"
                             android:insetTop="0dp"
                             android:insetBottom="0dp"
-                            android:fontFamily="@font/montserrat"
-                            android:text="−"
-                            android:textColor="@color/xura_cyan"
-                            android:textSize="22sp"
-                            app:strokeColor="@color/xura_cyan"
-                            app:cornerRadius="24dp" />
+                            android:text=""
+                            android:contentDescription="decrease bet"
+                            app:icon="@drawable/ic_pm_minus"
+                            app:iconTint="@color/xura_gold"
+                            app:iconSize="20dp"
+                            app:iconPadding="0dp"
+                            app:iconGravity="textStart"
+                            app:strokeColor="@color/xura_gold"
+                            app:strokeWidth="1.5dp"
+                            app:cornerRadius="10dp" />
 
-                        <TextView
-                            android:id="@+id/tv_bet_plus_minus"
+                        <com.google.android.material.slider.Slider
+                            android:id="@+id/slider_bet"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:fontFamily="@font/montserrat"
-                            android:gravity="center"
-                            android:textAlignment="center"
-                            android:textColor="@color/xura_text_primary"
-                            android:textSize="22sp"
-                            android:textStyle="bold"
-                            android:text="1.0 XRP" />
+                            android:valueFrom="0.1"
+                            android:valueTo="100.0"
+                            android:value="1.0"
+                            android:stepSize="0.1"
+                            app:thumbColor="@color/xura_gold"
+                            app:trackColorActive="@color/xura_gold"
+                            app:trackColorInactive="#33FFB000" />
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/btn_bet_plus"
                             style="@style/Widget.Material3.Button.OutlinedButton"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
+                            android:layout_width="52dp"
+                            android:layout_height="40dp"
                             android:insetTop="0dp"
                             android:insetBottom="0dp"
-                            android:fontFamily="@font/montserrat"
-                            android:text="+"
-                            android:textColor="@color/xura_gold"
-                            android:textSize="22sp"
+                            android:text=""
+                            android:contentDescription="increase bet"
+                            app:icon="@drawable/ic_pm_plus"
+                            app:iconTint="@color/xura_gold"
+                            app:iconSize="20dp"
+                            app:iconPadding="0dp"
+                            app:iconGravity="textStart"
                             app:strokeColor="@color/xura_gold"
-                            app:cornerRadius="24dp" />
+                            app:strokeWidth="1.5dp"
+                            app:cornerRadius="10dp" />
 
                     </LinearLayout>
-
-                    <com.google.android.material.slider.Slider
-                        android:id="@+id/slider_bet"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:valueFrom="0.1"
-                        android:valueTo="100.0"
-                        android:stepSize="0.1"
-                        app:thumbColor="@color/xura_gold"
-                        app:trackColorActive="@color/xura_gold"
-                        app:trackColorInactive="@color/xura_glass_border" />
 
                 </LinearLayout>
 
@@ -307,8 +317,8 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat"
                         android:text="@string/chip_01_xrp"
-                        android:backgroundTint="@color/chip_bg_quick_bet"
-                        app:chipStrokeColor="@color/chip_stroke_quick_bet" />
+                        android:backgroundTint="@color/chip_bg_roulette"
+                        app:chipStrokeColor="@color/chip_stroke_roulette" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chip_05_xrp"
@@ -317,8 +327,8 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat"
                         android:text="@string/chip_05_xrp"
-                        android:backgroundTint="@color/chip_bg_quick_bet"
-                        app:chipStrokeColor="@color/chip_stroke_quick_bet" />
+                        android:backgroundTint="@color/chip_bg_roulette"
+                        app:chipStrokeColor="@color/chip_stroke_roulette" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chip_1_xrp"
@@ -327,8 +337,8 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat"
                         android:text="@string/chip_1_xrp"
-                        android:backgroundTint="@color/chip_bg_quick_bet"
-                        app:chipStrokeColor="@color/chip_stroke_quick_bet" />
+                        android:backgroundTint="@color/chip_bg_roulette"
+                        app:chipStrokeColor="@color/chip_stroke_roulette" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chip_5_xrp"
@@ -337,8 +347,8 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat"
                         android:text="@string/chip_5_xrp"
-                        android:backgroundTint="@color/chip_bg_quick_bet"
-                        app:chipStrokeColor="@color/chip_stroke_quick_bet" />
+                        android:backgroundTint="@color/chip_bg_roulette"
+                        app:chipStrokeColor="@color/chip_stroke_roulette" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chip_10_xrp"
@@ -347,8 +357,8 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat"
                         android:text="@string/chip_10_xrp"
-                        android:backgroundTint="@color/chip_bg_quick_bet"
-                        app:chipStrokeColor="@color/chip_stroke_quick_bet" />
+                        android:backgroundTint="@color/chip_bg_roulette"
+                        app:chipStrokeColor="@color/chip_stroke_roulette" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chip_20_xrp"
@@ -357,8 +367,8 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat"
                         android:text="@string/chip_20_xrp"
-                        android:backgroundTint="@color/chip_bg_quick_bet"
-                        app:chipStrokeColor="@color/chip_stroke_quick_bet" />
+                        android:backgroundTint="@color/chip_bg_roulette"
+                        app:chipStrokeColor="@color/chip_stroke_roulette" />
 
                 </com.google.android.material.chip.ChipGroup>
 

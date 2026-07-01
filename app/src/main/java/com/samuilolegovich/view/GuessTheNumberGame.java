@@ -20,6 +20,8 @@ import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import android.content.res.ColorStateList;
+
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
@@ -334,6 +336,10 @@ public class GuessTheNumberGame extends BaseActivity {
 
     @SuppressLint("ClickableViewAccessibility")
     private void setupPlusMinusButtons() {
+        ColorStateList cyanTint = ColorStateList.valueOf(0xFF00D4FF);
+        btnBetMinus.setIconTint(cyanTint);
+        btnBetPlus.setIconTint(cyanTint);
+
         btnBetMinus.setOnClickListener(v -> changeBetBy(-1));
         btnBetPlus.setOnClickListener(v -> changeBetBy(+1));
 
