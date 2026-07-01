@@ -186,6 +186,12 @@ public class SlotGame extends BaseActivity {
     @SuppressLint("ClickableViewAccessibility")
     private void setupPlusMinusButtons() {
         if (btnBetMinus == null || btnBetPlus == null) return;
+
+        // Force magenta color regardless of M3 theme overrides
+        int slotColor = 0xFFD020A0;
+        btnBetMinus.setTextColor(slotColor);
+        btnBetPlus.setTextColor(slotColor);
+
         btnBetMinus.setOnClickListener(v -> changeBetBy(-1));
         btnBetPlus.setOnClickListener(v -> changeBetBy(+1));
         // return false so the click event still fires after the long-press is scheduled
