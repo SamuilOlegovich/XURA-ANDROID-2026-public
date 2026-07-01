@@ -1,0 +1,71 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="56dp"
+    android:height="56dp"
+    android:viewportWidth="56"
+    android:viewportHeight="56">
+
+    <!-- Frame outer -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#D020A0"
+        android:strokeWidth="2.5"
+        android:pathData="M6,10 Q6,6 10,6 L46,6 Q50,6 50,10 L50,42 Q50,46 46,46 L10,46 Q6,46 6,42 Z" />
+
+    <!-- Three reel windows -->
+    <!-- Left reel -->
+    <path
+        android:fillColor="#1AD020A0"
+        android:strokeColor="#D020A0"
+        android:strokeWidth="1.5"
+        android:pathData="M10,14 L20,14 L20,38 L10,38 Z" />
+    <!-- Center reel -->
+    <path
+        android:fillColor="#1AD020A0"
+        android:strokeColor="#D020A0"
+        android:strokeWidth="1.5"
+        android:pathData="M23,14 L33,14 L33,38 L23,38 Z" />
+    <!-- Right reel -->
+    <path
+        android:fillColor="#1AD020A0"
+        android:strokeColor="#D020A0"
+        android:strokeWidth="1.5"
+        android:pathData="M36,14 L46,14 L46,38 L36,38 Z" />
+
+    <!-- Divider lines inside reels (symbol rows) -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#40D020A0"
+        android:strokeWidth="1"
+        android:pathData="M10,22 L20,22 M23,22 L33,22 M36,22 L46,22" />
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#40D020A0"
+        android:strokeWidth="1"
+        android:pathData="M10,30 L20,30 M23,30 L33,30 M36,30 L46,30" />
+
+    <!-- Star in center of middle reel (jackpot symbol) -->
+    <path
+        android:fillColor="#FFD020A0"
+        android:pathData="M28,22 L29,25 L32,25 L30,27 L31,30 L28,28 L25,30 L26,27 L24,25 L27,25 Z" />
+
+    <!-- Handle on right side -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#D020A0"
+        android:strokeWidth="2.5"
+        android:strokeLineCap="round"
+        android:pathData="M50,18 L54,18 L54,30" />
+    <circle
+        android:fillColor="#D020A0"
+        android:cx="54"
+        android:cy="32"
+        android:r="3" />
+
+    <!-- Coin slot at bottom -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#D020A0"
+        android:strokeWidth="2"
+        android:strokeLineCap="round"
+        android:pathData="M22,48 L34,48" />
+</vector>

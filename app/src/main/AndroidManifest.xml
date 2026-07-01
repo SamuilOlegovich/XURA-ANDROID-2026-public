@@ -348,6 +348,36 @@
         </activity>
 
         <activity
+            android:name="com.samuilolegovich.view.SlotGame"
+            android:label="SlotGame"
+            android:exported="true">
+            <intent-filter>
+                <action android:name=".SlotGame" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.samuilolegovich.view.SlotFlasher"
+            android:label="SlotFlasher"
+            android:exported="true">
+            <intent-filter>
+                <action android:name=".SlotFlasher" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.samuilolegovich.view.RulesOfTheGameSlot"
+            android:label="RulesOfTheGameSlot"
+            android:exported="true">
+            <intent-filter>
+                <action android:name=".RulesOfTheGameSlot" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
             android:name="com.samuilolegovich.view.Referral"
             android:label="Referral"
             android:exported="true">

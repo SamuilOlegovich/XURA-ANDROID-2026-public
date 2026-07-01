@@ -79,6 +79,8 @@ public class NotifierRunForTrialGame implements Runnable {
             calculateForGuessTheColor();
         } else if (testModeEnum.equals(TestModeEnum.ROULETTE_GAME)) {
             calculateForRoulette(random.nextInt(37)); // 0–36
+        } else if (testModeEnum.equals(TestModeEnum.SLOT_GAME)) {
+            calculateForSlot();
         } else {
             calculateForGuessTheNumber(random.nextInt(36) + 1);
         }
@@ -225,6 +227,104 @@ public class NotifierRunForTrialGame implements Runnable {
         }
     }
 
+
+    /**
+     * Симулирует результат слот-машины: генерирует 3×3 матрицу символов с взвешенным RNG,
+     * проверяет 5 линий выплат, рассчитывает выигрыш и передаёт результат в SlotFlasher.
+     */
+    void calculateForSlot() {
+        // Веса символов из спецификации: XRP=30, Rocket=20, Moon=15, Diamond=10, Whale=5, Jackpot=1, Wild=3
+        int[] weights = { 30, 20, 15, 10, 5, 1, 3 };
+        // Множители выплат (Wild не выплачивает сам, только замещает)
+        int[] multipliers = { 2, 5, 10, 20, 50, 250, 0 };
+        int totalWeight = 0;
+        for (int w : weights) totalWeight += w;
+
+        // Генерируем матрицу 3×3
+        int[][] matrix = new int[3][3];
+        for (int row = 0; row < 3; row++) {
+            for (int col = 0; col < 3; col++) {
+                matrix[row][col] = weightedRandom(weights, totalWeight);
+            }
+        }
+        SlotFlasher.RESULT_MATRIX = matrix;
+
+        // 5 линий выплат: средняя, верхняя, нижняя, диагональ вниз, диагональ вверх
+        int[][] paylines = {
+            { matrix[1][0], matrix[1][1], matrix[1][2] }, // средняя строка (главная)
+            { matrix[0][0], matrix[0][1], matrix[0][2] }, // верхняя
+            { matrix[2][0], matrix[2][1], matrix[2][2] }, // нижняя
+            { matrix[0][0], matrix[1][1], matrix[2][2] }, // диагональ ↘
+            { matrix[2][0], matrix[1][1], matrix[0][2] }, // диагональ ↗
+        };
+
+        double bet = 0;
+        try { bet = Double.parseDouble(SlotFlasher.BET_AMOUNT); } catch (Exception ignored) {}
+
+        double totalPayout = 0;
+        for (int[] line : paylines) {
+            int sym = resolveLineSymbol(line);
+            if (sym >= 0) {
+                totalPayout += bet * multipliers[sym];
+            }
+        }
+
+        boolean win = totalPayout > 0;
+        String lotto = String.valueOf(random.nextInt(10001 - 4000) + 4000);
+        WalletRepository.getInstance().setLottoNow(lotto);
+
+        if (win && !Boolean.TRUE.equals(MainActivity.IS_REAL_GAME_MODE)) {
+            try { WalletRepository.getInstance().creditTestBalance(new java.math.BigDecimal(totalPayout)); }
+            catch (Exception ignored) {}
+        }
+
+        double profit = totalPayout - bet;
+        String msg = win
+                ? String.format(CONGRATULATIONS_YOUR_BET_IS_WON, String.valueOf((long) profit))
+                : YOUR_BET_IS_LOST_TRY_AGAIN_AND_YOU_WILL_BE_LUCKY;
+
+        responseToBetSlot(msg, lotto, win ? 2 : 1);
+    }
+
+    /** Генерирует символ по взвешенному RNG. */
+    private int weightedRandom(int[] weights, int total) {
+        int r = random.nextInt(total);
+        int acc = 0;
+        for (int i = 0; i < weights.length; i++) {
+            acc += weights[i];
+            if (r < acc) return i;
+        }
+        return weights.length - 1;
+    }
+
+    /**
+     * Проверяет, выигрывает ли линия из 3 символов.
+     * Wild (индекс 6) замещает любой символ.
+     * Возвращает индекс выигравшего символа или -1 (нет выигрыша).
+     */
+    private int resolveLineSymbol(int[] line) {
+        // Collect non-wild symbols
+        int found = -1;
+        for (int s : line) {
+            if (s == SlotReelView.SYM_WILD) continue;
+            if (found == -1) { found = s; }
+            else if (found != s) { return -1; } // two different non-wild → no win
+        }
+        return found; // -1 if all wild (pays as jackpot? for now no special case)
+    }
+
+    /**
+     * Доставляет результат слота в SlotFlasher (если он открыт),
+     * иначе кладёт в WalletRepository для показа позже.
+     */
+    private void responseToBetSlot(String text, String lotto, int outcome) {
+        com.samuilolegovich.view.SlotFlasher sf = SlotFlasher.SLOT_FLASHER;
+        if (SlotFlasher.VISIBLE_ON_SCREEN && sf != null) {
+            sf.stopGame(text, outcome == 2);
+        } else {
+            WalletRepository.getInstance().notifyEvent(text, lotto, outcome);
+        }
+    }
 
     /**
      * Доставляет готовый текст результата игроку: если экран соответствующей игры открыт — показывает его

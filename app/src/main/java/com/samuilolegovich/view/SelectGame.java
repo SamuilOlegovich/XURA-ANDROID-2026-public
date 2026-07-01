@@ -25,6 +25,7 @@ import com.samuilolegovich.utils.AudioHelper;
 import static com.samuilolegovich.view.GuessTheNumberGame.GUESS_THE_NUMBER_GAME_CLASS;
 import static com.samuilolegovich.view.GuessTheColorGame.GUESS_THE_COLOR_GAME_CLASS;
 import static com.samuilolegovich.view.RouletteGame.ROULETTE_GAME_CLASS;
+import static com.samuilolegovich.view.SlotGame.SLOT_GAME_CLASS;
 import dagger.hilt.android.AndroidEntryPoint;
 
 
@@ -73,6 +74,7 @@ public class SelectGame extends BaseActivity {
     private View guessTheNumber;
     private View guessTheColor;
     private View roulette;
+    private View slot;
 
     private Handler waveHandler;
     private Runnable waveRunnable;
@@ -109,6 +111,7 @@ public class SelectGame extends BaseActivity {
         guessTheColor   = findViewById(R.id.guess_the_color_linc);
         selectTextView  = (TextView) findViewById(R.id.select_text_view);
         roulette        = findViewById(R.id.roulette_linc);
+        slot            = findViewById(R.id.slot_linc);
         tvGameModeBadge = findViewById(R.id.tv_game_mode_badge);
     }
 
@@ -148,6 +151,11 @@ public class SelectGame extends BaseActivity {
         roulette.setOnClickListener(v -> {
             pulse(v);
             goToAnotherPage(ROULETTE_GAME_CLASS);
+        });
+
+        if (slot != null) slot.setOnClickListener(v -> {
+            pulse(v);
+            goToAnotherPage(SLOT_GAME_CLASS);
         });
     }
 
@@ -214,8 +222,8 @@ public class SelectGame extends BaseActivity {
 
     /** Запускает одну волну подпрыгивания карточек игр снизу вверх с нарастающей задержкой, а затем — толчок логотипа. */
     private void playWave() {
-        // Порядок: снизу вверх → roulette первая, guessTheNumber вторая, guessTheColor третья
-        View[] cards = { roulette, guessTheNumber, guessTheColor };
+        // Порядок: снизу вверх → slot, roulette, guessTheNumber, guessTheColor
+        View[] cards = { slot != null ? slot : roulette, roulette, guessTheNumber, guessTheColor };
         float bounceY = WAVE_BOUNCE_DP * getResources().getDisplayMetrics().density;
 
         for (int i = 0; i < cards.length; i++) {
