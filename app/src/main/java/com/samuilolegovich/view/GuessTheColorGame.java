@@ -309,9 +309,9 @@ public class GuessTheColorGame extends BaseActivity {
 
     @SuppressLint("ClickableViewAccessibility")
     private void setupPlusMinusButtons() {
-        ColorStateList cyanTint = ColorStateList.valueOf(0xFF00D4FF);
-        btnBetMinus.setIconTint(cyanTint);
-        btnBetPlus.setIconTint(cyanTint);
+        ColorStateList pinkTint = ColorStateList.valueOf(0xFFFF2080);
+        btnBetMinus.setIconTint(pinkTint);
+        btnBetPlus.setIconTint(pinkTint);
 
         btnBetMinus.setOnClickListener(v -> changeBetBy(-1));
         btnBetPlus.setOnClickListener(v -> changeBetBy(+1));

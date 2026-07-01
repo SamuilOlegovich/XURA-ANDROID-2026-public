@@ -135,7 +135,7 @@
                 app:errorEnabled="true"
                 app:errorTextColor="@color/xura_error"
                 app:suffixText="XRP"
-                app:suffixTextColor="@color/xura_cyan">
+                app:suffixTextColor="@color/xura_pink">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/bet_field"
@@ -164,8 +164,6 @@
                 android:id="@+id/tv_bet_plus_minus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="24dp"
                 android:fontFamily="@font/montserrat"
                 android:gravity="center"
                 android:textAlignment="center"
@@ -174,13 +172,14 @@
                 android:textStyle="bold"
                 android:text="1.0 XRP" />
 
+            <!-- negative margin compensates outer container's 24dp so width matches roulette -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginStart="-8dp"
+                android:layout_marginEnd="-8dp"
                 android:layout_marginTop="6dp">
 
                 <com.google.android.material.button.MaterialButton
@@ -193,11 +192,11 @@
                     android:text=""
                     android:contentDescription="decrease bet"
                     app:icon="@drawable/ic_pm_minus"
-                    app:iconTint="@color/xura_cyan"
+                    app:iconTint="@color/xura_pink"
                     app:iconSize="20dp"
                     app:iconPadding="0dp"
                     app:iconGravity="textStart"
-                    app:strokeColor="@color/xura_cyan"
+                    app:strokeColor="@color/xura_pink"
                     app:strokeWidth="1.5dp"
                     app:cornerRadius="10dp" />
 
@@ -210,9 +209,9 @@
                     android:valueTo="100.0"
                     android:value="1.0"
                     android:stepSize="0.1"
-                    app:thumbColor="@color/xura_cyan"
-                    app:trackColorActive="@color/xura_cyan"
-                    app:trackColorInactive="#3300D4FF" />
+                    app:thumbColor="@color/xura_pink"
+                    app:trackColorActive="@color/xura_pink"
+                    app:trackColorInactive="#33FF2080" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_bet_plus"
@@ -224,11 +223,11 @@
                     android:text=""
                     android:contentDescription="increase bet"
                     app:icon="@drawable/ic_pm_plus"
-                    app:iconTint="@color/xura_cyan"
+                    app:iconTint="@color/xura_pink"
                     app:iconSize="20dp"
                     app:iconPadding="0dp"
                     app:iconGravity="textStart"
-                    app:strokeColor="@color/xura_cyan"
+                    app:strokeColor="@color/xura_pink"
                     app:strokeWidth="1.5dp"
                     app:cornerRadius="10dp" />
 
@@ -252,8 +251,8 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat"
                 android:text="@string/chip_01_xrp"
-                android:backgroundTint="@color/chip_bg_quick_bet"
-                app:chipStrokeColor="@color/chip_stroke_quick_bet" />
+                android:backgroundTint="@color/chip_bg_color_game"
+                app:chipStrokeColor="@color/chip_stroke_color_game" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_05_xrp"
@@ -262,8 +261,8 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat"
                 android:text="@string/chip_05_xrp"
-                android:backgroundTint="@color/chip_bg_quick_bet"
-                app:chipStrokeColor="@color/chip_stroke_quick_bet" />
+                android:backgroundTint="@color/chip_bg_color_game"
+                app:chipStrokeColor="@color/chip_stroke_color_game" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_1_xrp"
@@ -272,8 +271,8 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat"
                 android:text="@string/chip_1_xrp"
-                android:backgroundTint="@color/chip_bg_quick_bet"
-                app:chipStrokeColor="@color/chip_stroke_quick_bet" />
+                android:backgroundTint="@color/chip_bg_color_game"
+                app:chipStrokeColor="@color/chip_stroke_color_game" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_5_xrp"
@@ -282,8 +281,8 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat"
                 android:text="@string/chip_5_xrp"
-                android:backgroundTint="@color/chip_bg_quick_bet"
-                app:chipStrokeColor="@color/chip_stroke_quick_bet" />
+                android:backgroundTint="@color/chip_bg_color_game"
+                app:chipStrokeColor="@color/chip_stroke_color_game" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_10_xrp"
@@ -292,8 +291,8 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat"
                 android:text="@string/chip_10_xrp"
-                android:backgroundTint="@color/chip_bg_quick_bet"
-                app:chipStrokeColor="@color/chip_stroke_quick_bet" />
+                android:backgroundTint="@color/chip_bg_color_game"
+                app:chipStrokeColor="@color/chip_stroke_color_game" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_20_xrp"
@@ -302,8 +301,8 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat"
                 android:text="@string/chip_20_xrp"
-                android:backgroundTint="@color/chip_bg_quick_bet"
-                app:chipStrokeColor="@color/chip_stroke_quick_bet" />
+                android:backgroundTint="@color/chip_bg_color_game"
+                app:chipStrokeColor="@color/chip_stroke_color_game" />
 
         </com.google.android.material.chip.ChipGroup>
 
