@@ -12,16 +12,13 @@ import android.os.Handler;
 import android.os.Looper;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.slider.Slider;
-import com.google.android.material.textfield.TextInputLayout;
 
 import com.samuilolegovich.BaseActivity;
 import com.samuilolegovich.MainActivity;
@@ -42,20 +39,17 @@ import static com.samuilolegovich.view.RulesOfTheGameSlot.RULES_SLOT_CLASS;
 import dagger.hilt.android.AndroidEntryPoint;
 
 
-
-/**
- * Экран ставки на слот-машину: ввод суммы (chips / slider), поле реферала,
- * кнопка «КРУТИТЬ» — отправляет ставку через {@link SlotViewModel} и открывает {@link SlotFlasher}.
- */
 @AndroidEntryPoint
 public class SlotGame extends BaseActivity {
     public static final String SLOT_GAME_CLASS = ".SlotGame";
 
-    private static final String STYLE_CHIPS  = "chips";
-    private static final String STYLE_SLIDER = "slider";
+    private static final int MAX_BET_TENTHS     = 1000; // 100.0 XRP × 10
+    private static final int DEFAULT_BET_TENTHS = 10;   // 1.0 XRP
 
-    private static final int MAX_BET_TENTHS     = 1000;
-    private static final int DEFAULT_BET_TENTHS = 10;
+    // Reel display orders (same as SlotFlasher)
+    private static final int[] REEL_ORDER_LEFT   = {0, 2, 4, 1, 5, 3, 6};
+    private static final int[] REEL_ORDER_CENTER = {3, 0, 5, 2, 6, 1, 4};
+    private static final int[] REEL_ORDER_RIGHT  = {5, 1, 3, 6, 0, 4, 2};
 
     private SlotViewModel viewModel;
     private SharedPreferences preferences;
@@ -83,30 +77,20 @@ public class SlotGame extends BaseActivity {
         }
     };
 
-    // Preview reels (animated on slot screen)
-    private static final int[] REEL_ORDER_LEFT   = {0, 2, 4, 1, 5, 3, 6};
-    private static final int[] REEL_ORDER_CENTER  = {3, 0, 5, 2, 6, 1, 4};
-    private static final int[] REEL_ORDER_RIGHT   = {5, 1, 3, 6, 0, 4, 2};
-
     // UI
-    private TextView tvBalance;
-    private View     btnSpin;
-    private View     tvRulesLink;
-    private View     styleChipsContainer;
-    private View     styleSliderContainer;
-    private TextInputLayout tilBetField;
-    private EditText etBet;
-    private ChipGroup chipGroup;
-    private Slider   sliderBet;
+    private TextView       tvBalance;
+    private View           btnSpin;
+    private View           tvRulesLink;
+    private TextView       tvBetPlusMinus;
     private MaterialButton btnBetMinus;
     private MaterialButton btnBetPlus;
-    private TextView tvBetPlusMinus;
-    private TextView tvBetInputError;
+    private Slider         sliderBet;
+    private ChipGroup      chipGroup;
+    private TextView       tvBetInputError;
 
     private SlotReelView reelPreviewLeft;
     private SlotReelView reelPreviewCenter;
     private SlotReelView reelPreviewRight;
-
 
     private int betTenths = DEFAULT_BET_TENTHS;
     private final Handler pmHandler = new Handler(Looper.getMainLooper());
@@ -121,44 +105,41 @@ public class SlotGame extends BaseActivity {
     private String ERR_PAYMENT;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.slot_game_page);
 
-        viewModel    = new ViewModelProvider(this).get(SlotViewModel.class);
-        preferences  = PrefsHelper.get(this);
+        viewModel   = new ViewModelProvider(this).get(SlotViewModel.class);
+        preferences = PrefsHelper.get(this);
 
         bindViews();
         setLanguage();
         loadReferral();
-        setupBetStyle();
+        setupPlusMinusButtons();
+        setupSliderListener();
         setupChips();
-        setupSliderButtons();
         setupListeners();
         setupObservers();
         setupBottomNav();
+
+        // Init display with default bet
+        tvBetPlusMinus.setText(formatTenths(betTenths) + " XRP");
 
         viewModel.loadBalance();
     }
 
 
-
     private void bindViews() {
-        tvBalance            = findViewById(R.id.tv_balance);
-        btnSpin              = findViewById(R.id.btn_spin);
-        tvRulesLink          = findViewById(R.id.tv_rules_link);
-        styleChipsContainer  = findViewById(R.id.style_chips_container);
-        styleSliderContainer = findViewById(R.id.style_slider_container);
-        tilBetField          = findViewById(R.id.til_bet_field);
-        etBet                = findViewById(R.id.et_bet);
-        chipGroup            = findViewById(R.id.chip_group_amounts);
-        sliderBet            = findViewById(R.id.slider_bet);
-        btnBetMinus          = findViewById(R.id.btn_bet_minus);
-        btnBetPlus           = findViewById(R.id.btn_bet_plus);
-        tvBetPlusMinus       = findViewById(R.id.tv_bet_plus_minus);
-        tvBetInputError      = findViewById(R.id.tv_bet_input_error);
+        tvBalance       = findViewById(R.id.tv_balance);
+        btnSpin         = findViewById(R.id.btn_spin);
+        tvRulesLink     = findViewById(R.id.tv_rules_link);
+        tvBetPlusMinus  = findViewById(R.id.tv_bet_plus_minus);
+        btnBetMinus     = findViewById(R.id.btn_bet_minus);
+        btnBetPlus      = findViewById(R.id.btn_bet_plus);
+        sliderBet       = findViewById(R.id.slider_bet);
+        chipGroup       = findViewById(R.id.chip_group_amounts);
+        tvBetInputError = findViewById(R.id.tv_bet_input_error);
 
         reelPreviewLeft   = findViewById(R.id.reel_preview_left);
         reelPreviewCenter = findViewById(R.id.reel_preview_center);
@@ -167,117 +148,100 @@ public class SlotGame extends BaseActivity {
 
     private void setLanguage() {
         ERR_ZERO    = getString(R.string.it_is_not_possible_to_send_null);
-        ERR_TOO_LOW = getString(R.string.bet_cannot_be_less_than)  + " " + StringEnum.MIN_BET_SLOT.getValue() + " XRP";
-        ERR_TOO_HIGH= getString(R.string.bet_cannot_be_more_than)  + " " + StringEnum.MAX_BET_SLOT.getValue() + " XRP";
+        ERR_TOO_LOW = getString(R.string.bet_cannot_be_less_than) + " " + StringEnum.MIN_BET_SLOT.getValue() + " XRP";
+        ERR_TOO_HIGH= getString(R.string.bet_cannot_be_more_than) + " " + StringEnum.MAX_BET_SLOT.getValue() + " XRP";
         ERR_BALANCE = getString(R.string.your_account_is_not_enough_to_send);
         ERR_INVALID = getString(R.string.payment_amount_is_incorrect);
         ERR_PAYMENT = getString(R.string.bet_is_made_expect_the_result);
-
     }
 
     private void loadReferral() {
         myReferral = preferences.getString(StringEnum.APP_PREFERENCES_REFERRAL.getValue(), "0");
     }
 
-    private void setupBetStyle() {
-        String style = preferences.getString(StringEnum.APP_PREFERENCES_BET_INPUT_STYLE.getValue(), STYLE_CHIPS);
-        if (STYLE_SLIDER.equals(style)) {
-            styleChipsContainer.setVisibility(View.GONE);
-            styleSliderContainer.setVisibility(View.VISIBLE);
-            updateSliderDisplay();
-        } else {
-            styleChipsContainer.setVisibility(View.VISIBLE);
-            styleSliderContainer.setVisibility(View.GONE);
+    // ─── Bet controls ────────────────────────────────────────────────────────
+
+    @SuppressLint("ClickableViewAccessibility")
+    private void setupPlusMinusButtons() {
+        if (btnBetMinus == null || btnBetPlus == null) return;
+        btnBetMinus.setOnClickListener(v -> changeBetBy(-1));
+        btnBetPlus.setOnClickListener(v -> changeBetBy(+1));
+        btnBetMinus.setOnTouchListener((v, event) -> handlePmTouch(event, -1));
+        btnBetPlus.setOnTouchListener((v, event) -> handlePmTouch(event, +1));
+    }
+
+    // Returns false so the normal click event still fires after long-press setup
+    private boolean handlePmTouch(MotionEvent event, int delta) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            pmRunnable = new Runnable() {
+                @Override public void run() {
+                    changeBetBy(delta);
+                    pmHandler.postDelayed(this, 100);
+                }
+            };
+            pmHandler.postDelayed(pmRunnable, 400);
+        } else if (event.getAction() == MotionEvent.ACTION_UP
+                || event.getAction() == MotionEvent.ACTION_CANCEL) {
+            pmHandler.removeCallbacks(pmRunnable);
         }
+        return false;
+    }
+
+    private void changeBetBy(int delta) {
+        betTenths = Math.max(1, Math.min(MAX_BET_TENTHS, betTenths + delta));
+        tvBetPlusMinus.setText(formatTenths(betTenths) + " XRP");
+        if (sliderBet != null)
+            sliderBet.setValue(Math.max(sliderBet.getValueFrom(),
+                    Math.min(sliderBet.getValueTo(), betTenths / 10.0f)));
+        clearError();
+    }
+
+    private void setupSliderListener() {
+        if (sliderBet == null) return;
+        sliderBet.addOnChangeListener((slider, value, fromUser) -> {
+            if (!fromUser) return;
+            betTenths = Math.round(value * 10);
+            tvBetPlusMinus.setText(formatTenths(betTenths) + " XRP");
+            clearError();
+        });
     }
 
     private void setupChips() {
-        int[] chipIds = {R.id.chip_01, R.id.chip_05, R.id.chip_1, R.id.chip_5, R.id.chip_10};
-        String[] vals = {"0.1", "0.5", "1", "5", "10"};
-        for (int i = 0; i < chipIds.length; i++) {
-            final String v = vals[i];
-            Chip chip = findViewById(chipIds[i]);
-            if (chip != null) chip.setOnClickListener(c -> {
-                if (etBet != null) etBet.setText(v);
-                clearError();
-                if (soundPool != null) soundPool.playBet(SlotGame.this);
-            });
-        }
-    }
-
-    @SuppressLint("ClickableViewAccessibility")
-    private void setupSliderButtons() {
-        if (sliderBet == null) return;
-        sliderBet.addOnChangeListener((s, val, user) -> {
-            betTenths = (int) val;
-            updateSliderDisplay();
+        if (chipGroup == null) return;
+        chipGroup.setOnCheckedStateChangeListener((group, checkedIds) -> {
+            int tenths = 0;
+            if      (checkedIds.contains(R.id.chip_01)) tenths = 1;
+            else if (checkedIds.contains(R.id.chip_05)) tenths = 5;
+            else if (checkedIds.contains(R.id.chip_1))  tenths = 10;
+            else if (checkedIds.contains(R.id.chip_5))  tenths = 50;
+            else if (checkedIds.contains(R.id.chip_10)) tenths = 100;
+            if (tenths == 0) return;
+            betTenths = Math.min(tenths, MAX_BET_TENTHS);
+            tvBetPlusMinus.setText(formatTenths(betTenths) + " XRP");
+            if (sliderBet != null)
+                sliderBet.setValue(Math.min(betTenths / 10.0f, sliderBet.getValueTo()));
+            clearError();
+            if (soundPool != null) soundPool.playBet(SlotGame.this);
         });
-
-        View.OnTouchListener repeatListener = (v, event) -> {
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    scheduleRepeat(v.getId());
-                    v.performClick();
-                    return true;
-                case MotionEvent.ACTION_UP:
-                case MotionEvent.ACTION_CANCEL:
-                    pmHandler.removeCallbacks(pmRunnable);
-                    return true;
-            }
-            return false;
-        };
-        if (btnBetMinus != null) btnBetMinus.setOnTouchListener(repeatListener);
-        if (btnBetPlus  != null) btnBetPlus .setOnTouchListener(repeatListener);
     }
 
-    private void scheduleRepeat(int viewId) {
-        pmRunnable = new Runnable() {
-            @Override
-            public void run() {
-                if (viewId == R.id.btn_bet_minus) { betTenths = Math.max(1, betTenths - 1); }
-                else                              { betTenths = Math.min(MAX_BET_TENTHS, betTenths + 1); }
-                if (sliderBet != null) sliderBet.setValue(betTenths);
-                updateSliderDisplay();
-                pmHandler.postDelayed(this, 80);
-            }
-        };
-        pmHandler.postDelayed(pmRunnable, 350);
+    private String formatTenths(int tenths) {
+        if (tenths % 10 == 0) return String.valueOf(tenths / 10);
+        return String.format(Locale.US, "%.1f", tenths / 10.0);
     }
 
-    private void updateSliderDisplay() {
-        double xrp = betTenths / 10.0;
-        if (tvBetPlusMinus != null)
-            tvBetPlusMinus.setText(String.format(Locale.US, "%.1f XRP", xrp));
-    }
+    // ─── Listeners & Observers ───────────────────────────────────────────────
 
     private void setupListeners() {
         btnSpin.setOnClickListener(v -> onSpinClicked());
         tvRulesLink.setOnClickListener(v -> startActivity(new Intent(RULES_SLOT_CLASS)));
-
-        if (etBet != null) etBet.setOnFocusChangeListener((v, f) -> { if (f) clearError(); });
     }
 
     private void onSpinClicked() {
-        String betStr = resolveCurrentBet();
-        String ref    = resolveReferral();
-
-        Flasher.TEST_MODE_ENUM = TestModeEnum.SLOT_GAME;
+        String betStr = formatTenths(betTenths);
+        Flasher.TEST_MODE_ENUM   = TestModeEnum.SLOT_GAME;
         Flasher.TEST_SAND_AMOUNT = betStr;
-
-        viewModel.placeBet(betStr, ref);
-    }
-
-    private String resolveCurrentBet() {
-        String style = preferences.getString(StringEnum.APP_PREFERENCES_BET_INPUT_STYLE.getValue(), STYLE_CHIPS);
-        if (STYLE_SLIDER.equals(style)) {
-            return String.format(Locale.US, "%.1f", betTenths / 10.0);
-        }
-        String raw = etBet != null ? etBet.getText().toString().trim() : "";
-        return raw.isEmpty() ? "0" : raw;
-    }
-
-    private String resolveReferral() {
-        return myReferral;
+        viewModel.placeBet(betStr, myReferral);
     }
 
     private void setupObservers() {
@@ -299,39 +263,41 @@ public class SlotGame extends BaseActivity {
 
     private String errorText(GameBetError err) {
         switch (err) {
-            case AMOUNT_IS_ZERO:         return ERR_ZERO;
-            case BET_TOO_LOW:            return ERR_TOO_LOW;
-            case BET_TOO_HIGH:           return ERR_TOO_HIGH;
-            case INSUFFICIENT_BALANCE:   return ERR_BALANCE;
-            case PAYMENT_FAILED:         return ERR_PAYMENT;
-            default:                     return ERR_INVALID;
+            case AMOUNT_IS_ZERO:       return ERR_ZERO;
+            case BET_TOO_LOW:          return ERR_TOO_LOW;
+            case BET_TOO_HIGH:         return ERR_TOO_HIGH;
+            case INSUFFICIENT_BALANCE: return ERR_BALANCE;
+            case PAYMENT_FAILED:       return ERR_PAYMENT;
+            default:                   return ERR_INVALID;
         }
     }
 
     private void showError(String msg) {
-        if (tilBetField != null)     tilBetField.setError(msg);
-        if (tvBetInputError != null) { tvBetInputError.setText(msg); tvBetInputError.setVisibility(View.VISIBLE); }
+        if (tvBetInputError != null) {
+            tvBetInputError.setText(msg);
+            tvBetInputError.setVisibility(View.VISIBLE);
+        }
     }
 
     private void clearError() {
-        if (tilBetField != null)     tilBetField.setError(null);
         if (tvBetInputError != null) tvBetInputError.setVisibility(View.GONE);
     }
 
-    // ─── Audio ──────────────────────────────────────────────────────────────
+    // ─── Reel preview ────────────────────────────────────────────────────────
 
     private void startPreviewReels() {
+        // post() defers until after the layout pass so cellPx > 0 in SlotReelView
         if (reelPreviewLeft != null) {
             reelPreviewLeft.setReelOrder(REEL_ORDER_LEFT);
-            reelPreviewLeft.startSpin();
+            reelPreviewLeft.post(() -> reelPreviewLeft.startSpin());
         }
         if (reelPreviewCenter != null) {
             reelPreviewCenter.setReelOrder(REEL_ORDER_CENTER);
-            reelPreviewCenter.startSpin();
+            reelPreviewCenter.post(() -> reelPreviewCenter.startSpin());
         }
         if (reelPreviewRight != null) {
             reelPreviewRight.setReelOrder(REEL_ORDER_RIGHT);
-            reelPreviewRight.startSpin();
+            reelPreviewRight.post(() -> reelPreviewRight.startSpin());
         }
     }
 
@@ -341,15 +307,19 @@ public class SlotGame extends BaseActivity {
         if (reelPreviewRight  != null) reelPreviewRight.cancelAnim();
     }
 
+    // ─── Audio & lifecycle ───────────────────────────────────────────────────
+
     @Override
     protected void onResume() {
         super.onResume();
         viewModel.loadBalance();
         startPreviewReels();
-        soundPool = new GameSoundPool(this);
+
+        soundPool     = new GameSoundPool(this);
         noisyReceiver = AudioHelper.registerNoisyReceiver(this,
                 () -> { if (casinoMediaPlayer != null && casinoMediaPlayer.isPlaying()) casinoMediaPlayer.pause(); });
         audioFocusRequest = AudioHelper.requestFocus(this, focusListener);
+
         if (casinoMediaPlayer == null) casinoMediaPlayer = MediaPlayer.create(this, R.raw.in_casino);
         if (casinoMediaPlayer != null) {
             casinoMediaPlayer.setLooping(true);
