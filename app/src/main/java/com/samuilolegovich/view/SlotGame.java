@@ -265,6 +265,7 @@ public class SlotGame extends BaseActivity {
             else if (checkedIds.contains(R.id.chip_1))  tenths = 10;
             else if (checkedIds.contains(R.id.chip_5))  tenths = 50;
             else if (checkedIds.contains(R.id.chip_10)) tenths = 100;
+            else if (checkedIds.contains(R.id.chip_20)) tenths = 200;
             if (tenths == 0) return;
 
             String style = preferences.getString(

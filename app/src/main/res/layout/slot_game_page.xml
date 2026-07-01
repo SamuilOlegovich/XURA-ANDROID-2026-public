@@ -432,6 +432,16 @@
                         android:backgroundTint="@color/chip_bg_slot"
                         app:chipStrokeColor="@color/chip_stroke_slot" />
 
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_20"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat"
+                        android:text="@string/chip_20_xrp"
+                        android:backgroundTint="@color/chip_bg_slot"
+                        app:chipStrokeColor="@color/chip_stroke_slot" />
+
                 </com.google.android.material.chip.ChipGroup>
 
                 <!-- Error display -->
