@@ -46,8 +46,10 @@ public class SlotReelView extends View {
     // Symbol order on this reel (7 unique symbols, can be shuffled per reel)
     private int[] reelOrder = { 0, 1, 2, 3, 4, 5, 6 };
 
-    private float cellPx    = 0f;
-    private float scrollPx  = 0f; // ever-increasing during spin
+    private float cellPx          = 0f;
+    private float scrollPx        = 0f;   // ever-increasing during spin
+    private float pendingSpinMult = -1f;  // >=0 means startSpin was called before layout
+    private float currentSpeedMult = 1.0f; // last speed used in doStartSpin
 
     private ValueAnimator activeAnimator;
     private boolean highlightMiddle = false;
@@ -93,6 +95,11 @@ public class SlotReelView extends View {
         cellPx = h / 3f;
         glyphPaint.setTextSize(cellPx * 0.46f);
         labelPaint.setTextSize(cellPx * 0.17f);
+        // Запускаем отложенный спин, если startSpin() вызвали до layout
+        if (pendingSpinMult >= 0f) {
+            doStartSpin(pendingSpinMult);
+            pendingSpinMult = -1f;
+        }
     }
 
     @Override
@@ -160,13 +167,30 @@ public class SlotReelView extends View {
         invalidate();
     }
 
-    /** Запускает непрерывное вращение барабана. Работает ~14 мин без переполнения float. */
+    /** Запускает непрерывное вращение с нормальной скоростью. */
     public void startSpin() {
+        startSpin(1.0f);
+    }
+
+    /**
+     * Запускает вращение с множителем скорости (>1 = быстрее).
+     * Если view ещё не измерен (cellPx==0), откладывает старт до onSizeChanged.
+     */
+    public void startSpin(float speedMult) {
         cancelAnim();
+        if (cellPx <= 0f) {
+            pendingSpinMult = speedMult;
+            return;
+        }
+        pendingSpinMult = -1f;
+        doStartSpin(speedMult);
+    }
+
+    private void doStartSpin(float speedMult) {
+        currentSpeedMult = speedMult;
         float loopPx = reelOrder.length * cellPx;
-        // Spin 1000 full loops — more than enough for any game session
         ValueAnimator anim = ValueAnimator.ofFloat(scrollPx, scrollPx + loopPx * 1000f);
-        anim.setDuration((long)(reelOrder.length * 120L * 1000));
+        anim.setDuration((long)(reelOrder.length * 120L * 1000 / speedMult));
         anim.setInterpolator(new LinearInterpolator());
         anim.addUpdateListener(a -> {
             scrollPx = (float) a.getAnimatedValue();
@@ -178,6 +202,7 @@ public class SlotReelView extends View {
 
     /**
      * Останавливает барабан так, чтобы символ {@code targetSym} оказался в средней ячейке.
+     * Анимация плавно продолжает текущую скорость спина, затем замедляется до нуля.
      * После окончания анимации вызывается {@code onStopped}.
      */
     public void stopAt(int targetSym, Runnable onStopped) {
@@ -196,23 +221,47 @@ public class SlotReelView extends View {
         // For the middle row (slot=1) to show targetSym:
         //   topIdx + 1 ≡ targetIdx  (mod n)
         //   → topIdx ≡ targetIdx - 1  (mod n)
-        // We need scrollPx to land at an integer-cell boundary where topIdx ≡ (targetIdx-1).
-        float currentMod   = scrollPx % total;
-        float wantedMod    = ((targetIdx - 1 + n) % n) * cellPx;
-        float delta        = wantedMod - currentMod;
+        float currentMod = scrollPx % total;
+        float wantedMod  = ((targetIdx - 1 + n) % n) * cellPx;
+        float delta      = wantedMod - currentMod;
         if (delta <= 0f) delta += total;
-        delta += total * 2f; // at least 2 extra full rotations for visual effect
+        delta += total; // 1 дополнительный полный оборот для визуального эффекта
+
+        // Текущая скорость спина: cellPx * speedMult / 120 px/ms
+        // DecelerateInterpolator(1f): f'(0) = 2 → начальная скорость = 2*delta/duration
+        // Приравниваем к скорости спина → duration = 2*delta / spinVelocity
+        float spinVelocity = cellPx * currentSpeedMult / 120f; // px/ms
+        long  duration     = (long)(2f * delta / spinVelocity);
+        duration = Math.max(900L, Math.min(2500L, duration));
+
+        // Capture для лямбды (effectively final)
+        final int   tIdx   = targetIdx;
+        final float total_ = total;
 
         ValueAnimator anim = ValueAnimator.ofFloat(scrollPx, scrollPx + delta);
-        anim.setDuration(1200);
-        anim.setInterpolator(new DecelerateInterpolator(2.5f));
+        anim.setDuration(duration);
+        anim.setInterpolator(new DecelerateInterpolator(1f));
         anim.addUpdateListener(a -> {
             scrollPx = (float) a.getAnimatedValue();
             invalidate();
         });
         anim.addListener(new AnimatorListenerAdapter() {
+            boolean wasCancelled = false;
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+                wasCancelled = true;
+            }
+
             @Override
             public void onAnimationEnd(Animator animation) {
+                if (wasCancelled) return;
+                // Снапим scrollPx точно на границу ячейки — убирает погрешность float
+                // и исключает мигание на соседний символ при завершении анимации
+                int nn    = reelOrder.length;
+                float exact = ((tIdx - 1 + nn) % nn) * cellPx;
+                scrollPx = (float) Math.floor(scrollPx / total_) * total_ + exact;
+                invalidate();
                 if (onStopped != null) onStopped.run();
             }
         });
@@ -228,8 +277,9 @@ public class SlotReelView extends View {
         return reelOrder[((topIdx + 1) % n + n) % n];
     }
 
-    /** Немедленно останавливает любую текущую анимацию. */
+    /** Немедленно останавливает любую текущую анимацию и отменяет отложенный старт. */
     public void cancelAnim() {
+        pendingSpinMult = -1f;
         if (activeAnimator != null) {
             activeAnimator.cancel();
             activeAnimator = null;

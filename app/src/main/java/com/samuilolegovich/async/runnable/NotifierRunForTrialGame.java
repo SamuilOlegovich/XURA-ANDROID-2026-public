@@ -34,12 +34,16 @@ public class NotifierRunForTrialGame implements Runnable {
     private String YOUR_REFERRAL_CODE;
 
     private final SecureRandom random = new SecureRandom();
+    // Привязываем к конкретному экземпляру Flasher при создании потока —
+    // чтобы результат не попал в следующую игру если первый Flasher закрыли раньше срока
+    private final Flasher expectedFlasher;
 
 
 
     /** Запоминает, для какой игры имитируется ответ сервера, и подгружает локализованные тексты уведомлений. */
     public NotifierRunForTrialGame(TestModeEnum testModeEnum) {
         this.testModeEnum = testModeEnum;
+        this.expectedFlasher = Flasher.FLASHER;
         setLanguage();
     }
 
@@ -47,6 +51,7 @@ public class NotifierRunForTrialGame implements Runnable {
     NotifierRunForTrialGame(TestModeEnum testModeEnum,
                             String lostMsg, String wonMsg, String wonLotoMsg, String referralMsg) {
         this.testModeEnum = testModeEnum;
+        this.expectedFlasher = Flasher.FLASHER;
         YOUR_BET_IS_LOST_TRY_AGAIN_AND_YOU_WILL_BE_LUCKY = lostMsg;
         CONGRATULATIONS_YOUR_BET_IS_WON                  = wonMsg;
         CONGRATULATIONS_YOUR_BET_IS_WON_LOTTO            = wonLotoMsg;
@@ -335,7 +340,8 @@ public class NotifierRunForTrialGame implements Runnable {
      */
     private void responseToBet(String text, String lotto, int i) {
         Flasher flasher = Flasher.FLASHER;
-        if (Flasher.VISIBLE_ON_SCREEN && flasher != null) {
+        // Доставляем только если открыт тот же Flasher, что был при старте этого потока
+        if (Flasher.VISIBLE_ON_SCREEN && flasher != null && flasher == expectedFlasher) {
             switch (i) {
                 case 1:
                     flasher.stopGame(text, false);

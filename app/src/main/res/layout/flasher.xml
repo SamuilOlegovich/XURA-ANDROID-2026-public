@@ -32,7 +32,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Roulette wheel — fills space between top label and win-amount text -->
+    <!-- Roulette wheel — square, fills space above result texts -->
     <com.samuilolegovich.view.RouletteWheelView
         android:id="@+id/roulette_wheel"
         android:layout_width="0dp"
@@ -76,7 +76,7 @@
         android:textStyle="bold"
         android:gravity="center"
         android:maxLines="2"
-        android:visibility="invisible"
+        android:visibility="gone"
         app:autoSizeTextType="uniform"
         app:autoSizeMinTextSize="12sp"
         app:autoSizeMaxTextSize="18sp"
@@ -98,7 +98,7 @@
         android:textSize="26sp"
         android:textStyle="bold"
         android:gravity="center"
-        android:visibility="invisible"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/tv_countdown"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -116,8 +116,8 @@
         android:textColor="@color/xura_text_muted"
         android:textSize="13sp"
         android:gravity="center"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/ll_continue_bet"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/btn_back_to_game"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -128,13 +128,13 @@
         android:layout_height="80dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="32dp"
         android:background="@drawable/bg_card_purple"
         android:clickable="true"
         android:focusable="true"
         android:contentDescription="@string/continue_browsing"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/btn_back_to_game"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
