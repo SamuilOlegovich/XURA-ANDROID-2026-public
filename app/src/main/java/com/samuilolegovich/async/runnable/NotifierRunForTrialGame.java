@@ -321,12 +321,14 @@ public class NotifierRunForTrialGame implements Runnable {
     }
 
     /**
-     * Доставляет результат слота в SlotFlasher (если он открыт),
+     * Доставляет результат слота в SlotFlasher (если экран ещё жив),
      * иначе кладёт в WalletRepository для показа позже.
+     * Не проверяем VISIBLE_ON_SCREEN: stopGame() использует runOnUiThread и безопасно
+     * доставляет результат даже когда экран свёрнут (onPause не уничтожает Activity).
      */
     private void responseToBetSlot(String text, String lotto, int outcome) {
         com.samuilolegovich.view.SlotFlasher sf = SlotFlasher.SLOT_FLASHER;
-        if (SlotFlasher.VISIBLE_ON_SCREEN && sf != null) {
+        if (sf != null) {
             sf.stopGame(text, outcome == 2);
         } else {
             WalletRepository.getInstance().notifyEvent(text, lotto, outcome);

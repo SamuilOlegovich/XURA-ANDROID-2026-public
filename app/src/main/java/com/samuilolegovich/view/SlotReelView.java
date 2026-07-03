@@ -256,11 +256,15 @@ public class SlotReelView extends View {
             @Override
             public void onAnimationEnd(Animator animation) {
                 if (wasCancelled) return;
-                // Снапим scrollPx точно на границу ячейки — убирает погрешность float
-                // и исключает мигание на соседний символ при завершении анимации
-                int nn    = reelOrder.length;
-                float exact = ((tIdx - 1 + nn) % nn) * cellPx;
-                scrollPx = (float) Math.floor(scrollPx / total_) * total_ + exact;
+                // Снап через целочисленный индекс ячейки (double precision) — исключает
+                // потерю 1 ячейки при накоплении ошибок float через total_ = n*cellPx.
+                int nn = reelOrder.length;
+                int wantedTopIdx = (tIdx - 1 + nn) % nn;
+                long nearestCell = Math.round((double) scrollPx / (double) cellPx);
+                long rem  = ((nearestCell % nn) + nn) % nn;
+                long diff = (wantedTopIdx - rem + nn) % nn;
+                // + малый epsilon чтобы Math.floor в getMiddleSymbol/onDraw давал точный topIdx
+                scrollPx = (float) ((nearestCell + diff) * (double) cellPx) + cellPx * 0.001f;
                 invalidate();
                 if (onStopped != null) onStopped.run();
             }
@@ -275,6 +279,26 @@ public class SlotReelView extends View {
         int n      = reelOrder.length;
         int topIdx = (int) Math.floor(scrollPx / cellPx);
         return reelOrder[((topIdx + 1) % n + n) % n];
+    }
+
+    /**
+     * Мгновенно устанавливает барабан так, чтобы targetSym оказался в средней ячейке.
+     * Используется при восстановлении состояния после onPause, без анимации.
+     */
+    public void snapTo(int targetSym) {
+        cancelAnim();
+        if (cellPx <= 0) return;
+        int n = reelOrder.length;
+        int targetIdx = 0;
+        for (int i = 0; i < n; i++) {
+            if (reelOrder[i] == targetSym) { targetIdx = i; break; }
+        }
+        int wantedTopIdx = (targetIdx - 1 + n) % n;
+        long nearestCell = Math.round((double) scrollPx / (double) cellPx);
+        long rem  = ((nearestCell % n) + n) % n;
+        long diff = (wantedTopIdx - rem + n) % n;
+        scrollPx  = (float) ((nearestCell + diff) * (double) cellPx) + cellPx * 0.001f;
+        invalidate();
     }
 
     /** Немедленно останавливает любую текущую анимацию и отменяет отложенный старт. */
