@@ -3,14 +3,78 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/roulette_game_page"
+    android:id="@+id/slot_game_page"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/xura_black"
-    tools:context=".view.RouletteGame">
+    tools:context=".view.SlotGame">
+
+    <!-- SPIN button pinned to bottom — стандарт: 80dp, margins 24dp, marginBottom 32dp -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/btn_spin"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/bg_card_slot"
+        android:clickable="true"
+        android:focusable="true"
+        android:contentDescription="@string/slot_spin_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/spin_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/slot_spin_button"
+            android:textColor="#D020A0"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.03"
+            app:layout_constraintBottom_toTopOf="@+id/spin_subtitle"
+            app:layout_constraintEnd_toStartOf="@+id/spin_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/spin_subtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/slot_spin_subtitle"
+            android:textColor="@color/xura_text_tertiary"
+            android:textSize="11sp"
+            android:letterSpacing="0.02"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/spin_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spin_title" />
+
+        <ImageView
+            android:id="@+id/spin_icon"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_slot_machine"
+            android:importantForAccessibility="no"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ScrollView
-        android:id="@+id/roulette_scroll"
+        android:id="@+id/slot_scroll"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fillViewport="true"
@@ -19,7 +83,7 @@
         android:requiresFadingEdge="vertical"
         android:fadingEdgeLength="64dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btn_spin"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
@@ -28,7 +92,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingTop="8dp"
-            android:paddingBottom="32dp">
+            android:paddingBottom="16dp">
 
             <!-- Balance + Rules row -->
             <LinearLayout
@@ -48,7 +112,7 @@
                     android:textSize="11sp" />
 
                 <TextView
-                    android:id="@+id/your_balance_xrp_text"
+                    android:id="@+id/tv_balance"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -61,7 +125,7 @@
 
                 <!-- Rules info button -->
                 <ImageView
-                    android:id="@+id/rules_of_the_game_link"
+                    android:id="@+id/tv_rules_link"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:padding="12dp"
@@ -74,16 +138,16 @@
 
             </LinearLayout>
 
-            <!-- ROULETTE title -->
+            <!-- SLOT MACHINE title -->
             <TextView
-                android:id="@+id/roulette_game_text_view"
+                android:id="@+id/tv_slot_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
                 android:fontFamily="@font/montserrat"
-                android:text="@string/roulette_game"
+                android:text="@string/name_slot"
                 android:textAlignment="center"
                 android:textColor="@color/xura_text_primary"
                 android:textSize="24sp"
@@ -91,11 +155,9 @@
                 android:gravity="center"
                 android:letterSpacing="0.12" />
 
-            <!-- ═══════════════════════════════════════
-                 CASINO TABLE CARD — vertical layout
-                 ═══════════════════════════════════════ -->
+            <!-- REEL PREVIEW CARD -->
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/roulette_table_card"
+                android:id="@+id/slot_reel_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
@@ -113,57 +175,65 @@
                     android:orientation="vertical"
                     android:padding="8dp">
 
-                    <!-- Bets summary row: label + clear button -->
-                    <LinearLayout
+                    <!-- Reels row -->
+                    <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical"
-                        android:layout_marginBottom="6dp">
+                        android:layout_height="160dp">
 
-                        <TextView
-                            android:id="@+id/roulette_selected_bet_label"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/montserrat"
-                            android:text="@string/roulette_select_a_bet"
-                            android:textAlignment="center"
-                            android:textColor="@color/xura_text_tertiary"
-                            android:textSize="11sp"
-                            android:letterSpacing="0.08" />
+                        <!-- Three reels -->
+                        <LinearLayout
+                            android:id="@+id/reel_preview_container"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/bg_reel_preview"
+                            android:clipToOutline="true"
+                            android:orientation="horizontal">
 
-                        <TextView
-                            android:id="@+id/btn_clear_bets"
-                            android:layout_width="wrap_content"
-                            android:layout_height="32dp"
-                            android:gravity="center"
-                            android:paddingStart="10dp"
-                            android:paddingEnd="10dp"
-                            android:fontFamily="@font/montserrat"
-                            android:text="@string/roulette_clear_bets"
-                            android:textColor="@color/xura_text_tertiary"
-                            android:textSize="10sp"
-                            android:letterSpacing="0.06"
-                            android:background="@drawable/bg_card_white_outline"
-                            android:visibility="gone"
-                            android:clickable="true"
-                            android:focusable="true" />
+                            <com.samuilolegovich.view.SlotReelView
+                                android:id="@+id/reel_preview_left"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1" />
 
-                    </LinearLayout>
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
+                                android:background="#40D020A0" />
 
-                    <!-- Vertical table — populated in RouletteGame.java -->
-                    <LinearLayout
-                        android:id="@+id/roulette_table_container"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical" />
+                            <com.samuilolegovich.view.SlotReelView
+                                android:id="@+id/reel_preview_center"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1" />
+
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
+                                android:background="#40D020A0" />
+
+                            <com.samuilolegovich.view.SlotReelView
+                                android:id="@+id/reel_preview_right"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1" />
+
+                        </LinearLayout>
+
+                        <!-- Payline overlay -->
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:layout_gravity="center_vertical"
+                            android:background="#66FF3060"
+                            android:importantForAccessibility="no" />
+
+                    </FrameLayout>
 
                 </LinearLayout>
 
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- BET INPUT CONTAINER — all 4 input styles -->
+            <!-- BET INPUT CONTAINER -->
             <LinearLayout
                 android:id="@+id/bet_input_container"
                 android:layout_width="match_parent"
@@ -171,7 +241,7 @@
                 android:layout_marginTop="14dp"
                 android:orientation="vertical">
 
-                <!-- Style: CHIPS (default) -->
+                <!-- Режим: текстовый ввод (chips) -->
                 <LinearLayout
                     android:id="@+id/style_chips_container"
                     android:layout_width="match_parent"
@@ -193,10 +263,10 @@
                         app:errorEnabled="true"
                         app:errorTextColor="@color/xura_error"
                         app:suffixText="XRP"
-                        app:suffixTextColor="@color/xura_gold">
+                        app:suffixTextColor="#D020A0">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/bet_field"
+                            android:id="@+id/et_bet"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/montserrat"
@@ -207,7 +277,7 @@
 
                 </LinearLayout>
 
-                <!-- Style: SLIDER + +/− (combined) -->
+                <!-- Режим: ползунок + кнопки (slider) -->
                 <LinearLayout
                     android:id="@+id/style_slider_container"
                     android:layout_width="match_parent"
@@ -215,6 +285,7 @@
                     android:orientation="vertical"
                     android:visibility="gone">
 
+                    <!-- Текущая ставка -->
                     <TextView
                         android:id="@+id/tv_bet_plus_minus"
                         android:layout_width="match_parent"
@@ -229,6 +300,7 @@
                         android:textStyle="bold"
                         android:text="1.0 XRP" />
 
+                    <!-- [−]  ══════слайдер══════  [+] -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -248,11 +320,11 @@
                             android:text=""
                             android:contentDescription="decrease bet"
                             app:icon="@drawable/ic_pm_minus"
-                            app:iconTint="@color/xura_gold"
+                            app:iconTint="#D020A0"
                             app:iconSize="20dp"
                             app:iconPadding="0dp"
                             app:iconGravity="textStart"
-                            app:strokeColor="@color/xura_gold"
+                            app:strokeColor="#D020A0"
                             app:strokeWidth="1.5dp"
                             app:cornerRadius="10dp" />
 
@@ -265,9 +337,9 @@
                             android:valueTo="100.0"
                             android:value="1.0"
                             android:stepSize="0.1"
-                            app:thumbColor="@color/xura_gold"
-                            app:trackColorActive="@color/xura_gold"
-                            app:trackColorInactive="#33FFB000" />
+                            app:thumbColor="#D020A0"
+                            app:trackColorActive="#D020A0"
+                            app:trackColorInactive="#33D020A0" />
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/btn_bet_plus"
@@ -279,11 +351,11 @@
                             android:text=""
                             android:contentDescription="increase bet"
                             app:icon="@drawable/ic_pm_plus"
-                            app:iconTint="@color/xura_gold"
+                            app:iconTint="#D020A0"
                             app:iconSize="20dp"
                             app:iconPadding="0dp"
                             app:iconGravity="textStart"
-                            app:strokeColor="@color/xura_gold"
+                            app:strokeColor="#D020A0"
                             app:strokeWidth="1.5dp"
                             app:cornerRadius="10dp" />
 
@@ -291,7 +363,7 @@
 
                 </LinearLayout>
 
-                <!-- Quick-amount chips (shown in all styles) -->
+                <!-- Quick-amount chips -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -311,68 +383,68 @@
                     app:singleSelection="true">
 
                     <com.google.android.material.chip.Chip
-                        android:id="@+id/chip_01_xrp"
+                        android:id="@+id/chip_01"
                         style="@style/Widget.Material3.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat"
                         android:text="@string/chip_01_xrp"
-                        android:backgroundTint="@color/chip_bg_roulette"
-                        app:chipStrokeColor="@color/chip_stroke_roulette" />
+                        android:backgroundTint="@color/chip_bg_slot"
+                        app:chipStrokeColor="@color/chip_stroke_slot" />
 
                     <com.google.android.material.chip.Chip
-                        android:id="@+id/chip_05_xrp"
+                        android:id="@+id/chip_05"
                         style="@style/Widget.Material3.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat"
                         android:text="@string/chip_05_xrp"
-                        android:backgroundTint="@color/chip_bg_roulette"
-                        app:chipStrokeColor="@color/chip_stroke_roulette" />
+                        android:backgroundTint="@color/chip_bg_slot"
+                        app:chipStrokeColor="@color/chip_stroke_slot" />
 
                     <com.google.android.material.chip.Chip
-                        android:id="@+id/chip_1_xrp"
+                        android:id="@+id/chip_1"
                         style="@style/Widget.Material3.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat"
                         android:text="@string/chip_1_xrp"
-                        android:backgroundTint="@color/chip_bg_roulette"
-                        app:chipStrokeColor="@color/chip_stroke_roulette" />
+                        android:backgroundTint="@color/chip_bg_slot"
+                        app:chipStrokeColor="@color/chip_stroke_slot" />
 
                     <com.google.android.material.chip.Chip
-                        android:id="@+id/chip_5_xrp"
+                        android:id="@+id/chip_5"
                         style="@style/Widget.Material3.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat"
                         android:text="@string/chip_5_xrp"
-                        android:backgroundTint="@color/chip_bg_roulette"
-                        app:chipStrokeColor="@color/chip_stroke_roulette" />
+                        android:backgroundTint="@color/chip_bg_slot"
+                        app:chipStrokeColor="@color/chip_stroke_slot" />
 
                     <com.google.android.material.chip.Chip
-                        android:id="@+id/chip_10_xrp"
+                        android:id="@+id/chip_10"
                         style="@style/Widget.Material3.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat"
                         android:text="@string/chip_10_xrp"
-                        android:backgroundTint="@color/chip_bg_roulette"
-                        app:chipStrokeColor="@color/chip_stroke_roulette" />
+                        android:backgroundTint="@color/chip_bg_slot"
+                        app:chipStrokeColor="@color/chip_stroke_slot" />
 
                     <com.google.android.material.chip.Chip
-                        android:id="@+id/chip_20_xrp"
+                        android:id="@+id/chip_20"
                         style="@style/Widget.Material3.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat"
                         android:text="@string/chip_20_xrp"
-                        android:backgroundTint="@color/chip_bg_roulette"
-                        app:chipStrokeColor="@color/chip_stroke_roulette" />
+                        android:backgroundTint="@color/chip_bg_slot"
+                        app:chipStrokeColor="@color/chip_stroke_slot" />
 
                 </com.google.android.material.chip.ChipGroup>
 
-                <!-- Shared error display for non-chip styles -->
+                <!-- Error display -->
                 <TextView
                     android:id="@+id/tv_bet_input_error"
                     android:layout_width="match_parent"
@@ -385,82 +457,6 @@
                     android:visibility="gone" />
 
             </LinearLayout>
-
-            <!-- SPIN — gold card -->
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/btn_spin_roulette"
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="24dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/bg_card_history"
-                android:clickable="true"
-                android:focusable="true"
-                android:contentDescription="@string/roulette_spin">
-
-                <TextView
-                    android:id="@+id/spin_title"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="8dp"
-                    android:fontFamily="@font/montserrat"
-                    android:text="@string/roulette_spin"
-                    android:textColor="@color/xura_gold"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:letterSpacing="0.03"
-                    app:layout_constraintBottom_toTopOf="@+id/spin_subtitle"
-                    app:layout_constraintEnd_toStartOf="@+id/spin_icon"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_chainStyle="packed" />
-
-                <TextView
-                    android:id="@+id/spin_subtitle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginEnd="8dp"
-                    android:fontFamily="@font/montserrat"
-                    android:text="@string/btn_sub_spin"
-                    android:textColor="@color/xura_text_tertiary"
-                    android:textSize="11sp"
-                    android:letterSpacing="0.02"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/spin_icon"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/spin_title" />
-
-                <ImageView
-                    android:id="@+id/spin_icon"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="16dp"
-                    android:src="@drawable/ic_spin"
-                    android:importantForAccessibility="no"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/xura_gold" />
-
-                <com.google.android.material.progressindicator.CircularProgressIndicator
-                    android:id="@+id/spin_progress"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="16dp"
-                    android:indeterminate="true"
-                    android:visibility="gone"
-                    app:indicatorColor="@color/xura_gold"
-                    app:trackColor="@color/xura_glass_fill"
-                    app:trackThickness="3dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
 

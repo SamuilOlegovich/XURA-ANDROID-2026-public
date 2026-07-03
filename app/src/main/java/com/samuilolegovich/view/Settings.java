@@ -123,6 +123,10 @@ public class Settings extends BaseActivity {
     private TextView betStyleTitle;
     private TextView betTimeoutTitle;
 
+    private View     settingsAnimationsLinc;
+    private TextView animationsTitle;
+    private android.widget.ImageView animationsIcon;
+
     // ── View скрытой DEV-секции ──────────────────────────────────────────
     private MaterialCardView cardDevNetwork;
     private SwitchMaterial   devNetworkSwitch;
@@ -205,6 +209,9 @@ public class Settings extends BaseActivity {
         settingsBetTimeoutLinc = findViewById(R.id.settings_bet_timeout_linc);
         betStyleTitle          = findViewById(R.id.bet_style_title);
         betTimeoutTitle        = findViewById(R.id.bet_timeout_title);
+        settingsAnimationsLinc = findViewById(R.id.settings_animations_linc);
+        animationsTitle        = findViewById(R.id.animations_title);
+        animationsIcon         = findViewById(R.id.animations_icon);
 
         // DEV
         cardDevNetwork  = findViewById(R.id.card_dev_network);
@@ -234,6 +241,7 @@ public class Settings extends BaseActivity {
         updateBetStyleRow();
         updateBetTimeoutRow();
         updateSoundButton();
+        updateAnimationsButton();
         updateGameModeButton();
         updateTestBalanceCard();
         updatePasswordIcon();
@@ -323,6 +331,27 @@ public class Settings extends BaseActivity {
         boolean enabled = AudioHelper.isSoundEnabled(this);
         soundTitle.setText(getString(R.string.settings_sound) + (enabled ? "  ●  ON" : "  ○  OFF"));
         soundIcon.setImageResource(enabled ? R.drawable.ic_volume_up : R.drawable.ic_volume_off);
+    }
+
+    /** Обновляет текст и цвет пункта анимаций в зависимости от текущего состояния (ON/OFF). */
+    private void updateAnimationsButton() {
+        boolean enabled = isAnimationsEnabled();
+        animationsTitle.setText(getString(R.string.settings_animations) + (enabled ? "  ●  ON" : "  ○  OFF"));
+        int color = enabled ? getColor(R.color.xura_text_primary) : getColor(R.color.xura_text_tertiary);
+        animationsTitle.setTextColor(color);
+        animationsIcon.setColorFilter(color);
+    }
+
+    /** Проверяет, включены ли входные анимации (по умолчанию включены). */
+    private boolean isAnimationsEnabled() {
+        return PrefsHelper.get(this).getBoolean(
+                StringEnum.APP_PREFERENCES_ANIMATIONS_ENABLED.getValue(), true);
+    }
+
+    /** Сохраняет флаг включённости анимаций в preferences. */
+    public static boolean isAnimationsEnabled(android.content.Context context) {
+        return com.samuilolegovich.utils.PrefsHelper.get(context).getBoolean(
+                StringEnum.APP_PREFERENCES_ANIMATIONS_ENABLED.getValue(), true);
     }
 
     /** Обновляет текст пункта таймаута, показывая текущее значение. */
@@ -553,6 +582,15 @@ public class Settings extends BaseActivity {
             boolean current = AudioHelper.isSoundEnabled(this);
             AudioHelper.setSoundEnabled(this, !current);
             updateSoundButton();
+        });
+
+        settingsAnimationsLinc.setOnClickListener(v -> {
+            pulse(v);
+            boolean current = isAnimationsEnabled();
+            PrefsHelper.get(this).edit()
+                    .putBoolean(StringEnum.APP_PREFERENCES_ANIMATIONS_ENABLED.getValue(), !current)
+                    .apply();
+            updateAnimationsButton();
         });
 
         settingsLockTimeoutLinc.setOnClickListener(v -> {

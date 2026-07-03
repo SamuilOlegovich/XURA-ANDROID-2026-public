@@ -27,6 +27,7 @@ import com.samuilolegovich.enums.TestModeEnum;
 import com.samuilolegovich.utils.AudioHelper;
 import com.samuilolegovich.utils.Lotto;
 import com.samuilolegovich.utils.PrefsHelper;
+import android.os.SystemClock;
 import dagger.hilt.android.AndroidEntryPoint;
 
 import java.math.BigDecimal;
@@ -85,7 +86,10 @@ public class Flasher extends BaseActivity {
         }
     };
 
+    private static final long MIN_SPIN_MS = 5000L;
+
     private RouletteWheelView wheelView;
+    private long entryTimeMs;
     private TextView numberInfo;
     private TextView infoThree;
     private TextView infoTwo;
@@ -147,6 +151,8 @@ public class Flasher extends BaseActivity {
         llContinueBet  = findViewById(R.id.ll_continue_bet);
         tvCountdown    = findViewById(R.id.tv_countdown);
 
+        entryTimeMs = SystemClock.elapsedRealtime();
+
         btnBackToGame.setOnClickListener(v -> {
             cancelCountdown();
             onBackPressed();
@@ -154,7 +160,6 @@ public class Flasher extends BaseActivity {
 
         llContinueBet.setOnClickListener(v -> onBackPressed());
     }
-
 
     /** Загружает локализованные строки для итоговых сообщений (поздравление/утешение, выигрыш/проигрыш). */
     private void setLanguage() {
@@ -231,34 +236,40 @@ public class Flasher extends BaseActivity {
     }
 
 
-    /** Останавливает звук вращения, доводит колесо до выигравшего числа и показывает все элементы итога ставки (число, цвет, текст, звук, отсчёт). */
-    @SuppressLint("SetTextI18n")
+    /** Запускает остановку колеса после получения результата; колесо крутится минимум MIN_SPIN_MS (5с). */
     private void gameStop(String text, boolean win) {
-        rouletteSpinMediaPlayer.stop();
-
         int displayNumber = resolveDisplayNumber(win);
+        long delay = Math.max(0L, MIN_SPIN_MS - (SystemClock.elapsedRealtime() - entryTimeMs));
+        new Handler(Looper.getMainLooper()).postDelayed(() -> {
+            if (rouletteSpinMediaPlayer != null) {
+                try { rouletteSpinMediaPlayer.stop(); } catch (Exception ignored) {}
+            }
+            wheelView.stopAtNumber(displayNumber, () -> showGameResult(text, win, displayNumber));
+        }, delay);
+    }
 
-        wheelView.stopAtNumber(displayNumber, () -> {
-            wheelView.setCenterColor(sectorColor(displayNumber));
-            numberInfo.setText(win ? NUMBER_BET : String.valueOf(displayNumber));
-            numberInfo.setTextColor(0xFFFFB000);
-            numberInfo.setVisibility(View.VISIBLE);
+    /** Показывает все UI-элементы результата ставки после остановки колеса. */
+    @SuppressLint("SetTextI18n")
+    private void showGameResult(String text, boolean win, int displayNumber) {
+        wheelView.setCenterColor(sectorColor(displayNumber));
+        numberInfo.setText(win ? NUMBER_BET : String.valueOf(displayNumber));
+        numberInfo.setTextColor(0xFFFFB000);
+        numberInfo.setVisibility(View.VISIBLE);
 
-            winInfo.setText(win ? BET_WON : BET_LOST);
-            winInfo.setVisibility(View.VISIBLE);
-            winInfo.post(() -> applyTextGradient(winInfo, win));
+        winInfo.setText(win ? BET_WON : BET_LOST);
+        winInfo.setVisibility(View.VISIBLE);
+        winInfo.post(() -> applyTextGradient(winInfo, win));
 
-            infoThree.setText(win ? CONGRATULATIONS : DONT_GIVE_UP);
-            infoThree.setVisibility(View.VISIBLE);
+        infoThree.setText(win ? CONGRATULATIONS : DONT_GIVE_UP);
+        infoThree.setVisibility(View.VISIBLE);
 
-            infoTwo.setText(text);
-            infoTwo.setVisibility(View.VISIBLE);
+        infoTwo.setText(text);
+        infoTwo.setVisibility(View.VISIBLE);
 
-            llContinueBet.setVisibility(View.GONE);
-            btnBackToGame.setVisibility(View.VISIBLE);
-            tvCountdown.setVisibility(View.VISIBLE);
-            startCountdown();
-        });
+        llContinueBet.setVisibility(View.GONE);
+        btnBackToGame.setVisibility(View.VISIBLE);
+        tvCountdown.setVisibility(View.VISIBLE);
+        startCountdown();
     }
 
 

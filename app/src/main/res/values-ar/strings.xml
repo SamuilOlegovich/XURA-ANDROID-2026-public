@@ -387,6 +387,8 @@
     <string name="settings_auto_lock_subtitle">مهلة القفل عند انتقال التطبيق إلى الخلفية</string>
     <string name="settings_sound">الصوت</string>
     <string name="settings_sound_subtitle">الموسيقى والمؤثرات الصوتية في الألعاب</string>
+    <string name="settings_animations">الرسوم المتحركة</string>
+    <string name="settings_animations_subtitle">رسوم متحركة عند فتح شاشة المحفظة واختيار اللعبة</string>
 
     <string name="chip_01_xrp">0.1 XRP</string>
     <string name="chip_05_xrp">0.5 XRP</string>
@@ -402,4 +404,12 @@
     <string name="bet_style_drum">طبل</string>
     <string name="bet_style_plusminus">+/−</string>
     <string name="bet_style_slider">شريط التمرير +/−</string>
+
+    <string name="name_slot">ماكينة القمار</string>
+    <string name="game_slot_subtitle">3 بكرات · جائزة كبرى ×250</string>
+    <string name="slot_spin_button">دوران</string>
+    <string name="slot_spin_subtitle">ضع رهانك وادر البكرات</string>
+    <string name="slot_bet_hint">مبلغ الرهان (XRP)</string>
+    <string name="slot_rules_title">قواعد السلوت</string>
+    <string name="slot_rules_content"><![CDATA[<font color="#D020A0"><b>كيفية اللعب</b></font><br><br>أدر 3 بكرات وطابق الرموز على <font color="#D020A0"><b>خط الدفع الأوسط</b></font>.<br>Wild (≋) يحل محل أي رمز.<br><br><font color="#D020A0"><b>الرموز والمضاعفات</b></font><br><br><font color="#00D4FF">XRP</font> × XRP = <b>×2</b><br><font color="#4080FF">صاروخ</font> × صاروخ = <b>×5</b><br><font color="#9090FF">قمر</font> × قمر = <b>×10</b><br><font color="#40D0FF">ماس</font> × ماس = <b>×20</b><br><font color="#9020D0">حوت</font> × حوت = <b>×50</b><br><font color="#FFB000">★ جائزة كبرى</font> × جائزة كبرى = <b>×250</b><br><br><font color="#D020A0"><b>الحدود</b></font><br>الحد الأدنى: <font color="#D020A0">0.1 XRP</font><br>الحد الأقصى: <font color="#D020A0">100 XRP</font><br><br><font color="#555577"><i>العب بمسؤولية. 18+.</i></font>]]></string>
 </resources>

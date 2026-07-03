@@ -389,6 +389,8 @@
     <string name="settings_auto_lock_subtitle">应用进入后台时的锁定超时</string>
     <string name="settings_sound">声音</string>
     <string name="settings_sound_subtitle">游戏中的音乐和音效</string>
+    <string name="settings_animations">动画</string>
+    <string name="settings_animations_subtitle">钱包和游戏选择界面的入场动画</string>
 
     <string name="chip_01_xrp">0.1 XRP</string>
     <string name="chip_05_xrp">0.5 XRP</string>
@@ -404,4 +406,12 @@
     <string name="bet_style_drum">滚轮</string>
     <string name="bet_style_plusminus">+/−</string>
     <string name="bet_style_slider">滑块 +/−</string>
+
+    <string name="name_slot">老虎机</string>
+    <string name="game_slot_subtitle">3个转轮 · 大奖×250</string>
+    <string name="slot_spin_button">旋转</string>
+    <string name="slot_spin_subtitle">下注并旋转转轮</string>
+    <string name="slot_bet_hint">下注金额 (XRP)</string>
+    <string name="slot_rules_title">老虎机规则</string>
+    <string name="slot_rules_content"><![CDATA[<font color="#D020A0"><b>游戏规则</b></font><br><br>旋转3个转轮，在<font color="#D020A0"><b>中间赔率线</b></font>上匹配符号。<br>Wild (≋) 可替代任何符号。<br><br><font color="#D020A0"><b>符号和倍数</b></font><br><br><font color="#00D4FF">XRP</font> × XRP = <b>×2</b><br><font color="#4080FF">火箭</font> × 火箭 = <b>×5</b><br><font color="#9090FF">月亮</font> × 月亮 = <b>×10</b><br><font color="#40D0FF">钻石</font> × 钻石 = <b>×20</b><br><font color="#9020D0">鲸鱼</font> × 鲸鱼 = <b>×50</b><br><font color="#FFB000">★ 大奖</font> × 大奖 = <b>×250</b><br><br><font color="#D020A0"><b>限额</b></font><br>最低下注: <font color="#D020A0">0.1 XRP</font><br>最高下注: <font color="#D020A0">100 XRP</font><br><br><font color="#555577"><i>理性游戏。18+。</i></font>]]></string>
 </resources>

@@ -26,6 +26,8 @@ import android.widget.TextView;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.res.ColorStateList;
+
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
@@ -180,7 +182,7 @@ public class RouletteGame extends BaseActivity {
         listeners();
 
         viewModel.getBalance().observe(this, b ->
-                balance.setText(b.stripTrailingZeros().toPlainString() + "  XRP"));
+                balance.setText(String.format(Locale.US, "%.2f XRP", b.doubleValue())));
 
         viewModel.getError().observe(this, error -> {
             if (error == null) return;
@@ -648,6 +650,10 @@ public class RouletteGame extends BaseActivity {
 
     @SuppressLint("ClickableViewAccessibility")
     private void setupPlusMinusButtons() {
+        ColorStateList goldTint = ColorStateList.valueOf(COLOR_GOLD);
+        btnBetMinus.setIconTint(goldTint);
+        btnBetPlus.setIconTint(goldTint);
+
         btnBetMinus.setOnClickListener(v -> changeBetBy(-1));
         btnBetPlus.setOnClickListener(v -> changeBetBy(+1));
 

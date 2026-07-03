@@ -90,6 +90,18 @@ public class NotifierRun implements Runnable {
                     .divide(BigDecimal.valueOf(1_000_000L), MathContext.DECIMAL128)
                     .toString();
 
+            // слот-машина: WIN:SLOT:{payout} или LOSE:SLOT:0
+            if (memoText.startsWith("WIN:SLOT:") || memoText.startsWith("LOSE:SLOT:")) {
+                boolean slotWin = memoText.startsWith("WIN:SLOT:");
+                Flasher.NUMBER_BET = "0";
+                if (slotWin) {
+                    responseToBetSlot(String.format(CONGRATULATIONS_YOUR_BET_IS_WON, amountWin), 2);
+                } else {
+                    responseToBetSlot(YOUR_BET_IS_LOST_TRY_AGAIN_AND_YOU_WILL_BE_LUCKY, 1);
+                }
+                return;
+            }
+
             // все форматы с префиксом RLT:
             if (memoText.startsWith("RLT:")) {
                 String[] parts = memoText.split(":");
@@ -172,6 +184,16 @@ public class NotifierRun implements Runnable {
         return bytes;
     }
 
+
+    /** Доставляет результат слот-машины в SlotFlasher (если открыт), иначе — в WalletRepository. */
+    private void responseToBetSlot(String text, int outcome) {
+        com.samuilolegovich.view.SlotFlasher sf = com.samuilolegovich.view.SlotFlasher.SLOT_FLASHER;
+        if (com.samuilolegovich.view.SlotFlasher.VISIBLE_ON_SCREEN && sf != null) {
+            sf.stopGame(text, outcome == 2);
+        } else {
+            WalletRepository.getInstance().notifyEvent(text, "0", outcome);
+        }
+    }
 
     /**
      * Доставляет готовый текст результата игроку: если экран игры открыт — показывает его прямо там

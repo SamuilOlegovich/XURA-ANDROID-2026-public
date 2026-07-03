@@ -16,6 +16,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import android.content.res.ColorStateList;
+
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
@@ -148,7 +150,7 @@ public class GuessTheColorGame extends BaseActivity {
         listeners();
 
         viewModel.getBalance().observe(this, b ->
-                balance.setText(b.stripTrailingZeros().toPlainString() + "  XRP"));
+                balance.setText(String.format(Locale.US, "%.2f XRP", b.doubleValue())));
 
         viewModel.getError().observe(this, error -> {
             if (error == null) return;
@@ -307,6 +309,10 @@ public class GuessTheColorGame extends BaseActivity {
 
     @SuppressLint("ClickableViewAccessibility")
     private void setupPlusMinusButtons() {
+        ColorStateList pinkTint = ColorStateList.valueOf(0xFFFF2080);
+        btnBetMinus.setIconTint(pinkTint);
+        btnBetPlus.setIconTint(pinkTint);
+
         btnBetMinus.setOnClickListener(v -> changeBetBy(-1));
         btnBetPlus.setOnClickListener(v -> changeBetBy(+1));
 

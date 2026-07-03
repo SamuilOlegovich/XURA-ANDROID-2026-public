@@ -53,6 +53,8 @@ public enum StringEnum {
     MIN_BET_GUESS_THE_NUMBER("0"),
     MAX_BET_ROULETTE("100"),
     MIN_BET_ROULETTE("0.1"),
+    MAX_BET_SLOT("100"),
+    MIN_BET_SLOT("0.1"),
 
     // tag 214 referral 7483647
     MAX_REFERRALS("666666"),
@@ -81,7 +83,8 @@ public enum StringEnum {
     WALLET_NOT_ACTIVATED("Wallet not activated."),
 
     APP_PREFERENCES_BET_INPUT_STYLE("bet_input_style"),
-    APP_PREFERENCES_BET_TIMEOUT("bet_response_timeout")
+    APP_PREFERENCES_BET_TIMEOUT("bet_response_timeout"),
+    APP_PREFERENCES_ANIMATIONS_ENABLED("animations_enabled")
 
     ;
 
