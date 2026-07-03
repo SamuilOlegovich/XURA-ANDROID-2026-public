@@ -55,7 +55,7 @@
     <string name="rules_double_your_bet">Wählen Sie eine Zahl von 1 bis 36. Bei richtiger Vorhersage wird Ihr Einsatz mit 35 multipliziert. Bei Verlust geht der Betrag in den LOTTO-Fonds. Min: 0,1 XRP, Max: 100 XRP.</string>
     <string name="rules_guess_the_color_text"><![CDATA[<font color="#FFB000"><b>SO GEHT ES</b></font><br><br>Setzen Sie und wählen Sie — <font color="#FF2080"><b>Rot</b></font> oder <b>Schwarz</b>.<br>Stimmt das Ergebnis mit Ihrer Farbe überein, wird Ihr Einsatz verdoppelt!<br><br><font color="#FF2080"><b>×2</b></font> &nbsp; Rot oder Schwarz<br><br><font color="#FFB000"><b>LOTTO-FONDS</b></font><br>Verlorene Einsätze fließen in den LOTTO-Sparfonds.<br>Jeder Spieler kann LOTTO gewinnen, wenn der Null-Sektor fällt.<br>Mini-LOTTO = 1/10 von LOTTO.<br><br><font color="#FFB000"><b>LIMITS</b></font><br>Mindesteinsatz: <font color="#00D4FF">0,1 XRP</font><br>Maximaleinsatz: <font color="#00D4FF">100 XRP</font><br><br><font color="#555577"><i>Spielen Sie verantwortungsvoll. Ab 18 Jahren.</i></font>]]></string>
     <string name="rules_guess_the_color">Setzen und Farbe wählen. Richtige Farbe verdoppelt den Einsatz. Bei Verlust geht der Betrag in den LOTTO-Fonds. Min: 0,1 XRP, Max: 100 XRP.</string>
-    <string name="referral_text">Wenn Sie einen Referral-Code haben — geben Sie ihn unbedingt ein — dies gibt Ihnen zusätzliche Spielchancen und Teilnahme an der täglichen Verlosung</string>
+    <string name="referral_text">Haben Sie einen Referral-Code? Eingeben — Bonus-Leben und tägliche Verlosung</string>
     <string name="rules_roulette"><![CDATA[Europäisches Roulette auf der XRP Ledger Blockchain.<br>Jedes Drehergebnis wird transparent durch XRP-Netzwerkdaten bestimmt.<br><br><font color="#FFB000"><b>EINSATZTYPEN UND AUSZAHLUNGEN</b></font><br><br>• Bestimmte Zahl (0–36) &nbsp; <font color="#FFB000"><b>×35</b></font><br>• Rot / Schwarz &nbsp; <font color="#FF2080"><b>×2</b></font><br>• Ungerade / Gerade &nbsp; <b>×2</b><br>• Niedrig 1–18 / Hoch 19–36 &nbsp; <b>×2</b><br>• Dutzend (1–12, 13–24, 25–36) &nbsp; <font color="#00D4FF"><b>×3</b></font><br>• Kolonne &nbsp; <font color="#00D4FF"><b>×3</b></font><br><br><font color="#FFB000"><b>MEHRFACHEINSATZ</b></font><br>Auf mehrere Positionen in einem Dreh setzen — Beträge werden als eine Zahlung zusammengefasst.<br><br><font color="#FF2080"><b>NULL</b></font><br>Nur der Direkteinsatz auf 0 gewinnt. Alle anderen Einsätze verlieren bei Null.<br><br><font color="#FFB000"><b>LIMITS</b></font><br>Min. pro Position: <font color="#00D4FF">0,1 XRP</font><br>Max. Gesamt pro Runde: <font color="#00D4FF">100 XRP</font><br><br><font color="#555577"><i>Spielen Sie verantwortungsvoll. Ab 18 Jahren.</i></font>]]></string>
     <string name="congratulations_your_bet_is_won_loto">LOTTO — %s XRP</string>
     <string name="get_recovery_become_referral">Referral-Wiederherstellungsanfrage gesendet — warten Sie auf die Serverantwort</string>
@@ -65,7 +65,7 @@
     <string name="go_to_the_dark_side_find_the_secret_button">Zur dunklen Seite — finden Sie den geheimen Knopf!</string>
     <string name="your_bet_is_lost_try_again">EINSATZ VERLOREN</string>
     <string name="create_new_wallet_text">Speichern Sie die Seed-Phrase unbedingt und teilen Sie sie niemandem mit</string>
-    <string name="set_password_to_enter_application">Passwort für den App-Zugang setzen</string>
+    <string name="set_password_to_enter_application">Erstellen Sie Ihre 6-stellige PIN</string>
     <string name="error_check_the_seed_and_try_again">Fehler: Überprüfen Sie Ihre Seed-Phrase und versuchen Sie es erneut</string>
     <string name="tag_knowledge_cannot_be_more">Ziel-Tag-Wert ist zu groß</string>
     <string name="your_account_is_not_enough_to_send">Ihr Guthaben reicht nicht aus</string>
@@ -89,7 +89,7 @@
     <string name="transaction_history_text">Transaktionsverlauf</string>
     <string name="wrong_restart_please">Seed-Phrase falsch, bitte erneut versuchen.</string>
     <string name="enter_referral_code">Referral-Code eingeben</string>
-    <string name="enter_password_low_case">Neuer PIN (4–8 Ziffern)</string>
+    <string name="enter_password_low_case">Neuer PIN (6 Ziffern)</string>
     <string name="select_game_mode_text">Spielmodus wählen</string>
     <string name="your_referral_code">Ihr Referral-Code</string>
     <string name="and_double_the_bet">Einsatz verdoppeln</string>
@@ -109,7 +109,7 @@
     <string name="info_referral">Info</string>
     <string name="your_balance">Ihr Guthaben</string>
     <string name="send_payment">Zahlung senden</string>
-    <string name="repeat_enter">PIN wiederholen (4–8 Ziffern)</string>
+    <string name="repeat_enter">PIN wiederholen (6 Ziffern)</string>
     <string name="request_xrp">XRP anfordern</string>
     <string name="select_game">Spiel wählen</string>
     <string name="coming_soon">Demnächst</string>

@@ -21,6 +21,7 @@ import com.samuilolegovich.enums.StringEnum;
 import com.samuilolegovich.utils.BiometricHelper;
 import com.samuilolegovich.utils.Cipher;
 import com.samuilolegovich.utils.PrefsHelper;
+import com.samuilolegovich.utils.SessionPin;
 
 import static com.samuilolegovich.view.RestoreOrCreateNewWallet.RESTORE_OR_NEW_WALLET_CLASS;
 import dagger.hilt.android.AndroidEntryPoint;
@@ -43,7 +44,6 @@ public class SetAnAppPassword extends BaseActivity {
 
     private TextView settingsSetPasswordAppTextView;
     private View confirm;
-    private View skip;
 
 
 
@@ -72,7 +72,6 @@ public class SetAnAppPassword extends BaseActivity {
         passwordTwo = (EditText) findViewById(R.id.settings_set_password_app_field_tow);
         confirm = findViewById(R.id.settings_set_password_app_confirm_link);
         passwordOne = (EditText) findViewById(R.id.settings_set_password_app_field);
-        skip = findViewById(R.id.settings_set_password_app_skip_linc);
     }
 
 
@@ -89,7 +88,8 @@ public class SetAnAppPassword extends BaseActivity {
             String one = passwordOne.getText().toString();
             String two = passwordTwo.getText().toString();
 
-            if (one.length() > 3 && one.equals(two)) {
+            if (one.length() == 6 && one.equals(two)) {
+                SessionPin.set(one);
                 setPasswordForApp(one, true);
                 offerBiometric();
             } else {
@@ -97,12 +97,6 @@ public class SetAnAppPassword extends BaseActivity {
                 passwordTwo.setText("");
                 tilPasswordTwo.setError(StringEnum.PASSWORD_DOES_NOT_MATCH.getValue());
             }
-        });
-
-        skip.setOnClickListener(v -> {
-            pulse(v);
-            setPasswordForApp(StringEnum.APP_PREFERENCES_PASSWORD_NOT_INSTALLED.getValue(), false);
-            goToAnotherPage(RESTORE_OR_NEW_WALLET_CLASS);
         });
 
         passwordTwo.addTextChangedListener(new TextWatcher() {

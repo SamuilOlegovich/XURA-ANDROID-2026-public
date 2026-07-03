@@ -50,7 +50,7 @@
     <string name="rules_double_your_bet">The rules of this game are very simple. You just have to choose the number you want to bet on. (from - 1 to -  36) In case of winning, the bet will be increased by 35 times. If the bet is lost, it goes to the savings fund - lotto. Absolutely any user can win a lotto, regardless of what and how much he bet - if the lotto sector falls out. And you can also win a mini lotto - it is one tenth of the lotto.\n\nThe minimum bet is 0.1 XRP, the maximum is 100 XRP.</string>
     <string name="rules_guess_the_color_text"><![CDATA[<font color="#FFB000"><b>HOW IT WORKS</b></font><br><br>Place your bet and choose — <font color="#FF2080"><b>Red</b></font> or <b>Black</b>.<br>If the spin result matches your color, your bet is doubled!<br><br><font color="#FF2080"><b>×2</b></font> &nbsp; Red or Black<br><br><font color="#FFB000"><b>LOTTO FUND</b></font><br>Losing bets go to the LOTTO savings fund.<br>Any player can win LOTTO when the zero sector hits.<br>Mini-LOTTO = 1/10 of LOTTO.<br><br><font color="#FFB000"><b>LIMITS</b></font><br>Min bet: <font color="#00D4FF">0.1 XRP</font><br>Max bet: <font color="#00D4FF">100 XRP</font><br><br><font color="#555577"><i>Play responsibly. Age 18+.</i></font>]]></string>
     <string name="rules_guess_the_color">The rules of this game are very simple. You place a bet and indicate which color. If the color is guessed - your bet will be doubled. If the bet is lost, it goes to the savings fund - lotto. Absolutely any user can win a lotto, regardless of what and how much he bet - if the lotto sector falls out. And you can also win a mini lotto - it is one tenth of the lotto.\n\nThe minimum bet is 0.1 XRP, the maximum is 100 XRP.</string>
-    <string name="referral_text">IF YOU HAVE A REFERRAL CODE - BE SURE TO ENTER IT - IT WILL GIVE YOU EXTRA LIVES ON YOUR BETS AND PARTICIPATION IN THE DAILY PRIZE DRAW</string>
+    <string name="referral_text">HAVE A REFERRAL CODE? ENTER IT — BONUS LIVES + DAILY PRIZE DRAW</string>
     <string name="rules_roulette"><![CDATA[European roulette powered by XRP Ledger blockchain.<br>Each spin result is determined transparently — by XRP network data.<br><br><font color="#FFB000"><b>BET TYPES AND PAYOUTS</b></font><br><br>• Straight number (0–36) &nbsp; <font color="#FFB000"><b>×35</b></font><br>• Red / Black &nbsp; <font color="#FF2080"><b>×2</b></font><br>• Odd / Even &nbsp; <b>×2</b><br>• Low 1–18 / High 19–36 &nbsp; <b>×2</b><br>• Dozen (1–12, 13–24, 25–36) &nbsp; <font color="#00D4FF"><b>×3</b></font><br>• Column &nbsp; <font color="#00D4FF"><b>×3</b></font><br><br><font color="#FFB000"><b>MULTI-BET</b></font><br>Place on multiple positions in one spin — amounts are summed into one payment.<br><br><font color="#FF2080"><b>ZERO</b></font><br>Only a straight bet on 0 wins. All other bets lose on zero.<br><br><font color="#FFB000"><b>LIMITS</b></font><br>Min per position: <font color="#00D4FF">0.1 XRP</font><br>Max total per spin: <font color="#00D4FF">100 XRP</font><br><br><font color="#555577"><i>Play responsibly. Age 18+.</i></font>]]></string>
     <string name="congratulations_your_bet_is_won_loto">LOTTO WIN — %s XRP</string>
     <string name="get_recovery_become_referral">Referral recovery request sent — please wait for the server response</string>
@@ -71,7 +71,7 @@
     <string name="onb_title_4">SECURE BY DESIGN</string>
     <string name="onb_sub_4">Biometric lock · Encrypted seed storage · APK tamper detection.</string>
     <string name="get_started">GET STARTED</string>
-    <string name="set_password_to_enter_application">SET A PASSWORD TO ENTER THE APPLICATION</string>
+    <string name="set_password_to_enter_application">CREATE YOUR 6-DIGIT PIN</string>
     <string name="change_password_title">CHANGE YOUR PASSWORD</string>
     <string name="current_password_hint">Current password</string>
     <string name="wrong_current_password">WRONG CURRENT PASSWORD</string>
@@ -102,7 +102,7 @@
     <string name="transaction_history_text">TRANSACTION HISTORY</string>
     <string name="wrong_restart_please">Incorrect seed phrase. Please try again.</string>
     <string name="enter_referral_code">Enter referral code</string>
-    <string name="enter_password_low_case">New PIN (4–8 digits)</string>
+    <string name="enter_password_low_case">New PIN (6 digits)</string>
     <string name="select_game_mode_text">SELECT GAME MODE</string>
     <string name="your_referral_code">YOUR REFERRAL CODE</string>
     <string name="and_double_the_bet">AND DOUBLE THE BET</string>
@@ -122,7 +122,7 @@
     <string name="info_referral">INFORMATION</string>
     <string name="your_balance">YOUR BALANCE</string>
     <string name="send_payment">SEND PAYMENT</string>
-    <string name="repeat_enter">Repeat PIN (4–8 digits)</string>
+    <string name="repeat_enter">Repeat PIN (6 digits)</string>
     <string name="request_xrp">REQUEST XRP</string>
     <string name="select_game">SELECT GAME</string>
     <string name="coming_soon">COMING SOON</string>

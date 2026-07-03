@@ -55,7 +55,7 @@
     <string name="rules_double_your_bet">इस खेल के नियम बहुत सरल हैं। आपको 1 से 36 तक एक संख्या चुननी है। सही होने पर दांव 35 गुना बढ़ता है। हारने पर राशि LOTTO में जाती है। न्यूनतम दांव 0.1 XRP, अधिकतम 100 XRP।</string>
     <string name="rules_guess_the_color_text"><![CDATA[<font color="#FFB000"><b>कैसे खेलें</b></font><br><br>दांव लगाएं और चुनें — <font color="#FF2080"><b>लाल</b></font> या <b>काला</b>।<br>अगर परिणाम आपके रंग से मेल खाता है — दांव दोगुना हो जाता है!<br><br><font color="#FF2080"><b>×2</b></font> &nbsp; लाल या काला<br><br><font color="#FFB000"><b>LOTTO फंड</b></font><br>हारे हुए दांव LOTTO बचत फंड में जाते हैं।<br>शून्य सेक्टर आने पर कोई भी खिलाड़ी LOTTO जीत सकता है।<br>मिनी-LOTTO = LOTTO का 1/10।<br><br><font color="#FFB000"><b>सीमाएं</b></font><br>न्यूनतम दांव: <font color="#00D4FF">0.1 XRP</font><br>अधिकतम दांव: <font color="#00D4FF">100 XRP</font><br><br><font color="#555577"><i>जिम्मेदारी से खेलें। आयु 18+.</i></font>]]></string>
     <string name="rules_guess_the_color">इस खेल के नियम बहुत सरल हैं। दांव लगाएं और रंग चुनें। सही रंग पर दांव दोगुना होता है। हारने पर LOTTO में जाता है। न्यूनतम 0.1 XRP, अधिकतम 100 XRP।</string>
-    <string name="referral_text">यदि आपके पास रेफरल कोड है — इसे ज़रूर दर्ज करें — इससे आपको अतिरिक्त गेम चांस और दैनिक पुरस्कार ड्रा में भाग मिलेगा</string>
+    <string name="referral_text">रेफरल कोड है? दर्ज करें — बोनस जीवन और दैनिक ड्रा</string>
     <string name="rules_roulette"><![CDATA[XRP Ledger ब्लॉकचेन पर यूरोपीय रूलेट।<br>हर स्पिन का परिणाम XRP नेटवर्क डेटा से पारदर्शी रूप से निर्धारित होता है।<br><br><font color="#FFB000"><b>दांव के प्रकार और भुगतान</b></font><br><br>• सटीक संख्या (0–36) &nbsp; <font color="#FFB000"><b>×35</b></font><br>• लाल / काला &nbsp; <font color="#FF2080"><b>×2</b></font><br>• विषम / सम &nbsp; <b>×2</b><br>• कम 1–18 / अधिक 19–36 &nbsp; <b>×2</b><br>• दर्जन (1–12, 13–24, 25–36) &nbsp; <font color="#00D4FF"><b>×3</b></font><br>• कॉलम &nbsp; <font color="#00D4FF"><b>×3</b></font><br><br><font color="#FFB000"><b>मल्टी-बेट</b></font><br>एक स्पिन में कई स्थानों पर दांव लगाएं — राशियां एक भुगतान में जोड़ी जाती हैं।<br><br><font color="#FF2080"><b>शून्य</b></font><br>केवल 0 पर सीधा दांव जीतता है। शून्य पर सभी अन्य दांव हारते हैं।<br><br><font color="#FFB000"><b>सीमाएं</b></font><br>प्रति पोजीशन न्यूनतम: <font color="#00D4FF">0.1 XRP</font><br>कुल अधिकतम: <font color="#00D4FF">100 XRP</font><br><br><font color="#555577"><i>जिम्मेदारी से खेलें। आयु 18+.</i></font>]]></string>
     <string name="congratulations_your_bet_is_won_loto">लोटो — %s XRP</string>
     <string name="get_recovery_become_referral">रेफरल रिकवरी अनुरोध भेजा गया — सर्वर के जवाब की प्रतीक्षा करें</string>
@@ -65,7 +65,7 @@
     <string name="go_to_the_dark_side_find_the_secret_button">डार्क साइड पर जाएं — गुप्त बटन खोजें!</string>
     <string name="your_bet_is_lost_try_again">दांव हारे</string>
     <string name="create_new_wallet_text">सीड फ्रेज़ ज़रूर सेव करें, किसी को न बताएं</string>
-    <string name="set_password_to_enter_application">ऐप में प्रवेश के लिए पासवर्ड सेट करें</string>
+    <string name="set_password_to_enter_application">अपना 6-अंकी PIN बनाएं</string>
     <string name="error_check_the_seed_and_try_again">त्रुटि: अपना सीड फ्रेज़ जांचें और पुनः प्रयास करें</string>
     <string name="tag_knowledge_cannot_be_more">डेस्टिनेशन टैग मान बहुत बड़ा है</string>
     <string name="your_account_is_not_enough_to_send">आपके खाते में भेजने के लिए पर्याप्त शेष नहीं है</string>
@@ -89,7 +89,7 @@
     <string name="transaction_history_text">लेनदेन इतिहास</string>
     <string name="wrong_restart_please">सीड फ्रेज़ गलत है, कृपया पुनः प्रयास करें।</string>
     <string name="enter_referral_code">रेफरल कोड दर्ज करें</string>
-    <string name="enter_password_low_case">नया PIN (4–8 अंक)</string>
+    <string name="enter_password_low_case">नया PIN (6 अंक)</string>
     <string name="select_game_mode_text">खेल मोड चुनें</string>
     <string name="your_referral_code">आपका रेफरल कोड</string>
     <string name="and_double_the_bet">दांव दोगुना</string>
@@ -109,7 +109,7 @@
     <string name="info_referral">जानकारी</string>
     <string name="your_balance">आपका शेष</string>
     <string name="send_payment">भुगतान भेजें</string>
-    <string name="repeat_enter">PIN दोहराएं (4–8 अंक)</string>
+    <string name="repeat_enter">PIN दोहराएं (6 अंक)</string>
     <string name="request_xrp">XRP अनुरोध</string>
     <string name="select_game">खेल चुनें</string>
     <string name="coming_soon">जल्द आ रहा है</string>

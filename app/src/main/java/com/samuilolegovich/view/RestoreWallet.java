@@ -21,6 +21,7 @@ import com.samuilolegovich.R;
 import com.samuilolegovich.enums.StringEnum;
 import com.samuilolegovich.utils.PrefsHelper;
 import com.samuilolegovich.utils.SecureSeedStorage;
+import com.samuilolegovich.utils.SessionPin;
 import com.samuilolegovich.wallet.repository.WalletRepository;
 
 import java.util.Map;
@@ -135,9 +136,9 @@ public class RestoreWallet extends BaseActivity {
     }
 
 
-    /** Сохраняет восстановленную seed-фразу в защищённом хранилище (Android Keystore через SecureSeedStorage). */
+    /** Сохраняет восстановленную seed-фразу (PIN+Keystore если PIN в сессии есть). */
     private void encryptAndWriteSeed(String seedRestore) {
-        SecureSeedStorage.save(PrefsHelper.get(this), StringEnum.APP_PREFERENCES_SEED.getValue(), seedRestore);
+        SecureSeedStorage.saveSeed(PrefsHelper.get(this), seedRestore, SessionPin.get());
     }
 
 
