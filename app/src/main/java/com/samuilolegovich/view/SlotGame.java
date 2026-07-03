@@ -313,7 +313,7 @@ public class SlotGame extends BaseActivity {
     private void setupObservers() {
         viewModel.getBalance().observe(this, balance -> {
             if (tvBalance != null && balance != null)
-                tvBalance.setText(String.format(Locale.US, "%.6f XRP", balance.doubleValue()));
+                tvBalance.setText(String.format(Locale.US, "%.2f XRP", balance.doubleValue()));
         });
 
         viewModel.getBetSuccess().observe(this, amount -> {

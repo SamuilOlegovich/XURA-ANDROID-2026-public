@@ -10,9 +10,13 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
+import android.view.ViewPropertyAnimator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
 
 import com.samuilolegovich.enums.StringEnum;
@@ -68,15 +72,21 @@ public class MainActivity extends BaseActivity {
 
     private static boolean rootWarningShown = false;
 
+    private static final long INTRO_STAGGER_MS    = 110L;
+    private static final long INTRO_CARD_DURATION = 380L;
+    private static final long INTRO_ELEM_DURATION = 350L;
+
     private MainViewModel viewModel;
     private SharedPreferences preferences;
 
+    private View logoWallet;
     private View transactionHistory;
     private TextView yourBalanceText;
     private TextView balance;
     private View request;
     private View send;
 
+    private Handler introHandler;
     private com.google.android.material.progressindicator.CircularProgressIndicator balanceLoading;
 
 
@@ -107,6 +117,7 @@ public class MainActivity extends BaseActivity {
 
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
+        introHandler = new Handler(Looper.getMainLooper());
         setButtons();
         setLanguage();
         listeners();
@@ -114,7 +125,7 @@ public class MainActivity extends BaseActivity {
 
         viewModel.getBalance().observe(this, b -> {
             if (b == null) return;
-            balance.setText(b.stripTrailingZeros().toPlainString() + " XRP");
+            balance.setText(String.format(Locale.US, "%.2f XRP", b.doubleValue()));
             balance.setVisibility(View.VISIBLE);
             balanceLoading.setVisibility(View.GONE);
             if (swipeRefresh != null) swipeRefresh.setRefreshing(false);
@@ -257,6 +268,7 @@ public class MainActivity extends BaseActivity {
 
     /** Находит View экрана по id и настраивает swipe-to-refresh для ручного обновления баланса. */
     private void setButtons() {
+        logoWallet         = findViewById(R.id.logo_xura);
         transactionHistory = findViewById(R.id.transaction_history_link);
         yourBalanceText    = findViewById(R.id.your_balance_text);
         request            = findViewById(R.id.request_link);
@@ -330,9 +342,10 @@ public class MainActivity extends BaseActivity {
     protected void onPause() {
         super.onPause();
         VISIBLE_ON_SCREEN = false;
+        resetWalletViews();
     }
 
-    /** При возврате на экран отмечает его видимым, обновляет бейдж сети и подгружает баланс, если кошелёк готов. */
+    /** При возврате на экран отмечает его видимым, обновляет бейдж сети, подгружает баланс и запускает входную анимацию. */
     @Override
     protected void onResume() {
         super.onResume();
@@ -341,6 +354,77 @@ public class MainActivity extends BaseActivity {
         if (Boolean.TRUE.equals(viewModel.getWalletReady().getValue())) {
             viewModel.loadBalance();
         }
+        playEntranceAnimation();
+    }
+
+    // ─── Входная анимация ───────────────────────────────────────────────────
+
+    /**
+     * Карточки влетают снизу вверх (история → получить → отправить),
+     * затем появляются надпись баланса и спиннер, последним — лого.
+     */
+    private void playEntranceAnimation() {
+        View[] cards = { transactionHistory, request, send };
+        float slideFromY = 150 * getResources().getDisplayMetrics().density;
+
+        for (View c : cards) {
+            if (c == null) continue;
+            c.animate().cancel();
+            c.setAlpha(0f);
+            c.setTranslationY(slideFromY);
+        }
+        if (logoWallet    != null) { logoWallet   .animate().cancel(); logoWallet   .setAlpha(0f); }
+        if (yourBalanceText!= null) { yourBalanceText.animate().cancel(); yourBalanceText.setAlpha(0f); }
+        if (tvTestnetBadge != null) { tvTestnetBadge .animate().cancel(); tvTestnetBadge .setAlpha(0f); }
+        if (balanceLoading != null) { balanceLoading .animate().cancel(); balanceLoading .setAlpha(0f); }
+        if (balance        != null) { balance        .animate().cancel(); balance        .setAlpha(0f); }
+
+        introHandler.post(() -> {
+            for (int i = 0; i < cards.length; i++) {
+                if (cards[i] == null) continue;
+                ViewPropertyAnimator anim = cards[i].animate()
+                        .translationY(0f)
+                        .alpha(1f)
+                        .setDuration(INTRO_CARD_DURATION)
+                        .setStartDelay((long) i * INTRO_STAGGER_MS)
+                        .setInterpolator(new DecelerateInterpolator(2f));
+
+                if (i == cards.length - 1) {
+                    anim.withEndAction(() -> {
+                        // Шаг 1: надпись баланса + плашка режима + спиннер
+                        if (balanceLoading != null)
+                            balanceLoading.animate().alpha(1f).setDuration(INTRO_ELEM_DURATION).setInterpolator(null);
+                        if (balance != null)
+                            balance.animate().alpha(1f).setDuration(INTRO_ELEM_DURATION).setInterpolator(null);
+                        if (tvTestnetBadge != null && tvTestnetBadge.getVisibility() == View.VISIBLE)
+                            tvTestnetBadge.animate().alpha(1f).setDuration(INTRO_ELEM_DURATION).setInterpolator(null);
+                        if (yourBalanceText != null)
+                            yourBalanceText.animate().alpha(1f).setDuration(INTRO_ELEM_DURATION).setInterpolator(null)
+                                .withEndAction(() -> {
+                                    // Шаг 2: лого — последним
+                                    if (logoWallet != null)
+                                        logoWallet.animate().alpha(1f).setDuration(INTRO_ELEM_DURATION).setInterpolator(null);
+                                });
+                    });
+                }
+            }
+        });
+    }
+
+    /** Сбрасывает все View кошелька в нормальное состояние и отменяет анимации. */
+    private void resetWalletViews() {
+        View[] cards = { transactionHistory, request, send };
+        for (View c : cards) {
+            if (c == null) continue;
+            c.animate().cancel();
+            c.setAlpha(1f);
+            c.setTranslationY(0f);
+        }
+        if (logoWallet    != null) { logoWallet   .animate().cancel(); logoWallet   .setAlpha(1f); logoWallet.setTranslationY(0f); }
+        if (yourBalanceText!= null) { yourBalanceText.animate().cancel(); yourBalanceText.setAlpha(1f); }
+        if (tvTestnetBadge != null) { tvTestnetBadge .animate().cancel(); tvTestnetBadge .setAlpha(1f); }
+        if (balanceLoading != null) { balanceLoading .animate().cancel(); balanceLoading .setAlpha(1f); }
+        if (balance        != null) { balance        .animate().cancel(); balance        .setAlpha(1f); }
     }
 
     /** Останавливает фоновый сервис подписки на XRPL-сокет и очищает статическую ссылку на Activity. */
