@@ -387,6 +387,8 @@
     <string name="settings_auto_lock_subtitle">Tiempo de espera antes del bloqueo en segundo plano</string>
     <string name="settings_sound">SONIDO</string>
     <string name="settings_sound_subtitle">Música y efectos de sonido en los juegos</string>
+    <string name="settings_animations">ANIMACIONES</string>
+    <string name="settings_animations_subtitle">Animación de entrada en la pantalla de billetera y selección de juego</string>
 
     <string name="chip_01_xrp">0.1 XRP</string>
     <string name="chip_05_xrp">0.5 XRP</string>

@@ -387,6 +387,8 @@
     <string name="settings_auto_lock_subtitle">Zeitlimit bis zur Sperre bei Inaktivität</string>
     <string name="settings_sound">TON</string>
     <string name="settings_sound_subtitle">Musik und Soundeffekte in den Spielen</string>
+    <string name="settings_animations">ANIMATIONEN</string>
+    <string name="settings_animations_subtitle">Eingangsanimation auf dem Wallet- und Spielauswahlbildschirm</string>
 
     <string name="chip_01_xrp">0.1 XRP</string>
     <string name="chip_05_xrp">0.5 XRP</string>

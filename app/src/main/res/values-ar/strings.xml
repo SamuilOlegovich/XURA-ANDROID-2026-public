@@ -387,6 +387,8 @@
     <string name="settings_auto_lock_subtitle">مهلة القفل عند انتقال التطبيق إلى الخلفية</string>
     <string name="settings_sound">الصوت</string>
     <string name="settings_sound_subtitle">الموسيقى والمؤثرات الصوتية في الألعاب</string>
+    <string name="settings_animations">الرسوم المتحركة</string>
+    <string name="settings_animations_subtitle">رسوم متحركة عند فتح شاشة المحفظة واختيار اللعبة</string>
 
     <string name="chip_01_xrp">0.1 XRP</string>
     <string name="chip_05_xrp">0.5 XRP</string>

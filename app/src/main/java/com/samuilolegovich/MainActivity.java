@@ -41,6 +41,7 @@ import static com.samuilolegovich.view.SetAnAppPassword.SET_AN_APP_PASSWORD_CLAS
 import static com.samuilolegovich.view.ReceivePayment.RECEIVE_PAYMENT_CLASS;
 import static com.samuilolegovich.view.YourReferral.YOUR_REFERRAL_CLASS;
 import static com.samuilolegovich.view.SendPayment.SEND_PAYMENT_CLASS;
+import com.samuilolegovich.view.Settings;
 import static com.samuilolegovich.view.Settings.SETTINGS_CLASS;
 import static com.samuilolegovich.view.Lost.LOST_CLASS;
 import static com.samuilolegovich.view.Win.WIN_CLASS;
@@ -354,7 +355,9 @@ public class MainActivity extends BaseActivity {
         if (Boolean.TRUE.equals(viewModel.getWalletReady().getValue())) {
             viewModel.loadBalance();
         }
-        playEntranceAnimation();
+        if (Settings.isAnimationsEnabled(this)) {
+            playEntranceAnimation();
+        }
     }
 
     // ─── Входная анимация ───────────────────────────────────────────────────

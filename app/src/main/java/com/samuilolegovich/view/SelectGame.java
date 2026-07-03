@@ -19,7 +19,6 @@ import android.widget.TextView;
 
 
 import com.samuilolegovich.BaseActivity;
-
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 import com.samuilolegovich.utils.AudioHelper;
@@ -121,8 +120,10 @@ public class SelectGame extends BaseActivity {
         roulette        = findViewById(R.id.roulette_linc);
         slot            = findViewById(R.id.slot_linc);
         tvGameModeBadge = findViewById(R.id.tv_game_mode_badge);
+    }
 
-        // Разрешаем карточкам выезжать за границы ScrollView при входной анимации
+    /** Отключает обрезку на root/scroll/inner — нужно только во время входной анимации. */
+    private void disableClipping() {
         ViewGroup root = (ViewGroup) findViewById(R.id.select_game);
         if (root != null) root.setClipChildren(false);
         ViewGroup scroll = (ViewGroup) findViewById(R.id.games_scroll);
@@ -131,6 +132,19 @@ public class SelectGame extends BaseActivity {
             scroll.setClipToPadding(false);
             View inner = scroll.getChildAt(0);
             if (inner instanceof ViewGroup) ((ViewGroup) inner).setClipChildren(false);
+        }
+    }
+
+    /** Восстанавливает обрезку после входной анимации — fadingEdge и bounce работают корректно. */
+    private void enableClipping() {
+        ViewGroup root = (ViewGroup) findViewById(R.id.select_game);
+        if (root != null) root.setClipChildren(true);
+        ViewGroup scroll = (ViewGroup) findViewById(R.id.games_scroll);
+        if (scroll != null) {
+            scroll.setClipChildren(true);
+            scroll.setClipToPadding(true);
+            View inner = scroll.getChildAt(0);
+            if (inner instanceof ViewGroup) ((ViewGroup) inner).setClipChildren(true);
         }
     }
 
@@ -212,7 +226,9 @@ public class SelectGame extends BaseActivity {
         audioFocusRequest = AudioHelper.requestFocus(this, focusListener);
         if (flourOfChoiceMediaPlayer != null && AudioHelper.isSoundEnabled(this))
             flourOfChoiceMediaPlayer.start();
-        playEntranceAndStartWave();
+        if (Settings.isAnimationsEnabled(this)) {
+            playEntranceAndStartWave();
+        }
     }
 
 
@@ -231,6 +247,7 @@ public class SelectGame extends BaseActivity {
      */
     private void playEntranceAndStartWave() {
         stopWave();
+        disableClipping(); // карточки летят снизу за пределами ScrollView
         View[] cards = buildCardList();
         float slideFromY = 150 * getResources().getDisplayMetrics().density;
 
@@ -267,7 +284,8 @@ public class SelectGame extends BaseActivity {
                                 .withEndAction(() -> {
                                     // Шаг 2: лого — последним
                                     if (logo != null)
-                                        logo.animate().alpha(1f).setDuration(INTRO_LOGO_DURATION).setInterpolator(null);
+                                        logo.animate().alpha(1f).setDuration(INTRO_LOGO_DURATION).setInterpolator(null)
+                                            .withEndAction(this::enableClipping);
                                 });
                     });
                 }

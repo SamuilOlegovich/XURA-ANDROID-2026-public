@@ -126,6 +126,13 @@ public abstract class BaseActivity extends AppCompatActivity {
         View logo = findViewById(R.id.logo_xura);
         if (logo == null) return;
 
+        if (!Settings.isAnimationsEnabled(this)) {
+            logo.setScaleX(1f);
+            logo.setScaleY(1f);
+            logo.setAlpha(1f);
+            return;
+        }
+
         logo.setScaleX(0f);
         logo.setScaleY(0f);
         logo.setAlpha(0f);
