@@ -57,7 +57,7 @@
     <string name="rules_double_your_bet">১ থেকে ৩৬ সংখ্যা বেছে নিন। সঠিক হলে বাজি ৩৫ গুণ হয়। হারলে LOTTO-তে যায়। সর্বনিম্ন: ০.১ XRP, সর্বোচ্চ: ১০০ XRP।</string>
     <string name="rules_guess_the_color_text"><![CDATA[<font color="#FFB000"><b>কিভাবে খেলবেন</b></font><br><br>বাজি ধরুন এবং বেছে নিন — <font color="#FF2080"><b>লাল</b></font> বা <b>কালো</b>।<br>ফলাফল আপনার রঙের সাথে মিলে গেলে বাজি দ্বিগুণ হয়!<br><br><font color="#FF2080"><b>×2</b></font> &nbsp; লাল বা কালো<br><br><font color="#FFB000"><b>লটো ফান্ড</b></font><br>হারা বাজি LOTTO সঞ্চয় ফান্ডে যায়।<br>শূন্য সেক্টর পড়লে যেকোনো খেলোয়াড় LOTTO জিততে পারেন।<br>মিনি-LOTTO = LOTTO-র ১/১০।<br><br><font color="#FFB000"><b>সীমা</b></font><br>সর্বনিম্ন বাজি: <font color="#00D4FF">0.1 XRP</font><br>সর্বোচ্চ বাজি: <font color="#00D4FF">100 XRP</font><br><br><font color="#555577"><i>দায়িত্বশীলভাবে খেলুন। বয়স ১৮+.</i></font>]]></string>
     <string name="rules_guess_the_color">বাজি ধরুন এবং রং বেছে নিন। সঠিক রং বাজি দ্বিগুণ করে। হারলে LOTTO-তে যায়। সর্বনিম্ন: ০.১ XRP, সর্বোচ্চ: ১০০ XRP।</string>
-    <string name="referral_text">আপনার কাছে রেফারেল কোড থাকলে — অবশ্যই দিন — এটি আপনাকে অতিরিক্ত গেম সুযোগ এবং দৈনিক ড্রতে অংশগ্রহণ দেবে</string>
+    <string name="referral_text">রেফারেল কোড আছে? দিন — বোনাস জীবন ও দৈনিক ড্র</string>
     <string name="rules_roulette"><![CDATA[XRP Ledger ব্লকচেইনে ইউরোপিয়ান রুলেট।<br>প্রতিটি স্পিনের ফলাফল XRP নেটওয়ার্ক ডেটা থেকে স্বচ্ছভাবে নির্ধারিত হয়।<br><br><font color="#FFB000"><b>বাজির ধরন ও পেমেন্ট</b></font><br><br>• নির্দিষ্ট সংখ্যা (0–36) &nbsp; <font color="#FFB000"><b>×35</b></font><br>• লাল / কালো &nbsp; <font color="#FF2080"><b>×2</b></font><br>• বিজোড় / জোড় &nbsp; <b>×2</b><br>• কম 1–18 / বেশি 19–36 &nbsp; <b>×2</b><br>• ডজন (1–12, 13–24, 25–36) &nbsp; <font color="#00D4FF"><b>×3</b></font><br>• কলাম &nbsp; <font color="#00D4FF"><b>×3</b></font><br><br><font color="#FFB000"><b>মাল্টি-বেট</b></font><br>এক স্পিনে একাধিক পজিশনে বাজি ধরুন — পরিমাণগুলো একটি পেমেন্টে যোগ হয়।<br><br><font color="#FF2080"><b>শূন্য</b></font><br>শুধুমাত্র 0-এ সরাসরি বাজি জেতে। শূন্যে অন্য সব বাজি হারে।<br><br><font color="#FFB000"><b>সীমা</b></font><br>প্রতি পজিশনে সর্বনিম্ন: <font color="#00D4FF">0.1 XRP</font><br>মোট সর্বোচ্চ: <font color="#00D4FF">100 XRP</font><br><br><font color="#555577"><i>দায়িত্বশীলভাবে খেলুন। বয়স ১৮+.</i></font>]]></string>
     <string name="congratulations_your_bet_is_won_loto">লটো — %s XRP</string>
     <string name="get_recovery_become_referral">রেফারেল পুনরুদ্ধারের অনুরোধ পাঠানো হয়েছে — সার্ভারের উত্তরের জন্য অপেক্ষা করুন</string>
@@ -67,7 +67,7 @@
     <string name="go_to_the_dark_side_find_the_secret_button">অন্ধকার দিকে যান — গোপন বোতাম খুঁজুন!</string>
     <string name="your_bet_is_lost_try_again">বাজি হারলেন</string>
     <string name="create_new_wallet_text">সিড ফ্রেজ অবশ্যই সংরক্ষণ করুন, কাউকে বলবেন না</string>
-    <string name="set_password_to_enter_application">অ্যাপে প্রবেশের জন্য পাসওয়ার্ড সেট করুন</string>
+    <string name="set_password_to_enter_application">আপনার ৬-সংখ্যার PIN তৈরি করুন</string>
     <string name="error_check_the_seed_and_try_again">ত্রুটি: আপনার সিড ফ্রেজ যাচাই করুন এবং আবার চেষ্টা করুন</string>
     <string name="tag_knowledge_cannot_be_more">গন্তব্য ট্যাগের মান অনেক বড়</string>
     <string name="your_account_is_not_enough_to_send">পাঠানোর জন্য পর্যাপ্ত ব্যালেন্স নেই</string>
@@ -91,7 +91,7 @@
     <string name="transaction_history_text">লেনদেনের ইতিহাস</string>
     <string name="wrong_restart_please">সিড ফ্রেজ ভুল, অনুগ্রহ করে আবার চেষ্টা করুন।</string>
     <string name="enter_referral_code">রেফারেল কোড দিন</string>
-    <string name="enter_password_low_case">নতুন PIN (৪–৮ সংখ্যা)</string>
+    <string name="enter_password_low_case">নতুন PIN (৬ সংখ্যা)</string>
     <string name="select_game_mode_text">গেম মোড নির্বাচন করুন</string>
     <string name="your_referral_code">আপনার রেফারেল কোড</string>
     <string name="and_double_the_bet">বাজি দ্বিগুণ</string>
@@ -111,7 +111,7 @@
     <string name="info_referral">তথ্য</string>
     <string name="your_balance">আপনার ব্যালেন্স</string>
     <string name="send_payment">পেমেন্ট পাঠান</string>
-    <string name="repeat_enter">PIN পুনরাবৃত্তি করুন (৪–৮ সংখ্যা)</string>
+    <string name="repeat_enter">PIN পুনরাবৃত্তি করুন (৬ সংখ্যা)</string>
     <string name="request_xrp">XRP অনুরোধ</string>
     <string name="select_game">গেম নির্বাচন</string>
     <string name="coming_soon">শীঘ্রই আসছে</string>

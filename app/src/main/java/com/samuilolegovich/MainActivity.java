@@ -24,6 +24,7 @@ import com.samuilolegovich.utils.Lotto;
 import com.samuilolegovich.utils.PrefsHelper;
 import com.samuilolegovich.utils.RootDetector;
 import com.samuilolegovich.utils.SecureSeedStorage;
+import com.samuilolegovich.utils.SessionPin;
 import com.samuilolegovich.utils.SignatureVerifier;
 import com.samuilolegovich.view.Lost;
 import com.samuilolegovich.view.Win;
@@ -247,12 +248,32 @@ public class MainActivity extends BaseActivity {
             return;
         }
 
-        // Пробуем расшифровать через Keystore; null = старый формат или повреждено
-        String seed = SecureSeedStorage.load(preferences, StringEnum.APP_PREFERENCES_SEED.getValue());
+        // Если seed зашифрован PIN-слоем, а PIN в сессии ещё нет — сначала идём на аутентификацию.
+        // После ввода PIN SessionPin.set() будет вызван в EnterApplicationPassword, затем
+        // handleStartup() запустится снова (уже с PIN) и seed будет загружен.
+        boolean seedPinEnabled = "true".equals(preferences.getString(
+                StringEnum.APP_PREFERENCES_SEED_PIN_ENABLED.getValue(), "false"));
+        if (seedPinEnabled && !SessionPin.isAvailable()) {
+            if (!isSetPassword && START_FLAG) {
+                goToAnotherPage(ENTER_APPLICATION_PASSWORD_CLASS);
+            }
+            return;
+        }
+
+        String seed = SecureSeedStorage.loadSeed(preferences, SessionPin.get());
         if (seed == null) {
             SecureSeedStorage.delete(preferences, StringEnum.APP_PREFERENCES_SEED.getValue());
+            preferences.edit()
+                    .remove(StringEnum.APP_PREFERENCES_SEED_PIN_ENABLED.getValue())
+                    .remove(StringEnum.APP_PREFERENCES_SEED_PIN_SALT.getValue())
+                    .apply();
             goToAnotherPage(RESTORE_OR_NEW_WALLET_CLASS);
             return;
+        }
+
+        // Тихая миграция: если seed был без PIN-слоя и PIN теперь известен — перешифровываем.
+        if (!seedPinEnabled && SessionPin.isAvailable()) {
+            SecureSeedStorage.saveSeed(preferences, seed, SessionPin.get());
         }
 
         viewModel.restoreAndInit(seed);

@@ -129,4 +129,20 @@ public class StringEnumTest {
     public void englishLanguageConstant_equalsEn() {
         assertEquals("en", StringEnum.APP_ENGLISH_LANGUAGE.getValue());
     }
+
+    // -------------------------------------------------------------------------
+    // PIN-слой seed — ключи SharedPreferences
+    // -------------------------------------------------------------------------
+
+    /** Ключ соли PIN-слоя seed совпадает с именем файла, используемым в SecureSeedStorage */
+    @Test
+    public void seedPinSalt_key_equals_seed_pin_salt() {
+        assertEquals("seed_pin_salt", StringEnum.APP_PREFERENCES_SEED_PIN_SALT.getValue());
+    }
+
+    /** Ключ флага активности PIN-слоя seed совпадает с именем файла, используемым в SecureSeedStorage */
+    @Test
+    public void seedPinEnabled_key_equals_seed_pin_enabled() {
+        assertEquals("seed_pin_enabled", StringEnum.APP_PREFERENCES_SEED_PIN_ENABLED.getValue());
+    }
 }

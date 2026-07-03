@@ -18,6 +18,7 @@ import com.samuilolegovich.R;
 import com.samuilolegovich.enums.StringEnum;
 import com.samuilolegovich.utils.PrefsHelper;
 import com.samuilolegovich.utils.SecureSeedStorage;
+import com.samuilolegovich.utils.SessionPin;
 import com.samuilolegovich.wallet.repository.WalletRepository;
 
 import javax.inject.Inject;
@@ -114,9 +115,9 @@ public class CheckingNewWallet extends BaseActivity {
     }
 
 
-    /** Сохраняет подтверждённую seed-фразу как постоянный seed кошелька в защищённом хранилище. */
+    /** Сохраняет подтверждённую seed-фразу как постоянный seed кошелька (PIN+Keystore если PIN в сессии есть). */
     private void setSeed(String newSeed) {
-        SecureSeedStorage.save(PrefsHelper.get(this), StringEnum.APP_PREFERENCES_SEED.getValue(), newSeed);
+        SecureSeedStorage.saveSeed(PrefsHelper.get(this), newSeed, SessionPin.get());
     }
 
 

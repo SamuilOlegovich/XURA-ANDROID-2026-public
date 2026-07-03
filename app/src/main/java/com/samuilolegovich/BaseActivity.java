@@ -30,6 +30,7 @@ import com.samuilolegovich.enums.StringEnum;
 import com.samuilolegovich.utils.AntiDebugDetector;
 import com.samuilolegovich.utils.InactivityGuard;
 import com.samuilolegovich.utils.PrefsHelper;
+import com.samuilolegovich.utils.SessionPin;
 import com.samuilolegovich.view.SelectGame;
 import com.samuilolegovich.view.Settings;
 
@@ -174,6 +175,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         InactivityGuard.reset();
         MainActivity.START_FLAG = true;
+        SessionPin.clear();
         startActivity(new Intent(".EnterApplicationPassword"));
     }
 

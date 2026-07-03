@@ -23,6 +23,7 @@ import com.samuilolegovich.utils.BiometricHelper;
 import com.samuilolegovich.utils.Cipher;
 import com.samuilolegovich.utils.LegacyCipher;
 import com.samuilolegovich.utils.PrefsHelper;
+import com.samuilolegovich.utils.SessionPin;
 
 
 import static com.samuilolegovich.view.RestoreOrCreateNewWallet.RESTORE_OR_NEW_WALLET_CLASS;
@@ -105,6 +106,7 @@ public class EnterApplicationPassword extends BaseActivity {
             }
 
             if (verifyPassword(entered)) {
+                SessionPin.set(entered);
                 MainActivity.START_FLAG = false;
                 if (!preferences.contains(StringEnum.APP_PREFERENCES_SEED.getValue())) {
                     goToAnotherPage(RESTORE_OR_NEW_WALLET_CLASS);
@@ -150,8 +152,20 @@ public class EnterApplicationPassword extends BaseActivity {
                 });
     }
 
-    /** Выполняется после успешной биометрической аутентификации: переходит к восстановлению/созданию кошелька или прямо в приложение, если кошелёк уже есть. */
+    /**
+     * Выполняется после успешной биометрической аутентификации.
+     * Если seed зашифрован PIN-слоем — биометрии недостаточно: остаёмся на экране,
+     * пользователь вводит PIN вручную (поле уже видно). После ввода PIN сработает
+     * обычный listeners() и SessionPin будет установлен там.
+     */
     private void proceedAfterAuth() {
+        boolean seedPinEnabled = "true".equals(preferences.getString(
+                StringEnum.APP_PREFERENCES_SEED_PIN_ENABLED.getValue(), "false"));
+        if (seedPinEnabled) {
+            // Биометрия подтвердила личность, но PIN нужен для расшифровки seed.
+            // Остаёмся на экране — пользователь вводит PIN в текстовое поле.
+            return;
+        }
         MainActivity.START_FLAG = false;
         if (!preferences.contains(StringEnum.APP_PREFERENCES_SEED.getValue())) {
             goToAnotherPage(RESTORE_OR_NEW_WALLET_CLASS);

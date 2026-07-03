@@ -51,7 +51,13 @@ public class SlotFlasher extends BaseActivity {
     public static volatile SlotFlasher SLOT_FLASHER;
 
     private volatile boolean waitingForResult = true;
-    private boolean resultShown = false;
+    private boolean resultShown   = false;
+    private boolean resultUiShown = false;
+
+    // Сохраняем состояние остановки, чтобы восстановить его после onPause/onResume
+    private int[]   pendingMidRow     = null;
+    private String  pendingResultText = null;
+    private boolean pendingWin        = false;
 
     private static final int REEL_STOP_DELAY_MS = 400; // задержка между остановкой барабанов
 
@@ -178,23 +184,23 @@ public class SlotFlasher extends BaseActivity {
     /**
      * Останавливает барабаны слева направо с паузой REEL_STOP_DELAY_MS между каждым.
      * Если RESULT_MATRIX задан — используем его символы; иначе генерируем случайные.
+     * Состояние сохраняется в полях для восстановления после onPause/onResume.
      */
     private void stopReelsSequentially(String resultText, boolean win) {
         int[][] matrix = RESULT_MATRIX;
         int[] midRow = generateMiddleRow(matrix, win);
 
-        // Остановить звук через 3*REEL_STOP_DELAY_MS + 1200ms (время торможения последнего)
-        uiHandler.postDelayed(this::stopSound, 3L * REEL_STOP_DELAY_MS + 1200);
+        // Сохраняем для восстановления если onPause прервёт цепочку
+        pendingMidRow     = midRow;
+        pendingResultText = resultText;
+        pendingWin        = win;
 
         reelLeft.stopAt(midRow[0], () -> {
-            reelLeft.setHighlightMiddle(false);
             uiHandler.postDelayed(() -> {
                 reelCenter.stopAt(midRow[1], () -> {
-                    reelCenter.setHighlightMiddle(false);
                     uiHandler.postDelayed(() -> {
                         reelRight.stopAt(midRow[2], () -> {
-                            reelRight.setHighlightMiddle(false);
-                            // После остановки всех барабанов — проверяем выигрышную линию
+                            // Все три барабана остановились — показываем результат
                             uiHandler.postDelayed(() -> showResult(resultText, win, midRow), 200);
                         });
                     }, REEL_STOP_DELAY_MS);
@@ -205,7 +211,9 @@ public class SlotFlasher extends BaseActivity {
 
     /** Показывает результат: подсветка, WIN/LOSE текст, обратный отсчёт. */
     private void showResult(String text, boolean win, int[] midRow) {
-        // Подсветить среднюю строку (выигрышная линия)
+        resultUiShown = true;
+        stopSound();
+
         if (win) {
             reelLeft.setHighlightMiddle(true);
             reelCenter.setHighlightMiddle(true);
@@ -338,6 +346,18 @@ public class SlotFlasher extends BaseActivity {
             if (spinMediaPlayer != null && spinMediaPlayer.isPlaying()) spinMediaPlayer.pause();
         });
         audioFocusRequest = AudioHelper.requestFocus(this, focusListener);
+
+        // Результат пришёл пока экран был свёрнут: цепочка остановки была прервана.
+        // Снапаем все барабаны на нужные символы и сразу показываем итог.
+        if (resultShown && !resultUiShown && pendingMidRow != null) {
+            uiHandler.removeCallbacksAndMessages(null); // сбрасываем незавершённые задержки
+            reelLeft  .snapTo(pendingMidRow[0]);
+            reelCenter.snapTo(pendingMidRow[1]);
+            reelRight .snapTo(pendingMidRow[2]);
+            showResult(pendingResultText, pendingWin, pendingMidRow);
+            return;
+        }
+
         if (waitingForResult) {
             FlasherRun.FLAG = true;
             AppExecutors.io().execute(new FlasherRun());
