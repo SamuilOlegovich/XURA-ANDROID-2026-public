@@ -15,6 +15,18 @@ import com.samuilolegovich.R;
 import com.samuilolegovich.utils.AudioHelper;
 import dagger.hilt.android.AndroidEntryPoint;
 
+import nl.dionsegijn.konfetti.core.Angle;
+import nl.dionsegijn.konfetti.core.Party;
+import nl.dionsegijn.konfetti.core.PartyFactory;
+import nl.dionsegijn.konfetti.core.Position;
+import nl.dionsegijn.konfetti.core.Spread;
+import nl.dionsegijn.konfetti.core.emitter.Emitter;
+import nl.dionsegijn.konfetti.xml.KonfettiView;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 
 
 
@@ -76,6 +88,23 @@ public class Win extends BaseActivity {
             overridePendingTransition(0, 0);
             finish();
         });
+
+        startWinConfetti();
+    }
+
+    private void startWinConfetti() {
+        KonfettiView kv = findViewById(R.id.konfetti_view);
+        if (kv == null) return;
+        List<Party> parties = Arrays.asList(
+            new PartyFactory(new Emitter(5000L, TimeUnit.MILLISECONDS).perSecond(60))
+                .angle(Angle.BOTTOM)
+                .spread(Spread.ROUND)
+                .setSpeedBetween(2f, 9f)
+                .colors(Arrays.asList(0xFFFFE040, 0xFF00D4FF, 0xFFD020A0, 0xFFFFB000, 0xFFFFFFFF, 0xFF9020D0))
+                .position(0.0, 0.0, 1.0, 0.0)
+                .build()
+        );
+        kv.start(parties);
     }
 
 

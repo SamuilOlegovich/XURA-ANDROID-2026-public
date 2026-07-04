@@ -30,6 +30,18 @@ import com.samuilolegovich.utils.PrefsHelper;
 import android.os.SystemClock;
 import dagger.hilt.android.AndroidEntryPoint;
 
+import nl.dionsegijn.konfetti.core.Angle;
+import nl.dionsegijn.konfetti.core.Party;
+import nl.dionsegijn.konfetti.core.PartyFactory;
+import nl.dionsegijn.konfetti.core.Position;
+import nl.dionsegijn.konfetti.core.Spread;
+import nl.dionsegijn.konfetti.core.emitter.Emitter;
+import nl.dionsegijn.konfetti.xml.KonfettiView;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import java.math.BigDecimal;
 import java.util.LinkedHashMap;
 
@@ -270,6 +282,40 @@ public class Flasher extends BaseActivity {
         btnBackToGame.setVisibility(View.VISIBLE);
         tvCountdown.setVisibility(View.VISIBLE);
         startCountdown();
+
+        if (win) startWinConfetti(); else startLostAshes();
+    }
+
+    private void startLostAshes() {
+        KonfettiView kv = findViewById(R.id.konfetti_view);
+        if (kv == null) return;
+        List<Party> parties = Arrays.asList(
+            new PartyFactory(new Emitter(4500L, TimeUnit.MILLISECONDS).perSecond(30))
+                .angle(Angle.TOP)
+                .spread(80)
+                .setSpeedBetween(3f, 8f)
+                .setDamping(0.98f)
+                .timeToLive(5500L)
+                .colors(Arrays.asList(0xFF8B0000, 0xFF2D2D2D, 0xFF4A0E1C, 0xFF1C1C1C, 0xFF5C0A1A))
+                .position(0.0, 1.0, 1.0, 1.0)
+                .build()
+        );
+        kv.start(parties);
+    }
+
+    private void startWinConfetti() {
+        KonfettiView kv = findViewById(R.id.konfetti_view);
+        if (kv == null) return;
+        List<Party> parties = Arrays.asList(
+            new PartyFactory(new Emitter(4000L, TimeUnit.MILLISECONDS).perSecond(50))
+                .angle(Angle.BOTTOM)
+                .spread(Spread.ROUND)
+                .setSpeedBetween(2f, 9f)
+                .colors(Arrays.asList(0xFFFFE040, 0xFF00D4FF, 0xFFD020A0, 0xFFFFB000, 0xFFFFFFFF, 0xFF9020D0))
+                .position(0.0, 0.0, 1.0, 0.0)
+                .build()
+        );
+        kv.start(parties);
     }
 
 

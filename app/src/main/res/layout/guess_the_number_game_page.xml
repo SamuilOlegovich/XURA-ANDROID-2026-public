@@ -78,6 +78,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/header_row" />
 
+    <!-- Game mode badge -->
+    <TextView
+        android:id="@+id/tv_game_mode"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="24dp"
+        android:fontFamily="@font/montserrat"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:letterSpacing="0.06"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guess_the_number_game_text_view"
+        tools:text="○ TRIAL" />
+
     <!-- Subtitle -->
     <TextView
         android:id="@+id/guess_the_number_game_text_view_tow"
@@ -95,7 +114,7 @@
         android:letterSpacing="0.04"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/guess_the_number_game_text_view" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_game_mode" />
 
     <!-- BET INPUT CONTAINER — contains all 4 input styles, only one visible at a time -->
     <LinearLayout

@@ -1,5 +1,6 @@
 package com.samuilolegovich.view;
 
+import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.LinearGradient;
@@ -13,6 +14,16 @@ import com.samuilolegovich.BaseActivity;
 import com.samuilolegovich.R;
 import com.samuilolegovich.utils.AudioHelper;
 import dagger.hilt.android.AndroidEntryPoint;
+
+import nl.dionsegijn.konfetti.core.Angle;
+import nl.dionsegijn.konfetti.core.Party;
+import nl.dionsegijn.konfetti.core.PartyFactory;
+import nl.dionsegijn.konfetti.core.emitter.Emitter;
+import nl.dionsegijn.konfetti.xml.KonfettiView;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 
 
@@ -74,6 +85,38 @@ public class Lost extends BaseActivity {
             overridePendingTransition(0, 0);
             finish();
         });
+
+        startLostAnimation();
+    }
+
+    private void startLostAnimation() {
+        View root = findViewById(R.id.lost);
+
+        // Тряска экрана
+        ObjectAnimator shake = ObjectAnimator.ofFloat(root, "translationX",
+                0f, -24f, 24f, -18f, 18f, -12f, 12f, -6f, 6f, 0f);
+        shake.setDuration(480);
+        shake.start();
+
+        // Пепел поднимается вверх — через небольшую задержку после тряски
+        root.postDelayed(this::startAshes, 250);
+    }
+
+    private void startAshes() {
+        KonfettiView kv = findViewById(R.id.konfetti_view);
+        if (kv == null) return;
+        List<Party> parties = Arrays.asList(
+            new PartyFactory(new Emitter(4500L, TimeUnit.MILLISECONDS).perSecond(35))
+                .angle(Angle.TOP)
+                .spread(80)
+                .setSpeedBetween(3f, 8f)
+                .setDamping(0.98f)
+                .timeToLive(5500L)
+                .colors(Arrays.asList(0xFF8B0000, 0xFF2D2D2D, 0xFF4A0E1C, 0xFF1C1C1C, 0xFF5C0A1A))
+                .position(0.0, 1.0, 1.0, 1.0)
+                .build()
+        );
+        kv.start(parties);
     }
 
 

@@ -135,25 +135,6 @@ public class MainActivity extends BaseActivity {
 
 
 
-        viewModel.getNavigationEvent().observe(this, event -> {
-            if (event == null) return;
-            switch (event.type) {
-                case NavigationEvent.LOST:
-                    Lost.MASSAGE = event.message;
-                    goToAnotherPage(LOST_CLASS);
-                    break;
-                case NavigationEvent.WIN:
-                    Win.MASSAGE = event.message;
-                    goToAnotherPage(WIN_CLASS);
-                    break;
-                case NavigationEvent.YOUR_REFERRAL:
-                    YourReferral.MASSAGE = event.message;
-                    goToAnotherPage(YOUR_REFERRAL_CLASS);
-                    break;
-            }
-            viewModel.clearNavigationEvent();
-        });
-
         viewModel.getWalletReady().observe(this, ready -> {
             if (Boolean.TRUE.equals(ready)) startXrplSocketService();
         });
