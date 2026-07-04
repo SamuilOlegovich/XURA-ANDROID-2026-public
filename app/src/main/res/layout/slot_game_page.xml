@@ -155,6 +155,20 @@
                 android:gravity="center"
                 android:letterSpacing="0.12" />
 
+            <!-- Game mode badge -->
+            <TextView
+                android:id="@+id/tv_game_mode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/montserrat"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.06"
+                tools:text="○ TRIAL" />
+
             <!-- REEL PREVIEW CARD -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/slot_reel_card"

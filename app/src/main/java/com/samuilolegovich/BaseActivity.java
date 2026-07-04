@@ -31,11 +31,17 @@ import com.samuilolegovich.utils.AntiDebugDetector;
 import com.samuilolegovich.utils.InactivityGuard;
 import com.samuilolegovich.utils.PrefsHelper;
 import com.samuilolegovich.utils.SessionPin;
+import com.samuilolegovich.view.Lost;
 import com.samuilolegovich.view.SelectGame;
 import com.samuilolegovich.view.Settings;
+import com.samuilolegovich.view.Win;
+import com.samuilolegovich.view.YourReferral;
+import com.samuilolegovich.viewmodel.NavigationEvent;
+import com.samuilolegovich.wallet.repository.WalletRepository;
 
 import java.util.Locale;
 import dagger.hilt.android.AndroidEntryPoint;
+import android.widget.TextView;
 
 
 
@@ -62,6 +68,27 @@ public abstract class BaseActivity extends AppCompatActivity {
         // отступы управляются вручную через WindowInsets (см. setContentView ниже)
         WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
         super.onCreate(savedInstanceState);
+
+        WalletRepository.getInstance().getNavigationEventLiveData().observe(this, event -> {
+            if (event == null) return;
+            // Не открываем экраны результата поверх самих же экранов результата
+            if (this instanceof Win || this instanceof Lost || this instanceof YourReferral) return;
+            switch (event.type) {
+                case NavigationEvent.LOST:
+                    Lost.MASSAGE = event.message;
+                    startActivity(new Intent(Lost.LOST_CLASS));
+                    break;
+                case NavigationEvent.WIN:
+                    Win.MASSAGE = event.message;
+                    startActivity(new Intent(Win.WIN_CLASS));
+                    break;
+                case NavigationEvent.YOUR_REFERRAL:
+                    YourReferral.MASSAGE = event.message;
+                    startActivity(new Intent(YourReferral.YOUR_REFERRAL_CLASS));
+                    break;
+            }
+            WalletRepository.getInstance().clearNavigationEvent();
+        });
     }
 
     /**
@@ -91,6 +118,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         syncBottomNavSelection();
         animateLogo();
         checkAntiDebug();
+        updateGameModeBadge();
     }
 
     /**
@@ -291,6 +319,15 @@ public abstract class BaseActivity extends AppCompatActivity {
     /** Запускает короткую пульсирующую анимацию на View — используется для визуального отклика на действие пользователя. */
     protected void pulse(View v) {
         v.startAnimation(AnimationUtils.loadAnimation(this, R.anim.anim_scale_pulse));
+    }
+
+    /** Обновляет бейдж режима игры (LIVE / TRIAL) если он присутствует в текущем layout. */
+    private void updateGameModeBadge() {
+        TextView badge = findViewById(R.id.tv_game_mode);
+        if (badge == null) return;
+        boolean isLive = Boolean.TRUE.equals(MainActivity.IS_REAL_GAME_MODE);
+        badge.setText(isLive ? "● LIVE" : "○ TRIAL");
+        badge.setTextColor(isLive ? 0xFF00C853 : 0xFFFFB000);
     }
 
     /** Читает сохранённую в настройках локаль и применяет её к ресурсам Activity до отрисовки UI. */
