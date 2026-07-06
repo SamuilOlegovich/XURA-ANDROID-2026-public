@@ -55,6 +55,8 @@ public class SlotFlasher extends BaseActivity {
 
     // Данные ставки, переданные из SlotGame
     public static volatile String  BET_AMOUNT = "0";
+    // Стоп-позиции трёх барабанов (0–83), полученные от сервера или сгенерированные в trial-режиме
+    public static volatile int[]   STOP_POSITIONS = null;
     // Результирующая матрица 3×3: [row][col], row 0=top 1=mid 2=bot, col 0=left 1=mid 2=right
     public static volatile int[][] RESULT_MATRIX = null;
 
@@ -66,14 +68,15 @@ public class SlotFlasher extends BaseActivity {
     private boolean resultShown   = false;
     private boolean resultUiShown = false;
 
-    // Сохраняем состояние остановки, чтобы восстановить его после onPause/onResume
-    private int[]   pendingMidRow     = null;
-    private String  pendingResultText = null;
-    private boolean pendingWin        = false;
+    // Полная матрица 3×3 и результат — сохраняем для восстановления после onPause/onResume
+    private int[][]  pendingMatrix     = null;
+    private String   pendingResultText = null;
+    private boolean  pendingWin        = false;
 
     private static final int REEL_STOP_DELAY_MS = 400; // задержка между остановкой барабанов
 
-    private SlotReelView reelLeft, reelCenter, reelRight;
+    private SlotReelView   reelLeft, reelCenter, reelRight;
+    private SlotPaylineView paylineView;
     private TextView tvResultTitle;
     private TextView tvPayout;
     private TextView tvCongratulations;
@@ -141,6 +144,7 @@ public class SlotFlasher extends BaseActivity {
         reelLeft         = findViewById(R.id.reel_left);
         reelCenter       = findViewById(R.id.reel_center);
         reelRight        = findViewById(R.id.reel_right);
+        paylineView      = findViewById(R.id.payline_view);
         tvResultTitle    = findViewById(R.id.tv_result_title);
         tvPayout         = findViewById(R.id.tv_payout);
         tvCongratulations= findViewById(R.id.tv_congratulations);
@@ -159,8 +163,9 @@ public class SlotFlasher extends BaseActivity {
         STR_BET_LOST        = getString(R.string.bet_lost);
     }
 
-    // Каждый барабан получает свой порядок символов для визуального разнообразия
     private void assignReelOrders() {
+        // Короткий визуальный стрип — для плавной анимации спина и остановки.
+        // SlotReelStrip (84 позиции) используется только для определения символа-результата.
         reelLeft  .setReelOrder(new int[]{ 0, 2, 4, 1, 5, 3, 6 });
         reelCenter.setReelOrder(new int[]{ 3, 0, 5, 2, 6, 1, 4 });
         reelRight .setReelOrder(new int[]{ 5, 1, 3, 6, 0, 4, 2 });
@@ -195,25 +200,29 @@ public class SlotFlasher extends BaseActivity {
 
     /**
      * Останавливает барабаны слева направо с паузой REEL_STOP_DELAY_MS между каждым.
-     * Если RESULT_MATRIX задан — используем его символы; иначе генерируем случайные.
+     * Полная матрица 3×3 строится из STOP_POSITIONS (сервер) или RESULT_MATRIX (trial fallback).
+     * Перед остановкой каждому барабану присваивается визуальный reelOrder с правильными
+     * top/mid/bot — чтобы все три видимые ячейки соответствовали 84-позиционному стрипу.
      * Состояние сохраняется в полях для восстановления после onPause/onResume.
      */
     private void stopReelsSequentially(String resultText, boolean win) {
-        int[][] matrix = RESULT_MATRIX;
-        int[] midRow = generateMiddleRow(matrix, win);
-
-        // Сохраняем для восстановления если onPause прервёт цепочку
-        pendingMidRow     = midRow;
+        int[][] matrix = resolveMatrix(win);
+        pendingMatrix     = matrix;
         pendingResultText = resultText;
         pendingWin        = win;
 
-        reelLeft.stopAt(midRow[0], () -> {
+        // Задаём визуальный порядок: reelOrder[0]=top, [1]=mid, [2]=bot по стрипу
+        reelLeft  .setReelOrder(buildVisualOrder(matrix[0][0], matrix[1][0], matrix[2][0]));
+        reelCenter.setReelOrder(buildVisualOrder(matrix[0][1], matrix[1][1], matrix[2][1]));
+        reelRight .setReelOrder(buildVisualOrder(matrix[0][2], matrix[1][2], matrix[2][2]));
+
+        // Останавливаем на индексе 1 (mid) — top и bot уже на позициях 0 и 2
+        reelLeft.stopAtPosition(1, () -> {
             uiHandler.postDelayed(() -> {
-                reelCenter.stopAt(midRow[1], () -> {
+                reelCenter.stopAtPosition(1, () -> {
                     uiHandler.postDelayed(() -> {
-                        reelRight.stopAt(midRow[2], () -> {
-                            // Все три барабана остановились — показываем результат
-                            uiHandler.postDelayed(() -> showResult(resultText, win, midRow), 200);
+                        reelRight.stopAtPosition(1, () -> {
+                            uiHandler.postDelayed(() -> showResult(resultText, win), 200);
                         });
                     }, REEL_STOP_DELAY_MS);
                 });
@@ -221,8 +230,48 @@ public class SlotFlasher extends BaseActivity {
         });
     }
 
+    /** Строит полную матрицу 3×3: из STOP_POSITIONS (сервер), RESULT_MATRIX или случайного fallback. */
+    private int[][] resolveMatrix(boolean win) {
+        if (STOP_POSITIONS != null && STOP_POSITIONS.length == 3) {
+            return SlotReelStrip.buildMatrix(STOP_POSITIONS[0], STOP_POSITIONS[1], STOP_POSITIONS[2]);
+        }
+        if (RESULT_MATRIX != null) {
+            return RESULT_MATRIX;
+        }
+        // Полный fallback: средняя строка — осмысленная, верх/низ — случайные
+        int[] mid = generateMiddleRow(null, win);
+        SecureRandom rnd = new SecureRandom();
+        int[][] m = new int[3][3];
+        m[0] = new int[]{ rnd.nextInt(7), rnd.nextInt(7), rnd.nextInt(7) };
+        m[1] = mid;
+        m[2] = new int[]{ rnd.nextInt(7), rnd.nextInt(7), rnd.nextInt(7) };
+        return m;
+    }
+
+    /**
+     * Строит 7-элементный визуальный reelOrder с гарантированным расположением:
+     * index 0 = topSym, index 1 = midSym, index 2 = botSym.
+     * Оставшиеся 4 позиции заполняются символами, не вошедшими в top/mid/bot.
+     * Корректно обрабатывает дублирующиеся символы в колонке.
+     */
+    private static int[] buildVisualOrder(int topSym, int midSym, int botSym) {
+        int[] order = new int[7];
+        order[0] = topSym;
+        order[1] = midSym;
+        order[2] = botSym;
+        boolean[] placed = new boolean[7];
+        placed[topSym] = true;
+        placed[midSym] = true;
+        placed[botSym] = true;
+        int pos = 3;
+        for (int sym = 0; sym < 7 && pos < 7; sym++) {
+            if (!placed[sym]) order[pos++] = sym;
+        }
+        return order;
+    }
+
     /** Показывает результат: подсветка, WIN/LOSE текст, обратный отсчёт. */
-    private void showResult(String text, boolean win, int[] midRow) {
+    private void showResult(String text, boolean win) {
         resultUiShown = true;
         stopSound();
 
@@ -230,6 +279,9 @@ public class SlotFlasher extends BaseActivity {
             reelLeft.setHighlightMiddle(true);
             reelCenter.setHighlightMiddle(true);
             reelRight.setHighlightMiddle(true);
+            if (pendingMatrix != null) {
+                uiHandler.postDelayed(() -> paylineView.showWinLines(pendingMatrix), 350);
+            }
         }
 
         tvResultTitle.setText(win ? STR_BET_WON : STR_BET_LOST);
@@ -394,13 +446,16 @@ public class SlotFlasher extends BaseActivity {
         audioFocusRequest = AudioHelper.requestFocus(this, focusListener);
 
         // Результат пришёл пока экран был свёрнут: цепочка остановки была прервана.
-        // Снапаем все барабаны на нужные символы и сразу показываем итог.
-        if (resultShown && !resultUiShown && pendingMidRow != null) {
-            uiHandler.removeCallbacksAndMessages(null); // сбрасываем незавершённые задержки
-            reelLeft  .snapTo(pendingMidRow[0]);
-            reelCenter.snapTo(pendingMidRow[1]);
-            reelRight .snapTo(pendingMidRow[2]);
-            showResult(pendingResultText, pendingWin, pendingMidRow);
+        // Восстанавливаем реелы с правильными top/mid/bot и сразу показываем итог.
+        if (resultShown && !resultUiShown && pendingMatrix != null) {
+            uiHandler.removeCallbacksAndMessages(null);
+            reelLeft  .setReelOrder(buildVisualOrder(pendingMatrix[0][0], pendingMatrix[1][0], pendingMatrix[2][0]));
+            reelCenter.setReelOrder(buildVisualOrder(pendingMatrix[0][1], pendingMatrix[1][1], pendingMatrix[2][1]));
+            reelRight .setReelOrder(buildVisualOrder(pendingMatrix[0][2], pendingMatrix[1][2], pendingMatrix[2][2]));
+            reelLeft  .snapToPosition(1);
+            reelCenter.snapToPosition(1);
+            reelRight .snapToPosition(1);
+            showResult(pendingResultText, pendingWin);
             return;
         }
 
@@ -423,6 +478,7 @@ public class SlotFlasher extends BaseActivity {
         reelLeft.cancelAnim();
         reelCenter.cancelAnim();
         reelRight.cancelAnim();
+        paylineView.reset();
         stopSound();
         AudioHelper.abandonFocus(this, audioFocusRequest);
         AudioHelper.unregisterNoisyReceiver(this, noisyReceiver);
@@ -446,7 +502,8 @@ public class SlotFlasher extends BaseActivity {
         AudioHelper.abandonFocus(this, audioFocusRequest);
         AudioHelper.unregisterNoisyReceiver(this, noisyReceiver);
         if (spinMediaPlayer != null) { spinMediaPlayer.release(); spinMediaPlayer = null; }
-        SLOT_FLASHER = null;
-        RESULT_MATRIX = null;
+        SLOT_FLASHER    = null;
+        STOP_POSITIONS  = null;
+        RESULT_MATRIX   = null;
     }
 }

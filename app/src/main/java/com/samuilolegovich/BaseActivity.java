@@ -32,8 +32,10 @@ import com.samuilolegovich.utils.InactivityGuard;
 import com.samuilolegovich.utils.PrefsHelper;
 import com.samuilolegovich.utils.SessionPin;
 import com.samuilolegovich.view.Lost;
+import com.samuilolegovich.view.RouletteResult;
 import com.samuilolegovich.view.SelectGame;
 import com.samuilolegovich.view.Settings;
+import com.samuilolegovich.view.SlotResult;
 import com.samuilolegovich.view.Win;
 import com.samuilolegovich.view.YourReferral;
 import com.samuilolegovich.viewmodel.NavigationEvent;
@@ -72,7 +74,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         WalletRepository.getInstance().getNavigationEventLiveData().observe(this, event -> {
             if (event == null) return;
             // Не открываем экраны результата поверх самих же экранов результата
-            if (this instanceof Win || this instanceof Lost || this instanceof YourReferral) return;
+            if (this instanceof Win || this instanceof Lost || this instanceof YourReferral
+                    || this instanceof SlotResult || this instanceof RouletteResult) return;
             switch (event.type) {
                 case NavigationEvent.LOST:
                     Lost.MASSAGE = event.message;
@@ -85,6 +88,12 @@ public abstract class BaseActivity extends AppCompatActivity {
                 case NavigationEvent.YOUR_REFERRAL:
                     YourReferral.MASSAGE = event.message;
                     startActivity(new Intent(YourReferral.YOUR_REFERRAL_CLASS));
+                    break;
+                case NavigationEvent.SLOT_RESULT:
+                    startActivity(new Intent(SlotResult.SLOT_RESULT_CLASS));
+                    break;
+                case NavigationEvent.ROULETTE_RESULT:
+                    startActivity(new Intent(RouletteResult.ROULETTE_RESULT_CLASS));
                     break;
             }
             WalletRepository.getInstance().clearNavigationEvent();
