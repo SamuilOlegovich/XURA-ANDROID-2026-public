@@ -90,14 +90,27 @@ public class NotifierRun implements Runnable {
                     .divide(BigDecimal.valueOf(1_000_000L), MathContext.DECIMAL128)
                     .toString();
 
-            // слот-машина: WIN:SLOT:{payout} или LOSE:SLOT:0
-            if (memoText.startsWith("WIN:SLOT:") || memoText.startsWith("LOSE:SLOT:")) {
-                boolean slotWin = memoText.startsWith("WIN:SLOT:");
-                Flasher.NUMBER_BET = "0";
-                if (slotWin) {
-                    responseToBetSlot(String.format(CONGRATULATIONS_YOUR_BET_IS_WON, amountWin), 2);
-                } else {
-                    responseToBetSlot(YOUR_BET_IS_LOST_TRY_AGAIN_AND_YOU_WILL_BE_LUCKY, 1);
+            // слот-машина: SLOT:{p0},{p1},{p2}:{WIN|LOSE}
+            if (memoText.startsWith("SLOT:")) {
+                String[] slotParts = memoText.split(":");
+                // slotParts[0]="SLOT", slotParts[1]="p0,p1,p2", slotParts[2]="WIN|LOSE"
+                if (slotParts.length >= 3) {
+                    try {
+                        String[] pos = slotParts[1].split(",");
+                        com.samuilolegovich.view.SlotFlasher.STOP_POSITIONS = new int[]{
+                            Integer.parseInt(pos[0].trim()),
+                            Integer.parseInt(pos[1].trim()),
+                            Integer.parseInt(pos[2].trim())
+                        };
+                    } catch (Exception ignored) {
+                        com.samuilolegovich.view.SlotFlasher.STOP_POSITIONS = null;
+                    }
+                    boolean slotWin = "WIN".equals(slotParts[2]);
+                    if (slotWin) {
+                        responseToBetSlot(String.format(CONGRATULATIONS_YOUR_BET_IS_WON, amountWin), 2);
+                    } else {
+                        responseToBetSlot(YOUR_BET_IS_LOST_TRY_AGAIN_AND_YOU_WILL_BE_LUCKY, 1);
+                    }
                 }
                 return;
             }
@@ -185,20 +198,25 @@ public class NotifierRun implements Runnable {
     }
 
 
-    /** Доставляет результат слот-машины в SlotFlasher (если открыт), иначе — в WalletRepository. */
+    /** Доставляет результат слот-машины: в SlotFlasher (если открыт) или открывает SlotResult. */
     private void responseToBetSlot(String text, int outcome) {
         com.samuilolegovich.view.SlotFlasher sf = com.samuilolegovich.view.SlotFlasher.SLOT_FLASHER;
         if (com.samuilolegovich.view.SlotFlasher.VISIBLE_ON_SCREEN && sf != null) {
             sf.stopGame(text, outcome == 2);
         } else {
-            WalletRepository.getInstance().notifyEvent(text, "0", outcome);
+            // Копируем позиции до async-доставки, чтобы они не были сброшены раньше
+            int[] stops = com.samuilolegovich.view.SlotFlasher.STOP_POSITIONS;
+            com.samuilolegovich.view.SlotResult.PENDING_STOPS = stops != null ? stops.clone() : null;
+            com.samuilolegovich.view.SlotResult.MASSAGE = text;
+            com.samuilolegovich.view.SlotResult.IS_WIN  = outcome == 2;
+            WalletRepository.getInstance().notifyEvent(text, "0",
+                    com.samuilolegovich.viewmodel.NavigationEvent.SLOT_RESULT);
         }
     }
 
     /**
      * Доставляет готовый текст результата игроку: если экран игры открыт — показывает его прямо там
-     * (stopGame), иначе (или для реферального кода) кладёт уведомление в WalletRepository,
-     * чтобы оно было показано позже, когда подходящий экран станет видимым.
+     * (stopGame), иначе открывает RouletteResult с кратким прокрутом колеса и итоговым числом.
      */
     private void responseToBet(String text, String serverNumber, int i) {
         if (Flasher.VISIBLE_ON_SCREEN && Flasher.FLASHER != null) {
@@ -213,8 +231,19 @@ public class NotifierRun implements Runnable {
                     WalletRepository.getInstance().notifyEvent(text, serverNumber, i);
                     break;
             }
+        } else if (i == 1 || i == 2) {
+            com.samuilolegovich.view.RouletteResult.PENDING_NUMBER = parseNumber(Flasher.NUMBER_BET);
+            com.samuilolegovich.view.RouletteResult.MASSAGE = text;
+            com.samuilolegovich.view.RouletteResult.IS_WIN  = i == 2;
+            WalletRepository.getInstance().notifyEvent(text, serverNumber,
+                    com.samuilolegovich.viewmodel.NavigationEvent.ROULETTE_RESULT);
         } else {
             WalletRepository.getInstance().notifyEvent(text, serverNumber, i);
         }
+    }
+
+    private static int parseNumber(String s) {
+        try { int n = Integer.parseInt(s); return (n >= 0 && n <= 36) ? n : 0; }
+        catch (Exception e) { return 0; }
     }
 }

@@ -57,7 +57,7 @@ public class SlotViewModel extends ViewModel {
             if (error != null) { errorLiveData.postValue(error); return; }
 
             String amount = prepareAmount(rawAmount);
-            String memo   = "BET:SLOT:" + amount + ":" + (referral != null ? referral : "0");
+            String memo   = "SLOT:" + (referral != null && !referral.isEmpty() ? referral : "0");
 
             boolean success;
             if (Boolean.TRUE.equals(MainActivity.IS_REAL_GAME_MODE)) {

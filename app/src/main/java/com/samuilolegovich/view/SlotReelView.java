@@ -301,6 +301,68 @@ public class SlotReelView extends View {
         invalidate();
     }
 
+    /**
+     * Останавливает барабан на позиции {@code targetPos} стрипа (0–83).
+     * Используется с новым протоколом: позиция задаётся напрямую, без поиска символа.
+     */
+    public void stopAtPosition(int targetPos, Runnable onStopped) {
+        cancelAnim();
+        if (cellPx <= 0) { if (onStopped != null) onStopped.run(); return; }
+
+        int n       = reelOrder.length;
+        float total = n * cellPx;
+
+        float currentMod = scrollPx % total;
+        float wantedMod  = ((targetPos - 1 + n) % n) * cellPx;
+        float delta      = wantedMod - currentMod;
+        if (delta <= 0f) delta += total;
+        delta += total;
+
+        float spinVelocity = cellPx * currentSpeedMult / 120f;
+        long  duration     = (long)(2f * delta / spinVelocity);
+        duration = Math.max(900L, Math.min(2500L, duration));
+
+        final int tIdx = targetPos;
+
+        ValueAnimator anim = ValueAnimator.ofFloat(scrollPx, scrollPx + delta);
+        anim.setDuration(duration);
+        anim.setInterpolator(new DecelerateInterpolator(1f));
+        anim.addUpdateListener(a -> {
+            scrollPx = (float) a.getAnimatedValue();
+            invalidate();
+        });
+        anim.addListener(new AnimatorListenerAdapter() {
+            boolean wasCancelled = false;
+            @Override public void onAnimationCancel(Animator animation) { wasCancelled = true; }
+            @Override public void onAnimationEnd(Animator animation) {
+                if (wasCancelled) return;
+                int nn = reelOrder.length;
+                int wantedTopIdx = (tIdx - 1 + nn) % nn;
+                long nearestCell = Math.round((double) scrollPx / (double) cellPx);
+                long rem  = ((nearestCell % nn) + nn) % nn;
+                long diff = (wantedTopIdx - rem + nn) % nn;
+                scrollPx = (float) ((nearestCell + diff) * (double) cellPx) + cellPx * 0.001f;
+                invalidate();
+                if (onStopped != null) onStopped.run();
+            }
+        });
+        activeAnimator = anim;
+        anim.start();
+    }
+
+    /** Мгновенно устанавливает барабан на позицию {@code targetPos} стрипа (0–83). Без анимации. */
+    public void snapToPosition(int targetPos) {
+        cancelAnim();
+        if (cellPx <= 0) return;
+        int n = reelOrder.length;
+        int wantedTopIdx = (targetPos - 1 + n) % n;
+        long nearestCell = Math.round((double) scrollPx / (double) cellPx);
+        long rem  = ((nearestCell % n) + n) % n;
+        long diff = (wantedTopIdx - rem + n) % n;
+        scrollPx  = (float) ((nearestCell + diff) * (double) cellPx) + cellPx * 0.001f;
+        invalidate();
+    }
+
     /** Немедленно останавливает любую текущую анимацию и отменяет отложенный старт. */
     public void cancelAnim() {
         pendingSpinMult = -1f;

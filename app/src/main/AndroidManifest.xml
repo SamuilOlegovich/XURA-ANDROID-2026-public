@@ -368,6 +368,26 @@
         </activity>
 
         <activity
+            android:name="com.samuilolegovich.view.RouletteResult"
+            android:label="RouletteResult"
+            android:exported="true">
+            <intent-filter>
+                <action android:name=".view.RouletteResult" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.samuilolegovich.view.SlotResult"
+            android:label="SlotResult"
+            android:exported="true">
+            <intent-filter>
+                <action android:name=".view.SlotResult" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
             android:name="com.samuilolegovich.view.RulesOfTheGameSlot"
             android:label="RulesOfTheGameSlot"
             android:exported="true">

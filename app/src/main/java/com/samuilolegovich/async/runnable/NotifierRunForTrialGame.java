@@ -9,6 +9,7 @@ import com.samuilolegovich.enums.TestModeEnum;
 import com.samuilolegovich.utils.Lotto;
 import com.samuilolegovich.view.Flasher;
 import com.samuilolegovich.view.SlotFlasher;
+import com.samuilolegovich.view.SlotReelStrip;
 import com.samuilolegovich.view.SlotReelView;
 import com.samuilolegovich.view.YourReferral;
 import com.samuilolegovich.wallet.repository.WalletRepository;
@@ -240,29 +241,23 @@ public class NotifierRunForTrialGame implements Runnable {
      * проверяет 5 линий выплат, рассчитывает выигрыш и передаёт результат в SlotFlasher.
      */
     void calculateForSlot() {
-        // Веса символов из спецификации: XRP=30, Rocket=20, Moon=15, Diamond=10, Whale=5, Jackpot=1, Wild=3
-        int[] weights = { 30, 20, 15, 10, 5, 1, 3 };
-        // Множители выплат (Wild не выплачивает сам, только замещает)
         int[] multipliers = { 2, 5, 10, 20, 50, 250, 0 };
-        int totalWeight = 0;
-        for (int w : weights) totalWeight += w;
 
-        // Генерируем матрицу 3×3
-        int[][] matrix = new int[3][3];
-        for (int row = 0; row < 3; row++) {
-            for (int col = 0; col < 3; col++) {
-                matrix[row][col] = weightedRandom(weights, totalWeight);
-            }
-        }
-        SlotFlasher.RESULT_MATRIX = matrix;
+        // Стоп-позиции (0–83) для каждого барабана — вероятность символов задаётся стрипом
+        int stopLeft   = random.nextInt(SlotReelStrip.LENGTH);
+        int stopCenter = random.nextInt(SlotReelStrip.LENGTH);
+        int stopRight  = random.nextInt(SlotReelStrip.LENGTH);
 
-        // 5 линий выплат: средняя, верхняя, нижняя, диагональ вниз, диагональ вверх
+        int[][] matrix = SlotReelStrip.buildMatrix(stopLeft, stopCenter, stopRight);
+        SlotFlasher.STOP_POSITIONS = new int[]{ stopLeft, stopCenter, stopRight };
+
+        // 5 линий выплат: средняя, верхняя, нижняя, диагональ ↘, диагональ ↗
         int[][] paylines = {
-            { matrix[1][0], matrix[1][1], matrix[1][2] }, // средняя строка (главная)
-            { matrix[0][0], matrix[0][1], matrix[0][2] }, // верхняя
-            { matrix[2][0], matrix[2][1], matrix[2][2] }, // нижняя
-            { matrix[0][0], matrix[1][1], matrix[2][2] }, // диагональ ↘
-            { matrix[2][0], matrix[1][1], matrix[0][2] }, // диагональ ↗
+            { matrix[1][0], matrix[1][1], matrix[1][2] },
+            { matrix[0][0], matrix[0][1], matrix[0][2] },
+            { matrix[2][0], matrix[2][1], matrix[2][2] },
+            { matrix[0][0], matrix[1][1], matrix[2][2] },
+            { matrix[2][0], matrix[1][1], matrix[0][2] },
         };
 
         double bet = 0;
@@ -271,9 +266,7 @@ public class NotifierRunForTrialGame implements Runnable {
         double totalPayout = 0;
         for (int[] line : paylines) {
             int sym = resolveLineSymbol(line);
-            if (sym >= 0) {
-                totalPayout += bet * multipliers[sym];
-            }
+            if (sym >= 0) totalPayout += bet * multipliers[sym];
         }
 
         boolean win = totalPayout > 0;
@@ -291,17 +284,6 @@ public class NotifierRunForTrialGame implements Runnable {
                 : YOUR_BET_IS_LOST_TRY_AGAIN_AND_YOU_WILL_BE_LUCKY;
 
         responseToBetSlot(msg, lotto, win ? 2 : 1);
-    }
-
-    /** Генерирует символ по взвешенному RNG. */
-    private int weightedRandom(int[] weights, int total) {
-        int r = random.nextInt(total);
-        int acc = 0;
-        for (int i = 0; i < weights.length; i++) {
-            acc += weights[i];
-            if (r < acc) return i;
-        }
-        return weights.length - 1;
     }
 
     /**
@@ -328,10 +310,15 @@ public class NotifierRunForTrialGame implements Runnable {
      */
     private void responseToBetSlot(String text, String lotto, int outcome) {
         com.samuilolegovich.view.SlotFlasher sf = SlotFlasher.SLOT_FLASHER;
-        if (sf != null) {
+        if (SlotFlasher.VISIBLE_ON_SCREEN && sf != null) {
             sf.stopGame(text, outcome == 2);
         } else {
-            WalletRepository.getInstance().notifyEvent(text, lotto, outcome);
+            int[] stops = SlotFlasher.STOP_POSITIONS;
+            com.samuilolegovich.view.SlotResult.PENDING_STOPS = stops != null ? stops.clone() : null;
+            com.samuilolegovich.view.SlotResult.MASSAGE = text;
+            com.samuilolegovich.view.SlotResult.IS_WIN  = outcome == 2;
+            WalletRepository.getInstance().notifyEvent(text, lotto,
+                    com.samuilolegovich.viewmodel.NavigationEvent.SLOT_RESULT);
         }
     }
 
@@ -355,8 +342,19 @@ public class NotifierRunForTrialGame implements Runnable {
                     WalletRepository.getInstance().notifyEvent(text, lotto, i);
                     break;
             }
+        } else if (i == 1 || i == 2) {
+            com.samuilolegovich.view.RouletteResult.PENDING_NUMBER = parseNumber(Flasher.NUMBER_BET);
+            com.samuilolegovich.view.RouletteResult.MASSAGE = text;
+            com.samuilolegovich.view.RouletteResult.IS_WIN  = i == 2;
+            WalletRepository.getInstance().notifyEvent(text, lotto,
+                    com.samuilolegovich.viewmodel.NavigationEvent.ROULETTE_RESULT);
         } else {
             WalletRepository.getInstance().notifyEvent(text, lotto, i);
         }
+    }
+
+    private static int parseNumber(String s) {
+        try { int n = Integer.parseInt(s); return (n >= 0 && n <= 36) ? n : 0; }
+        catch (Exception e) { return 0; }
     }
 }

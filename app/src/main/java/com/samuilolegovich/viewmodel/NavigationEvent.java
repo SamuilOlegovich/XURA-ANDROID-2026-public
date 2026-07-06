@@ -8,9 +8,11 @@ package com.samuilolegovich.viewmodel;
  * экран реферала), и какой текст/лотерейный номер передать туда.
  */
 public class NavigationEvent {
-    public static final int LOST = 1;
-    public static final int WIN = 2;
+    public static final int LOST        = 1;
+    public static final int WIN         = 2;
     public static final int YOUR_REFERRAL = 3;
+    public static final int SLOT_RESULT     = 4;
+    public static final int ROULETTE_RESULT = 5;
 
     public final int type;
     public final String message;
