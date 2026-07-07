@@ -362,6 +362,11 @@
     <string name="btn_sub_bengali">বাংলায় পরিবর্তন করুন</string>
 
     <string name="roulette_bet_history">ставка на рулетку</string>
+    <string name="roulette_won_history">рулетка: победа!</string>
+    <string name="roulette_lost_history">рулетка: проигрыш</string>
+    <string name="slot_bet_history">ставка: слот</string>
+    <string name="slot_won_history">слот: победа!</string>
+    <string name="slot_lost_history">слот: проигрыш</string>
     <string name="detail_bets_breakdown">ДЕТАЛИ СТАВОК</string>
     <string name="detail_full_address">Адрес</string>
     <string name="detail_dest_tag">Тег назначения</string>

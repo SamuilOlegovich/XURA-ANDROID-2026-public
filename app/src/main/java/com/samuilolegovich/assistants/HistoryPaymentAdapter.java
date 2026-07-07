@@ -25,8 +25,11 @@ import com.samuilolegovich.dto.HistoryPaymentDto;
 
 /**
  * Адаптер RecyclerView для списка истории платежей.
- * Раскрашивает и подписывает каждую строку по типу операции (ставка, выигрыш, реферал и т.д.),
- * различая входящие и исходящие переводы, и определяет иконку/цвет по тегу транзакции.
+ * Раскрашивает строки по типу операции:
+ *   - победа     → зелёный (иконка + метка + индикатор)
+ *   - проигрыш   → красный
+ *   - ставка     → золотой / циановый (по игре)
+ *   - прочее     → по направлению перевода
  */
 public class HistoryPaymentAdapter extends ListAdapter<HistoryPaymentDto, HistoryPaymentAdapter.ViewHolder> {
 
@@ -36,12 +39,10 @@ public class HistoryPaymentAdapter extends ListAdapter<HistoryPaymentDto, Histor
 
     private OnItemClickListener clickListener;
 
-    /** Задаёт обработчик нажатия на строку истории (используется для открытия деталей транзакции). */
     public void setOnItemClickListener(OnItemClickListener l) {
         this.clickListener = l;
     }
 
-    /** Правила сравнения элементов для DiffUtil — определяют, какие строки списка нужно перерисовать при обновлении. */
     private static final DiffUtil.ItemCallback<HistoryPaymentDto> DIFF_CALLBACK =
             new DiffUtil.ItemCallback<HistoryPaymentDto>() {
                 @Override
@@ -71,10 +72,14 @@ public class HistoryPaymentAdapter extends ListAdapter<HistoryPaymentDto, Histor
     private final String betOnHistory;
     private final String tagHistory;
     private final String rouletteBetHistory;
+    private final String rouletteWonHistory;
+    private final String rouletteLostHistory;
+    private final String slotBetHistory;
+    private final String slotWonHistory;
+    private final String slotLostHistory;
 
 
 
-    /** Загружает локализованные подписи типов операций один раз при создании адаптера, чтобы не делать это на каждый bind. */
     public HistoryPaymentAdapter(Context context) {
         super(DIFF_CALLBACK);
         Resources res = getResourcesForLocale(context);
@@ -91,11 +96,15 @@ public class HistoryPaymentAdapter extends ListAdapter<HistoryPaymentDto, Histor
         betOnHistory            = res.getString(R.string.bet_on_history);
         tagHistory              = res.getString(R.string.tag_history);
         rouletteBetHistory      = res.getString(R.string.roulette_bet_history);
+        rouletteWonHistory      = res.getString(R.string.roulette_won_history);
+        rouletteLostHistory     = res.getString(R.string.roulette_lost_history);
+        slotBetHistory          = res.getString(R.string.slot_bet_history);
+        slotWonHistory          = res.getString(R.string.slot_won_history);
+        slotLostHistory         = res.getString(R.string.slot_lost_history);
     }
 
 
 
-    /** Создаёт Resources с принудительно применённой локалью приложения (MainActivity.newLocale), а не системной. */
     private static Resources getResourcesForLocale(Context context) {
         Configuration config = context.getResources().getConfiguration();
         config.setLocale(MainActivity.newLocale);
@@ -104,7 +113,6 @@ public class HistoryPaymentAdapter extends ListAdapter<HistoryPaymentDto, Histor
 
 
 
-    /** Создаёт новый ViewHolder, раздувая разметку одной строки истории (R.layout.table). */
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -115,7 +123,6 @@ public class HistoryPaymentAdapter extends ListAdapter<HistoryPaymentDto, Histor
 
 
 
-    /** Заполняет строку истории данными транзакции: сумму, цвет, метку типа, адрес контрагента, время и иконку. */
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         HistoryPaymentDto item = getItem(position);
@@ -132,26 +139,21 @@ public class HistoryPaymentAdapter extends ListAdapter<HistoryPaymentDto, Histor
         holder.amount.setText(amt);
         holder.amount.setTextColor(amountColor);
 
-        // Единый цвет — иконка и метка всегда совпадают
-        int typeColor = getTypeColor(ctx, tag, incoming);
+        // Единый цвет для иконки, метки и индикатора
+        int typeColor = getTypeColor(ctx, tag);
 
-        // Метка типа операции
         holder.label.setText(getDisplayLabel(tag));
         holder.label.setTextColor(typeColor);
 
-        // Адрес контрагента — сокращаем до rXXXXX…XXXX
         holder.address.setText(truncateAddress(item.getAddress()));
 
-        // Время транзакции
         String time = item.getTime();
         holder.time.setText(time);
         holder.time.setVisibility(time != null && !time.isEmpty() ? View.VISIBLE : View.GONE);
 
-        // Иконка
-        holder.icon.setImageResource(getIconRes(tag, incoming));
+        holder.icon.setImageResource(getIconRes(tag));
         ImageViewCompat.setImageTintList(holder.icon, ColorStateList.valueOf(typeColor));
 
-        // Тап → детали
         holder.itemView.setOnClickListener(v -> {
             if (clickListener != null) clickListener.onItemClick(item);
         });
@@ -161,79 +163,118 @@ public class HistoryPaymentAdapter extends ListAdapter<HistoryPaymentDto, Histor
 
     // ─── Метка типа ──────────────────────────────────────────────────────────
 
-    /** Возвращает локализованную метку типа операции по тегу транзакции, без пробела в начале. */
     private String getDisplayLabel(String tag) {
         return processTag(tag).trim();
     }
 
-    /** Сопоставляет служебный тег транзакции (BET:, WIN, JKPT, REF: и т.д.) с человекочитаемым локализованным текстом. */
     private String processTag(String tag) {
-        if (tag.startsWith("RLT:"))  return " " + rouletteBetHistory;
-        if (tag.startsWith("BET:RED")) return " " + betOnRedHistory;
-        if (tag.startsWith("BET:BLK")) return " " + betOnBlackHistory;
+        // Слот: SLOT:{p0},{p1},{p2}:WIN|LOSE  или  SLOT:{ref} (ставка)
+        if (tag.startsWith("SLOT:")) {
+            if (tag.contains(",") && tag.endsWith(":WIN"))  return slotWonHistory;
+            if (tag.contains(",") && tag.endsWith(":LOSE")) return slotLostHistory;
+            return slotBetHistory;
+        }
+
+        // Рулетка: RLT:{num}:WIN|LOSE  или  RLT:{bets@}:{ref} (ставка)  или  RLT:LOTTO:...
+        if (tag.startsWith("RLT:")) {
+            if (tag.contains("LOTTO"))         return wonTheLottoHistory;
+            if (tag.endsWith(":WIN"))          return rouletteWonHistory;
+            if (tag.endsWith(":LOSE"))         return rouletteLostHistory;
+            if (tag.startsWith("BET:RED"))     return betOnRedHistory;
+            if (tag.startsWith("BET:BLK"))     return betOnBlackHistory;
+            return rouletteBetHistory;
+        }
+
+        if (tag.startsWith("BET:RED"))  return betOnRedHistory;
+        if (tag.startsWith("BET:BLK"))  return betOnBlackHistory;
 
         if (tag.startsWith("BET:N:")) {
             String[] parts = tag.split(":");
-            return " " + betOnHistory + " " + (parts.length > 2 ? parts[2] : "?");
+            return betOnHistory + " " + (parts.length > 2 ? parts[2] : "?");
         }
 
-        if (tag.equals("WIN")  || tag.startsWith("WIN:"))  return " " + betWonHistory;
-        if (tag.equals("LOSE") || tag.startsWith("LOSE:")) return " " + betLostHistory;
-        if (tag.equals("JKPT") || tag.startsWith("JKPT:")) return " " + wonTheLottoHistory;
-        if (tag.equals("DON")  || tag.startsWith("DON:"))  return " " + donationHistory;
-        if (tag.equals("RFD")  || tag.startsWith("RFD:"))  return " " + refundHistory;
-        if (tag.equals("REF"))                              return " " + referralOrderHistory;
-        if (tag.equals("REF:REC"))                         return " " + referralRecoveryHistory;
-        if (tag.startsWith("REF:"))                        return " " + referralHistory + " " + truncateAddress(tag.substring(4));
+        if (tag.equals("WIN")  || tag.startsWith("WIN:"))  return betWonHistory;
+        if (tag.equals("LOSE") || tag.startsWith("LOSE:")) return betLostHistory;
+        if (tag.equals("JKPT") || tag.startsWith("JKPT:")) return wonTheLottoHistory;
+        if (tag.equals("DON")  || tag.startsWith("DON:"))  return donationHistory;
+        if (tag.equals("RFD")  || tag.startsWith("RFD:"))  return refundHistory;
+        if (tag.equals("REF"))                             return referralOrderHistory;
+        if (tag.equals("REF:REC"))                         return referralRecoveryHistory;
+        if (tag.startsWith("REF:"))                        return referralHistory + " " + truncateAddress(tag.substring(4));
 
-        return " " + tagHistory + " " + tag;
+        return tagHistory + " " + tag;
     }
 
 
-    // ─── Единый цвет: иконка и метка всегда одного цвета ────────────────────
+    // ─── Единый цвет: иконка, метка и индикатор ──────────────────────────────
 
-    /** Определяет единый цвет для иконки и метки строки по тегу транзакции (или по направлению перевода как fallback). */
-    private int getTypeColor(Context ctx, String tag, boolean incoming) {
-        if (tag.equals("WIN")    || tag.startsWith("WIN:"))  return ContextCompat.getColor(ctx, R.color.xura_success);
-        if (tag.equals("LOSE")   || tag.startsWith("LOSE:")) return ContextCompat.getColor(ctx, R.color.xura_error);
-        if (tag.equals("JKPT")   || tag.startsWith("JKPT:")) return ContextCompat.getColor(ctx, R.color.xura_gold);
-        if (tag.startsWith("RLT:"))                         return incoming
-                ? ContextCompat.getColor(ctx, R.color.xura_purple)
-                : ContextCompat.getColor(ctx, R.color.xura_gold);
+    private int getTypeColor(Context ctx, String tag) {
+        // Слот
+        if (tag.startsWith("SLOT:")) {
+            if (tag.contains(",") && tag.endsWith(":WIN"))  return ContextCompat.getColor(ctx, R.color.xura_success);
+            if (tag.contains(",") && tag.endsWith(":LOSE")) return ContextCompat.getColor(ctx, R.color.xura_purple);
+            return ContextCompat.getColor(ctx, R.color.xura_magenta); // ставка в слот — цвет кнопки слота
+        }
+
+        // Рулетка и прочие RLT
+        if (tag.startsWith("RLT:")) {
+            if (tag.contains("LOTTO"))    return ContextCompat.getColor(ctx, R.color.xura_gold);
+            if (tag.endsWith(":WIN"))     return ContextCompat.getColor(ctx, R.color.xura_success);
+            if (tag.endsWith(":LOSE"))    return ContextCompat.getColor(ctx, R.color.xura_purple);
+            return ContextCompat.getColor(ctx, R.color.xura_gold); // ставка на рулетку — золотая
+        }
+
         if (tag.startsWith("BET:RED"))                        return ContextCompat.getColor(ctx, R.color.xura_pink);
         if (tag.startsWith("BET:BLK"))                        return ContextCompat.getColor(ctx, R.color.xura_text_secondary);
         if (tag.startsWith("BET:N:"))                         return ContextCompat.getColor(ctx, R.color.xura_cyan);
-        if (tag.equals("RFD")    || tag.startsWith("RFD:"))   return ContextCompat.getColor(ctx, R.color.xura_cyan);
-        if (tag.equals("DON")    || tag.startsWith("DON:"))   return ContextCompat.getColor(ctx, R.color.xura_gold);
-        if (tag.equals("REF")    || tag.startsWith("REF:"))   return ContextCompat.getColor(ctx, R.color.xura_gold);
-        return incoming
-                ? ContextCompat.getColor(ctx, R.color.xura_cyan)
-                : ContextCompat.getColor(ctx, R.color.xura_pink);
+
+        if (tag.equals("WIN")  || tag.startsWith("WIN:"))     return ContextCompat.getColor(ctx, R.color.xura_success);
+        if (tag.equals("LOSE") || tag.startsWith("LOSE:"))    return ContextCompat.getColor(ctx, R.color.xura_purple);
+        if (tag.equals("JKPT") || tag.startsWith("JKPT:"))    return ContextCompat.getColor(ctx, R.color.xura_gold);
+        if (tag.equals("RFD")  || tag.startsWith("RFD:"))     return ContextCompat.getColor(ctx, R.color.xura_cyan);
+        if (tag.equals("DON")  || tag.startsWith("DON:"))     return ContextCompat.getColor(ctx, R.color.xura_gold);
+        if (tag.equals("REF")  || tag.startsWith("REF:"))     return ContextCompat.getColor(ctx, R.color.xura_gold);
+
+        return ContextCompat.getColor(ctx, R.color.xura_text_secondary);
     }
 
 
     // ─── Иконка ──────────────────────────────────────────────────────────────
 
-    /** Подбирает drawable-иконку для строки истории по тегу транзакции (или по направлению перевода как fallback). */
-    private int getIconRes(String tag, boolean incoming) {
-        if (tag.equals("WIN")    || tag.startsWith("WIN:"))  return R.drawable.ic_check_circle;
-        if (tag.equals("LOSE")   || tag.startsWith("LOSE:")) return R.drawable.ic_lost_x;
-        if (tag.equals("JKPT")   || tag.startsWith("JKPT:")) return R.drawable.ic_bolt;
-        if (tag.startsWith("RLT:"))                         return R.drawable.ic_roulette_outline;
+    private int getIconRes(String tag) {
+        // Слот
+        if (tag.startsWith("SLOT:")) {
+            if (tag.contains(",") && tag.endsWith(":WIN"))  return R.drawable.ic_check_circle;
+            if (tag.contains(",") && tag.endsWith(":LOSE")) return R.drawable.ic_lost_x;
+            return R.drawable.ic_slot_machine_outline;
+        }
+
+        // Рулетка
+        if (tag.startsWith("RLT:")) {
+            if (tag.contains("LOTTO"))   return R.drawable.ic_bolt;
+            if (tag.endsWith(":WIN"))    return R.drawable.ic_check_circle;
+            if (tag.endsWith(":LOSE"))   return R.drawable.ic_lost_x;
+            return R.drawable.ic_roulette_outline;
+        }
+
         if (tag.startsWith("BET:RED"))                        return R.drawable.ic_favorite;
         if (tag.startsWith("BET:BLK"))                        return R.drawable.ic_clubs;
         if (tag.startsWith("BET:N:"))                         return R.drawable.ic_target;
-        if (tag.equals("RFD")    || tag.startsWith("RFD:"))   return R.drawable.ic_restore;
-        if (tag.equals("DON")    || tag.startsWith("DON:"))   return R.drawable.ic_favorite;
+
+        if (tag.equals("WIN")  || tag.startsWith("WIN:"))     return R.drawable.ic_check_circle;
+        if (tag.equals("LOSE") || tag.startsWith("LOSE:"))    return R.drawable.ic_lost_x;
+        if (tag.equals("JKPT") || tag.startsWith("JKPT:"))    return R.drawable.ic_bolt;
+        if (tag.equals("RFD")  || tag.startsWith("RFD:"))     return R.drawable.ic_restore;
+        if (tag.equals("DON")  || tag.startsWith("DON:"))     return R.drawable.ic_favorite;
         if (tag.equals("REF:REC"))                            return R.drawable.ic_referral_restore;
-        if (tag.equals("REF")    || tag.startsWith("REF:"))   return R.drawable.ic_referral;
-        return incoming ? R.drawable.ic_receive_arrow : R.drawable.ic_send_arrow;
+        if (tag.equals("REF")  || tag.startsWith("REF:"))     return R.drawable.ic_referral;
+
+        return R.drawable.ic_receive_arrow;
     }
 
 
     // ─── Утилиты ─────────────────────────────────────────────────────────────
 
-    /** Сокращает длинный XRPL-адрес до вида "rXXXXXX…XXXX" для компактного отображения в строке списка. */
     private String truncateAddress(String addr) {
         if (addr == null || addr.length() <= 14) return addr;
         return addr.substring(0, 6) + "…" + addr.substring(addr.length() - 4);
@@ -241,7 +282,6 @@ public class HistoryPaymentAdapter extends ListAdapter<HistoryPaymentDto, Histor
 
 
 
-    /** Держатель View одной строки истории платежей: иконка, метка типа, адрес, сумма и время. */
     static class ViewHolder extends RecyclerView.ViewHolder {
         final ImageView icon;
         final TextView  label;
@@ -249,14 +289,13 @@ public class HistoryPaymentAdapter extends ListAdapter<HistoryPaymentDto, Histor
         final TextView  amount;
         final TextView  time;
 
-        /** Находит и кэширует View-компоненты строки по их id из разметки R.layout.table. */
         ViewHolder(@NonNull View itemView) {
             super(itemView);
-            icon    = itemView.findViewById(R.id.ic_tx_type);
-            label   = itemView.findViewById(R.id.tx_label);
-            address = itemView.findViewById(R.id.address);
-            amount  = itemView.findViewById(R.id.amount_field);
-            time    = itemView.findViewById(R.id.tx_time);
+            icon      = itemView.findViewById(R.id.ic_tx_type);
+            label     = itemView.findViewById(R.id.tx_label);
+            address   = itemView.findViewById(R.id.address);
+            amount    = itemView.findViewById(R.id.amount_field);
+            time      = itemView.findViewById(R.id.tx_time);
         }
     }
 }

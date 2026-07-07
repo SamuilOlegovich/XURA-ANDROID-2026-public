@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="28dp"
+    android:height="24dp"
+    android:viewportWidth="28"
+    android:viewportHeight="24">
+
+    <!-- Корпус -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="1.5"
+        android:pathData="M2,3 Q2,1 4,1 L22,1 Q24,1 24,3 L24,21 Q24,23 22,23 L4,23 Q2,23 2,21 Z" />
+
+    <!-- Шапка (заливка одним цветом) -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:strokeColor="#00000000"
+        android:pathData="M2,3 Q2,1 4,1 L22,1 Q24,1 24,3 L24,6 L2,6 Z" />
+
+    <!-- Барабан левый -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="1.2"
+        android:pathData="M3.5,7.5 L8,7.5 L8,16.5 L3.5,16.5 Z" />
+
+    <!-- Барабан центральный -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="1.2"
+        android:pathData="M10,7.5 L14.5,7.5 L14.5,16.5 L10,16.5 Z" />
+
+    <!-- Барабан правый -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="1.2"
+        android:pathData="M16.5,7.5 L21,7.5 L21,16.5 L16.5,16.5 Z" />
+
+    <!-- Линия выплат по центру барабанов -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="0.8"
+        android:pathData="M2,12 L24,12" />
+
+    <!-- Рычаг -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="1.4"
+        android:strokeLineCap="round"
+        android:pathData="M24,9.5 L26.5,9.5 L26.5,15.5" />
+
+    <!-- Шар рычага -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:strokeColor="#00000000"
+        android:pathData="M25.3,15.5 A1.2,1.2 0 0 1 27.7,15.5 A1.2,1.2 0 0 1 25.3,15.5 Z" />
+
+    <!-- Монетоприёмник -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="1.2"
+        android:strokeLineCap="round"
+        android:pathData="M8,19.5 L18.5,19.5" />
+
+</vector>

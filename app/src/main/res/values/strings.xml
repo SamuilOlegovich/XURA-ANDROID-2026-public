@@ -165,6 +165,11 @@
     <string name="refund_history">refund</string>
     <string name="tag_history">tag:</string>
     <string name="roulette_bet_history">roulette bet</string>
+    <string name="roulette_won_history">roulette won!</string>
+    <string name="roulette_lost_history">roulette lost</string>
+    <string name="slot_bet_history">slot bet</string>
+    <string name="slot_won_history">slot won!</string>
+    <string name="slot_lost_history">slot lost</string>
     <string name="detail_bets_breakdown">BETS BREAKDOWN</string>
     <string name="detail_full_address">Address</string>
     <string name="detail_dest_tag">Destination tag</string>

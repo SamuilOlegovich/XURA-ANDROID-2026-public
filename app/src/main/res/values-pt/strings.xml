@@ -359,6 +359,11 @@
     <string name="dev_network_switched_mainnet">Alternado para Mainnet. Reinício recomendado.</string>
     <string name="dev_network_switched_testnet">Alternado para Testnet. Reinício recomendado.</string>
     <string name="roulette_bet_history">aposta roleta</string>
+    <string name="roulette_won_history">roleta ganha!</string>
+    <string name="roulette_lost_history">roleta perdida</string>
+    <string name="slot_bet_history">aposta slot</string>
+    <string name="slot_won_history">slot ganho!</string>
+    <string name="slot_lost_history">slot perdido</string>
     <string name="detail_bets_breakdown">DETALHES DAS APOSTAS</string>
     <string name="detail_full_address">Endereço</string>
     <string name="detail_dest_tag">Tag de destino</string>

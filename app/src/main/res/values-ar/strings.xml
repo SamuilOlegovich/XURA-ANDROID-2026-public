@@ -355,6 +355,11 @@
     <string name="dev_network_switched_mainnet">تم التبديل إلى الشبكة الرئيسية. يُنصح بإعادة التشغيل.</string>
     <string name="dev_network_switched_testnet">تم التبديل إلى شبكة الاختبار. يُنصح بإعادة التشغيل.</string>
     <string name="roulette_bet_history">رهان الروليت</string>
+    <string name="roulette_won_history">فزت بالروليت!</string>
+    <string name="roulette_lost_history">خسرت الروليت</string>
+    <string name="slot_bet_history">رهان السلوت</string>
+    <string name="slot_won_history">فزت بالسلوت!</string>
+    <string name="slot_lost_history">خسرت السلوت</string>
     <string name="detail_bets_breakdown">تفاصيل الرهانات</string>
     <string name="detail_full_address">العنوان</string>
     <string name="detail_dest_tag">علامة الوجهة</string>

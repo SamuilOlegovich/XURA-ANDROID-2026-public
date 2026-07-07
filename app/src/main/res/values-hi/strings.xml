@@ -355,6 +355,11 @@
     <string name="dev_network_switched_mainnet">मेननेट पर स्विच किया। पुनः आरंभ अनुशंसित।</string>
     <string name="dev_network_switched_testnet">टेस्टनेट पर स्विच किया। पुनः आरंभ अनुशंसित।</string>
     <string name="roulette_bet_history">रूलेट दांव</string>
+    <string name="roulette_won_history">रूलेट जीता!</string>
+    <string name="roulette_lost_history">रूलेट हारा</string>
+    <string name="slot_bet_history">स्लॉट दांव</string>
+    <string name="slot_won_history">स्लॉट जीता!</string>
+    <string name="slot_lost_history">स्लॉट हारा</string>
     <string name="detail_bets_breakdown">दांव का विवरण</string>
     <string name="detail_full_address">पता</string>
     <string name="detail_dest_tag">डेस्टिनेशन टैग</string>

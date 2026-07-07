@@ -355,6 +355,11 @@
     <string name="dev_network_switched_mainnet">Basculé vers Mainnet. Redémarrage recommandé.</string>
     <string name="dev_network_switched_testnet">Basculé vers Testnet. Redémarrage recommandé.</string>
     <string name="roulette_bet_history">mise roulette</string>
+    <string name="roulette_won_history">roulette gagnée!</string>
+    <string name="roulette_lost_history">roulette perdue</string>
+    <string name="slot_bet_history">mise slot</string>
+    <string name="slot_won_history">slot gagné!</string>
+    <string name="slot_lost_history">slot perdu</string>
     <string name="detail_bets_breakdown">DÉTAIL DES MISES</string>
     <string name="detail_full_address">Adresse</string>
     <string name="detail_dest_tag">Tag de destination</string>

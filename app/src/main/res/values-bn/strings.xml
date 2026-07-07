@@ -359,6 +359,11 @@
     <string name="dev_network_switched_mainnet">মেইননেটে পরিবর্তিত। পুনরায় চালু করার পরামর্শ।</string>
     <string name="dev_network_switched_testnet">টেস্টনেটে পরিবর্তিত। পুনরায় চালু করার পরামর্শ।</string>
     <string name="roulette_bet_history">রুলেট বাজি</string>
+    <string name="roulette_won_history">রুলেট জিতেছ!</string>
+    <string name="roulette_lost_history">রুলেট হেরেছ</string>
+    <string name="slot_bet_history">স্লট বাজি</string>
+    <string name="slot_won_history">স্লট জিতেছ!</string>
+    <string name="slot_lost_history">স্লট হেরেছ</string>
     <string name="detail_bets_breakdown">বাজির বিবরণ</string>
     <string name="detail_full_address">ঠিকানা</string>
     <string name="detail_dest_tag">গন্তব্য ট্যাগ</string>

@@ -16,6 +16,7 @@ import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.lifecycle.ViewModelProvider;
@@ -99,6 +100,9 @@ public class SlotGame extends BaseActivity {
     private ChipGroup       chipGroup;
     private TextView        tvBetInputError;
 
+    private ImageView spinIcon;
+    private View      spinProgress;
+
     private SlotReelView reelPreviewLeft;
     private SlotReelView reelPreviewCenter;
     private SlotReelView reelPreviewRight;
@@ -153,6 +157,9 @@ public class SlotGame extends BaseActivity {
         sliderBet            = findViewById(R.id.slider_bet);
         chipGroup            = findViewById(R.id.chip_group_amounts);
         tvBetInputError      = findViewById(R.id.tv_bet_input_error);
+
+        spinIcon     = findViewById(R.id.spin_icon);
+        spinProgress = findViewById(R.id.spin_progress);
 
         reelPreviewLeft   = findViewById(R.id.reel_preview_left);
         reelPreviewCenter = findViewById(R.id.reel_preview_center);
@@ -296,10 +303,19 @@ public class SlotGame extends BaseActivity {
     }
 
     private void onSpinClicked() {
+        btnSpin.setClickable(false);
+        spinIcon.setVisibility(View.GONE);
+        spinProgress.setVisibility(View.VISIBLE);
         String betStr = resolveCurrentBet();
         Flasher.TEST_MODE_ENUM   = TestModeEnum.SLOT_GAME;
         Flasher.TEST_SAND_AMOUNT = betStr;
         viewModel.placeBet(betStr, myReferral);
+    }
+
+    private void resetSpinButton() {
+        btnSpin.setClickable(true);
+        spinIcon.setVisibility(View.VISIBLE);
+        spinProgress.setVisibility(View.GONE);
     }
 
     private String resolveCurrentBet() {
@@ -323,6 +339,7 @@ public class SlotGame extends BaseActivity {
 
         viewModel.getError().observe(this, err -> {
             if (err == null) return;
+            resetSpinButton();
             showError(errorText(err));
         });
     }
@@ -379,6 +396,7 @@ public class SlotGame extends BaseActivity {
         preferences = PrefsHelper.get(this);
         applyBetInputStyle();
         viewModel.loadBalance();
+        resetSpinButton();
         startPreviewReels();
 
         soundPool     = new GameSoundPool(this);
