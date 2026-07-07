@@ -56,6 +56,7 @@ public class SlotResult extends BaseActivity {
     private View            llContinueBet, btnBackToGame;
 
     private MediaPlayer          spinMediaPlayer;
+    private MediaPlayer          resultMediaPlayer;
     private AudioFocusRequest    audioFocusRequest;
     private Handler              countdownHandler;
     private Runnable             countdownRunnable;
@@ -169,6 +170,8 @@ public class SlotResult extends BaseActivity {
     private void showResultUi() {
         stopSound();
         boolean win = IS_WIN;
+        resultMediaPlayer = MediaPlayer.create(this, win ? R.raw.win : R.raw.lost);
+        if (resultMediaPlayer != null && AudioHelper.isSoundEnabled(this)) resultMediaPlayer.start();
 
         if (win) {
             reelLeft.setHighlightMiddle(true);
@@ -291,6 +294,7 @@ public class SlotResult extends BaseActivity {
         reelRight.cancelAnim();
         paylineView.reset();
         stopSound();
+        if (resultMediaPlayer != null) resultMediaPlayer.stop();
         super.onBackPressed();
     }
 
@@ -309,6 +313,7 @@ public class SlotResult extends BaseActivity {
         reelRight.cancelAnim();
         paylineView.reset();
         stopSound();
+        if (resultMediaPlayer != null && resultMediaPlayer.isPlaying()) resultMediaPlayer.pause();
         AudioHelper.abandonFocus(this, audioFocusRequest);
     }
 
@@ -317,6 +322,7 @@ public class SlotResult extends BaseActivity {
         super.onDestroy();
         AudioHelper.abandonFocus(this, audioFocusRequest);
         if (spinMediaPlayer != null) { spinMediaPlayer.release(); spinMediaPlayer = null; }
+        if (resultMediaPlayer != null) { resultMediaPlayer.release(); resultMediaPlayer = null; }
         PENDING_STOPS = null;
     }
 }

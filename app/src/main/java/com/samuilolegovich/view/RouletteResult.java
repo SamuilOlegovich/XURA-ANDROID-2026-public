@@ -50,6 +50,7 @@ public class RouletteResult extends BaseActivity {
     private View              btnBackToGame, llContinueBet;
 
     private MediaPlayer       spinPlayer;
+    private MediaPlayer       resultPlayer;
     private AudioFocusRequest audioFocusRequest;
     private Handler           countdownHandler;
     private Runnable          countdownRunnable;
@@ -62,11 +63,17 @@ public class RouletteResult extends BaseActivity {
         switch (change) {
             case AudioManager.AUDIOFOCUS_LOSS:
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
-                if (spinPlayer.isPlaying()) spinPlayer.pause(); break;
+                if (spinPlayer.isPlaying()) spinPlayer.pause();
+                if (resultPlayer != null && resultPlayer.isPlaying()) resultPlayer.pause();
+                break;
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
-                spinPlayer.setVolume(0.1f, 0.1f); break;
+                spinPlayer.setVolume(0.1f, 0.1f);
+                if (resultPlayer != null) resultPlayer.setVolume(0.1f, 0.1f);
+                break;
             case AudioManager.AUDIOFOCUS_GAIN:
-                spinPlayer.setVolume(1f, 1f); break;
+                spinPlayer.setVolume(1f, 1f);
+                if (resultPlayer != null) resultPlayer.setVolume(1f, 1f);
+                break;
         }
     };
 
@@ -128,6 +135,8 @@ public class RouletteResult extends BaseActivity {
     private void showGameResult(int number) {
         stopSound();
         boolean win = IS_WIN;
+        resultPlayer = MediaPlayer.create(this, win ? R.raw.win : R.raw.lost);
+        if (resultPlayer != null && AudioHelper.isSoundEnabled(this)) resultPlayer.start();
 
         wheelView.setCenterColor(sectorColor(number));
 
@@ -231,6 +240,7 @@ public class RouletteResult extends BaseActivity {
         uiHandler.removeCallbacksAndMessages(null);
         if (wheelView != null) wheelView.stopSpinning();
         stopSound();
+        if (resultPlayer != null) resultPlayer.stop();
         super.onBackPressed();
     }
 
@@ -246,6 +256,7 @@ public class RouletteResult extends BaseActivity {
         uiHandler.removeCallbacksAndMessages(null);
         if (wheelView != null) wheelView.stopSpinning();
         stopSound();
+        if (resultPlayer != null && resultPlayer.isPlaying()) resultPlayer.pause();
         AudioHelper.abandonFocus(this, audioFocusRequest);
     }
 
@@ -254,6 +265,7 @@ public class RouletteResult extends BaseActivity {
         super.onDestroy();
         AudioHelper.abandonFocus(this, audioFocusRequest);
         if (spinPlayer != null) { spinPlayer.release(); spinPlayer = null; }
+        if (resultPlayer != null) { resultPlayer.release(); resultPlayer = null; }
         PENDING_NUMBER = 0;
     }
 }

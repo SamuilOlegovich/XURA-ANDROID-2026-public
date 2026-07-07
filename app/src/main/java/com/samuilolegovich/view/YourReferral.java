@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -13,6 +14,7 @@ import com.samuilolegovich.BaseActivity;
 import com.samuilolegovich.MainActivity;
 import com.samuilolegovich.R;
 import com.samuilolegovich.enums.StringEnum;
+import com.samuilolegovich.utils.AudioHelper;
 import com.samuilolegovich.utils.PrefsHelper;
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -31,6 +33,7 @@ public class YourReferral extends BaseActivity {
 
     private String CODE_COPIED_TO_PHONE_BUFFER;
 
+    private MediaPlayer winMediaPlayer;
 
     private ClipboardManager clipboardManager;
     private ClipData clipData;
@@ -54,6 +57,8 @@ public class YourReferral extends BaseActivity {
         listeners();
         goText();
         setReferralForApp(CODE);
+        winMediaPlayer = MediaPlayer.create(this, R.raw.win);
+        if (winMediaPlayer != null && AudioHelper.isSoundEnabled(this)) winMediaPlayer.start();
     }
 
 
@@ -103,9 +108,21 @@ public class YourReferral extends BaseActivity {
     }
 
 
-    /** При нажатии на кнопку "назад" возвращается на предыдущий экран. */
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (winMediaPlayer != null && winMediaPlayer.isPlaying()) winMediaPlayer.pause();
+    }
+
     @Override
     public void onBackPressed() {
+        if (winMediaPlayer != null) { try { winMediaPlayer.stop(); } catch (Exception ignored) {} }
         super.onBackPressed();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (winMediaPlayer != null) { winMediaPlayer.release(); winMediaPlayer = null; }
     }
 }

@@ -85,6 +85,7 @@ public class SlotFlasher extends BaseActivity {
     private View btnBackToGame;
 
     private MediaPlayer spinMediaPlayer;
+    private MediaPlayer resultMediaPlayer;
     private AudioFocusRequest audioFocusRequest;
     private BroadcastReceiver noisyReceiver;
 
@@ -93,11 +94,17 @@ public class SlotFlasher extends BaseActivity {
         switch (focusChange) {
             case AudioManager.AUDIOFOCUS_LOSS:
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
-                if (spinMediaPlayer.isPlaying()) spinMediaPlayer.pause(); break;
+                if (spinMediaPlayer.isPlaying()) spinMediaPlayer.pause();
+                if (resultMediaPlayer != null && resultMediaPlayer.isPlaying()) resultMediaPlayer.pause();
+                break;
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
-                spinMediaPlayer.setVolume(0.1f, 0.1f); break;
+                spinMediaPlayer.setVolume(0.1f, 0.1f);
+                if (resultMediaPlayer != null) resultMediaPlayer.setVolume(0.1f, 0.1f);
+                break;
             case AudioManager.AUDIOFOCUS_GAIN:
-                spinMediaPlayer.setVolume(1f, 1f); break;
+                spinMediaPlayer.setVolume(1f, 1f);
+                if (resultMediaPlayer != null) resultMediaPlayer.setVolume(1f, 1f);
+                break;
         }
     };
 
@@ -283,6 +290,9 @@ public class SlotFlasher extends BaseActivity {
                 uiHandler.postDelayed(() -> paylineView.showWinLines(pendingMatrix), 350);
             }
         }
+
+        resultMediaPlayer = MediaPlayer.create(this, win ? R.raw.win : R.raw.lost);
+        if (resultMediaPlayer != null && AudioHelper.isSoundEnabled(this)) resultMediaPlayer.start();
 
         tvResultTitle.setText(win ? STR_BET_WON : STR_BET_LOST);
         tvResultTitle.setVisibility(View.VISIBLE);
@@ -480,6 +490,7 @@ public class SlotFlasher extends BaseActivity {
         reelRight.cancelAnim();
         paylineView.reset();
         stopSound();
+        if (resultMediaPlayer != null && resultMediaPlayer.isPlaying()) resultMediaPlayer.pause();
         AudioHelper.abandonFocus(this, audioFocusRequest);
         AudioHelper.unregisterNoisyReceiver(this, noisyReceiver);
     }
@@ -493,6 +504,7 @@ public class SlotFlasher extends BaseActivity {
         reelCenter.cancelAnim();
         reelRight.cancelAnim();
         stopSound();
+        if (resultMediaPlayer != null) { resultMediaPlayer.stop(); }
         super.onBackPressed();
     }
 
@@ -502,6 +514,7 @@ public class SlotFlasher extends BaseActivity {
         AudioHelper.abandonFocus(this, audioFocusRequest);
         AudioHelper.unregisterNoisyReceiver(this, noisyReceiver);
         if (spinMediaPlayer != null) { spinMediaPlayer.release(); spinMediaPlayer = null; }
+        if (resultMediaPlayer != null) { resultMediaPlayer.release(); resultMediaPlayer = null; }
         SLOT_FLASHER    = null;
         STOP_POSITIONS  = null;
         RESULT_MATRIX   = null;
