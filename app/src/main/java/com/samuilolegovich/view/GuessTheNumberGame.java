@@ -66,7 +66,7 @@ public class GuessTheNumberGame extends BaseActivity {
     private static final String STYLE_CHIPS  = "chips";
     private static final String STYLE_SLIDER = "slider";
 
-    private static final int MAX_BET_TENTHS     = 360; // 36.0 XRP × 10
+    private static final int MAX_BET_TENTHS     = 1000; // 100.0 XRP × 10
     private static final int DEFAULT_BET_TENTHS = 10;  // 1.0 XRP
 
     private String GUESSED_NUMBER_SHOULD_NOT_BE_LESS_THAN;
