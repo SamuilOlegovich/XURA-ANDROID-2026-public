@@ -51,29 +51,31 @@ The gaming logic (Roulette, Guess the Color, Guess the Number, Slot Machine) req
 </p>
 
 <p align="center">
-  <em>Game selection · Guess the Color · Guess the Number · Roulette · Transaction history</em>
+  <em>Game selection (4 games) · Guess the Color · Guess the Number · Roulette · Transaction history</em>
 </p>
 
 <p align="center">
-  <img src="screenshots/33_roulette_wheel.png" width="18%" alt="Roulette Wheel"/>
-  <img src="screenshots/34_bet_won.png"        width="18%" alt="Bet Won"/>
-  <img src="screenshots/35_bet_lost.png"       width="18%" alt="Bet Lost"/>
+  <img src="screenshots/37_slot_game.png"       width="18%" alt="Slot Machine"/>
+  <img src="screenshots/39_slot_game_reels.png" width="18%" alt="Slot Machine Reels"/>
+  <img src="screenshots/33_roulette_wheel.png"  width="18%" alt="Roulette Wheel"/>
+  <img src="screenshots/34_bet_won.png"         width="18%" alt="Bet Won"/>
+  <img src="screenshots/35_bet_lost.png"        width="18%" alt="Bet Lost"/>
 </p>
 
 <p align="center">
-  <em>Roulette wheel (waiting for result) · BET WON · BET LOST</em>
+  <em>Slot Machine (symbols + chips) · Slot reels · Roulette wheel · BET WON · BET LOST</em>
 </p>
 
 <p align="center">
   <img src="screenshots/18_settings.png"              width="18%" alt="Settings"/>
+  <img src="screenshots/38_settings_vibration.png"    width="18%" alt="Settings Vibration"/>
   <img src="screenshots/19_select_language.png"       width="18%" alt="Language"/>
   <img src="screenshots/28_referral_enter.png"        width="18%" alt="Enter Referral"/>
-  <img src="screenshots/30_your_referral.png"         width="18%" alt="Your Referral"/>
   <img src="screenshots/32_security_root_warning.png" width="18%" alt="Security"/>
 </p>
 
 <p align="center">
-  <em>Settings · 10 languages · Referral system · Root/tamper detection</em>
+  <em>Settings (top) · Settings: Sound / Animations / Vibration · 10 languages · Referral · Root detection</em>
 </p>
 
 ---
