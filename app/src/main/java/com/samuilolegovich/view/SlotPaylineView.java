@@ -45,7 +45,7 @@ public class SlotPaylineView extends View {
         0xFFFF40C0, // диаг ↗      — малиновый
     };
 
-    private static final int[]    MULTIPLIERS = { 2, 5, 10, 20, 50, 250, 0 };
+    private static final int[]    MULTIPLIERS = { 2, 5, 10, 20, 50, 100, 0 };
     private static final String[] SYM_LABEL   = { "XRP","RKT","MOON","DIA","WHAL","JKPT","WILD" };
 
     private final Paint glowPaint = new Paint(Paint.ANTI_ALIAS_FLAG);

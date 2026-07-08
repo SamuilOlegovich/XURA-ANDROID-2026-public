@@ -241,7 +241,7 @@ public class NotifierRunForTrialGame implements Runnable {
      * проверяет 5 линий выплат, рассчитывает выигрыш и передаёт результат в SlotFlasher.
      */
     void calculateForSlot() {
-        int[] multipliers = { 2, 5, 10, 20, 50, 250, 0 };
+        int[] multipliers = { 2, 5, 10, 20, 50, 100, 0 };
 
         // Стоп-позиции (0–83) для каждого барабана — вероятность символов задаётся стрипом
         int stopLeft   = random.nextInt(SlotReelStrip.LENGTH);

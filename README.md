@@ -155,7 +155,7 @@ Every winning payout is sent directly back to your wallet address — no withdra
 | Guess the Color | Pick Red or Black | **×2** |
 | Guess the Number | Pick 1–36 | **×36** |
 | European Roulette | Full table (straight, red/black, odd/even, dozens, columns) | **×2 – ×36** |
-| Slot Machine | 3-reel, 7 symbols including Wild; win on middle payline | **×2 – ×10** |
+| Slot Machine | 3-reel, 7 symbols including Wild; win on middle payline | **×2 – ×100** |
 
 All bets are sent as real XRPL transactions with a structured memo (`BET:R:…`). The server responds with a signed payment and a memo (`WIN:N` or `LOSE:N`) that the client verifies on-chain.
 

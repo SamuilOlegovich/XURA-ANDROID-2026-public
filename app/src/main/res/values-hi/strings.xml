@@ -414,10 +414,10 @@
     <string name="bet_style_slider">स्लाइडर +/−</string>
 
     <string name="name_slot">स्लॉट मशीन</string>
-    <string name="game_slot_subtitle">3 रील · ×250 जैकपॉट</string>
+    <string name="game_slot_subtitle">3 रील · ×100 जैकपॉट</string>
     <string name="slot_spin_button">स्पिन</string>
     <string name="slot_spin_subtitle">दांव लगाएं और रीलें घुमाएं</string>
     <string name="slot_bet_hint">दांव राशि (XRP)</string>
     <string name="slot_rules_title">स्लॉट नियम</string>
-    <string name="slot_rules_content"><![CDATA[<font color="#D020A0"><b>कैसे खेलें</b></font><br><br>3 रीलें घुमाएं और <font color="#D020A0"><b>मध्य पेलाइन</b></font> पर प्रतीक मिलाएं।<br>Wild (≋) किसी भी प्रतीक की जगह ले सकता है।<br><br><font color="#D020A0"><b>प्रतीक और गुणक</b></font><br><br><font color="#00D4FF">XRP</font> × XRP = <b>×2</b><br><font color="#4080FF">रॉकेट</font> × रॉकेट = <b>×5</b><br><font color="#9090FF">चंद्रमा</font> × चंद्रमा = <b>×10</b><br><font color="#40D0FF">हीरा</font> × हीरा = <b>×20</b><br><font color="#9020D0">व्हेल</font> × व्हेल = <b>×50</b><br><font color="#FFB000">★ जैकपॉट</font> × जैकपॉट = <b>×250</b><br><br><font color="#D020A0"><b>सीमाएं</b></font><br>न्यूनतम दांव: <font color="#D020A0">0.1 XRP</font><br>अधिकतम दांव: <font color="#D020A0">100 XRP</font><br><br><font color="#555577"><i>जिम्मेदारी से खेलें। 18+।</i></font>]]></string>
+    <string name="slot_rules_content"><![CDATA[<font color="#D020A0"><b>कैसे खेलें</b></font><br><br>3 रीलें घुमाएं और <font color="#D020A0"><b>मध्य पेलाइन</b></font> पर प्रतीक मिलाएं।<br>Wild (≋) किसी भी प्रतीक की जगह ले सकता है।<br><br><font color="#D020A0"><b>प्रतीक और गुणक</b></font><br><br><font color="#00D4FF">XRP</font> × XRP = <b>×2</b><br><font color="#4080FF">रॉकेट</font> × रॉकेट = <b>×5</b><br><font color="#9090FF">चंद्रमा</font> × चंद्रमा = <b>×10</b><br><font color="#40D0FF">हीरा</font> × हीरा = <b>×20</b><br><font color="#9020D0">व्हेल</font> × व्हेल = <b>×50</b><br><font color="#FFB000">★ जैकपॉट</font> × जैकपॉट = <b>×100</b><br><br><font color="#D020A0"><b>सीमाएं</b></font><br>न्यूनतम दांव: <font color="#D020A0">0.1 XRP</font><br>अधिकतम दांव: <font color="#D020A0">100 XRP</font><br><br><font color="#555577"><i>जिम्मेदारी से खेलें। 18+।</i></font>]]></string>
 </resources>
