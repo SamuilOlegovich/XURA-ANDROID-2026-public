@@ -53,6 +53,10 @@ public class SlotReelView extends View {
 
     private ValueAnimator activeAnimator;
     private boolean highlightMiddle = false;
+    private Runnable onTickListener;
+    private int lastTopIdx = Integer.MIN_VALUE;
+
+    public void setOnTickListener(Runnable listener) { onTickListener = listener; }
 
     private final Paint bgPaint     = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint glyphPaint  = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -114,6 +118,12 @@ public class SlotReelView extends View {
         float frac = scrollPx % cellPx;
         // Index of the symbol that is at the very top of the view (may be partially off-screen)
         int topIdx = (int) Math.floor(scrollPx / cellPx);
+
+        // Стреляем тик каждый раз когда topIdx меняется (= новый символ вошёл в барабан)
+        if (topIdx != lastTopIdx && lastTopIdx != Integer.MIN_VALUE && onTickListener != null) {
+            onTickListener.run();
+        }
+        lastTopIdx = topIdx;
 
         // Draw 4 cells so the view is always fully covered (partial top + 3 full + partial bottom)
         for (int slot = 0; slot <= 3; slot++) {

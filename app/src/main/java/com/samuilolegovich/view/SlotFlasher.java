@@ -25,6 +25,7 @@ import com.samuilolegovich.enums.StringEnum;
 import com.samuilolegovich.enums.TestModeEnum;
 import com.samuilolegovich.utils.AudioHelper;
 import com.samuilolegovich.utils.PrefsHelper;
+import com.samuilolegovich.utils.SlotSpinSoundPlayer;
 
 import java.security.SecureRandom;
 
@@ -84,25 +85,24 @@ public class SlotFlasher extends BaseActivity {
     private View llContinueBet;
     private View btnBackToGame;
 
-    private MediaPlayer spinMediaPlayer;
+    private SlotSpinSoundPlayer spinPlayer;
     private MediaPlayer resultMediaPlayer;
     private AudioFocusRequest audioFocusRequest;
     private BroadcastReceiver noisyReceiver;
 
     private final AudioManager.OnAudioFocusChangeListener focusListener = focusChange -> {
-        if (spinMediaPlayer == null) return;
         switch (focusChange) {
             case AudioManager.AUDIOFOCUS_LOSS:
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
-                if (spinMediaPlayer.isPlaying()) spinMediaPlayer.pause();
+                if (spinPlayer != null) spinPlayer.pause();
                 if (resultMediaPlayer != null && resultMediaPlayer.isPlaying()) resultMediaPlayer.pause();
                 break;
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
-                spinMediaPlayer.setVolume(0.1f, 0.1f);
+                if (spinPlayer != null) spinPlayer.setVolume(0.1f);
                 if (resultMediaPlayer != null) resultMediaPlayer.setVolume(0.1f, 0.1f);
                 break;
             case AudioManager.AUDIOFOCUS_GAIN:
-                spinMediaPlayer.setVolume(1f, 1f);
+                if (spinPlayer != null) spinPlayer.setVolume(1.0f);
                 if (resultMediaPlayer != null) resultMediaPlayer.setVolume(1f, 1f);
                 break;
         }
@@ -185,12 +185,12 @@ public class SlotFlasher extends BaseActivity {
     }
 
     private void startSound() {
-        spinMediaPlayer = MediaPlayer.create(this, R.raw.roulette_spin);
-        if (spinMediaPlayer != null) {
-            spinMediaPlayer.setLooping(true);
-            spinMediaPlayer.setVolume(1f, 1f);
-            if (AudioHelper.isSoundEnabled(this)) spinMediaPlayer.start();
-        }
+        spinPlayer = new SlotSpinSoundPlayer();
+        if (AudioHelper.isSoundEnabled(this)) spinPlayer.start();
+        // Клики синхронизированы с анимацией левого барабана
+        reelLeft.setOnTickListener(() -> {
+            if (spinPlayer != null) spinPlayer.playClick();
+        });
     }
 
     /** Вызывается из NotifierRun / NotifierRunForTrialGame с результатом ставки. */
@@ -376,9 +376,7 @@ public class SlotFlasher extends BaseActivity {
     }
 
     private void stopSound() {
-        if (spinMediaPlayer != null) {
-            try { spinMediaPlayer.stop(); } catch (Exception ignored) {}
-        }
+        if (spinPlayer != null) spinPlayer.stop();
     }
 
     // ─── Timeout ────────────────────────────────────────────────────────────
@@ -451,7 +449,7 @@ public class SlotFlasher extends BaseActivity {
         super.onResume();
         VISIBLE_ON_SCREEN = true;
         noisyReceiver = AudioHelper.registerNoisyReceiver(this, () -> {
-            if (spinMediaPlayer != null && spinMediaPlayer.isPlaying()) spinMediaPlayer.pause();
+            if (spinPlayer != null) spinPlayer.pause();
         });
         audioFocusRequest = AudioHelper.requestFocus(this, focusListener);
 
@@ -473,7 +471,8 @@ public class SlotFlasher extends BaseActivity {
             FlasherRun.FLAG = true;
             AppExecutors.io().execute(new FlasherRun());
             startSpinAll();
-            if (spinMediaPlayer != null && AudioHelper.isSoundEnabled(this)) spinMediaPlayer.start();
+            if (spinPlayer == null) spinPlayer = new SlotSpinSoundPlayer();
+            if (AudioHelper.isSoundEnabled(this)) spinPlayer.resume();
         }
     }
 
@@ -513,7 +512,7 @@ public class SlotFlasher extends BaseActivity {
         super.onDestroy();
         AudioHelper.abandonFocus(this, audioFocusRequest);
         AudioHelper.unregisterNoisyReceiver(this, noisyReceiver);
-        if (spinMediaPlayer != null) { spinMediaPlayer.release(); spinMediaPlayer = null; }
+        if (spinPlayer != null) { spinPlayer.release(); spinPlayer = null; }
         if (resultMediaPlayer != null) { resultMediaPlayer.release(); resultMediaPlayer = null; }
         SLOT_FLASHER    = null;
         STOP_POSITIONS  = null;
