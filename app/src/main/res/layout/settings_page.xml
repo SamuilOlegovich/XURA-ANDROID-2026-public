@@ -574,6 +574,68 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <!-- HAPTIC TOGGLE — glass card -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/settings_haptic_linc"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/bg_card_glass_clickable"
+                android:clickable="true"
+                android:focusable="true"
+                android:contentDescription="Haptic toggle">
+
+                <TextView
+                    android:id="@+id/haptic_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="@string/settings_haptic"
+                    android:textColor="@color/xura_text_primary"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.03"
+                    app:layout_constraintBottom_toTopOf="@+id/haptic_subtitle"
+                    app:layout_constraintEnd_toStartOf="@+id/haptic_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="packed" />
+
+                <TextView
+                    android:id="@+id/haptic_subtitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="8dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="@string/settings_haptic_subtitle"
+                    android:textColor="@color/xura_text_tertiary"
+                    android:textSize="11sp"
+                    android:letterSpacing="0.02"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/haptic_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/haptic_title" />
+
+                <ImageView
+                    android:id="@+id/haptic_icon"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/ic_vibration"
+                    android:importantForAccessibility="no"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/xura_text_primary" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
             <!-- SELECT LANGUAGE — glass card -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/settings_select_english_linc"

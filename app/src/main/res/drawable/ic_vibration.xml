@@ -1,0 +1,23 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- Phone body -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M15,1L9,1C7.9,1 7,1.9 7,3L7,21C7,22.1 7.9,23 9,23L15,23C16.1,23 17,22.1 17,21L17,3C17,1.9 16.1,1 15,1ZM15,19L9,19L9,5L15,5L15,19Z"/>
+    <!-- Left wave 1 -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M4.55,7.06L3.14,5.64C1.23,7.26 0,9.5 0,12C0,14.5 1.23,16.74 3.14,18.36L4.55,16.94C3.03,15.7 2,13.96 2,12C2,10.04 3.03,8.3 4.55,7.06Z"/>
+    <!-- Left wave 2 -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M3.14,5.64L1.73,4.22C-0.68,6.23 -2,9 -2,12C-2,15 -0.68,17.77 1.73,19.78L3.14,18.36C1.12,16.73 0,14.45 0,12C0,9.55 1.12,7.27 3.14,5.64Z"
+        android:alpha="0"/>
+    <!-- Right wave 1 -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M19.45,7.06C20.97,8.3 22,10.04 22,12C22,13.96 20.97,15.7 19.45,16.94L20.86,18.36C22.77,16.74 24,14.5 24,12C24,9.5 22.77,7.26 20.86,5.64L19.45,7.06Z"/>
+</vector>

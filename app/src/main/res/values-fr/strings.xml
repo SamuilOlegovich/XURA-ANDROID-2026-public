@@ -394,6 +394,9 @@
     <string name="settings_sound_subtitle">Musique et effets sonores dans les jeux</string>
     <string name="settings_animations">ANIMATIONS</string>
     <string name="settings_animations_subtitle">Animation d\'entrée sur l\'écran du portefeuille et de sélection du jeu</string>
+    <string name="settings_haptic">VIBRATION</string>
+    <string name="settings_haptic_subtitle">Retour haptique sur les boutons et le défilement</string>
+    
 
     <string name="chip_01_xrp">0.1 XRP</string>
     <string name="chip_05_xrp">0.5 XRP</string>

@@ -172,22 +172,22 @@ public class SelectGame extends BaseActivity {
     /** Назначает обработчики кнопок выбора игры: onPause() сам остановит музыку при переходе. */
     private void listeners() {
         guessTheColor.setOnClickListener(v -> {
-            pulse(v);
+            pulse(v); soundNav();
             goToAnotherPage(GUESS_THE_COLOR_GAME_CLASS);
         });
 
         guessTheNumber.setOnClickListener(v -> {
-            pulse(v);
+            pulse(v); soundNav();
             goToAnotherPage(GUESS_THE_NUMBER_GAME_CLASS);
         });
 
         roulette.setOnClickListener(v -> {
-            pulse(v);
+            pulse(v); soundNav();
             goToAnotherPage(ROULETTE_GAME_CLASS);
         });
 
         if (slot != null) slot.setOnClickListener(v -> {
-            pulse(v);
+            pulse(v); soundNav();
             goToAnotherPage(SLOT_GAME_CLASS);
         });
     }

@@ -430,6 +430,7 @@ public class RouletteGame extends BaseActivity {
 
     /** Переключает ставку на ячейке: если ставка уже стоит — снимает её, иначе считывает сумму из поля ввода и добавляет новую ставку с подсветкой и фишкой. */
     private void toggleBet(View v, String betTag, int bgColor) {
+        soundSelect();
         if (tableBets.containsKey(betTag)) {
             // Remove bet: restore cell bg, hide chip
             tableBets.remove(betTag);
@@ -513,6 +514,7 @@ public class RouletteGame extends BaseActivity {
     /** Назначает обработчики: быстрый выбор суммы по чипам, сброс ошибки при правке поля, переход к правилам, очистку ставок и запуск спина со всеми текущими ставками. */
     private void listeners() {
         chipGroupAmounts.setOnCheckedStateChangeListener((group, checkedIds) -> {
+            soundSelect();
             int tenths = 0;
             if      (checkedIds.contains(R.id.chip_01_xrp)) tenths = 1;
             else if (checkedIds.contains(R.id.chip_05_xrp)) tenths = 5;
@@ -558,14 +560,14 @@ public class RouletteGame extends BaseActivity {
         setupSliderListener();
 
         rulesInfo.setOnClickListener(v -> {
-            pulse(v);
+            pulse(v); soundNav();
             startActivity(new Intent(RULES_OF_THE_GAME_ROULETTE_CLASS));
         });
 
 
         if (btnClearBets != null) {
             btnClearBets.setOnClickListener(v -> {
-                pulse(v);
+                pulse(v); soundNav();
                 clearAllBets();
             });
         }
@@ -578,7 +580,7 @@ public class RouletteGame extends BaseActivity {
             pendingPrimaryTag        = tableBets.keySet().iterator().next();
             pendingPrimaryMultiplier = RouletteBetCode.multiplierForTag(pendingPrimaryTag);
 
-            pulse(v);
+            pulse(v); soundSelect();
             setSpinningState(true);
             soundPool.playBet(this);
             viewModel.placeBets(new LinkedHashMap<>(tableBets), myReferral);
@@ -654,8 +656,8 @@ public class RouletteGame extends BaseActivity {
         btnBetMinus.setIconTint(goldTint);
         btnBetPlus.setIconTint(goldTint);
 
-        btnBetMinus.setOnClickListener(v -> changeBetBy(-1));
-        btnBetPlus.setOnClickListener(v -> changeBetBy(+1));
+        btnBetMinus.setOnClickListener(v -> { soundSelect(); changeBetBy(-1); });
+        btnBetPlus.setOnClickListener(v ->  { soundSelect(); changeBetBy(+1); });
 
         btnBetMinus.setOnTouchListener((v, event) -> handlePmTouch(event, -1));
         btnBetPlus.setOnTouchListener((v, event) -> handlePmTouch(event, +1));

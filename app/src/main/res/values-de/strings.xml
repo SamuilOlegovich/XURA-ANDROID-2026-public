@@ -394,6 +394,9 @@
     <string name="settings_sound_subtitle">Musik und Soundeffekte in den Spielen</string>
     <string name="settings_animations">ANIMATIONEN</string>
     <string name="settings_animations_subtitle">Eingangsanimation auf dem Wallet- und Spielauswahlbildschirm</string>
+    <string name="settings_haptic">VIBRATION</string>
+    <string name="settings_haptic_subtitle">Haptisches Feedback auf Schaltflächen und beim Scrollen</string>
+    
 
     <string name="chip_01_xrp">0.1 XRP</string>
     <string name="chip_05_xrp">0.5 XRP</string>

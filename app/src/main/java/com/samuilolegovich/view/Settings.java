@@ -127,6 +127,10 @@ public class Settings extends BaseActivity {
     private TextView animationsTitle;
     private android.widget.ImageView animationsIcon;
 
+    private View     settingsHapticLinc;
+    private TextView hapticTitle;
+    private android.widget.ImageView hapticIcon;
+
     // ── View скрытой DEV-секции ──────────────────────────────────────────
     private MaterialCardView cardDevNetwork;
     private SwitchMaterial   devNetworkSwitch;
@@ -213,6 +217,10 @@ public class Settings extends BaseActivity {
         animationsTitle        = findViewById(R.id.animations_title);
         animationsIcon         = findViewById(R.id.animations_icon);
 
+        settingsHapticLinc = findViewById(R.id.settings_haptic_linc);
+        hapticTitle        = findViewById(R.id.haptic_title);
+        hapticIcon         = findViewById(R.id.haptic_icon);
+
         // DEV
         cardDevNetwork  = findViewById(R.id.card_dev_network);
         devNetworkSwitch = findViewById(R.id.dev_network_switch);
@@ -242,6 +250,7 @@ public class Settings extends BaseActivity {
         updateBetTimeoutRow();
         updateSoundButton();
         updateAnimationsButton();
+        updateHapticButton();
         updateGameModeButton();
         updateTestBalanceCard();
         updatePasswordIcon();
@@ -340,6 +349,19 @@ public class Settings extends BaseActivity {
         int color = enabled ? getColor(R.color.xura_text_primary) : getColor(R.color.xura_text_tertiary);
         animationsTitle.setTextColor(color);
         animationsIcon.setColorFilter(color);
+    }
+
+    private void updateHapticButton() {
+        boolean enabled = isHapticEnabledLocal();
+        hapticTitle.setText(getString(R.string.settings_haptic) + (enabled ? "  ●  ON" : "  ○  OFF"));
+        int color = enabled ? getColor(R.color.xura_text_primary) : getColor(R.color.xura_text_tertiary);
+        hapticTitle.setTextColor(color);
+        hapticIcon.setColorFilter(color);
+    }
+
+    private boolean isHapticEnabledLocal() {
+        return PrefsHelper.get(this).getBoolean(
+                StringEnum.APP_PREFERENCES_HAPTIC_ENABLED.getValue(), true);
     }
 
     /** Проверяет, включены ли входные анимации (по умолчанию включены). */
@@ -591,6 +613,15 @@ public class Settings extends BaseActivity {
                     .putBoolean(StringEnum.APP_PREFERENCES_ANIMATIONS_ENABLED.getValue(), !current)
                     .apply();
             updateAnimationsButton();
+        });
+
+        settingsHapticLinc.setOnClickListener(v -> {
+            pulse(v);
+            boolean current = isHapticEnabledLocal();
+            PrefsHelper.get(this).edit()
+                    .putBoolean(StringEnum.APP_PREFERENCES_HAPTIC_ENABLED.getValue(), !current)
+                    .apply();
+            updateHapticButton();
         });
 
         settingsLockTimeoutLinc.setOnClickListener(v -> {

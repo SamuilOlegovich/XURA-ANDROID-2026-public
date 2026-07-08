@@ -246,6 +246,7 @@ public class GuessTheNumberGame extends BaseActivity {
             tv.setLayoutParams(p);
 
             tv.setOnClickListener(v -> {
+                soundSelect();
                 if (selectedNumView != null) {
                     selectedNumView.setBackground(getDrawable(R.drawable.bg_num_button));
                 }
@@ -277,6 +278,7 @@ public class GuessTheNumberGame extends BaseActivity {
 
     private void listeners() {
         chipGroupAmounts.setOnCheckedStateChangeListener((group, checkedIds) -> {
+            soundSelect();
             int tenths = 0;
             if      (checkedIds.contains(R.id.chip_01_xrp)) tenths = 1;
             else if (checkedIds.contains(R.id.chip_05_xrp)) tenths = 5;
@@ -322,12 +324,12 @@ public class GuessTheNumberGame extends BaseActivity {
         setupSliderListener();
 
         rulesInfo.setOnClickListener(v -> {
-            pulse(v);
+            pulse(v); soundNav();
             goToAnotherPage(RULES_OF_THE_GAME_GUESS_THE_NUMBER_CLASS);
         });
 
         placeBetLinc.setOnClickListener(v -> {
-            pulse(v);
+            pulse(v); soundSelect();
             setBettingState(true);
             soundPool.playBet(this);
             viewModel.placeBet(getBetAmount(), selectedNumber, myReferral);
@@ -340,8 +342,8 @@ public class GuessTheNumberGame extends BaseActivity {
         btnBetMinus.setIconTint(cyanTint);
         btnBetPlus.setIconTint(cyanTint);
 
-        btnBetMinus.setOnClickListener(v -> changeBetBy(-1));
-        btnBetPlus.setOnClickListener(v -> changeBetBy(+1));
+        btnBetMinus.setOnClickListener(v -> { soundSelect(); changeBetBy(-1); });
+        btnBetPlus.setOnClickListener(v ->  { soundSelect(); changeBetBy(+1); });
 
         btnBetMinus.setOnTouchListener((v, event) -> handlePmTouch(event, -1));
         btnBetPlus.setOnTouchListener((v, event) -> handlePmTouch(event, +1));

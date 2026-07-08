@@ -430,6 +430,8 @@
     <string name="settings_sound_subtitle">Music and sound effects in casino games</string>
     <string name="settings_animations">ANIMATIONS</string>
     <string name="settings_animations_subtitle">Entrance animation on wallet and game selection</string>
+    <string name="settings_haptic">VIBRATION</string>
+    <string name="settings_haptic_subtitle">Haptic feedback on buttons and scrolling</string>
 
     <string name="chip_01_xrp">0.1 XRP</string>
     <string name="chip_05_xrp">0.5 XRP</string>

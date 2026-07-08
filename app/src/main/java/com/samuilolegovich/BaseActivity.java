@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.HapticFeedbackConstants;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -28,9 +29,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.samuilolegovich.enums.StringEnum;
 import com.samuilolegovich.utils.AntiDebugDetector;
+import com.samuilolegovich.utils.AudioHelper;
 import com.samuilolegovich.utils.InactivityGuard;
 import com.samuilolegovich.utils.PrefsHelper;
 import com.samuilolegovich.utils.SessionPin;
+import com.samuilolegovich.utils.UiSoundPlayer;
 import com.samuilolegovich.view.Lost;
 import com.samuilolegovich.view.RouletteResult;
 import com.samuilolegovich.view.SelectGame;
@@ -328,6 +331,42 @@ public abstract class BaseActivity extends AppCompatActivity {
     /** Запускает короткую пульсирующую анимацию на View — используется для визуального отклика на действие пользователя. */
     protected void pulse(View v) {
         v.startAnimation(AnimationUtils.loadAnimation(this, R.anim.anim_scale_pulse));
+    }
+
+    /** Лёгкий тап — навигация, «назад», выбор игры, правила. */
+    protected void soundNav() {
+        if (AudioHelper.isSoundEnabled(this)) UiSoundPlayer.get().nav();
+        hapticTap();
+    }
+
+    /** Тинк монеты — чипы ставки, +/−, выбор числа/цвета, ячейка рулетки. */
+    protected void soundSelect() {
+        if (AudioHelper.isSoundEnabled(this)) UiSoundPlayer.get().select();
+        hapticTap();
+    }
+
+    /** Тяжёлый удар — SPIN, BET, PlaceBet. */
+    protected void soundAction() {
+        if (AudioHelper.isSoundEnabled(this)) UiSoundPlayer.get().action();
+        hapticTap();
+    }
+
+    protected boolean isHapticEnabled() {
+        return PrefsHelper.get(this).getBoolean(StringEnum.APP_PREFERENCES_HAPTIC_ENABLED.getValue(), true);
+    }
+
+    protected void hapticTap() {
+        if (!isHapticEnabled()) return;
+        View root = getWindow().getDecorView();
+        root.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP,
+                HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+    }
+
+    protected void hapticScroll() {
+        if (!isHapticEnabled()) return;
+        View root = getWindow().getDecorView();
+        root.performHapticFeedback(HapticFeedbackConstants.CLOCK_TICK,
+                HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
     }
 
     /** Обновляет бейдж режима игры (LIVE / TRIAL) если он присутствует в текущем layout. */

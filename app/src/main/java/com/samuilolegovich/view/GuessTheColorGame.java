@@ -237,6 +237,7 @@ public class GuessTheColorGame extends BaseActivity {
 
     private void listeners() {
         chipGroupAmounts.setOnCheckedStateChangeListener((group, checkedIds) -> {
+            soundSelect();
             int tenths = 0;
             if      (checkedIds.contains(R.id.chip_01_xrp)) tenths = 1;
             else if (checkedIds.contains(R.id.chip_05_xrp)) tenths = 5;
@@ -282,12 +283,12 @@ public class GuessTheColorGame extends BaseActivity {
         setupSliderListener();
 
         rulesOfTheGameLink.setOnClickListener(v -> {
-            pulse(v);
+            pulse(v); soundNav();
             goToAnotherPage(RULES_OF_THE_GAME_GUESS_THE_COLOR_CLASS);
         });
 
         black.setOnClickListener(v -> {
-            pulse(v);
+            pulse(v); soundSelect();
             lastBetWasRed = false;
             setBettingState(true);
             soundPool.playBet(this);
@@ -297,7 +298,7 @@ public class GuessTheColorGame extends BaseActivity {
         });
 
         red.setOnClickListener(v -> {
-            pulse(v);
+            pulse(v); soundSelect();
             lastBetWasRed = true;
             setBettingState(true);
             soundPool.playBet(this);
@@ -313,8 +314,8 @@ public class GuessTheColorGame extends BaseActivity {
         btnBetMinus.setIconTint(pinkTint);
         btnBetPlus.setIconTint(pinkTint);
 
-        btnBetMinus.setOnClickListener(v -> changeBetBy(-1));
-        btnBetPlus.setOnClickListener(v -> changeBetBy(+1));
+        btnBetMinus.setOnClickListener(v -> { soundSelect(); changeBetBy(-1); });
+        btnBetPlus.setOnClickListener(v ->  { soundSelect(); changeBetBy(+1); });
 
         btnBetMinus.setOnTouchListener((v, event) -> handlePmTouch(event, -1));
         btnBetPlus.setOnTouchListener((v, event) -> handlePmTouch(event, +1));
