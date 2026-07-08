@@ -41,6 +41,7 @@ import com.samuilolegovich.enums.RouletteBetCode;
 import com.samuilolegovich.enums.StringEnum;
 import com.samuilolegovich.enums.TestModeEnum;
 import com.samuilolegovich.utils.AudioHelper;
+import com.samuilolegovich.utils.BetInputFilter;
 import com.samuilolegovich.utils.GameSoundPool;
 import com.samuilolegovich.utils.PrefsHelper;
 import com.samuilolegovich.viewmodel.RouletteViewModel;
@@ -430,6 +431,7 @@ public class RouletteGame extends BaseActivity {
 
     /** Переключает ставку на ячейке: если ставка уже стоит — снимает её, иначе считывает сумму из поля ввода и добавляет новую ставку с подсветкой и фишкой. */
     private void toggleBet(View v, String betTag, int bgColor) {
+        soundSelect();
         if (tableBets.containsKey(betTag)) {
             // Remove bet: restore cell bg, hide chip
             tableBets.remove(betTag);
@@ -513,6 +515,7 @@ public class RouletteGame extends BaseActivity {
     /** Назначает обработчики: быстрый выбор суммы по чипам, сброс ошибки при правке поля, переход к правилам, очистку ставок и запуск спина со всеми текущими ставками. */
     private void listeners() {
         chipGroupAmounts.setOnCheckedStateChangeListener((group, checkedIds) -> {
+            soundSelect();
             int tenths = 0;
             if      (checkedIds.contains(R.id.chip_01_xrp)) tenths = 1;
             else if (checkedIds.contains(R.id.chip_05_xrp)) tenths = 5;
@@ -536,36 +539,27 @@ public class RouletteGame extends BaseActivity {
             clearBetError();
         });
 
+        bet.setFilters(new android.text.InputFilter[]{ new BetInputFilter(MAX_BET_TENTHS / 10.0) });
         bet.addTextChangedListener(new android.text.TextWatcher() {
-            private boolean editing = false;
             @Override public void beforeTextChanged(CharSequence s, int i, int c, int a) {}
             @Override public void onTextChanged(CharSequence s, int i, int b, int c) {
                 clearBetError();
             }
-            @Override public void afterTextChanged(android.text.Editable s) {
-                if (editing) return;
-                String text = s.toString();
-                int dot = text.indexOf('.');
-                if (dot >= 0 && text.length() > dot + 2) {
-                    editing = true;
-                    s.replace(0, s.length(), text.substring(0, dot + 2));
-                    editing = false;
-                }
-            }
+            @Override public void afterTextChanged(android.text.Editable s) {}
         });
 
         setupPlusMinusButtons();
         setupSliderListener();
 
         rulesInfo.setOnClickListener(v -> {
-            pulse(v);
+            pulse(v); soundNav();
             startActivity(new Intent(RULES_OF_THE_GAME_ROULETTE_CLASS));
         });
 
 
         if (btnClearBets != null) {
             btnClearBets.setOnClickListener(v -> {
-                pulse(v);
+                pulse(v); soundNav();
                 clearAllBets();
             });
         }
@@ -578,7 +572,7 @@ public class RouletteGame extends BaseActivity {
             pendingPrimaryTag        = tableBets.keySet().iterator().next();
             pendingPrimaryMultiplier = RouletteBetCode.multiplierForTag(pendingPrimaryTag);
 
-            pulse(v);
+            pulse(v); soundSelect();
             setSpinningState(true);
             soundPool.playBet(this);
             viewModel.placeBets(new LinkedHashMap<>(tableBets), myReferral);
@@ -654,8 +648,8 @@ public class RouletteGame extends BaseActivity {
         btnBetMinus.setIconTint(goldTint);
         btnBetPlus.setIconTint(goldTint);
 
-        btnBetMinus.setOnClickListener(v -> changeBetBy(-1));
-        btnBetPlus.setOnClickListener(v -> changeBetBy(+1));
+        btnBetMinus.setOnClickListener(v -> { soundSelect(); changeBetBy(-1); });
+        btnBetPlus.setOnClickListener(v ->  { soundSelect(); changeBetBy(+1); });
 
         btnBetMinus.setOnTouchListener((v, event) -> handlePmTouch(event, -1));
         btnBetPlus.setOnTouchListener((v, event) -> handlePmTouch(event, +1));

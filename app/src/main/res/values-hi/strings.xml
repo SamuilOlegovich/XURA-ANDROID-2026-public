@@ -394,6 +394,9 @@
     <string name="settings_sound_subtitle">खेलों में संगीत और ध्वनि प्रभाव</string>
     <string name="settings_animations">एनिमेशन</string>
     <string name="settings_animations_subtitle">वॉलेट और गेम चयन स्क्रीन पर प्रवेश एनिमेशन</string>
+    <string name="settings_haptic">कंपन</string>
+    <string name="settings_haptic_subtitle">बटन और स्क्रॉलिंग पर हैप्टिक फीडबैक</string>
+    
 
     <string name="chip_01_xrp">0.1 XRP</string>
     <string name="chip_05_xrp">0.5 XRP</string>

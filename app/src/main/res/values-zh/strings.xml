@@ -396,6 +396,9 @@
     <string name="settings_sound_subtitle">游戏中的音乐和音效</string>
     <string name="settings_animations">动画</string>
     <string name="settings_animations_subtitle">钱包和游戏选择界面的入场动画</string>
+    <string name="settings_haptic">振动</string>
+    <string name="settings_haptic_subtitle">按钮和滚动的触觉反馈</string>
+    
 
     <string name="chip_01_xrp">0.1 XRP</string>
     <string name="chip_05_xrp">0.5 XRP</string>

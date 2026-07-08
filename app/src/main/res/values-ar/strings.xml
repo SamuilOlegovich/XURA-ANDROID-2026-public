@@ -394,6 +394,9 @@
     <string name="settings_sound_subtitle">الموسيقى والمؤثرات الصوتية في الألعاب</string>
     <string name="settings_animations">الرسوم المتحركة</string>
     <string name="settings_animations_subtitle">رسوم متحركة عند فتح شاشة المحفظة واختيار اللعبة</string>
+    <string name="settings_haptic">اهتزاز</string>
+    <string name="settings_haptic_subtitle">ردود الفعل اللمسية على الأزرار والتمرير</string>
+    
 
     <string name="chip_01_xrp">0.1 XRP</string>
     <string name="chip_05_xrp">0.5 XRP</string>

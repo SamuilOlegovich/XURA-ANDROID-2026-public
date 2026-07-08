@@ -1,7 +1,7 @@
 # XURA — XRP Wallet & Gaming Platform
 
 > **Non-custodial XRP Ledger wallet with built-in blockchain-powered games.**  
-> Android application written in Java · minSdk 28 (Android 9+) · version 26.7.1  
+> Android application written in Java · minSdk 28 (Android 9+) · version 26.7.7  
 > *Originally started in 2022 as an XRP wallet experiment — rewritten and actively maintained through 2026.*
 
 ---
@@ -9,10 +9,10 @@
 ## ⚠️ Important Notice / Важное предупреждение
 
 **GAME SERVER IS NOT YET LIVE.**  
-The gaming logic (Roulette, Guess the Color, Guess the Number) requires a dedicated backend server that is currently under development. **Do NOT play with real XRP until the server goes live.** The author will announce availability separately.
+The gaming logic (Roulette, Guess the Color, Guess the Number, Slot Machine) requires a dedicated backend server that is currently under development. **Do NOT play with real XRP until the server goes live.** The author will announce availability separately.
 
 > **Игровой сервер ещё не запущен.**  
-> Игровая логика (рулетка, «Угадай цвет», «Угадай число») требует бэкенд-сервера, который сейчас в разработке. **Не играйте на реальный XRP до официального объявления запуска.**
+> Игровая логика (рулетка, «Угадай цвет», «Угадай число», слот-машина) требует бэкенд-сервера, который сейчас в разработке. **Не играйте на реальный XRP до официального объявления запуска.**
 
 ---
 
@@ -39,7 +39,7 @@ The gaming logic (Roulette, Guess the Color, Guess the Number) requires a dedica
 </p>
 
 <p align="center">
-  <em>Create or restore · New wallet seed · Seed verification · Main wallet (1000 XRP) · Send XRP</em>
+  <em>Create or restore · New wallet seed · Seed verification · Main wallet · Send XRP</em>
 </p>
 
 <p align="center">
@@ -80,7 +80,7 @@ The gaming logic (Roulette, Guess the Color, Guess the Number) requires a dedica
 
 ## What is XURA?
 
-XURA is a **non-custodial mobile wallet** for the XRP Ledger blockchain combined with a **Blockchain-verifiable gaming platform** where every bet is a real on-chain XRP transaction. The game outcome is determined by the server and returned as a signed XRPL payment — verifiable on-chain, no trusted third party for the money flow.
+XURA is a **non-custodial mobile wallet** for the XRP Ledger blockchain combined with a **blockchain-verifiable gaming platform** where every bet is a real on-chain XRP transaction. The game outcome is determined by the server and returned as a signed XRPL payment — verifiable on-chain, no trusted third party for the money flow.
 
 The wallet side works fully **right now** on XRPL Mainnet. The game side requires the backend server (ETA: a few weeks).
 
@@ -129,17 +129,19 @@ Every winning payout is sent directly back to your wallet address — no withdra
 | Restore wallet | Import any XRPL account via 16-word seed phrase |
 | Send XRP | Address input by hand or QR scan; destination tag support; confirmation dialog |
 | Receive XRP | Your address as QR code + one-tap copy |
-| Transaction history | Real-time list of incoming/outgoing payments via WebSocket subscription |
-| Balance | Live balance updated over persistent WebSocket connection to `wss://xrplcluster.com` |
+| Transaction history | Real-time list of incoming/outgoing payments via WebSocket subscription; colored icons per type |
+| Balance | Live balance updated over persistent WebSocket connection to `wss://xrplcluster.com`; displayed to 2 decimal places |
 | Testnet mode | Switch to XRPL Altnet for development without real funds |
 
 ### Security
 | Feature | Details |
 |---------|---------|
-| Android Keystore AES-256-GCM | Seed phrase is encrypted inside the TEE (Trusted Execution Environment) — never exposed in plaintext |
+| Android Keystore AES-256-GCM | Seed phrase encrypted inside the TEE — never exposed in plaintext |
+| Double seed encryption (PIN layer) | Optional second encryption layer: seed is re-encrypted with a PBKDF2-derived key from a user PIN, stored separately from the Keystore key |
 | Biometric unlock | Fingerprint / Face ID via `androidx.biometric` (BIOMETRIC_STRONG only) |
-| App password (PBKDF2) | Optional PIN/password as a fallback or primary lock |
-| Inactivity auto-lock | Screen locks after a configurable idle period |
+| App password (PBKDF2) | PBKDF2WithHmacSHA256, 310 000 iterations, 256-bit output, 16-byte SecureRandom salt stored in EncryptedSharedPreferences |
+| Legacy password migration | On first login with old SHA-256 hash, automatically re-hashes with PBKDF2 transparently |
+| Inactivity auto-lock | Screen locks after a configurable idle period (30 s / 1 / 3 / 5 / 15 min) |
 | Root detection | Warns if the device appears to be rooted |
 | Anti-debug detection | Detects debugger attachment in production builds |
 | FLAG_SECURE | Prevents screenshots on sensitive screens (seed display, password entry) |
@@ -151,8 +153,59 @@ Every winning payout is sent directly back to your wallet address — no withdra
 | Guess the Color | Pick Red or Black | **×2** |
 | Guess the Number | Pick 1–36 | **×36** |
 | European Roulette | Full table (straight, red/black, odd/even, dozens, columns) | **×2 – ×36** |
+| Slot Machine | 3-reel, 7 symbols including Wild; win on middle payline | **×2 – ×10** |
 
 All bets are sent as real XRPL transactions with a structured memo (`BET:R:…`). The server responds with a signed payment and a memo (`WIN:N` or `LOSE:N`) that the client verifies on-chain.
+
+#### Slot Machine details
+- Custom `SlotReelView` renders 3 independently animated reels using canvas drawing
+- `SlotReelStrip` — 84-symbol strip with configurable reel order and Wild placement
+- Wild symbol substitutes for any other symbol on the middle payline
+- `SlotPaylineView` — animated win-line overlay drawn on canvas after result
+- `SlotResult` screen: brief re-spin on last known positions → reveal → confetti/ash particle effect
+- Server stop-positions are preserved across screen transitions via static volatile fields
+
+#### Bet input (all games)
+- Three input styles selectable in Settings: **Chips** (quick-tap amounts) · **Slider** · **+/− stepper**
+- `BetInputFilter` — `InputFilter` applied at character level: blocks values > 100 XRP, prevents more than 1 decimal place, rejects leading zeros and double dots before text reaches the field
+- Uniform limits across all games: **min 0.1 XRP · max 100 XRP**
+
+### Audio
+| Sound | When | Player |
+|-------|------|--------|
+| `in_casino.mp3` | Background music during gameplay | MediaPlayer (looping, 50% volume) |
+| `roulette_spin.mp3` | Slot machine / Roulette spinning animation | MediaPlayer (looping, full volume) |
+| `win.mp3` | Bet won result screen | MediaPlayer (once) |
+| `lost.mp3` | Bet lost result screen | MediaPlayer (once) |
+| `bet.mp3` | Bet confirmation sent | SoundPool (zero-latency) |
+| `error.mp3` | Validation error | SoundPool (zero-latency) |
+| UI button sounds | Every button tap (nav / select / action) | `UiSoundPlayer` — PCM-synthesized, `AudioTrack MODE_STATIC` |
+
+All audio respects **AudioFocus** (pause on phone call, duck on transient loss) and the global **Sound ON/OFF** toggle in Settings.
+
+`UiSoundPlayer` generates three micro-sounds entirely in code (no audio files):
+- **nav** — 8 ms, 900 Hz soft tap (back, rules, navigation)
+- **select** — 18 ms, 650 + 1300 Hz metallic tink (chips, bet buttons, grid cells)
+- **action** — 28 ms, 340 + 170 Hz heavy thud (reserved for primary actions)
+
+### Haptic Feedback
+- All game buttons and navigation produce tactile feedback via `HapticFeedbackConstants.KEYBOARD_TAP`
+- Scroll in Transaction History produces per-row tick via `HapticFeedbackConstants.CLOCK_TICK`
+- No `VIBRATE` permission required (`FLAG_IGNORE_GLOBAL_SETTING`)
+- **Vibration toggle** in Settings (ON by default) — persisted in SharedPreferences
+
+### Settings
+| Setting | Description |
+|---------|-------------|
+| Sound | Global audio on/off |
+| Vibration | Haptic feedback on buttons and scroll on/off |
+| Animations | Entry/exit animations on/off |
+| Bet input style | Chips / Slider / +/− stepper |
+| Bet timeout | Auto-cancel bet if no server response (3 / 5 / 10 / 30 / 60 s) |
+| Auto-lock timeout | Inactivity lock delay |
+| Biometric | Enable/disable fingerprint unlock |
+| Language | 10 languages |
+| Game mode | LIVE (real XRP) / TRIAL (test balance) |
 
 ### Referral System
 - Become a referral partner by recording a **66 XRP on-chain registration fee** — partially recoverable (13 XRP refunded on exit). The fee is a blockchain record, not a payment to the app.
@@ -161,6 +214,8 @@ All bets are sent as real XRPL transactions with a structured memo (`BET:R:…`)
 
 ### Internationalisation
 10 languages out of the box: **English, Russian, Chinese (中文), Hindi, Spanish, French, German, Arabic, Portuguese, Bengali**
+
+All strings — including new Settings cards (Vibration, Animations) — are fully localised in all 10 languages.
 
 ---
 
@@ -171,6 +226,13 @@ Java · MVVM · Dagger Hilt DI
 
 com.samuilolegovich
 ├── view/           — Activities (UI layer)
+│   ├── SlotGame        — Slot machine bet screen
+│   ├── SlotFlasher     — Animated reels while waiting for server
+│   ├── SlotResult      — Result reveal when server replied after leaving Flasher
+│   ├── SlotReelView    — Custom View: canvas-drawn animated reel
+│   ├── SlotPaylineView — Custom View: win-line overlay animation
+│   ├── SlotReelStrip   — 84-symbol strip & matrix builder
+│   └── ...             — Wallet, Roulette, Color, Number, Settings, History, …
 ├── viewmodel/      — ViewModels + LiveData state
 ├── wallet/
 │   ├── client/     — XRPL RPC + WebSocket clients (xrpl4j, OkHttp)
@@ -178,7 +240,18 @@ com.samuilolegovich
 ├── async/runnable/ — Background Runnables (balance, subscriber, notifier)
 ├── config/         — NetworkConfig (mainnet/testnet runtime switching)
 ├── enums/          — StringEnum: all constants in one place
-├── utils/          — SecureSeedStorage, BiometricHelper, Cipher, RootDetector, …
+├── utils/
+│   ├── SecureSeedStorage   — AES-256-GCM seed encryption via Android Keystore
+│   ├── Cipher              — PBKDF2WithHmacSHA256 password hashing
+│   ├── LegacyCipher        — SHA-256 legacy hash verifier (migration path only)
+│   ├── BiometricHelper     — Fingerprint / Face ID prompt wrapper
+│   ├── AudioHelper         — AudioFocus management + isSoundEnabled()
+│   ├── UiSoundPlayer       — PCM-synthesized button sounds (AudioTrack)
+│   ├── BetInputFilter      — InputFilter: enforces 0.1–100 XRP range at char level
+│   ├── GameSoundPool       — SoundPool wrapper for bet/error sounds
+│   ├── InactivityGuard     — Auto-lock on idle
+│   ├── RootDetector        — Root / tamper detection
+│   └── AntiDebugDetector   — Debugger detection (release builds)
 └── di/             — Hilt AppModule
 ```
 
@@ -191,6 +264,7 @@ com.samuilolegovich
 - `com.google.mlkit:barcode-scanning 17.0.2` + CameraX — QR code scanner
 - `com.squareup.retrofit2:retrofit 2.11.0` — REST calls to Ripple RPC nodes
 - `com.google.zxing:core 3.3.2` — QR code generation
+- `nl.dionsegijn:konfetti-xml` — confetti / ash particle effects on win/loss screens
 
 ---
 
@@ -312,13 +386,21 @@ The gaming logic in this app is intentionally inoperative without the server —
 ## Roadmap
 
 - [x] Non-custodial XRP wallet (mainnet ready)
-- [x] Biometric + password security
+- [x] Biometric + PBKDF2 password security
+- [x] Double seed encryption via optional PIN layer
+- [x] Legacy password migration (SHA-256 → PBKDF2 on first login)
 - [x] QR send/receive
-- [x] Transaction history
+- [x] Transaction history with colored icons
 - [x] European Roulette UI + protocol
 - [x] Guess the Color / Guess the Number UI + protocol
+- [x] **Slot Machine** — 3-reel, Wild symbol, payline animation, result screen
 - [x] Referral system on-chain
-- [x] 10-language localisation
+- [x] 10-language localisation (all new UI strings fully translated)
+- [x] Full audio system — background music, win/lost sounds, AudioFocus, PCM button sounds
+- [x] Haptic feedback — all buttons + scroll, toggle in Settings
+- [x] Bet input validation — `BetInputFilter`, uniform 0.1–100 XRP across all games
+- [x] Settings: Sound / Vibration / Animations / Bet style / Timeout / Language / Biometric
+- [x] Unified header across all screens; balance shown to 2 decimal places
 - [ ] **Game server launch** — ETA: coming weeks
 - [ ] Push notifications for incoming payments
 - [ ] Google Play release

@@ -394,6 +394,9 @@
     <string name="settings_sound_subtitle">Música e efeitos sonoros nos jogos</string>
     <string name="settings_animations">ANIMAÇÕES</string>
     <string name="settings_animations_subtitle">Animação de entrada na carteira e na seleção de jogos</string>
+    <string name="settings_haptic">VIBRAÇÃO</string>
+    <string name="settings_haptic_subtitle">Feedback háptico em botões e rolagem</string>
+    
 
     <string name="chip_01_xrp">0.1 XRP</string>
     <string name="chip_05_xrp">0.5 XRP</string>

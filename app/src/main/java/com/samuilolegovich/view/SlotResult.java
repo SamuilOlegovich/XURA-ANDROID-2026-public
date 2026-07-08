@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.samuilolegovich.BaseActivity;
 import com.samuilolegovich.R;
 import com.samuilolegovich.utils.AudioHelper;
-import com.samuilolegovich.utils.SlotSpinSoundPlayer;
 
 import java.util.Arrays;
 import java.util.List;
@@ -56,7 +55,7 @@ public class SlotResult extends BaseActivity {
     private TextView        tvResultTitle, tvPayout, tvCongratulations, tvCountdown;
     private View            llContinueBet, btnBackToGame;
 
-    private SlotSpinSoundPlayer  spinPlayer;
+    private MediaPlayer          spinMediaPlayer;
     private MediaPlayer          resultMediaPlayer;
     private AudioFocusRequest    audioFocusRequest;
     private Handler              countdownHandler;
@@ -66,20 +65,15 @@ public class SlotResult extends BaseActivity {
     private String STR_CONGRATULATIONS, STR_DONT_GIVE_UP, STR_BET_WON, STR_BET_LOST;
 
     private final AudioManager.OnAudioFocusChangeListener focusListener = change -> {
+        if (spinMediaPlayer == null) return;
         switch (change) {
             case AudioManager.AUDIOFOCUS_LOSS:
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
-                if (spinPlayer != null) spinPlayer.pause();
-                if (resultMediaPlayer != null && resultMediaPlayer.isPlaying()) resultMediaPlayer.pause();
-                break;
+                if (spinMediaPlayer.isPlaying()) spinMediaPlayer.pause(); break;
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
-                if (spinPlayer != null) spinPlayer.setVolume(0.1f);
-                if (resultMediaPlayer != null) resultMediaPlayer.setVolume(0.1f, 0.1f);
-                break;
+                spinMediaPlayer.setVolume(0.1f, 0.1f); break;
             case AudioManager.AUDIOFOCUS_GAIN:
-                if (spinPlayer != null) spinPlayer.setVolume(1.0f);
-                if (resultMediaPlayer != null) resultMediaPlayer.setVolume(1f, 1f);
-                break;
+                spinMediaPlayer.setVolume(1f, 1f); break;
         }
     };
 
@@ -140,11 +134,12 @@ public class SlotResult extends BaseActivity {
     }
 
     private void startSound() {
-        spinPlayer = new SlotSpinSoundPlayer();
-        if (AudioHelper.isSoundEnabled(this)) spinPlayer.start();
-        reelLeft.setOnTickListener(() -> {
-            if (spinPlayer != null) spinPlayer.playClick();
-        });
+        spinMediaPlayer = MediaPlayer.create(this, R.raw.roulette_spin);
+        if (spinMediaPlayer != null) {
+            spinMediaPlayer.setLooping(true);
+            spinMediaPlayer.setVolume(1f, 1f);
+            if (AudioHelper.isSoundEnabled(this)) spinMediaPlayer.start();
+        }
     }
 
     /** Останавливает барабаны на итоговых позициях и показывает результат. */
@@ -233,7 +228,9 @@ public class SlotResult extends BaseActivity {
     }
 
     private void stopSound() {
-        if (spinPlayer != null) spinPlayer.stop();
+        if (spinMediaPlayer != null) {
+            try { spinMediaPlayer.stop(); } catch (Exception ignored) {}
+        }
     }
 
     private void startWinConfetti() {
@@ -324,7 +321,7 @@ public class SlotResult extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         AudioHelper.abandonFocus(this, audioFocusRequest);
-        if (spinPlayer != null) { spinPlayer.release(); spinPlayer = null; }
+        if (spinMediaPlayer != null) { spinMediaPlayer.release(); spinMediaPlayer = null; }
         if (resultMediaPlayer != null) { resultMediaPlayer.release(); resultMediaPlayer = null; }
         PENDING_STOPS = null;
     }

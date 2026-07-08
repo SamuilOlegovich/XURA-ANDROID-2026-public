@@ -85,6 +85,7 @@ public enum StringEnum {
     APP_PREFERENCES_BET_INPUT_STYLE("bet_input_style"),
     APP_PREFERENCES_BET_TIMEOUT("bet_response_timeout"),
     APP_PREFERENCES_ANIMATIONS_ENABLED("animations_enabled"),
+    APP_PREFERENCES_HAPTIC_ENABLED("haptic_enabled"),
     APP_PREFERENCES_SEED_PIN_SALT("seed_pin_salt"),
     APP_PREFERENCES_SEED_PIN_ENABLED("seed_pin_enabled")
 

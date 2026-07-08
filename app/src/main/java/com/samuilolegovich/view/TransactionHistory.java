@@ -73,6 +73,20 @@ public class TransactionHistory extends BaseActivity {
         adapter.setOnItemClickListener(dto ->
                 TxDetailSheet.show(getSupportFragmentManager(), dto));
         recyclerView.setAdapter(adapter);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            private int lastFirst = RecyclerView.NO_POSITION;
+            @Override
+            public void onScrolled(RecyclerView rv, int dx, int dy) {
+                androidx.recyclerview.widget.LinearLayoutManager lm =
+                        (androidx.recyclerview.widget.LinearLayoutManager) rv.getLayoutManager();
+                if (lm == null) return;
+                int first = lm.findFirstVisibleItemPosition();
+                if (first != RecyclerView.NO_POSITION && first != lastFirst) {
+                    lastFirst = first;
+                    hapticScroll();
+                }
+            }
+        });
     }
 
 
