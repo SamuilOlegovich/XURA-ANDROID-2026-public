@@ -32,6 +32,7 @@ import com.samuilolegovich.R;
 import com.samuilolegovich.enums.StringEnum;
 import com.samuilolegovich.enums.TestModeEnum;
 import com.samuilolegovich.utils.AudioHelper;
+import com.samuilolegovich.utils.BetInputFilter;
 import com.samuilolegovich.utils.GameSoundPool;
 import com.samuilolegovich.utils.PrefsHelper;
 import com.samuilolegovich.utils.Lotto;
@@ -261,22 +262,13 @@ public class GuessTheColorGame extends BaseActivity {
             clearBetError();
         });
 
+        bet.setFilters(new android.text.InputFilter[]{ new BetInputFilter(MAX_BET_TENTHS / 10.0) });
         bet.addTextChangedListener(new android.text.TextWatcher() {
-            private boolean editing = false;
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
                 clearBetError();
             }
-            @Override public void afterTextChanged(android.text.Editable s) {
-                if (editing) return;
-                String text = s.toString();
-                int dot = text.indexOf('.');
-                if (dot >= 0 && text.length() > dot + 2) {
-                    editing = true;
-                    s.replace(0, s.length(), text.substring(0, dot + 2));
-                    editing = false;
-                }
-            }
+            @Override public void afterTextChanged(android.text.Editable s) {}
         });
 
         setupPlusMinusButtons();

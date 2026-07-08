@@ -32,6 +32,7 @@ import com.samuilolegovich.R;
 import com.samuilolegovich.enums.StringEnum;
 import com.samuilolegovich.enums.TestModeEnum;
 import com.samuilolegovich.utils.AudioHelper;
+import com.samuilolegovich.utils.BetInputFilter;
 import com.samuilolegovich.utils.GameSoundPool;
 import com.samuilolegovich.utils.PrefsHelper;
 import com.samuilolegovich.viewmodel.GameBetError;
@@ -242,23 +243,14 @@ public class SlotGame extends BaseActivity {
         });
     }
 
-    /** Ограничивает текстовый ввод одним знаком после запятой, как в других играх. */
+    /** Ограничивает текстовый ввод: не более 1 знака после точки, значение ≤ MAX_BET. */
     private void setupBetFieldWatcher() {
         if (etBet == null) return;
+        etBet.setFilters(new android.text.InputFilter[]{ new BetInputFilter(MAX_BET_TENTHS / 10.0) });
         etBet.addTextChangedListener(new TextWatcher() {
-            private boolean editing = false;
             @Override public void beforeTextChanged(CharSequence s, int i, int c, int a) {}
             @Override public void onTextChanged(CharSequence s, int i, int b, int c) { clearError(); }
-            @Override public void afterTextChanged(Editable s) {
-                if (editing) return;
-                String text = s.toString();
-                int dot = text.indexOf('.');
-                if (dot >= 0 && text.length() > dot + 2) {
-                    editing = true;
-                    s.replace(0, s.length(), text.substring(0, dot + 2));
-                    editing = false;
-                }
-            }
+            @Override public void afterTextChanged(Editable s) {}
         });
         etBet.setOnFocusChangeListener((v, focused) -> { if (focused) clearError(); });
     }
