@@ -58,12 +58,23 @@ The gaming logic (Roulette, Guess the Color, Guess the Number, Slot Machine) req
   <img src="screenshots/37_slot_game.png"       width="18%" alt="Slot Machine"/>
   <img src="screenshots/39_slot_game_reels.png" width="18%" alt="Slot Machine Reels"/>
   <img src="screenshots/33_roulette_wheel.png"  width="18%" alt="Roulette Wheel"/>
-  <img src="screenshots/34_bet_won.png"         width="18%" alt="Bet Won"/>
-  <img src="screenshots/35_bet_lost.png"        width="18%" alt="Bet Lost"/>
+  <img src="screenshots/41_win_confetti.png"    width="18%" alt="Win (confetti)"/>
+  <img src="screenshots/42_lost_ash.png"        width="18%" alt="Lost (ash)"/>
 </p>
 
 <p align="center">
-  <em>Slot Machine (symbols + chips) · Slot reels · Roulette wheel · BET WON · BET LOST</em>
+  <em>Slot Machine (symbols + chips) · Slot reels · Roulette wheel · WIN screen (confetti) · LOST screen (ash)</em>
+</p>
+
+<p align="center">
+  <img src="screenshots/44_slot_win_paylines.png"  width="22%" alt="Slot WIN paylines + confetti"/>
+  <img src="screenshots/45_slot_lost_ash.png"      width="22%" alt="Slot LOST ash"/>
+  <img src="screenshots/43_slot_result_lost.png"   width="22%" alt="Slot Result LOST"/>
+  <img src="screenshots/40_lost_ashes.png"         width="22%" alt="Roulette LOST ash"/>
+</p>
+
+<p align="center">
+  <em>Slot WIN (paylines highlighted + confetti) · Slot LOST (ash) · Slot Result activity · Roulette LOST (ash)</em>
 </p>
 
 <p align="center">
