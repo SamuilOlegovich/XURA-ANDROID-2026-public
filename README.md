@@ -171,12 +171,41 @@ Every winning payout is sent directly back to your wallet address — no withdra
 All bets are sent as real XRPL transactions with a structured memo (`BET:R:…`). The server responds with a signed payment and a memo (`WIN:N` or `LOSE:N`) that the client verifies on-chain.
 
 #### Slot Machine details
-- Custom `SlotReelView` renders 3 independently animated reels using canvas drawing
+
+**Symbols & payouts** (×bet per matching payline):
+
+| Symbol | Label | Multiplier |
+|--------|-------|-----------|
+| X (Ripple) | XRP | ×2 |
+| Rocket | RKT | ×5 |
+| Moon | MOON | ×10 |
+| Diamond | DIA | ×20 |
+| Whale | WHAL | ×50 |
+| Jackpot Star | JKPT | ×100 |
+| Wave | WILD | substitutes for any symbol |
+
+**Paylines** — 5 lines checked after each spin:
+
+| # | Line | Color |
+|---|------|-------|
+| 1 | Middle horizontal | Gold |
+| 2 | Top horizontal | Cyan |
+| 3 | Bottom horizontal | Green |
+| 4 | Diagonal ↘ | Orange |
+| 5 | Diagonal ↗ | Magenta |
+
+Multiple paylines can win simultaneously; each pays independently.
+
+**Visual effects:**
+- **WIN** — gold confetti falls from the top, winning paylines animate with glowing colored traces, each line labeled with symbol and multiplier
+- **LOST** — dark red/charcoal ash particles rise from the bottom
+
+**Implementation:**
+- Custom `SlotReelView` renders 3 independently animated reels via canvas drawing
 - `SlotReelStrip` — 84-symbol strip with configurable reel order and Wild placement
-- Wild symbol substitutes for any other symbol on the middle payline
-- `SlotPaylineView` — animated win-line overlay drawn on canvas after result
-- `SlotResult` screen: brief re-spin on last known positions → reveal → confetti/ash particle effect
-- Server stop-positions are preserved across screen transitions via static volatile fields
+- `SlotPaylineView` — animated win-line overlay: traces each winning line with glow + label
+- `SlotResult` screen: brief re-spin on last known positions → reveal → confetti/ash
+- Stop-positions preserved across screen transitions via `static volatile` fields
 
 #### Bet input (all games)
 - Three input styles selectable in Settings: **Chips** (quick-tap amounts) · **Slider** · **+/− stepper**
