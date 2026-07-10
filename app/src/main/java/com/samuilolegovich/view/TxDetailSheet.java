@@ -1,7 +1,9 @@
 package com.samuilolegovich.view;
 
 import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -73,8 +75,11 @@ public class TxDetailSheet extends BottomSheetDialogFragment {
 
         bindHeader(view, dto);
         bindInfoRow(view, dto);
-        if (dto.getTag() != null && dto.getTag().startsWith("RLT:")) {
-            bindBetsBreakdown(view, dto.getTag());
+        String tag = dto.getTag() != null ? dto.getTag() : "";
+        if (tag.startsWith("SLOT:") && tag.contains(",")) {
+            bindSlotGrid(view, tag);
+        } else if (tag.startsWith("RLT:")) {
+            bindBetsBreakdown(view, tag);
         }
     }
 
@@ -128,6 +133,7 @@ public class TxDetailSheet extends BottomSheetDialogFragment {
 
         boolean isInternalCode = tag.startsWith("BET:")
                 || tag.startsWith("RLT:")
+                || tag.startsWith("SLOT:")
                 || tag.equals("WIN")   || tag.startsWith("WIN:")
                 || tag.equals("LOSE")  || tag.startsWith("LOSE:")
                 || tag.equals("JKPT")  || tag.startsWith("JKPT:")
@@ -157,6 +163,115 @@ public class TxDetailSheet extends BottomSheetDialogFragment {
             ((TextView) root.findViewById(R.id.detail_dest_tag_value)).setText(destTag);
         } else {
             tagSection.setVisibility(View.GONE);
+        }
+    }
+
+    // ── Сетка результата слота ───────────────────────────────────────────
+
+    /**
+     * Парсит тег SLOT:{p0},{p1},{p2}:WIN|LOSE, строит матрицу 3×3 и показывает
+     * мини-сетку барабанов с выигрышными paylines (если WIN).
+     */
+    private void bindSlotGrid(View root, String tag) {
+        // Формат: SLOT:{p0},{p1},{p2}:WIN  или  SLOT:{p0},{p1},{p2}:LOSE
+        String[] parts = tag.split(":", -1);
+        if (parts.length < 3) return;
+
+        String[] stopStrs = parts[1].split(",");
+        if (stopStrs.length != 3) return;
+
+        int p0, p1, p2;
+        try {
+            p0 = Integer.parseInt(stopStrs[0].trim());
+            p1 = Integer.parseInt(stopStrs[1].trim());
+            p2 = Integer.parseInt(stopStrs[2].trim());
+        } catch (NumberFormatException e) {
+            return;
+        }
+
+        boolean win    = "WIN".equals(parts[2]);
+        int[][] matrix = SlotReelStrip.buildMatrix(p0, p1, p2);
+
+        LinearLayout section = root.findViewById(R.id.detail_slot_section);
+        SlotMiniView  grid   = root.findViewById(R.id.detail_slot_grid);
+        section.setVisibility(View.VISIBLE);
+        grid.setData(matrix, win);
+
+        if (win) {
+            LinearLayout legend = root.findViewById(R.id.detail_slot_legend);
+            buildSlotLegend(legend, grid);
+        }
+    }
+
+    /** Строит список выигрышных paylines под мини-сеткой. */
+    private void buildSlotLegend(LinearLayout legend, SlotMiniView grid) {
+        int[] indices = grid.getWinLineIndices();
+        if (indices.length == 0) return;
+
+        int textPrimary   = ContextCompat.getColor(requireContext(), R.color.xura_text_primary);
+        int textSecondary = ContextCompat.getColor(requireContext(), R.color.xura_text_secondary);
+        int goldColor     = ContextCompat.getColor(requireContext(), R.color.xura_gold);
+
+        // Заголовок
+        TextView header = new TextView(requireContext());
+        header.setText("WINNING LINES");
+        header.setTextColor(ContextCompat.getColor(requireContext(), R.color.xura_text_muted));
+        header.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10f);
+        header.setLetterSpacing(0.10f);
+        header.setTypeface(Typeface.DEFAULT);
+        header.setAllCaps(true);
+        LinearLayout.LayoutParams headerLp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        headerLp.bottomMargin = dp(8);
+        header.setLayoutParams(headerLp);
+        legend.addView(header);
+
+        for (int li : indices) {
+            int   symId      = grid.getWinSymbol(li);
+            int   lineColor  = SlotMiniView.LINE_COLORS[li];
+            String lineName  = SlotMiniView.LINE_NAMES[li];
+            String symLabel  = SlotReelView.SYM_LABEL[symId];
+            int   multiplier = SlotMiniView.MULTIPLIERS[symId];
+
+            LinearLayout row = new LinearLayout(requireContext());
+            row.setOrientation(LinearLayout.HORIZONTAL);
+            row.setGravity(Gravity.CENTER_VERTICAL);
+            LinearLayout.LayoutParams rowLp = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, dp(28));
+            rowLp.bottomMargin = dp(4);
+            row.setLayoutParams(rowLp);
+
+            // Цветная точка — индикатор линии
+            View dot = new View(requireContext());
+            GradientDrawable dotBg = new GradientDrawable();
+            dotBg.setShape(GradientDrawable.OVAL);
+            dotBg.setColor(lineColor);
+            dot.setBackground(dotBg);
+            LinearLayout.LayoutParams dotLp = new LinearLayout.LayoutParams(dp(8), dp(8));
+            dotLp.setMarginEnd(dp(10));
+            dot.setLayoutParams(dotLp);
+            row.addView(dot);
+
+            // Название линии
+            TextView tvName = new TextView(requireContext());
+            tvName.setText(lineName);
+            tvName.setTextColor(textSecondary);
+            tvName.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13f);
+            LinearLayout.LayoutParams nameLp = new LinearLayout.LayoutParams(
+                    0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f);
+            tvName.setLayoutParams(nameLp);
+            row.addView(tvName);
+
+            // Символ × множитель
+            TextView tvMult = new TextView(requireContext());
+            tvMult.setText(symLabel + " ×" + multiplier);
+            tvMult.setTextColor(goldColor);
+            tvMult.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13f);
+            tvMult.setTypeface(Typeface.DEFAULT_BOLD);
+            tvMult.setGravity(Gravity.END);
+            row.addView(tvMult);
+
+            legend.addView(row);
         }
     }
 
@@ -257,6 +372,11 @@ public class TxDetailSheet extends BottomSheetDialogFragment {
 
     /** Подбирает локализованный заголовок записи по её тегу (вид ставки, выигрыш, проигрыш, джекпот, возврат, донат, реферал и т.д.). */
     private String resolveTitle(String tag) {
+        if (tag.startsWith("SLOT:")) {
+            if (tag.endsWith(":WIN"))  return getString(R.string.slot_won_history);
+            if (tag.endsWith(":LOSE")) return getString(R.string.slot_lost_history);
+            return getString(R.string.slot_bet_history);
+        }
         if (tag.startsWith("RLT:"))  return getString(R.string.roulette_bet_history);
         if (tag.startsWith("BET:RED")) return getString(R.string.bet_on_red_history);
         if (tag.startsWith("BET:BLK")) return getString(R.string.bet_on_black_history);
@@ -276,6 +396,11 @@ public class TxDetailSheet extends BottomSheetDialogFragment {
 
     /** Подбирает цвет подсветки записи по её тегу (успех/ошибка/золото/розовый/циан), либо по направлению платежа, если тег не распознан. */
     private int resolveTypeColor(String tag, boolean incoming) {
+        if (tag.startsWith("SLOT:")) {
+            if (tag.endsWith(":WIN"))  return ContextCompat.getColor(requireContext(), R.color.xura_success);
+            if (tag.endsWith(":LOSE")) return ContextCompat.getColor(requireContext(), R.color.xura_error);
+            return ContextCompat.getColor(requireContext(), R.color.xura_magenta);
+        }
         if (tag.equals("WIN")   || tag.startsWith("WIN:"))  return ContextCompat.getColor(requireContext(), R.color.xura_success);
         if (tag.equals("LOSE")  || tag.startsWith("LOSE:")) return ContextCompat.getColor(requireContext(), R.color.xura_error);
         if (tag.equals("JKPT")  || tag.startsWith("JKPT:")) return ContextCompat.getColor(requireContext(), R.color.xura_gold);
@@ -295,6 +420,11 @@ public class TxDetailSheet extends BottomSheetDialogFragment {
 
     /** Подбирает ресурс иконки записи по её тегу, либо по направлению платежа (получено/отправлено), если тег не распознан. */
     private int resolveIconRes(String tag, boolean incoming) {
+        if (tag.startsWith("SLOT:")) {
+            if (tag.endsWith(":WIN"))  return R.drawable.ic_check_circle;
+            if (tag.endsWith(":LOSE")) return R.drawable.ic_lost_x;
+            return R.drawable.ic_slot_machine_outline;
+        }
         if (tag.equals("WIN")   || tag.startsWith("WIN:"))  return R.drawable.ic_check_circle;
         if (tag.equals("LOSE")  || tag.startsWith("LOSE:")) return R.drawable.ic_lost_x;
         if (tag.equals("JKPT")  || tag.startsWith("JKPT:")) return R.drawable.ic_bolt;
