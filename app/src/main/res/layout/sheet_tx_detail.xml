@@ -192,6 +192,25 @@
 
         </LinearLayout>
 
+        <!-- Roulette mini table (RLT:… tags) -->
+        <LinearLayout
+            android:id="@+id/detail_roulette_section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="4dp"
+            android:visibility="gone">
+
+            <com.samuilolegovich.view.RouletteMiniView
+                android:id="@+id/detail_roulette_grid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
         <!-- Bets breakdown section (BET:R: only) -->
         <LinearLayout
             android:id="@+id/detail_bets_section"

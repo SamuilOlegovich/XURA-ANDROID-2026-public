@@ -28,6 +28,8 @@ import com.samuilolegovich.enums.RouletteBetCode;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.util.ArrayList;
+import java.util.List;
 
 
 
@@ -79,7 +81,10 @@ public class TxDetailSheet extends BottomSheetDialogFragment {
         if (tag.startsWith("SLOT:") && tag.contains(",")) {
             bindSlotGrid(view, tag);
         } else if (tag.startsWith("RLT:")) {
-            bindBetsBreakdown(view, tag);
+            bindRouletteGrid(view, tag);
+            if (!tag.endsWith(":WIN") && !tag.endsWith(":LOSE")) {
+                bindBetsBreakdown(view, tag);
+            }
         }
     }
 
@@ -275,6 +280,46 @@ public class TxDetailSheet extends BottomSheetDialogFragment {
         }
     }
 
+    // ── Мини-стол рулетки ────────────────────────────────────────────────
+
+    /**
+     * Для тегов RLT: показывает компактный стол рулетки:
+     *  - RLT:{число}:WIN|LOSE  → подсвечивает выигравшее число
+     *  - RLT:{ставки}:{ref}    → подсвечивает ячейки поставленных ставок
+     */
+    private void bindRouletteGrid(View root, String tag) {
+        LinearLayout     section = root.findViewById(R.id.detail_roulette_section);
+        RouletteMiniView grid    = root.findViewById(R.id.detail_roulette_grid);
+        section.setVisibility(View.VISIBLE);
+
+        if (tag.endsWith(":WIN") || tag.endsWith(":LOSE")) {
+            // RLT:{number}:WIN|LOSE — только результат
+            String[] parts = tag.split(":", -1);
+            if (parts.length >= 3) {
+                try {
+                    int num = Integer.parseInt(parts[1].trim());
+                    grid.setWinningNumber(num, tag.endsWith(":WIN"));
+                } catch (NumberFormatException ignored) {}
+            }
+        } else {
+            // RLT:{n5@1.5,r@2.0}:{ref} — ставки на столе
+            String[] parts = tag.split(":", -1);
+            if (parts.length >= 2) {
+                List<RouletteMiniView.BetEntry> bets = new ArrayList<>();
+                for (String token : parts[1].split(",")) {
+                    String[] pair = token.split("@", 2);
+                    if (pair.length == 2) {
+                        try {
+                            BigDecimal amt = new BigDecimal(pair[1].trim());
+                            bets.add(new RouletteMiniView.BetEntry(pair[0].trim(), amt));
+                        } catch (NumberFormatException ignored) {}
+                    }
+                }
+                if (!bets.isEmpty()) grid.setBets(bets);
+            }
+        }
+    }
+
     // ── Разбивка по ставкам (только для составной ставки RLT:) ──────────
 
     /** Разбирает строку составной ставки на рулетку и строит для каждой отдельной ставки строку с названием, суммой и множителем; внизу — общая сумма. */
@@ -377,7 +422,11 @@ public class TxDetailSheet extends BottomSheetDialogFragment {
             if (tag.endsWith(":LOSE")) return getString(R.string.slot_lost_history);
             return getString(R.string.slot_bet_history);
         }
-        if (tag.startsWith("RLT:"))  return getString(R.string.roulette_bet_history);
+        if (tag.startsWith("RLT:")) {
+            if (tag.endsWith(":WIN"))  return getString(R.string.roulette_won_history);
+            if (tag.endsWith(":LOSE")) return getString(R.string.roulette_lost_history);
+            return getString(R.string.roulette_bet_history);
+        }
         if (tag.startsWith("BET:RED")) return getString(R.string.bet_on_red_history);
         if (tag.startsWith("BET:BLK")) return getString(R.string.bet_on_black_history);
         if (tag.startsWith("BET:N:"))  {
@@ -404,9 +453,13 @@ public class TxDetailSheet extends BottomSheetDialogFragment {
         if (tag.equals("WIN")   || tag.startsWith("WIN:"))  return ContextCompat.getColor(requireContext(), R.color.xura_success);
         if (tag.equals("LOSE")  || tag.startsWith("LOSE:")) return ContextCompat.getColor(requireContext(), R.color.xura_error);
         if (tag.equals("JKPT")  || tag.startsWith("JKPT:")) return ContextCompat.getColor(requireContext(), R.color.xura_gold);
-        if (tag.startsWith("RLT:"))                        return incoming
-                ? ContextCompat.getColor(requireContext(), R.color.xura_purple)
-                : ContextCompat.getColor(requireContext(), R.color.xura_gold);
+        if (tag.startsWith("RLT:")) {
+            if (tag.endsWith(":WIN"))  return ContextCompat.getColor(requireContext(), R.color.xura_success);
+            if (tag.endsWith(":LOSE")) return ContextCompat.getColor(requireContext(), R.color.xura_error);
+            return incoming
+                    ? ContextCompat.getColor(requireContext(), R.color.xura_purple)
+                    : ContextCompat.getColor(requireContext(), R.color.xura_gold);
+        }
         if (tag.startsWith("BET:RED"))                       return ContextCompat.getColor(requireContext(), R.color.xura_pink);
         if (tag.startsWith("BET:BLK"))                       return ContextCompat.getColor(requireContext(), R.color.xura_text_secondary);
         if (tag.startsWith("BET:N:"))                        return ContextCompat.getColor(requireContext(), R.color.xura_cyan);
@@ -428,7 +481,11 @@ public class TxDetailSheet extends BottomSheetDialogFragment {
         if (tag.equals("WIN")   || tag.startsWith("WIN:"))  return R.drawable.ic_check_circle;
         if (tag.equals("LOSE")  || tag.startsWith("LOSE:")) return R.drawable.ic_lost_x;
         if (tag.equals("JKPT")  || tag.startsWith("JKPT:")) return R.drawable.ic_bolt;
-        if (tag.startsWith("RLT:"))                        return R.drawable.ic_roulette_outline;
+        if (tag.startsWith("RLT:")) {
+            if (tag.endsWith(":WIN"))  return R.drawable.ic_check_circle;
+            if (tag.endsWith(":LOSE")) return R.drawable.ic_lost_x;
+            return R.drawable.ic_roulette_outline;
+        }
         if (tag.startsWith("BET:RED"))                       return R.drawable.ic_favorite;
         if (tag.startsWith("BET:BLK"))                       return R.drawable.ic_clubs;
         if (tag.startsWith("BET:N:"))                        return R.drawable.ic_target;
