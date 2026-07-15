@@ -1,0 +1,70 @@
+Copyright (c) 2022–2026 SamuilOlegovich (samuilolegovich@gmail.com)
+All rights reserved.
+
+================================================================================
+XURA — SOURCE AVAILABLE LICENSE (MOBILE)
+================================================================================
+
+1. DEFINITIONS
+
+   "Software" means the source code, compiled binaries, assets, and
+   accompanying documentation in this repository.
+
+   "Author" means SamuilOlegovich, the sole copyright holder.
+
+   "Non-Commercial Use" means personal, educational, or research use where
+   no revenue, compensation, or commercial advantage is derived directly or
+   indirectly from the Software or any product built with it.
+
+   "Commercial Use" means any use intended for or resulting in commercial
+   advantage or monetary compensation, including but not limited to:
+   operating a gambling or gaming service, deploying the Software for paying
+   users, licensing, reselling, or integrating into a commercial product.
+
+2. WALLET FUNCTIONALITY — NON-COMMERCIAL GRANT
+
+   Subject to the terms of this License, the Author grants you a
+   non-exclusive, non-transferable, royalty-free right to use the
+   Software solely as a personal XRP Ledger wallet for Non-Commercial Use.
+
+   This grant does NOT extend to the game logic, game server integration,
+   or any gambling functionality contained in the Software.
+
+3. GAME FUNCTIONALITY
+
+   The gaming logic in this Software is intentionally inoperative without
+   a proprietary game server that is NOT included in this repository.
+   You may not attempt to reconstruct, reverse-engineer, or replicate
+   the server-side logic to enable game functionality.
+
+4. COMMERCIAL USE — PROHIBITED WITHOUT AGREEMENT
+
+   Any Commercial Use of the Software, in whole or in part, is strictly
+   prohibited without a separate written commercial license agreement
+   signed by the Author.
+
+   To obtain a commercial license, contact: samuilolegovich@gmail.com
+
+5. REDISTRIBUTION
+
+   You may fork or clone this repository for personal review or
+   Non-Commercial Use. You may NOT redistribute, sublicense, or publish
+   modified versions of the Software without prior written consent
+   of the Author.
+
+6. NO WARRANTY
+
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+   EXPRESS OR IMPLIED. THE AUTHOR SHALL NOT BE LIABLE FOR ANY CLAIM,
+   DAMAGES, OR OTHER LIABILITY ARISING FROM THE USE OF THE SOFTWARE.
+
+7. GOVERNING LAW
+
+   This License shall be governed by and construed in accordance with
+   applicable international copyright law. Disputes shall be resolved
+   by negotiation in good faith, followed by arbitration if necessary.
+
+================================================================================
+Contact: samuilolegovich@gmail.com
+GitHub:  https://github.com/SamuilOlegovich
+================================================================================
